@@ -27,9 +27,10 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 
 ## Output
 
-The 13-week grid, an assumptions log (dated), and a one-paragraph narrative: trough week, trough amount, and what's being done about it.
+The 13-week grid, an assumptions log (dated), and a one-paragraph narrative: trough week, trough amount, and what's being done about it. Write all three under `output/`, never at repo root — confirm the repo's `.gitignore` covers `output/` and add it if absent; generated workpapers carry client data and never enter version control.
 
 ## Boundaries
 
 - This is a management tool, not assurance. Label it clearly as a forecast on assumptions.
 - Financing decisions and ATO payment-plan negotiations are the client's/partner's calls — surface the need, don't act on it.
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.

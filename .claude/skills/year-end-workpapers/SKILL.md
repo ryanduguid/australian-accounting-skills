@@ -17,9 +17,9 @@ Turn a year-end trial balance into an indexed, review-ready workpaper pack. The 
 
 ## Workflow
 
-1. **Index the pack.** Default convention: A cash and cash equivalents, B receivables, C inventory/WIP, D other assets and prepayments, E fixed assets, F payables and accruals, G tax accounts (GST, PAYG, income tax), H payroll liabilities, I loans and borrowings, J equity, P&L analytical section. One lead schedule per section.
+1. **Index the pack.** Default convention: A cash and cash equivalents, B receivables, C inventory/WIP, D other assets and prepayments, E fixed assets, F payables and accruals, G tax accounts (GST, PAYG, income tax), H payroll liabilities, I loans and borrowings, J equity, P&L analytical section. One lead schedule per section. Write the pack under `output/`, never at repo root — confirm the repo's `.gitignore` covers `output/` and add it if absent; generated workpapers carry client data and never enter version control.
 2. **Lead schedules.** Each shows: prior year closing, current year closing, movement, workpaper references to support. Section total agrees to the TB — to the cent.
-3. **Support each section.** Bank agrees to recs and statements; AR to aged listing with collectability noted for old balances; fixed assets to the register with additions/disposals/depreciation reconciled; payables to aged listing plus accrual schedule; GST to the December/June BAS position (see `bas-preparation`); payroll liabilities to the STP year-end position (see `stp-finalisation`); loans to statements with current/non-current split; equity rolls from prior year signed accounts plus profit and distributions.
+3. **Support each section.** Bank agrees to recs and statements; AR to aged listing with collectability noted for old balances; fixed assets to the register with additions/disposals/depreciation reconciled; payables to aged listing plus accrual schedule; GST to the BAS position for the period ending at balance date — the June quarter or month for standard balancers (see `bas-preparation`); payroll liabilities to the STP year-end position (see `stp-finalisation`); loans to statements with current/non-current split; equity rolls from prior year signed accounts plus profit and distributions.
 4. **Journals.** One schedule of all proposed adjusting journals with reasons; mark posted vs pending. Re-run the TB after posting — the pack is built on the *final* TB.
 5. **Analytical review.** P&L year-on-year by line: movement %, one-line commentary for anything past the engagement materiality. Gross margin, wage ratio, and interest cover sanity checks.
 6. **Carry-forwards and completeness.** Prior year review points addressed; comparatives agree to signed accounts; every TB line mapped to a section (a completeness check — unmapped lines are the classic hole).
@@ -33,4 +33,5 @@ Turn a year-end trial balance into an indexed, review-ready workpaper pack. The 
 ## Boundaries
 
 - Accounting policy choices (revenue recognition, ECL approach, depreciation rates) are engagement decisions — apply the firm's existing positions, flag anything new.
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.
 - Run `workpaper-tie-out` as the verification pass after drafting statements.

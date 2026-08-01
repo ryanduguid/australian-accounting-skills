@@ -36,4 +36,5 @@ Work the FBT year (1 April – 31 March) from benefit identification through to 
 
 - Rates, thresholds, gross-up factors, and exemption conditions change — this skill never states them as fixed numbers.
 - Method elections and contentious positions (LAFHA, EV conditions) go to the reviewer as flagged decisions, not silent choices.
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.
 - Not tax advice; return is lodged by the registered agent.

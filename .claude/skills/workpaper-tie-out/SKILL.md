@@ -25,9 +25,10 @@ Audit-style verification pass: nothing is "done" until every number traces to a 
 
 ## Output
 
-The tie-out matrix plus the exceptions list. An empty exceptions list with a complete matrix is the definition of done.
+The tie-out matrix plus the exceptions list. An empty exceptions list with a complete matrix is the definition of done. Write both under `output/`, never at repo root — confirm the repo's `.gitignore` covers `output/` and add it if absent; generated workpapers carry client data and never enter version control.
 
 ## Boundaries
 
 - Verify against sources provided — never fabricate a plausible source or assume a number is fine because it looks reasonable.
 - If a source export is missing, the finding is "unsupported", not "incorrect".
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.
