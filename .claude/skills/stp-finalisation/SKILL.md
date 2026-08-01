@@ -22,15 +22,16 @@ Reconcile the payroll year three ways — register, GL, STP-filed — then final
 3. **Super guarantee.** Check the SG rate applied against the legislated rate for each period (verify at ato.gov.au). Confirm payments reached funds by the deadline for the year being finalised — quarterly due dates up to FY2025-26; payday super (fund receipt within 7 business days of each payday) from 1 July 2026. Late payments mean SGC exposure — flag, don't bury.
 4. **Categories and codes.** STP Phase 2 disaggregation: allowances in their proper categories, salary sacrifice reported correctly, ETPs coded per type. Spot-check unusual payees.
 5. **RFBA.** Include reportable fringe benefits amounts for affected employees before finalising.
-6. **Finalise.** Produce the checklist: every reconciliation status, exceptions and resolutions, then the finalisation declaration is made by the authorised person in the payroll software — not by this workflow.
+6. **Finalise.** Produce the checklist: every reconciliation status, exceptions and resolutions, then the finalisation declaration is made by the authorised person in the payroll software — not by this workflow. Write the checklist and workpapers under `output/`, never at repo root — confirm the repo's `.gitignore` covers `output/` and add it if absent; generated workpapers carry client data and never enter version control.
 
 ## Checks before handing over
 
 - Three-way tie: register = GL = STP, per employee for tax and super, in total for gross
-- SG rate per quarter cited; payment dates evidenced
+- SG rate and due-date regime cited per period (quarterly for FY2025-26 and earlier; per payday under payday super from FY2026-27); payment dates evidenced
 - Exceptions list empty or explicitly accepted by the reviewer
 
 ## Boundaries
 
 - The finalisation declaration is a legal declaration by the employer/agent — a human makes it.
 - SGC calculations and remission requests are advice territory; flag exposure, hand over.
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.

@@ -24,16 +24,27 @@ exports/
 *.myo
 *.bak
 
+# Generated-workpaper formats (the skills route packs to output/, ignored
+# above; this catches strays written anywhere else)
+*.docx
+*.doc
+*.json
+# *.json must not swallow repo config — keep .claude JSON trackable
+!.claude/**/*.json
+
+# Allow sanitised sample fixtures when needed — sample-* convention only,
+# matching the sibling repos. Uncomment here, ABOVE the client-name rules:
+# gitignore is last-match-wins, so the *client* guard below must stay the
+# last word.
+# !samples/
+# !samples/sample-*.csv
+
 # Client-named data files (scoped to data extensions so docs/skills named
-# "client-*" are never silently swallowed)
+# "client-*" are never silently swallowed). Keep these below any sample
+# re-includes — last match wins.
 *client*.csv
 *client*.xlsx
 *client*.pdf
-
-# Allow sanitised sample fixtures when needed — sample-* convention only,
-# matching the sibling repos:
-# !samples/
-# !samples/sample-*.csv
 
 # OS / editor noise
 .DS_Store

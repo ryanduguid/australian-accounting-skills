@@ -27,7 +27,7 @@ Drive a close to done with a checklist, reconcile every control account, and end
 3. **Schedules roll.** Accruals and prepayments: roll last month's schedule, release what expired, add what's new, agree closing balances to the TB. Same for any loan or intercompany schedules — intercompany balances must mirror each other across entities.
 4. **Fixed assets.** Additions/disposals posted to the register, depreciation journal posted, register closing WDV agrees to TB.
 5. **Variance review.** P&L vs prior month and vs budget. Flag lines moving beyond the agreed materiality; one-line explanation per flag. Unexplained flags stay open — they don't disappear.
-6. **Close out.** Checklist with per-item status and preparer initials/date, exceptions list, then lock the period in the ledger.
+6. **Close out.** Checklist with per-item status and preparer initials/date, exceptions list, then have the preparer lock the period in the ledger. Write the close pack under `output/`, never at repo root — confirm the repo's `.gitignore` covers `output/` and add it if absent; generated workpapers carry client data and never enter version control.
 
 ## Checks before handing over
 
@@ -39,3 +39,5 @@ Drive a close to done with a checklist, reconcile every control account, and end
 
 - Materiality is the firm's or engagement's call — ask for the threshold rather than inventing one.
 - Propose adjusting journals; a human posts and reviews them.
+- Period lock is performed by a human in the ledger, like journal posting.
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.

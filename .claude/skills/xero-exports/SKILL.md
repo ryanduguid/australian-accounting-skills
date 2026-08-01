@@ -40,4 +40,5 @@ The other skills in this pack assume clean inputs. This skill is how you get the
 ## Boundaries
 
 - If an export fails a completeness check, stop and re-export — don't patch numbers.
+- Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.
 - API access (OAuth apps) is out of scope here; this skill covers the export-file path that works for any practice.
