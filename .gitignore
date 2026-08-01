@@ -1,0 +1,41 @@
+# Client data must never enter this repo.
+# Anything exported from a ledger or containing a real entity stays out.
+input/
+output/
+clients/
+exports/
+
+# Data-file extensions (ledger exports, workbooks, statements, bank files)
+*.xlsx
+*.xlsm
+*.xlsb
+*.xls
+*.xlt
+*.xltx
+*.xltm
+*.csv
+*.txt
+*.pdf
+*.aba
+*.ofx
+*.qif
+*.zip
+*.myox
+*.myo
+*.bak
+
+# Client-named data files (scoped to data extensions so docs/skills named
+# "client-*" are never silently swallowed)
+*client*.csv
+*client*.xlsx
+*client*.pdf
+
+# Allow sanitised sample fixtures when needed — sample-* convention only,
+# matching the sibling repos:
+# !samples/
+# !samples/sample-*.csv
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
