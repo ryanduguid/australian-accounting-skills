@@ -1,0 +1,39 @@
+# CLAUDE.md — {FIRM NAME}
+
+Copy this into the root of your firm's working repo as `CLAUDE.md`, replace every {PLACEHOLDER}, and delete sections that don't apply. This file is context an agent reads every session — keep it short, factual, and current.
+
+## Who we are
+
+{FIRM NAME}, public practice, {CITY} {STATE}. Work is predominantly {compilation / tax / advisory mix}. Clients are {typical client profile, e.g. trading SMEs $1m–$20m turnover, trusts and bucket companies, a handful of SMSFs}.
+
+## Software stack
+
+- Ledger: {Xero / MYOB / mixed} — {version/plan notes}
+- Practice management: {XPM / other}
+- Workpapers: {tool or "Excel, per templates in /templates"}
+- Lodgment: {agent portal arrangements — the agent lodges, never automation}
+
+## Conventions
+
+- Chart of accounts: {e.g. "standard Xero COA with firm variations listed in coa-map.md"}
+- Workpaper index: {e.g. "A–J per the year-end-workpapers skill default" or firm's own}
+- File naming: {entity}-{report}-{period-end}-{basis}
+- Materiality defaults: {e.g. "greater of $X or Y% of the relevant base, unless the engagement letter says otherwise"} — always confirm per engagement
+- Rounding: {to the dollar / cent} on workpapers; statements per {policy}
+
+## Review flow
+
+Preparer → {reviewer role} → {partner}. Nothing goes to a client or the ATO without {sign-off level}. Agents prepare and check; humans decide, sign, and lodge.
+
+## Privacy rules (non-negotiable)
+
+1. No client names, TFNs, ABNs, addresses, or financial data in any prompt to a cloud service unless the engagement and firm policy explicitly allow it. Default: de-identify (Entity A, round numbers).
+2. Client exports live in {location}, which is outside any git repository.
+3. Generated output containing client data is stored in {location}, never committed, never emailed unencrypted.
+
+## Current-year references
+
+Rates and thresholds are never trusted from memory. Check and cite:
+- ato.gov.au for FBT rates/gross-up, Div 7A benchmark rate, SG rate, BAS due dates
+- {state revenue office} for payroll tax
+- Firm rate card: {location}

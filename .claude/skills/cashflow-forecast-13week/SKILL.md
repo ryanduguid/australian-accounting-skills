@@ -1,0 +1,35 @@
+---
+name: cashflow-forecast-13week
+description: Use when building or updating a rolling 13-week cashflow forecast for an Australian SME — receipts from debtor history, payments from creditors and payroll cycles, ATO obligation timing (BAS, PAYG, super), and weekly actual-vs-forecast variance.
+---
+
+# 13-Week Cashflow Forecast
+
+Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's job is to surface the crunch week early enough to act on it.
+
+## Inputs needed
+
+1. Confirmed opening bank balance (all accounts, net of unpresented items)
+2. Aged receivables and aged payables as at the start date
+3. Payroll calendar: pay frequency, typical net run, PAYG withholding and super amounts
+4. ATO obligation schedule: BAS/IAS cycle and amounts, super timing under the current regime (payday super from 1 July 2026: contributions must reach the fund within 7 business days of each payday — verify at ato.gov.au), any payment plans
+5. Recurring commitments from the GL: rent, loan repayments, insurances, subscriptions
+6. Known one-offs: capex, tax assessments, dividends/drawings
+
+## Workflow
+
+1. **Frame the grid.** Weeks 1–13 as columns; receipts, payments (by category), net movement, closing balance as rows. Week 1 starts from the confirmed bank balance — not the ledger balance.
+2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate "committed" (invoiced) from "expected" (pipeline) — shade confidence.
+3. **Payments.** Creditors by due date honouring critical suppliers first; payroll on its calendar with PAYG remitted on its cycle; super with each pay cycle per payday-super timing (quarterly due dates apply only to pre-1-July-2026 periods); loan and rent on contract dates.
+4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgment cycle at ato.gov.au — agent lodgment often shifts them). GST collected is not the entity's money — the forecast makes that visible by pairing strong sales weeks with their BAS week.
+5. **Stress the trough.** Identify the minimum closing balance week. Test it: receipts one week late, largest debtor pays late, no pipeline receipts. If the stressed trough goes negative, list the levers (invoice earlier, terms, financing, deferral requests) — as options for the owner, not decisions.
+6. **Weekly cadence.** Each week: replace forecast with actuals, note variance per line, push the horizon one week out, and record *why* the misses missed — the assumptions log is what makes week 10's forecast better than week 1's.
+
+## Output
+
+The 13-week grid, an assumptions log (dated), and a one-paragraph narrative: trough week, trough amount, and what's being done about it.
+
+## Boundaries
+
+- This is a management tool, not assurance. Label it clearly as a forecast on assumptions.
+- Financing decisions and ATO payment-plan negotiations are the client's/partner's calls — surface the need, don't act on it.
