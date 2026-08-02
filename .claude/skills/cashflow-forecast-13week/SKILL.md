@@ -15,11 +15,13 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 4. ATO obligation schedule: BAS/IAS cycle and amounts, super timing under the current regime (payday super from 1 July 2026: contributions must reach the fund within 7 business days of each payday — verify at ato.gov.au), any payment plans
 5. Recurring commitments from the GL: rent, loan repayments, insurances, subscriptions
 6. Known one-offs: capex, tax assessments, dividends/drawings
+7. Receipts and invoice history for the last 3–6 months — the source of actual days-to-pay by major customer
+8. Sales forecast or pipeline with expected invoice dates, if the owner wants expected receipts in the grid — otherwise forecast committed receipts only
 
 ## Workflow
 
 1. **Frame the grid.** Weeks 1–13 as columns; receipts, payments (by category), net movement, closing balance as rows. Week 1 starts from the confirmed bank balance — not the ledger balance.
-2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate "committed" (invoiced) from "expected" (pipeline) — shade confidence.
+2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate "committed" (invoiced) from "expected" (pipeline) — shade confidence. With no pipeline input, the expected row stays empty and flagged as such — never estimated.
 3. **Payments.** Creditors by due date honouring critical suppliers first; payroll on its calendar with PAYG remitted on its cycle; super with each pay cycle per payday-super timing (quarterly due dates apply only to pre-1-July-2026 periods); loan and rent on contract dates.
 4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgment cycle at ato.gov.au — agent lodgment often shifts them). If ato.gov.au is unreachable from this session, stop and ask the user for the current dates, record them as "per [name], [date], unverified", and flag them on the forecast — never construct a citation from memory. GST collected is not the entity's money — the forecast makes that visible by pairing strong sales weeks with their BAS week.
 5. **Stress the trough.** Identify the minimum closing balance week. Test it: receipts one week late, largest debtor pays late, no pipeline receipts. If the stressed trough goes negative, list the levers (invoice earlier, terms, financing, deferral requests) — as options for the owner, not decisions.

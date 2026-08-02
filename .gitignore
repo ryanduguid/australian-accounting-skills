@@ -29,10 +29,16 @@ exports/
 *.docx
 *.doc
 *.json
+*.md
 # *.json must not swallow skill config — keep .claude/skills JSON trackable,
 # nothing wider (settings.local.json and MCP/token JSON stay out)
 !.claude/skills/**/*.json
 .claude/settings.local.json
+# *.md must not swallow the repo's own docs — a checklist or register written
+# as Markdown is the stray being caught here. Any future tracked Markdown
+# (CONTRIBUTING.md, docs/*.md) needs its own negation added below.
+!README.md
+!.claude/skills/**/*.md
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
 # matching the sibling repos. Uncomment here, ABOVE the client-name rules:
