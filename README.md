@@ -2,7 +2,7 @@
 
 Claude Code skills for Australian public-practice accounting workflows — BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers.
 
-Built inside Australian public practice, for the people doing the work. Each skill encodes the *workflow* — the steps, the tie-outs, the exceptions to chase — not tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
+Built from years inside Australian public practice, for the people doing the work — written independently, from scratch. Each skill encodes the *workflow* — the steps, the tie-outs, the exceptions to chase — not tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
 ## Who this is for
 
