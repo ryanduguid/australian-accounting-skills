@@ -29,8 +29,10 @@ exports/
 *.docx
 *.doc
 *.json
-# *.json must not swallow repo config — keep .claude JSON trackable
-!.claude/**/*.json
+# *.json must not swallow skill config — keep .claude/skills JSON trackable,
+# nothing wider (settings.local.json and MCP/token JSON stay out)
+!.claude/skills/**/*.json
+.claude/settings.local.json
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
 # matching the sibling repos. Uncomment here, ABOVE the client-name rules:

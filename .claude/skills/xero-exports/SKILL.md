@@ -5,7 +5,7 @@ description: Use when working with Xero report exports — trial balance, accoun
 
 # Working With Xero Exports
 
-The other skills in this pack assume clean inputs. This skill is how you get them out of Xero and how you spot a broken export before it poisons a workpaper.
+The other skills in this pack assume clean inputs. This skill is how you specify what to export and how you spot a broken export before it poisons a workpaper.
 
 ## The core exports and what they're for
 
@@ -31,7 +31,7 @@ The other skills in this pack assume clean inputs. This skill is how you get the
 1. TB debits = credits (a truncated export fails this first)
 2. Account Transactions: per-account movement for the period = TB movement for that account
 3. Aged listings total = the control account balance on the TB, same date
-4. Row-count sanity vs the on-screen report before trusting any large export
+4. Row-count sanity: ask whoever ran the export for the on-screen row/total count and compare before trusting any large export; if that count can't be obtained, record the check as not performed on the workpaper
 
 ## File conventions
 
