@@ -25,11 +25,16 @@ def front_matter(skill_file: Path) -> dict[str, str]:
         key, separator, value = line.partition(":")
         if not separator or not key.strip() or not value.strip():
             # Deliberate restriction: skills in this repo keep front matter to
-            # single-line 'key: value' fields only. Blank lines, '#' comments,
-            # YAML block lists (e.g. an allowed-tools: list), and multi-line
-            # values all land here by design. If you hit this on a new skill,
-            # it is this parser's limitation, not a defect in the skill --
-            # either simplify the front matter or extend this parser knowingly.
+            # single-line 'key: value' fields only. Lines without a colon or
+            # with an empty key or value — blank lines, YAML block lists
+            # (e.g. an allowed-tools: list), colon-less comments — land here.
+            # NOT everything fails loud, though: a '#' comment that contains
+            # a colon parses silently as a junk key, and a folded or literal
+            # block scalar ('description: >' or '|') parses silently as the
+            # one-character value '>' or '|', which still passes the
+            # non-empty assertions below. If you hit this raise, or add any
+            # of those shapes to a new skill, extend this parser knowingly
+            # and eyeball the parsed metadata — do not trust green alone.
             raise ValueError(
                 f"invalid front-matter field: {line!r} "
                 "(this repo restricts skill front matter to single-line "
