@@ -23,7 +23,7 @@ Drive a close to done with a checklist, reconcile every control account, and end
    - AR control = aged receivables total
    - AP control = aged payables total
    - GST account(s) = expected net based on the period's activity
-   - Payroll: wages clearing nils out; PAYG withholding payable and superannuation payable agree to payroll reports; super payable clears within the payday-super window (7 business days of each payday, from 1 July 2026; quarterly cycle for earlier periods — verify the current window at ato.gov.au) — a super balance aging beyond the last pay run is itself an exception
+   - Payroll: wages clearing nils out; PAYG withholding payable and superannuation payable agree to payroll reports; super payable clears within the payday-super window (the fund must RECEIVE the contribution by the end of the 7th business day after each payday, from 1 July 2026; quarterly cycle for earlier periods — verify the current window at ato.gov.au). The test is fund receipt, not the day the payment left the employer or the clearing house, so a remittance date alone does not clear the balance — a super balance aging beyond the last pay run is itself an exception
 3. **Schedules roll.** Accruals and prepayments: roll last month's schedule, release what expired, add what's new, agree closing balances to the TB. Same for any loan or intercompany schedules — intercompany balances must mirror each other across entities.
 4. **Fixed assets.** Additions/disposals posted to the register, depreciation journal posted, register closing WDV agrees to TB.
 5. **Variance review.** P&L vs prior month and vs budget. Flag lines moving beyond the agreed materiality; one-line explanation per flag. Unexplained flags stay open — they don't disappear.

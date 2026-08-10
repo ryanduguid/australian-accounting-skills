@@ -12,7 +12,7 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 1. Confirmed opening bank balance (all accounts, net of unpresented items)
 2. Aged receivables and aged payables as at the start date
 3. Payroll calendar: pay frequency, typical net run, PAYG withholding and super amounts
-4. ATO obligation schedule: BAS/IAS cycle and amounts, super timing under the current regime (payday super from 1 July 2026: contributions must reach the fund within 7 business days of each payday — verify at ato.gov.au), any payment plans
+4. ATO obligation schedule: BAS/IAS cycle and amounts, super timing under the current regime (payday super from 1 July 2026: the fund must receive the contribution by the end of the 7th business day after each payday, and clearing-house transit sits inside that window, not outside it — verify at ato.gov.au), any payment plans
 5. Recurring commitments from the GL: rent, loan repayments, insurances, subscriptions
 6. Known one-offs: capex, tax assessments, dividends/drawings
 7. Receipts and invoice history for the last 3–6 months — the source of actual days-to-pay by major customer
