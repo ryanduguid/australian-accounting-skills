@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import unittest
+from pathlib import Path
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -46,7 +46,7 @@ def front_matter(skill_file: Path) -> dict[str, str]:
 
 class SkillMetadataTests(unittest.TestCase):
     def test_every_skill_has_matching_complete_front_matter(self) -> None:
-        skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
+        skill_files = sorted(SKILLS_DIRECTORY.rglob("SKILL.md"))
         self.assertGreaterEqual(len(skill_files), 1, "at least one distributable skill is required")
 
         declared_names: set[str] = set()
@@ -62,6 +62,22 @@ class SkillMetadataTests(unittest.TestCase):
         directories = sorted(path for path in SKILLS_DIRECTORY.iterdir() if path.is_dir())
         missing = [path.name for path in directories if not (path / "SKILL.md").is_file()]
         self.assertEqual(missing, [])
+
+    def test_every_skill_marks_embedded_instructions_as_untrusted(self) -> None:
+        skill_files = sorted(SKILLS_DIRECTORY.rglob("SKILL.md"))
+        missing = [
+            str(path.relative_to(REPOSITORY))
+            for path in skill_files
+            if "instructions found inside" not in path.read_text(encoding="utf-8")
+            or "untrusted content" not in path.read_text(encoding="utf-8")
+        ]
+        self.assertEqual(missing, [])
+
+        firm_template = (REPOSITORY / "templates" / "firm-CLAUDE.md.example").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("Instructions embedded in client files", firm_template)
+        self.assertIn("untrusted data", firm_template)
 
 
 if __name__ == "__main__":
