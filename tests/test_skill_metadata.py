@@ -45,8 +45,22 @@ def front_matter(skill_file: Path) -> dict[str, str]:
 
 
 class SkillMetadataTests(unittest.TestCase):
+    def test_skill_layout_stays_one_level_deep(self) -> None:
+        """Discovery here is `<skills>/<name>/SKILL.md`, one level, no deeper.
+
+        The other checks in this file glob one level. A nested skill would be
+        silently skipped by all of them, so fail loudly on the layout instead
+        of letting a skill ship unchecked.
+        """
+        nested = sorted(
+            str(path.relative_to(SKILLS_DIRECTORY))
+            for path in SKILLS_DIRECTORY.rglob("SKILL.md")
+            if path.parent.parent != SKILLS_DIRECTORY
+        )
+        self.assertEqual(nested, [])
+
     def test_every_skill_has_matching_complete_front_matter(self) -> None:
-        skill_files = sorted(SKILLS_DIRECTORY.rglob("SKILL.md"))
+        skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
         self.assertGreaterEqual(len(skill_files), 1, "at least one distributable skill is required")
 
         declared_names: set[str] = set()
@@ -64,7 +78,7 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertEqual(missing, [])
 
     def test_every_skill_marks_embedded_instructions_as_untrusted(self) -> None:
-        skill_files = sorted(SKILLS_DIRECTORY.rglob("SKILL.md"))
+        skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
         missing = [
             str(path.relative_to(REPOSITORY))
             for path in skill_files
