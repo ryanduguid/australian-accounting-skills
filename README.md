@@ -48,14 +48,14 @@ Also included: [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.exa
 
 1. **Workflow over content.** The skill knows the steps and the checks; the ATO website is the source of truth for this year's rates and labels.
 2. **Tie-out or it didn't happen.** Every skill ends by reconciling its output back to source — the habit that separates a workpaper from a guess.
-3. **No client data, ever.** Examples use placeholder entities and round numbers. The `.gitignore` blocks common client-artifact patterns; keep real exports out of any repo.
+3. **No client data in the repository.** Examples use placeholder entities and round numbers. The `.gitignore` blocks common client-artifact patterns; keep real exports out of every repository and use them only where the engagement, firm policy and approved environment permit.
 4. **Degrade gracefully.** Skills work from CSV exports on disk. Ledger integrations (MCP) are a bonus, never a requirement.
 
 ## Disclaimer
 
 These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgment or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything — lodgment is a registered agent's job.
 
-Running these skills means client data passes through a cloud AI service. Check your firm's policy and your confidentiality and privacy obligations first; de-identify by default. [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) has starter privacy rules.
+If these skills are run with client inputs through a cloud AI service, that data passes to the service. Check your firm's policy and your confidentiality and privacy obligations first; de-identify by default. [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) has starter privacy rules.
 
 ## Author
 
