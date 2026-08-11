@@ -26,7 +26,7 @@ Reconcile the payroll year three ways (register, GL, STP-filed) and then finalis
 
 ## Checks before handing over
 
-- Three-way tie: register = GL = STP, per employee for tax and super, in total for gross; from FY2026-27, qualifying earnings and super liability per employee also tie to the register
+- Three-way tie: register = GL in total; register = STP per employee for gross, tax and super; from FY2026-27, qualifying earnings and super liability per employee also tie to the register. Per-employee gross is what each employee's income statement in myGov shows, so a total-only gross tie lets offsetting per-employee errors through the gate that step 2 was written to catch
 - RFBA stated per affected employee, or the absence confirmed with the user and recorded
 - SG rate and due-date regime cited per period (quarterly for FY2025-26 and earlier; per payday under payday super from FY2026-27); payment dates evidenced; for FY2026-27 onward, the payday-super STP field/code requirements verified at ato.gov.au
 - Exceptions list empty or explicitly accepted by the reviewer
