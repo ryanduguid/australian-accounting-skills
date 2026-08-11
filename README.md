@@ -1,8 +1,8 @@
 # australian-accounting-skills
 
-Claude Code skills for Australian public-practice accounting workflows — BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
+Claude Code skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
 
-Workflow skills for Australian public-practice accounting, written independently, from scratch, in my own time and on my own equipment. Each skill encodes the *workflow* — the steps, the tie-outs, the exceptions to chase — not tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
+Workflow skills for Australian public-practice accounting, written independently, from scratch, in my own time and on my own equipment. Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
 ## Who this is for
 
@@ -42,25 +42,25 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 | `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |
 
-Also included: [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) — a starter `CLAUDE.md` for an accounting firm's repo: terminology, materiality defaults, workpaper conventions, privacy rules.
+Also included: [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo: terminology, materiality defaults, workpaper conventions, privacy rules.
 
 ## Design principles
 
 1. **Workflow over content.** The skill knows the steps and the checks; the ATO website is the source of truth for this year's rates and labels.
-2. **Tie-out or it didn't happen.** Every skill ends by reconciling its output back to source — the habit that separates a workpaper from a guess.
+2. **Tie-out or it didn't happen.** Every skill ends by reconciling its output back to source. That habit separates a workpaper from a guess.
 3. **No client data in the repository.** Examples use placeholder entities and round numbers. The `.gitignore` blocks common client-artifact patterns; keep real exports out of every repository and use them only where the engagement, firm policy and approved environment permit.
 4. **Degrade gracefully.** Skills work from CSV exports on disk. Ledger integrations (MCP) are a bonus, never a requirement.
 
 ## Disclaimer
 
-These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgment or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything — lodgment is a registered agent's job.
+These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgment or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything. Lodgment is a registered agent's job.
 
 If these skills are run with client inputs through a cloud AI service, that data passes to the service. Check your firm's policy and your confidentiality and privacy obligations first; de-identify by default. [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) has starter privacy rules.
 
 ## Author
 
-Ryan Duguid — accountant in Newcastle NSW, CA ANZ Provisional Member.
+Ryan Duguid, accountant in Newcastle NSW, CA ANZ Provisional Member.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
