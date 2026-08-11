@@ -1,5 +1,7 @@
 # australian-accounting-skills
 
+[![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Claude Code skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
 
 Workflow skills for Australian public-practice accounting, written independently, from scratch, in my own time and on my own equipment. Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
