@@ -12,7 +12,18 @@ Accountants in Australian public practice (and finance staff in AU SMEs) using [
 
 ## Install
 
-Copy the skills you want into your project or user skills directory:
+One command, using the [`skills` CLI](https://github.com/vercel-labs/skills). It reads the
+`.claude/skills/` layout this repo uses, so no extra manifest is needed:
+
+```bash
+npx skills add ryanduguid/australian-accounting-skills
+```
+
+That installs into the current project (`./.claude/skills/`). Add `-g` to install into
+`~/.claude/skills` instead, `-a claude-code` to target one agent, and `-l` to list the skills
+without installing anything.
+
+To install by hand instead, copy the skills you want into your project or user skills directory:
 
 ```bash
 git clone https://github.com/ryanduguid/australian-accounting-skills
