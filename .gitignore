@@ -39,6 +39,7 @@ exports/
 # (CONTRIBUTING.md, docs/*.md) needs its own negation added below.
 !README.md
 !SECURITY.md
+!CONTRIBUTING.md
 !.claude/skills/**/*.md
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
