@@ -9,12 +9,15 @@ Drive a close to done with a checklist, reconcile every control account, and end
 
 ## Inputs needed
 
+Ask for these if not provided (see `xero-exports` for pulling and validating them):
 1. Trial balance as at month end (and prior month); see `xero-exports` for export and completeness checks
 2. Bank reconciliation report(s) per account
 3. GL detail for the month
 4. Subledger reports: aged receivables, aged payables (as at month end)
 5. Fixed asset register, accrual/prepayment schedules from last close
 6. Budget or forecast for the month (if variance review is in scope)
+7. Payroll activity summary for the month per the payroll system (gross, PAYG withheld, super accrued), and the pay dates falling in the month. Step 2 reconciles the PAYG withholding and superannuation payable accounts to these
+8. Super payment evidence showing the date each contribution was RECEIVED by the fund, not the date it left the employer or the clearing house. Step 2 tests receipt, so a remittance date alone cannot clear the balance. A clearing-house or fund confirmation carries this; a bank payment date does not
 
 ## Workflow
 
