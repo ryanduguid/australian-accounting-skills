@@ -26,6 +26,6 @@ The suite checks skill metadata and structure. Add a test when a change introduc
 
 ## Pull requests
 
-Cite the provision, ruling or ATO page behind any technical change, and give its date. If a change alters a rule, search for every other place that states or polices it — the same rule is often repeated in a checklist, a tie-out and a worked example.
+Cite the provision, ruling or ATO page behind any technical change, and give its date. If a change alters a rule, search for every other place that states or polices it. The same rule is often repeated in a checklist, a tie-out and a worked example.
 
 For a potential security vulnerability, follow [SECURITY.md](SECURITY.md) rather than opening an issue.
