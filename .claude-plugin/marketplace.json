@@ -1,0 +1,40 @@
+{
+  "name": "ryanduguid",
+  "description": "Ryan Duguid's Claude Code plugins for Australian accounting work.",
+  "owner": {
+    "name": "Ryan Duguid"
+  },
+  "plugins": [
+    {
+      "name": "australian-accounting-skills",
+      "description": "Workflow skills for Australian public-practice accounting: BAS preparation, month-end close, workpaper tie-out, FBT year-end, Division 7A, STP finalisation, year-end workpapers, Xero exports and 13-week cashflow. Each skill encodes the process and the tie-outs, and sends the agent to ato.gov.au for rates and thresholds that change yearly.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Ryan Duguid"
+      },
+      "category": "productivity",
+      "tags": [
+        "accounting",
+        "australia",
+        "tax",
+        "xero",
+        "bookkeeping"
+      ],
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./.claude/skills/bas-preparation",
+        "./.claude/skills/cashflow-forecast-13week",
+        "./.claude/skills/div7a-compliance",
+        "./.claude/skills/fbt-annual-workflow",
+        "./.claude/skills/month-end-close",
+        "./.claude/skills/stp-finalisation",
+        "./.claude/skills/workpaper-tie-out",
+        "./.claude/skills/xero-exports",
+        "./.claude/skills/year-end-workpapers"
+      ],
+      "homepage": "https://github.com/ryanduguid/australian-accounting-skills",
+      "license": "MIT"
+    }
+  ]
+}
