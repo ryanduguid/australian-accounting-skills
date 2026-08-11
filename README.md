@@ -12,6 +12,20 @@ Accountants in Australian public practice (and finance staff in AU SMEs) using [
 
 ## Install
 
+### Claude Code plugin
+
+This repo is also a Claude Code plugin marketplace, so all nine skills install together and
+update with the repo:
+
+```
+/plugin marketplace add ryanduguid/australian-accounting-skills
+/plugin install australian-accounting-skills@ryanduguid
+```
+
+The skills then register as `australian-accounting-skills:bas-preparation` and so on.
+
+### Any agent, via the skills CLI
+
 One command, using the [`skills` CLI](https://github.com/vercel-labs/skills). It reads the
 `.claude/skills/` layout this repo uses, so no extra manifest is needed:
 
@@ -23,7 +37,9 @@ That installs into the current project (`./.claude/skills/`). Add `-g` to instal
 `~/.claude/skills` instead, `-a claude-code` to target one agent, and `-l` to list the skills
 without installing anything.
 
-To install by hand instead, copy the skills you want into your project or user skills directory:
+### By hand
+
+Copy the skills you want into your project or user skills directory:
 
 ```bash
 git clone https://github.com/ryanduguid/australian-accounting-skills
