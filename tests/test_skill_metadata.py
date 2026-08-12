@@ -61,17 +61,29 @@ def front_matter(skill_file: Path) -> dict[str, str]:
 class SkillMetadataTests(unittest.TestCase):
     def test_front_matter_rejects_ambiguous_or_unknown_yaml(self) -> None:
         cases = {
-            "duplicate": "---\\nname: first\\nname: second\\ndescription: valid\\n---\\n",
-            "unknown": "---\\nname: valid\\ndescription: valid\\ntools: shell\\n---\\n",
-            "comment": "---\\nname: valid\\n# note: hidden metadata\\ndescription: valid\\n---\\n",
-            "block scalar": "---\\nname: valid\\ndescription: >\\n  folded text\\n---\\n",
+            "duplicate": (
+                "---\nname: first\nname: second\ndescription: valid\n---\n",
+                "duplicate front-matter field",
+            ),
+            "unknown": (
+                "---\nname: valid\ndescription: valid\ntools: shell\n---\n",
+                "unknown front-matter field",
+            ),
+            "comment": (
+                "---\nname: valid\n# note: hidden metadata\ndescription: valid\n---\n",
+                "invalid front-matter field",
+            ),
+            "block scalar": (
+                "---\nname: valid\ndescription: >\n  folded text\n---\n",
+                "invalid front-matter field",
+            ),
         }
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "SKILL.md"
-            for label, content in cases.items():
+            for label, (content, error) in cases.items():
                 with self.subTest(case=label):
                     path.write_text(content, encoding="utf-8")
-                    with self.assertRaises(ValueError):
+                    with self.assertRaisesRegex(ValueError, error):
                         front_matter(path)
 
     def test_skill_layout_stays_one_level_deep(self) -> None:
