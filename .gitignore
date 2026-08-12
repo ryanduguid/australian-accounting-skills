@@ -57,6 +57,10 @@ exports/
 *client*.xlsx
 *client*.pdf
 
+# Python
+__pycache__/
+*.py[cod]
+
 # OS / editor noise
 .DS_Store
 Thumbs.db
