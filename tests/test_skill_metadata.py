@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -23,7 +25,15 @@ def front_matter(skill_file: Path) -> dict[str, str]:
     metadata: dict[str, str] = {}
     for line in lines[1:end]:
         key, separator, value = line.partition(":")
-        if not separator or not key.strip() or not value.strip():
+        key = key.strip()
+        value = value.strip()
+        if (
+            not separator
+            or not key
+            or not value
+            or line.lstrip().startswith("#")
+            or value in {">", "|"}
+        ):
             # Deliberate restriction: skills in this repo keep front matter to
             # single-line 'key: value' fields only. Lines without a colon or
             # with an empty key or value — blank lines, YAML block lists
@@ -40,11 +50,30 @@ def front_matter(skill_file: Path) -> dict[str, str]:
                 "(this repo restricts skill front matter to single-line "
                 "'key: value' fields; see comment above this raise)"
             )
-        metadata[key.strip()] = value.strip()
+        if key not in {"name", "description"}:
+            raise ValueError(f"unknown front-matter field: {key!r}")
+        if key in metadata:
+            raise ValueError(f"duplicate front-matter field: {key!r}")
+        metadata[key] = value
     return metadata
 
 
 class SkillMetadataTests(unittest.TestCase):
+    def test_front_matter_rejects_ambiguous_or_unknown_yaml(self) -> None:
+        cases = {
+            "duplicate": "---\\nname: first\\nname: second\\ndescription: valid\\n---\\n",
+            "unknown": "---\\nname: valid\\ndescription: valid\\ntools: shell\\n---\\n",
+            "comment": "---\\nname: valid\\n# note: hidden metadata\\ndescription: valid\\n---\\n",
+            "block scalar": "---\\nname: valid\\ndescription: >\\n  folded text\\n---\\n",
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "SKILL.md"
+            for label, content in cases.items():
+                with self.subTest(case=label):
+                    path.write_text(content, encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        front_matter(path)
+
     def test_skill_layout_stays_one_level_deep(self) -> None:
         """Discovery here is `<skills>/<name>/SKILL.md`, one level, no deeper.
 
@@ -76,6 +105,33 @@ class SkillMetadataTests(unittest.TestCase):
         directories = sorted(path for path in SKILLS_DIRECTORY.iterdir() if path.is_dir())
         missing = [path.name for path in directories if not (path / "SKILL.md").is_file()]
         self.assertEqual(missing, [])
+
+    def test_marketplace_inventory_exactly_matches_discovered_skills(self) -> None:
+        marketplace = json.loads(
+            (REPOSITORY / ".claude-plugin" / "marketplace.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(len(marketplace.get("plugins", [])), 1)
+        declared = marketplace["plugins"][0].get("skills")
+        self.assertIsInstance(declared, list)
+        self.assertEqual(len(declared), len(set(declared)))
+
+        root = REPOSITORY.resolve()
+        declared_paths = []
+        for item in declared:
+            with self.subTest(skill=item):
+                self.assertIsInstance(item, str)
+                path = (REPOSITORY / item).resolve()
+                self.assertTrue(path.is_relative_to(root))
+                self.assertTrue((path / "SKILL.md").is_file())
+                declared_paths.append(path.relative_to(root).as_posix())
+
+        discovered = sorted(
+            path.parent.resolve().relative_to(root).as_posix()
+            for path in SKILLS_DIRECTORY.glob("*/SKILL.md")
+        )
+        self.assertEqual(sorted(declared_paths), discovered)
 
     def test_every_skill_marks_embedded_instructions_as_untrusted(self) -> None:
         skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
