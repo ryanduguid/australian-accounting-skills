@@ -25,5 +25,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check --no-deps --requirement requirements-test.txt
+
       - name: Verify skill metadata
         run: python -m unittest discover -s tests -v
+
+      - name: Verify Skills CLI discovery
+        run: python tests/verify_skills_cli.py

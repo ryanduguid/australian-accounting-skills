@@ -1,6 +1,6 @@
 ---
 name: stp-finalisation
-description: Use for Single Touch Payroll year-end finalisation: reconciling payroll registers to the GL and to STP-filed totals, checking super guarantee, including RFBA, and producing the finalisation checklist before the declaration deadline.
+description: "Use for Single Touch Payroll year-end finalisation: reconciling payroll registers to the GL and to STP-filed totals, checking super guarantee, including RFBA, and producing the finalisation checklist before the declaration deadline."
 ---
 
 # STP Finalisation

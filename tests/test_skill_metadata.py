@@ -7,13 +7,37 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
+ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
+
+
+class UniqueKeySafeLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects duplicate mapping keys."""
+
+    def construct_mapping(
+        self,
+        node: yaml.nodes.MappingNode,
+        deep: bool = False,
+    ) -> dict[object, object]:
+        mapping: dict[object, object] = {}
+        for key_node, value_node in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            try:
+                duplicate = key in mapping
+            except TypeError as error:
+                raise ValueError("front-matter keys must be scalar") from error
+            if duplicate:
+                raise ValueError(f"duplicate front-matter field: {key!r}")
+            mapping[key] = self.construct_object(value_node, deep=deep)
+        return mapping
 
 
 def front_matter(skill_file: Path) -> dict[str, str]:
-    """Read the small, deliberately simple YAML front matter used by skills."""
+    """Parse and validate the deliberately small YAML skill front matter."""
     lines = skill_file.read_text(encoding="utf-8").splitlines()
     if not lines or lines[0] != "---":
         raise ValueError("front matter must start with '---'")
@@ -22,7 +46,6 @@ def front_matter(skill_file: Path) -> dict[str, str]:
     except ValueError as error:
         raise ValueError("front matter must end with '---'") from error
 
-    metadata: dict[str, str] = {}
     for line in lines[1:end]:
         key, separator, value = line.partition(":")
         key = key.strip()
@@ -34,26 +57,28 @@ def front_matter(skill_file: Path) -> dict[str, str]:
             or line.lstrip().startswith("#")
             or value in {">", "|"}
         ):
-            # Deliberate restriction: skills in this repo keep front matter to
-            # single-line 'key: value' fields only. Lines without a colon or
-            # with an empty key or value — blank lines, YAML block lists
-            # (e.g. an allowed-tools: list), colon-less comments — land here.
-            # NOT everything fails loud, though: a '#' comment that contains
-            # a colon parses silently as a junk key, and a folded or literal
-            # block scalar ('description: >' or '|') parses silently as the
-            # one-character value '>' or '|', which still passes the
-            # non-empty assertions below. If you hit this raise, or add any
-            # of those shapes to a new skill, extend this parser knowingly
-            # and eyeball the parsed metadata — do not trust green alone.
             raise ValueError(
                 f"invalid front-matter field: {line!r} "
-                "(this repo restricts skill front matter to single-line "
-                "'key: value' fields; see comment above this raise)"
+                "(this repo restricts skill front matter to single-line fields)"
             )
-        if key not in {"name", "description"}:
+
+    raw_front_matter = "\n".join(lines[1:end])
+    try:
+        loaded = yaml.load(raw_front_matter, Loader=UniqueKeySafeLoader)
+    except ValueError:
+        raise
+    except yaml.YAMLError as error:
+        raise ValueError(f"front matter must be valid YAML: {error}") from error
+
+    if not isinstance(loaded, dict):
+        raise ValueError("front matter must be a YAML mapping")
+
+    metadata: dict[str, str] = {}
+    for key, value in loaded.items():
+        if not isinstance(key, str) or key not in ALLOWED_FRONT_MATTER_FIELDS:
             raise ValueError(f"unknown front-matter field: {key!r}")
-        if key in metadata:
-            raise ValueError(f"duplicate front-matter field: {key!r}")
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"front-matter field {key!r} must be a non-empty string")
         metadata[key] = value
     return metadata
 
@@ -94,6 +119,10 @@ class SkillMetadataTests(unittest.TestCase):
                 "---\nname: valid\ndescription: >\n  folded text\n---\n",
                 "invalid front-matter field",
             ),
+            "unquoted colon": (
+                "---\nname: valid\ndescription: invalid: plain scalar\n---\n",
+                "front matter must be valid YAML",
+            ),
         }
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "SKILL.md"
@@ -102,6 +131,21 @@ class SkillMetadataTests(unittest.TestCase):
                     path.write_text(content, encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, error):
                         front_matter(path)
+
+    def test_front_matter_accepts_a_quoted_colon(self) -> None:
+        content = (
+            "---\n"
+            "name: valid\n"
+            'description: "valid: quoted scalar"\n'
+            "---\n"
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "SKILL.md"
+            path.write_text(content, encoding="utf-8")
+            self.assertEqual(
+                front_matter(path),
+                {"name": "valid", "description": "valid: quoted scalar"},
+            )
 
     def test_skill_layout_stays_one_level_deep(self) -> None:
         """Discovery here is `<skills>/<name>/SKILL.md`, one level, no deeper.
