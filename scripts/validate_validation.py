@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
+import html
 import os
 import re
 import stat
 import subprocess
 import sys
+import unicodedata
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
 
@@ -55,13 +57,26 @@ MARKDOWN_LINK = re.compile(
 MARKDOWN_REFERENCE = re.compile(
     r"(?m)^[ ]{0,3}\[[^\]\r\n]+\]:[ \t]*(?P<target><[^>\r\n]+>|\S+)"
 )
-RAW_HTML_LINK = re.compile(r"<\s*(?:a|img|iframe|object)\b", re.I)
+RAW_HTML_OR_AUTOLINK = re.compile(r"<")
+HTML_MARKUP = re.compile(r"<!--.*?-->|<[^>]*>", re.S)
+INLINE_MARKDOWN_LINK = re.compile(
+    r"!?\[(?P<label>[^\]\r\n]*)\]\((?:<[^>\r\n]+>|[^)\r\n]+)\)"
+)
+REFERENCE_MARKDOWN_LINK = re.compile(
+    r"!?\[(?P<label>[^\]\r\n]*)\]\[[^\]\r\n]*\]"
+)
+MARKDOWN_FORMATTING = str.maketrans("", "", "\\`*~[]()")
+MARKDOWN_FORMATTING_WITH_UNDERSCORE = str.maketrans("", "", "\\`*_~[]()")
 SENSITIVE_PATTERNS = {
     "email address": re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I),
     "labelled Australian identifier": re.compile(
-        r"\b(?:ABN|ACN|TFN)\s*(?:number|no\.?|[:#-])?\s*\d", re.I
+        r"\b(?:A\s*B\s*N|A\s*C\s*N|T\s*F\s*N)\s*"
+        r"(?:number|no\.?|[:#-])?\s*\d",
+        re.I,
     ),
-    "unlabelled long numeric identifier": re.compile(r"(?<![\d,.])\d{8,11}(?![\d,.])"),
+    "unlabelled long numeric identifier": re.compile(
+        r"(?<![\d,.])\d(?:[ -]?\d){7,10}(?![\d,.])"
+    ),
     "BSB or bank account": re.compile(
         r"\b(?:BSB|bank\s+account)\s*(?:number|no\.?|[:#-])?\s*\d", re.I
     ),
@@ -130,6 +145,15 @@ def read_utf8(path: Path) -> str:
     text = text.replace("\r\n", "\n")
     if "\r" in text:
         raise ValidationError(f"{path} contains a bare carriage return")
+    for character in text:
+        if character not in {"\n", "\t"} and unicodedata.category(character) in {
+            "Cc",
+            "Cf",
+        }:
+            raise ValidationError(
+                f"{path} contains a Unicode control/format character "
+                f"U+{ord(character):04X}"
+            )
     return text
 
 
@@ -247,10 +271,52 @@ def decode_repeatedly(value: str) -> str:
     return current
 
 
+def normalise_for_sensitive_scan(text: str) -> str:
+    """Expose common rendered-Markdown/entity obfuscation to safety patterns."""
+    decoded = unicodedata.normalize("NFKC", html.unescape(text))
+    decoded = "".join(
+        character
+        for character in decoded
+        if unicodedata.category(character) != "Cf"
+    )
+    visible = HTML_MARKUP.sub("", decoded)
+    visible = INLINE_MARKDOWN_LINK.sub(lambda match: match.group("label"), visible)
+    visible = REFERENCE_MARKDOWN_LINK.sub(lambda match: match.group("label"), visible)
+    return "\n::scan-variant-boundary::\n".join(
+        (
+            decoded,
+            decoded.translate(MARKDOWN_FORMATTING),
+            decoded.translate(MARKDOWN_FORMATTING_WITH_UNDERSCORE),
+            visible.translate(MARKDOWN_FORMATTING),
+            visible.translate(MARKDOWN_FORMATTING_WITH_UNDERSCORE),
+        )
+    )
+
+
+def check_sensitive_content(text: str) -> None:
+    """Reject common private-data, credential and stale-rule fixture content."""
+    scan_text = normalise_for_sensitive_scan(text)
+    for label, pattern in SENSITIVE_PATTERNS.items():
+        if pattern.search(scan_text):
+            raise ValidationError(f"possible {label}")
+    if DATED_RULE.search(scan_text):
+        raise ValidationError("embeds a dated/rate rule instead of a live-source check")
+
+
 def markdown_targets(text: str) -> list[str]:
-    """Extract supported Markdown links and reject bypass-prone raw HTML."""
-    if RAW_HTML_LINK.search(text):
-        raise ValidationError("raw HTML links or embedded objects are not permitted")
+    """Extract supported Markdown links and reject raw HTML/autolink bypasses."""
+    scan_text = html.unescape(text)
+
+    def unwrap_destination(match: re.Match[str]) -> str:
+        target = match.group("target")
+        if target.startswith("<") and target.endswith(">"):
+            return match.group(0).replace(target, target[1:-1], 1)
+        return match.group(0)
+
+    scan_text = MARKDOWN_LINK.sub(unwrap_destination, scan_text)
+    scan_text = MARKDOWN_REFERENCE.sub(unwrap_destination, scan_text)
+    if RAW_HTML_OR_AUTOLINK.search(scan_text):
+        raise ValidationError("raw HTML or autolinks are not permitted")
     return [
         *(match.group("target") for match in MARKDOWN_LINK.finditer(text)),
         *(match.group("target") for match in MARKDOWN_REFERENCE.finditer(text)),
@@ -274,12 +340,26 @@ def resolve_local_link(
     decoded = decode_repeatedly(target)
     if "\\" in decoded or "\x00" in decoded:
         raise ValidationError(f"encoded unsafe separator or NUL: {raw_target}")
-    parsed = urlsplit(decoded)
+    if any(character.isspace() for character in decoded):
+        raise ValidationError(f"encoded whitespace in link target: {raw_target}")
+    try:
+        parsed = urlsplit(decoded)
+    except ValueError as error:
+        raise ValidationError(f"malformed link target: {raw_target}") from error
     if parsed.scheme:
-        if parsed.scheme.lower() not in {"http", "https", "mailto"}:
+        scheme = parsed.scheme.lower()
+        if scheme not in {"http", "https", "mailto"}:
             raise ValidationError(f"unsafe link scheme: {parsed.scheme}")
         if parsed.username is not None or parsed.password is not None:
             raise ValidationError("credentials are not permitted in a link target")
+        if scheme in {"http", "https"} and (
+            not parsed.netloc
+            or parsed.hostname is None
+            or not parsed.hostname.strip(".")
+        ):
+            raise ValidationError(
+                f"HTTP(S) link must have a network authority: {raw_target}"
+            )
         return None
     if parsed.netloc or decoded.startswith("//"):
         raise ValidationError(f"protocol-relative/UNC link is not permitted: {raw_target}")
@@ -443,11 +523,7 @@ def main() -> int:
             if "Synthetic" not in body:
                 raise ValidationError("card must use an explicit Synthetic placeholder")
 
-            for label, pattern in SENSITIVE_PATTERNS.items():
-                if pattern.search(body):
-                    raise ValidationError(f"possible {label}")
-            if DATED_RULE.search(body):
-                raise ValidationError("card embeds a dated/rate rule instead of a live-source check")
+            check_sensitive_content(body)
 
             for raw_target in markdown_targets(body):
                 target = resolve_local_link(rel, raw_target)
@@ -465,6 +541,7 @@ def main() -> int:
 
     validation_readme = read_sources.get("validation/README.md", "")
     try:
+        check_sensitive_content(validation_readme)
         readme_targets = markdown_targets(validation_readme)
     except ValidationError as error:
         errors.append(f"validation/README.md: {error}")

@@ -124,6 +124,18 @@ class DecodeAndPathTests(unittest.TestCase):
             with self.assertRaisesRegex(validator.ValidationError, "NUL"):
                 validator.read_utf8(path)
 
+    def test_unicode_control_and_format_characters_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "fixture.md"
+            for content in ("hidden\u200btext", "reordered\u202etext", "control\x1ftext"):
+                with self.subTest(content=ascii(content)):
+                    path.write_text(content, encoding="utf-8")
+                    with self.assertRaisesRegex(
+                        validator.ValidationError,
+                        "Unicode control/format character",
+                    ):
+                        validator.read_utf8(path)
+
     def test_crlf_is_normalised_and_bare_carriage_return_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "fixture.md"
@@ -160,6 +172,14 @@ class DecodeAndPathTests(unittest.TestCase):
             "//server/share.md",
             "javascript:alert(1)",
             "https://user:password@example.invalid/source",
+            "http:../../README.md",
+            "https:/../README.md",
+            "https:///../README.md",
+            "http:example.invalid/source",
+            "http://",
+            "http://../README.md",
+            "https://example.invalid/%20outside",
+            "https://example.invalid/%0Aoutside",
             "cases/bas-g10-g11.md?raw=1",
             "cases/unknown.md",
         )
@@ -175,11 +195,30 @@ class DecodeAndPathTests(unittest.TestCase):
             ),
             ["cases/bas-g10-g11.md"],
         )
+        self.assertEqual(
+            validator.markdown_targets("[safe](<cases/bas-g10-g11.md>)"),
+            ["<cases/bas-g10-g11.md>"],
+        )
         target = validator.markdown_targets("[outside]: %2e%2e/README.md")[0]
         with self.assertRaises(validator.ValidationError):
             validator.resolve_local_link("validation/README.md", target)
-        with self.assertRaisesRegex(validator.ValidationError, "raw HTML"):
-            validator.markdown_targets('<a href="../README.md">outside</a>')
+        adverse = (
+            '<a href="../README.md">outside</a>',
+            '<embed src="../README.md">',
+            '<script src="../outside.js"></script>',
+            '<video src="../outside.mp4"></video>',
+            '<link rel="stylesheet" href="../outside.css">',
+            '<file:///C:/Users/Public/outside.md>',
+            '<https://user:password@example.invalid/source>',
+            '&lt;iframe src="../README.md"&gt;',
+        )
+        for content in adverse:
+            with self.subTest(content=content):
+                with self.assertRaisesRegex(
+                    validator.ValidationError,
+                    "raw HTML or autolinks",
+                ):
+                    validator.markdown_targets(content)
 
     def test_validation_inventory_does_not_read_unexpected_content(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -217,6 +256,23 @@ class SafetyControlTests(unittest.TestCase):
                 text = path.read_text(encoding="utf-8")
                 self.assertIn("do not change `.gitignore`", text.lower())
                 self.assertIn("authorised human", text)
+                self.assertIn("assurance", text.lower())
+
+    def test_shared_rule_keeps_consequential_actions_human_only(self) -> None:
+        text = (
+            REPOSITORY / ".claude" / "rules" / "accounting-safety.md"
+        ).read_text(encoding="utf-8")
+        for boundary in (
+            "Do not lodge",
+            "make declarations",
+            "communicate with a regulator or client",
+            "execute a payment",
+            "post a journal",
+            "lock financial records",
+            "authorised human action",
+        ):
+            with self.subTest(boundary=boundary):
+                self.assertIn(boundary, text)
 
     def test_export_manifest_and_cash_roll_forward_cannot_silently_regress(self) -> None:
         exports = (
@@ -271,10 +327,52 @@ class SafetyControlTests(unittest.TestCase):
         }
         for label, content in adverse.items():
             with self.subTest(label=label):
-                self.assertIsNotNone(validator.SENSITIVE_PATTERNS[label].search(content))
+                scan_text = validator.normalise_for_sensitive_scan(content)
+                self.assertIsNotNone(
+                    validator.SENSITIVE_PATTERNS[label].search(scan_text)
+                )
         self.assertIsNotNone(
-            validator.DATED_RULE.search("effective 1 July 2026")
+            validator.DATED_RULE.search(
+                validator.normalise_for_sensitive_scan("effective 1 July 2026")
+            )
         )
+
+    def test_sensitive_scan_exposes_rendered_markdown_and_entity_obfuscation(self) -> None:
+        adverse = {
+            "labelled Australian identifier": (
+                "A**B**N: 12 345 678 901",
+                "T`F`N 123 456 789",
+                "A[B](#fragment)N 12 345 678 901",
+                "A\u200bBN: 12 345 678 901",
+            ),
+            "unlabelled long numeric identifier": ("12 345 678 901",),
+            "email address": ("worker&#64;example.test",),
+            "BSB or bank account": ("B<!-- -->SB 123-456",),
+            "realistic entity suffix": ("Acme Pty **Ltd**",),
+            "API credential": ("sk_abcdef**ghijkl**mnop",),
+        }
+        for label, contents in adverse.items():
+            for content in contents:
+                with self.subTest(label=label, content=content):
+                    scan_text = validator.normalise_for_sensitive_scan(content)
+                    self.assertIsNotNone(
+                        validator.SENSITIVE_PATTERNS[label].search(scan_text)
+                    )
+                    with self.assertRaisesRegex(
+                        validator.ValidationError,
+                        f"possible {label}",
+                    ):
+                        validator.check_sensitive_content(content)
+
+        self.assertIsNotNone(
+            validator.DATED_RULE.search(
+                validator.normalise_for_sensitive_scan(
+                    "effective 1 **July** 2026"
+                )
+            )
+        )
+        with self.assertRaisesRegex(validator.ValidationError, "dated/rate rule"):
+            validator.check_sensitive_content("effective 1 **July** 2026")
 
 
 if __name__ == "__main__":
