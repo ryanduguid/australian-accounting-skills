@@ -33,18 +33,28 @@ exports/
 *.md
 # *.json must not swallow skill config — keep .claude/skills JSON trackable,
 # nothing wider (settings.local.json and MCP/token JSON stay out)
-!.claude/skills/**/*.json
+!/.claude/skills/**/*.json
 !.claude-plugin/marketplace.json
 .claude/settings.local.json
 # *.md must not swallow the repo's own docs — a checklist or register written
 # as Markdown is the stray being caught here. Any future tracked Markdown
 # (CONTRIBUTING.md, docs/*.md) needs its own negation added below.
-!README.md
-!SECURITY.md
-!CONTRIBUTING.md
-!RELEASE_NOTES.md
-!RELEASING.md
-!.claude/skills/**/*.md
+!/README.md
+!/SECURITY.md
+!/CONTRIBUTING.md
+!/RELEASE_NOTES.md
+!/RELEASING.md
+!/CLAUDE.md
+!/.claude/skills/**/*.md
+!/.claude/rules/
+!/.claude/rules/**/*.md
+
+# Fixed, fabricated regression cards. Keep this exception narrow: arbitrary
+# Markdown elsewhere remains blocked as a possible generated workpaper.
+!/validation/
+!/validation/README.md
+!/validation/cases/
+!/validation/cases/*.md
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
 # matching the sibling repos. Uncomment here, ABOVE the client-name rules:

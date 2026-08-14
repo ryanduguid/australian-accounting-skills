@@ -55,7 +55,7 @@ New-Item -ItemType Directory -Force "$HOME/.claude/skills"
 Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/skills/"
 ```
 
-Or copy individual skill folders into `<project>/.claude/skills/`. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best.
+Or copy individual skill folders into `<project>/.claude/skills/`. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best. For a firm repository, adapt [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) to its actual policy; this repository's [`CLAUDE.md`](CLAUDE.md) is contributor guidance, not a substitute for firm controls.
 
 ## Skills
 
@@ -71,13 +71,17 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 | `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |
 
-Also included: [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo: terminology, materiality defaults, workpaper conventions, privacy rules.
+Also included:
+
+- [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.
+- [`CLAUDE.md`](CLAUDE.md) and [`.claude/rules/accounting-safety.md`](.claude/rules/accounting-safety.md): maintained contributor and accounting-safety boundaries.
+- [`validation/README.md`](validation/README.md) and [`scripts/validate_validation.py`](scripts/validate_validation.py): a fabricated regression pack and fail-closed static validator.
 
 ## Design principles
 
 1. **Workflow over content.** The skill knows the steps and the checks; the ATO website is the source of truth for this year's rates and labels.
 2. **Tie-out or it didn't happen.** Every skill ends by reconciling its output back to source. That habit separates a workpaper from a guess.
-3. **No client data in the repository.** Examples use placeholder entities and round numbers. The `.gitignore` blocks common client-artifact patterns; keep real exports out of every repository and use them only where the engagement, firm policy and approved environment permit.
+3. **No client data in the repository.** Examples are fabricated from scratch. The `.gitignore` blocks common client-artifact patterns; keep real exports out of every repository and use them only where the engagement, firm policy and approved environment permit.
 4. **Degrade gracefully.** Skills work from CSV exports on disk. Ledger integrations (MCP) are a bonus, never a requirement.
 
 ## Disclaimer
