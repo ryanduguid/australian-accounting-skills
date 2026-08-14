@@ -47,7 +47,6 @@ jobs:
           test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
           test "$(sed -n '1p' RELEASE_NOTES.md)" = "# $GITHUB_REF_NAME"
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          test "$(gh api -H 'X-GitHub-Api-Version: 2026-03-10' "repos/$GITHUB_REPOSITORY/immutable-releases" --jq .enabled)" = true
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "A release for $GITHUB_REF_NAME already exists; refusing to overwrite it." >&2
             exit 1

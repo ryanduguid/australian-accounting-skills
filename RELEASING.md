@@ -5,9 +5,16 @@ Releases are built by GitHub Actions from an annotated tag on the exact `main` c
 Before tagging:
 
 1. Merge the release pull request and require every `main` check to pass.
-2. Enable release immutability in the repository settings. The workflow stops before publication while it is off.
-3. Confirm `VERSION` and the `RELEASE_NOTES.md` heading match the intended tag.
-4. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.1 -m "v0.1.1"` (or `-s` when signing is configured), then push only that tag.
+2. Enable release immutability in the repository settings.
+3. From an operator session authenticated with repository Administration read access, run:
+
+    ```bash
+    gh api -H "X-GitHub-Api-Version: 2026-03-10" repos/ryanduguid/australian-accounting-skills/immutable-releases --jq .enabled
+    ```
+
+    Do not push the tag unless the output is exactly `true`. The Actions `GITHUB_TOKEN` cannot be granted repository Administration read access, so the tag workflow cannot perform this preflight itself.
+4. Confirm `VERSION` and the `RELEASE_NOTES.md` heading match the intended tag.
+5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.1 -m "v0.1.1"` (or `-s` when signing is configured), then push only that tag.
 
 The workflow reruns both skill validators and builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and an SBOM attestation before publishing the completed draft. An existing release is never overwritten.
 
