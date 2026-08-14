@@ -14,16 +14,21 @@ Work the FBT year (1 April – 31 March) from benefit identification through to 
 3. Employee contribution records
 4. Prior year FBT return and workpapers
 5. Any existing declarations (living-away-from-home, expense payment, no-private-use)
+6. Employer FBT status and the evidence supporting any special status
+7. Car-parking facts where relevant: premises, employee parking/use and available commercial-parking evidence
+8. FBT instalments, tax-account evidence and FBT-payable opening/closing balances
+9. Expected return lodgment date or applicable agent arrangement
 
 ## Workflow
 
-1. **Identify benefit categories.** Sweep the GL for: cars (statutory formula vs operating cost, comparing both where logbooks exist), expense payments, entertainment (meal vs recreation; income tax/GST interaction), loans to employees, housing/LAFHA, property/residual benefits. Map each finding to an account and an employee where attributable.
+1. **Identify benefit categories.** Sweep the GL for: cars (statutory formula vs operating cost, comparing both where logbooks exist), car parking, expense payments, entertainment (meal vs recreation; income tax/GST interaction), loans to employees, housing/LAFHA, property/residual benefits. Map each finding to an account and an employee where attributable.
 2. **Apply exemptions and reductions, verifying each against current ATO guidance.** Minor and infrequent benefits, work-related portable devices, otherwise-deductible rule (declaration required), electric vehicle exemption conditions. Cite the ATO page and date checked for every exemption relied on.
-3. **Collect what's missing.** Produce a per-employee list of required declarations and missing logbook/odometer data. Missing declaration = benefit stays taxable until the declaration exists.
+3. **Collect what's missing.** Produce a dated declaration register with required form/alternative record, employee/benefit, applicable deadline, received date and exception status. Verify the deadline against current authoritative guidance and the applicable lodgment arrangement. Produce the related missing logbook/odometer list. Missing support means a reduction or exemption is not assumed.
 4. **Compute.** Taxable value per benefit, less employee contributions. Apply Type 1 vs Type 2 gross-up by GST-creditability of the benefit, using the current year's gross-up factors and FBT rate from ato.gov.au, never from memory. If ato.gov.au is unreachable from this session, stop and ask the user for the current figures, record them as "per [name], [date], unverified", and flag them on the workpaper. Never construct a citation from memory.
-5. **Reconcile.** Employee contributions to the GL (they're usually income to the employer); FBT expense/payable accounts to the calculated liability; instalments already paid to the ATO account.
+5. **Reconcile.** Reconcile employee contributions to the GL. Reconcile FBT payable through a roll-forward: opening payable + calculated liability and supported adjustments − instalments/payments = closing payable. Tie each instalment/payment to tax-account evidence.
 6. **RFBA.** Compute reportable fringe benefits amounts per employee against the current reporting threshold, ready for STP finalisation (see `stp-finalisation`). RFBA always uses the lower Type 2 gross-up rate regardless of the benefit's GST-creditability. Verify the current rate and reporting threshold at ato.gov.au.
-7. **Assemble the workpaper.** Benefit register by category and employee, calculation schedules, exemption positions with citations, declaration checklist, return-item summary. Write the workpaper to the firm's designated output location (see the firm's CLAUDE.md); if none is configured, default to `output/` in the working repo (never repo root), and confirm `.gitignore` covers `output/` and add it if absent; generated workpapers carry client data and never enter version control.
+   Record a supported status per employee: reportable, excluded, below threshold or unverified.
+7. **Assemble the workpaper.** Benefit register by category and employee, calculation schedules, exemption positions with citations, declaration checklist, return-item summary and liability/instalment roll-forward. Use the firm-approved secure client-data location. If none is configured, ask before creating a repo-adjacent path. Confirm the selected path is already excluded from version control; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
 ## Checks before handing over
 
@@ -31,8 +36,12 @@ Work the FBT year (1 April – 31 March) from benefit identification through to 
 - Car benefits: method choice documented per vehicle, days-available count shown
 - Entertainment positions consistent across FBT, income tax deductibility, and GST claims
 - RFBA schedule ties to the benefit register
+- Declarations carry applicable deadline, received date and exception status
+- FBT payable and instalments reconcile through the documented roll-forward
 
 ## Boundaries
+
+- An authorised human decides any tax position, obtains or makes declarations, communicates, pays and lodges. This workflow does not perform those actions or provide assurance.
 
 - Rates, thresholds, gross-up factors, and exemption conditions change, so this skill never states them as fixed numbers.
 - Method elections and contentious positions (LAFHA, EV conditions) go to the reviewer as flagged decisions, not silent choices.
