@@ -1,6 +1,6 @@
 ---
 name: div7a-compliance
-description: Use when reviewing shareholder or associate loans, payments, or debt forgiveness by a private company for Division 7A exposure: building the loan register, checking complying loan agreements, and calculating minimum yearly repayments.
+description: "Use when reviewing shareholder or associate loans, payments, or debt forgiveness by a private company for Division 7A exposure: building the loan register, checking complying loan agreements, and calculating minimum yearly repayments."
 ---
 
 # Division 7A Compliance
