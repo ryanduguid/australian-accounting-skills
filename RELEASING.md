@@ -14,21 +14,24 @@ Before tagging:
 
     Do not push the tag unless the output is exactly `true`. The Actions `GITHUB_TOKEN` cannot be granted repository Administration read access, so the tag workflow cannot perform this preflight itself.
 4. Confirm `VERSION` and the `RELEASE_NOTES.md` heading match the intended tag.
-5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.1 -m "v0.1.1"` (or `-s` when signing is configured), then push only that tag.
+5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.2 -m "v0.1.2"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns both skill validators and builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and an SBOM attestation before publishing the completed draft. An existing release is never overwritten.
+The workflow reruns the repository tests, the fabricated-pack validator and the exact nine-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
+
+Publication is fail-closed. The workflow inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
 Verify the downloaded release with:
 
 ```bash
-gh release download v0.1.1 -R ryanduguid/australian-accounting-skills --dir release-v0.1.1
-cd release-v0.1.1
+gh release download v0.1.2 -R ryanduguid/australian-accounting-skills --dir release-v0.1.2
+cd release-v0.1.2
 sha256sum --check SHA256SUMS
-gh attestation verify australian-accounting-skills-0.1.1.zip -R ryanduguid/australian-accounting-skills
-gh attestation verify australian-accounting-skills-0.1.1.zip -R ryanduguid/australian-accounting-skills --predicate-type https://spdx.dev/Document/v2.3
-gh release view v0.1.1 -R ryanduguid/australian-accounting-skills --json isImmutable
-gh release verify v0.1.1 -R ryanduguid/australian-accounting-skills
-gh release verify-asset v0.1.1 australian-accounting-skills-0.1.1.zip -R ryanduguid/australian-accounting-skills
+for file in *; do gh attestation verify "$file" -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.2 --signer-workflow ryanduguid/australian-accounting-skills/.github/workflows/release.yml; done
+gh attestation verify australian-accounting-skills-0.1.2.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.2 --signer-workflow ryanduguid/australian-accounting-skills/.github/workflows/release.yml --predicate-type https://spdx.dev/Document/v2.3
+gh attestation verify australian-accounting-skills-0.1.2.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.2 --signer-workflow ryanduguid/australian-accounting-skills/.github/workflows/release.yml --predicate-type https://spdx.dev/Document/v2.3
+gh release view v0.1.2 -R ryanduguid/australian-accounting-skills --json isImmutable
+gh release verify v0.1.2 -R ryanduguid/australian-accounting-skills
+for file in *; do gh release verify-asset v0.1.2 "$file" -R ryanduguid/australian-accounting-skills; done
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a published tag.
