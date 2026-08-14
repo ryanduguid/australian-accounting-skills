@@ -1,6 +1,6 @@
 ---
 name: year-end-workpapers
-description: Use when building a review-ready annual workpaper pack from a trial balance: lead schedules per statement area, movement analysis, analytical review, and an indexed pack a reviewer can sign without hunting.
+description: "Use when building a review-ready annual workpaper pack from a trial balance: lead schedules per statement area, movement analysis, analytical review, and an indexed pack a reviewer can sign without hunting."
 ---
 
 # Year-End Workpapers
