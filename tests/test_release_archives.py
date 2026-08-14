@@ -10,6 +10,8 @@ import unittest
 from unittest import mock
 import zipfile
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -107,6 +109,68 @@ class ReleaseArchiveTests(unittest.TestCase):
         self.assertIn("TZ: UTC", workflow)
         self.assertIn("python tools/build_release_archives.py", workflow)
         self.assertNotIn("\n          git archive ", workflow)
+
+    def test_release_workflow_is_draft_aware_and_race_safe(self) -> None:
+        workflow_path = ROOT / ".github" / "workflows" / "release.yml"
+        workflow = workflow_path.read_text(encoding="utf-8")
+
+        self.assertNotIn("gh release view", workflow)
+        self.assertNotIn("gh release edit", workflow)
+        self.assertIn("releases?per_page=100", workflow)
+        self.assertIn(".tag_name == \\\"$tag\\\" and .draft == true", workflow)
+        self.assertGreaterEqual(workflow.count("git/ref/heads/main"), 2)
+        self.assertIn('refs/tags/$tag^{}', workflow)
+        self.assertIn("repos/$GITHUB_REPOSITORY/releases/$release_id", workflow)
+        self.assertIn("-F draft=false", workflow)
+
+        loaded = yaml.safe_load(workflow)
+        for step in loaded["jobs"]["release"]["steps"]:
+            run = step.get("run", "")
+            if "gh " in run:
+                with self.subTest(step=step["name"]):
+                    self.assertEqual(
+                        "${{ github.token }}",
+                        step.get("env", {}).get("GH_TOKEN"),
+                    )
+
+    def test_release_workflow_verifies_exact_assets_and_attestations(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8",
+        )
+
+        self.assertIn("Unexpected release asset inventory.", workflow)
+        self.assertIn("/tmp/expected-digests", workflow)
+        self.assertIn(".immutable == true", workflow)
+        self.assertIn(".isLatest == true", workflow)
+        self.assertIn('gh release verify "$tag"', workflow)
+        self.assertIn('gh release verify-asset "$tag" "$file"', workflow)
+        self.assertIn("--source-digest", workflow)
+        self.assertIn("--source-ref", workflow)
+        self.assertIn(
+            '"dist/australian-accounting-skills-${{ steps.release.outputs.version }}.zip"',
+            workflow,
+        )
+        self.assertIn(
+            '"dist/australian-accounting-skills-${{ steps.release.outputs.version }}.tar.gz"',
+            workflow,
+        )
+        self.assertEqual(
+            1,
+            workflow.count("--predicate-type https://spdx.dev/Document/v2.3"),
+        )
+
+    def test_release_pins_exact_skills_cli_inventory(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8",
+        )
+        verifier = (ROOT / "tests" / "verify_skills_cli.py").read_text(
+            encoding="utf-8",
+        )
+
+        self.assertIn("python tests/verify_skills_cli.py", workflow)
+        self.assertIn('SKILLS_CLI_VERSION = "1.5.22"', verifier)
+        self.assertIn("reported_count != len(EXPECTED_SKILLS)", verifier)
+        self.assertIn("discovered != EXPECTED_SKILLS", verifier)
 
     def test_builder_refuses_unsafe_prefixes(self) -> None:
         with TemporaryDirectory() as temporary:
