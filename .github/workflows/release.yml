@@ -71,7 +71,7 @@ jobs:
           git archive --format=tar.gz --prefix="australian-accounting-skills-$version/" --output="dist/australian-accounting-skills-$version.tar.gz" "$GITHUB_SHA"
 
       - name: Generate SPDX SBOM for the ZIP archive
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.22.2
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
         with:
           file: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.zip
           format: spdx-json
@@ -86,7 +86,7 @@ jobs:
           (cd dist && sha256sum --check SHA256SUMS)
 
       - name: Attest release asset provenance
-        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.0.0
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
           subject-path: |
             dist/*.zip
@@ -95,7 +95,7 @@ jobs:
             dist/SHA256SUMS
 
       - name: Attest the ZIP SBOM
-        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.0.0
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
           subject-path: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.zip
           sbom-path: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.spdx.json
