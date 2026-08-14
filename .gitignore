@@ -42,6 +42,8 @@ exports/
 !README.md
 !SECURITY.md
 !CONTRIBUTING.md
+!RELEASE_NOTES.md
+!RELEASING.md
 !.claude/skills/**/*.md
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,

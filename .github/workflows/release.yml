@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: build, attest and publish
+    runs-on: ubuntu-latest
+    permissions:
+      attestations: write # Record provenance and SBOM attestations for release assets.
+      contents: write # Create the draft release, upload assets and publish it.
+      id-token: write # Obtain the OIDC identity required to sign attestations.
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Require a release-ready tag and repository
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(tr -d '[:space:]' < VERSION)"
+          test "$GITHUB_REF_NAME" = "v$version"
+          test "$(git cat-file -t "refs/tags/$GITHUB_REF_NAME")" = tag
+          test "$(git rev-parse "refs/tags/$GITHUB_REF_NAME^{commit}")" = "$GITHUB_SHA"
+          git fetch --no-tags origin main
+          test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
+          test "$(sed -n '1p' RELEASE_NOTES.md)" = "# $GITHUB_REF_NAME"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "A release for $GITHUB_REF_NAME already exists; refusing to overwrite it." >&2
+            exit 1
+          fi
+
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check --no-deps --requirement requirements-test.txt
+
+      - name: Run skill validation
+        run: |
+          python -m unittest discover -s tests -v
+          python tests/verify_skills_cli.py
+
+      - name: Build deterministic plugin archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(tr -d '[:space:]' < VERSION)"
+          mkdir dist
+          git archive --format=zip --prefix="australian-accounting-skills-$version/" --output="dist/australian-accounting-skills-$version.zip" "$GITHUB_SHA"
+          git archive --format=tar.gz --prefix="australian-accounting-skills-$version/" --output="dist/australian-accounting-skills-$version.tar.gz" "$GITHUB_SHA"
+
+      - name: Generate SPDX SBOM for the ZIP archive
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+        with:
+          file: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.zip
+          format: spdx-json
+          syft-version: v1.51.0
+          output-file: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Write and verify SHA-256 checksums
+        run: |
+          (cd dist && sha256sum *.zip *.tar.gz *.spdx.json > SHA256SUMS)
+          (cd dist && sha256sum --check SHA256SUMS)
+
+      - name: Attest release asset provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: |
+            dist/*.zip
+            dist/*.tar.gz
+            dist/*.spdx.json
+            dist/SHA256SUMS
+
+      - name: Attest the ZIP SBOM
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.zip
+          sbom-path: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.spdx.json
+
+      - name: Publish the complete release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --draft --title "$GITHUB_REF_NAME" --notes-file RELEASE_NOTES.md
+          gh release upload "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY"
+          gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft=false --latest
