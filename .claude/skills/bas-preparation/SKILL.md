@@ -1,6 +1,6 @@
 ---
 name: bas-preparation
-description: Use when preparing, reviewing, or reconciling a Business Activity Statement (BAS) or IAS for an Australian entity: mapping ledger figures to BAS labels, tying out GST control accounts, or investigating a GST variance before lodgment.
+description: "Use when preparing, reviewing, or reconciling a Business Activity Statement (BAS) or IAS for an Australian entity: mapping ledger figures to BAS labels, tying out GST control accounts, or investigating a GST variance before lodgment."
 ---
 
 # BAS Preparation

@@ -1,6 +1,6 @@
 ---
 name: fbt-annual-workflow
-description: Use when preparing FBT year-end work for an Australian employer: identifying fringe benefits, collecting declarations, applying gross-up, calculating reportable fringe benefits amounts, and building the FBT return workpaper. FBT year runs 1 April to 31 March.
+description: "Use when preparing FBT year-end work for an Australian employer: identifying fringe benefits, collecting declarations, applying gross-up, calculating reportable fringe benefits amounts, and building the FBT return workpaper. FBT year runs 1 April to 31 March."
 ---
 
 # FBT Annual Workflow
