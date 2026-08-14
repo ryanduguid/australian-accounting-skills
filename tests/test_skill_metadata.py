@@ -59,6 +59,23 @@ def front_matter(skill_file: Path) -> dict[str, str]:
 
 
 class SkillMetadataTests(unittest.TestCase):
+    def test_bas_skill_keeps_current_w1_and_g10_g11_decision_branches(self) -> None:
+        """Regulated label rules must not regress into unconditional shortcuts."""
+        content = (
+            SKILLS_DIRECTORY / "bas-preparation" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn(
+            "whether the employer reports through Single Touch Payroll (STP)",
+            content,
+        )
+        self.assertIn("an STP reporter no longer needs to report an amount at W1", content)
+        self.assertIn("Where W1 is present and required", content)
+        self.assertIn("Classify by the nature of the purchase first", content)
+        self.assertIn("does not record capital and non-capital purchases separately", content)
+        self.assertIn("expects GST turnover below $1 million", content)
+        self.assertIn("capital items costing $1,000 or less may be recorded at G11", content)
+
     def test_front_matter_rejects_ambiguous_or_unknown_yaml(self) -> None:
         cases = {
             "duplicate": (
