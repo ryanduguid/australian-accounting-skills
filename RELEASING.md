@@ -16,7 +16,7 @@ Before tagging:
 4. Confirm `VERSION` and the `RELEASE_NOTES.md` heading match the intended tag.
 5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.1 -m "v0.1.1"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns both skill validators and builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and an SBOM attestation before publishing the completed draft. An existing release is never overwritten.
+The workflow reruns both skill validators and builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and an SBOM attestation before publishing the completed draft. An existing release is never overwritten.
 
 Verify the downloaded release with:
 
