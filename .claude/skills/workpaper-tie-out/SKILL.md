@@ -1,6 +1,6 @@
 ---
 name: workpaper-tie-out
-description: Use when verifying a set of financial statements or a workpaper pack against source documents: tracing every statement line to a workpaper reference and a source export, recalculating schedules, and producing an exceptions list.
+description: "Use when verifying a set of financial statements or a workpaper pack against source documents: tracing every statement line to a workpaper reference and a source export, recalculating schedules, and producing an exceptions list."
 ---
 
 # Workpaper Tie-Out

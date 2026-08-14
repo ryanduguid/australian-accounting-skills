@@ -8,7 +8,6 @@
     {
       "name": "australian-accounting-skills",
       "description": "Workflow skills for Australian public-practice accounting: BAS preparation, month-end close, workpaper tie-out, FBT year-end, Division 7A, STP finalisation, year-end workpapers, Xero exports and 13-week cashflow. Each skill encodes the process and the tie-outs, and sends the agent to ato.gov.au for rates and thresholds that change yearly.",
-      "version": "0.1.0",
       "author": {
         "name": "Ryan Duguid"
       },

@@ -15,6 +15,7 @@ exports/
 *.xltm
 *.csv
 *.txt
+!requirements-test.txt
 *.pdf
 *.aba
 *.ofx
