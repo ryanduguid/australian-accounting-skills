@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import build_release_archives as release_archives  # noqa: E402
+import write_release_checksums as release_checksums  # noqa: E402
 
 
 def _sha256(path: Path) -> str:
@@ -138,7 +139,8 @@ class ReleaseArchiveTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        self.assertIn("Unexpected release asset inventory.", workflow)
+        self.assertIn("python tools/write_release_checksums.py", workflow)
+        self.assertIn("sha256sum --check SHA256SUMS", workflow)
         self.assertIn("/tmp/expected-digests", workflow)
         self.assertIn(".immutable == true", workflow)
         self.assertIn(".isLatest == true", workflow)
@@ -183,6 +185,151 @@ class ReleaseArchiveTests(unittest.TestCase):
                         output_base=output,
                         cwd=ROOT,
                     )
+
+
+class ReleaseChecksumTests(unittest.TestCase):
+    ASSETS = (
+        "example.spdx.json",
+        "example.tar.gz",
+        "example.zip",
+    )
+
+    def _write_assets(self, directory: Path) -> None:
+        for index, name in enumerate(self.ASSETS, start=1):
+            (directory / name).write_bytes(f"asset-{index}\n".encode("ascii"))
+
+    def test_checksum_creation_executes_pre_then_post_inventory(self) -> None:
+        with TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            self._write_assets(directory)
+            inventories: list[tuple[str, ...]] = []
+            real_inventory = release_checksums._inventory
+
+            def record_inventory(path: Path) -> tuple[str, ...]:
+                inventory = real_inventory(path)
+                inventories.append(inventory)
+                return inventory
+
+            with mock.patch.object(
+                release_checksums,
+                "_inventory",
+                side_effect=record_inventory,
+            ):
+                manifest = release_checksums.write_release_checksums(
+                    directory,
+                    self.ASSETS,
+                )
+
+            self.assertEqual(
+                [
+                    tuple(sorted(self.ASSETS)),
+                    tuple(sorted((*self.ASSETS, "SHA256SUMS"))),
+                ],
+                inventories,
+            )
+            self.assertEqual(directory / "SHA256SUMS", manifest)
+            release_checksums.verify_release_checksums(directory, self.ASSETS)
+
+    def test_workflow_cli_creates_then_verifies_manifest(self) -> None:
+        with TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            self._write_assets(directory)
+            command = [
+                sys.executable,
+                str(ROOT / "tools" / "write_release_checksums.py"),
+                "--directory",
+                str(directory),
+            ]
+            for asset in self.ASSETS:
+                command.extend(("--asset", asset))
+
+            result = release_archives.subprocess.run(
+                command,
+                capture_output=True,
+                check=False,
+                text=True,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn("created and verified", result.stdout)
+            release_checksums.verify_release_checksums(directory, self.ASSETS)
+
+    def test_bad_pre_inventory_does_not_create_manifest(self) -> None:
+        for mode in ("missing", "extra"):
+            with self.subTest(mode=mode), TemporaryDirectory() as temporary:
+                directory = Path(temporary)
+                self._write_assets(directory)
+                if mode == "missing":
+                    (directory / self.ASSETS[0]).unlink()
+                else:
+                    (directory / "unexpected.txt").write_text(
+                        "unexpected\n",
+                        encoding="ascii",
+                    )
+
+                with self.assertRaisesRegex(
+                    release_checksums.ReleaseAssetError,
+                    "Unexpected pre-checksum release asset inventory",
+                ):
+                    release_checksums.write_release_checksums(
+                        directory,
+                        self.ASSETS,
+                    )
+
+                self.assertFalse((directory / "SHA256SUMS").exists())
+
+    def test_existing_manifest_is_never_overwritten(self) -> None:
+        with TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            self._write_assets(directory)
+            manifest = directory / "SHA256SUMS"
+            manifest.write_text("sentinel\n", encoding="ascii")
+
+            with self.assertRaisesRegex(
+                release_checksums.ReleaseAssetError,
+                "Unexpected pre-checksum release asset inventory",
+            ):
+                release_checksums.write_release_checksums(directory, self.ASSETS)
+
+            self.assertEqual("sentinel\n", manifest.read_text(encoding="ascii"))
+
+    def test_manifest_or_asset_tampering_fails_verification(self) -> None:
+        for mode in ("manifest-line-endings", "asset-content"):
+            with self.subTest(mode=mode), TemporaryDirectory() as temporary:
+                directory = Path(temporary)
+                self._write_assets(directory)
+                manifest = release_checksums.write_release_checksums(
+                    directory,
+                    self.ASSETS,
+                )
+                if mode == "manifest-line-endings":
+                    manifest.write_bytes(
+                        manifest.read_bytes().replace(b"\n", b"\r\n")
+                    )
+                else:
+                    (directory / self.ASSETS[0]).write_bytes(b"tampered\n")
+
+                with self.assertRaisesRegex(
+                    release_checksums.ReleaseAssetError,
+                    "SHA256SUMS does not match the release assets",
+                ):
+                    release_checksums.verify_release_checksums(
+                        directory,
+                        self.ASSETS,
+                    )
+
+    def test_asset_names_are_unique_safe_basenames(self) -> None:
+        for assets in (
+            ("duplicate.zip", "duplicate.zip"),
+            ("../escape.zip",),
+            ("nested/escape.zip",),
+            ("nested\\escape.zip",),
+            ("SHA256SUMS",),
+        ):
+            with self.subTest(assets=assets), self.assertRaises(
+                release_checksums.ReleaseAssetError,
+            ):
+                release_checksums.write_release_checksums(Path("unused"), assets)
 
 
 if __name__ == "__main__":

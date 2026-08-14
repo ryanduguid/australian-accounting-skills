@@ -108,25 +108,11 @@ jobs:
         run: |
           set -euo pipefail
           version="${{ steps.release.outputs.version }}"
-          expected="$(printf '%s\n' \
-            "SHA256SUMS" \
-            "australian-accounting-skills-$version.spdx.json" \
-            "australian-accounting-skills-$version.tar.gz" \
-            "australian-accounting-skills-$version.zip")"
-          actual="$(find dist -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort)"
-          if [[ "$actual" != "$expected" ]]; then
-            echo "Unexpected release asset inventory." >&2
-            printf 'Expected:\n%s\nActual:\n%s\n' "$expected" "$actual" >&2
-            exit 1
-          fi
-          (
-            cd dist
-            LC_ALL=C sha256sum \
-              "australian-accounting-skills-$version.zip" \
-              "australian-accounting-skills-$version.tar.gz" \
-              "australian-accounting-skills-$version.spdx.json" \
-              > SHA256SUMS
-          )
+          python tools/write_release_checksums.py \
+            --directory dist \
+            --asset "australian-accounting-skills-$version.zip" \
+            --asset "australian-accounting-skills-$version.tar.gz" \
+            --asset "australian-accounting-skills-$version.spdx.json"
           (cd dist && sha256sum --check SHA256SUMS)
 
       - name: Preserve the exact candidate assets before publication
