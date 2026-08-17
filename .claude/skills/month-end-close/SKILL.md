@@ -5,7 +5,7 @@ description: Use when running or reviewing a month-end close (bank reconciliatio
 
 # Month-End Close
 
-Drive a close to done with a checklist, reconcile every control account, and end with a variance review a reviewer can sign. One artifact comes out: the close pack.
+Drive a close to done with a checklist, reconcile every control account, and end with a variance review a reviewer can sign. One artefact comes out: the close pack.
 
 ## Inputs needed
 
@@ -27,7 +27,7 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
    - AR control = aged receivables total
    - AP control = aged payables total
    - GST account(s) = expected net based on the period's activity
-   - Payroll: wages clearing nils out; PAYG withholding payable and superannuation payable agree to payroll reports; super payable clears within the payday-super window (the fund must RECEIVE the contribution by the end of the 7th business day after each payday, from 1 July 2026; quarterly cycle for earlier periods; verify the current window at ato.gov.au). The test is fund receipt, not the day the payment left the employer or the clearing house, so a remittance date alone does not clear the balance. A super balance aging beyond the last pay run is itself an exception
+   - Payroll: wages clearing nils out; PAYG withholding payable and superannuation payable agree to payroll reports; super payable clears within the payday-super window (the fund must RECEIVE the contribution by the end of the 7th business day after each payday, from 1 July 2026; quarterly cycle for earlier periods; verify the current window at ato.gov.au). The test is fund receipt, not the day the payment left the employer or the clearing house, so a remittance date alone does not clear the balance. A super balance ageing beyond the last pay run is itself an exception
 3. **Schedules roll.** Accruals and prepayments: roll last month's schedule, release what expired, add what's new, agree closing balances to the TB. Same for any loan or intercompany schedules. Intercompany balances must mirror each other across entities.
 4. **Fixed assets.** Additions/disposals posted to the register, depreciation journal posted, register closing WDV agrees to TB.
 5. **Variance review.** P&L vs prior month and vs budget. Flag lines moving beyond the agreed materiality; one-line explanation per flag. Unexplained flags stay open. They don't disappear.
