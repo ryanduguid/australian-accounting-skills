@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import tempfile
 import unittest
@@ -14,26 +15,18 @@ REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
 
+STRICT_YAML = REPOSITORY / "scripts" / "strict_yaml.py"
+STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", STRICT_YAML)
+if STRICT_YAML_SPEC is None or STRICT_YAML_SPEC.loader is None:  # pragma: no cover - import machinery guard
+    raise RuntimeError(f"cannot load {STRICT_YAML}")
+strict_yaml = importlib.util.module_from_spec(STRICT_YAML_SPEC)
+STRICT_YAML_SPEC.loader.exec_module(strict_yaml)
 
-class UniqueKeySafeLoader(yaml.SafeLoader):
-    """Safe YAML loader that rejects duplicate mapping keys."""
-
-    def construct_mapping(
-        self,
-        node: yaml.nodes.MappingNode,
-        deep: bool = False,
-    ) -> dict[object, object]:
-        mapping: dict[object, object] = {}
-        for key_node, value_node in node.value:
-            key = self.construct_object(key_node, deep=deep)
-            try:
-                duplicate = key in mapping
-            except TypeError as error:
-                raise ValueError("front-matter keys must be scalar") from error
-            if duplicate:
-                raise ValueError(f"duplicate front-matter field: {key!r}")
-            mapping[key] = self.construct_object(value_node, deep=deep)
-        return mapping
+UniqueKeySafeLoader = strict_yaml.unique_key_safe_loader(
+    ValueError,
+    field_noun="front-matter field",
+    keys_noun="front-matter keys",
+)
 
 
 def front_matter(skill_file: Path) -> dict[str, str]:
@@ -122,6 +115,10 @@ class SkillMetadataTests(unittest.TestCase):
             "unquoted colon": (
                 "---\nname: valid\ndescription: invalid: plain scalar\n---\n",
                 "front matter must be valid YAML",
+            ),
+            "alias": (
+                "---\nname: &shared valid\ndescription: *shared\n---\n",
+                "YAML aliases are not permitted",
             ),
         }
         with tempfile.TemporaryDirectory() as temporary:
