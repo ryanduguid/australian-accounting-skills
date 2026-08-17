@@ -81,12 +81,12 @@ Also included:
 
 1. **Workflow over content.** The skill knows the steps and the checks; the ATO website is the source of truth for this year's rates and labels.
 2. **Tie-out or it didn't happen.** Every skill ends by reconciling its output back to source. That habit separates a workpaper from a guess.
-3. **No client data in the repository.** Examples are fabricated from scratch. The `.gitignore` blocks common client-artifact patterns; keep real exports out of every repository and use them only where the engagement, firm policy and approved environment permit.
+3. **No client data in the repository.** Examples are fabricated from scratch. The `.gitignore` blocks common client-artefact patterns; keep real exports out of every repository and use them only where the engagement, firm policy and approved environment permit.
 4. **Degrade gracefully.** Skills work from CSV exports on disk. Ledger integrations (MCP) are a bonus, never a requirement.
 
 ## Disclaimer
 
-These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgment or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything. Lodgment is a registered agent's job.
+These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgement or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything. Lodgment is a registered agent's job.
 
 If these skills are run with client inputs through a cloud AI service, that data passes to the service. Check your firm's policy and your confidentiality and privacy obligations first; de-identify by default. [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) has starter privacy rules.
 
@@ -94,6 +94,6 @@ If these skills are run with client inputs through a cloud AI service, that data
 
 Ryan Duguid, accountant in Newcastle NSW, CA ANZ Provisional Member.
 
-## License
+## Licence
 
 MIT. See [LICENSE](LICENSE).

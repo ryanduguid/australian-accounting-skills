@@ -21,7 +21,7 @@ mismatched settings or timing.
 |---|---|---|
 | Trial Balance | Every workpaper starts here | Check cash vs accrual toggle matches the engagement basis; export as at the exact cut-off date |
 | Account Transactions | GL detail per account | Large date ranges paginate/truncate in some formats; verify row counts; includes system journals |
-| Aged Receivables / Payables | Control account support | Run **as at** the period end, not "current"; aging buckets are settings-dependent |
+| Aged Receivables / Payables | Control account support | Run **as at** the period end, not "current"; ageing buckets are settings-dependent |
 | GST Audit Report / Activity Statement | BAS support | Basis follows the GST settings, not the TB toggle; confirm both |
 | Payroll Activity Summary | Payroll recs | Financial-year runs; per-employee detail needs the detailed variant |
 | Fixed Asset Reconciliation | FA workpapers | Draft vs registered assets differ; registered only |
