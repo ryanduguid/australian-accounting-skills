@@ -5,7 +5,7 @@ description: "Use when preparing FBT year-end work for an Australian employer: i
 
 # FBT Annual Workflow
 
-Work the FBT year (1 April – 31 March) from benefit identification through to a return-ready workpaper and RFBA figures for payroll.
+Work the FBT year (1 April to 31 March) from benefit identification through to a return-ready workpaper and RFBA figures for payroll.
 
 ## Inputs needed
 
