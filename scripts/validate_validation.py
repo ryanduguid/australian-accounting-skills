@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import html
+import importlib.util
 import os
 import re
 import stat
@@ -37,6 +38,7 @@ EXPECTED_VALIDATION = {
 EXPECTED_SUPPORT = {
     "CLAUDE.md",
     ".claude/rules/accounting-safety.md",
+    "scripts/strict_yaml.py",
     "scripts/validate_validation.py",
     "tests/test_validation_pack.py",
 }
@@ -100,30 +102,18 @@ class ValidationError(ValueError):
     """Expected validation failure with a user-actionable message."""
 
 
-class UniqueKeySafeLoader(yaml.SafeLoader):
-    """Safe YAML loader that rejects aliases and duplicate mapping keys."""
+_STRICT_YAML = ROOT / "scripts" / "strict_yaml.py"
+_STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", _STRICT_YAML)
+if _STRICT_YAML_SPEC is None or _STRICT_YAML_SPEC.loader is None:  # pragma: no cover - import machinery guard
+    raise RuntimeError(f"cannot load {_STRICT_YAML}")
+strict_yaml = importlib.util.module_from_spec(_STRICT_YAML_SPEC)
+_STRICT_YAML_SPEC.loader.exec_module(strict_yaml)
 
-    def compose_node(self, parent: object, index: object) -> yaml.nodes.Node:
-        if self.check_event(yaml.events.AliasEvent):
-            raise ValidationError("YAML aliases are not permitted")
-        return super().compose_node(parent, index)
-
-    def construct_mapping(
-        self,
-        node: yaml.nodes.MappingNode,
-        deep: bool = False,
-    ) -> dict[object, object]:
-        mapping: dict[object, object] = {}
-        for key_node, value_node in node.value:
-            key = self.construct_object(key_node, deep=deep)
-            try:
-                duplicate = key in mapping
-            except TypeError as error:
-                raise ValidationError("YAML mapping keys must be scalar") from error
-            if duplicate:
-                raise ValidationError(f"duplicate YAML field: {key!r}")
-            mapping[key] = self.construct_object(value_node, deep=deep)
-        return mapping
+UniqueKeySafeLoader = strict_yaml.unique_key_safe_loader(
+    ValidationError,
+    field_noun="YAML field",
+    keys_noun="YAML mapping keys",
+)
 
 
 def relative(path: Path, root: Path = ROOT) -> str:
