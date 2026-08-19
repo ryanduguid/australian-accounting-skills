@@ -4,7 +4,7 @@
 
 Claude Code skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
 
-Workflow skills for Australian public-practice accounting, written independently, from scratch, in my own time and on my own equipment. Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
+Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
 ## Who this is for
 
@@ -56,6 +56,17 @@ Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/
 ```
 
 Or copy individual skill folders into `<project>/.claude/skills/`. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best. For a firm repository, adapt [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) to its actual policy; this repository's [`CLAUDE.md`](CLAUDE.md) is contributor guidance, not a substitute for firm controls.
+
+### Versioning
+
+The nine skills are released and tested as a set at each tagged release.
+Installing a subset by hand can break skills that call their siblings:
+
+- `bas-preparation`, `month-end-close` and `year-end-workpapers` depend on `xero-exports`
+- `fbt-annual-workflow` and `stp-finalisation` depend on each other (RFBA hand-off)
+- `year-end-workpapers` depends on `bas-preparation`, `stp-finalisation` and `workpaper-tie-out`
+
+Install the full pack at a tagged release to keep the set consistent.
 
 ## First run
 
@@ -115,4 +126,4 @@ Ryan Duguid, accountant in Newcastle NSW, CA ANZ Provisional Member.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). Provenance statement: [NOTICE](NOTICE).
