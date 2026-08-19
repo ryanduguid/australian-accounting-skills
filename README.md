@@ -8,7 +8,7 @@ Workflow skills for Australian public-practice accounting, written independently
 
 ## Who this is for
 
-Accountants in Australian public practice (and finance staff in AU SMEs) using [Claude Code](https://claude.com/claude-code) or any agent that reads `SKILL.md` files. Assumes Xero as the primary ledger; most skills work from standard CSV exports and degrade gracefully with no integrations at all.
+Accountants in Australian public practice (and finance staff in AU SMEs) using [Claude Code](https://claude.com/claude-code). Claude Code is the agent these skills are tested with. Other agents that read `SKILL.md` files should work, but I have not tested them. Assumes Xero as the primary ledger; most skills work from standard CSV exports and degrade gracefully with no integrations at all.
 
 ## Install
 
@@ -56,6 +56,25 @@ Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/
 ```
 
 Or copy individual skill folders into `<project>/.claude/skills/`. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best. For a firm repository, adapt [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) to its actual policy; this repository's [`CLAUDE.md`](CLAUDE.md) is contributor guidance, not a substitute for firm controls.
+
+## First run
+
+Minimal path from install to one verified result, assuming Claude Code is already installed:
+
+1. Install the plugin (see above): `/plugin marketplace add ryanduguid/australian-accounting-skills` then `/plugin install australian-accounting-skills@ryanduguid`.
+2. Export three reports from Xero for your most recent completed BAS period: the GST Audit Report, the trial balance as at period end, and the GL detail for the GST control account(s). Use a demo or fabricated file if you are only trialling; keep real client exports inside firm policy.
+3. In Claude Code, in the folder holding those exports, ask: "Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger." The `bas-preparation` skill picks this up and asks for anything missing.
+4. Verify the result yourself: check that net GST on the workpaper (1A less 1B) ties to the movement in the GST control account for the period. If the workpaper shows that tie-out and lists its exceptions, it worked.
+
+Uninstall with `/plugin uninstall australian-accounting-skills@ryanduguid` (or delete the copied folders from `~/.claude/skills/` if you installed by hand).
+
+## Worked example: bas-preparation
+
+**Input.** A quarterly BAS for a small company on the cash basis. You supply the GST Audit Report, the trial balance, GL detail for the GST control accounts, prior period BAS figures, and the payroll activity summary.
+
+**What the skill checks.** It confirms the report basis matches the entity's ATO registration basis first, and stops and flags a mismatch rather than continuing. It maps ledger figures only to the labels actually present on the entity's statement (it will not invent a W1 just because payroll data exists; STP reporters may not need one). It ties net GST (1A less 1B) to the movement in the GST control account to the cent, using the cash-basis bridge where the ledger is on accruals. It scans for coding exceptions such as GST claimed on bank fees, stamp duty or wages, and compares each label to the prior period and same period last year, asking you for the firm's variance threshold rather than inventing one.
+
+**Output and escalation.** A review-ready workpaper: summary page with labels, amounts and tie-out proof, an exceptions list with resolutions, preparer and date, and space for reviewer sign-off. It does not lodge and does not draft ATO correspondence; that stays with the registered agent. If it cannot verify a current rate or label at ato.gov.au, it stops, asks you for the figure, records it as "per [name], [date], unverified", and flags it on the workpaper.
 
 ## Skills
 
