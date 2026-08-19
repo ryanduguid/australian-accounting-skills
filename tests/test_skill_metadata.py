@@ -87,7 +87,11 @@ class SkillMetadataTests(unittest.TestCase):
             "whether the employer reports through Single Touch Payroll (STP)",
             content,
         )
-        self.assertIn("an STP reporter no longer needs to report an amount at W1", content)
+        self.assertIn(
+            "a large withholder reporting through STP no longer needs to report an amount at W1",
+            content,
+        )
+        self.assertIn("not a rule for every STP reporter", content)
         self.assertIn("Where W1 is present and required", content)
         self.assertIn("Classify by the nature of the purchase first", content)
         self.assertIn("does not record capital and non-capital purchases separately", content)
