@@ -37,6 +37,8 @@ For paydays from 1 July 2026, the ordinary seven-business-day period requires th
 
 These cases are fact-dependent. A planned or remitted payment is not fund receipt. Missing facts produce an `UNKNOWN` review state and require human review; do not make an SGC determination. Enterprise agreements, awards or fund terms may require earlier payment.
 
+At use time, before applying this control, reverify the current Payday Super timing at the [ATO Payday Super source](https://softwaredevelopers.ato.gov.au/PaydaySuper). In the finalisation workpaper, record the direct URL, access/check date, relevant payday or period and precise timing fact relied on; if the source is unavailable, mark it unverified and keep the outcome `UNKNOWN` for human review.
+
 Primary sources (checked 20 August 2026):
 
 - [ATO Payday Super](https://softwaredevelopers.ato.gov.au/PaydaySuper)

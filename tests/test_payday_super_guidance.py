@@ -15,6 +15,11 @@ SKILL_FILES = {
         REPOSITORY / ".claude" / "skills" / "cashflow-forecast-13week" / "SKILL.md"
     ),
 }
+USE_TIME_RECORDS = {
+    "stp-finalisation": "finalisation workpaper",
+    "month-end-close": "close pack",
+    "cashflow-forecast-13week": "forecast source log",
+}
 
 ATO_PAYDAY_SUPER = "https://softwaredevelopers.ato.gov.au/PaydaySuper"
 PAYDAY_SUPER_ACT = "https://www.legislation.gov.au/C2025A00057/asmade/text"
@@ -81,6 +86,21 @@ class PaydaySuperGuidanceTests(unittest.TestCase):
                 self.assertIn(PAYDAY_SUPER_ACT, content)
                 self.assertIn(SGA_REGULATIONS, content)
                 self.assertIn("20 August 2026", content)
+
+    def test_each_skill_requires_use_time_source_reverification(self) -> None:
+        """A static maintenance date must not replace the at-use source check."""
+        for skill, path in SKILL_FILES.items():
+            content = compact(path.read_text(encoding="utf-8"))
+            with self.subTest(skill=skill):
+                self.assertRegex(
+                    content,
+                    r"at use time.{0,120}before applying this control.{0,120}reverify.{0,160}current payday super timing.{0,160}ato payday super source",
+                )
+                self.assertRegex(
+                    content,
+                    r"record.{0,120}direct url.{0,80}access/check date.{0,80}relevant payday or period.{0,120}precise timing fact relied on",
+                )
+                self.assertIn(USE_TIME_RECORDS[skill], content)
 
 
 if __name__ == "__main__":
