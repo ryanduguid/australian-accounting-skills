@@ -49,6 +49,7 @@ At use time, before applying this control, reverify the current Payday Super tim
 Primary sources (checked 20 August 2026):
 
 - [ATO Payday Super](https://softwaredevelopers.ato.gov.au/PaydaySuper)
+- [ATO Payday Super for employers](https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday)
 - [Treasury Laws Amendment (Payday Superannuation) Act 2025, Schedule 1 / SGAA s 18C](https://www.legislation.gov.au/C2025A00057/asmade/text)
 - [Superannuation Guarantee (Administration) Regulations 2018, current 1 July 2026 compilation](https://www.legislation.gov.au/F2018L01289/latest/text)
 

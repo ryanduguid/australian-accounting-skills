@@ -107,6 +107,13 @@ Also included:
 - [`CLAUDE.md`](CLAUDE.md) and [`.claude/rules/accounting-safety.md`](.claude/rules/accounting-safety.md): maintained contributor and accounting-safety boundaries.
 - [`validation/README.md`](validation/README.md) and [`scripts/validate_validation.py`](scripts/validate_validation.py): a fabricated regression pack and fail-closed static validator.
 
+## Sibling command-line tools
+
+These skills name two maintained CLIs rather than asking the agent to invent the same work:
+
+- [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
+- [`export-tb`](https://github.com/ryanduguid/xero-trial-balance-export) (`xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
+
 ## Design principles
 
 1. **Workflow over content.** The skill knows the steps and the checks; the ATO website is the source of truth for this year's rates and labels.
