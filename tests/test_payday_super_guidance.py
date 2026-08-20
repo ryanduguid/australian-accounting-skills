@@ -32,6 +32,44 @@ def compact(text: str) -> str:
 
 
 class PaydaySuperGuidanceTests(unittest.TestCase):
+    def assert_use_time_evidence_contract(self, skill: str, content: str) -> None:
+        """Require one complete, bound at-use instruction for a maintained skill."""
+        paragraphs = [
+            paragraph.strip()
+            for paragraph in re.split(r"\r?\n[ \t]*\r?\n", content)
+            if paragraph.strip()
+        ]
+        at_use_paragraphs = [
+            paragraph for paragraph in paragraphs if paragraph.startswith("At use time,")
+        ]
+        self.assertEqual(
+            len(at_use_paragraphs),
+            1,
+            "each skill must contain exactly one At use time paragraph",
+        )
+        paragraph = at_use_paragraphs[0]
+        artefact = USE_TIME_RECORDS[skill]
+
+        self.assertIn("before applying this control", paragraph)
+        self.assertIn("reverify the current Payday Super timing", paragraph)
+        self.assertIn(
+            f"[ATO Payday Super source]({ATO_PAYDAY_SUPER})",
+            paragraph,
+            "the at-use paragraph must contain the exact ATO Payday Super URL",
+        )
+        self.assertIn(
+            f"In the {artefact}, record",
+            paragraph,
+            f"the at-use paragraph must bind the recording action to the {artefact}",
+        )
+        self.assertIn("direct URL", paragraph)
+        self.assertIn("access/check date", paragraph)
+        self.assertIn("relevant payday or period", paragraph)
+        self.assertIn("precise timing fact relied on", paragraph)
+        self.assertIn("if the source is unavailable", paragraph)
+        self.assertIn("mark it unverified", paragraph)
+        self.assertIn("`UNKNOWN`", paragraph)
+
     def test_each_skill_checks_allowable_period_before_a_late_classification(self) -> None:
         """A universal seven-day shortcut must not drive a late or SGC outcome."""
         for skill, path in SKILL_FILES.items():
@@ -90,17 +128,39 @@ class PaydaySuperGuidanceTests(unittest.TestCase):
     def test_each_skill_requires_use_time_source_reverification(self) -> None:
         """A static maintenance date must not replace the at-use source check."""
         for skill, path in SKILL_FILES.items():
-            content = compact(path.read_text(encoding="utf-8"))
             with self.subTest(skill=skill):
-                self.assertRegex(
-                    content,
-                    r"at use time.{0,120}before applying this control.{0,120}reverify.{0,160}current payday super timing.{0,160}ato payday super source",
+                self.assert_use_time_evidence_contract(
+                    skill,
+                    path.read_text(encoding="utf-8"),
                 )
-                self.assertRegex(
-                    content,
-                    r"record.{0,120}direct url.{0,80}access/check date.{0,80}relevant payday or period.{0,120}precise timing fact relied on",
-                )
-                self.assertIn(USE_TIME_RECORDS[skill], content)
+
+    def test_use_time_contract_rejects_a_misdirected_source_link(self) -> None:
+        """The static source list must not mask a wrong operative hyperlink."""
+        skill = "month-end-close"
+        content = SKILL_FILES[skill].read_text(encoding="utf-8")
+        mutated = content.replace(
+            f"[ATO Payday Super source]({ATO_PAYDAY_SUPER})",
+            "[ATO Payday Super source](https://example.invalid/)",
+            1,
+        )
+        self.assertNotEqual(mutated, content)
+
+        with self.assertRaisesRegex(AssertionError, "exact ATO Payday Super URL"):
+            self.assert_use_time_evidence_contract(skill, mutated)
+
+    def test_use_time_contract_rejects_an_unbound_record_instruction(self) -> None:
+        """Other artefact references must not mask a detached record action."""
+        skill = "month-end-close"
+        artefact = USE_TIME_RECORDS[skill]
+        content = SKILL_FILES[skill].read_text(encoding="utf-8")
+        mutated = content.replace(f"In the {artefact}, record", "Record", 1)
+        self.assertNotEqual(mutated, content)
+
+        with self.assertRaisesRegex(
+            AssertionError,
+            f"bind the recording action to the {artefact}",
+        ):
+            self.assert_use_time_evidence_contract(skill, mutated)
 
 
 if __name__ == "__main__":
