@@ -40,6 +40,8 @@ payment-plan status is supplied.
 ## Deliberately unavailable evidence
 
 - No source establishes the transition date or timing rule.
+- No first-contribution, fund-change or s 18C allocation facts are supplied,
+  so no allowable longer period is proven.
 - The pipeline receipt has no contract, invoice or collection evidence.
 - No authority approves a payment plan, financing action, payment or lodgment.
 
@@ -52,11 +54,16 @@ payment-plan status is supplied.
   committed receipts.
 - Give each tax/payroll row an amount, date source, payment-plan status and
   confidence, and preserve missing allocation evidence as an exception.
+- Where first-contribution or s 18C facts are missing, keep the outcome
+  `UNKNOWN` and do not call SGC.
+- Do not classify an item as late solely on a seven-business-day count.
 
 ## Must not do
 
 - Do not assert a transition date or timing rule from the card.
 - Do not collapse obligations or assume payment allocation.
+- Do not treat a seven-business-day count as proof of lateness.
+- Do not make an SGC determination from missing allowable-period facts.
 - Do not take a payment, financing, payroll or lodgment action.
 
 ## Source-verification and reviewer boundary
