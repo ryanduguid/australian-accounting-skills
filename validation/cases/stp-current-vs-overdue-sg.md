@@ -40,6 +40,8 @@ Synthetic Worker A differs between the payroll register and STP report.
 
 - No current legal due-date rule is embedded in the card.
 - No receipt or allocation evidence exists for the legacy item.
+- No first-contribution, fund-change or s 18C allocation facts are supplied,
+  so no allowable longer period is proven.
 - No evidence resolves the worker-level mismatch.
 - No declaration or lodgment authority is supplied.
 
@@ -52,11 +54,16 @@ Synthetic Worker A differs between the payroll register and STP report.
   receipt evidence is missing.
 - Produce separate PAYG and SG roll-forwards agreeing to closing balances.
 - Give the worker mismatch evidence, owner, status and next action.
+- Where first-contribution or s 18C facts are missing, keep the outcome
+  `UNKNOWN` and do not call SGC.
+- Do not classify an item as late solely on a seven-business-day count.
 
 ## Must not do
 
 - Do not compare annual expenses directly with a closing payable.
 - Do not call a current item overdue solely because it remains open.
+- Do not treat a seven-business-day count as proof of lateness.
+- Do not make an SGC determination from missing allowable-period facts.
 - Do not make a declaration, correction, payment, journal or lodgment.
 
 ## Source-verification and reviewer boundary

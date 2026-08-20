@@ -162,6 +162,23 @@ class PaydaySuperGuidanceTests(unittest.TestCase):
         ):
             self.assert_use_time_evidence_contract(skill, mutated)
 
+    def test_sg_validation_cards_require_unknown_when_period_facts_are_missing(self) -> None:
+        """A seven-business-day count must not become a late or SGC call."""
+        cards = (
+            REPOSITORY / "validation" / "cases" / "stp-current-vs-overdue-sg.md",
+            REPOSITORY / "validation" / "cases" / "cashflow-super-regime-transition.md",
+        )
+        for path in cards:
+            content = compact(path.read_text(encoding="utf-8"))
+            with self.subTest(card=path.name):
+                self.assertIn("allowable longer period", content)
+                self.assertIn("s 18c", content)
+                self.assertIn("`unknown`", content)
+                self.assertRegex(
+                    content,
+                    r"do not classify.{0,80}late.{0,80}seven-business-day",
+                )
+
 
 if __name__ == "__main__":
     unittest.main()
