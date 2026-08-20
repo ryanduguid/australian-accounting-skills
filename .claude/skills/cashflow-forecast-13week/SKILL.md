@@ -12,7 +12,7 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 1. Confirmed opening bank balance (all accounts, net of unpresented items)
 2. Aged receivables and aged payables as at the start date
 3. Payroll calendar: pay frequency, typical net run, PAYG withholding and super amounts
-4. ATO obligation schedule: BAS/IAS cycle and amounts, super timing under the current regime (payday super from 1 July 2026: the fund must receive the contribution by the end of the 7th business day after each payday, and clearing-house transit sits inside that window, not outside it, so verify at ato.gov.au), any payment plans
+4. ATO obligation schedule: BAS/IAS cycle and amounts, super timing under the current regime, actual fund receipt/allocation evidence and any payment plans. Quarterly due dates apply to periods before 1 July 2026; the timing control below applies to later paydays
 5. Recurring commitments from the GL: rent, loan repayments, insurances, subscriptions
 6. Known one-offs: capex, tax assessments, dividends/drawings
 7. Receipts and invoice history for the last 3 to 6 months, the source of actual days-to-pay by major customer
@@ -22,10 +22,27 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 
 1. **Frame the grid.** Weeks 1 to 13 as columns; receipts, payments (by category), net movement and closing balance as rows. Week 1 starts from confirmed available cash, never the ledger balance. For every week, closing cash = opening cash + receipts − payments, and the next week's opening cash must equal the prior closing cash. Show overdrafts, restricted cash and unavailable balances separately.
 2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate "committed" (invoiced) from "expected" (pipeline), and shade confidence. With no pipeline input, the expected row stays empty and flagged as such, never estimated.
-3. **Payments.** Creditors by due date honouring critical suppliers first; payroll on its calendar with PAYG remitted on its cycle; super with each pay cycle per payday-super timing (quarterly due dates apply only to pre-1-July-2026 periods); loan and rent on contract dates.
+3. **Payments.** Creditors by due date honouring critical suppliers first; payroll on its calendar with PAYG remitted on its cycle; super with each pay cycle per the supported payday-super timing control below; loan and rent on contract dates.
 4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgment cycle at ato.gov.au, since agent lodgment often shifts them). If ato.gov.au is unreachable from this session, stop and ask the user for the current dates, record them as "per [name], [date], unverified", and flag them on the forecast. Never construct a citation from memory. GST collected is not the entity's money, and the forecast makes that visible by pairing strong sales weeks with their BAS week.
 5. **Stress the trough.** Identify the minimum closing balance week. Test it: receipts one week late, largest debtor pays late, no pipeline receipts. If the stressed trough goes negative, list the levers (invoice earlier, terms, financing, deferral requests) as options for the owner, not decisions.
 6. **Weekly cadence.** Each week: replace forecast with actuals, note variance per line, push the horizon one week out, and record *why* the misses missed. The assumptions log is what makes week 10's forecast better than week 1's.
+
+## Payday Super timing control
+
+For paydays from 1 July 2026, the ordinary seven-business-day period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday. Check which allowable longer period applies before treating a contribution as late or flagging SGC exposure, and before forecasting a legally mandatory payment date:
+
+- 20 business days for the first eligible contribution to a particular fund, including a new starter, recommencement or fund change, where the statutory conditions apply
+- qualifying out-of-cycle payments that can use a subsequent standard qualifying-earnings payment's window, only when the determination's conditions are proven
+- an exceptional-circumstances determination; or
+- alignment with an earlier contribution's later due day where s 18C's conditions and actual allocation are evidenced
+
+These cases are fact-dependent. A planned or remitted payment is not fund receipt. Missing facts produce an `UNKNOWN` review state and require human review; do not forecast a legally mandatory date. Enterprise agreements, awards or fund terms may require earlier payment.
+
+Primary sources (checked 20 August 2026):
+
+- [ATO Payday Super](https://softwaredevelopers.ato.gov.au/PaydaySuper)
+- [Treasury Laws Amendment (Payday Superannuation) Act 2025, Schedule 1 / SGAA s 18C](https://www.legislation.gov.au/C2025A00057/asmade/text)
+- [Superannuation Guarantee (Administration) Regulations 2018, current 1 July 2026 compilation](https://www.legislation.gov.au/F2018L01289/latest/text)
 
 ## Output
 
