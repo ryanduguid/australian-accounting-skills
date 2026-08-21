@@ -9,7 +9,7 @@ Before tagging:
 3. From an operator session authenticated with repository Administration read access, run:
 
     ```bash
-    gh api -H "X-GitHub-Api-Version: 2026-03-10" repos/ryanduguid/australian-accounting-skills/immutable-releases --jq .enabled
+    gh api -H "X-GitHub-Api-Version: 2026-03-10" repos/ryanduguid/MaryAddisonHamilton/immutable-releases --jq .enabled
     ```
 
     Do not push the tag unless the output is exactly `true`. The Actions `GITHUB_TOKEN` cannot be granted repository Administration read access, so the tag workflow cannot perform this preflight itself.
@@ -22,20 +22,20 @@ Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires e
 
 ## Protected failed tag
 
-The annotated `v0.1.2` tag peels to `efc8c5b8f0b6bd1dee65eccba953cb1b60a4aaa4` and is protected by the version-tag ruleset. [Release run 31832538528](https://github.com/ryanduguid/australian-accounting-skills/actions/runs/31832538528) failed at the pre-publication asset-inventory gate before candidate upload, attestation, draft creation or publication. No `v0.1.2` GitHub release exists. Do not move, delete or reuse the tag; `v0.1.3` is its recovery release.
+The annotated `v0.1.2` tag peels to `efc8c5b8f0b6bd1dee65eccba953cb1b60a4aaa4` and is protected by the version-tag ruleset. [Release run 31832538528](https://github.com/ryanduguid/MaryAddisonHamilton/actions/runs/31832538528) failed at the pre-publication asset-inventory gate before candidate upload, attestation, draft creation or publication. No `v0.1.2` GitHub release exists. Do not move, delete or reuse the tag; `v0.1.3` is its recovery release.
 
 Verify the downloaded release with:
 
 ```bash
-gh release download v0.1.3 -R ryanduguid/australian-accounting-skills --dir release-v0.1.3
+gh release download v0.1.3 -R ryanduguid/MaryAddisonHamilton --dir release-v0.1.3
 cd release-v0.1.3
 sha256sum --check SHA256SUMS
-for file in *; do gh attestation verify "$file" -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.3 --signer-workflow ryanduguid/australian-accounting-skills/.github/workflows/release.yml; done
-gh attestation verify australian-accounting-skills-0.1.3.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.3 --signer-workflow ryanduguid/australian-accounting-skills/.github/workflows/release.yml --predicate-type https://spdx.dev/Document/v2.3
-gh attestation verify australian-accounting-skills-0.1.3.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.3 --signer-workflow ryanduguid/australian-accounting-skills/.github/workflows/release.yml --predicate-type https://spdx.dev/Document/v2.3
-gh release view v0.1.3 -R ryanduguid/australian-accounting-skills --json isImmutable
-gh release verify v0.1.3 -R ryanduguid/australian-accounting-skills
-for file in *; do gh release verify-asset v0.1.3 "$file" -R ryanduguid/australian-accounting-skills; done
+for file in *; do gh attestation verify "$file" -R ryanduguid/MaryAddisonHamilton --source-ref refs/tags/v0.1.3 --signer-workflow ryanduguid/MaryAddisonHamilton/.github/workflows/release.yml; done
+gh attestation verify australian-accounting-skills-0.1.3.zip -R ryanduguid/MaryAddisonHamilton --source-ref refs/tags/v0.1.3 --signer-workflow ryanduguid/MaryAddisonHamilton/.github/workflows/release.yml --predicate-type https://spdx.dev/Document/v2.3
+gh attestation verify australian-accounting-skills-0.1.3.tar.gz -R ryanduguid/MaryAddisonHamilton --source-ref refs/tags/v0.1.3 --signer-workflow ryanduguid/MaryAddisonHamilton/.github/workflows/release.yml --predicate-type https://spdx.dev/Document/v2.3
+gh release view v0.1.3 -R ryanduguid/MaryAddisonHamilton --json isImmutable
+gh release verify v0.1.3 -R ryanduguid/MaryAddisonHamilton
+for file in *; do gh release verify-asset v0.1.3 "$file" -R ryanduguid/MaryAddisonHamilton; done
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a published tag.
