@@ -10,7 +10,7 @@ Prepare a BAS workpaper from ledger exports and tie every label back to the gene
 ## Inputs needed
 
 Ask for these if not provided (period-locked where possible; see `xero-exports` for pulling and validating them):
-1. GST Audit Report (or Activity Statement report) for the BAS period
+1. Activity Statement report for the BAS period, plus the GST Reconciliation report for the GST control tie-out
 2. Trial balance as at period end
 3. GL detail for GST control accounts (GST collected / GST paid, or single GST account)
 4. Prior period BAS figures (for variance comparison)
