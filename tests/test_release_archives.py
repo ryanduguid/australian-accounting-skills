@@ -255,6 +255,73 @@ class ReleaseArchiveTests(unittest.TestCase):
         self.assertEqual(1, calls)
         self.assertEqual([], delays)
 
+    def test_does_not_retry_an_empty_create_url(self) -> None:
+        calls = 0
+        delays: list[float] = []
+
+        def list_releases() -> list[dict[str, object]]:
+            nonlocal calls
+            calls += 1
+            return []
+
+        with self.assertRaisesRegex(
+            draft_release.ReleaseLookupError,
+            "did not return a release URL",
+        ):
+            draft_release.find_created_draft_release_id(
+                list_releases,
+                "",
+                expected_tag="v0.1.4",
+                attempts=2,
+                delay_seconds=3,
+                sleep=delays.append,
+            )
+
+        self.assertEqual(1, calls)
+        self.assertEqual([], delays)
+
+    def test_does_not_retry_an_ambiguous_created_release(self) -> None:
+        created_url = "https://api.github.com/repos/example/accounting-skills/releases/42"
+        calls = 0
+        delays: list[float] = []
+        ambiguous_listing = [
+            {
+                "id": 42,
+                "url": created_url,
+                "draft": True,
+                "prerelease": False,
+                "tag_name": "v0.1.4",
+            },
+            {
+                "id": 42,
+                "url": created_url,
+                "draft": True,
+                "prerelease": False,
+                "tag_name": "v0.1.4",
+            },
+        ]
+
+        def list_releases() -> list[dict[str, object]]:
+            nonlocal calls
+            calls += 1
+            return ambiguous_listing
+
+        with self.assertRaisesRegex(
+            draft_release.ReleaseLookupError,
+            "matched more than one release",
+        ):
+            draft_release.find_created_draft_release_id(
+                list_releases,
+                created_url,
+                expected_tag="v0.1.4",
+                attempts=2,
+                delay_seconds=3,
+                sleep=delays.append,
+            )
+
+        self.assertEqual(1, calls)
+        self.assertEqual([], delays)
+
     def test_rejects_a_created_release_that_is_not_a_draft(self) -> None:
         created_url = "https://api.github.com/repos/example/accounting-skills/releases/42"
         releases = [
@@ -364,6 +431,46 @@ class ReleaseArchiveTests(unittest.TestCase):
             1,
             workflow.count("--predicate-type https://spdx.dev/Document/v2.3"),
         )
+
+    def test_release_workflow_isolates_candidate_build_from_publisher(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8",
+        )
+        candidate = workflow.split("\n  candidate:\n", maxsplit=1)[1].split(
+            "\n  release:\n",
+            maxsplit=1,
+        )[0]
+        publisher = workflow.split("\n  release:\n", maxsplit=1)[1]
+
+        self.assertIn("permissions:\n      contents: read", candidate)
+        self.assertNotIn("contents: write", candidate)
+        self.assertNotIn("attestations: write", candidate)
+        self.assertNotIn("id-token: write", candidate)
+        self.assertIn("python -m unittest discover -s tests -v", candidate)
+        self.assertIn("python tools/build_release_archives.py", candidate)
+        self.assertIn("needs: candidate", publisher)
+        self.assertNotIn("python -m unittest discover -s tests -v", publisher)
+        self.assertNotIn("python tools/build_release_archives.py", publisher)
+        self.assertIn("actions/download-artifact@", publisher)
+        self.assertIn("Verify downloaded candidate asset inventory", publisher)
+
+    def test_release_workflow_rechecks_authority_before_publishing_draft(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8",
+        )
+        publisher = workflow.split("\n  release:\n", maxsplit=1)[1]
+        create = publisher.index('gh release create "$tag"')
+        final_guard = publisher.index("A tag or branch move must leave this immutable release")
+        publish = publisher.index("gh api --method PATCH")
+
+        self.assertLess(create, final_guard)
+        self.assertLess(final_guard, publish)
+        guard = publisher[final_guard:publish]
+        self.assertIn('"refs/tags/$tag^{}"', guard)
+        self.assertIn("repos/$GITHUB_REPOSITORY/git/ref/heads/main", guard)
+        self.assertIn('test "$GITHUB_SHA" = "$expected_commit"', guard)
+        self.assertIn("/releases/$release_id", guard)
+        self.assertIn("pre-publish-release.json", guard)
 
     def test_release_pins_exact_skills_cli_inventory(self) -> None:
         workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(

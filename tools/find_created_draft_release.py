@@ -12,6 +12,10 @@ class ReleaseLookupError(RuntimeError):
     """Raised when the release created by GitHub cannot be safely identified."""
 
 
+class RetryableReleaseLookupError(ReleaseLookupError):
+    """A release-listing state that may settle without changing authority."""
+
+
 class IneligibleReleaseError(ReleaseLookupError):
     """Raised when the matched release is no longer a publishable draft."""
 
@@ -81,7 +85,9 @@ def select_created_draft_release_id(
         )
     ]
     if not matches:
-        raise ReleaseLookupError("created release is not visible in the paginated release listing")
+        raise RetryableReleaseLookupError(
+            "created release is not visible in the paginated release listing"
+        )
     if len(matches) != 1:
         raise ReleaseLookupError("created release URL matched more than one release")
 
@@ -105,7 +111,9 @@ def _release_with_id(
         if str(release.get("id", "")) == release_id
     ]
     if not matches:
-        raise ReleaseLookupError("created release ID is not visible in the paginated release listing")
+        raise RetryableReleaseLookupError(
+            "created release ID is not visible in the paginated release listing"
+        )
     if len(matches) != 1:
         raise ReleaseLookupError("created release ID matched more than one release")
 
@@ -141,23 +149,18 @@ def find_created_draft_release_id(
             if actual_tag == expected_tag:
                 return release_id
             if isinstance(actual_tag, str) and actual_tag.startswith("untagged-"):
-                raise ReleaseLookupError("created release tag has not settled")
+                raise RetryableReleaseLookupError("created release tag has not settled")
             raise UnexpectedReleaseTagError(
                 f"created release has unexpected tag {actual_tag!r}; expected {expected_tag!r}",
             )
-        except (
-            ReleaseLookupError,
-            json.JSONDecodeError,
-            subprocess.CalledProcessError,
-        ) as error:
-            if isinstance(error, (IneligibleReleaseError, UnexpectedReleaseTagError)):
-                raise
-            if (
-                not isinstance(error, ReleaseLookupError)
-                and not _is_transient_listing_error(error)
-            ):
+        except RetryableReleaseLookupError as error:
+            last_error = error
+        except (json.JSONDecodeError, subprocess.CalledProcessError) as error:
+            if not _is_transient_listing_error(error):
                 raise
             last_error = error
+        except ReleaseLookupError:
+            raise
         if attempt < attempts - 1:
             sleep(delay_seconds)
 
