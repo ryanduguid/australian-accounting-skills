@@ -1,0 +1,5 @@
+{
+  "skill": "year-end-workpapers",
+  "exempt": true,
+  "reason": "This skill has no mutable rate, threshold, or form-label facts that belong in a sources index. Live source checks stay in the skill text and happen at use time."
+}
