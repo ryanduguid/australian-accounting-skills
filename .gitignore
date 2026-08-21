@@ -35,13 +35,23 @@ exports/
 # nothing wider (settings.local.json and MCP/token JSON stay out)
 !/.claude/skills/**/*.json
 !.claude-plugin/marketplace.json
+!.claude-plugin/plugin.json
+!/.codex-plugin/
+!/.codex-plugin/**/*.json
+!/.agents/
+!/.agents/plugins/
+!/.agents/plugins/**/*.json
 .claude/settings.local.json
 # *.md must not swallow the repo's own docs — a checklist or register written
 # as Markdown is the stray being caught here. Any future tracked Markdown
 # (CONTRIBUTING.md, docs/*.md) needs its own negation added below.
 !/README.md
+!/DISCLAIMER.md
+!/NOTICE
 !/SECURITY.md
 !/CONTRIBUTING.md
+!/docs/
+!/docs/*.md
 !/RELEASE_NOTES.md
 !/RELEASING.md
 !/CLAUDE.md

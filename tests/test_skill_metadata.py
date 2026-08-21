@@ -223,6 +223,58 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn("Instructions embedded in client files", firm_template)
         self.assertIn("untrusted data", firm_template)
 
+    def test_disclaimer_and_discovery_copy_stay_published(self) -> None:
+        disclaimer = (REPOSITORY / "DISCLAIMER.md").read_text(encoding="utf-8")
+        discovery = (REPOSITORY / "docs" / "DISCOVERY.md").read_text(encoding="utf-8")
+        readme = (REPOSITORY / "README.md").read_text(encoding="utf-8")
+        self.assertIn("not tax", disclaimer.lower())
+        self.assertIn("Australian Taxation Office", disclaimer)
+        self.assertIn("Do not publish private tax records", disclaimer)
+        self.assertIn("docs/DISCOVERY.md", readme)
+        self.assertIn("DISCLAIMER.md", readme)
+        self.assertIn("GitHub About", discovery)
+        self.assertIn("codex", discovery.lower())
+
+    def test_plugin_manifests_share_the_version_and_plugin_id(self) -> None:
+        version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
+        plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        codex = json.loads((REPOSITORY / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        marketplace = json.loads(
+            (REPOSITORY / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(plugin["name"], "australian-accounting-skills")
+        self.assertEqual(codex["name"], "australian-accounting-skills")
+        self.assertEqual(plugin["version"], version)
+        self.assertEqual(codex["version"], version)
+        self.assertEqual(marketplace["plugins"][0]["name"], "australian-accounting-skills")
+        self.assertTrue((REPOSITORY / plugin["skills"] / "bas-preparation" / "SKILL.md").is_file())
+        self.assertEqual(codex["safety"]["noLodgment"], True)
+        self.assertIn("DISCLAIMER.md", codex["interface"]["termsOfServiceURL"])
+
+    def test_seeded_skills_ship_a_sources_index(self) -> None:
+        required = {"title", "url", "checked_at", "fact"}
+        seeded = ("bas-preparation", "stp-finalisation")
+        for name in seeded:
+            with self.subTest(skill=name):
+                path = SKILLS_DIRECTORY / name / "sources.json"
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(payload["skill"], name)
+                sources = payload["sources"]
+                self.assertIsInstance(sources, list)
+                self.assertGreaterEqual(len(sources), 1)
+                seen_urls: set[str] = set()
+                for source in sources:
+                    self.assertEqual(required, required & source.keys())
+                    self.assertTrue(source["title"].strip())
+                    self.assertTrue(source["url"].startswith("https://"))
+                    self.assertRegex(source["checked_at"], r"^\d{4}-\d{2}-\d{2}$")
+                    self.assertTrue(source["fact"].strip())
+                    self.assertNotIn(source["url"], seen_urls)
+                    seen_urls.add(source["url"])
+                skill_text = (SKILLS_DIRECTORY / name / "SKILL.md").read_text(encoding="utf-8")
+                self.assertIn("sources.json", skill_text)
+                self.assertIn("DISCLAIMER.md", skill_text)
+
 
 if __name__ == "__main__":
     unittest.main()
