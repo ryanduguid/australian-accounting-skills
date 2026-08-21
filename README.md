@@ -1,6 +1,8 @@
-# australian-accounting-skills
+# Mary Addison Hamilton
 
-[![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![MaryAddisonHamilton](assets/banner.svg)
+
+[![Verify](https://github.com/ryanduguid/MaryAddisonHamilton/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/MaryAddisonHamilton/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Claude Code skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
 
@@ -18,11 +20,13 @@ This repo is also a Claude Code plugin marketplace, so all nine skills install t
 update with the repo:
 
 ```
-/plugin marketplace add ryanduguid/australian-accounting-skills
+/plugin marketplace add ryanduguid/MaryAddisonHamilton
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
+
+The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
 ### Any agent, via the skills CLI
 
@@ -30,7 +34,7 @@ One command, using the [`skills` CLI](https://github.com/vercel-labs/skills). It
 `.claude/skills/` layout this repo uses, so no extra manifest is needed:
 
 ```bash
-npx skills add ryanduguid/australian-accounting-skills
+npx skills add ryanduguid/MaryAddisonHamilton
 ```
 
 That installs into the current project (`./.claude/skills/`). Add `-g` to install into
@@ -42,17 +46,17 @@ without installing anything.
 Copy the skills you want into your project or user skills directory:
 
 ```bash
-git clone https://github.com/ryanduguid/australian-accounting-skills
+git clone https://github.com/ryanduguid/MaryAddisonHamilton MaryAddisonHamilton
 mkdir -p ~/.claude/skills
-cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
+cp -r MaryAddisonHamilton/.claude/skills/* ~/.claude/skills/
 ```
 
 PowerShell:
 
 ```powershell
-git clone https://github.com/ryanduguid/australian-accounting-skills
+git clone https://github.com/ryanduguid/MaryAddisonHamilton MaryAddisonHamilton
 New-Item -ItemType Directory -Force "$HOME/.claude/skills"
-Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/skills/"
+Copy-Item -Recurse MaryAddisonHamilton/.claude/skills/* "$HOME/.claude/skills/"
 ```
 
 Or copy individual skill folders into `<project>/.claude/skills/`. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best. For a firm repository, adapt [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) to its actual policy; this repository's [`CLAUDE.md`](CLAUDE.md) is contributor guidance, not a substitute for firm controls.
@@ -72,7 +76,7 @@ Install the full pack at a tagged release to keep the set consistent.
 
 Minimal path from install to one verified result, assuming Claude Code is already installed:
 
-1. Install the plugin (see above): `/plugin marketplace add ryanduguid/australian-accounting-skills` then `/plugin install australian-accounting-skills@ryanduguid`.
+1. Install the plugin (see above): `/plugin marketplace add ryanduguid/MaryAddisonHamilton` then `/plugin install australian-accounting-skills@ryanduguid`.
 2. Export three reports from Xero for your most recent completed BAS period: the GST Audit Report, the trial balance as at period end, and the GL detail for the GST control account(s). Use a demo or fabricated file if you are only trialling; keep real client exports inside firm policy.
 3. In Claude Code, in the folder holding those exports, ask: "Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger." The `bas-preparation` skill picks this up and asks for anything missing.
 4. Verify the result yourself: check that net GST on the workpaper (1A less 1B) ties to the movement in the GST control account for the period. If the workpaper shows that tie-out and lists its exceptions, it worked.
@@ -112,7 +116,7 @@ Also included:
 These skills name two maintained CLIs rather than asking the agent to invent the same work:
 
 - [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
-- [`export-tb`](https://github.com/ryanduguid/xero-trial-balance-export) (`xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
+- [`JohnSpenceOgilvy`](https://github.com/ryanduguid/JohnSpenceOgilvy) (`export-tb`; `xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
 
 ## Design principles
 
@@ -134,3 +138,4 @@ Ryan Duguid, accountant in Newcastle NSW, CA ANZ Provisional Member.
 ## Licence
 
 MIT. See [LICENSE](LICENSE). Provenance statement: [NOTICE](NOTICE).
+
