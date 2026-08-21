@@ -154,7 +154,7 @@ Also included:
 
 These skills name two maintained CLIs rather than asking the agent to invent the same work:
 
-- [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
+- [`payday-super-check`](https://github.com/ryanduguid/CharlesHenryWickens) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
 - [`JohnSpenceOgilvy`](https://github.com/ryanduguid/JohnSpenceOgilvy) (`export-tb`; `xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
 
 ## Design principles
