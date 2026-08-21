@@ -1,0 +1,34 @@
+{
+  "skill": "bas-preparation",
+  "notes": "Mutable ATO facts. Re-verify at use time. This index is provenance, not a substitute for a live source check.",
+  "sources": [
+    {
+      "title": "Business activity statements (BAS)",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas",
+      "checked_at": "2026-08-19",
+      "fact": "BAS labels, reporting method, and lodgment cycle are read from the entity's statement and current ATO guidance, not assumed.",
+      "volatile": true
+    },
+    {
+      "title": "How GST works",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works",
+      "checked_at": "2026-08-19",
+      "fact": "GST registration basis (cash or accruals) must match the report basis before any label is mapped.",
+      "volatile": true
+    },
+    {
+      "title": "Pay as you go (PAYG) withholding",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/pay-as-you-go-withholding",
+      "checked_at": "2026-08-19",
+      "fact": "A large withholder reporting through STP no longer needs to report an amount at W1. That relief is a large-withholder rule, not a rule for every STP reporter.",
+      "volatile": true
+    },
+    {
+      "title": "Activity statement instructions",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/activity-statements/in-detail/activity-statement-instructions",
+      "checked_at": "2026-08-19",
+      "fact": "Simpler BAS entities report G1, 1A and 1B in the GST section where the current turnover test is met. G10/G11 capital vs non-capital mapping follows the entity's reporting method.",
+      "volatile": true
+    }
+  ]
+}

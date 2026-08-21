@@ -4,15 +4,26 @@
 
 [![Verify](https://github.com/ryanduguid/MaryAddisonHamilton/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/MaryAddisonHamilton/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Claude Code skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
+Claude Code, Codex, and portable agent skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
+> [!WARNING]
+> **Not tax advice.** These skills are prep-only workflow aids. They do not lodge, declare, or replace professional judgement. See [DISCLAIMER.md](DISCLAIMER.md).
+
 ## Who this is for
 
-Accountants in Australian public practice (and finance staff in AU SMEs) using [Claude Code](https://claude.com/claude-code). Claude Code is the agent these skills are tested with. Other agents that read `SKILL.md` files should work, but I have not tested them. Assumes Xero as the primary ledger; most skills work from standard CSV exports and degrade gracefully with no integrations at all.
+Accountants in Australian public practice (and finance staff in AU SMEs) using [Claude Code](https://claude.com/claude-code). Claude Code is the agent these skills are tested with. Codex and other agents that read `SKILL.md` files should work; Codex packaging is included, Claude Code is the tested runtime. Assumes Xero as the primary ledger; most skills work from standard CSV exports and degrade gracefully with no integrations at all.
 
 ## Install
+
+Pick the smallest path that matches what you need:
+
+| Need | Install | What you get |
+| --- | --- | --- |
+| Claude Code, with updates from this repo | Plugin install | All nine skills as `australian-accounting-skills:*` |
+| Codex | Codex plugin | Same skills via `.codex-plugin/plugin.json` |
+| Any agent that reads `SKILL.md` | `npx skills` | Portable skill files only. No extra runtime. |
 
 ### Claude Code plugin
 
@@ -27,6 +38,13 @@ update with the repo:
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
+
+### Codex plugin
+
+```
+codex plugin marketplace add ryanduguid/MaryAddisonHamilton
+codex plugin add australian-accounting-skills@ryanduguid
+```
 
 ### Any agent, via the skills CLI
 
@@ -81,7 +99,27 @@ Minimal path from install to one verified result, assuming Claude Code is alread
 3. In Claude Code, in the folder holding those exports, ask: "Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger." The `bas-preparation` skill picks this up and asks for anything missing.
 4. Verify the result yourself: check that net GST on the workpaper (1A less 1B) ties to the movement in the GST control account for the period. If the workpaper shows that tie-out and lists its exceptions, it worked.
 
+Ask the agent in natural language. Copy one of these:
+
+```text
+Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger. Tie 1A less 1B to the GST control account movement and list exceptions.
+```
+
+```text
+Finalise STP for the year ended 30 June from this payroll register, GL detail, and STP reporting summary. Reconcile register to GL and register to STP by employee. Do not compute an SGC charge.
+```
+
+```text
+Use workpaper-tie-out on this year-end pack. Every statement line needs a source. Carry unresolved differences; do not smooth them.
+```
+
 Uninstall with `/plugin uninstall australian-accounting-skills@ryanduguid` (or delete the copied folders from `~/.claude/skills/` if you installed by hand).
+
+## Preview
+
+![Synthetic BAS workpaper for Cedar and Pine Consulting Pty Ltd, quarter ended 31 March 2026](assets/readme/bas-workpaper-synthetic.svg)
+
+Fabricated sample. Shows labelled BAS amounts, a GST control-account tie-out to the cent, exceptions carried to the reviewer, and a blank reviewer sign-off. Not an ATO form. Not fileable. Not a real entity.
 
 ## Worked example: bas-preparation
 
@@ -110,6 +148,7 @@ Also included:
 - [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.
 - [`CLAUDE.md`](CLAUDE.md) and [`.claude/rules/accounting-safety.md`](.claude/rules/accounting-safety.md): maintained contributor and accounting-safety boundaries.
 - [`validation/README.md`](validation/README.md) and [`scripts/validate_validation.py`](scripts/validate_validation.py): a fabricated regression pack and fail-closed static validator.
+- [`DISCLAIMER.md`](DISCLAIMER.md) and [`docs/DISCOVERY.md`](docs/DISCOVERY.md): legal boundary and GitHub About copy.
 
 ## Sibling command-line tools
 
@@ -127,7 +166,7 @@ These skills name two maintained CLIs rather than asking the agent to invent the
 
 ## Disclaimer
 
-These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgement or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything. Lodgment is a registered agent's job.
+See [DISCLAIMER.md](DISCLAIMER.md). These skills are workflow aids for qualified professionals. They are not tax advice, not financial advice, and not a substitute for professional judgement or review. Verify all rates, thresholds and due dates against current ATO publications before relying on any output. Nothing here lodges anything. Lodgment is a registered agent's job.
 
 If these skills are run with client inputs through a cloud AI service, that data passes to the service. Check your firm's policy and your confidentiality and privacy obligations first; de-identify by default. [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example) has starter privacy rules.
 
