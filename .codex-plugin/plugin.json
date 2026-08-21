@@ -1,0 +1,49 @@
+{
+  "name": "australian-accounting-skills",
+  "version": "0.1.4",
+  "license": "MIT",
+  "repository": "https://github.com/ryanduguid/MaryAddisonHamilton",
+  "homepage": "https://github.com/ryanduguid/MaryAddisonHamilton",
+  "author": {
+    "name": "Ryan Duguid"
+  },
+  "description": "Australian public-practice workflow skills: BAS tie-out, FBT, Division 7A, STP finalisation, and workpapers. Prep-only. Not lodgment. Not tax advice.",
+  "skills": "./.claude/skills/",
+  "keywords": [
+    "australian tax",
+    "accounting",
+    "bas",
+    "fbt",
+    "division 7a",
+    "stp",
+    "xero",
+    "codex",
+    "claude code",
+    "agent skills",
+    "accountant"
+  ],
+  "safety": {
+    "humanReviewRequired": true,
+    "noLodgment": true,
+    "noLodgmentBoundary": "Never lodge, file, submit, transmit, declare, pay, or finalise any tax return, BAS, FBT return, STP report, or other material with the ATO or any government agency.",
+    "preserveReviewFlags": true
+  },
+  "interface": {
+    "displayName": "Australian accounting skills",
+    "developerName": "Ryan Duguid",
+    "shortDescription": "Public-practice BAS, FBT, Div 7A and STP workflows",
+    "longDescription": "Nine workflow skills for Australian public-practice accounting. Each skill encodes the steps and tie-outs, and sends the agent to ato.gov.au for rates and thresholds that change yearly. Outputs are review-ready workpapers. An authorised human reviews, decides and lodges. Not tax advice. Not affiliated with or endorsed by the Australian Taxation Office.",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger. Tie 1A less 1B to the GST control account movement and list exceptions."
+    ],
+    "logo": "./assets/banner.svg",
+    "websiteURL": "https://github.com/ryanduguid/MaryAddisonHamilton",
+    "termsOfServiceURL": "https://github.com/ryanduguid/MaryAddisonHamilton/blob/main/DISCLAIMER.md",
+    "privacyPolicyURL": "https://github.com/ryanduguid/MaryAddisonHamilton/blob/main/SECURITY.md"
+  }
+}
