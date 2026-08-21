@@ -275,6 +275,29 @@ class SkillMetadataTests(unittest.TestCase):
                 self.assertIn("sources.json", skill_text)
                 self.assertIn("DISCLAIMER.md", skill_text)
 
+    def test_every_skill_declares_sources_or_an_exemption(self) -> None:
+        required = {"title", "url", "checked_at", "fact"}
+        for skill_dir in sorted(path for path in SKILLS_DIRECTORY.iterdir() if path.is_dir()):
+            with self.subTest(skill=skill_dir.name):
+                sources = skill_dir / "sources.json"
+                exempt = skill_dir / "sources.exempt.json"
+                self.assertTrue(
+                    sources.is_file() or exempt.is_file(),
+                    "each skill must ship sources.json or sources.exempt.json",
+                )
+                if sources.is_file():
+                    payload = json.loads(sources.read_text(encoding="utf-8"))
+                    self.assertEqual(payload["skill"], skill_dir.name)
+                    self.assertIsInstance(payload["sources"], list)
+                    self.assertGreaterEqual(len(payload["sources"]), 1)
+                    for source in payload["sources"]:
+                        self.assertEqual(required, required & source.keys())
+                else:
+                    payload = json.loads(exempt.read_text(encoding="utf-8"))
+                    self.assertEqual(payload["skill"], skill_dir.name)
+                    self.assertIs(payload["exempt"], True)
+                    self.assertTrue(str(payload["reason"]).strip())
+
 
 if __name__ == "__main__":
     unittest.main()
