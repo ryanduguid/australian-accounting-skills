@@ -206,7 +206,7 @@ jobs:
           tar="dist/australian-accounting-skills-$version.tar.gz"
           sbom="dist/australian-accounting-skills-$version.spdx.json"
 
-          gh release create "$tag" \
+          created_release_url="$(gh release create "$tag" \
             --repo "$GITHUB_REPOSITORY" \
             --verify-tag \
             --draft \
@@ -215,17 +215,16 @@ jobs:
             "$zip#Deterministic source ZIP" \
             "$tar#Deterministic source tar archive" \
             "$sbom#SPDX 2.3 SBOM" \
-            "dist/SHA256SUMS#SHA-256 checksums"
+            "dist/SHA256SUMS#SHA-256 checksums")"
 
-          draft_release_ids="$(gh api --paginate \
-            -H "X-GitHub-Api-Version: 2026-03-10" \
-            "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-            --jq ".[] | select(.tag_name == \"$tag\" and .draft == true) | .id")"
-          if [[ ! "$draft_release_ids" =~ ^[0-9]+$ ]]; then
-            echo "Could not identify exactly one draft release for $tag." >&2
-            exit 1
-          fi
-          release_id="$draft_release_ids"
+          # GitHub can briefly label a newly created draft as untagged-*. Bind
+          # the retrying paginated lookup to create's URL, never to another draft.
+          release_id="$(python tools/find_created_draft_release.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --created-url "$created_release_url" \
+            --expected-tag "$tag" \
+            --attempts 5 \
+            --delay-seconds 5)"
 
           gh api \
             -H "X-GitHub-Api-Version: 2026-03-10" \

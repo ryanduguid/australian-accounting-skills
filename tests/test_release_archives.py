@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 import tarfile
 from tempfile import TemporaryDirectory
@@ -10,12 +12,11 @@ import unittest
 from unittest import mock
 import zipfile
 
-import yaml
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import build_release_archives as release_archives  # noqa: E402
+import find_created_draft_release as draft_release  # noqa: E402
 import write_release_checksums as release_checksums  # noqa: E402
 
 
@@ -111,28 +112,231 @@ class ReleaseArchiveTests(unittest.TestCase):
         self.assertIn("python tools/build_release_archives.py", workflow)
         self.assertNotIn("\n          git archive ", workflow)
 
-    def test_release_workflow_is_draft_aware_and_race_safe(self) -> None:
-        workflow_path = ROOT / ".github" / "workflows" / "release.yml"
-        workflow = workflow_path.read_text(encoding="utf-8")
+    def test_selects_the_created_untagged_draft_not_an_unrelated_draft(self) -> None:
+        created_url = (
+            "https://github.com/example/accounting-skills/releases/tag/"
+            "untagged-created-by-github"
+        )
+        releases = [
+            {
+                "id": 41,
+                "html_url": "https://github.com/example/accounting-skills/releases/tag/v9.9.9",
+                "draft": True,
+                "prerelease": False,
+                "tag_name": "v9.9.9",
+            },
+            {
+                "id": 42,
+                "html_url": created_url,
+                "draft": True,
+                "prerelease": False,
+                "tag_name": "untagged-created-by-github",
+            },
+        ]
 
-        self.assertNotIn("gh release view", workflow)
-        self.assertNotIn("gh release edit", workflow)
-        self.assertIn("releases?per_page=100", workflow)
-        self.assertIn(".tag_name == \\\"$tag\\\" and .draft == true", workflow)
-        self.assertGreaterEqual(workflow.count("git/ref/heads/main"), 2)
-        self.assertIn('refs/tags/$tag^{}', workflow)
-        self.assertIn("repos/$GITHUB_REPOSITORY/releases/$release_id", workflow)
-        self.assertIn("-F draft=false", workflow)
+        release_id = draft_release.select_created_draft_release_id(
+            releases,
+            created_url,
+        )
 
-        loaded = yaml.safe_load(workflow)
-        for step in loaded["jobs"]["release"]["steps"]:
-            run = step.get("run", "")
-            if "gh " in run:
-                with self.subTest(step=step["name"]):
-                    self.assertEqual(
-                        "${{ github.token }}",
-                        step.get("env", {}).get("GH_TOKEN"),
-                    )
+        self.assertEqual("42", release_id)
+
+    def test_retries_paginated_release_listing_until_created_draft_is_visible(self) -> None:
+        created_url = "https://api.github.com/repos/example/accounting-skills/releases/42"
+        pages = iter(
+            (
+                [
+                    {
+                        "id": 41,
+                        "html_url": "https://github.com/example/accounting-skills/releases/tag/v9.9.9",
+                        "draft": True,
+                        "prerelease": False,
+                    },
+                ],
+                [
+                    {
+                        "id": 41,
+                        "html_url": "https://github.com/example/accounting-skills/releases/tag/v9.9.9",
+                        "draft": True,
+                        "prerelease": False,
+                    },
+                    {
+                        "id": 42,
+                        "html_url": "https://github.com/example/accounting-skills/releases/tag/untagged-created-by-github",
+                        "url": created_url,
+                        "draft": True,
+                        "prerelease": False,
+                        "tag_name": "v0.1.4",
+                    },
+                ],
+            ),
+        )
+        delays: list[float] = []
+
+        release_id = draft_release.find_created_draft_release_id(
+            lambda: next(pages),
+            created_url,
+            expected_tag="v0.1.4",
+            attempts=2,
+            delay_seconds=3,
+            sleep=delays.append,
+        )
+
+        self.assertEqual("42", release_id)
+        self.assertEqual([3], delays)
+
+    def test_retries_transient_listing_failures_then_finds_the_exact_created_draft(self) -> None:
+        created_url = "https://api.github.com/repos/example/accounting-skills/releases/42"
+        created_draft = {
+            "id": 42,
+            "url": created_url,
+            "draft": True,
+            "prerelease": False,
+            "tag_name": "v0.1.4",
+        }
+        transient_failures = (
+            subprocess.CalledProcessError(
+                1,
+                ["gh", "api"],
+                output="",
+                stderr="HTTP 503: Service Unavailable",
+            ),
+            json.JSONDecodeError("Unterminated string", '{"id": 42', 10),
+        )
+
+        for failure in transient_failures:
+            with self.subTest(failure=type(failure).__name__):
+                results = iter((failure, [created_draft]))
+                delays: list[float] = []
+
+                def list_releases() -> list[dict[str, object]]:
+                    result = next(results)
+                    if isinstance(result, BaseException):
+                        raise result
+                    return result
+
+                release_id = draft_release.find_created_draft_release_id(
+                    list_releases,
+                    created_url,
+                    expected_tag="v0.1.4",
+                    attempts=2,
+                    delay_seconds=3,
+                    sleep=delays.append,
+                )
+
+                self.assertEqual("42", release_id)
+                self.assertEqual([3], delays)
+
+    def test_does_not_retry_bad_credentials_from_the_listing(self) -> None:
+        created_url = "https://api.github.com/repos/example/accounting-skills/releases/42"
+        calls = 0
+        delays: list[float] = []
+
+        def list_releases() -> list[dict[str, object]]:
+            nonlocal calls
+            calls += 1
+            raise subprocess.CalledProcessError(
+                1,
+                ["gh", "api"],
+                output="",
+                stderr="HTTP 401: Bad credentials",
+            )
+
+        with self.assertRaises(subprocess.CalledProcessError):
+            draft_release.find_created_draft_release_id(
+                list_releases,
+                created_url,
+                expected_tag="v0.1.4",
+                attempts=2,
+                delay_seconds=3,
+                sleep=delays.append,
+            )
+
+        self.assertEqual(1, calls)
+        self.assertEqual([], delays)
+
+    def test_rejects_a_created_release_that_is_not_a_draft(self) -> None:
+        created_url = "https://api.github.com/repos/example/accounting-skills/releases/42"
+        releases = [
+            {
+                "id": 42,
+                "url": created_url,
+                "draft": False,
+                "prerelease": False,
+            },
+        ]
+
+        calls = 0
+        delays: list[float] = []
+
+        def list_releases() -> list[dict[str, object]]:
+            nonlocal calls
+            calls += 1
+            return releases
+
+        with self.assertRaisesRegex(
+            draft_release.ReleaseLookupError,
+            "not an eligible draft",
+        ):
+            draft_release.find_created_draft_release_id(
+                list_releases,
+                created_url,
+                expected_tag="v0.1.4",
+                attempts=2,
+                delay_seconds=3,
+                sleep=delays.append,
+            )
+
+        self.assertEqual(1, calls)
+        self.assertEqual([], delays)
+
+    def test_tracks_the_created_release_id_until_its_expected_tag_settles(self) -> None:
+        created_url = (
+            "https://github.com/example/accounting-skills/releases/tag/"
+            "untagged-created-by-github"
+        )
+        listings = iter(
+            (
+                [
+                    {
+                        "id": 42,
+                        "html_url": created_url,
+                        "draft": True,
+                        "prerelease": False,
+                        "tag_name": "untagged-created-by-github",
+                    },
+                ],
+                [
+                    {
+                        "id": 42,
+                        "html_url": "https://github.com/example/accounting-skills/releases/tag/v0.1.4",
+                        "draft": True,
+                        "prerelease": False,
+                        "tag_name": "v0.1.4",
+                    },
+                    {
+                        "id": 99,
+                        "html_url": created_url,
+                        "draft": True,
+                        "prerelease": False,
+                        "tag_name": "untagged-created-by-github",
+                    },
+                ],
+            ),
+        )
+        delays: list[float] = []
+
+        release_id = draft_release.find_created_draft_release_id(
+            lambda: next(listings),
+            created_url,
+            expected_tag="v0.1.4",
+            attempts=2,
+            delay_seconds=3,
+            sleep=delays.append,
+        )
+
+        self.assertEqual("42", release_id)
+        self.assertEqual([3], delays)
 
     def test_release_workflow_verifies_exact_assets_and_attestations(self) -> None:
         workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
