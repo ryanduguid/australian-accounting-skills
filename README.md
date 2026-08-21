@@ -77,7 +77,7 @@ Install the full pack at a tagged release to keep the set consistent.
 Minimal path from install to one verified result, assuming Claude Code is already installed:
 
 1. Install the plugin (see above): `/plugin marketplace add ryanduguid/MaryAddisonHamilton` then `/plugin install australian-accounting-skills@ryanduguid`.
-2. Export three reports from Xero for your most recent completed BAS period: the GST Audit Report, the trial balance as at period end, and the GL detail for the GST control account(s). Use a demo or fabricated file if you are only trialling; keep real client exports inside firm policy.
+2. Export three reports from Xero for your most recent completed BAS period: `Activity Statement`, `Trial Balance` as at period end, and `General Ledger Detail` for the GST control account(s). Use a demo or fabricated file if you are only trialling; keep real client exports inside firm policy.
 3. In Claude Code, in the folder holding those exports, ask: "Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger." The `bas-preparation` skill picks this up and asks for anything missing.
 4. Verify the result yourself: check that net GST on the workpaper (1A less 1B) ties to the movement in the GST control account for the period. If the workpaper shows that tie-out and lists its exceptions, it worked.
 
@@ -85,7 +85,7 @@ Uninstall with `/plugin uninstall australian-accounting-skills@ryanduguid` (or d
 
 ## Worked example: bas-preparation
 
-**Input.** A quarterly BAS for a small company on the cash basis. You supply the GST Audit Report, the trial balance, GL detail for the GST control accounts, prior period BAS figures, and the payroll activity summary.
+**Input.** A quarterly BAS for a small company on the cash basis. You supply the activity statement, the trial balance, general ledger detail for the GST control accounts, prior period BAS figures, and the payroll activity summary. Xero report names for each are in the `xero-exports` skill.
 
 **What the skill checks.** It confirms the report basis matches the entity's ATO registration basis first, and stops and flags a mismatch rather than continuing. It maps ledger figures only to the labels actually present on the entity's statement (it will not invent a W1 just because payroll data exists; large withholders reporting through STP may not need one). It ties net GST (1A less 1B) to the movement in the GST control account to the cent, using the cash-basis bridge where the ledger is on accruals. It scans for coding exceptions such as GST claimed on bank fees, stamp duty or wages, and compares each label to the prior period and same period last year, asking you for the firm's variance threshold rather than inventing one.
 
