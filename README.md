@@ -1,5 +1,7 @@
 # australian-accounting-skills
 
+![MaryAddisonHamilton](assets/banner.svg)
+
 [![Verify](https://github.com/ryanduguid/MaryAddisonHamilton/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/MaryAddisonHamilton/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Claude Code skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
@@ -134,3 +136,4 @@ Ryan Duguid, accountant in Newcastle NSW, CA ANZ Provisional Member.
 ## Licence
 
 MIT. See [LICENSE](LICENSE). Provenance statement: [NOTICE](NOTICE).
+
