@@ -55,6 +55,7 @@ exports/
 !/RELEASE_NOTES.md
 !/RELEASING.md
 !/CLAUDE.md
+!/AGENTS.md
 !/.claude/skills/**/*.md
 !/.claude/rules/
 !/.claude/rules/**/*.md
