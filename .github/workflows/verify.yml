@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   verify:
+    timeout-minutes: 15
     name: verify
     runs-on: ubuntu-latest
     steps:
