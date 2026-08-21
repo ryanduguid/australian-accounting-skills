@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="960" height="620" role="img" aria-label="Synthetic BAS workpaper for Cedar and Pine Consulting Pty Ltd, quarter ended 31 March 2026. Fabricated data. Not an ATO form. Not fileable.">
+  <rect width="960" height="620" fill="#F4F1EA"/>
+  <rect x="24" y="24" width="912" height="572" fill="#FFFEFB" stroke="#1F2933" stroke-width="1.25"/>
+  <rect x="24" y="24" width="8" height="572" fill="#7A1F2B"/>
+
+  <text x="52" y="58" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#1F2933">BAS workpaper</text>
+  <text x="52" y="80" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="12" fill="#7A1F2B">SYNTHETIC SAMPLE  not an ATO form  not fileable</text>
+
+  <text x="52" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">Entity: Cedar &amp; Pine Consulting Pty Ltd (fabricated)</text>
+  <text x="52" y="132" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">Period: quarter ended 31 March 2026 · Basis: cash · Cycle: quarterly</text>
+  <text x="52" y="152" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">Identifier: SYNTH-0001 · ABN withheld (not a real entity)</text>
+
+  <rect x="52" y="172" width="856" height="28" fill="#E8E2D6"/>
+  <text x="64" y="191" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#1F2933">Label</text>
+  <text x="220" y="191" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#1F2933">Description</text>
+  <text x="620" y="191" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#1F2933">Amount (AUD)</text>
+  <text x="780" y="191" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#1F2933">Status</text>
+
+  <text x="64" y="226" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" fill="#1F2933">G1</text>
+  <text x="220" y="226" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">Total sales (GST-inclusive)</text>
+  <text x="620" y="226" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" fill="#1F2933">48,400.00</text>
+  <text x="780" y="226" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">tied</text>
+
+  <text x="64" y="254" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" fill="#1F2933">1A</text>
+  <text x="220" y="254" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">GST on sales</text>
+  <text x="620" y="254" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" fill="#1F2933">4,400.00</text>
+  <text x="780" y="254" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">tied</text>
+
+  <text x="64" y="282" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" fill="#1F2933">1B</text>
+  <text x="220" y="282" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">GST on purchases</text>
+  <text x="620" y="282" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" fill="#1F2933">1,210.00</text>
+  <text x="780" y="282" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">tied</text>
+
+  <line x1="52" y1="300" x2="908" y2="300" stroke="#1F2933" stroke-width="0.75"/>
+
+  <text x="220" y="328" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="#1F2933">Net GST (1A  1B)</text>
+  <text x="620" y="328" font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="13" font-weight="700" fill="#1F2933">3,190.00</text>
+  <text x="780" y="328" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">to the cent</text>
+
+  <text x="52" y="368" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="#1F2933">GST control-account tie-out</text>
+  <text x="52" y="390" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">GST collected / GST paid movement for the quarter (cash-basis reports): 3,190.00</text>
+  <text x="52" y="410" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">Difference: 0.00 · W1 not present on this statement (not invented)</text>
+
+  <rect x="52" y="430" width="856" height="88" fill="#F8EFE8" stroke="#7A1F2B" stroke-width="0.75"/>
+  <text x="64" y="454" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="#7A1F2B">Exceptions carried to reviewer</text>
+  <text x="64" y="476" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">1. GST claimed on bank fees $12.00  coding exception, unresolved</text>
+  <text x="64" y="496" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#1F2933">2. Firm variance threshold not supplied  prior-period comparison not closed</text>
+
+  <text x="52" y="546" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#1F2933">Preparer: synthetic fixture · Date: 21 Aug 2026 · Reviewer sign-off: ________</text>
+  <text x="52" y="568" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#5B6570">Does not lodge. Does not draft ATO correspondence. Verify current labels at ato.gov.au before anyone relies on this layout.</text>
+</svg>

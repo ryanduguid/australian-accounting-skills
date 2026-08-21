@@ -13,6 +13,7 @@ These skills describe how an agent should work through an Australian accounting 
 - Send the agent to the primary source for anything that changes: rates, thresholds, benchmark interest, label numbers, lodgement dates. Hardcode a current-year figure and the skill goes wrong next year without saying so.
 - Reach every step from the inputs the skill asks for. A step that needs a payroll report, a balance sheet or a payment history the skill never requested is broken rather than thorough.
 - Keep the scope fence visible. State what the skill declines to decide, and where a human signs off.
+- Keep [DISCLAIMER.md](DISCLAIMER.md) aligned with README and plugin manifests. Discovery copy lives in [docs/DISCOVERY.md](docs/DISCOVERY.md).
 - Prefer a tie-out to an assertion. If a step produces a number, say what that number must agree with.
 - Put generated client output only in the firm's approved secure location. A skill must ask before using a repo-adjacent path and must not change `.gitignore` or repository configuration without explicit approval.
 - Keep consequential actions human-only: agents may prepare and check, but an authorised human decides, communicates, signs, posts, locks, pays, declares and lodges.
