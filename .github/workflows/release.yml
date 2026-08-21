@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   candidate:
+    timeout-minutes: 15
     name: test and build candidate
     runs-on: ubuntu-latest
     permissions:
@@ -98,6 +99,7 @@ jobs:
           retention-days: 14
 
   release:
+    timeout-minutes: 15
     name: attest and publish
     needs: candidate
     runs-on: ubuntu-latest
