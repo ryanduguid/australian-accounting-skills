@@ -13,15 +13,100 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  candidate:
+    name: test and build candidate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Check candidate version and tag
+        id: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(tr -d '[:space:]' < VERSION)"
+          tag="$GITHUB_REF_NAME"
+          if [[ ! "$tag" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Release tags must use canonical vMAJOR.MINOR.PATCH form." >&2
+            exit 1
+          fi
+          test "$tag" = "v$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check --no-deps --requirement requirements-test.txt
+
+      - name: Run repository and fabricated-pack validation
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/validate_validation.py
+
+      - name: Verify the exact nine-skill inventory with Skills CLI 1.5.22
+        run: python tests/verify_skills_cli.py
+
+      - name: Build deterministic plugin archives
+        env:
+          TZ: UTC
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.candidate.outputs.version }}"
+          python tools/build_release_archives.py \
+            --commit "$GITHUB_SHA" \
+            --prefix "australian-accounting-skills-$version/" \
+            --output-base "dist/australian-accounting-skills-$version"
+
+      - name: Generate SPDX SBOM for the ZIP archive
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+        with:
+          file: dist/australian-accounting-skills-${{ steps.candidate.outputs.version }}.zip
+          format: spdx-json
+          syft-version: v1.51.0
+          output-file: dist/australian-accounting-skills-${{ steps.candidate.outputs.version }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Write and verify the exact candidate asset inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.candidate.outputs.version }}"
+          python tools/write_release_checksums.py \
+            --directory dist \
+            --asset "australian-accounting-skills-$version.zip" \
+            --asset "australian-accounting-skills-$version.tar.gz" \
+            --asset "australian-accounting-skills-$version.spdx.json"
+          (cd dist && sha256sum --check SHA256SUMS)
+
+      - name: Preserve the exact candidate assets for the fresh publisher
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ github.ref_name }}-candidate-assets
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+
   release:
-    name: build, attest and publish
+    name: attest and publish
+    needs: candidate
     runs-on: ubuntu-latest
     permissions:
       attestations: write # Record provenance and SBOM attestations for release assets.
       contents: write # Create the draft release, upload assets and publish it.
       id-token: write # Obtain the OIDC identity required to sign attestations.
     steps:
-      - name: Check out the tagged source
+      - name: Check out the tagged source on a fresh runner
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
@@ -56,72 +141,30 @@ jobs:
           test "$main_commit" = "$tag_commit"
           test "$(sed -n '1p' RELEASE_NOTES.md)" = "# $tag"
           test -z "$(git status --porcelain --untracked-files=no)"
-
-          existing_release_ids="$(gh api --paginate \
-            -H "X-GitHub-Api-Version: 2026-03-10" \
-            "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-            --jq ".[] | select(.tag_name == \"$tag\") | .id")"
-          if [[ -n "$existing_release_ids" ]]; then
-            echo "A release for $tag already exists; refusing to replace it." >&2
-            exit 1
-          fi
-
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "commit=$tag_commit" >> "$GITHUB_OUTPUT"
 
-      - name: Install test dependencies
-        run: python -m pip install --disable-pip-version-check --no-deps --requirement requirements-test.txt
-
-      - name: Run repository and fabricated-pack validation
-        run: |
-          python -m unittest discover -s tests -v
-          python scripts/validate_validation.py
-
-      - name: Verify the exact nine-skill inventory with Skills CLI 1.5.22
-        run: python tests/verify_skills_cli.py
-
-      - name: Build deterministic plugin archives
-        env:
-          TZ: UTC
-        shell: bash
-        run: |
-          set -euo pipefail
-          version="$(tr -d '[:space:]' < VERSION)"
-          python tools/build_release_archives.py \
-            --commit "$GITHUB_SHA" \
-            --prefix "australian-accounting-skills-$version/" \
-            --output-base "dist/australian-accounting-skills-$version"
-
-      - name: Generate SPDX SBOM for the ZIP archive
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+      - name: Download the candidate assets onto the fresh publisher
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          file: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.zip
-          format: spdx-json
-          syft-version: v1.51.0
-          output-file: dist/australian-accounting-skills-${{ steps.release.outputs.version }}.spdx.json
-          upload-artifact: false
-          upload-release-assets: false
+          name: ${{ steps.release.outputs.tag }}-candidate-assets
+          path: dist
 
-      - name: Write and verify the exact release asset inventory
+      - name: Verify downloaded candidate asset inventory
         shell: bash
         run: |
           set -euo pipefail
           version="${{ steps.release.outputs.version }}"
-          python tools/write_release_checksums.py \
-            --directory dist \
-            --asset "australian-accounting-skills-$version.zip" \
-            --asset "australian-accounting-skills-$version.tar.gz" \
-            --asset "australian-accounting-skills-$version.spdx.json"
+          expected_assets="$(printf '%s\n' \
+            "SHA256SUMS" \
+            "australian-accounting-skills-$version.spdx.json" \
+            "australian-accounting-skills-$version.tar.gz" \
+            "australian-accounting-skills-$version.zip")"
+          test -z "$(find dist -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+          downloaded_assets="$(find dist -mindepth 1 -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort)"
+          test "$downloaded_assets" = "$expected_assets"
           (cd dist && sha256sum --check SHA256SUMS)
-
-      - name: Preserve the exact candidate assets before publication
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: ${{ steps.release.outputs.tag }}-candidate-assets
-          path: dist/*
-          if-no-files-found: error
-          retention-days: 14
 
       - name: Attest release asset provenance
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
@@ -186,7 +229,6 @@ jobs:
           test "$remote_tag_commit" = "$expected_commit"
           test "$remote_main_commit" = "$expected_commit"
           test "$GITHUB_SHA" = "$expected_commit"
-
           existing_release_ids="$(gh api --paginate \
             -H "X-GitHub-Api-Version: 2026-03-10" \
             "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
@@ -205,8 +247,7 @@ jobs:
           zip="dist/australian-accounting-skills-$version.zip"
           tar="dist/australian-accounting-skills-$version.tar.gz"
           sbom="dist/australian-accounting-skills-$version.spdx.json"
-
-          gh release create "$tag" \
+          created_release_url="$(gh release create "$tag" \
             --repo "$GITHUB_REPOSITORY" \
             --verify-tag \
             --draft \
@@ -215,17 +256,16 @@ jobs:
             "$zip#Deterministic source ZIP" \
             "$tar#Deterministic source tar archive" \
             "$sbom#SPDX 2.3 SBOM" \
-            "dist/SHA256SUMS#SHA-256 checksums"
+            "dist/SHA256SUMS#SHA-256 checksums")"
 
-          draft_release_ids="$(gh api --paginate \
-            -H "X-GitHub-Api-Version: 2026-03-10" \
-            "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-            --jq ".[] | select(.tag_name == \"$tag\" and .draft == true) | .id")"
-          if [[ ! "$draft_release_ids" =~ ^[0-9]+$ ]]; then
-            echo "Could not identify exactly one draft release for $tag." >&2
-            exit 1
-          fi
-          release_id="$draft_release_ids"
+          # GitHub can briefly label a newly created draft as untagged-*. Bind
+          # the retrying paginated lookup to create's URL, never to another draft.
+          release_id="$(python tools/find_created_draft_release.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --created-url "$created_release_url" \
+            --expected-tag "$tag" \
+            --attempts 5 \
+            --delay-seconds 5)"
 
           gh api \
             -H "X-GitHub-Api-Version: 2026-03-10" \
@@ -236,7 +276,6 @@ jobs:
             /tmp/draft-release.json >/dev/null
           jq -j '.body' /tmp/draft-release.json > /tmp/draft-release-notes.md
           diff -u RELEASE_NOTES.md /tmp/draft-release-notes.md
-
           expected_assets="$(printf '%s\n' \
             "SHA256SUMS" \
             "australian-accounting-skills-$version.spdx.json" \
@@ -254,6 +293,33 @@ jobs:
           jq -r '.assets[] | [.name, .digest] | @tsv' /tmp/draft-release.json \
             | LC_ALL=C sort > /tmp/draft-digests
           diff -u /tmp/expected-digests /tmp/draft-digests
+
+          # A tag or branch move must leave this immutable release as a draft.
+          remote_tag_commit="$(git ls-remote \
+            "https://github.com/$GITHUB_REPOSITORY.git" \
+            "refs/tags/$tag^{}" | cut -f1)"
+          remote_main_commit="$(gh api \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            "repos/$GITHUB_REPOSITORY/git/ref/heads/main" \
+            --jq '.object.sha')"
+          test -n "$remote_tag_commit"
+          test "$remote_tag_commit" = "$expected_commit"
+          test "$remote_main_commit" = "$expected_commit"
+          test "$GITHUB_SHA" = "$expected_commit"
+          gh api \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            "repos/$GITHUB_REPOSITORY/releases/$release_id" \
+            > /tmp/pre-publish-release.json
+          jq -e --arg tag "$tag" --arg release_id "$release_id" \
+            '(.id | tostring) == $release_id and .draft == true and .prerelease == false and .tag_name == $tag' \
+            /tmp/pre-publish-release.json >/dev/null
+          jq -j '.body' /tmp/pre-publish-release.json > /tmp/pre-publish-release-notes.md
+          diff -u RELEASE_NOTES.md /tmp/pre-publish-release-notes.md
+          pre_publish_assets="$(jq -r '.assets[].name' /tmp/pre-publish-release.json | LC_ALL=C sort)"
+          test "$pre_publish_assets" = "$expected_assets"
+          jq -r '.assets[] | [.name, .digest] | @tsv' /tmp/pre-publish-release.json \
+            | LC_ALL=C sort > /tmp/pre-publish-digests
+          diff -u /tmp/expected-digests /tmp/pre-publish-digests
 
           gh api --method PATCH \
             -H "X-GitHub-Api-Version: 2026-03-10" \
@@ -286,7 +352,6 @@ jobs:
           jq -e --arg tag "$tag" \
             'any(.[]; .tagName == $tag and .isLatest == true)' \
             /tmp/release-list.json >/dev/null
-
           release_verified=false
           for attempt in 1 2 3 4 5; do
             if gh release verify "$tag" --repo "$GITHUB_REPOSITORY"; then
