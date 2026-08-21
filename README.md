@@ -133,7 +133,7 @@ If these skills are run with client inputs through a cloud AI service, that data
 
 ## Author
 
-Ryan Duguid, accountant in Newcastle NSW, CA ANZ Provisional Member.
+Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accountants ANZ.
 
 ## Licence
 
