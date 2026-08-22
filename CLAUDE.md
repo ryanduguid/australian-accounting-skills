@@ -1,4 +1,4 @@
-# Mary Addison Hamilton contributor guide
+# Australian Accounting Skills contributor guide
 
 This repository contains reusable workflow skills for Australian
 public-practice accounting. It is source code and documentation, not a client
