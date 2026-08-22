@@ -9,13 +9,13 @@ About, repository topics, README, `.claude-plugin/plugin.json`, and
 Description:
 
 ```text
-Claude Code, Codex, and portable agent skills for Australian public-practice workflows: BAS tie-out, FBT, Division 7A, STP finalisation, and workpapers. Prep-only. Not lodgment. Not tax advice.
+Claude Code and Codex skills for Australian public-practice workflows. Not lodgment.
 ```
 
 Website:
 
 ```text
-https://github.com/ryanduguid/MaryAddisonHamilton#install
+https://github.com/ryanduguid/australian-accounting-skills#install
 ```
 
 Topics:
