@@ -13,15 +13,15 @@ TOPICS=(
   ai-agents
   ato
   australia
+  australian-accounting
   australian-tax
   bas
-  bas-agent
   claude-code
-  claude-code-skills
   codex
   division-7a
   fbt
-  mcp
+  public-practice
+  python
   stp
   tax-prep
   xero
@@ -33,9 +33,10 @@ if ! command -v gh >/dev/null 2>&1; then
 fi
 
 gh repo edit "$REPO" --description "$DESCRIPTION" --homepage "$HOMEPAGE"
-topic_flags=()
+topic_args=()
 for topic in "${TOPICS[@]}"; do
-  topic_flags+=(--add-topic "$topic")
+  topic_args+=(-f "names[]=$topic")
 done
-gh repo edit "$REPO" "${topic_flags[@]}"
+# Set the whole topic list so removals apply too and drift cannot accumulate.
+gh api -X PUT "repos/$REPO/topics" "${topic_args[@]}" --jq '.names | length'
 echo "Updated $REPO About. Pin this repository from github.com/ryanduguid (Customize your pins)."

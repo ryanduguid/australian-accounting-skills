@@ -83,3 +83,4 @@ coverage changes, so re-verify at developer.xero.com before relying on it.
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output out of version control.
 - The file-export path is the default and works for any practice. API retrieval is optional and only covers the endpoints listed above; when an authorised operator already has a Xero OAuth app, use [`xero-trial-balance-export`](https://github.com/ryanduguid/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export`) for the trial balance rather than inventing a fetch. This skill does not run OAuth.
 - Export retrieval and validation do not provide an audit or assurance conclusion. An authorised human decides whether evidence is sufficient.
+- Not tax, legal or assurance advice. Outputs are preparation aids for review by a qualified professional.
