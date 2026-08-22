@@ -20,7 +20,7 @@
       "title": "Pay as you go (PAYG) withholding",
       "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/pay-as-you-go-withholding",
       "checked_at": "2026-08-19",
-      "fact": "A large withholder reporting through STP no longer needs to report an amount at W1. That relief is a large-withholder rule, not a rule for every STP reporter.",
+      "fact": "A large withholder reporting through STP no longer needs to report an amount at W1. That relief is a large-withholder rule, not a rule for every STP reporter. Non-payroll withholding does not all belong at W1/W2: no-ABN withholding sits at its own label (W4 at time of writing) and other amounts withheld sit at W3; the current label set must be confirmed at ato.gov.au before lodging.",
       "volatile": true
     },
     {
@@ -28,6 +28,13 @@
       "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/activity-statements/in-detail/activity-statement-instructions",
       "checked_at": "2026-08-19",
       "fact": "Simpler BAS entities report G1, 1A and 1B in the GST section where the current turnover test is met. G10/G11 capital vs non-capital mapping follows the entity's reporting method.",
+      "volatile": true
+    },
+    {
+      "title": "Simpler BAS and GST bookkeeping: capital purchases",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst",
+      "checked_at": "2026-08-14",
+      "fact": "The $1,000 capital-purchases concession applies only where the entity does not record capital and non-capital purchases separately and expects GST turnover below $1 million; in that case capital items of $1,000 or less may be recorded at G11. All conditions and current guidance must be re-verified before applying it.",
       "volatile": true
     }
   ]
