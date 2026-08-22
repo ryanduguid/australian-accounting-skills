@@ -2,7 +2,7 @@
 
 ![Australian Accounting Skills](assets/banner.svg)
 
-[![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-4F485E.svg?labelColor=04001F)](LICENSE)
 
 Claude Code, Codex, and portable agent skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
 
