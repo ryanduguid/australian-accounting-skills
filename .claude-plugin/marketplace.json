@@ -25,7 +25,7 @@
         "bookkeeping"
       ],
       "source": "./",
-      "strict": false,
+      "strict": true,
       "skills": [
         "./.claude/skills/bas-preparation",
         "./.claude/skills/cashflow-forecast-13week",

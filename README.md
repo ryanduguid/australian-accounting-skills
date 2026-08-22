@@ -1,4 +1,4 @@
-# Mary Addison Hamilton
+# Australian Accounting Skills
 
 ![Australian Accounting Skills](assets/banner.svg)
 

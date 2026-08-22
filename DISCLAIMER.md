@@ -1,6 +1,6 @@
 # Disclaimer
 
-Mary Addison Hamilton is a set of workflow skills for Australian public-practice
+Australian Accounting Skills is a set of workflow skills for Australian public-practice
 accounting. It is not tax, legal, accounting, financial, investment, BAS-agent,
 registered-tax-agent, or assurance advice.
 
