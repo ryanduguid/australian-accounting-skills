@@ -2,8 +2,8 @@
   "name": "australian-accounting-skills",
   "version": "0.1.4",
   "license": "MIT",
-  "repository": "https://github.com/ryanduguid/MaryAddisonHamilton",
-  "homepage": "https://github.com/ryanduguid/MaryAddisonHamilton",
+  "repository": "https://github.com/ryanduguid/australian-accounting-skills",
+  "homepage": "https://github.com/ryanduguid/australian-accounting-skills",
   "author": {
     "name": "Ryan Duguid"
   },
@@ -42,8 +42,8 @@
       "Prepare a BAS workpaper for the quarter ended 31 March from these exports. Cash basis, quarterly lodger. Tie 1A less 1B to the GST control account movement and list exceptions."
     ],
     "logo": "./assets/banner.svg",
-    "websiteURL": "https://github.com/ryanduguid/MaryAddisonHamilton",
-    "termsOfServiceURL": "https://github.com/ryanduguid/MaryAddisonHamilton/blob/main/DISCLAIMER.md",
-    "privacyPolicyURL": "https://github.com/ryanduguid/MaryAddisonHamilton/blob/main/SECURITY.md"
+    "websiteURL": "https://github.com/ryanduguid/australian-accounting-skills",
+    "termsOfServiceURL": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/DISCLAIMER.md",
+    "privacyPolicyURL": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/SECURITY.md"
   }
 }
