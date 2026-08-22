@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Apply docs/DISCOVERY.md to GitHub About. Requires gh, authenticated to
-# ryanduguid/MaryAddisonHamilton with repo metadata write access.
+# ryanduguid/australian-accounting-skills with repo metadata write access.
 set -euo pipefail
 
-REPO="ryanduguid/MaryAddisonHamilton"
-DESCRIPTION="Claude Code, Codex, and portable agent skills for Australian public-practice workflows: BAS tie-out, FBT, Division 7A, STP finalisation, and workpapers. Prep-only. Not lodgment. Not tax advice."
-HOMEPAGE="https://github.com/ryanduguid/MaryAddisonHamilton#install"
+REPO="ryanduguid/australian-accounting-skills"
+DESCRIPTION="Claude Code and Codex skills for Australian public-practice workflows. Not lodgment."
+HOMEPAGE="https://github.com/ryanduguid/australian-accounting-skills#install"
 TOPICS=(
   accounting
   accounting-automation
