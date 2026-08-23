@@ -38,7 +38,9 @@ gh release verify v0.1.5 -R ryanduguid/australian-accounting-skills
 for file in *; do gh release verify-asset v0.1.5 "$file" -R ryanduguid/australian-accounting-skills; done
 ```
 
-If any gate fails, inspect it before touching the tag or draft. Never move a published tag.
+If any gate fails, inspect it before touching the tag or draft. Never move a
+published tag. It behaves like a boulder in a corridor: once it is rolling the
+only direction is forward, so cut a new version rather than try to get behind it.
 
 Historical caveat: v0.1.1, v0.1.3 and v0.1.4 were published from a history
 line that was later rewritten in the August 2026 rename sweep, so
