@@ -89,3 +89,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Credentials must never be committed.
+.env
+.env.*
+!.env.example
+*.token
+*.tokens
+*.pem
