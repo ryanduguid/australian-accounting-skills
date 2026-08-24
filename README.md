@@ -1,5 +1,19 @@
 # Australian Accounting Skills
 
+```
++----------------------------------------------------------------------+
+|                     australian-accounting-skills                     |
++----------------------------------------------------------------------+
+|             Claude Code and Codex skills for AU practice             |
++----------------------------------+-----------------------------------+
+| DR  what it gives you            | CR  what it needs                 |
++----------------------------------+-----------------------------------+
+| nine AU practice workflows       | Claude Code, Codex, or CLI        |
+| BAS FBT and STP workflows        | Xero CSV exports                  |
+| month end close checklists       | -                                 |
++----------------------------------+-----------------------------------+
+```
+
 ![Australian Accounting Skills](assets/banner.svg)
 
 [![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-4F485E.svg?labelColor=04001F)](LICENSE)
