@@ -1,0 +1,36 @@
+name: github-about
+
+# Keep the GitHub About homepage on the comparison page.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - docs/DISCOVERY.md
+      - scripts/publish-github-about.sh
+      - .github/workflows/github-about.yml
+
+concurrency:
+  group: github-about
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  about:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set repository homepage
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          homepage="https://ryanduguid.github.io/tools/australian-tax-ai-agents/"
+          gh api -X PATCH "repos/${GITHUB_REPOSITORY}" -f "homepage=${homepage}"
+          echo "Set homepage to ${homepage}"
