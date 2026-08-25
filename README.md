@@ -170,10 +170,11 @@ Also included:
 
 ## Sibling command-line tools
 
-These skills name two maintained CLIs rather than asking the agent to invent the same work:
+These skills name three maintained CLIs rather than asking the agent to invent the same work:
 
 - [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
 - [`xero-trial-balance-export`](https://github.com/ryanduguid/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
+- [`review-ready`](https://github.com/ryanduguid/review-ready-gate) for whether a BAS, month-end, or year-end pack is allowed onto the review desk. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off.
 
 ## Design principles
 
