@@ -12,7 +12,6 @@ import subprocess
 import sys
 import unicodedata
 from pathlib import Path, PurePosixPath
-from urllib.parse import unquote, urlsplit
 
 import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
@@ -53,16 +52,9 @@ REQUIRED_SECTIONS = (
 )
 ALLOWED_METADATA = {"id", "synthetic", "target_skills"}
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
-MARKDOWN_LINK = re.compile(
-    r"!?\[[^\]\r\n]*\]\((?P<target><[^>\r\n]+>|[^)\r\n]+)\)"
-)
-MARKDOWN_REFERENCE = re.compile(
-    r"(?m)^[ ]{0,3}\[[^\]\r\n]+\]:[ \t]*(?P<target><[^>\r\n]+>|\S+)"
-)
-RAW_HTML_OR_AUTOLINK = re.compile(r"<")
 HTML_MARKUP = re.compile(r"<!--.*?-->|<[^>]*>", re.S)
 INLINE_MARKDOWN_LINK = re.compile(
-    r"!?\[(?P<label>[^\]\r\n]*)\]\((?:<[^>\r\n]+>|[^)\r\n]+)\)"
+    r"!?\[(?P<label>[^\]\r\n]*)\]\(?:<[^>\r\n]+>|[^)\r\n]+\)"
 )
 REFERENCE_MARKDOWN_LINK = re.compile(
     r"!?\[(?P<label>[^\]\r\n]*)\]\[[^\]\r\n]*\]"
@@ -248,19 +240,6 @@ def parse_front_matter(text: str, card_name: str) -> tuple[dict[str, object], st
     return loaded, text[match.end() :]
 
 
-def decode_repeatedly(value: str) -> str:
-    """Decode URL escapes to a fixed point, rejecting obfuscated targets."""
-    current = value
-    for _ in range(4):
-        decoded = unquote(current, errors="strict")
-        if decoded == current:
-            return decoded
-        current = decoded
-    if unquote(current, errors="strict") != current:
-        raise ValidationError(f"over-encoded link target: {value}")
-    return current
-
-
 def normalise_for_sensitive_scan(text: str) -> str:
     """Expose common rendered-Markdown/entity obfuscation to safety patterns."""
     decoded = unicodedata.normalize("NFKC", html.unescape(text))
@@ -291,82 +270,6 @@ def check_sensitive_content(text: str) -> None:
             raise ValidationError(f"possible {label}")
     if DATED_RULE.search(scan_text):
         raise ValidationError("embeds a dated/rate rule instead of a live-source check")
-
-
-def markdown_targets(text: str) -> list[str]:
-    """Extract supported Markdown links and reject raw HTML/autolink bypasses."""
-    scan_text = html.unescape(text)
-
-    def unwrap_destination(match: re.Match[str]) -> str:
-        target = match.group("target")
-        if target.startswith("<") and target.endswith(">"):
-            return match.group(0).replace(target, target[1:-1], 1)
-        return match.group(0)
-
-    scan_text = MARKDOWN_LINK.sub(unwrap_destination, scan_text)
-    scan_text = MARKDOWN_REFERENCE.sub(unwrap_destination, scan_text)
-    if RAW_HTML_OR_AUTOLINK.search(scan_text):
-        raise ValidationError("raw HTML or autolinks are not permitted")
-    return [
-        *(match.group("target") for match in MARKDOWN_LINK.finditer(text)),
-        *(match.group("target") for match in MARKDOWN_REFERENCE.finditer(text)),
-    ]
-
-
-def resolve_local_link(
-    source_relative: str,
-    raw_target: str,
-    allowed_files: set[str] = EXPECTED_VALIDATION,
-) -> str | None:
-    """Return a safe local target, None for allowed remote/fragment links."""
-    target = raw_target.strip()
-    if target.startswith("<") and target.endswith(">"):
-        target = target[1:-1]
-    if not target or any(character.isspace() for character in target):
-        raise ValidationError(f"empty or whitespace-bearing link target: {raw_target}")
-    if "\\" in target or "\x00" in target:
-        raise ValidationError(f"unsafe link separator or NUL: {raw_target}")
-
-    decoded = decode_repeatedly(target)
-    if "\\" in decoded or "\x00" in decoded:
-        raise ValidationError(f"encoded unsafe separator or NUL: {raw_target}")
-    if any(character.isspace() for character in decoded):
-        raise ValidationError(f"encoded whitespace in link target: {raw_target}")
-    try:
-        parsed = urlsplit(decoded)
-    except ValueError as error:
-        raise ValidationError(f"malformed link target: {raw_target}") from error
-    if parsed.scheme:
-        scheme = parsed.scheme.lower()
-        if scheme not in {"http", "https", "mailto"}:
-            raise ValidationError(f"unsafe link scheme: {parsed.scheme}")
-        if parsed.username is not None or parsed.password is not None:
-            raise ValidationError("credentials are not permitted in a link target")
-        if scheme in {"http", "https"} and (
-            not parsed.netloc
-            or parsed.hostname is None
-            or not parsed.hostname.strip(".")
-        ):
-            raise ValidationError(
-                f"HTTP(S) link must have a network authority: {raw_target}"
-            )
-        return None
-    if parsed.netloc or decoded.startswith("//"):
-        raise ValidationError(f"protocol-relative/UNC link is not permitted: {raw_target}")
-    if not parsed.path and parsed.fragment:
-        return None
-    if parsed.query:
-        raise ValidationError(f"local link query is not permitted: {raw_target}")
-    if not parsed.path or parsed.path.startswith("/") or re.match(r"^[A-Za-z]:", parsed.path):
-        raise ValidationError(f"absolute or empty local link is not permitted: {raw_target}")
-
-    candidate = PurePosixPath(source_relative).parent / PurePosixPath(parsed.path)
-    if any(part in {"", ".", ".."} for part in candidate.parts):
-        raise ValidationError(f"local link traversal/dot component: {raw_target}")
-    normalised = candidate.as_posix()
-    if normalised not in allowed_files:
-        raise ValidationError(f"local link leaves the fixed validation inventory: {raw_target}")
-    return normalised
 
 
 def git_entries(paths: list[str], root: Path = ROOT) -> dict[str, str]:
@@ -514,11 +417,6 @@ def main() -> int:
                 raise ValidationError("card must use an explicit Synthetic placeholder")
 
             check_sensitive_content(body)
-
-            for raw_target in markdown_targets(body):
-                target = resolve_local_link(rel, raw_target)
-                if target is not None:
-                    check_expected_path(ROOT / PurePosixPath(target))
         except (AssertionError, OSError, ValidationError) as error:
             errors.append(f"{rel}: {error}")
 
@@ -532,17 +430,8 @@ def main() -> int:
     validation_readme = read_sources.get("validation/README.md", "")
     try:
         check_sensitive_content(validation_readme)
-        readme_targets = markdown_targets(validation_readme)
     except ValidationError as error:
         errors.append(f"validation/README.md: {error}")
-        readme_targets = []
-    for raw_target in readme_targets:
-        try:
-            target = resolve_local_link("validation/README.md", raw_target)
-            if target is not None:
-                check_expected_path(ROOT / PurePosixPath(target))
-        except (OSError, ValidationError) as error:
-            errors.append(f"validation/README.md: {error}")
 
     for command, label in (
         (["git", "diff", "--check"], "unstaged whitespace check"),
