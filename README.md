@@ -24,6 +24,8 @@ Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to ch
 
 These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [aus-accounting-mcp](https://github.com/ryanduguid/au-tax-mcp-server). Comparison: [Australian tax tools for AI agents](https://ryanduguid.github.io/tools/australian-tax-ai-agents/).
 
+Citation details are in [`CITATION.cff`](CITATION.cff) for the [`v0.1.5` release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5).
+
 > [!WARNING]
 > **Not tax advice.** These skills are prep-only workflow aids. They do not lodge, declare, or replace professional judgement. See [DISCLAIMER.md](DISCLAIMER.md).
 
