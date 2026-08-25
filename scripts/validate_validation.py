@@ -54,7 +54,7 @@ ALLOWED_METADATA = {"id", "synthetic", "target_skills"}
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 HTML_MARKUP = re.compile(r"<!--.*?-->|<[^>]*>", re.S)
 INLINE_MARKDOWN_LINK = re.compile(
-    r"!?\[(?P<label>[^\]\r\n]*)\]\(?:<[^>\r\n]+>|[^)\r\n]+\)"
+    r"!?\[(?P<label>[^\]\r\n]*)\]\((?:<[^>\r\n]+>|[^)\r\n]+)\)"
 )
 REFERENCE_MARKDOWN_LINK = re.compile(
     r"!?\[(?P<label>[^\]\r\n]*)\]\[[^\]\r\n]*\]"
