@@ -5,7 +5,7 @@ set -euo pipefail
 
 REPO="ryanduguid/australian-accounting-skills"
 DESCRIPTION="Claude Code and Codex skills for Australian public-practice workflows. Not lodgment."
-HOMEPAGE="https://github.com/ryanduguid/australian-accounting-skills#install"
+HOMEPAGE="https://ryanduguid.github.io/tools/australian-tax-ai-agents/"
 TOPICS=(
   accounting
   accounting-automation
