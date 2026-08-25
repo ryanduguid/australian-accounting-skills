@@ -42,8 +42,15 @@ xero
 ```
 
 Apply with `scripts/publish-github-about.sh` from a session authenticated to
-GitHub (`gh auth status`). GitHub has no public pin API; pin this repository
-from the profile **Customize your pins** dialog.
+GitHub (`gh auth status`). The Actions `GITHUB_TOKEN` cannot PATCH homepage
+(needs repository admin), so the `github-about` workflow warns and continues
+rather than failing. GitHub has no public pin API; pin this repository from
+the profile **Customize your pins** dialog.
+
+skills.sh has no public submit API. `npx skills add ryanduguid/australian-accounting-skills`
+already lists the nine skills. Do not claim a skills.sh directory page until
+that host serves one for this repository. The index is install telemetry, not a
+form.
 
 ## Keyword map
 
