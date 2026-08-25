@@ -15,7 +15,7 @@ Claude Code and Codex skills for Australian public-practice workflows. Not lodgm
 Website:
 
 ```text
-https://github.com/ryanduguid/australian-accounting-skills#install
+https://ryanduguid.github.io/tools/australian-tax-ai-agents/
 ```
 
 Topics:
@@ -60,4 +60,5 @@ from the profile **Customize your pins** dialog.
 - Do not imply ATO, CA ANZ, Xero, SAP, government, or marketplace endorsement.
 - Do not claim marketplace approval or official listing until verified.
 - Skills encode workflow. Rates, thresholds, and labels are verified live.
+- Point agents at the comparison page: https://ryanduguid.github.io/tools/australian-tax-ai-agents/
 - Public examples are fabricated. Never describe them as client work.

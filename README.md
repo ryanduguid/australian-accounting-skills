@@ -22,6 +22,8 @@ Claude Code, Codex, and portable agent skills for Australian public-practice acc
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
+These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [aus-accounting-mcp](https://github.com/ryanduguid/au-tax-mcp-server). Comparison: [Australian tax tools for AI agents](https://ryanduguid.github.io/tools/australian-tax-ai-agents/).
+
 > [!WARNING]
 > **Not tax advice.** These skills are prep-only workflow aids. They do not lodge, declare, or replace professional judgement. See [DISCLAIMER.md](DISCLAIMER.md).
 
@@ -191,4 +193,3 @@ Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accoun
 ## Licence
 
 MIT. See [LICENSE](LICENSE). Provenance statement: [NOTICE](NOTICE).
-
