@@ -19,7 +19,6 @@ from yaml.tokens import AliasToken, AnchorToken, TagToken
 
 ROOT = Path(__file__).resolve().parents[1]
 VALIDATION = ROOT / "validation"
-CASES = VALIDATION / "cases"
 EXPECTED_CASE_NAMES = {
     "bas-export-manifest-rounding.md",
     "bas-g10-g11.md",
