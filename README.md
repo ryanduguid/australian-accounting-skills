@@ -22,7 +22,7 @@ Claude Code, Codex, and portable agent skills for Australian public-practice acc
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
-These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [aus-accounting-mcp](https://github.com/ryanduguid/au-tax-mcp-server). Comparison: [Australian tax tools for AI agents](https://ryanduguid.github.io/tools/australian-tax-ai-agents/).
+These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [Aus Accounting MCP](https://github.com/ryanduguid/aus-accounting-mcp). Comparison: [Australian tax tools for AI agents](https://ryanduguid.github.io/tools/australian-tax-ai-agents/).
 
 Citation details are in [`CITATION.cff`](CITATION.cff) for the [`v0.1.5` release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5).
 
@@ -174,7 +174,7 @@ These skills name three maintained CLIs rather than asking the agent to invent t
 
 - [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
 - [`xero-trial-balance-export`](https://github.com/ryanduguid/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
-- [`review-ready`](https://github.com/ryanduguid/review-ready-gate) for whether a BAS, month-end, or year-end pack is allowed onto the review desk. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off.
+- [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) for whether a BAS, month-end, or year-end pack is allowed onto the review desk. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off.
 
 ## Design principles
 

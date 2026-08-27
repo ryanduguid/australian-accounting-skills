@@ -7,7 +7,7 @@ description: "Use when building a review-ready annual workpaper pack from a tria
 
 Turn a year-end trial balance into an indexed, review-ready workpaper pack. The reviewer should never have to ask "where's the support for this?"
 
-If the folder uses the filenames [`review-ready-gate`](https://github.com/ryanduguid/review-ready-gate) expects, run `review-ready gate --profile year_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off. Then run `workpaper-tie-out`.
+If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) expects, run `review-ready gate --profile year_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off. Then run `workpaper-tie-out`.
 
 ## Inputs needed
 
