@@ -1,5 +1,7 @@
 # Releasing
 
+The repository's [GitHub Releases](https://github.com/ryanduguid/australian-accounting-skills/releases) page is the canonical release history. A separate changelog is intentionally not maintained.
+
 Releases are built by GitHub Actions from an annotated tag on the exact `main` commit. Do not create or upload release assets by hand.
 
 Before tagging:
@@ -31,8 +33,8 @@ gh release download v0.1.5 -R ryanduguid/australian-accounting-skills --dir rele
 cd release-v0.1.5
 sha256sum --check SHA256SUMS
 for file in *; do gh attestation verify "$file" -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml; done
-gh attestation verify australian-accounting-skills-0.1.3.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
-gh attestation verify australian-accounting-skills-0.1.3.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
+gh attestation verify australian-accounting-skills-0.1.5.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
+gh attestation verify australian-accounting-skills-0.1.5.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
 gh release view v0.1.5 -R ryanduguid/australian-accounting-skills --json isImmutable
 gh release verify v0.1.5 -R ryanduguid/australian-accounting-skills
 for file in *; do gh release verify-asset v0.1.5 "$file" -R ryanduguid/australian-accounting-skills; done
@@ -42,10 +44,24 @@ If any gate fails, inspect it before touching the tag or draft. Never move a
 published tag. It behaves like a boulder in a corridor: once it is rolling the
 only direction is forward, so cut a new version rather than try to get behind it.
 
-Historical caveat: v0.1.1, v0.1.3 and v0.1.4 were published from a history
-line that was later rewritten in the August 2026 rename sweep, so
-`gh release verify` and `gh release verify-asset` fail permanently for those
-tags with "no attestations for tag" (their release attestations reference
-commit ids the rewrite orphaned). Their asset downloads, checksums and
-immutability flags still verify. v0.1.5 is the first release cut from the
-current history and restores the full verification story.
+## Preserved squash-boundary releases
+
+Four published tags point at pull-request-side commits that preceded their
+squash merges to `main`. They are intentional historical exceptions outside
+current `main` ancestry:
+
+| Release | Tag object | Peeled commit |
+| --- | --- | --- |
+| `v0.1.1` | `3f6e5130806aa6eb6aaa7f7e3ffec51dbb0de297` | `b94df5ed09ee86038cdd78792e649cdcae9e9de3` |
+| `v0.1.3` | `38fae525f456391dabf4227459320566117cc0a7` | `3bb02f96fe5aaeddf2d1299b73a00d54d41e5163` |
+| `v0.1.4` | `e522b3cb24cc972ec8bdc183eecf464137fa7d2e` | `ef8415da22c9d6408df4b637e166b452a3f4bd23` |
+| `v0.1.5` | `ba7496f613d552cb9fdbb49083848d3baf180c08` | `57f7bef712fa856db7f073fab65c4cf016885197` |
+
+Ancestry and release attestation are separate facts. `gh release verify`
+succeeds for `v0.1.5`. It returns `no attestations for tag` for `v0.1.1`,
+`v0.1.3` and `v0.1.4`; their asset downloads, checksums and immutability flags
+remain historical evidence.
+
+Preserve those immutable tags exactly as published. Do not move, delete or
+recreate them to make the history appear linear. Every future release tag must
+point to a commit reachable from protected `main`.
