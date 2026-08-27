@@ -7,7 +7,7 @@ description: "Use when preparing, reviewing, or reconciling a Business Activity 
 
 Prepare a BAS workpaper from ledger exports and tie every label back to the general ledger. The output is a review-ready workpaper, not a lodgment. Lodgment belongs to the registered agent.
 
-If the folder uses the filenames [`review-ready-gate`](https://github.com/ryanduguid/review-ready-gate) expects, run `review-ready gate --profile bas` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. Do not treat `READY` as lodgment approval.
+If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) expects, run `review-ready gate --profile bas` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. Do not treat `READY` as lodgment approval.
 
 ## Inputs needed
 
