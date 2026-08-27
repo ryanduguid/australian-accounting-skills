@@ -9,7 +9,7 @@ About, repository topics, README, `.claude-plugin/plugin.json`, and
 Description:
 
 ```text
-Claude Code and Codex skills for Australian public-practice workflows. Not lodgment.
+Claude Code and Codex skills for Australian practice and contracting workflows. Not lodgment.
 ```
 
 Website:
@@ -32,6 +32,7 @@ australian-tax
 bas
 claude-code
 codex
+construction-accounting
 division-7a
 fbt
 public-practice
@@ -48,16 +49,17 @@ rather than failing. GitHub has no public pin API; pin this repository from
 the profile **Customize your pins** dialog.
 
 skills.sh has no public submit API. `npx skills add ryanduguid/australian-accounting-skills`
-already lists the nine skills. Do not claim a skills.sh directory page until
+already lists the 19 skills. Do not claim a skills.sh directory page until
 that host serves one for this repository. The index is install telemetry, not a
 form.
 
 ## Keyword map
 
-- Primary: Australian public-practice workflow skills, BAS workpaper tie-out,
-  accountant handoff.
+- Primary: Australian practice and contracting workflow skills, BAS and
+  contract workpaper tie-outs, accountant handoff.
 - Topic clusters: GST/BAS, FBT, Division 7A, STP, payday super, Xero exports,
-  month-end close, year-end workpapers.
+  month-end close, year-end workpapers, progress claims, retentions, WIP,
+  contract costs, plant, fuel, payroll tax, TPAR and Coal LSL.
 - Agent/platform terms: Claude Code plugin, Codex plugin, portable `npx skills`.
 
 ## Copy rules

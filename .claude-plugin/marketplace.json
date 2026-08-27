@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "australian-accounting-skills",
-      "description": "Workflow skills for Australian public-practice accounting: BAS preparation, month-end close, workpaper tie-out, FBT year-end, Division 7A, STP finalisation, year-end workpapers, Xero exports and 13-week cashflow. Each skill encodes the process and the tie-outs, and sends the agent to ato.gov.au for rates and thresholds that change yearly.",
+      "description": "Nineteen workflow skills for Australian public-practice and contracting-business accounting, with review-ready tie-outs and live-source gates.",
       "author": {
         "name": "Ryan Duguid"
       },
@@ -29,11 +29,21 @@
       "skills": [
         "./.claude/skills/bas-preparation",
         "./.claude/skills/cashflow-forecast-13week",
+        "./.claude/skills/coal-lsl-levy",
+        "./.claude/skills/contract-cost-tracking",
+        "./.claude/skills/contracting-exports",
+        "./.claude/skills/contractor-super-tpar",
         "./.claude/skills/div7a-compliance",
         "./.claude/skills/fbt-annual-workflow",
+        "./.claude/skills/fuel-tax-credits",
         "./.claude/skills/month-end-close",
+        "./.claude/skills/payroll-tax-contractors",
+        "./.claude/skills/plant-and-equipment-costing",
+        "./.claude/skills/progress-claim-preparation",
+        "./.claude/skills/retention-schedule",
         "./.claude/skills/stp-finalisation",
         "./.claude/skills/workpaper-tie-out",
+        "./.claude/skills/wip-over-under-billing",
         "./.claude/skills/xero-exports",
         "./.claude/skills/year-end-workpapers"
       ],

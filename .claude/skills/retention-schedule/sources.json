@@ -1,0 +1,20 @@
+{
+  "skill": "retention-schedule",
+  "notes": "NSW trust sources reviewed in hardhat-ledger on 15 August 2026. Jurisdiction, current instruments and conflicts must be rechecked at use time.",
+  "sources": [
+    {
+      "title": "Building and Construction Industry Security of Payment Act 1999 (NSW)",
+      "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
+      "checked_at": "2026-08-15",
+      "fact": "Section 12A provides the NSW retention-money trust head power; coverage and action conclusions remain with a qualified human.",
+      "volatile": true
+    },
+    {
+      "title": "Building and Construction Industry Security of Payment Regulation 2020 (NSW)",
+      "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/sl-2020-0504",
+      "checked_at": "2026-08-15",
+      "fact": "Part 2 controls the current NSW trust trigger, account, deposit, withdrawal, notice and record requirements.",
+      "volatile": true
+    }
+  ]
+}

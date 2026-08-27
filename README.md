@@ -8,8 +8,8 @@
 +----------------------------------+-----------------------------------+
 | DR  what it gives you            | CR  what it needs                 |
 +----------------------------------+-----------------------------------+
-| nine AU practice workflows       | Claude Code, Codex, or CLI        |
-| BAS FBT and STP workflows        | Xero CSV exports                  |
+| 19 accounting workflows          | Claude Code, Codex, or CLI        |
+| practice and contracting packs   | ledger and contract exports       |
 | month end close checklists       | -                                 |
 +----------------------------------+-----------------------------------+
 ```
@@ -18,7 +18,7 @@
 
 [![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-4F485E.svg?labelColor=04001F)](LICENSE)
 
-Claude Code, Codex, and portable agent skills for Australian public-practice accounting workflows: BAS, FBT, Division 7A, STP finalisation, month-end close, year-end workpapers, 13-week cashflow forecasting.
+Claude Code, Codex, and portable agent skills for Australian public-practice and contracting-business accounting workflows. The pack covers BAS, FBT, Division 7A, STP finalisation, close and workpapers, cashflow, progress claims, retentions, WIP, contract costs, plant, fuel, payroll tax, contractor super, TPAR and Coal LSL.
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change every year, so skills direct the agent to verify current figures at ato.gov.au rather than hardcoding numbers that go stale.
 
@@ -31,7 +31,7 @@ Citation details are in [`CITATION.cff`](CITATION.cff) for the [`v0.1.5` release
 
 ## Who this is for
 
-Accountants in Australian public practice (and finance staff in AU SMEs) using [Claude Code](https://claude.com/claude-code). Claude Code is the agent these skills are tested with. Codex and other agents that read `SKILL.md` files should work; Codex packaging is included, Claude Code is the tested runtime. Assumes Xero as the primary ledger; most skills work from standard CSV exports and degrade gracefully with no integrations at all.
+Accountants in Australian public practice and finance staff in Australian SMEs, construction businesses and mining-services subcontractors using [Claude Code](https://claude.com/claude-code). Claude Code is the agent these skills are tested with. Codex and other agents that read `SKILL.md` files should work; Codex packaging is included, Claude Code is the tested runtime. Most skills work from standard CSV exports and degrade gracefully with no integrations at all.
 
 ## Install
 
@@ -39,13 +39,13 @@ Pick the smallest path that matches what you need:
 
 | Need | Install | What you get |
 | --- | --- | --- |
-| Claude Code, with updates from this repo | Plugin install | All nine skills as `australian-accounting-skills:*` |
+| Claude Code, with updates from this repo | Plugin install | All 19 skills as `australian-accounting-skills:*` |
 | Codex | Codex plugin | Same skills via `.codex-plugin/plugin.json` |
 | Any agent that reads `SKILL.md` | `npx skills` | Portable skill files only. No extra runtime. |
 
 ### Claude Code plugin
 
-This repo is also a Claude Code plugin marketplace, so all nine skills install together and
+This repo is also a Claude Code plugin marketplace, so all 19 skills install together and
 update with the repo:
 
 ```
@@ -56,6 +56,13 @@ update with the repo:
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
+
+If migrating from the former `hardhat-ledger` pack, uninstall or disable
+`subcontractor-accounting-skills@ryanduguid-contracting` before installing this
+pack. The ten transferred skill names are intentionally unchanged, so enabling
+both packs would create ambiguous duplicate entrypoints. See
+[`docs/HARDHAT-CONSOLIDATION.md`](docs/HARDHAT-CONSOLIDATION.md) for the exact
+source inventory and rollback route.
 
 ### Codex plugin
 
@@ -99,12 +106,15 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 
 ### Versioning
 
-The nine skills are released and tested as a set at each tagged release.
+The 19 skills are released and tested as a set at each tagged release.
 Installing a subset by hand can break skills that call their siblings:
 
 - `bas-preparation`, `month-end-close` and `year-end-workpapers` depend on `xero-exports`
 - `fbt-annual-workflow` and `stp-finalisation` depend on each other (RFBA hand-off)
 - `year-end-workpapers` depends on `bas-preparation`, `stp-finalisation` and `workpaper-tie-out`
+- the contracting workflows use `contracting-exports` as their shared export
+  reference, and the costing, claim, retention and WIP skills cross-reference
+  each other
 
 Install the full pack at a tagged release to keep the set consistent.
 
@@ -160,6 +170,16 @@ Fabricated sample. Shows labelled BAS amounts, a GST control-account tie-out to 
 | `year-end-workpapers` | Review-ready annual workpaper pack from a trial balance export |
 | `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |
+| `progress-claim-preparation` | Prepare and review payment claims, variations, retention and reference-date evidence |
+| `retention-schedule` | Roll forward contractual retentions and test jurisdiction-specific trust controls |
+| `wip-over-under-billing` | Prepare per-contract WIP inputs and route arithmetic through TheWIPTally |
+| `contract-cost-tracking` | Reconcile job costs, commitments, plant allocations and forecast cost to complete |
+| `plant-and-equipment-costing` | Build reviewable machine-cost and utilisation schedules |
+| `fuel-tax-credits` | Prepare evidence and apportionment for fuel tax credit review |
+| `payroll-tax-contractors` | Test contractor payments against the applicable State or Territory pathway |
+| `contractor-super-tpar` | Prepare contractor super, TPAR and no-ABN review workpapers |
+| `coal-lsl-levy` | Prepare Coal LSL coverage, levy, reimbursement and payroll tie-outs |
+| `contracting-exports` | Validate the job, claim, plant, payroll and subcontractor exports the contracting skills consume |
 
 Also included:
 
@@ -175,6 +195,7 @@ These skills name three maintained CLIs rather than asking the agent to invent t
 - [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
 - [`xero-trial-balance-export`](https://github.com/ryanduguid/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
 - [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) for whether a BAS, month-end, or year-end pack is allowed onto the review desk. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off.
+- [TheWIPTally](https://github.com/ryanduguid/TheWIPTally) (`wip-tally schedule`) for reviewed cost-to-cost arithmetic. The skills retain the unit-of-account, recognition and professional-judgement gates.
 
 ## Design principles
 

@@ -16,7 +16,7 @@ Before tagging:
 4. Confirm `VERSION` and the `RELEASE_NOTES.md` heading match the intended tag.
 5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns the repository tests, the fabricated-pack validator and the exact nine-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
+The workflow reruns the repository tests, the fabricated-pack validator and the exact 19-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final four-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
@@ -31,12 +31,17 @@ gh release download v0.1.5 -R ryanduguid/australian-accounting-skills --dir rele
 cd release-v0.1.5
 sha256sum --check SHA256SUMS
 for file in *; do gh attestation verify "$file" -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml; done
-gh attestation verify australian-accounting-skills-0.1.3.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
-gh attestation verify australian-accounting-skills-0.1.3.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
+gh attestation verify australian-accounting-skills-0.1.5.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
+gh attestation verify australian-accounting-skills-0.1.5.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
 gh release view v0.1.5 -R ryanduguid/australian-accounting-skills --json isImmutable
 gh release verify v0.1.5 -R ryanduguid/australian-accounting-skills
 for file in *; do gh release verify-asset v0.1.5 "$file" -R ryanduguid/australian-accounting-skills; done
 ```
+
+Those commands preserve the signer identity of the existing `v0.1.5` release.
+Releases cut after the specialised policy migration use
+`ryanduguid/release-policy/.github/workflows/release-skills.yml` as their
+`--signer-workflow` value.
 
 If any gate fails, inspect it before touching the tag or draft. Never move a
 published tag. It behaves like a boulder in a corridor: once it is rolling the

@@ -1,8 +1,9 @@
 # Australian Accounting Skills contributor guide
 
 This repository contains reusable workflow skills for Australian
-public-practice accounting. It is source code and documentation, not a client
-workpaper store and not a substitute for a firm's own instructions.
+public-practice and contracting-business accounting. It is source code and
+documentation, not a client workpaper store and not a substitute for a firm's
+own instructions.
 
 ## Scope and data
 

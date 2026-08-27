@@ -1,0 +1,20 @@
+{
+  "skill": "contractor-super-tpar",
+  "notes": "Reviewed source paths transferred from hardhat-ledger commit eb3b8a6ba47dfcdc05cea434f2f6a7dba82f96ef. Re-verify status and compilations at use time.",
+  "sources": [
+    {
+      "title": "Superannuation Guarantee (Administration) Act 1992",
+      "url": "https://www.legislation.gov.au/C2004A04402/latest/text",
+      "checked_at": "2026-08-15",
+      "fact": "Contractor coverage and the bounded payday-super calculation use the current statutory pathways, while employee status and final charge remain human decisions.",
+      "volatile": true
+    },
+    {
+      "title": "Taxation Administration Act 1953",
+      "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "checked_at": "2026-08-15",
+      "fact": "TPAR and no-ABN reporting pathways, periods and authorities must be kept distinct and rechecked against the current compilation.",
+      "volatile": true
+    }
+  ]
+}
