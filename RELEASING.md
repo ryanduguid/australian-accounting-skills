@@ -39,9 +39,30 @@ for file in *; do gh release verify-asset v0.1.5 "$file" -R ryanduguid/australia
 ```
 
 Those commands preserve the signer identity of the existing `v0.1.5` release.
-Releases cut after the specialised policy migration use
-`ryanduguid/release-policy/.github/workflows/release-skills.yml` as their
-`--signer-workflow` value.
+Releases cut after the specialised policy migration are signed by the policy's
+internal publication workflow. For the next release, update `tag` if the
+intended version changes and bind verification to the exact source and policy
+commit:
+
+```bash
+tag=v0.1.6
+repo=ryanduguid/australian-accounting-skills
+release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
+test -n "$release_commit"
+for file in *; do
+  gh attestation verify "$file" -R "$repo" \
+    --source-digest "$release_commit" \
+    --source-ref "refs/tags/$tag" \
+    --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
+    --signer-digest 8b4de1ed339f1358b5f3e850b63412d8717d01da
+done
+gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
+  --predicate-type https://spdx.dev/Document/v2.3 \
+  --source-digest "$release_commit" \
+  --source-ref "refs/tags/$tag" \
+  --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
+  --signer-digest 8b4de1ed339f1358b5f3e850b63412d8717d01da
+```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a
 published tag. It behaves like a boulder in a corridor: once it is rolling the
