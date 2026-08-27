@@ -7,7 +7,7 @@ description: "Use when verifying a set of financial statements or a workpaper pa
 
 Audit-style verification pass: nothing is "done" until every number traces to a source. Run this after statements or a workpaper pack are drafted, before review.
 
-If the folder is a BAS, month-end, or year-end pack using the filenames [`review-ready-gate`](https://github.com/ryanduguid/review-ready-gate) expects, run `review-ready gate` first. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. Do not start the tie-out matrix until the gate is `READY`. The gate does not replace this skill: it only decides whether the pack is allowed onto the review desk.
+If the folder is a BAS, month-end, or year-end pack using the filenames [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) expects, run `review-ready gate` first. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. Do not start the tie-out matrix until the gate is `READY`. The gate does not replace this skill: it only decides whether the pack is allowed onto the review desk.
 
 ## Inputs needed
 

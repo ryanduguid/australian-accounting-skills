@@ -7,7 +7,7 @@ description: Use when running or reviewing a month-end close (bank reconciliatio
 
 Drive a close to done with a checklist, reconcile every control account, and end with a variance review a reviewer can sign. One artefact comes out: the close pack.
 
-If the folder uses the filenames [`review-ready-gate`](https://github.com/ryanduguid/review-ready-gate) expects, run `review-ready gate --profile month_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not period-lock approval. For trial-balance exception review after the gate, use [monthly-close-control-plane](https://github.com/ryanduguid/monthly-close-control-plane).
+If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) expects, run `review-ready gate --profile month_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not period-lock approval. For trial-balance exception review after the gate, use [Monthly Close Controls](https://github.com/ryanduguid/monthly-close-controls).
 
 ## Inputs needed
 
