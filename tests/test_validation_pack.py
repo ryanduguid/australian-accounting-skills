@@ -179,9 +179,17 @@ class SafetyControlTests(unittest.TestCase):
         for path in skill_files:
             with self.subTest(skill=path.parent.name):
                 text = path.read_text(encoding="utf-8")
-                self.assertIn("do not change `.gitignore`", text.lower())
+                lower = text.lower()
+                self.assertTrue(
+                    "do not change `.gitignore`" in lower
+                    or "do not edit `.gitignore`" in lower
+                )
                 self.assertIn("authorised human", text)
-                self.assertIn("assurance", text.lower())
+                self.assertTrue(
+                    "assurance" in lower
+                    or "legal, tax and accounting judgement belongs to the authorised reviewer"
+                    in lower
+                )
 
     def test_shared_rule_keeps_consequential_actions_human_only(self) -> None:
         text = (

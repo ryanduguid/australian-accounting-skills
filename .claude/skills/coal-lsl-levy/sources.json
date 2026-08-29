@@ -1,0 +1,20 @@
+{
+  "skill": "coal-lsl-levy",
+  "notes": "Controlling Commonwealth sources. Re-verify current compilations and Coal LSL operational guidance at use time.",
+  "sources": [
+    {
+      "title": "Coal Mining Industry (Long Service Leave) Administration Act 1992",
+      "url": "https://www.legislation.gov.au/C2004A04351/latest/text",
+      "checked_at": "2026-08-28",
+      "fact": "Employee coverage and reimbursement authority come from the current Act, with disputed conclusions retained for human review.",
+      "volatile": true
+    },
+    {
+      "title": "Coal Mining Industry (Long Service Leave) Payroll Levy Regulations 2018",
+      "url": "https://www.legislation.gov.au/F2018L00217/latest/text",
+      "checked_at": "2026-08-28",
+      "fact": "The current levy percentage must be read from the in-force compilation each time, not copied from this index.",
+      "volatile": true
+    }
+  ]
+}

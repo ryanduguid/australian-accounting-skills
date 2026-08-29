@@ -1,7 +1,8 @@
 # Disclaimer
 
-Australian Accounting Skills is a set of workflow skills for Australian public-practice
-accounting. It is not tax, legal, accounting, financial, investment, BAS-agent,
+Australian Accounting Skills is a set of workflow skills for Australian
+public-practice and contracting-business accounting. It is not tax, legal,
+accounting, financial, investment, BAS-agent,
 registered-tax-agent, or assurance advice.
 
 These skills are not affiliated with, sponsored by, endorsed by, or approved by:

@@ -1,0 +1,20 @@
+{
+  "skill": "payroll-tax-contractors",
+  "notes": "NSW discovery sources only. The skill requires a separate current-source test in every jurisdiction where work is performed.",
+  "sources": [
+    {
+      "title": "Payroll Tax Act 2007 (NSW)",
+      "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+      "checked_at": "2026-08-28",
+      "fact": "The relevant-contract and exemption tests must be read from the in-force Act for NSW and must not be projected into another jurisdiction.",
+      "volatile": true
+    },
+    {
+      "title": "Revenue NSW contractors and payroll tax",
+      "url": "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/payroll-tax/taxable-wages/contractors",
+      "checked_at": "2026-08-28",
+      "fact": "Current operational guidance supports, but does not replace, the statutory contractor tests and exemptions.",
+      "volatile": true
+    }
+  ]
+}

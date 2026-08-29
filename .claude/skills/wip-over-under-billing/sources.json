@@ -1,0 +1,20 @@
+{
+  "skill": "wip-over-under-billing",
+  "notes": "Accounting-standard provenance. The external schedule engine supplies arithmetic only and does not own professional judgements.",
+  "sources": [
+    {
+      "title": "AASB 15 Revenue from Contracts with Customers",
+      "url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
+      "checked_at": "2026-08-28",
+      "fact": "Unit of account, timing, progress, variable consideration and contract-balance principles come from the compilation operative for the reporting period.",
+      "volatile": true
+    },
+    {
+      "title": "TheWIPTally schedule engine",
+      "url": "https://github.com/ryanduguid/TheWIPTally",
+      "checked_at": "2026-08-28",
+      "fact": "The local schedule engine performs reviewed arithmetic only; it does not decide recognition, enforceability or onerous-contract conclusions.",
+      "volatile": true
+    }
+  ]
+}

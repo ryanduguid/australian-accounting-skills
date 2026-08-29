@@ -1,0 +1,20 @@
+{
+  "skill": "contract-cost-tracking",
+  "notes": "Accounting-standard provenance only. Select the compilation operative for the reporting period at use time.",
+  "sources": [
+    {
+      "title": "AASB 15 Revenue from Contracts with Customers",
+      "url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
+      "checked_at": "2026-08-28",
+      "fact": "Contract combination, directly related costs and cost-based progress tests come from AASB 15; the operative compilation must be confirmed for the period.",
+      "volatile": true
+    },
+    {
+      "title": "AASB 137 Provisions, Contingent Liabilities and Contingent Assets",
+      "url": "https://standards.aasb.gov.au/aasb-137-dec-2022",
+      "checked_at": "2026-08-28",
+      "fact": "Onerous-contract recognition and measurement sit in AASB 137 rather than AASB 15; confirm the current compilation before relying on paragraph numbers.",
+      "volatile": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The eight cards in `cases/` test workflow quality, provenance and restraint.
+The 17 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -50,8 +50,17 @@ law claim, unverified source or guess.
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
 | [Post-journal provenance tie-out](cases/post-journal-provenance-tie-out.md) | xero-exports, workpaper-tie-out, year-end-workpapers, month-end-close |
 | [BAS export manifest and rounding bridge](cases/bas-export-manifest-rounding.md) | xero-exports, bas-preparation, workpaper-tie-out |
+| [Progress claim missing reference date](cases/progress-claim-missing-reference-date.md) | progress-claim-preparation |
+| [Retention release missing deed](cases/retention-release-missing-deed.md) | retention-schedule |
+| [WIP cost-to-complete gap](cases/wip-cost-to-complete-gap.md) | wip-over-under-billing |
+| [Unallocated plant cost](cases/contract-cost-unallocated-plant.md) | contract-cost-tracking, plant-and-equipment-costing |
+| [Fuel tax credits missing docket](cases/fuel-tax-credits-missing-docket.md) | fuel-tax-credits |
+| [Coal LSL levy unverified rate](cases/coal-lsl-levy-unverified-rate.md) | coal-lsl-levy |
+| [Payroll-tax contractor characterisation](cases/payroll-tax-contractor-characterisation.md) | payroll-tax-contractors, contractor-super-tpar |
+| [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
+| [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all ten transferred contracting skills installed independently |
 
-Together the cards cover all nine distributable skills.
+Together the cards cover all 19 distributable skills.
 
 ## Static checks
 
