@@ -1,0 +1,20 @@
+{
+  "skill": "progress-claim-preparation",
+  "notes": "NSW coverage sources reviewed in hardhat-ledger on 15 August 2026. Other jurisdictions require their own current-source review.",
+  "sources": [
+    {
+      "title": "Building and Construction Industry Security of Payment Act 1999 (NSW)",
+      "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
+      "checked_at": "2026-08-15",
+      "fact": "Section 5 coverage and exclusions are applied to the actual work and purpose; the skill does not make the legal coverage conclusion.",
+      "volatile": true
+    },
+    {
+      "title": "Cadia Holdings Pty Ltd v Downer EDI Mining Pty Ltd [2020] NSWSC 1588",
+      "url": "https://www.caselaw.nsw.gov.au/decision/175b4bf54ee486b38a0338e5",
+      "checked_at": "2026-08-15",
+      "fact": "The judgment informs the purpose connection and mixed-work analysis but is not transferred mechanically to another contract.",
+      "volatile": false
+    }
+  ]
+}

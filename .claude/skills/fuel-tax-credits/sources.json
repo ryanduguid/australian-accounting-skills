@@ -1,0 +1,20 @@
+{
+  "skill": "fuel-tax-credits",
+  "notes": "Entitlement and rate provenance. The rate is deliberately not stored here.",
+  "sources": [
+    {
+      "title": "Fuel Tax Act 2006",
+      "url": "https://www.legislation.gov.au/C2006A00072/latest/text",
+      "checked_at": "2026-08-28",
+      "fact": "Fuel acquisition, use and entitlement gates come from the current Act and must be applied before any rate is selected.",
+      "volatile": true
+    },
+    {
+      "title": "ATO fuel tax credit rates",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/fuel-schemes/fuel-tax-credits-business/rates-business",
+      "checked_at": "2026-08-28",
+      "fact": "Rates vary by period and use and must be read live for the fuel acquisition date; this index is not a rate table.",
+      "volatile": true
+    }
+  ]
+}
