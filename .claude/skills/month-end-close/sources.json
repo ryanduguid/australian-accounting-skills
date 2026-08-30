@@ -1,0 +1,34 @@
+{
+  "skill": "month-end-close",
+  "notes": "Mutable ATO and Treasury facts behind the Payday Super timing control. Re-verify at use time. This index is provenance, not a substitute for a live source check.",
+  "sources": [
+    {
+      "title": "ATO Payday Super",
+      "url": "https://softwaredevelopers.ato.gov.au/PaydaySuper",
+      "checked_at": "2026-08-20",
+      "fact": "For paydays from 1 July 2026, the ordinary period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday.",
+      "volatile": true
+    },
+    {
+      "title": "ATO Payday Super for employers",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday",
+      "checked_at": "2026-08-20",
+      "fact": "Allowable longer periods (first eligible contribution, qualifying out-of-cycle payments, exceptional circumstances, s 18C alignment) are fact-dependent. A remittance date is not fund receipt.",
+      "volatile": true
+    },
+    {
+      "title": "Treasury Laws Amendment (Payday Superannuation) Act 2025, Schedule 1 / SGAA s 18C",
+      "url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+      "checked_at": "2026-08-20",
+      "fact": "Statutory payday-super timing and the s 18C alignment conditions sit in this Act. Missing facts produce UNKNOWN, not an SGC determination.",
+      "volatile": false
+    },
+    {
+      "title": "Superannuation Guarantee (Administration) Regulations 2018",
+      "url": "https://www.legislation.gov.au/F2018L01289/latest/text",
+      "checked_at": "2026-08-20",
+      "fact": "Use the current compilation, including the 1 July 2026 compilation where that is the law in force for the period being closed.",
+      "volatile": true
+    }
+  ]
+}
