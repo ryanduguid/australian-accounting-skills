@@ -6,6 +6,14 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+    ignore:
+      # ADR-0001: the release-policy pin is an immutable full commit SHA,
+      # advanced only by a reviewed migration that also updates the pin
+      # assertion and verifies attestations against the new signer workflow.
+      # Dependabot can do neither, so its bumps are refused by the pin tests
+      # and sit red forever. Pin drift is tracked by release-policy's canary
+      # audit instead.
+      - dependency-name: "ryanduguid/release-policy/.github/workflows/*"
   - package-ecosystem: pip
     directory: /
     schedule:
