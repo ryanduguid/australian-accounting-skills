@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +19,17 @@ ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
 # that already labels a release must never label a second, different inventory.
 RELEASED_INVENTORIES = {"0.1.5": 9}
 INVENTORY_WORDS = {9: "nine", 19: "nineteen"}
+# Every spelling the skills use to open a dated primary-source list. Two are in
+# the tree: the inline "Primary sources (checked 20 August 2026):" lead-in
+# (cashflow-forecast-13week, month-end-close, stp-finalisation) and the
+# "## Primary sources checked" heading whose body carries the check date
+# (contractor-super-tpar, progress-claim-preparation, retention-schedule).
+# Matching one spelling only would let the other claim a source-index exemption
+# unchallenged, so this is anchored to the line but tolerant of the separator.
+DATED_SOURCE_LIST = re.compile(
+    r"^#{0,6}\s*Primary sources\b[\s(,:-]*checked\b",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 STRICT_YAML = REPOSITORY / "scripts" / "strict_yaml.py"
 STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", STRICT_YAML)
@@ -309,13 +321,21 @@ class SkillMetadataTests(unittest.TestCase):
         skill can declare it has nothing worth indexing while its text carries
         a dated source list. Then a maintainer sweeping `sources.json` files
         for stale check dates never sees it.
+
+        Detection has to cover every spelling of that list the tree uses. The
+        skills transferred under `test_hardhat_consolidation.py` head theirs
+        `## Primary sources checked`, so a check keyed to the inline lead-in
+        alone skipped three skills whose SKILL.md bytes are hash-locked and
+        cannot be reworded to suit the test.
         """
+        dated: list[str] = []
         for skill_dir in sorted(path for path in SKILLS_DIRECTORY.iterdir() if path.is_dir()):
             skill_file = skill_dir / "SKILL.md"
             if not skill_file.is_file():
                 continue
-            if "Primary sources (checked" not in skill_file.read_text(encoding="utf-8"):
+            if not DATED_SOURCE_LIST.search(skill_file.read_text(encoding="utf-8")):
                 continue
+            dated.append(skill_dir.name)
             with self.subTest(skill=skill_dir.name):
                 self.assertFalse(
                     (skill_dir / "sources.exempt.json").is_file(),
@@ -323,6 +343,12 @@ class SkillMetadataTests(unittest.TestCase):
                     "has no facts that belong in a sources index",
                 )
                 self.assertTrue((skill_dir / "sources.json").is_file())
+        self.assertTrue(
+            dated,
+            "no SKILL.md matched DATED_SOURCE_LIST, so this check inspected "
+            "nothing and passed vacuously. Point the pattern at the heading "
+            "the skills now use.",
+        )
 
     def test_version_never_relabels_a_published_inventory(self) -> None:
         """One version string must identify one set of skills, not two."""
