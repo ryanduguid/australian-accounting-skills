@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 import importlib.util
+import re
 import tempfile
 import unittest
 from pathlib import Path
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
+# The not-advice sentence has to travel with a single copied skill folder, so a
+# link back to the repository root does not count as one.
+INLINE_NOT_ADVICE = re.compile(r"not (?:tax|legal)[^.\n]*advice", re.IGNORECASE)
 SCRIPT = REPOSITORY / "scripts" / "validate_validation.py"
 SPEC = importlib.util.spec_from_file_location("validate_validation", SCRIPT)
 if SPEC is None or SPEC.loader is None:  # pragma: no cover - import machinery guard
@@ -189,6 +193,12 @@ class SafetyControlTests(unittest.TestCase):
                     "assurance" in lower
                     or "legal, tax and accounting judgement belongs to the authorised reviewer"
                     in lower
+                )
+                self.assertTrue(
+                    INLINE_NOT_ADVICE.search(text) is not None
+                    or "## Portable safety boundary" in text,
+                    "the not-advice boundary must survive copying this folder out "
+                    "of the repository, so a DISCLAIMER.md link alone is not enough",
                 )
 
     def test_shared_rule_keeps_consequential_actions_human_only(self) -> None:
