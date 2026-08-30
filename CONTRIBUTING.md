@@ -26,7 +26,12 @@ Python 3.10 or newer. Install the pinned test dependency first:
 python -m pip install --requirement requirements-test.txt
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
+python tests/verify_skills_cli.py
 ```
+
+Those three checks are the gates `.github/workflows/verify.yml` runs. The last
+one needs `npx` and hard-codes the expected skill names, so renaming a skill
+fails there even when the unittest suite passes.
 
 The suite checks skill metadata and structure. Add a test when your change introduces a rule a reader could get wrong.
 

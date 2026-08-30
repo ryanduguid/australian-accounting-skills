@@ -1,13 +1,13 @@
 {
   "name": "australian-accounting-skills",
-  "version": "0.1.5",
+  "version": "0.2.0-rc.1",
   "license": "MIT",
   "repository": "https://github.com/ryanduguid/australian-accounting-skills",
   "homepage": "https://ryanduguid.github.io/tools/australian-tax-ai-agents/",
   "author": {
     "name": "Ryan Duguid"
   },
-  "description": "Australian public-practice workflow skills: BAS tie-out, FBT, Division 7A, STP finalisation, and workpapers. Prep-only. Not lodgment. Not tax advice.",
+  "description": "Australian public-practice and contracting-business workflow skills. Prep-only. Not lodgment. Not tax advice.",
   "skills": "./.claude/skills/",
   "keywords": [
     "australian tax",
@@ -32,7 +32,7 @@
     "displayName": "Australian accounting skills",
     "developerName": "Ryan Duguid",
     "shortDescription": "Public-practice BAS, FBT, Div 7A and STP workflows",
-    "longDescription": "Nine workflow skills for Australian public-practice accounting. Each skill encodes the steps and tie-outs, and sends the agent to ato.gov.au for rates and thresholds that change yearly. Outputs are review-ready workpapers. An authorised human reviews, decides and lodges. Not tax advice. Not affiliated with or endorsed by the Australian Taxation Office.",
+    "longDescription": "Nineteen workflow skills for Australian public-practice and contracting-business accounting. Each skill encodes steps, tie-outs and escalation boundaries, then sends the agent to current primary sources for mutable rules. Outputs are review-ready workpapers. An authorised human reviews, decides and lodges. Not tax advice. Not affiliated with or endorsed by the Australian Taxation Office.",
     "category": "Productivity",
     "capabilities": [
       "Read",

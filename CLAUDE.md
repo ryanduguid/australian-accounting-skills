@@ -1,8 +1,9 @@
 # Australian Accounting Skills contributor guide
 
 This repository contains reusable workflow skills for Australian
-public-practice accounting. It is source code and documentation, not a client
-workpaper store and not a substitute for a firm's own instructions.
+public-practice and contracting-business accounting. It is source code and
+documentation, not a client workpaper store and not a substitute for a firm's
+own instructions.
 
 ## Scope and data
 
@@ -44,5 +45,6 @@ workpaper store and not a substitute for a firm's own instructions.
 - Review the requested scope, diff, local links, cross-skill references and
   privacy risks.
 - Run `python -m unittest discover -s tests -v`,
-  `python scripts/validate_validation.py`, and `git diff --check`.
+  `python scripts/validate_validation.py`, `python tests/verify_skills_cli.py`,
+  and `git diff --check`. The first three are the gates CI runs.
 - State any relevant validation that was not run and why.

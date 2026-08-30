@@ -1,8 +1,8 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "australian-accounting-skills",
-  "version": "0.1.5",
-  "description": "Workflow skills for Australian public-practice accounting: BAS preparation, month-end close, workpaper tie-out, FBT, Division 7A, STP finalisation, year-end workpapers, Xero exports and 13-week cashflow. Prep-only. Not lodgment. Not tax advice.",
+  "version": "0.2.0-rc.1",
+  "description": "Nineteen workflow skills for Australian public-practice and contracting-business accounting. Prep-only. Not lodgment. Not tax advice.",
   "author": {
     "name": "Ryan Duguid"
   },

@@ -10,11 +10,12 @@ specific to working in the repository tree.
 
 ## What this repository is
 
-Nine agent skills for Australian public-practice accounting: BAS preparation,
-month-end close, workpaper tie-out, FBT annual workflow, Division 7A
-compliance, STP finalisation, year-end workpapers, Xero exports and 13-week
-cashflow. Each skill encodes the process and the tie-outs, then sends the agent
-to the primary source for rates and thresholds that change.
+Nineteen agent skills for Australian public-practice and contracting-business
+accounting. The original practice workflows cover BAS, close, workpapers, FBT,
+Division 7A, STP, Xero exports and cashflow. The consolidated contracting
+workflows cover claims, retentions, WIP, contract costs, plant, fuel, payroll
+tax, contractor super, TPAR and Coal LSL. Each skill encodes the process and
+tie-outs, then sends the agent to current primary sources for mutable rules.
 
 ## Hard boundary
 
@@ -50,7 +51,11 @@ it.
 ```
 python -m pip install --requirement requirements-test.txt
 python -m unittest discover -s tests -v
+python scripts/validate_validation.py
+python tests/verify_skills_cli.py
 ```
+
+Those three checks are the gates `.github/workflows/verify.yml` runs.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate

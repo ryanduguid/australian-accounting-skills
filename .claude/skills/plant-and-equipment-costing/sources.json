@@ -1,0 +1,20 @@
+{
+  "skill": "plant-and-equipment-costing",
+  "notes": "Financial-reporting and tax provenance. Management-costing methods remain entity policy and are labelled as such.",
+  "sources": [
+    {
+      "title": "AASB 116 Property, Plant and Equipment",
+      "url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
+      "checked_at": "2026-08-28",
+      "fact": "Recognition, depreciation and component-accounting requirements come from the compilation operative for the reporting period.",
+      "volatile": true
+    },
+    {
+      "title": "Income Tax Assessment Act 1997",
+      "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "checked_at": "2026-08-28",
+      "fact": "Division 40 separates tax decline in value and effective-life choices from the management-accounting machine rate.",
+      "volatile": true
+    }
+  ]
+}
