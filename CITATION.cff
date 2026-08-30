@@ -8,7 +8,9 @@ authors:
 abstract: >-
   Nine preparation-only agent skills for Australian public-practice
   accounting workflows, with source verification, reconciliation checks and
-  human review boundaries.
+  human review boundaries. This record is pinned to the tagged v0.1.5
+  release. The default branch carries a nineteen-skill public-practice and
+  contracting integration candidate, which is not a published release.
 version: 0.1.5
 date-released: 2026-08-23
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"

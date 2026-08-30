@@ -18,7 +18,7 @@
 
 [![Verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-4F485E.svg?labelColor=04001F)](LICENSE)
 
-Claude Code, Codex, and portable agent skills for Australian public-practice and contracting-business accounting workflows. The pack covers BAS, FBT, Division 7A, STP finalisation, close and workpapers, cashflow, progress claims, retentions, WIP, contract costs, plant, fuel, payroll tax, contractor super, TPAR and Coal LSL.
+Claude Code, Codex, and portable agent skills for Australian public-practice and contracting-business accounting workflows. The pack covers BAS, FBT, Division 7A, STP finalisation, close and workpapers, cashflow, progress claims, retentions, WIP, contract costs, plant, fuel, payroll tax (NSW), contractor super, TPAR and Coal LSL.
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change, so each skill directs the agent to the applicable current primary authority: Commonwealth legislation and ATO material, State or Territory legislation and revenue office material, AASB standards, or Coal LSL guidance.
 
@@ -125,6 +125,17 @@ subset by hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
+Every command under [Install](#install) resolves the default branch, so each one
+delivers the 19-skill candidate, which is stamped `0.2.0-rc.1` so it never
+shares a version string with the published nine-skill `v0.1.5`. To take the
+tagged nine-skill pack, install from the tag instead:
+
+```bash
+git clone --branch v0.1.5 --depth 1 https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
+mkdir -p ~/.claude/skills
+cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
+```
+
 Use the full nine-skill pack for `v0.1.5`. After the future 19-skill replacement
 release is available, install that full tagged pack to keep the expanded set
 consistent.
@@ -187,7 +198,7 @@ Fabricated sample. Shows labelled BAS amounts, a GST control-account tie-out to 
 | `contract-cost-tracking` | Reconcile job costs, commitments, plant allocations and forecast cost to complete |
 | `plant-and-equipment-costing` | Build reviewable machine-cost and utilisation schedules |
 | `fuel-tax-credits` | Prepare evidence and apportionment for fuel tax credit review |
-| `payroll-tax-contractors` | Test contractor payments against the applicable State or Territory pathway |
+| `payroll-tax-contractors` | Test contractor payments against the NSW relevant-contract and employment-agency pathways (NSW only; other jurisdictions need their own Act) |
 | `contractor-super-tpar` | Prepare contractor super, TPAR and no-ABN review workpapers |
 | `coal-lsl-levy` | Prepare Coal LSL coverage, levy, reimbursement and payroll tie-outs |
 | `contracting-exports` | Validate the job, claim, plant, payroll and subcontractor exports the contracting skills consume |

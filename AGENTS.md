@@ -51,7 +51,11 @@ it.
 ```
 python -m pip install --requirement requirements-test.txt
 python -m unittest discover -s tests -v
+python scripts/validate_validation.py
+python tests/verify_skills_cli.py
 ```
+
+Those three checks are the gates `.github/workflows/verify.yml` runs.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,6 +15,21 @@ import yaml
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
+# Published releases and the skill inventory each one shipped. A version string
+# that already labels a release must never label a second, different inventory.
+RELEASED_INVENTORIES = {"0.1.5": 9}
+INVENTORY_WORDS = {9: "nine", 19: "nineteen"}
+# Every spelling the skills use to open a dated primary-source list. Two are in
+# the tree: the inline "Primary sources (checked 20 August 2026):" lead-in
+# (cashflow-forecast-13week, month-end-close, stp-finalisation) and the
+# "## Primary sources checked" heading whose body carries the check date
+# (contractor-super-tpar, progress-claim-preparation, retention-schedule).
+# Matching one spelling only would let the other claim a source-index exemption
+# unchallenged, so this is anchored to the line but tolerant of the separator.
+DATED_SOURCE_LIST = re.compile(
+    r"^#{0,6}\s*Primary sources\b[\s(,:-]*checked\b",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 STRICT_YAML = REPOSITORY / "scripts" / "strict_yaml.py"
 STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", STRICT_YAML)
@@ -297,6 +313,96 @@ class SkillMetadataTests(unittest.TestCase):
                     self.assertEqual(payload["skill"], skill_dir.name)
                     self.assertIs(payload["exempt"], True)
                     self.assertTrue(str(payload["reason"]).strip())
+
+    def test_a_dated_primary_source_list_rules_out_an_exemption(self) -> None:
+        """A skill that dates its own sources holds the facts an index tracks.
+
+        The exemption reason is a free-text string no other check reads, so a
+        skill can declare it has nothing worth indexing while its text carries
+        a dated source list. Then a maintainer sweeping `sources.json` files
+        for stale check dates never sees it.
+
+        Detection has to cover every spelling of that list the tree uses. The
+        skills transferred under `test_hardhat_consolidation.py` head theirs
+        `## Primary sources checked`, so a check keyed to the inline lead-in
+        alone skipped three skills whose SKILL.md bytes are hash-locked and
+        cannot be reworded to suit the test.
+        """
+        dated: list[str] = []
+        for skill_dir in sorted(path for path in SKILLS_DIRECTORY.iterdir() if path.is_dir()):
+            skill_file = skill_dir / "SKILL.md"
+            if not skill_file.is_file():
+                continue
+            if not DATED_SOURCE_LIST.search(skill_file.read_text(encoding="utf-8")):
+                continue
+            dated.append(skill_dir.name)
+            with self.subTest(skill=skill_dir.name):
+                self.assertFalse(
+                    (skill_dir / "sources.exempt.json").is_file(),
+                    "a skill carrying a dated primary-source list cannot claim it "
+                    "has no facts that belong in a sources index",
+                )
+                self.assertTrue((skill_dir / "sources.json").is_file())
+        self.assertTrue(
+            dated,
+            "no SKILL.md matched DATED_SOURCE_LIST, so this check inspected "
+            "nothing and passed vacuously. Point the pattern at the heading "
+            "the skills now use.",
+        )
+
+    def test_version_never_relabels_a_published_inventory(self) -> None:
+        """One version string must identify one set of skills, not two."""
+        version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
+        released = RELEASED_INVENTORIES.get(version)
+        if released is None:
+            return
+        discovered = sorted(path.parent.name for path in SKILLS_DIRECTORY.glob("*/SKILL.md"))
+        self.assertEqual(
+            len(discovered),
+            released,
+            f"{version} was published with {released} skills but this tree ships "
+            f"{len(discovered)}, so it needs a version string of its own",
+        )
+
+    def test_readme_names_the_inventory_the_documented_installs_deliver(self) -> None:
+        """Every documented install route resolves one revision. Say which."""
+        readme = (REPOSITORY / "README.md").read_text(encoding="utf-8")
+        version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
+        self.assertIn("resolves the default branch", readme)
+        self.assertIn(version, readme)
+
+    def test_citation_record_matches_the_branch_or_declares_its_pin(self) -> None:
+        """A citation stamped with another release's inventory must say so."""
+        version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
+        citation = yaml.safe_load((REPOSITORY / "CITATION.cff").read_text(encoding="utf-8"))
+        cited = str(citation["version"]).strip()
+        abstract = " ".join(str(citation["abstract"]).split())
+        discovered = len(list(SKILLS_DIRECTORY.glob("*/SKILL.md")))
+
+        self.assertIn(discovered, INVENTORY_WORDS, "name the word for this inventory size")
+        self.assertIn(
+            INVENTORY_WORDS[discovered],
+            abstract.lower(),
+            "the citation abstract must state the inventory this branch ships",
+        )
+        if cited != version:
+            self.assertIn(
+                f"v{cited}",
+                abstract,
+                "a cited version that differs from VERSION must name the release it pins to",
+            )
+
+    def test_readme_keeps_the_payroll_tax_jurisdiction_fence(self) -> None:
+        """The skills table must not advertise beyond a skill's own scope."""
+        readme = (REPOSITORY / "README.md").read_text(encoding="utf-8")
+        rows = [
+            line
+            for line in readme.splitlines()
+            if line.startswith("| `payroll-tax-contractors`")
+        ]
+        self.assertEqual(len(rows), 1)
+        self.assertIn("NSW", rows[0])
+        self.assertNotIn("State or Territory", rows[0])
 
 
 if __name__ == "__main__":

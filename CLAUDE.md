@@ -45,5 +45,6 @@ own instructions.
 - Review the requested scope, diff, local links, cross-skill references and
   privacy risks.
 - Run `python -m unittest discover -s tests -v`,
-  `python scripts/validate_validation.py`, and `git diff --check`.
+  `python scripts/validate_validation.py`, `python tests/verify_skills_cli.py`,
+  and `git diff --check`. The first three are the gates CI runs.
 - State any relevant validation that was not run and why.
