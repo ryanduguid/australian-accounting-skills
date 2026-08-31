@@ -10,7 +10,7 @@ import yaml
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 VERIFY_WORKFLOW = REPOSITORY / ".github" / "workflows" / "verify.yml"
-CONTRIBUTOR_GUIDES = ("CLAUDE.md", "AGENTS.md", "CONTRIBUTING.md")
+CONTRIBUTOR_GUIDES = ("AGENTS.md", "CONTRIBUTING.md")
 
 
 def ci_gate_commands() -> list[str]:
@@ -25,6 +25,27 @@ def ci_gate_commands() -> list[str]:
 
 
 class ContributorCheckTests(unittest.TestCase):
+    def test_agents_is_the_shared_guide_and_claude_imports_it(self) -> None:
+        """One substantive guide prevents cross-runtime instruction drift."""
+        agents = (REPOSITORY / "AGENTS.md").read_text(encoding="utf-8")
+        claude = (REPOSITORY / "CLAUDE.md").read_text(encoding="utf-8")
+
+        for section in (
+            "## What this repository is",
+            "## Hard boundary",
+            "## Scope and data",
+            "## Accuracy and professional boundaries",
+            "## Where things live",
+            "## Checks before opening a pull request",
+            "## Maintaining skills",
+            "## Writing rules",
+            "## Before hand-off",
+        ):
+            with self.subTest(section=section):
+                self.assertIn(section, agents)
+
+        self.assertIn(claude, ("@AGENTS.md", "@AGENTS.md\n"))
+
     def test_every_ci_gate_appears_in_every_contributor_guide(self) -> None:
         """A gate missing from the local list fails only after hand-off."""
         gates = ci_gate_commands()
