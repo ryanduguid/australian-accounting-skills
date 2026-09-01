@@ -14,7 +14,7 @@ abstract: >-
 version: 0.1.5
 date-released: 2026-08-23
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"
-url: "https://ryanduguid.github.io/tools/australian-tax-ai-agents/"
+url: "https://duguid.com.au/tools/australian-tax-ai-agents/"
 license: MIT
 keywords:
   - Australian accounting

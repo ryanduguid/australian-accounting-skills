@@ -31,7 +31,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -uo pipefail
-          homepage="https://ryanduguid.github.io/tools/australian-tax-ai-agents/"
+          homepage="https://duguid.com.au/tools/australian-tax-ai-agents/"
           if gh api -X PATCH "repos/${GITHUB_REPOSITORY}" -f "homepage=${homepage}"; then
             echo "Set homepage to ${homepage}"
           else

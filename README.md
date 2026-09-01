@@ -22,7 +22,7 @@ Claude Code, Codex, and portable agent skills for Australian public-practice and
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change, so each skill directs the agent to the applicable current primary authority: Commonwealth legislation and ATO material, State or Territory legislation and revenue office material, AASB standards, or Coal LSL guidance.
 
-These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [Aus Accounting MCP](https://github.com/ryanduguid/aus-accounting-mcp). Comparison: [Australian tax tools for AI agents](https://ryanduguid.github.io/tools/australian-tax-ai-agents/).
+These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [Aus Accounting MCP](https://github.com/ryanduguid/aus-accounting-mcp). Comparison: [Australian tax tools for AI agents](https://duguid.com.au/tools/australian-tax-ai-agents/).
 
 Citation details are in [`CITATION.cff`](CITATION.cff) for the [`v0.1.5` release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5).
 
