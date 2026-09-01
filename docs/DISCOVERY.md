@@ -15,7 +15,7 @@ Claude Code and Codex skills for Australian practice and contracting workflows. 
 Website:
 
 ```text
-https://ryanduguid.github.io/tools/australian-tax-ai-agents/
+https://duguid.com.au/tools/australian-tax-ai-agents/
 ```
 
 Topics:
@@ -69,5 +69,5 @@ form.
 - Do not imply ATO, CA ANZ, Xero, SAP, government, or marketplace endorsement.
 - Do not claim marketplace approval or official listing until verified.
 - Skills encode workflow. Rates, thresholds, and labels are verified live.
-- Point agents at the comparison page: https://ryanduguid.github.io/tools/australian-tax-ai-agents/
+- Point agents at the comparison page: https://duguid.com.au/tools/australian-tax-ai-agents/
 - Public examples are fabricated. Never describe them as client work.
