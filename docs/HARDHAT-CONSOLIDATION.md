@@ -7,8 +7,9 @@ matches that commit after canonical LF normalisation. Destination-owned source
 indexes, discovery metadata and validation cards sit beside those unchanged
 definitions.
 
-This document records an integration candidate, not an available replacement
-release. Hardhat Ledger remains the compatible install route until a reviewed
+This document records local preparation for a proposed `v0.2.0` release, not an
+available replacement release. The proposal is neither published nor publicly
+verified. Hardhat Ledger remains the compatible install route until a reviewed
 release of this repository contains the inventory below and passes all three
 discovery paths.
 
@@ -48,10 +49,11 @@ exact release commit:
 
 ## Migration order
 
-After a destination release passes those gates, existing Hardhat users must
-uninstall or disable `subcontractor-accounting-skills@ryanduguid-contracting`
-before installing `australian-accounting-skills@ryanduguid`. The ten names are
-stable compatibility identifiers, so never enable both packs at once.
+After the proposed `v0.2.0` destination release is published, publicly
+verified and passes those gates, existing Hardhat users must uninstall or disable
+`subcontractor-accounting-skills@ryanduguid-contracting` before installing
+`australian-accounting-skills@ryanduguid`. The ten names are stable
+compatibility identifiers, so never enable both packs at once.
 
 Only after that replacement is available and verified may Hardhat Ledger take a
 separate deprecation change. That follow-up updates its install guidance, keeps
