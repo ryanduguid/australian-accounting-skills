@@ -1,3 +1,22 @@
+# v0.2.0
+
+Changes since the last published release, `v0.1.5`:
+
+- The destination plugin is `australian-accounting-skills@ryanduguid`. Its
+  nineteen skills include the ten incoming Hardhat Ledger skills:
+  `coal-lsl-levy`, `contract-cost-tracking`, `contracting-exports`,
+  `contractor-super-tpar`, `fuel-tax-credits`, `payroll-tax-contractors`,
+  `plant-and-equipment-costing`, `progress-claim-preparation`,
+  `retention-schedule` and `wip-over-under-billing`.
+- Claude and Codex plugin discovery resolve the canonical `.claude/skills/`
+  owner. `skills@1.5.22 add . --list` must discover the same nineteen skills.
+- After a published and publicly verified destination release passes its gates,
+  uninstall or disable `subcontractor-accounting-skills@ryanduguid-contracting`
+  before installing `australian-accounting-skills@ryanduguid`. Never enable both
+  packs at once because the ten transferred skill names collide.
+- To roll back, uninstall the destination pack and reinstall Hardhat Ledger
+  `v0.1.5`. Keep its release and tags intact.
+
 # v0.1.5
 
 Changes since the last published release, `v0.1.4`:
