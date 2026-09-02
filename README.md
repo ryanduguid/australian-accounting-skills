@@ -26,11 +26,12 @@ These are workflow skills, not a computational MCP and not a hosted ATO document
 
 Citation details are in [`CITATION.cff`](CITATION.cff) for the [`v0.1.5` release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5).
 
-The tagged `v0.1.5` release contains the original nine-skill practice pack. The
-19-skill integration candidate documented here is not an available replacement
-release. Hardhat Ledger remains the compatible install route for its ten
-contracting skills until a separately reviewed replacement release passes the
-gates in [`docs/HARDHAT-CONSOLIDATION.md`](docs/HARDHAT-CONSOLIDATION.md).
+The tagged `v0.1.5` release contains the original nine-skill practice pack, and
+its citation pin remains in [`CITATION.cff`](CITATION.cff). This worktree
+prepares a proposed `v0.2.0` 19-skill replacement. It is not published or
+publicly verified. Hardhat Ledger remains the compatible install route for its
+ten contracting skills until the proposed release passes the gates in
+[`docs/HARDHAT-CONSOLIDATION.md`](docs/HARDHAT-CONSOLIDATION.md).
 
 > [!WARNING]
 > **Not tax advice.** These skills are prep-only workflow aids. They do not lodge, declare, or replace professional judgement. See [DISCLAIMER.md](DISCLAIMER.md).
@@ -63,11 +64,12 @@ The skills then register as `australian-accounting-skills:bas-preparation` and s
 
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
-Do not migrate from Hardhat Ledger to this integration candidate. After a future
-19-skill replacement release passes the documented gates, uninstall or disable
-`subcontractor-accounting-skills@ryanduguid-contracting` before installing that
-release. The ten transferred skill names are intentionally unchanged, so
-enabling both packs would create ambiguous duplicate entrypoints. See
+Do not migrate from Hardhat Ledger to this prepared release. After proposed
+`v0.2.0` is published, publicly verified and passes the documented gates,
+uninstall or disable `subcontractor-accounting-skills@ryanduguid-contracting`
+before installing `australian-accounting-skills@ryanduguid`. The ten
+transferred skill names are intentionally unchanged, so never enable both packs
+at once. See
 [`docs/HARDHAT-CONSOLIDATION.md`](docs/HARDHAT-CONSOLIDATION.md) for the exact
 source inventory and rollback route.
 
@@ -114,9 +116,9 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 ### Versioning
 
 The tagged `v0.1.5` release contains and tests the original nine skills as a
-set. This candidate expands that inventory to 19 skills. A separately reviewed
-future replacement release will release and test all 19 as a set. Installing a
-subset by hand can break skills that call their siblings:
+set. The proposed `v0.2.0` release expands that inventory to 19 skills. It is
+prepared locally, not published or publicly verified. Installing a subset by
+hand can break skills that call their siblings:
 
 - `bas-preparation`, `month-end-close` and `year-end-workpapers` depend on `xero-exports`
 - `fbt-annual-workflow` and `stp-finalisation` depend on each other (RFBA hand-off)
@@ -125,10 +127,10 @@ subset by hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
-Every command under [Install](#install) resolves the default branch, so each one
-delivers the 19-skill candidate, which is stamped `0.2.0-rc.1` so it never
-shares a version string with the published nine-skill `v0.1.5`. To take the
-tagged nine-skill pack, install from the tag instead:
+Every command under [Install](#install) resolves the default branch. It may
+contain the prepared 19-skill `v0.2.0` transition, but it does not establish a
+published or publicly verified replacement. To take the tagged nine-skill pack,
+install from the tag instead:
 
 ```bash
 git clone --branch v0.1.5 --depth 1 https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
@@ -136,9 +138,9 @@ mkdir -p ~/.claude/skills
 cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
 ```
 
-Use the full nine-skill pack for `v0.1.5`. After the future 19-skill replacement
-release is available, install that full tagged pack to keep the expanded set
-consistent.
+Use the full nine-skill pack for `v0.1.5`. After a published and publicly
+verified `v0.2.0` release is available, install that full tagged pack to keep
+the expanded set consistent.
 
 ## First run
 
