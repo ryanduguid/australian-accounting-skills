@@ -37,3 +37,11 @@ jobs:
 
       - name: Verify Skills CLI discovery
         run: python tests/verify_skills_cli.py
+
+  shared-conformance:
+    name: shared conformance
+    permissions:
+      contents: read
+    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@8b4de1ed339f1358b5f3e850b63412d8717d01da
+    with:
+      skills-verification-mode: subcontractor-accounting-v1
