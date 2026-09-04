@@ -211,7 +211,7 @@ Also included:
 
 ## Sibling command-line tools
 
-These skills name four maintained CLIs rather than asking the agent to invent the same work. Each now lives in a monorepo; the distribution and command names are unchanged.
+These skills name five maintained tools rather than asking the agent to invent the same work. Each now lives in a monorepo; the distribution and command names are unchanged.
 
 - [`payday-super-check`](https://github.com/ryanduguid/australian-accounting/tree/main/packages/payday-super-checker) (`payday-super-checker` in `australian-accounting`) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
 - [`xero-trial-balance-export`](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export` in `accounting-review-pipeline`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.

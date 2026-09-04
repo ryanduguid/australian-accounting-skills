@@ -6,7 +6,7 @@ Status on 4 September 2026: the `v0.2.0` destination release was published on
 gated; the rollback route deliberately keeps its link to the archived Hardhat
 Ledger release.
 
-This pack is the planned replacement owner for the ten contracting skills from
+This pack became the owner of the ten contracting skills transferred from
 `ryanduguid/hardhat-ledger`. The integration source is immutable commit
 `eb3b8a6ba47dfcdc05cea434f2f6a7dba82f96ef`. Every transferred `SKILL.md`
 matches that commit after canonical LF normalisation. Destination-owned source
