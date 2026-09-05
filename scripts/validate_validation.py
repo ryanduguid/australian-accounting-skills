@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import html
 import importlib.util
+import json
 import os
 import re
 import stat
@@ -40,6 +41,7 @@ EXPECTED_CASE_NAMES = {
 }
 EXPECTED_VALIDATION = {
     "validation/README.md",
+    "validation/results.schema.json",
     *(f"validation/cases/{name}" for name in EXPECTED_CASE_NAMES),
 }
 EXPECTED_SUPPORT = {
@@ -49,6 +51,12 @@ EXPECTED_SUPPORT = {
     "scripts/validate_validation.py",
     "tests/test_validation_pack.py",
 }
+# A recorded run: YYYY-MM-DD-<slug>.json under validation/results/. Any number
+# may exist; each must be tracked and must hold only a pass or fail per card.
+RESULT_FILE_RE = re.compile(r"^validation/results/(\d{4}-\d{2}-\d{2})-[a-z0-9]+(?:-[a-z0-9]+)*\.json$")
+RESULT_KEYS = ("model", "run_date", "skills_version", "runner", "results")
+RESULT_VERDICTS = ("pass", "fail")
+CASE_IDS = frozenset(name.removesuffix(".md") for name in EXPECTED_CASE_NAMES)
 REQUIRED_SECTIONS = (
     "## Scenario",
     "## Task",
@@ -339,6 +347,79 @@ def check_ignored(path: str, root: Path = ROOT) -> None:
         raise ValidationError(f"git check-ignore failed for {path}: {detail}")
 
 
+def _strict_json(text: str, label: str) -> object:
+    def reject_duplicates(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        mapping: dict[str, object] = {}
+        for key, value in pairs:
+            if key in mapping:
+                raise ValidationError(f"{label}: duplicate JSON key {key!r}")
+            mapping[key] = value
+        return mapping
+
+    try:
+        return json.loads(text, object_pairs_hook=reject_duplicates)
+    except ValueError as error:
+        raise ValidationError(f"{label}: not valid JSON ({error})") from error
+
+
+def split_result_files(names: set[str]) -> tuple[set[str], set[str]]:
+    """Separate recorded runs from the fixed inventory."""
+    results = {name for name in names if RESULT_FILE_RE.match(name)}
+    return names - results, results
+
+
+def check_results_schema(text: str) -> None:
+    """The published schema must name exactly the cards the checker knows."""
+    schema = _strict_json(text, "validation/results.schema.json")
+    try:
+        assert isinstance(schema, dict)
+        enum = schema["properties"]["results"]["items"]["properties"]["case"]["enum"]
+        assert isinstance(enum, list)
+    except (AssertionError, KeyError, TypeError) as error:
+        raise ValidationError("results schema does not declare the case enum") from error
+    if sorted(enum) != sorted(CASE_IDS) or len(enum) != len(CASE_IDS):
+        raise ValidationError(
+            "results schema case enum does not match the card inventory: "
+            f"missing={sorted(CASE_IDS - set(enum))}, unknown={sorted(set(enum) - CASE_IDS)}"
+        )
+
+
+def check_result_file(rel: str, text: str) -> None:
+    """A run records a pass or fail per card and nothing else."""
+    match = RESULT_FILE_RE.match(rel)
+    if match is None:
+        raise ValidationError("result file name must be YYYY-MM-DD-<slug>.json")
+    data = _strict_json(text, rel)
+    if not isinstance(data, dict) or sorted(data) != sorted(RESULT_KEYS):
+        raise ValidationError(
+            f"result keys must be exactly {', '.join(RESULT_KEYS)}; "
+            "prompts, outputs and transcripts do not belong in a result file"
+        )
+    for key in ("model", "run_date", "skills_version", "runner"):
+        if not isinstance(data[key], str) or not data[key].strip():
+            raise ValidationError(f"{key} must be a non-empty string")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", data["run_date"]) or data["run_date"] != match.group(1):
+        raise ValidationError("run_date must be YYYY-MM-DD and match the file name")
+    results = data["results"]
+    if not isinstance(results, list) or not results:
+        raise ValidationError("results must be a non-empty list")
+    seen: set[str] = set()
+    for entry in results:
+        if not isinstance(entry, dict) or sorted(entry) != ["case", "verdict"]:
+            raise ValidationError("each result must hold exactly case and verdict")
+        if entry["case"] not in CASE_IDS:
+            raise ValidationError(f"unknown case: {entry['case']!r}")
+        if entry["case"] in seen:
+            raise ValidationError(f"duplicate case: {entry['case']}")
+        seen.add(entry["case"])
+        if entry["verdict"] not in RESULT_VERDICTS:
+            raise ValidationError(f"{entry['case']}: verdict must be pass or fail")
+    # The date is the one long numeric string a run legitimately carries; the
+    # free-text fields are where an identifier or a pasted output would land.
+    for key in ("model", "skills_version", "runner"):
+        check_sensitive_content(data[key])
+
+
 def check_text(relative_path: str, text: str) -> None:
     for line_number, line in enumerate(text.splitlines(), start=1):
         if line.rstrip(" \t") != line:
@@ -349,8 +430,9 @@ def main() -> int:
     errors: list[str] = []
     discovered_skills: set[str] = set()
 
+    result_files: set[str] = set()
     try:
-        actual = inventory_validation_tree()
+        actual, result_files = split_result_files(inventory_validation_tree())
         if actual != EXPECTED_VALIDATION:
             errors.append(
                 "validation inventory mismatch: "
@@ -360,7 +442,7 @@ def main() -> int:
     except ValidationError as error:
         errors.append(str(error))
 
-    expected_all = EXPECTED_VALIDATION | EXPECTED_SUPPORT
+    expected_all = EXPECTED_VALIDATION | EXPECTED_SUPPORT | result_files
     try:
         tracked = git_entries(sorted(expected_all))
         if set(tracked) != expected_all:
@@ -435,6 +517,21 @@ def main() -> int:
             f"unknown={sorted(covered_skills - discovered_skills)}"
         )
 
+    schema_text = read_sources.get("validation/results.schema.json")
+    if schema_text is not None:
+        try:
+            check_results_schema(schema_text)
+        except ValidationError as error:
+            errors.append(f"validation/results.schema.json: {error}")
+    for rel in sorted(result_files):
+        text = read_sources.get(rel)
+        if text is None:
+            continue
+        try:
+            check_result_file(rel, text)
+        except ValidationError as error:
+            errors.append(f"{rel}: {error}")
+
     validation_readme = read_sources.get("validation/README.md", "")
     try:
         check_sensitive_content(validation_readme)
@@ -458,7 +555,8 @@ def main() -> int:
     print(
         "Validation pack checks passed: "
         f"{len(EXPECTED_CASE_NAMES)} fabricated cards, "
-        f"{len(discovered_skills)} skills, exact tracked inventory."
+        f"{len(discovered_skills)} skills, {len(result_files)} recorded runs, "
+        "exact tracked inventory."
     )
     return 0
 
