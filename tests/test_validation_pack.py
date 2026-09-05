@@ -318,5 +318,75 @@ class SafetyControlTests(unittest.TestCase):
             validator.check_sensitive_content("effective 1 **July** 2026")
 
 
+class RecordedRunTests(unittest.TestCase):
+    """A recorded run is a pass or fail per card and nothing else."""
+
+    GOOD = (
+        '{"model": "example-model", "run_date": "2026-01-31", "skills_version": "v0.2.0", '
+        '"runner": "A Person", "results": {"bas-g10-g11": "pass"}}'
+    )
+    NAME = "validation/results/2026-01-31-example-model.json"
+
+    def test_accepts_a_minimal_run(self) -> None:
+        validator.check_result_file(self.NAME, self.GOOD)
+
+    def test_rejects_shape_drift(self) -> None:
+        for label, name, text in (
+            ("transcript key", self.NAME, self.GOOD.replace('"runner"', '"transcript": "x", "runner"')),
+            ("unknown case", self.NAME, self.GOOD.replace("bas-g10-g11", "made-up")),
+            ("bad verdict", self.NAME, self.GOOD.replace('"pass"', '"PASS"')),
+            ("duplicate case", self.NAME, self.GOOD.replace(
+                '"bas-g10-g11": "pass"', '"bas-g10-g11": "pass", "bas-g10-g11": "fail"')),
+            ("date mismatch", "validation/results/2026-02-01-example-model.json", self.GOOD),
+            ("bad name", "validation/results/notes.json", self.GOOD),
+            ("duplicate key", self.NAME, self.GOOD.replace('"runner"', '"model": "x", "runner"')),
+            ("empty model", self.NAME, self.GOOD.replace('"example-model"', '" "')),
+            ("no results", self.NAME, self.GOOD.replace('{"bas-g10-g11": "pass"}', "{}")),
+            ("list of entries", self.NAME, self.GOOD.replace(
+                '{"bas-g10-g11": "pass"}', '[{"case": "bas-g10-g11", "verdict": "pass"}]')),
+            ("note as verdict", self.NAME, self.GOOD.replace(
+                '"pass"', '{"verdict": "pass", "note": "why"}')),
+            ("impossible date", "validation/results/2026-99-99-example-model.json",
+             self.GOOD.replace("2026-01-31", "2026-99-99")),
+            ("multi-line runner", self.NAME, self.GOOD.replace('"A Person"', '"Model output:\\nx"')),
+            ("long runner", self.NAME, self.GOOD.replace('"A Person"', '"' + "x" * 121 + '"')),
+            ("identifier in runner", self.NAME, self.GOOD.replace('"A Person"', '"123456789"')),
+        ):
+            with self.subTest(label), self.assertRaises(validator.ValidationError):
+                validator.check_result_file(name, text)
+
+    def test_rejection_reasons_are_the_documented_ones(self) -> None:
+        with self.assertRaisesRegex(validator.ValidationError, "match the file name"):
+            validator.check_result_file(
+                "validation/results/2026-02-01-example-model.json", self.GOOD)
+        with self.assertRaisesRegex(validator.ValidationError, "transcripts do not belong"):
+            validator.check_result_file(
+                self.NAME, self.GOOD.replace('"runner"', '"transcript": "x", "runner"'))
+        with self.assertRaisesRegex(validator.ValidationError, "one line of at most"):
+            validator.check_result_file(
+                self.NAME, self.GOOD.replace('"A Person"', '"' + "x" * 121 + '"'))
+
+    def test_schema_enum_must_match_the_card_inventory(self) -> None:
+        schema = validator.read_utf8(REPOSITORY / "validation" / "results.schema.json")
+        validator.check_results_schema(schema)
+        with self.assertRaisesRegex(validator.ValidationError, "missing="):
+            validator.check_results_schema(schema.replace('"bas-g10-g11",\n', ""))
+        with self.assertRaisesRegex(validator.ValidationError, "unknown=\\['made-up'\\]"):
+            validator.check_results_schema(schema.replace('"bas-g10-g11",\n', '"bas-g10-g11",\n"made-up",\n'))
+        with self.assertRaisesRegex(validator.ValidationError, "does not declare"):
+            validator.check_results_schema(schema.replace('"bas-g10-g11",\n', '5,\n'))
+        with self.assertRaisesRegex(validator.ValidationError, "verdict enum"):
+            validator.check_results_schema(schema.replace('"pass",', '"PASS",'))
+
+    def test_inventory_splits_runs_from_the_fixed_set(self) -> None:
+        fixed, runs = validator.split_result_files({
+            "validation/README.md",
+            "validation/results/2026-01-31-example-model.json",
+            "validation/results/notes.json",
+        })
+        self.assertEqual(runs, {"validation/results/2026-01-31-example-model.json"})
+        self.assertEqual(fixed, {"validation/README.md", "validation/results/notes.json"})
+
+
 if __name__ == "__main__":
     unittest.main()

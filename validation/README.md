@@ -17,7 +17,8 @@ leaves it for an authorised reviewer.
    identifiers to make it more realistic.
 3. Assess the output against `Required checks` and `Must not do`. Exact prose
    is not important; provenance, arithmetic, exceptions and escalation are.
-4. Record only a compact pass/fail note in an approved location. Do not commit
+4. Record only a pass or fail per card, as [docs/EVAL.md](../docs/EVAL.md)
+   describes, in `results/` or another approved location. Do not commit
    model prompts or outputs to this public repository.
 
 ## Passing standard
@@ -74,7 +75,8 @@ python -m unittest discover -s tests -v
 git diff --check
 ```
 
-The checker reads only its fixed source and card inventory. It rejects malformed
+The checker reads its fixed source and card inventory plus any recorded runs
+under `results/`, which it holds to the shape in `results.schema.json`. It rejects malformed
 or duplicate-key YAML, undecodable UTF-8, unexpected/untracked validation files,
 symlinks, ignored files, unsafe local links, traversal targets, trailing
 whitespace and common identifier or credential patterns. Static checks cannot
@@ -84,8 +86,9 @@ prove a live legal position or judge an agent response.
 
 - Create scenarios from scratch. Redaction or de-identification does not turn a
   client export into a fixture.
-- Add or rename a card only with the validator's fixed inventory, this coverage
-  table and adverse tests in the same change.
+- Add or rename a card only with the validator's fixed inventory, the card
+  list in `results.schema.json`, this coverage table and adverse tests in the
+  same change.
 - Keep missing evidence explicit. It is a test condition, not permission to
   manufacture a conclusion.
 - Put mutable authority in the live-source check, not the card.
