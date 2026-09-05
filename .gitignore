@@ -52,6 +52,7 @@ exports/
 !/CONTRIBUTING.md
 !/docs/
 !/docs/*.md
+!/docs/EVAL.md
 !/RELEASE_NOTES.md
 !/RELEASING.md
 !/CLAUDE.md
