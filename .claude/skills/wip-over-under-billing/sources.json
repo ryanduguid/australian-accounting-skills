@@ -11,8 +11,8 @@
     },
     {
       "title": "TheWIPTally schedule engine",
-      "url": "https://github.com/ryanduguid/TheWIPTally",
-      "checked_at": "2026-08-28",
+      "url": "https://github.com/ryanduguid/australian-accounting/tree/main/packages/the-wip-tally",
+      "checked_at": "2026-09-04",
       "fact": "The local schedule engine performs reviewed arithmetic only; it does not decide recognition, enforceability or onerous-contract conclusions.",
       "volatile": true
     }
