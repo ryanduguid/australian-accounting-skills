@@ -7,6 +7,7 @@ import html
 import importlib.util
 import json
 import os
+from datetime import date
 import re
 import stat
 import subprocess
@@ -56,6 +57,9 @@ EXPECTED_SUPPORT = {
 RESULT_FILE_RE = re.compile(r"^validation/results/(\d{4}-\d{2}-\d{2})-[a-z0-9]+(?:-[a-z0-9]+)*\.json$")
 RESULT_KEYS = ("model", "run_date", "skills_version", "runner", "results")
 RESULT_VERDICTS = ("pass", "fail")
+# One line each and short: room for a model name or a version, not for a
+# pasted output or a note on why a case failed.
+RESULT_FIELD_MAX_LENGTH = 120
 CASE_IDS = frozenset(name.removesuffix(".md") for name in EXPECTED_CASE_NAMES)
 REQUIRED_SECTIONS = (
     "## Scenario",
@@ -375,6 +379,7 @@ def check_results_schema(text: str) -> None:
         assert isinstance(schema, dict)
         enum = schema["properties"]["results"]["items"]["properties"]["case"]["enum"]
         assert isinstance(enum, list)
+        assert all(isinstance(item, str) for item in enum)
     except (AssertionError, KeyError, TypeError) as error:
         raise ValidationError("results schema does not declare the case enum") from error
     if sorted(enum) != sorted(CASE_IDS) or len(enum) != len(CASE_IDS):
@@ -396,10 +401,20 @@ def check_result_file(rel: str, text: str) -> None:
             "prompts, outputs and transcripts do not belong in a result file"
         )
     for key in ("model", "run_date", "skills_version", "runner"):
-        if not isinstance(data[key], str) or not data[key].strip():
+        value = data[key]
+        if not isinstance(value, str) or not value.strip():
             raise ValidationError(f"{key} must be a non-empty string")
-    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", data["run_date"]) or data["run_date"] != match.group(1):
-        raise ValidationError("run_date must be YYYY-MM-DD and match the file name")
+        if len(value) > RESULT_FIELD_MAX_LENGTH or any(ch in value for ch in "\r\n|"):
+            raise ValidationError(
+                f"{key} must be one line of at most {RESULT_FIELD_MAX_LENGTH} characters "
+                "with no pipe; an output, transcript or note does not belong in a result file"
+            )
+    try:
+        run_date = date.fromisoformat(data["run_date"])
+    except ValueError as error:
+        raise ValidationError("run_date must be a real date, YYYY-MM-DD") from error
+    if run_date.isoformat() != match.group(1):
+        raise ValidationError("run_date must match the file name")
     results = data["results"]
     if not isinstance(results, list) or not results:
         raise ValidationError("results must be a non-empty list")
@@ -407,7 +422,7 @@ def check_result_file(rel: str, text: str) -> None:
     for entry in results:
         if not isinstance(entry, dict) or sorted(entry) != ["case", "verdict"]:
             raise ValidationError("each result must hold exactly case and verdict")
-        if entry["case"] not in CASE_IDS:
+        if not isinstance(entry["case"], str) or entry["case"] not in CASE_IDS:
             raise ValidationError(f"unknown case: {entry['case']!r}")
         if entry["case"] in seen:
             raise ValidationError(f"duplicate case: {entry['case']}")
