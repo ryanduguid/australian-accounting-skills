@@ -1,17 +1,23 @@
 # Hardhat Ledger consolidation
 
-This pack is the planned replacement owner for the ten contracting skills from
+Status on 4 September 2026: the `v0.2.0` destination release was published on
+2 September 2026 and `ryanduguid/hardhat-ledger` was archived on 3 September
+2026. The sections below record the consolidation as it was prepared and
+gated; the rollback route deliberately keeps its link to the archived Hardhat
+Ledger release.
+
+This pack became the owner of the ten contracting skills transferred from
 `ryanduguid/hardhat-ledger`. The integration source is immutable commit
 `eb3b8a6ba47dfcdc05cea434f2f6a7dba82f96ef`. Every transferred `SKILL.md`
 matches that commit after canonical LF normalisation. Destination-owned source
 indexes, discovery metadata and validation cards sit beside those unchanged
 definitions.
 
-This document records local preparation for a proposed `v0.2.0` release, not an
-available replacement release. The proposal is neither published nor publicly
-verified. Hardhat Ledger remains the compatible install route until a reviewed
-release of this repository contains the inventory below and passes all three
-discovery paths.
+This document recorded the local preparation for the `v0.2.0` release while
+it was still a proposal. That release, containing the inventory below, was
+published and verified on 2 September 2026 and passed all three discovery
+paths, so this pack is now the only install route for the ten contracting
+skills.
 
 ## Exact transferred inventory
 
@@ -49,23 +55,21 @@ exact release commit:
 
 ## Migration order
 
-After the proposed `v0.2.0` destination release is published, publicly
-verified and passes those gates, existing Hardhat users must uninstall or disable
+The `v0.2.0` destination release was published on 2 September 2026 and passed
+those gates. Existing Hardhat users must uninstall or disable
 `subcontractor-accounting-skills@ryanduguid-contracting` before installing
 `australian-accounting-skills@ryanduguid`. The ten names are stable
 compatibility identifiers, so never enable both packs at once.
 
-Only after that replacement is available and verified may Hardhat Ledger take a
-separate deprecation change. That follow-up updates its install guidance, keeps
-the last compatible release and rollback link, and deletes its duplicate
-validator and skill payload rather than layering a forwarding implementation.
-Publishing that release or archiving the repository requires separate owner
-approval.
+With the replacement available and verified, the owner archived Hardhat Ledger
+on 3 September 2026. Its last compatible release, tags and rollback link remain
+readable in the archive; no forwarding implementation was layered on it.
 
 ## Rollback
 
 If destination discovery, validation or behaviour regresses, uninstall the
 destination pack and reinstall Hardhat Ledger
 [`v0.1.5`](https://github.com/ryanduguid/hardhat-ledger/releases/tag/v0.1.5).
-Keep Hardhat Ledger unarchived and retain its release and tags. Do not rename
-skills, rewrite tags or keep two active owners as a workaround.
+The archived repository is read-only, so that release and its tags stay
+available. Do not rename skills, rewrite tags or keep two active owners as a
+workaround.

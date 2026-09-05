@@ -22,16 +22,17 @@ Claude Code, Codex, and portable agent skills for Australian public-practice and
 
 Each skill encodes the *workflow* (the steps, the tie-outs, the exceptions to chase) rather than tax content. Rates, thresholds and due dates change, so each skill directs the agent to the applicable current primary authority: Commonwealth legislation and ATO material, State or Territory legislation and revenue office material, AASB standards, or Coal LSL guidance.
 
-These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [Aus Accounting MCP](https://github.com/ryanduguid/aus-accounting-mcp). Comparison: [Australian tax tools for AI agents](https://duguid.com.au/tools/australian-tax-ai-agents/).
+These are workflow skills, not a computational MCP and not a hosted ATO document library. For Payday Super timing and ATO benchmark ratios running on the operator's machine, install [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp). Comparison: [Australian tax tools for AI agents](https://duguid.com.au/tools/australian-tax-ai-agents/).
 
-Citation details are in [`CITATION.cff`](CITATION.cff) for the [`v0.1.5` release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5).
-
-The tagged `v0.1.5` release contains the original nine-skill practice pack, and
-its citation pin remains in [`CITATION.cff`](CITATION.cff). This worktree
-prepares a proposed `v0.2.0` 19-skill replacement. It is not published or
-publicly verified. Hardhat Ledger remains the compatible install route for its
-ten contracting skills until the proposed release passes the gates in
+The current release is [`v0.2.0`](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.0),
+published on 2 September 2026 with all nineteen skills. It absorbed the ten
+contracting skills previously published as Hardhat Ledger; that repository is
+archived and the consolidation record is in
 [`docs/HARDHAT-CONSOLIDATION.md`](docs/HARDHAT-CONSOLIDATION.md).
+
+Citation details are in [`CITATION.cff`](CITATION.cff), which remains pinned to
+the [`v0.1.5` release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5),
+the original nine-skill practice pack.
 
 > [!WARNING]
 > **Not tax advice.** These skills are prep-only workflow aids. They do not lodge, declare, or replace professional judgement. See [DISCLAIMER.md](DISCLAIMER.md).
@@ -64,12 +65,10 @@ The skills then register as `australian-accounting-skills:bas-preparation` and s
 
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
-Do not migrate from Hardhat Ledger to this prepared release. After proposed
-`v0.2.0` is published, publicly verified and passes the documented gates,
-uninstall or disable `subcontractor-accounting-skills@ryanduguid-contracting`
-before installing `australian-accounting-skills@ryanduguid`. The ten
-transferred skill names are intentionally unchanged, so never enable both packs
-at once. See
+If the Hardhat Ledger plugin is installed, uninstall or disable
+`subcontractor-accounting-skills@ryanduguid-contracting` before installing
+`australian-accounting-skills@ryanduguid`. The ten transferred skill names are
+intentionally unchanged, so never enable both packs at once. See
 [`docs/HARDHAT-CONSOLIDATION.md`](docs/HARDHAT-CONSOLIDATION.md) for the exact
 source inventory and rollback route.
 
@@ -115,10 +114,9 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 
 ### Versioning
 
-The tagged `v0.1.5` release contains and tests the original nine skills as a
-set. The proposed `v0.2.0` release expands that inventory to 19 skills. It is
-prepared locally, not published or publicly verified. Installing a subset by
-hand can break skills that call their siblings:
+The tagged `v0.2.0` release contains and tests all 19 skills as a set. The
+earlier `v0.1.5` release contained the original nine practice skills. Installing
+a subset by hand can break skills that call their siblings:
 
 - `bas-preparation`, `month-end-close` and `year-end-workpapers` depend on `xero-exports`
 - `fbt-annual-workflow` and `stp-finalisation` depend on each other (RFBA hand-off)
@@ -127,20 +125,19 @@ hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
-Every command under [Install](#install) resolves the default branch. It may
-contain the prepared 19-skill `v0.2.0` transition, but it does not establish a
-published or publicly verified replacement. To take the tagged nine-skill pack,
-install from the tag instead:
+Every command under [Install](#install) resolves the default branch, which may
+be ahead of the latest tag. To take the tagged 19-skill pack exactly as
+released and verified, install from the tag instead:
 
 ```bash
-git clone --branch v0.1.5 --depth 1 https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
+git clone --branch v0.2.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
 mkdir -p ~/.claude/skills
 cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
 ```
 
-Use the full nine-skill pack for `v0.1.5`. After a published and publicly
-verified `v0.2.0` release is available, install that full tagged pack to keep
-the expanded set consistent.
+Install the full tagged pack so the expanded set stays consistent. The
+nine-skill `v0.1.5` pack remains available from its tag for anyone who cites
+it.
 
 ## First run
 
@@ -215,12 +212,14 @@ Also included:
 
 ## Sibling command-line tools
 
-These skills name four maintained CLIs rather than asking the agent to invent the same work:
+These skills name five maintained tools rather than asking the agent to invent the same work. Each now lives in a monorepo; the distribution and command names are unchanged.
 
-- [`payday-super-check`](https://github.com/ryanduguid/payday-super-checker) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
-- [`xero-trial-balance-export`](https://github.com/ryanduguid/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
-- [Workpaper Review Gate](https://github.com/ryanduguid/workpaper-review-gate) for whether a BAS, month-end, or year-end pack is allowed onto the review desk. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off.
-- [TheWIPTally](https://github.com/ryanduguid/TheWIPTally) (`wip-tally schedule`) for reviewed cost-to-cost arithmetic. The skills retain the unit-of-account, recognition and professional-judgement gates.
+- [`payday-super-check`](https://github.com/ryanduguid/australian-accounting/tree/main/packages/payday-super-checker) (`payday-super-checker` in `australian-accounting`) for contribution timing against SGAA s 18C. The agent must not invent an SGC charge; that remains advice territory.
+- [`xero-trial-balance-export`](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/xero-trial-balance-export) (`export-tb`; `xero-trial-balance-export` in `accounting-review-pipeline`) for an optional API trial-balance CSV. The `xero-exports` file path remains the default for any practice.
+- [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) (`review-ready-gate` in `accounting-review-pipeline`) for whether a BAS, month-end, or year-end pack is allowed onto the review desk. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off.
+- [The WIP Tally](https://github.com/ryanduguid/australian-accounting/tree/main/packages/the-wip-tally) (`the-wip-tally` in `australian-accounting`; `wip-tally schedule`) for reviewed cost-to-cost arithmetic. The skills retain the unit-of-account, recognition and professional-judgement gates.
+
+Trial-balance exception review after the gate runs through [Monthly Close Controls](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/monthly-close-control-plane) (`monthly-close-control-plane` in `accounting-review-pipeline`), which surfaces exceptions and never locks a period.
 
 ## Design principles
 
