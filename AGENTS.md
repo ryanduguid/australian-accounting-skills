@@ -12,11 +12,8 @@ Division 7A, STP, Xero exports and cashflow. The consolidated contracting
 workflows cover claims, retentions, WIP, contract costs, plant, fuel, payroll
 tax, contractor super, TPAR and Coal LSL. Each skill encodes the process and
 tie-outs, then sends the agent to current primary sources for mutable rules.
-
-This repository contains reusable workflow skills for Australian
-public-practice and contracting-business accounting. It is source code and
-documentation, not a client workpaper store and not a substitute for a firm's
-own instructions.
+The repository is source code and documentation, not a client workpaper store
+and not a substitute for a firm's own instructions.
 
 ## Hard boundary
 
@@ -88,9 +85,10 @@ python -m pip install --requirement requirements-test.txt
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
+git diff --check
 ```
 
-Those three checks are the gates `.github/workflows/verify.yml` runs.
+The three Python checks are the gates `.github/workflows/verify.yml` runs.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate
@@ -105,9 +103,6 @@ for any figure that changes.
 
 ## Before hand-off
 
-- Review the requested scope, diff, local links, cross-skill references and
-  privacy risks.
-- Run `python -m unittest discover -s tests -v`,
-  `python scripts/validate_validation.py`, `python tests/verify_skills_cli.py`,
-  and `git diff --check`. The first three are the gates CI runs.
-- State any relevant validation that was not run and why.
+Run the checks above, then review the requested scope, diff, local links,
+cross-skill references and privacy risks. State any relevant validation that
+was not run and why.
