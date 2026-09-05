@@ -12,39 +12,29 @@
     "skills_version": {"type": "string", "minLength": 1, "description": "The release tag or commit of this repository the run used."},
     "runner": {"type": "string", "minLength": 1, "description": "The person who judged the outputs."},
     "results": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "required": ["case", "verdict"],
-        "additionalProperties": false,
-        "properties": {
-          "case": {
-            "type": "string",
-            "description": "A card id from validation/cases/, without the .md suffix.",
-            "enum": [
-              "bas-export-manifest-rounding",
-              "bas-g10-g11",
-              "bas-stp-w3-w4",
-              "cashflow-super-regime-transition",
-              "coal-lsl-levy-unverified-rate",
-              "contract-cost-unallocated-plant",
-              "div7a-upe-review",
-              "export-manifest-rounding",
-              "fbt-carparking-missing-declaration",
-              "fuel-tax-credits-missing-docket",
-              "payroll-tax-contractor-characterisation",
-              "post-journal-provenance-tie-out",
-              "progress-claim-missing-reference-date",
-              "retention-release-missing-deed",
-              "standalone-skill-safety-boundary",
-              "stp-current-vs-overdue-sg",
-              "wip-cost-to-complete-gap"
-            ]
-          },
-          "verdict": {"type": "string", "enum": ["pass", "fail"]}
-        }
-      }
+      "type": "object",
+      "description": "One verdict per card, keyed by the card id from validation/cases/ without the .md suffix. A card appears at most once because a JSON object holds one value per key.",
+      "minProperties": 1,
+      "propertyNames": {"enum": [
+        "bas-export-manifest-rounding",
+        "bas-g10-g11",
+        "bas-stp-w3-w4",
+        "cashflow-super-regime-transition",
+        "coal-lsl-levy-unverified-rate",
+        "contract-cost-unallocated-plant",
+        "div7a-upe-review",
+        "export-manifest-rounding",
+        "fbt-carparking-missing-declaration",
+        "fuel-tax-credits-missing-docket",
+        "payroll-tax-contractor-characterisation",
+        "post-journal-provenance-tie-out",
+        "progress-claim-missing-reference-date",
+        "retention-release-missing-deed",
+        "standalone-skill-safety-boundary",
+        "stp-current-vs-overdue-sg",
+        "wip-cost-to-complete-gap"
+      ]},
+      "additionalProperties": {"type": "string", "enum": ["pass", "fail"]}
     }
   }
 }

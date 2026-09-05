@@ -29,23 +29,23 @@ shape of [validation/results.schema.json](../validation/results.schema.json):
   "run_date": "2026-01-31",
   "skills_version": "v0.2.0",
   "runner": "A Person",
-  "results": [
-    {"case": "bas-g10-g11", "verdict": "pass"},
-    {"case": "coal-lsl-levy-unverified-rate", "verdict": "fail"}
-  ]
+  "results": {
+    "bas-g10-g11": "pass",
+    "coal-lsl-levy-unverified-rate": "fail"
+  }
 }
 ```
 
-A run may cover any subset of the cards, each at most once. Only `pass` and
-`fail` are verdicts. Nothing else goes in the file: no prompt, no output, no
+A run may cover any subset of the cards. `results` is keyed by card id, so a
+card appears at most once. Only `pass` and `fail` are verdicts. Nothing else goes in the file: no prompt, no output, no
 transcript, no note on why a case failed. Keep those in the firm-approved
 location the validation README already requires, outside this repository.
 
 `scripts/validate_validation.py` reads every result file, rejects any other
 key or verdict, any unknown or repeated card, a date that does not match the
 file name, and the identifier patterns it screens the cards for. It also holds
-the schema's `case` list to the card inventory, so adding a card means adding
-it to the schema in the same change. Stage new result files before running
+the schema's card list to the card inventory and its verdict list to `pass`
+and `fail`, so adding a card means adding it to the schema in the same change. Stage new result files before running
 the checker, as `validation/README.md` describes, because it verifies the
 tracked inventory.
 

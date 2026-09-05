@@ -86,7 +86,7 @@ prove a live legal position or judge an agent response.
 
 - Create scenarios from scratch. Redaction or de-identification does not turn a
   client export into a fixture.
-- Add or rename a card only with the validator's fixed inventory, the case
+- Add or rename a card only with the validator's fixed inventory, the card
   list in `results.schema.json`, this coverage table and adverse tests in the
   same change.
 - Keep missing evidence explicit. It is a test condition, not permission to

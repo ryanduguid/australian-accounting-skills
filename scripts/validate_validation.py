@@ -373,19 +373,25 @@ def split_result_files(names: set[str]) -> tuple[set[str], set[str]]:
 
 
 def check_results_schema(text: str) -> None:
-    """The published schema must name exactly the cards the checker knows."""
+    """The published schema must name exactly the cards and verdicts the checker knows."""
     schema = _strict_json(text, "validation/results.schema.json")
     try:
         assert isinstance(schema, dict)
-        enum = schema["properties"]["results"]["items"]["properties"]["case"]["enum"]
-        assert isinstance(enum, list)
-        assert all(isinstance(item, str) for item in enum)
+        results = schema["properties"]["results"]
+        enum = results["propertyNames"]["enum"]
+        verdicts = results["additionalProperties"]["enum"]
+        assert isinstance(enum, list) and isinstance(verdicts, list)
+        assert all(isinstance(item, str) for item in enum + verdicts)
     except (AssertionError, KeyError, TypeError) as error:
-        raise ValidationError("results schema does not declare the case enum") from error
+        raise ValidationError("results schema does not declare the case and verdict enums") from error
     if sorted(enum) != sorted(CASE_IDS) or len(enum) != len(CASE_IDS):
         raise ValidationError(
             "results schema case enum does not match the card inventory: "
             f"missing={sorted(CASE_IDS - set(enum))}, unknown={sorted(set(enum) - CASE_IDS)}"
+        )
+    if sorted(verdicts) != sorted(RESULT_VERDICTS):
+        raise ValidationError(
+            f"results schema verdict enum must be exactly {', '.join(RESULT_VERDICTS)}, got {verdicts}"
         )
 
 
@@ -416,19 +422,14 @@ def check_result_file(rel: str, text: str) -> None:
     if run_date.isoformat() != match.group(1):
         raise ValidationError("run_date must match the file name")
     results = data["results"]
-    if not isinstance(results, list) or not results:
-        raise ValidationError("results must be a non-empty list")
-    seen: set[str] = set()
-    for entry in results:
-        if not isinstance(entry, dict) or sorted(entry) != ["case", "verdict"]:
-            raise ValidationError("each result must hold exactly case and verdict")
-        if not isinstance(entry["case"], str) or entry["case"] not in CASE_IDS:
-            raise ValidationError(f"unknown case: {entry['case']!r}")
-        if entry["case"] in seen:
-            raise ValidationError(f"duplicate case: {entry['case']}")
-        seen.add(entry["case"])
-        if entry["verdict"] not in RESULT_VERDICTS:
-            raise ValidationError(f"{entry['case']}: verdict must be pass or fail")
+    if not isinstance(results, dict) or not results:
+        raise ValidationError("results must map at least one card id to a verdict")
+    # A card can only appear once: _strict_json rejects a repeated key.
+    for case, verdict in results.items():
+        if case not in CASE_IDS:
+            raise ValidationError(f"unknown case: {case!r}")
+        if verdict not in RESULT_VERDICTS:
+            raise ValidationError(f"{case}: verdict must be pass or fail")
     # The date is the one long numeric string a run legitimately carries; the
     # free-text fields are where an identifier or a pasted output would land.
     for key in ("model", "skills_version", "runner"):

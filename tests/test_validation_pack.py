@@ -323,7 +323,7 @@ class RecordedRunTests(unittest.TestCase):
 
     GOOD = (
         '{"model": "example-model", "run_date": "2026-01-31", "skills_version": "v0.2.0", '
-        '"runner": "A Person", "results": [{"case": "bas-g10-g11", "verdict": "pass"}]}'
+        '"runner": "A Person", "results": {"bas-g10-g11": "pass"}}'
     )
     NAME = "validation/results/2026-01-31-example-model.json"
 
@@ -336,16 +336,16 @@ class RecordedRunTests(unittest.TestCase):
             ("unknown case", self.NAME, self.GOOD.replace("bas-g10-g11", "made-up")),
             ("bad verdict", self.NAME, self.GOOD.replace('"pass"', '"PASS"')),
             ("duplicate case", self.NAME, self.GOOD.replace(
-                '"verdict": "pass"}', '"verdict": "pass"}, {"case": "bas-g10-g11", "verdict": "fail"}')),
+                '"bas-g10-g11": "pass"', '"bas-g10-g11": "pass", "bas-g10-g11": "fail"')),
             ("date mismatch", "validation/results/2026-02-01-example-model.json", self.GOOD),
             ("bad name", "validation/results/notes.json", self.GOOD),
             ("duplicate key", self.NAME, self.GOOD.replace('"runner"', '"model": "x", "runner"')),
             ("empty model", self.NAME, self.GOOD.replace('"example-model"', '" "')),
-            ("no results", self.NAME, self.GOOD.replace(
-                '[{"case": "bas-g10-g11", "verdict": "pass"}]', "[]")),
-            ("note inside an entry", self.NAME, self.GOOD.replace(
-                '"verdict": "pass"}', '"verdict": "pass", "note": "why"}')),
-            ("list as case", self.NAME, self.GOOD.replace('"bas-g10-g11"', '["bas-g10-g11"]')),
+            ("no results", self.NAME, self.GOOD.replace('{"bas-g10-g11": "pass"}', "{}")),
+            ("list of entries", self.NAME, self.GOOD.replace(
+                '{"bas-g10-g11": "pass"}', '[{"case": "bas-g10-g11", "verdict": "pass"}]')),
+            ("note as verdict", self.NAME, self.GOOD.replace(
+                '"pass"', '{"verdict": "pass", "note": "why"}')),
             ("impossible date", "validation/results/2026-99-99-example-model.json",
              self.GOOD.replace("2026-01-31", "2026-99-99")),
             ("multi-line runner", self.NAME, self.GOOD.replace('"A Person"', '"Model output:\\nx"')),
@@ -375,6 +375,8 @@ class RecordedRunTests(unittest.TestCase):
             validator.check_results_schema(schema.replace('"bas-g10-g11",\n', '"bas-g10-g11",\n"made-up",\n'))
         with self.assertRaisesRegex(validator.ValidationError, "does not declare"):
             validator.check_results_schema(schema.replace('"bas-g10-g11",\n', '5,\n'))
+        with self.assertRaisesRegex(validator.ValidationError, "verdict enum"):
+            validator.check_results_schema(schema.replace('"pass",', '"PASS",'))
 
     def test_inventory_splits_runs_from_the_fixed_set(self) -> None:
         fixed, runs = validator.split_result_files({
