@@ -207,6 +207,7 @@ Also included:
 - [`templates/firm-CLAUDE.md.example`](templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.
 - [`CLAUDE.md`](CLAUDE.md) and [`.claude/rules/accounting-safety.md`](.claude/rules/accounting-safety.md): maintained contributor and accounting-safety boundaries.
 - [`validation/README.md`](validation/README.md) and [`scripts/validate_validation.py`](scripts/validate_validation.py): a fabricated regression pack and fail-closed static validator.
+- [`docs/EVAL.md`](docs/EVAL.md) and [`validation/results.schema.json`](validation/results.schema.json): how to run the pack against a model by hand and record a pass or fail per card.
 - [`DISCLAIMER.md`](DISCLAIMER.md) and [`docs/DISCOVERY.md`](docs/DISCOVERY.md): legal boundary and GitHub About copy.
 
 ## Sibling command-line tools

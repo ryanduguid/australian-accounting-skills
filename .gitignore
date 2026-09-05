@@ -52,6 +52,7 @@ exports/
 !/CONTRIBUTING.md
 !/docs/
 !/docs/*.md
+!/docs/EVAL.md
 !/RELEASE_NOTES.md
 !/RELEASING.md
 !/CLAUDE.md
@@ -66,6 +67,11 @@ exports/
 !/validation/README.md
 !/validation/cases/
 !/validation/cases/*.md
+# Result files hold a pass or fail per card and nothing else; the validator
+# enforces that shape, so a transcript cannot ride in under the exception.
+!/validation/results.schema.json
+!/validation/results/
+!/validation/results/*.json
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
 # matching the sibling repos. Uncomment here, ABOVE the client-name rules:
