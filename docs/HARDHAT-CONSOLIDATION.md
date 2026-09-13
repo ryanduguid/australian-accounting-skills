@@ -144,11 +144,12 @@ recorded.
 
 Step 10 of `fuel-tax-credits` now states the non-cash attribution rule as the
 earlier of the period consideration is provided or an invoice is issued,
-subject to holding the tax invoice at lodgement, and names the s 65-5(4) to (6)
+subject to holding the tax invoice at lodgement, limits a cash-basis claim to the
+part matching the consideration provided, and names the s 65-5(4) to (6)
 later-period election as a separate choice. The earlier wording reduced the
 rule to the invoice alone. Original transfer hashes and the earlier amendment
 records above remain unchanged.
 
 | Skill | Amended canonical SHA-256 |
 |---|---|
-| `fuel-tax-credits` | `c50540d4af1072bc76c2c5e90e3692c2268a26475bcb35bcc1000df3815373d6` |
+| `fuel-tax-credits` | `d40287358d80f67ec75d6effebcccfaa1f99643e0ce2d92916356d0827e22916` |
