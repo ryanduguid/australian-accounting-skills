@@ -139,3 +139,17 @@ recorded.
 | `progress-claim-preparation` | `8a6799ed533f491acc8fc1b16212bf70ec28690bdf9783cb83fd4b4e7bdb6b5c` |
 | `retention-schedule` | `4af4c536f331c82e3730aaebcf8f9afe0757cf08ada56c898c0b0c54b2a7d891` |
 | `wip-over-under-billing` | `ce6d130bb924904edd617e06371d15b07104672333467cf364953cf01116bbe5` |
+
+## Fuel tax credit attribution amendment, 13 September 2026
+
+Step 10 of `fuel-tax-credits` now states the non-cash attribution rule as the
+earlier of the period consideration is provided or an invoice is issued,
+subject to holding the tax invoice at lodgement, limits a cash-basis claim to the
+part matching the consideration provided, and names the s 65-5(4) to (6)
+later-period election as a separate choice. The earlier wording reduced the
+rule to the invoice alone. Original transfer hashes and the earlier amendment
+records above remain unchanged.
+
+| Skill | Amended canonical SHA-256 |
+|---|---|
+| `fuel-tax-credits` | `d40287358d80f67ec75d6effebcccfaa1f99643e0ce2d92916356d0827e22916` |
