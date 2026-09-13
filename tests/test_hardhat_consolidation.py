@@ -29,7 +29,7 @@ AMENDED_SKILL_HASHES = {
     "contract-cost-tracking": "7e8ee6f47caa283fa7fa0d282c43b902600fe87f9e6237ad15f2daab348a7957",
     "contracting-exports": "a423015904aec0e79846381725a92bd6393121bdbb4e55b4b468854b1d3cd450",
     "contractor-super-tpar": "1955efd6c7595606c714123cffd660b1f49dc349a27cf388f214af3c24e712d9",
-    "fuel-tax-credits": "93b7d67eaa8d4a50fc584754249f39f98c15417ad4c59fb5614b880a0b9e8f26",
+    "fuel-tax-credits": "c50540d4af1072bc76c2c5e90e3692c2268a26475bcb35bcc1000df3815373d6",
     "payroll-tax-contractors": "fc03ba9c035c2092770cbaeeb901671e375a2a4696cddba474350dde07e63d75",
     "plant-and-equipment-costing": "11ce902d769e0b8be65d81a23dd6fdd7f6ed453070208240bf91a066877676b8",
     "progress-claim-preparation": "8a6799ed533f491acc8fc1b16212bf70ec28690bdf9783cb83fd4b4e7bdb6b5c",
