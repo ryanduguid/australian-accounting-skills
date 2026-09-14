@@ -20,7 +20,11 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Use the greater result each month", text)
         self.assertIn("For an annual salary", text)
         self.assertIn("casual periods from 1 January 2024", text)
-        self.assertIn("insurer reimburses the employer", text)
+        self.assertIn("an insurer or other source", text)
+        self.assertIn("that source reimburses the employer", text)
+        self.assertIn("the employer pays the employee normally", text)
+        self.assertIn("every payroll week ending in the reporting month", text)
+        self.assertIn("each week's start date and hours", text)
         self.assertNotIn("so they can be excluded", text)
 
     def test_coal_exit_status_does_not_erase_worked_hours(self) -> None:

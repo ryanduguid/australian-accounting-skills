@@ -181,3 +181,12 @@ transfer hashes and earlier amendment records remain above.
 | `payroll-tax-contractors` | `f3e69f7c074f5250172205bd8c662a9810e8e0242f0da005920b67a70e642d1f` |
 | `progress-claim-preparation` | `ffd4afb78b698ad20254729600b9b8c3db7bb36716fc53c6b22116526b289e00` |
 | `retention-schedule` | `de0f9b9a42fc00032b5aee41d71d9171ddef82fa2e7705d13c6f3828f368bc3f` |
+
+## Payroll input clarification, 14 September 2026
+
+Coal LSL intake now includes every payroll week ending in the reporting month,
+with its start date and hours. Direct workers compensation or income protection
+payments from an insurer or other source are distinguished from employer
+reimbursements. The earlier amendment hashes remain above.
+
+The amended canonical SHA-256 for `coal-lsl-levy` is `b1f24e052c7936dfc2cf64ae1478bb7e473dbc6be5e8284d8ac29f1b2a1067a5`.
