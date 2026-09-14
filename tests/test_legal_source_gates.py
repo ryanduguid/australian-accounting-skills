@@ -14,6 +14,90 @@ def skill_text(name: str) -> str:
 
 
 class LegalSourceGateTests(unittest.TestCase):
+    def test_coal_wages_preserve_the_overtime_floor_and_employee_categories(self) -> None:
+        text = skill_text("coal-lsl-levy")
+        self.assertIn("75% of the combined total of Formula A, overtime or penalty rates", text)
+        self.assertIn("Use the greater result each month", text)
+        self.assertIn("For an annual salary", text)
+        self.assertIn("casual periods from 1 January 2024", text)
+        self.assertIn("an insurer or other source", text)
+        self.assertIn("that source reimburses the employer", text)
+        self.assertIn("the employer pays the employee normally", text)
+        self.assertIn("every payroll week ending in the reporting month", text)
+        self.assertIn("each week's start date and hours", text)
+        self.assertNotIn("so they can be excluded", text)
+
+    def test_coal_exit_status_does_not_erase_worked_hours(self) -> None:
+        text = skill_text("coal-lsl-levy")
+        self.assertIn("Preserve weekly hours worked before cessation or leave", text)
+        self.assertIn("annual leave retains normal hours", text)
+        self.assertIn("leaving weeks outside the reporting period blank", text)
+        self.assertNotIn("relevant status code and zero hours", text)
+
+    def test_contractual_deadlines_retain_their_units(self) -> None:
+        text = skill_text("progress-claim-preparation")
+        self.assertIn("actual unit or fixed date", text)
+        self.assertIn("14(4)(b)(i)", text)
+        self.assertIn("73(1)(a) and 76(1)(a)", text)
+        self.assertNotIn("Every period in this step runs in business days", text)
+
+    def test_qld_retention_notices_opening_and_transfer_keep_their_conditions(self) -> None:
+        text = skill_text("retention-schedule")
+        for rule in (
+            "s 34(2)(b) allows 20 business days",
+            "Section 35(2)",
+            "Section 34B requires commissioner notice",
+            "s 40(4) allows 5 business days after opening",
+            "deposit-notice exception in s 40A(3)",
+            "Section 51 requires the trustee to deposit the shortfall immediately",
+            "ss 34A(4)(b) and 34C",
+            "s 37A(3) preserves that exception",
+        ):
+            with self.subTest(rule=rule):
+                self.assertIn(rule, text)
+
+    def test_retention_financing_exception_requires_both_conditions(self) -> None:
+        text = skill_text("retention-schedule")
+        self.assertIn("both a reason other than financing", text)
+        self.assertIn("proportionate to that reason", text)
+        self.assertIn("assess paras 60 and 61", text)
+        self.assertIn("one-year practical expedient", text)
+        self.assertIn("before 1 July 2026", text)
+        self.assertNotIn("para 62(c) takes it out", text)
+
+    def test_rollback_requires_an_available_replacement_before_uninstall(self) -> None:
+        text = (REPOSITORY / "docs/HARDHAT-CONSOLIDATION.md").read_text(encoding="utf-8")
+        self.assertIn("publicly unavailable", text)
+        self.assertIn("Do not\nuninstall a working destination pack until", text)
+        self.assertIn("obtained and verified", text)
+        self.assertNotIn("that release and its tags stay\navailable", text)
+
+    def test_xero_export_rules_preserve_observed_schema_and_au_bas_scope(self) -> None:
+        text = skill_text("xero-exports")
+        self.assertIn("direct references and arithmetic", text)
+        self.assertIn("Accept either an empty cell or numeric `0`", text)
+        self.assertIn("grouped by BAS field, with no `Net` column", text)
+        self.assertIn("retrieves a specific published BAS", text)
+        self.assertIn("Check whether voluntary-agreement payments are included", text)
+        self.assertNotIn("It will not carry the voluntary-agreement component", text)
+
+    def test_nsw_payroll_nexus_starts_with_monthly_service_locations(self) -> None:
+        text = skill_text("payroll-tax-contractors")
+        self.assertIn("services performed wholly in NSW", text)
+        self.assertIn("s 11(1)(a)", text)
+        self.assertIn("s 11(1)(b)", text)
+        self.assertIn("s 11(1)(c)", text)
+        self.assertIn("s 11(4) and (5)", text)
+        self.assertNotIn("fixed order starting with the worker's principal place of residence", text)
+
+    def test_nsw_payroll_exemptions_use_the_current_section_32(self) -> None:
+        text = skill_text("payroll-tax-contractors")
+        self.assertIn("owner-driver conveyance (s 32(2)(d), PTA 006", text)
+        self.assertNotIn("insurance procurement", text)
+        self.assertNotIn("door-to-door sale", text)
+        self.assertNotIn("s 32(2)(d)(ii)", text)
+        self.assertNotIn("s 32(2)(d)(iii)", text)
+
     def test_nsw_mining_coverage_uses_primary_act_and_judgment(self) -> None:
         text = skill_text("progress-claim-preparation")
 

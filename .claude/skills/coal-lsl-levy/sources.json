@@ -15,6 +15,20 @@
       "checked_at": "2026-08-28",
       "fact": "The current levy percentage must be read from the in-force compilation each time, not copied from this index.",
       "volatile": true
+    },
+    {
+      "title": "Determining eligible wages, issued 21 June 2024",
+      "url": "https://coallsl.com.au/guidance-notes/eligible-wages",
+      "checked_at": "2026-09-14",
+      "fact": "Non-casual Formula B includes overtime, penalties and non-reimbursement allowances before applying 75%. Category-specific salary and casual methods and insurer-payment distinctions must be preserved; the casual method changed on 1 January 2024.",
+      "volatile": true
+    },
+    {
+      "title": "Coal LSL Levy Advice quick guide, pages 5, 6, 8 and 9",
+      "url": "https://assets.ctfassets.net/w7mmu5az9koe/4nhFgjUnZKKO8sEQamwXYw/7b918f8e2e25119c9eaf8442a8c4b911/LSL0093_Levy_Advice_PDF_0426_V4.1accessible__1_.pdf",
+      "checked_at": "2026-09-14",
+      "fact": "The reviewed guide retains exiting employees in Employee Details and preserves relevant weekly hours. Casual no-work weeks and part-time unpaid-leave weeks use zero; part-time annual leave retains normal hours. Recheck the form version at use time.",
+      "volatile": true
     }
   ]
 }

@@ -15,6 +15,20 @@
       "checked_at": "2026-08-15",
       "fact": "The judgment informs the purpose connection and mixed-work analysis but is not transferred mechanically to another contract.",
       "volatile": false
+    },
+    {
+      "title": "NSW payment and payment-schedule deadlines",
+      "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
+      "checked_at": "2026-09-14",
+      "fact": "Sections 11(1A)(b), 11(1B)(b), 11(1C)(a) and 14(4)(b)(i) preserve applicable contractual terms; keep their actual calendar unit or fixed date.",
+      "volatile": true
+    },
+    {
+      "title": "Queensland payment and payment-schedule deadlines",
+      "url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2017-043",
+      "checked_at": "2026-09-14",
+      "fact": "Sections 73(1)(a) and 76(1)(a) preserve applicable contractual deadlines, subject to the relevant statutory limits.",
+      "volatile": true
     }
   ]
 }
