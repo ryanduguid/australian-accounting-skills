@@ -190,3 +190,14 @@ payments from an insurer or other source are distinguished from employer
 reimbursements. The earlier amendment hashes remain above.
 
 The amended canonical SHA-256 for `coal-lsl-levy` is `b1f24e052c7936dfc2cf64ae1478bb7e473dbc6be5e8284d8ac29f1b2a1067a5`.
+
+## Domestic-work exclusion amendment, 14 September 2026
+
+The contractor super and TPAR skill now records who domestic work was done for
+and applies the SGAA s 12(11) exclusion only to a direct arrangement between the
+payer and the worker for work done in respect of that payer, as *Newton* [2010]
+FCA 1440 and TR 2023/4 require. A business paying a worker to do domestic work
+for its own clients continues the other s 12 tests. The earlier amendment hashes
+remain above.
+
+The amended canonical SHA-256 for `contractor-super-tpar` is `f88a46cf4f6800d729f30b2e2499997b3a34bdde14e2b770d8d6ceed565a9a0f`.

@@ -129,7 +129,7 @@ a subset by hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
-The [recommended installation](#tagged-nineteen-workflow-release) pins v0.2.1.
+The [recommended installation](#tagged-19-workflow-release) pins v0.2.1.
 The [development options](#development-installations) can be ahead of that tag.
 Install the full tagged pack so sibling references stay consistent. The
 9-skill `v0.1.5` pack remains available from its tag for anyone who cites
