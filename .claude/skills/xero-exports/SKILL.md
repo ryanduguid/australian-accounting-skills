@@ -38,7 +38,7 @@ this table names the Xero report that satisfies it.
 | Journal Report | Manual journal evidence for the journals schedule | Covers journal entries in the general ledger; it is not the same population as `Account Transactions` for an account |
 | Aged Receivables Detail / Aged Payables Detail | Control account support, invoice by invoice | The `Summary` variants total by contact only and cannot support an invoice-level tie-out, so take Detail. Run **as at** the period end, not 'current'; ageing buckets are settings-dependent |
 | Activity Statement / GST Reconciliation | BAS support | Basis follows the GST settings, not the TB toggle; confirm both. There is no report named 'GST Audit Report' in the AU menu; the transaction-level trail is the `Transactions by Tax Rate` and `Transactions by BAS Field` tabs of the Activity Statement export. `GST Reconciliation` exports as legacy `.xls` |
-| Payroll Activity Summary | Payroll recs, the W1/W2 source in `bas-preparation` | Financial-year runs; per-employee detail needs `Payroll Activity Details`. It will not carry the voluntary-agreement component |
+| Payroll Activity Summary | Payroll recs, the W1/W2 source in `bas-preparation` | Financial-year runs; per-employee detail needs `Payroll Activity Details`. Check whether voluntary-agreement payments are included before adding them from the payment register |
 | Payment Summary Details / Superannuation Accruals | STP finalisation and SG workpapers in `stp-finalisation` | `Superannuation Accruals` is accrued by pay period; `Superannuation Payments` is the expected-payment view. The Payday Super timing control needs both, so do not treat them as interchangeable |
 | Fixed Asset Reconciliation / Depreciation Schedule / Disposal Schedule | The 'fixed asset register' input in `month-end-close` and `year-end-workpapers` | Draft versus registered assets differ; registered only. `Fixed Asset Reconciliation` is the one that ties the register to the Balance Sheet; the 2 schedules are the supporting movement detail |
 | Bank Reconciliation | Bank section of the close pack | Exports 3 sheets per account: the reconciliation summary, the bank statement and `Statement Exceptions` (deleted or duplicated lines with a `Reason`). `Bank Summary` is opening and closing balances plus movement, not a reconciliation; it will not evidence unpresented items |
@@ -50,9 +50,9 @@ Company (AU), plus the Overall Budget and Statement Lines CSV exports. Re-verify
 Xero changes a report layout.
 
 1. Layout: rows 1 to 3 hold the report name, the organisation and the date line; row 4 is blank and the header sits on row 5. A subtitle (`Ageing by due date`, a bank account name, a tracking category) moves the header to row 6. Find the header by its first label, never by row count.
-2. Every total, subtotal and running balance in an `.xlsx` export is a live `SUM` formula whose cached value is `0`. Excel recalculates on open; pandas, openpyxl and any other reader that takes the cached value sees zero. Recompute totals from the detail rows, or save the workbook from Excel before reading it elsewhere.
+2. Totals, subtotals and running balances in the inspected `.xlsx` exports use live formulas, including `SUM`, direct references and arithmetic. All 2,005 original formula caches in the supplied 5 September 2026 exports were zero. Excel recalculates on open; pandas, openpyxl and any other reader that takes those cached values sees zero. Recompute from the detail rows, or save a recalculated copy from Excel before reading it elsewhere. Recheck caches in later exports rather than assuming they have the same values.
 3. Sections and subtotals share the data columns: a section row carries a label and blank amounts, its subtotal is `Total <section>`, grouped detail reports (aged detail, invoice detail, Journal Report, General Ledger Detail) use the contact, invoice, journal or account as the section, and the aged summaries end with `Total`, a blank row and `Percentage of total`. Drop them before summing or a subtotal doubles a figure.
-4. Signs: the Trial Balance and General Ledger reports carry separate Debit and Credit columns, with the nil side an empty cell rather than `0`. Presentation reports (Profit and Loss, Balance Sheet, Cash Summary, budgets) write natural balances, so expenses and liabilities are positive and a credit sitting in an expense line is negative; the Statement of Cash Flows signs outflows negative; Trial Balance comparative columns are signed balances, debit positive. Reconcile sign conventions before combining reports.
+4. Signs: the Trial Balance and General Ledger reports carry separate Debit and Credit columns. Accept either an empty cell or numeric `0` on the nil side; the inspected General Ledger Detail contains numeric zeroes. Presentation reports (Profit and Loss, Balance Sheet, Cash Summary, budgets) write natural balances, so expenses and liabilities are positive and a credit sitting in an expense line is negative; the Statement of Cash Flows signs outflows negative; Trial Balance comparative columns are signed balances, debit positive. Reconcile sign conventions before combining reports.
 5. Account codes are text cells (`090` keeps its leading zero) on the Trial Balance, General Ledger Summary, Journal Report and General Ledger Exceptions. Other reports show the name only, or `Sales (200)` when codes are switched on. Force text on any code column after a CSV round trip.
 6. Dates are real date cells in the `.xlsx` exports, and `Posted Date` and `Date imported into Xero` carry the time. The Activity Statement transaction tabs are the exception, with `dd/mm/yyyy` text. The 2 CSV exports use ISO dates (`2026-08-14`) and `Apr-2026` month headers. Parse day-first and never let a tool guess US order.
 7. Multi-sheet exports: Management Report (Executive Summary, Cash Summary, Profit and Loss, Balance Sheet, both aged summaries), Reconciliation Reports (Trial Balance, both aged summaries, one reconciliation summary per bank account, Fixed Asset Reconciliation, General Ledger Exceptions, Journal Report), Bank Reconciliation (Reconciliation Summary, Bank Statement, Statement Exceptions) and Activity Statement (Activity Statement, Transactions by Tax Rate, Transactions by BAS Field). Reading only the first sheet misses evidence.
@@ -78,7 +78,9 @@ report run with different column settings changes the set, so match by name.
 | Aged Receivables Summary / Aged Payables Summary | `Contact`, optional `Current`, `< 1 Month`, `1 Month`, `2 Months`, `3 Months`, `Older`, `Total` |
 | Receivable Invoice Detail | `Invoice Date`, `Source`, `Reference`, `Item Code`, `Description`, `Quantity`, `Unit Price (ex)`, `Discount (ex)`, `GST`, `Gross`, `Invoice Total`, `Status`; grouped by invoice number |
 | Payable Invoice Summary | `Invoice Date`, `Contact`, `Source`, `Reference`, `Planned Date`, `Gross`, `Balance`, `Status` |
-| Activity Statement | Labels in column B (`G1`, `W1`, `1A`, `9`) and amounts in column C, below the ABN and GST accounting method; the transaction tabs carry `Date`, `Account`, `Reference`, `Details`, `Gross`, `GST`, `Net` grouped by tax rate or BAS field |
+| Activity Statement | Labels in column B (`G1`, `W1`, `1A`, `9`) and amounts in column C, below the ABN and GST accounting method |
+| Activity Statement, Transactions by Tax Rate | `Date`, `Account`, `Reference`, `Details`, `Gross`, `GST`, `Net`; grouped by tax rate |
+| Activity Statement, Transactions by BAS Field | `Date`, `Account`, `Reference`, `Details`, `Gross`, `GST`; grouped by BAS field, with no `Net` column. Derive a net amount only when the particular field and sign convention support it |
 | Bank Reconciliation | Summary `Date`, `Description`, `Reference`, `Amount`; statement `Date`, `Description`, `Date imported into Xero`, `Reference`, `Reconciled`, `Source`, `Amount`, `Balance`; exceptions add `Reason` |
 | Fixed Asset Reconciliation | `Source`, `Opening Cost`, `Opening Accum Dep`, `Opening Book Value`, `Cost Debits`, `Cost Credits`, `Accum Dep Debits`, `Accum Dep Credits`, `Closing Cost`, `Closing Accum Dep`, `Closing Book Value`; `Balance Sheet`, `Asset Register` and `Difference` rows per asset type |
 | Depreciation Schedule | 26 columns from `Name` and `Asset Number` through `Method`, `Averaging Method`, `Dep Start Date`, cost, depreciation and disposal figures, then one column per tracking category |
@@ -103,18 +105,23 @@ unverified. A report's presence in the menu does not validate its export schema.
 
 ## What the API can and cannot fetch
 
-Most reports in this table are UI export only. The Xero Accounting API exposes just
-8 report endpoints an AU practice can use: Balance Sheet, Profit and Loss, Trial
+Most reports in this table are UI export only. The Xero Accounting API exposes
+these report endpoints for an AU practice: Balance Sheet, Profit and Loss, Trial
 Balance, Bank Summary, Budget Summary, Executive Summary, and aged payables and aged
-receivables by contact. `Reports/{ReportID}` additionally fetches a report the
-organisation has already published.
+receivables by contact. For Australian organisations, `Reports` also lists
+published BAS reports and `Reports/{ReportID}` retrieves a specific published BAS
+report. This is not a general facility for every published report. The [Xero Reports
+documentation](https://developer.xero.com/documentation/api/accounting/reports),
+checked on 14 September 2026, states this Australian BAS capability separately from
+the New Zealand GST facility. No authenticated request was tested here.
 
 Everything else this skill names, including `General Ledger Detail`, `Journal Report`,
-`Activity Statement`, `GST Reconciliation`, `Trial Balance by Date Range` and the 3
+`GST Reconciliation`, `Trial Balance by Date Range` and the 3
 fixed asset reports, has no report endpoint. The Finance API adds a cash flow statement
 and contact revenue and expense views; the Payroll AU, Projects and Assets APIs return
 underlying records rather than the named reports, so a report built from them is a
-reconstruction and must be labelled as one.
+reconstruction and must be labelled as one. A published BAS report does not replace
+the Activity Statement export's transaction tabs for transaction-level evidence.
 
 Two consequences. Do not promise a client or a script an API pull for a UI-only report.
 And when a reconstruction is unavoidable, say in the manifest that the figures were

@@ -15,6 +15,20 @@
       "checked_at": "2026-08-28",
       "fact": "Current operational guidance supports, but does not replace, the statutory contractor tests and exemptions.",
       "volatile": true
+    },
+    {
+      "title": "Payroll Tax Act 2007 (NSW), section 11",
+      "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021#sec.11",
+      "checked_at": "2026-09-14",
+      "fact": "Wholly NSW services use subsection (1)(a); the conditional interstate hierarchy is subsection (1)(b). Wholly overseas services and months without services have separate rules.",
+      "volatile": true
+    },
+    {
+      "title": "Payroll Tax Act 2007 (NSW), section 32",
+      "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021#sec.32",
+      "checked_at": "2026-09-14",
+      "fact": "Subsection (2)(d) covers vehicle-supplied goods conveyance. It has no insurance-procurement or door-to-door-sales subparagraphs.",
+      "volatile": true
     }
   ]
 }

@@ -9,8 +9,9 @@ separately below; the other definitions still match their transferred bytes.
 
 The `v0.2.0` destination release was published and verified on 2 September
 2026, and `ryanduguid/hardhat-ledger` was archived on 3 September 2026. That
-archive stays readable, so its last compatible release, tags and rollback link
-remain available; no forwarding implementation was layered on it.
+historical archive record does not establish present public access. On
+14 September 2026, the public `v0.1.5` release URL returned HTTP 404. Its
+present cause and any private availability are unverified.
 
 ## Exact transferred inventory
 
@@ -84,12 +85,14 @@ compatibility identifiers, so never enable both packs at once.
 
 ## Rollback
 
-If destination discovery, validation or behaviour regresses, uninstall the
-destination pack and reinstall Hardhat Ledger
-[`v0.1.5`](https://github.com/ryanduguid/hardhat-ledger/releases/tag/v0.1.5).
-The archived repository is read-only, so that release and its tags stay
-available. Do not rename skills, rewrite tags or keep 2 active owners as a
-workaround.
+The previously documented Hardhat Ledger
+[`v0.1.5`](https://github.com/ryanduguid/hardhat-ledger/releases/tag/v0.1.5)
+rollback route is publicly unavailable in the 14 September 2026 check. Do not
+uninstall a working destination pack until a compatible replacement artefact
+has been obtained and verified. If destination behaviour regresses, disable
+the affected workflow and retain the installed files while investigating.
+No accessible public rollback artefact has been verified here. Do not rename
+skills, rewrite tags or keep 2 active owners as a workaround.
 
 ## Spelling amendment, 11 September 2026
 
@@ -162,3 +165,19 @@ client storage requirements remain in force. The original transfer and earlier
 amendment records above are preserved. Fresh responses require human assessment.
 
 The amended canonical SHA-256 for `contracting-exports` is `ad35a00cd2f093463f09eab096d032ed0de1e0a863686e170426d59ef0d2d7ef`.
+
+## Source corrections, 14 September 2026
+
+The payroll-tax skill now starts the NSW nexus test with monthly service locations
+and uses the current contractor exemptions. Coal LSL separates wage categories
+and preserves hours before cessation or leave. Progress claims retain contractual
+deadline units. Retention guidance separates Queensland notice duties, opening
+and transfer conditions, and the period-specific financing assessment. Original
+transfer hashes and earlier amendment records remain above.
+
+| Skill | Amended canonical SHA-256 |
+| --- | --- |
+| `coal-lsl-levy` | `c080dac6702d675c071d713421592f38c50f65881c56e3db10b2ce4e5c4096cf` |
+| `payroll-tax-contractors` | `f3e69f7c074f5250172205bd8c662a9810e8e0242f0da005920b67a70e642d1f` |
+| `progress-claim-preparation` | `ffd4afb78b698ad20254729600b9b8c3db7bb36716fc53c6b22116526b289e00` |
+| `retention-schedule` | `de0f9b9a42fc00032b5aee41d71d9171ddef82fa2e7705d13c6f3828f368bc3f` |
