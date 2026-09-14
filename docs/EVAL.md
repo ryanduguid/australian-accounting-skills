@@ -5,6 +5,13 @@ the outcome. The cards in `validation/cases/` are the test set; the passing
 standard is in [validation/README.md](../validation/README.md). Nothing in
 this repository calls a model, and nothing here changes a skill.
 
+This method supplies the whole card, including its required checks and
+prohibitions. It measures adherence to visible instructions, not whether the
+model discovers an error without that guidance. Describe results on that basis.
+An evaluation of independent error detection would need a separate task-only
+input and a withheld grading rubric; its results would not be directly
+comparable with these runs.
+
 ## Run
 
 1. Install the skills at the release or commit you are evaluating and note
