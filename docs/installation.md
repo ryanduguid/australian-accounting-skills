@@ -1,6 +1,6 @@
 ## Install
 
-### Tagged nineteen-workflow release
+### Tagged 19-workflow release
 
 Start with v0.2.1, the latest published release. From a separate project
 directory, install from a checkout of that tag:
@@ -10,7 +10,7 @@ git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-acc
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-This copies all nineteen released workflows into the current project's Codex
+This copies all 19 released workflows into the current project's Codex
 and Claude Code directories. It leaves global installations unchanged. A tag
 fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
@@ -18,7 +18,7 @@ fixes the installed revision; it does not certify model outputs. The
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
-They can deliver unreleased changes, including the fifty-workflow inventory
+They can deliver unreleased changes, including the 50-workflow inventory
 preparing v0.3.0. Choose them when you intend to test development work.
 
 | Need | Install | What you get |
@@ -43,7 +43,7 @@ The `australian-accounting-skills` plug-in ID, namespace and install target are 
 
 If the Hardhat Ledger plugin is installed, uninstall or disable
 `subcontractor-accounting-skills@ryanduguid-contracting` before installing
-`australian-accounting-skills@ryanduguid`. The ten transferred skill names are
+`australian-accounting-skills@ryanduguid`. The 10 transferred skill names are
 intentionally unchanged, so never enable both packs at once. See
 [`docs/HARDHAT-CONSOLIDATION.md`](../docs/HARDHAT-CONSOLIDATION.md) for the exact
 source inventory and rollback route.
@@ -118,7 +118,7 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 ### Versioning
 
 The tagged `v0.2.1` release contains and tests all 19 skills as a set, as
-`v0.2.0` did. The earlier `v0.1.5` release contained the original nine
+`v0.2.0` did. The earlier `v0.1.5` release contained the original 9
 practice skills. Installing
 a subset by hand can break skills that call their siblings:
 
@@ -132,5 +132,5 @@ a subset by hand can break skills that call their siblings:
 The [recommended installation](#tagged-nineteen-workflow-release) pins v0.2.1.
 The [development options](#development-installations) can be ahead of that tag.
 Install the full tagged pack so sibling references stay consistent. The
-nine-skill `v0.1.5` pack remains available from its tag for anyone who cites
+9-skill `v0.1.5` pack remains available from its tag for anyone who cites
 it.

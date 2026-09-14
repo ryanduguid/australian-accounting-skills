@@ -24,11 +24,11 @@ information outside this task.
 - Period: August 2026; AUD; accrual ledger; all entries are final, with no
   drafts, omitted accounts or rounding adjustments.
 - Source: fabricated bank statement and ledger export, captured on
-  1 September 2026. Filters cover the full period and all three movements.
+  1 September 2026. Filters cover the full period and all 3 movements.
 - Opening available bank cash: 10000.00. Statement and ledger both show one
   debtor receipt of 4000.00, one loan receipt of 2000.00 and one creditor
   payment of 2500.00. Both closing balances are 13500.00.
-- The three movements have matching synthetic source documents. The supplied
+- The 3 movements have matching synthetic source documents. The supplied
   mapping credits debtors for the first receipt, loan liability for the second
   and debits creditors for the payment. No new tax code is requested.
 - Opening debtors: 4000.00; receipt: 4000.00; no sales or adjustments;
@@ -48,7 +48,7 @@ judgement remain with the reviewer.
 
 - Show 10000.00 + 4000.00 + 2000.00 - 2500.00 = 13500.00.
 - Show both debtor and creditor roll-forwards ending at 0.00.
-- Reconcile all three source movements to all three ledger movements.
+- Reconcile all 3 source movements to all 3 ledger movements.
 - Keep the 2000.00 loan receipt separate from trading income.
 - Record the source, period, basis, filters and no-rounding assumption.
 - State that the supplied arithmetic ties, with no reconciliation exception

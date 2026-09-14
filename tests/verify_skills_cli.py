@@ -9,7 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_CLI_VERSION = "1.5.22"
 EXPECTED_SKILLS = {

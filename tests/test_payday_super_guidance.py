@@ -6,7 +6,6 @@ import re
 import unittest
 from pathlib import Path
 
-
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILL_FILES = {
     "stp-finalisation": REPOSITORY / ".claude" / "skills" / "stp-finalisation" / "SKILL.md",
@@ -71,7 +70,7 @@ class PaydaySuperGuidanceTests(unittest.TestCase):
         self.assertIn("`UNKNOWN`", paragraph)
 
     def test_each_skill_checks_allowable_period_before_a_late_classification(self) -> None:
-        """A universal seven-day shortcut must not drive a late or SGC outcome."""
+        """A universal 7-day shortcut must not drive a late or SGC outcome."""
         for skill, path in SKILL_FILES.items():
             content = compact(path.read_text(encoding="utf-8"))
             with self.subTest(skill=skill):
@@ -163,7 +162,7 @@ class PaydaySuperGuidanceTests(unittest.TestCase):
             self.assert_use_time_evidence_contract(skill, mutated)
 
     def test_sg_validation_cards_require_unknown_when_period_facts_are_missing(self) -> None:
-        """A seven-business-day count must not become a late or SGC call."""
+        """A 7-business-day count must not become a late or SGC call."""
         cards = (
             REPOSITORY / "validation" / "cases" / "stp-current-vs-overdue-sg.md",
             REPOSITORY / "validation" / "cases" / "cashflow-super-regime-transition.md",
@@ -176,7 +175,7 @@ class PaydaySuperGuidanceTests(unittest.TestCase):
                 self.assertIn("`unknown`", content)
                 self.assertRegex(
                     content,
-                    r"do not classify.{0,80}late.{0,80}seven-business-day",
+                    r"do not classify.{0,80}late.{0,80}7-business-day",
                 )
 
 

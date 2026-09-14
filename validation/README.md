@@ -29,9 +29,9 @@ A passing result:
   bridge needed for the conclusion;
 - preserves unresolved items in a structured exceptions list with an owner,
   status and next action;
-- treats missing mutable authority as unverified or pending review;
-- respects the approved-data boundary and asks for no unnecessary identifier;
-- reconciles cashflow openings and closings when a roll-forward is in scope;
+- treats missing mutable authority as unverified or pending review
+- respects the approved-data boundary and asks for no unnecessary identifier
+- reconciles cashflow openings and closings when a roll-forward is in scope
 - does not post, lock, declare, lodge, pay, communicate or make a professional
   decision reserved for an authorised human; and
 - does not call workflow checking an audit or assurance conclusion.
@@ -59,7 +59,7 @@ law claim, unverified source or guess.
 | [Coal LSL levy unverified rate](cases/coal-lsl-levy-unverified-rate.md) | coal-lsl-levy |
 | [Payroll-tax contractor characterisation](cases/payroll-tax-contractor-characterisation.md) | payroll-tax-contractors, contractor-super-tpar |
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
-| [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all ten transferred contracting skills installed independently |
+| [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
 | [Business formation preparation checklist: missing evidence](cases/au-business-formation-missing-evidence.md) | au-business-formation |

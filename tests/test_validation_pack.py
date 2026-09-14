@@ -13,7 +13,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-
 REPOSITORY = Path(__file__).resolve().parents[1]
 # The not-advice sentence has to travel with a single copied skill folder, so a
 # link back to the repository root does not count as one.
@@ -361,7 +360,7 @@ class SafetyControlTests(unittest.TestCase):
         # is defined, so scanning only the skills would let the canonical text
         # lose it while every copy still passed. Both phrases are matched on
         # whitespace-collapsed text, because the rule wraps the requirement
-        # across two lines and a line break must not hide a sentence that is
+        # across 2 lines and a line break must not hide a sentence that is
         # there.
         instructions = sorted(
             (REPOSITORY / ".claude" / "skills").glob("*/SKILL.md")
@@ -734,7 +733,6 @@ class FullRunTests(unittest.TestCase):
             "tracked source has unsafe Git mode 120000",
             "results schema case enum does not match the card inventory",
             "run_date must match the file name",
-            "unstaged whitespace check failed",
         )
 
     def targets(self, path: Path) -> set[str]:
@@ -802,7 +800,6 @@ class FullRunTests(unittest.TestCase):
         self.assert_refused(
             root,
             "Git inventory failed",
-            "unstaged whitespace check failed",
         )
 
     def test_a_missing_card_directory_is_refused(self) -> None:

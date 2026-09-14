@@ -3,7 +3,7 @@ name: contracting-exports
 description: "Use when pulling, specifying, or validating the source exports the contracting pack runs on: job or tracking-dimension P&L, contract and claim registers, plant registers and hire dockets, payroll by employee and by job, and subcontractor payment listings, including file conventions, completeness checks and CSV parsing traps. Reference skill for the other skills in this pack."
 ---
 
-# Contracting Exports
+# Contracting exports
 
 The other skills in this pack assume clean, period-locked inputs. This skill is how you specify what to export, how you parse it, and how you catch a broken export before it poisons a claim, a WIP schedule or a levy return.
 
@@ -13,7 +13,7 @@ The other skills in this pack assume clean, period-locked inputs. This skill is 
 2. Job or tracking-dimension P&L for the period, inception-to-date per job where the ledger supports it, and the job master list showing each job's open or closed status
 3. Contract or claim register: contract sum, approved variations, claims certified, claims paid, retention withheld and released
 4. Plant register and hire dockets: asset ID, owned or hired, hours or kilometres, rate basis, job charged, fuel issued, plus the internal hire rate card and recharge postings where plant is recharged to jobs
-5. Payroll register in two cuts for the same period, by employee and by job or cost code, each carrying the work state or site the sibling skills ask for
+5. Payroll register in 2 cuts for the same period, by employee and by job or cost code, each carrying the work state or site the sibling skills ask for
 6. Subcontractor payment listing: payee, ABN, invoice and payment dates, gross paid, GST, retention withheld, labour versus materials split
 7. Trial balance as at period end, which is the control total everything else ties to
 8. For each export: the source system, export timestamp, exact settings (basis, date range, filters and inclusion of draft or unapproved transactions), the operator role where needed, and the row count shown on screen. Request only the fields needed for this task. For a fabricated exercise, retain supplied pseudonyms, use roles instead of personal identifiers, and provide an in-chat manifest unless a file is requested.

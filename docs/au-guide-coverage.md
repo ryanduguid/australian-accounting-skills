@@ -3,7 +3,7 @@
 The pack contains 50 skills: the original 19 and 31 new preparation workflows.
 This map accounts for all 38 guide filenames in the [OpenAccountants Australian folder](https://github.com/openaccountants/openaccountants/tree/66912a14e86095f150c2b0c37703d195938f8f1d/skills/international/australia), inspected on 8 September 2026. The additional `references.md` is a bibliography, not a separate workflow.
 
-This is a topic-to-workflow mapping. It does not claim identical coverage of each Guide's body or validate its tax content. Six topics reuse existing skills; two residency topics share one new skill. The new workflows identify evidence, reconciliations and decisions for qualified review. They do not encode complete tax engines.
+This is a topic-to-workflow mapping. It does not claim identical coverage of each Guide's body or validate its tax content. Six topics reuse existing skills; 2 residency topics share one new skill. The new workflows identify evidence, reconciliations and decisions for qualified review. They do not encode complete tax engines.
 
 ## Coverage
 
@@ -54,7 +54,7 @@ The OpenAccountants topic names helped identify gaps. Its Guide bodies were not 
 
 The current [OpenAccountants Guide licence](https://github.com/openaccountants/openaccountants/blob/66912a14e86095f150c2b0c37703d195938f8f1d/LICENSES/LicenseRef-OA-Guide-License-1.0.txt) treats bulk extraction separately from permitted reference use. These additions do not relicense or redistribute that collection. The pack remains MIT.
 
-Ryan's OpenAccountants fork already exists. Its Australian folder has 36 guide files plus references; the two absent filenames are `au-amending-individual-income-tax-return-period.md` and `au-foreign-currency-forex-realisation-gains-and.md`. This build neither synchronises that diverged fork nor changes website drafts.
+Ryan's OpenAccountants fork already exists. Its Australian folder has 36 guide files plus references; the 2 absent filenames are `au-amending-individual-income-tax-return-period.md` and `au-foreign-currency-forex-realisation-gains-and.md`. This build neither synchronises that diverged fork nor changes website drafts.
 
 ## Verification limits
 

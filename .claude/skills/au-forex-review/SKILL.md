@@ -17,7 +17,7 @@ Currency accounts and transaction histories, original receivables/payables and s
 
 3. Verify the applicable forex provisions, interactions with CGT or other financial-arrangement regimes and any valid election. Record scope, timing and documentary support for an election.
 
-4. Bridge accounting FX profit or loss to the proposed tax schedule. Identify the exchange-rate date and source used at each relevant event and prevent the same movement entering two tax schedules.
+4. Bridge accounting FX profit or loss to the proposed tax schedule. Identify the exchange-rate date and source used at each relevant event and prevent the same movement entering 2 tax schedules.
 
 ## Hand-off and checks
 

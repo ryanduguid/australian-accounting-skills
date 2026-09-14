@@ -15,7 +15,7 @@ Taxation Office.
 
 ## Install
 
-- Claude Code plugin marketplace, delivering the fifty skills on `main`:
+- Claude Code plugin marketplace, delivering the 50 skills on `main`:
   `/plugin marketplace add ryanduguid/australian-accounting-skills` then
   `/plugin install australian-accounting-skills@ryanduguid`
 - Codex plugin, the same revision:
@@ -23,7 +23,7 @@ Taxation Office.
   `codex plugin add australian-accounting-skills@ryanduguid`
 - Any agent that reads SKILL.md, via the skills CLI:
   `npx skills add ryanduguid/australian-accounting-skills`
-- The nineteen workflows in the v0.2.1 release: clone that tag and install the
+- The 19 workflows in the v0.2.1 release: clone that tag and install the
   checkout, as [docs/installation.md](docs/installation.md) sets out.
 
 ## Skills

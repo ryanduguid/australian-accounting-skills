@@ -40,7 +40,7 @@ but do not prevent the requested mapping and arithmetic checks.
 
 ## Required checks
 
-- Map all eight accounts once and retain their supplied debit or credit signs.
+- Map all 8 accounts once and retain their supplied debit or credit signs.
 - Show total debits and credits of 37000.00 each.
 - Calculate the supplied period result as 9000.00 - 7000.00 = 2000.00.
 - Show assets of 30000.00, liabilities of 10000.00 and closing equity of

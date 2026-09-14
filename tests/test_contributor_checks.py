@@ -7,7 +7,6 @@ from pathlib import Path
 
 import yaml
 
-
 REPOSITORY = Path(__file__).resolve().parents[1]
 VERIFY_WORKFLOW = REPOSITORY / ".github" / "workflows" / "verify.yml"
 CONTRIBUTOR_GUIDES = ("AGENTS.md", "CONTRIBUTING.md")
@@ -57,7 +56,7 @@ class ContributorCheckTests(unittest.TestCase):
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
         self.assertIn("python -m mypy", gates)
-        self.assertEqual(len(gates), 4)
+        self.assertEqual(len(gates), 5)
         for gate in gates:
             with self.subTest(gate=gate):
                 self.assertNotIn("pip install", gate)

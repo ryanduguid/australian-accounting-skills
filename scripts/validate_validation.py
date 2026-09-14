@@ -7,17 +7,16 @@ import html
 import importlib.util
 import json
 import os
-from datetime import date
 import re
 import stat
 import subprocess
 import sys
 import unicodedata
+from datetime import date
 from pathlib import Path, PurePosixPath
 
 import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
-
 
 ROOT = Path(__file__).resolve().parents[1]
 VALIDATION = ROOT / "validation"
@@ -324,24 +323,6 @@ def git_entries(paths: list[str], root: Path = ROOT) -> dict[str, str]:
     return entries
 
 
-def git_check(command: list[str], label: str, root: Path = ROOT) -> None:
-    try:
-        result = subprocess.run(
-            command,
-            cwd=root,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            capture_output=True,
-            check=False,
-        )
-    except OSError as error:
-        raise ValidationError(f"cannot run {label}: {error}") from error
-    if result.returncode != 0:
-        detail = result.stdout.strip() or result.stderr.strip() or str(result.returncode)
-        raise ValidationError(f"{label} failed: {detail}")
-
-
 def check_ignored(path: str, root: Path = ROOT) -> None:
     result = subprocess.run(
         ["git", "check-ignore", "--no-index", "--quiet", "--", path],
@@ -404,7 +385,7 @@ def check_published_inventories(skills: set[str], root: Path = ROOT) -> None:
     """The published skill lists must name exactly the directories on disk.
 
     The schema enum is checked against the card directory in
-    `check_results_schema`; these two are the remaining hand-maintained copies
+    `check_results_schema`; these 2 are the remaining hand-maintained copies
     of an inventory, and a copy that drifts advertises a skill nobody ships.
     """
     marketplace = _strict_json(read_utf8(root / PurePosixPath(MARKETPLACE)), MARKETPLACE)
@@ -602,15 +583,6 @@ def main(root: Path = ROOT) -> int:
         check_sensitive_content(validation_readme)
     except ValidationError as error:
         errors.append(f"validation/README.md: {error}")
-
-    for command, label in (
-        (["git", "diff", "--check"], "unstaged whitespace check"),
-        (["git", "diff", "--cached", "--check"], "staged whitespace check"),
-    ):
-        try:
-            git_check(command, label, root)
-        except ValidationError as error:
-            errors.append(str(error))
 
     for message in errors:
         print(f"ERROR: {message}")

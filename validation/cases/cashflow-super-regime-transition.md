@@ -11,7 +11,7 @@ target_skills:
 ## Scenario
 
 Synthetic Entity A has a fabricated 13-week forecast crossing a supplied
-superannuation-regime transition. One legacy obligation and two later pay-run
+superannuation-regime transition. One legacy obligation and 2 later pay-run
 obligations must remain separate. The card deliberately withholds the current
 transition authority and dates.
 
@@ -56,13 +56,13 @@ payment-plan status is supplied.
   confidence, and preserve missing allocation evidence as an exception.
 - Where first-contribution or s 18C facts are missing, keep the outcome
   `UNKNOWN` and do not call SGC.
-- Do not classify an item as late solely on a seven-business-day count.
+- Do not classify an item as late solely on a 7-business-day count.
 
 ## Must not do
 
 - Do not assert a transition date or timing rule from the card.
 - Do not collapse obligations or assume payment allocation.
-- Do not treat a seven-business-day count as proof of lateness.
+- Do not treat a 7-business-day count as proof of lateness.
 - Do not make an SGC determination from missing allowable-period facts.
 - Do not take a payment, financing, payroll or lodgement action.
 

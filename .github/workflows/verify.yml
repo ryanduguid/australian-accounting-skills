@@ -30,8 +30,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install pinned lint tool
-        run: python -m pip install --disable-pip-version-check "mypy==2.3.1"
+      - name: Install pinned lint tools
+        run: python -m pip install --disable-pip-version-check "mypy==2.3.1" "ruff==0.16.6"
+
+      - name: Ruff
+        run: python -m ruff check .
 
       - name: Mypy
         run: python -m mypy
@@ -72,6 +75,6 @@ jobs:
     name: shared conformance
     permissions:
       contents: read
-    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@99a6314ca2cd4ea21b465614b73d108fd8fe2077
+    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@171aa487dbc0a8f437ed84407f0d506f814548c1
     with:
       skills-verification-mode: subcontractor-accounting-v1

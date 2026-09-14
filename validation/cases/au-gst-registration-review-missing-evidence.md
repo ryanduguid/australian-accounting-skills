@@ -49,7 +49,7 @@ tax period, approval or determination is supplied.
 
 ## Required checks
 
-- Confirm the two rolling twelve-month windows; a financial-year total is not a
+- Confirm the 2 rolling 12-month windows; a financial-year total is not a
   substitute. September belongs in both windows.
 - Verify GST Act ss 188-10, 188-15, 188-20 and 188-25 for the relevant period.
   Keep GST-free supplies distinct from input-taxed supplies in the reconciliation.

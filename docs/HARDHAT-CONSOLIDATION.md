@@ -45,13 +45,13 @@ Later on 9 September 2026, its client-data boundary stopped accepting ignore
 coverage as the safeguard for where exports and generated output may be
 written, and now requires a location outside every version-control checkout.
 The skill already forbade a repository fallback in its portable safety
-boundary, so the earlier wording contradicted the same file two sections
+boundary, so the earlier wording contradicted the same file 2 sections
 above it. Its amended canonical SHA-256 is
 `d39b1a6479b6f73d373b51841555e8ef276135b9879594a2064c0a69cdbec3f4`.
 The transfer hash above remains the historical source record.
 
 Later still on 9 September 2026, the same client-data boundary was carried
-across the other nine transferred skills, which had kept the earlier wording.
+across the other 9 transferred skills, which had kept the earlier wording.
 Monthly Close Controls is gaining a guard that refuses any output path beneath
 a checkout marker outright, so a skill that asked only for output kept out of
 version control could send an agent to a path the command then rejects. That
@@ -79,7 +79,7 @@ Their transfer hashes above remain the historical source record.
 
 Existing Hardhat users must uninstall or disable
 `subcontractor-accounting-skills@ryanduguid-contracting` before installing
-`australian-accounting-skills@ryanduguid`. The ten names are stable
+`australian-accounting-skills@ryanduguid`. The 10 names are stable
 compatibility identifiers, so never enable both packs at once.
 
 ## Rollback
@@ -88,7 +88,7 @@ If destination discovery, validation or behaviour regresses, uninstall the
 destination pack and reinstall Hardhat Ledger
 [`v0.1.5`](https://github.com/ryanduguid/hardhat-ledger/releases/tag/v0.1.5).
 The archived repository is read-only, so that release and its tags stay
-available. Do not rename skills, rewrite tags or keep two active owners as a
+available. Do not rename skills, rewrite tags or keep 2 active owners as a
 workaround.
 
 ## Spelling amendment, 11 September 2026
@@ -117,6 +117,43 @@ remain unchanged. Fresh model evaluation is pending.
 | `coal-lsl-levy` | `d77c86459d3bff0761b079fcaea84e73673ecea8f027fa5c018fcfe3dca08bc3` |
 | `wip-over-under-billing` | `47d284ce45e07a062f2d1f5e4d62c5b7f6351e0281a18790c9022797bde44efa` |
 
+## Style Manual amendment, 13 September 2026
+
+Prose in all 10 transferred skills now follows the Australian Government Style
+Manual: numerals for numbers, English wording in place of Latin shortened
+forms, italicised Act titles and sentence-case headings. Front matter names,
+official source titles, section references, original transfer hashes and the
+earlier amendment records are unchanged. This changes presentation only.
+Requirements, refusal rules, source-review dates and human authority stay as
+recorded.
+
+| Skill | Amended canonical SHA-256 |
+|---|---|
+| `coal-lsl-levy` | `d9a57dd6ed2217a68a22a6cb15416104e4b46581e15079a573e4d1dc1f9ed101` |
+| `contract-cost-tracking` | `7e8ee6f47caa283fa7fa0d282c43b902600fe87f9e6237ad15f2daab348a7957` |
+| `contracting-exports` | `a423015904aec0e79846381725a92bd6393121bdbb4e55b4b468854b1d3cd450` |
+| `contractor-super-tpar` | `1955efd6c7595606c714123cffd660b1f49dc349a27cf388f214af3c24e712d9` |
+| `fuel-tax-credits` | `93b7d67eaa8d4a50fc584754249f39f98c15417ad4c59fb5614b880a0b9e8f26` |
+| `payroll-tax-contractors` | `fc03ba9c035c2092770cbaeeb901671e375a2a4696cddba474350dde07e63d75` |
+| `plant-and-equipment-costing` | `11ce902d769e0b8be65d81a23dd6fdd7f6ed453070208240bf91a066877676b8` |
+| `progress-claim-preparation` | `8a6799ed533f491acc8fc1b16212bf70ec28690bdf9783cb83fd4b4e7bdb6b5c` |
+| `retention-schedule` | `4af4c536f331c82e3730aaebcf8f9afe0757cf08ada56c898c0b0c54b2a7d891` |
+| `wip-over-under-billing` | `ce6d130bb924904edd617e06371d15b07104672333467cf364953cf01116bbe5` |
+
+## Fuel tax credit attribution amendment, 13 September 2026
+
+Step 10 of `fuel-tax-credits` now states the non-cash attribution rule as the
+earlier of the period consideration is provided or an invoice is issued,
+subject to holding the tax invoice at lodgement, limits a cash-basis claim to the
+part matching the consideration provided, and names the s 65-5(4) to (6)
+later-period election as a separate choice. The earlier wording reduced the
+rule to the invoice alone. Original transfer hashes and the earlier amendment
+records above remain unchanged.
+
+| Skill | Amended canonical SHA-256 |
+|---|---|
+| `fuel-tax-credits` | `d40287358d80f67ec75d6effebcccfaa1f99643e0ce2d92916356d0827e22916` |
+
 ## Fabricated exercise amendment, 13 September 2026
 
 Contracting export intake now uses operator roles and supplied pseudonyms in
@@ -124,4 +161,4 @@ fabricated exercises, with an in-chat manifest when no file is requested. Real
 client storage requirements remain in force. The original transfer and earlier
 amendment records above are preserved. Fresh responses require human assessment.
 
-The amended canonical SHA-256 for `contracting-exports` is `a84b6a267206fa7e03d3cd55d4367965cca438dd5236ff2f3ad02037f856238b`.
+The amended canonical SHA-256 for `contracting-exports` is `ad35a00cd2f093463f09eab096d032ed0de1e0a863686e170426d59ef0d2d7ef`.

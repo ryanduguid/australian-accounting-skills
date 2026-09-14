@@ -84,7 +84,8 @@ it.
 ## Checks before opening a pull request
 
 ```
-python -m pip install --requirement requirements-test.txt "mypy==2.3.1"
+python -m pip install --requirement requirements-test.txt "mypy==2.3.1" "ruff==0.16.6"
+python -m ruff check .
 python -m mypy
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
@@ -92,8 +93,8 @@ python tests/verify_skills_cli.py
 git diff --check
 ```
 
-The four Python checks are the gates `.github/workflows/verify.yml` runs. Mypy
-runs in its `lint` job, then the three verification checks run on Python 3.10,
+The 5 Python checks are the gates `.github/workflows/verify.yml` runs. Ruff
+and mypy run in its `lint` job, then the 3 verification checks run on Python 3.10,
 3.12 and 3.13.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying

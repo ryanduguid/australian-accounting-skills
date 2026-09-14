@@ -18,7 +18,7 @@ jobs:
       attestations: write # Record provenance and SBOM attestations for release assets.
       contents: write # Create the draft release, upload assets and publish it.
       id-token: write # Obtain the OIDC identity required to sign attestations.
-    uses: ryanduguid/release-policy/.github/workflows/release-skills.yml@99a6314ca2cd4ea21b465614b73d108fd8fe2077
+    uses: ryanduguid/release-policy/.github/workflows/release-skills.yml@171aa487dbc0a8f437ed84407f0d506f814548c1
     with:
       artifact-stem: australian-accounting-skills
       skills-verification-mode: subcontractor-accounting-v1

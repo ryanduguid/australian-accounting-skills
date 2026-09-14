@@ -1,7 +1,7 @@
 """The release workflow is the closed shared skill policy, not a local copy."""
 
-from pathlib import Path
 import unittest
+from pathlib import Path
 
 import yaml
 
@@ -24,7 +24,7 @@ class ReleasePolicyTests(unittest.TestCase):
                 "permissions": {"contents": "read"},
                 "uses": (
                     "ryanduguid/release-policy/.github/workflows/verify-skills.yml@"
-                    "99a6314ca2cd4ea21b465614b73d108fd8fe2077"
+                    "171aa487dbc0a8f437ed84407f0d506f814548c1"
                 ),
                 "with": {"skills-verification-mode": "subcontractor-accounting-v1"},
             },
@@ -36,7 +36,7 @@ class ReleasePolicyTests(unittest.TestCase):
         )
         self.assertIn(
             "ryanduguid/release-policy/.github/workflows/release-skills.yml@"
-            "99a6314ca2cd4ea21b465614b73d108fd8fe2077",
+            "171aa487dbc0a8f437ed84407f0d506f814548c1",
             workflow,
         )
         self.assertIn("artifact-stem: australian-accounting-skills", workflow)

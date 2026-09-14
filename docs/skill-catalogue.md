@@ -7,7 +7,7 @@
 | `workpaper-tie-out` | Audit-style verification: every statement line traced to workpaper and source |
 | `fbt-annual-workflow` | FBT year-end: benefit identification, declarations, gross-up, RFBA |
 | `div7a-compliance` | Division 7A loan register, complying-agreement checks, minimum repayments |
-| `stp-finalisation` | STP year-end finalisation: payroll vs GL vs filed totals, super guarantee checks |
+| `stp-finalisation` | STP year-end finalisation: payroll versus GL versus filed totals, super guarantee checks |
 | `year-end-workpapers` | Review-ready annual workpaper pack from a trial balance export |
 | `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |

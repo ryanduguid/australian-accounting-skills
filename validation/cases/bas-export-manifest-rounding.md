@@ -11,7 +11,7 @@ target_skills:
 
 ## Scenario
 
-Synthetic Entity A has four fabricated reports with similar totals but
+Synthetic Entity A has 4 fabricated reports with similar totals but
 different source metadata. A rounding bridge may be valid only if report basis
 and filter settings are comparable.
 

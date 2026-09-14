@@ -7,7 +7,6 @@ import unittest
 import xml.etree.ElementTree as ElementTree
 from pathlib import Path
 
-
 REPOSITORY = Path(__file__).resolve().parents[1]
 ASSETS = REPOSITORY / "assets"
 TEXT_NODE = re.compile(r"<text\b[^>]*>(?P<label>[^<>]*)</text>")

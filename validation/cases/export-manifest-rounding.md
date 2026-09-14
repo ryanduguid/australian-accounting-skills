@@ -28,7 +28,7 @@ Create a reviewer-facing export manifest. Do not recode the ledger or treat the 
 ## Deliberately unavailable evidence
 
 - No current export-manifest or rounding policy is supplied.
-- No evidence explains the twelve-cent difference.
+- No evidence explains the 12-cent difference.
 - No authority approves a recode, journal or period lock.
 
 ## Required checks

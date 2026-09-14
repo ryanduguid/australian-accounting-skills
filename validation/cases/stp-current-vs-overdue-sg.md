@@ -10,7 +10,7 @@ target_skills:
 
 ## Scenario
 
-Synthetic Entity A has two fabricated SG balances with different evidence
+Synthetic Entity A has 2 fabricated SG balances with different evidence
 status: one current pay-run liability and one earlier-period balance. A
 worker-level mismatch also exists between two reports.
 
@@ -56,13 +56,13 @@ Synthetic Worker A differs between the payroll register and STP report.
 - Give the worker mismatch evidence, owner, status and next action.
 - Where first-contribution or s 18C facts are missing, keep the outcome
   `UNKNOWN` and do not call SGC.
-- Do not classify an item as late solely on a seven-business-day count.
+- Do not classify an item as late solely on a 7-business-day count.
 
 ## Must not do
 
 - Do not compare annual expenses directly with a closing payable.
 - Do not call a current item overdue solely because it remains open.
-- Do not treat a seven-business-day count as proof of lateness.
+- Do not treat a 7-business-day count as proof of lateness.
 - Do not make an SGC determination from missing allowable-period facts.
 - Do not make a declaration, correction, payment, journal or lodgement.
 

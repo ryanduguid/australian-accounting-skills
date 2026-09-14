@@ -3,7 +3,7 @@ name: cashflow-forecast-13week
 description: "Use when building or updating a rolling 13-week cashflow forecast for an Australian SME: receipts from debtor history, payments from creditors and payroll cycles, ATO obligation timing (BAS, PAYG, super), and weekly actual-vs-forecast variance."
 ---
 
-# 13-Week Cashflow Forecast
+# 13-week cashflow forecast
 
 Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's job is to surface the crunch week early enough to act on it.
 
@@ -21,9 +21,9 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 ## Workflow
 
 1. **Frame the grid.** Weeks 1 to 13 as columns; receipts, payments (by category), net movement and closing balance as rows. Week 1 starts from confirmed available cash, never the ledger balance. For every week, closing cash = opening cash + receipts − payments, and the next week's opening cash must equal the prior closing cash. Show overdrafts, restricted cash and unavailable balances separately.
-2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate "committed" (invoiced) from "expected" (pipeline), and shade confidence. With no pipeline input, the expected row stays empty and flagged as such, never estimated.
+2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate 'committed' (invoiced) from 'expected' (pipeline), and shade confidence. With no pipeline input, the expected row stays empty and flagged as such, never estimated.
 3. **Payments.** Creditors by due date honouring critical suppliers first; payroll on its calendar with PAYG remitted on its cycle; super with each pay cycle per the supported payday-super timing control below; loan and rent on contract dates.
-4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgement cycle at ato.gov.au, since agent lodgement often shifts them). If ato.gov.au is unreachable from this session, stop and ask the user for the current dates, record them as "per [name], [date], unverified", and flag them on the forecast. Never construct a citation from memory. GST collected is not the entity's money, and the forecast makes that visible by pairing strong sales weeks with their BAS week.
+4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgement cycle at ato.gov.au, since agent lodgement often shifts them). If ato.gov.au is unreachable from this session, stop and ask the user for the current dates, record them as 'per [name], [date], unverified', and flag them on the forecast. Never construct a citation from memory. GST collected is not the entity's money, and the forecast makes that visible by pairing strong sales weeks with their BAS week.
 5. **Stress the trough.** Identify the minimum closing balance week. Test it: receipts one week late, largest debtor pays late, no pipeline receipts. If the stressed trough goes negative, list the levers (invoice earlier, terms, financing, deferral requests) as options for the owner, not decisions.
 6. **Weekly cadence.** Each week: replace forecast with actuals, note variance per line, push the horizon one week out, and record *why* the misses missed. The assumptions log is what makes week 10's forecast better than week 1's.
 
@@ -36,12 +36,12 @@ supporting facts. Keep the payment date `UNKNOWN` until that record exists.
 The dated timing branches below guide the evidence check; they are not presumed
 ordinary or exception periods to apply without the record.
 
-For paydays from 1 July 2026, the ordinary seven-business-day period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday. Check which allowable longer period applies before treating a contribution as late or flagging SGC exposure, and before forecasting a legally mandatory payment date:
+For paydays from 1 July 2026, the ordinary 7-business-day period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday. Check which allowable longer period applies before treating a contribution as late or flagging SGC exposure, and before forecasting a legally mandatory payment date:
 
 - 20 business days for the first eligible contribution to a particular fund, including a new starter, recommencement or fund change, where the statutory conditions apply
 - qualifying out-of-cycle payments that can use a subsequent standard qualifying-earnings payment's window, only when the determination's conditions are proven
-- an exceptional-circumstances determination; or
-- alignment with an earlier contribution's later due day where s 18C's conditions and actual allocation are evidenced
+- an exceptional-circumstances determination
+- alignment with an earlier contribution's later due day where s 18C's conditions and actual allocation are evidenced.
 
 These cases are fact-dependent. A planned or remitted payment is not fund receipt. Missing facts produce an `UNKNOWN` review state and require human review; do not forecast a legally mandatory date. Enterprise agreements, awards or fund terms may require earlier payment.
 
@@ -51,8 +51,8 @@ Primary sources (checked 20 August 2026):
 
 - [ATO Payday Super](https://softwaredevelopers.ato.gov.au/PaydaySuper)
 - [ATO Payday Super for employers](https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday)
-- [Treasury Laws Amendment (Payday Superannuation) Act 2025, Schedule 1 / SGAA s 18C](https://www.legislation.gov.au/C2025A00057/asmade/text)
-- [Superannuation Guarantee (Administration) Regulations 2018, current 1 July 2026 compilation](https://www.legislation.gov.au/F2018L01289/latest/text)
+- [*Treasury Laws Amendment (Payday Superannuation) Act 2025*, Schedule 1 / SGAA s 18C](https://www.legislation.gov.au/C2025A00057/asmade/text)
+- [*Superannuation Guarantee (Administration) Regulations 2018*, current 1 July 2026 compilation](https://www.legislation.gov.au/F2018L01289/latest/text)
 
 ## Output
 

@@ -3,7 +3,7 @@ name: month-end-close
 description: Use when running or reviewing a month-end close (bank reconciliations, control account reconciliations, accruals and prepayments, depreciation, and P&L variance review) for an Australian SME or client entity.
 ---
 
-# Month-End Close
+# Month-end close
 
 Drive a close to done with a checklist, reconcile every control account, and end with a variance review a reviewer can sign. One artefact comes out: the close pack.
 
@@ -32,17 +32,17 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
    - Payroll: wages clearing nils out; PAYG withholding payable and superannuation payable agree to payroll reports; quarterly due dates apply to periods before 1 July 2026 and the timing control below applies to later paydays. Reconcile actual fund receipt and allocation evidence before ageing or escalating a balance
 3. **Schedules roll.** Accruals and prepayments: roll last month's schedule, release what expired, add what's new, agree closing balances to the TB. Same for any loan or intercompany schedules. Intercompany balances must mirror each other across entities.
 4. **Fixed assets.** Additions/disposals posted to the register, depreciation journal posted, register closing WDV agrees to TB.
-5. **Variance review.** P&L vs prior month and vs budget. Flag lines moving beyond the agreed materiality; one-line explanation per flag. Unexplained flags stay open. They don't disappear.
+5. **Variance review.** P&L versus prior month and versus budget. Flag lines moving beyond the agreed materiality; one-line explanation per flag. Unexplained flags stay open. They don't disappear.
 6. **Close out.** Checklist with per-item status and preparer initials/date, plus exceptions with owner/status. After an authorised human approves and posts final journals, re-export affected trial balances, bank reconciliations, subledgers and schedules; verify the close pack reflects that post-journal position. Leave period locking as a separate authorised-human action after this check. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
 ## Payday Super timing control
 
-For paydays from 1 July 2026, the ordinary seven-business-day period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday. Check which allowable longer period applies before treating a contribution as late or flagging SGC exposure:
+For paydays from 1 July 2026, the ordinary 7-business-day period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday. Check which allowable longer period applies before treating a contribution as late or flagging SGC exposure:
 
 - 20 business days for the first eligible contribution to a particular fund, including a new starter, recommencement or fund change, where the statutory conditions apply
 - qualifying out-of-cycle payments that can use a subsequent standard qualifying-earnings payment's window, only when the determination's conditions are proven
-- an exceptional-circumstances determination; or
-- alignment with an earlier contribution's later due day where s 18C's conditions and actual allocation are evidenced
+- an exceptional-circumstances determination
+- alignment with an earlier contribution's later due day where s 18C's conditions and actual allocation are evidenced.
 
 These cases are fact-dependent. A planned or remitted payment is not fund receipt. Missing facts produce an `UNKNOWN` review state and require human review; do not make an SGC determination. Enterprise agreements, awards or fund terms may require earlier payment.
 
@@ -52,8 +52,8 @@ Primary sources (checked 20 August 2026):
 
 - [ATO Payday Super](https://softwaredevelopers.ato.gov.au/PaydaySuper)
 - [ATO Payday Super for employers](https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday)
-- [Treasury Laws Amendment (Payday Superannuation) Act 2025, Schedule 1 / SGAA s 18C](https://www.legislation.gov.au/C2025A00057/asmade/text)
-- [Superannuation Guarantee (Administration) Regulations 2018, current 1 July 2026 compilation](https://www.legislation.gov.au/F2018L01289/latest/text)
+- [*Treasury Laws Amendment (Payday Superannuation) Act 2025*, Schedule 1 / SGAA s 18C](https://www.legislation.gov.au/C2025A00057/asmade/text)
+- [*Superannuation Guarantee (Administration) Regulations 2018*, current 1 July 2026 compilation](https://www.legislation.gov.au/F2018L01289/latest/text)
 
 ## Checks before handing over
 
