@@ -153,3 +153,12 @@ records above remain unchanged.
 | Skill | Amended canonical SHA-256 |
 |---|---|
 | `fuel-tax-credits` | `d40287358d80f67ec75d6effebcccfaa1f99643e0ce2d92916356d0827e22916` |
+
+## Fabricated exercise amendment, 13 September 2026
+
+Contracting export intake now uses operator roles and supplied pseudonyms in
+fabricated exercises, with an in-chat manifest when no file is requested. Real
+client storage requirements remain in force. The original transfer and earlier
+amendment records above are preserved. Fresh responses require human assessment.
+
+The amended canonical SHA-256 for `contracting-exports` is `ad35a00cd2f093463f09eab096d032ed0de1e0a863686e170426d59ef0d2d7ef`.

@@ -114,9 +114,13 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn("not a rule for every STP reporter", content)
         self.assertIn("Where W1 is present and required", content)
         self.assertIn("Classify by the nature of the purchase first", content)
-        self.assertIn("does not record capital and non-capital purchases separately", content)
-        self.assertIn("expects GST turnover below $1 million", content)
-        self.assertIn("capital items costing $1,000 or less may be recorded at G11", content)
+        for condition in ("amount limit", "turnover condition", "record-keeping condition"):
+            self.assertIn(condition, content)
+        self.assertIn("primary ATO text before applying it", content)
+        self.assertIn("leave the concession and affected classification unverified", content)
+        self.assertIn("Search snippets", content)
+        self.assertIn("do not establish the rule", content)
+
 
     def test_front_matter_rejects_ambiguous_or_unknown_yaml(self) -> None:
         cases = {

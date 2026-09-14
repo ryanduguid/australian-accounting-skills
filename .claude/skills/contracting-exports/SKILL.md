@@ -16,7 +16,7 @@ The other skills in this pack assume clean, period-locked inputs. This skill is 
 5. Payroll register in 2 cuts for the same period, by employee and by job or cost code, each carrying the work state or site the sibling skills ask for
 6. Subcontractor payment listing: payee, ABN, invoice and payment dates, gross paid, GST, retention withheld, labour versus materials split
 7. Trial balance as at period end, which is the control total everything else ties to
-8. For each export: the source system, export timestamp, exact settings (basis, date range, filters and inclusion of draft or unapproved transactions), who ran it, and the row count shown on screen. Request only the fields needed for this task; retain supplied synthetic labels for a demonstration.
+8. For each export: the source system, export timestamp, exact settings (basis, date range, filters and inclusion of draft or unapproved transactions), the operator role where needed, and the row count shown on screen. Request only the fields needed for this task. For a fabricated exercise, retain supplied pseudonyms, use roles instead of personal identifiers, and provide an in-chat manifest unless a file is requested.
 
 ## Workflow
 

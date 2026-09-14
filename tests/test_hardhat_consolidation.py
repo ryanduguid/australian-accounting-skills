@@ -27,7 +27,7 @@ TRANSFERRED_SKILL_HASHES = {
 AMENDED_SKILL_HASHES = {
     "coal-lsl-levy": "d9a57dd6ed2217a68a22a6cb15416104e4b46581e15079a573e4d1dc1f9ed101",
     "contract-cost-tracking": "7e8ee6f47caa283fa7fa0d282c43b902600fe87f9e6237ad15f2daab348a7957",
-    "contracting-exports": "a423015904aec0e79846381725a92bd6393121bdbb4e55b4b468854b1d3cd450",
+    "contracting-exports": "ad35a00cd2f093463f09eab096d032ed0de1e0a863686e170426d59ef0d2d7ef",
     "contractor-super-tpar": "1955efd6c7595606c714123cffd660b1f49dc349a27cf388f214af3c24e712d9",
     "fuel-tax-credits": "d40287358d80f67ec75d6effebcccfaa1f99643e0ce2d92916356d0827e22916",
     "payroll-tax-contractors": "fc03ba9c035c2092770cbaeeb901671e375a2a4696cddba474350dde07e63d75",

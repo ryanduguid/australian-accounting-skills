@@ -13,7 +13,7 @@ Period, entity structure and chart of accounts, source-document register, ledger
 
 1. Reconcile source and ledger coverage by account and date. Identify gaps, duplicates and cut-off differences before proposing coding changes.
 
-2. Match receipts and payments to invoices or other evidence. Separate loans, owner movements and transfers from income and expenditure.
+2. Match receipts and payments to invoices or other evidence. Separate loans, owner movements and transfers from income and expenditure. Trace each bank movement to every related ledger entry and subledger allocation. A single withdrawal establishes cash movement only; the ledger bank balance, expense and payable remain unverified until their entries reconcile. Keep possible causes separate from findings and leave the correction pending that trace.
 
 3. Apply the firm's documented account mapping and verify tax-code conditions where treatment is uncertain. An invoice's wording or a bank-rule match alone does not establish deductibility or creditability.
 
@@ -21,7 +21,7 @@ Period, entity structure and chart of accounts, source-document register, ledger
 
 ## Hand-off and checks
 
-A completeness register, bank/subledger reconciliations and proposed-correction list. An authorised human approves and posts corrections.
+A completeness register, bank/subledger reconciliations and proposed-correction list. For fabricated exercises, retain supplied pseudonyms, use roles for preparer and reviewer, and present the draft in chat unless a file is requested. An authorised human approves and posts corrections.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

@@ -13,7 +13,10 @@ For every source export, retain the entity or approved pseudonym, report name,
 generated timestamp, start/end or as-at date, cash/accrual and GST basis,
 tracking/entity filters, draft or pending-transaction setting, currency and
 other report options. The manifest prevents false differences caused by
-mismatched settings or timing.
+mismatched settings or timing. Establish what each amount measures from the
+actual headers and detail. A generic report name does not establish whether a
+total represents gross sales, GST alone or a control balance. Record an unknown
+measurement basis as unresolved, even when two totals agree.
 
 Record the export format and any conversion as separate steps. In Demo Company
 (AU) on 13 September 2026, the Trial Balance, Profit and Loss, Balance Sheet and
