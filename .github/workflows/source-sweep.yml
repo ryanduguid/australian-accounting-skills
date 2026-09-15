@@ -1,0 +1,102 @@
+name: Source sweep
+
+# Re-fetches every indexed primary source and reports which ones moved.
+#
+# The sweep is read-only on purpose. Recording a new digest means accepting
+# that the page's current text is the one this repository stands on, and that
+# is a reading decision, not a scheduling one. So the workflow reports and a
+# person runs `python scripts/source_refresh.py --write` after reviewing. The
+# issue therefore keeps saying the same thing until someone acts on it, which
+# is the point.
+#
+# It only opens an issue for findings an edit here can resolve. Several of
+# these hosts refuse automated retrieval outright and always will, so gating on
+# those would hold an issue open for ever and teach the reader to ignore it.
+# They stay in the body of every report.
+
+on:
+  schedule:
+    # 19:00 UTC Sunday is early Monday in Australia, so a change lands at the
+    # start of the working week rather than during it.
+    - cron: "0 19 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    name: sweep
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Sweep the indexed sources
+        id: sweep
+        # A source that moved or cannot be retrieved exits 2. That is the
+        # reportable outcome, not a failure of the job, so it is captured here
+        # and the run itself only fails on an unexpected exit code.
+        run: |
+          set +e
+          python scripts/source_refresh.py --check --report sweep.md
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" -gt 2 ]; then
+            echo "source_refresh.py exited $status" >&2
+            exit "$status"
+          fi
+
+      - name: File the result
+        if: steps.sweep.outputs.status == '2'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: Primary source sweep
+        run: |
+          existing=$(gh issue list --state open --search "$TITLE in:title" \
+            --json number,title \
+            --jq "[.[] | select(.title == env.TITLE) | .number] | first // empty")
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file sweep.md
+            echo "Updated issue #$existing"
+          else
+            gh issue create --title "$TITLE" --body-file sweep.md
+          fi
+
+      - name: Close the issue when nothing here needs an edit
+        if: steps.sweep.outputs.status == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: Primary source sweep
+        run: |
+          existing=$(gh issue list --state open --search "$TITLE in:title" \
+            --json number,title \
+            --jq "[.[] | select(.title == env.TITLE) | .number] | first // empty")
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" \
+              --comment "Every indexed source was retrieved and none had moved."
+          fi
+
+      - name: Publish the report
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: source-sweep
+          path: sweep.md
+          if-no-files-found: warn

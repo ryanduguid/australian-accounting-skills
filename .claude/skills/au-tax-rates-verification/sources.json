@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "unavailable-http-403",
-      "limitations": "Direct retrieval returned HTTP 403. Open an authoritative source at use time before relying on any rule."
+      "limitations": "Direct retrieval returned HTTP 403. Open an authoritative source at use time before relying on any rule.",
+      "final_url": "https://www.ato.gov.au/tax-rates-and-codes",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "2112e5623e73beb2c3961c8c31f7e0b11b7a65774ee809129d6dfae289460a5c",
+      "source_last_modified": "2026-06-29",
+      "content_hash_covers": "html"
     }
   ]
 }

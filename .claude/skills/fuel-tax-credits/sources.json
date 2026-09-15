@@ -7,14 +7,26 @@
       "url": "https://www.legislation.gov.au/C2006A00072/latest/text",
       "checked_at": "2026-08-28",
       "fact": "Fuel acquisition, use and entitlement gates come from the current Act and must be applied before any rate is selected.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.legislation.gov.au/C2006A00072/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "04fc55a78a7fe68a1cb31dbecc29092009b3562e2c7bf715bba8971088ff40e6",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     },
     {
       "title": "ATO fuel tax credit rates",
       "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/fuel-schemes/fuel-tax-credits-business/rates-business",
       "checked_at": "2026-08-28",
       "fact": "Rates vary by period and use and must be read live for the fuel acquisition date; this index is not a rate table.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/fuel-schemes/fuel-tax-credits-business/rates-business",
+      "http_status": 404,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     }
   ]
 }

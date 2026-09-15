@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/your-tax-return/instructions-to-complete-your-tax-return/mytax-instructions/2025/deductions/claiming-deductions",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "9ed8089b10f2019579fd048490b18060f5cb03c0a22b80decdab07f9ed3176f0",
+      "source_last_modified": "2026-08-29",
+      "content_hash_covers": "html"
     }
   ]
 }

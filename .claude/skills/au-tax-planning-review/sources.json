@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/concessions",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "90b468811d2f11511509509eb22ea21b66d7c6df9168b121441619bcd949c12b",
+      "source_last_modified": "2025-12-16",
+      "content_hash_covers": "html"
     }
   ]
 }

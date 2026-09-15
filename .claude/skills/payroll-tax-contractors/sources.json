@@ -7,28 +7,52 @@
       "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
       "checked_at": "2026-08-28",
       "fact": "The relevant-contract and exemption tests must be read from the in-force Act for NSW and must not be projected into another jurisdiction.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+      "http_status": 403,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     },
     {
       "title": "Revenue NSW contractors and payroll tax",
       "url": "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/payroll-tax/taxable-wages/contractors",
       "checked_at": "2026-08-28",
       "fact": "Current operational guidance supports, but does not replace, the statutory contractor tests and exemptions.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/payroll-tax/taxable-wages/contractors",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "e0d37c305280fa0b03be0ae50ebad3a779f420a3b49ff099f5ad23801b1c342a",
+      "source_last_modified": "2026-06-03",
+      "content_hash_covers": "html"
     },
     {
       "title": "Payroll Tax Act 2007 (NSW), section 11",
       "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021#sec.11",
       "checked_at": "2026-09-14",
       "fact": "Wholly NSW services use subsection (1)(a); the conditional interstate hierarchy is subsection (1)(b). Wholly overseas services and months without services have separate rules.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+      "http_status": 403,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     },
     {
       "title": "Payroll Tax Act 2007 (NSW), section 32",
       "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021#sec.32",
       "checked_at": "2026-09-14",
       "fact": "Subsection (2)(d) covers vehicle-supplied goods conveyance. It has no insurance-procurement or door-to-door-sales subparagraphs.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+      "http_status": 403,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     }
   ]
 }

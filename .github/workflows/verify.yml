@@ -71,6 +71,28 @@ jobs:
       - name: Verify Skills CLI discovery
         run: python tests/verify_skills_cli.py
 
+      - name: Verify coverage matrix
+        run: python scripts/build_coverage.py --check
+
+  secrets:
+    name: secrets
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # gitleaks scans commits, so a shallow checkout would leave every
+          # earlier commit unscanned.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+
   shared-conformance:
     name: shared conformance
     permissions:

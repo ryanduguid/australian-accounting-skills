@@ -5,6 +5,9 @@
 [tool.mypy]
 python_version = "3.10"
 files = ["scripts", "tests"]
+# tests/ puts scripts/ on sys.path to import the standalone entry points
+# there by name; mypy has to resolve them from the same place.
+mypy_path = "scripts"
 check_untyped_defs = true
 ignore_missing_imports = true
 pretty = true

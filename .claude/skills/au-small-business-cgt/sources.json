@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/api/public/content/0-6aa67b45-4089-405d-aed5-bf6c78e4767a",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "46541486f912c45161c316e08835a2fb250e02dbf55034b460a288a105cd5a34",
+      "source_last_modified": "2026-02-02",
+      "content_hash_covers": "bytes"
     }
   ]
 }

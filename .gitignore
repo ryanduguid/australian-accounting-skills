@@ -44,6 +44,9 @@ exports/
 !/.agents/
 !/.agents/plugins/
 !/.agents/plugins/**/*.json
+# The derived evidence matrix. scripts/build_coverage.py writes it and
+# tests/test_coverage_matrix.py fails when it drifts from the tree.
+!/coverage.json
 .claude/settings.local.json
 # *.md must not swallow the repo's own docs — a checklist or register written
 # as Markdown is the stray being caught here. Any future tracked Markdown
