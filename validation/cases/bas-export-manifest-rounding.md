@@ -44,6 +44,10 @@ opening trial balance with matching settings is supplied for a movement test.
 
 - Produce a manifest with approved entity pseudonym, report name, generated
   time, period, basis, GST basis where relevant, filters, currency and options.
+  Where the scenario supplies no value for a field, record it as `not supplied`
+  and mark the manifest unverified for that field. The manifest is complete when
+  every field carries either a supplied value or that explicit gap, never an
+  inferred setting.
 - Reconcile comparable reports and preserve each settings mismatch as a scope
   limit.
 - Document the cents-to-whole-dollar bridge without changing source totals.

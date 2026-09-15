@@ -32,7 +32,7 @@ Verify the downloaded release with:
 gh release download v0.1.5 -R ryanduguid/australian-accounting-skills --dir release-v0.1.5
 cd release-v0.1.5
 sha256sum --check SHA256SUMS
-for file in *; do gh attestation verify "$file" -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml; done
+for file in australian-accounting-skills-0.1.5.zip australian-accounting-skills-0.1.5.tar.gz; do gh attestation verify "$file" -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml; done
 gh attestation verify australian-accounting-skills-0.1.5.zip -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
 gh attestation verify australian-accounting-skills-0.1.5.tar.gz -R ryanduguid/australian-accounting-skills --source-ref refs/tags/v0.1.5 --signer-workflow ryanduguid/release-policy/.github/workflows/release-archive.yml --predicate-type https://spdx.dev/Document/v2.3
 gh release view v0.1.5 -R ryanduguid/australian-accounting-skills --json isImmutable
