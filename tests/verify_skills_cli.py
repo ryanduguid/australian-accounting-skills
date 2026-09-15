@@ -11,6 +11,8 @@ from pathlib import Path
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_CLI_VERSION = "1.5.22"
+# A registry download and a skill listing take seconds; 5 minutes is a stall.
+NPX_TIMEOUT_SECONDS = 300
 EXPECTED_SKILLS = {
     "au-bookkeeping",
     "au-business-formation",
@@ -83,23 +85,34 @@ def main() -> int:
             "NO_COLOR": "1",
         }
     )
-    result = subprocess.run(
-        [
-            npx,
-            "--yes",
-            f"skills@{SKILLS_CLI_VERSION}",
-            "add",
-            ".",
-            "--list",
-        ],
-        cwd=REPOSITORY,
-        env=environment,
-        capture_output=True,
-        check=False,
-        encoding="utf-8",
-        errors="replace",
-        text=True,
-    )
+    try:
+        result = subprocess.run(
+            [
+                npx,
+                "--yes",
+                f"skills@{SKILLS_CLI_VERSION}",
+                "add",
+                ".",
+                "--list",
+            ],
+            cwd=REPOSITORY,
+            env=environment,
+            capture_output=True,
+            check=False,
+            encoding="utf-8",
+            errors="replace",
+            text=True,
+            # This downloads the CLI from the npm registry. Without a bound, a stalled
+            # registry or a CLI waiting on input blocks until the workflow timeout.
+            timeout=NPX_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired:
+        print(
+            f"Skills CLI discovery timed out after {NPX_TIMEOUT_SECONDS}s: the npm "
+            "registry stalled or the CLI waited on input",
+            file=sys.stderr,
+        )
+        return 1
     output = ANSI_ESCAPE.sub("", f"{result.stdout}\n{result.stderr}").replace("\r", "")
     discovered = {
         match.group(1)

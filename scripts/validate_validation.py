@@ -77,9 +77,12 @@ SENSITIVE_PATTERNS = {
     ),
     "realistic entity suffix": re.compile(r"\b(?:Pty\s+Ltd|Limited)\b", re.I),
 }
+# The word boundary belongs inside the date branch. After % there is no word
+# boundary when punctuation or the end of the string follows, so a trailing \b
+# let text such as "effective 12%." past this gate.
 DATED_RULE = re.compile(
     r"\b(?:from|effective|due(?:\s+by)?|deadline)\s+"
-    r"(?:\d{1,2}\s+[A-Z][a-z]+\s+20\d{2}|\d+(?:\.\d+)?%)\b",
+    r"(?:\d{1,2}\s+[A-Z][a-z]+\s+20\d{2}\b|\d+(?:\.\d+)?%)",
     re.I,
 )
 MARKETPLACE = ".claude-plugin/marketplace.json"
