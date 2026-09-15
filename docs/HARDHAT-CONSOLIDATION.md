@@ -252,3 +252,34 @@ Leave) Payroll Levy Collection Act 1992* s 3B. Use the compilation applying to
 the period. The September wage correction changed the treatment of overtime,
 penalties and allowances within the category-specific comparison, as shown in
 commit `57d5e84`. The statutory source gaps are now explicit in the skills.
+
+## Coal LSL audit exception and NSW labour determination, 23 September 2026
+
+Two statements of current law were corrected, each read at the primary source.
+
+`coal-lsl-levy` said section 10 of the *Coal Mining Industry (Long Service Leave)
+Payroll Levy Collection Act 1992* carried no carve out and no power to excuse. It now
+records Schedule 1 clause 19(4), which provides that sections 5 and 10 do not apply,
+and are taken never to have applied, to the employment of an employee covered by a
+Board-approved unpaid levy payment arrangement. Clause 19(2) switches off sections 6,
+7 and 9(2) for the unpaid levy on those wages, and clause 12 requires the arrangement
+to carry its own auditor's report. Read in compilation C2026C00364 (compilation 12,
+in force 1 September 2026) on 16 and 23 September 2026. Schedule 1 arrived with the
+*Coal Mining Industry (Long Service Leave) Legislation Amendment Act 2026*.
+`sources.json` gains the Act, which the skill cited without an index entry.
+
+`plant-and-equipment-costing` offered a self-substantiated labour split as an
+alternative to a Chief Commissioner determination. Section 35(2) of the *Payroll Tax
+Act 2007* (NSW), read in the in-force version on 23 September 2026, provides that
+where the labour amount sits inside a larger contract amount, the part not
+attributable to the performance of work "is as determined by the Chief Commissioner".
+The skill now says substantiation is the evidence put to the Chief Commissioner, not
+a substitute for the determination.
+
+Both provisions exist as cited, so the audit citation record above no longer needs
+to treat them as unverified references.
+
+| Skill | Amended canonical SHA-256 |
+|---|---|
+| `coal-lsl-levy` | `eb551fc0a2ab16adb0b61496d3b2b4d93474f75b691d96bb44cb6fe54f432dc8` |
+| `plant-and-equipment-costing` | `93c35646ee89746f6c9a13d55f838d6cfa00aa832246fba6b7cc636af6055657` |
