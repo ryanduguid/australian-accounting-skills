@@ -1,0 +1,69 @@
+# Secret and client-identifier scanning.
+#
+# The default gitleaks rules cover credentials. They know nothing about the
+# boundary this repository actually has to hold: AGENTS.md and
+# .claude/rules/accounting-safety.md forbid real client data, and a tax file
+# number, ABN or bank detail is the shape that breach takes here. A credential
+# scanner alone would pass a commit carrying a client's TFN.
+#
+# Each rule below anchors on the label rather than the digits. An unanchored
+# 11-digit pattern would match invoice numbers, amounts and dates on every
+# other line and the gate would be turned off within a week.
+
+title = "australian-accounting-skills"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "au-tax-file-number"
+description = "Tax file number beside its label"
+# 8 or 9 digits, commonly grouped 3-3-3. AGENTS.md excludes TFNs from this
+# repository outright, including from fabricated fixtures.
+regex = '''(?i)\btfns?\b[^0-9\n]{0,20}(\d{3}[ -]?\d{3}[ -]?\d{2,3})\b'''
+tags = ["client-data", "australia"]
+
+[[rules]]
+id = "au-business-number"
+description = "ABN beside its label"
+# 11 digits, commonly grouped 2-3-3-3. A fabricated ABN is still forbidden
+# here: the validation pack bans realistic identifiers, not just real ones.
+regex = '''(?i)\bab\.?n\.?\b[^0-9\n]{0,20}(\d{2}[ -]?\d{3}[ -]?\d{3}[ -]?\d{3})\b'''
+tags = ["client-data", "australia"]
+
+[[rules]]
+id = "au-bank-account"
+description = "BSB or account number beside its label"
+regex = '''(?i)\b(?:bsb|account\s*(?:number|no\.?))\b[^0-9\n]{0,20}(\d{3}[ -]?\d{3}\b|\d{6,10}\b)'''
+tags = ["client-data", "australia"]
+
+[[rules]]
+id = "au-medicare-number"
+description = "Medicare number beside its label"
+regex = '''(?i)\bmedicare\s*(?:number|no\.?|card)\b[^0-9\n]{0,20}(\d{4}[ -]?\d{5}[ -]?\d{1,2})\b'''
+tags = ["client-data", "australia"]
+
+[allowlist]
+description = "Paths that cannot carry a live secret or a client identifier"
+paths = [
+  # The scanner's own rules quote the patterns they match.
+  '''\.gitleaks\.toml$''',
+  # Lock and dependency metadata: upstream digests, not repository content.
+  '''(^|/)requirements-test\.txt$''',
+]
+# Placeholder forms used in documentation and adverse test examples. Each is
+# spelled out in full rather than covered by a vague pattern, and the file
+# holding them is not allowlisted, so a real identifier sitting beside one is
+# still reported.
+#
+# `tests/test_validation_pack.py` needs these exact strings: they are the
+# adverse examples that prove the repository's own client-data heuristics fire.
+# A rule that never fires is the failure this repository already guards against
+# elsewhere, so the examples stay and the placeholders are named here instead.
+regexes = [
+  '''^12345678901$''',
+  '''^123[ -]?456$''',
+  '''^12345678$''',
+  '''(?i)^(?:xxx|nnn|000)[ -]?(?:xxx|nnn|000)[ -]?(?:xxx|nnn|000)$''',
+  '''(?i)^<(?:tfn|abn|bsb|account[ -]?number|medicare[ -]?number)>$''',
+]

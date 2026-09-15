@@ -7,14 +7,26 @@
       "url": "https://www.legislation.gov.au/C2004A04402/latest/text",
       "checked_at": "2026-08-15",
       "fact": "Contractor coverage and the bounded payday-super calculation use the current statutory pathways, while employee status and final charge remain human decisions.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.legislation.gov.au/C2004A04402/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "5bb2fa013bb24949ace45d9ae92cdc5e2536dc5b531886902bb2bf4140b21fc9",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     },
     {
       "title": "Taxation Administration Act 1953",
       "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
       "checked_at": "2026-08-15",
       "fact": "TPAR and no-ABN reporting pathways, periods and authorities must be kept distinct and rechecked against the current compilation.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "f1f959fb84743ff3b79863f96f8b5984079aa7262cadc261e037e935b97b62ed",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     }
   ]
 }

@@ -7,14 +7,26 @@
       "url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
       "checked_at": "2026-08-28",
       "fact": "Recognition, depreciation and component-accounting requirements come from the compilation operative for the reporting period.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "af554ee9ed9dc6c6b0d94f57625913b2b3b5863c030cde0d7e1f7f58fb6e51ca",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     },
     {
       "title": "Income Tax Assessment Act 1997",
       "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
       "checked_at": "2026-08-28",
       "fact": "Division 40 separates tax decline in value and effective-life choices from the management-accounting machine rate.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "http_status": 0,
+      "fetched_at": "2026-09-16",
+      "content_hash": "903531afceffcd61f14e1a226ae53037f19060f2b9910d884f1b678dcf5b8ead",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     }
   ]
 }

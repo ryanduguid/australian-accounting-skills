@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://community.ato.gov.au/s/article/a079s0000009GmwAAE/understanding-the-medicare-levy-and-medicare-levy-surcharge",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "cd2750445aeaad0103980800f4a0027a018fd9f6e6e3acc2851ca2f5f2710d02",
+      "source_last_modified": "2025-09-15",
+      "content_hash_covers": "html"
     }
   ]
 }

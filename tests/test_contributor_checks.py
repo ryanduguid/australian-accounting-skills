@@ -9,7 +9,21 @@ import yaml
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 VERIFY_WORKFLOW = REPOSITORY / ".github" / "workflows" / "verify.yml"
+PRE_COMMIT_CONFIG = REPOSITORY / ".pre-commit-config.yaml"
 CONTRIBUTOR_GUIDES = ("AGENTS.md", "CONTRIBUTING.md")
+
+# Which pre-commit hook covers each CI gate. A hook rarely spells its gate
+# the same way: the Ruff and mypy mirrors run their own entry points, so a
+# substring search would report drift that is not there and miss drift that
+# is. Naming the pairs makes a new gate with no local hook fail here.
+GATE_HOOKS = {
+    "python -m ruff check .": "ruff-check",
+    "python -m mypy": "mypy",
+    "python -m unittest discover -s tests -v": "unittest",
+    "python scripts/validate_validation.py": "validation-pack",
+    "python tests/verify_skills_cli.py": "skills-cli-discovery",
+    "python scripts/build_coverage.py --check": "coverage-matrix",
+}
 
 
 GATE_JOBS = ("lint", "verify")
@@ -56,7 +70,7 @@ class ContributorCheckTests(unittest.TestCase):
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
         self.assertIn("python -m mypy", gates)
-        self.assertEqual(len(gates), 5)
+        self.assertEqual(len(gates), 6)
         for gate in gates:
             with self.subTest(gate=gate):
                 self.assertNotIn("pip install", gate)
@@ -75,6 +89,55 @@ class ContributorCheckTests(unittest.TestCase):
                         text,
                         f"{guide} omits a check .github/workflows/verify.yml gates on",
                     )
+
+
+    def test_every_ci_gate_has_a_pre_commit_hook(self) -> None:
+        """A gate that only runs after a push is a gate found too late.
+
+        The local config and the workflow are two lists of the same checks, and
+        nothing stops one from gaining an entry the other never hears about.
+        """
+        config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
+        hook_ids = {
+            hook["id"] for repo in config["repos"] for hook in repo["hooks"]
+        }
+
+        for gate in ci_gate_commands():
+            with self.subTest(gate=gate):
+                hook = GATE_HOOKS.get(gate)
+                self.assertIsNotNone(
+                    hook,
+                    f"verify.yml gates on {gate!r} with no entry in GATE_HOOKS, so nobody "
+                    "has said which pre-commit hook runs it locally",
+                )
+                self.assertIn(
+                    hook,
+                    hook_ids,
+                    f"{gate!r} maps to pre-commit hook {hook!r}, which is not configured",
+                )
+
+    def test_the_gate_map_describes_gates_that_still_exist(self) -> None:
+        """A mapping left behind after a gate is removed is a false assurance."""
+        self.assertEqual(set(GATE_HOOKS), set(ci_gate_commands()))
+
+    def test_secret_scanning_runs_locally_and_in_ci(self) -> None:
+        """Gitleaks is not a `run:` step, so the gate map cannot reach it."""
+        workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
+        actions = [
+            step.get("uses", "")
+            for job in workflow["jobs"].values()
+            if isinstance(job, dict)
+            for step in job.get("steps", [])
+        ]
+        self.assertTrue(
+            any("gitleaks" in action for action in actions),
+            "verify.yml must scan for secrets and client identifiers",
+        )
+
+        config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
+        hook_ids = {hook["id"] for repo in config["repos"] for hook in repo["hooks"]}
+        self.assertIn("gitleaks", hook_ids)
+        self.assertTrue((REPOSITORY / ".gitleaks.toml").is_file())
 
 
 if __name__ == "__main__":

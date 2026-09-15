@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/forms-and-instructions/foreign-income-tax-offset-rules-guide-2020/calculating-and-claiming-your-foreign-income-tax-offset",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "9a60edcc3adf3b1b34286c2a05a01bbe4893bb9444a12a57950074142ffe329d",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     }
   ]
 }

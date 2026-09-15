@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "unavailable-http-403",
-      "limitations": "Direct retrieval returned HTTP 403. Open an authoritative source at use time before relying on any rule."
+      "limitations": "Direct retrieval returned HTTP 403. Open an authoritative source at use time before relying on any rule.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/record-keeping-for-business",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "3805692ff15a1158a3a920e4684bd7af74a104e90f18df0ee0e4f9725fbc39bf",
+      "source_last_modified": "2025-12-16",
+      "content_hash_covers": "html"
     }
   ]
 }

@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/foreign-exchange-gains-and-losses/in-detail/forex-elections#ato-Electionoutofthe12monthrule",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "0e6d936d8e28622def00c287041b73d77170f64d607c7868c918542aea949424",
+      "source_last_modified": "2025-10-02",
+      "content_hash_covers": "html"
     }
   ]
 }

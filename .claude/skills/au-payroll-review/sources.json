@@ -7,7 +7,13 @@
       "checked_at": "2026-09-08",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time."
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.fairwork.gov.au/tools-and-resources/fact-sheets/rights-and-obligations/record-keeping-pay-slips",
+      "http_status": 0,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     }
   ]
 }

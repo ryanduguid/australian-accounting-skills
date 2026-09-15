@@ -1,0 +1,1288 @@
+{
+  "schema_version": 1,
+  "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date scripts/source_refresh.py last retrieved it, and never stands in for a review.",
+  "totals": {
+    "skills": 50,
+    "sources_indexed": 75,
+    "skills_source_exempt": 6,
+    "skills_with_unreachable_sources": 11,
+    "skills_with_sources_moved_since_review": 4,
+    "skills_with_behavioural_gate": 16,
+    "skills_with_only_the_seeded_case": 28
+  },
+  "skills": [
+    {
+      "skill": "au-bookkeeping",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-bookkeeping-missing-evidence",
+          "au-bookkeeping-supported-reconciliation"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-business-formation",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-business-formation-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-capital-gains",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-capital-gains-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-company-tax",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-company-tax-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-crypto-tax",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-crypto-tax-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-deceased-estates",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-deceased-estates-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-financial-statements",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-financial-statements-missing-evidence",
+          "au-financial-statements-supported-mapping"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-foreign-income",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-foreign-income-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-forex-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-forex-review-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-gst-property",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-gst-property-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-gst-registration-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst"
+        ]
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-gst-registration-review-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-individual-return",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-individual-return-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-land-tax",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-land-tax-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-medicare-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-medicare-review-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-nonresident-cgt",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-nonresident-cgt-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-not-for-profit",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-not-for-profit-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-partnership-tax",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": [
+          "https://www.ato.gov.au/api/public/content/0-f504e4ab-07e9-4138-89a0-5911bb1079d3"
+        ]
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-partnership-tax-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-payroll-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-payroll-review-missing-evidence",
+          "au-payroll-review-supported-tie-out"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-psi-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-psi-review-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-rd-incentive",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-rd-incentive-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-rental-property",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-rental-property-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-return-amendment",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": [
+          "https://www.ato.gov.au/api/public/content/0-f9693a0f-35d4-4a60-912a-61913daaac0f"
+        ]
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-return-amendment-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-small-business-cgt",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-small-business-cgt-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-smsf-year-end",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-smsf-year-end-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-sole-trader",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-sole-trader-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-tax-planning-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-tax-planning-review-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-tax-rates-verification",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-tax-rates-verification-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-tax-residency",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-tax-residency-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-transfer-duty",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-transfer-duty-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-transfer-pricing",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-transfer-pricing-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-trust-distributions",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-08",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-trust-distributions-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "bas-preparation",
+      "sources": {
+        "indexed": 5,
+        "exempt": false,
+        "reviewed": "2026-08-14",
+        "fetched": "2026-09-16",
+        "unreachable": 2,
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works"
+        ]
+      },
+      "validation": {
+        "cases": 3,
+        "case_ids": [
+          "bas-export-manifest-rounding",
+          "bas-g10-g11",
+          "bas-stp-w3-w4"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_skill_metadata.py",
+          "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "cashflow-forecast-13week",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-08-20",
+        "fetched": "2026-09-16",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "cashflow-super-regime-transition"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_payday_super_guidance.py",
+          "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "coal-lsl-levy",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-08-28",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "coal-lsl-levy-unverified-rate",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py",
+          "test_legal_source_gates.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "contract-cost-tracking",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "2026-08-28",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "contract-cost-unallocated-plant",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "contracting-exports",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "export-manifest-rounding",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "contractor-super-tpar",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "2026-08-15",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "payroll-tax-contractor-characterisation",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py",
+          "test_legal_source_gates.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "div7a-compliance",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "div7a-upe-review"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "fbt-annual-workflow",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "fbt-carparking-missing-declaration"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "fuel-tax-credits",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "2026-08-28",
+        "fetched": "2026-09-16",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "fuel-tax-credits-missing-docket",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "month-end-close",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-08-20",
+        "fetched": "2026-09-16",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "post-journal-provenance-tie-out",
+          "stp-current-vs-overdue-sg"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_payday_super_guidance.py",
+          "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "payroll-tax-contractors",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-08-28",
+        "fetched": "2026-09-16",
+        "unreachable": 3,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "payroll-tax-contractor-characterisation",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py",
+          "test_legal_source_gates.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "plant-and-equipment-costing",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "2026-08-28",
+        "fetched": "2026-09-16",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "contract-cost-unallocated-plant",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "progress-claim-preparation",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-08-15",
+        "fetched": "2026-09-16",
+        "unreachable": 2,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "progress-claim-missing-reference-date",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py",
+          "test_legal_source_gates.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "retention-schedule",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-08-15",
+        "fetched": "2026-09-16",
+        "unreachable": 2,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "retention-release-missing-deed",
+          "standalone-skill-safety-boundary"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py",
+          "test_legal_source_gates.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "stp-finalisation",
+      "sources": {
+        "indexed": 5,
+        "exempt": false,
+        "reviewed": "2026-08-20",
+        "fetched": "2026-09-16",
+        "unreachable": 2,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 3,
+        "case_ids": [
+          "cashflow-super-regime-transition",
+          "fbt-carparking-missing-declaration",
+          "stp-current-vs-overdue-sg"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_payday_super_guidance.py",
+          "test_skill_metadata.py",
+          "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "wip-over-under-billing",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "2026-08-28",
+        "fetched": "2026-09-16",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "standalone-skill-safety-boundary",
+          "wip-cost-to-complete-gap"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_hardhat_consolidation.py",
+          "test_legal_source_gates.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "workpaper-tie-out",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 3,
+        "case_ids": [
+          "bas-export-manifest-rounding",
+          "div7a-upe-review",
+          "post-journal-provenance-tie-out"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "xero-exports",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "bas-export-manifest-rounding",
+          "post-journal-provenance-tie-out"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_legal_source_gates.py",
+          "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "year-end-workpapers",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "post-journal-provenance-tie-out"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    }
+  ]
+}

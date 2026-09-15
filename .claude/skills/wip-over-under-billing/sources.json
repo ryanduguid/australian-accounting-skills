@@ -7,14 +7,26 @@
       "url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
       "checked_at": "2026-08-28",
       "fact": "Unit of account, timing, progress, variable consideration and contract-balance principles come from the compilation operative for the reporting period.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "192f073051d7624ba483499761ddaf6ce11ef07c99039ced41a51533af06f73c",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     },
     {
       "title": "TheWIPTally schedule engine",
       "url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
       "checked_at": "2026-09-12",
       "fact": "The local schedule engine performs reviewed arithmetic only; it does not decide recognition, enforceability or onerous-contract conclusions.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "fa7b7ee3843a2917b45a39707b4892663b1355555837ba4849f41e3d8afd06ea",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     }
   ]
 }

@@ -7,28 +7,52 @@
       "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
       "checked_at": "2026-08-15",
       "fact": "Section 5 coverage and exclusions are applied to the actual work and purpose; the skill does not make the legal coverage conclusion.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
+      "http_status": 403,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     },
     {
       "title": "Cadia Holdings Pty Ltd v Downer EDI Mining Pty Ltd [2020] NSWSC 1588",
       "url": "https://www.caselaw.nsw.gov.au/decision/175b4bf54ee486b38a0338e5",
       "checked_at": "2026-08-15",
       "fact": "The judgment informs the purpose connection and mixed-work analysis but is not transferred mechanically to another contract.",
-      "volatile": false
+      "volatile": false,
+      "final_url": "https://www.caselaw.nsw.gov.au/decision/175b4bf54ee486b38a0338e5",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "982c4c136382cbbad56bbaacaeb05afc28fa953b28350405a48aea71585d8e8d",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     },
     {
       "title": "NSW payment and payment-schedule deadlines",
       "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
       "checked_at": "2026-09-14",
       "fact": "Sections 11(1A)(b), 11(1B)(b), 11(1C)(a) and 14(4)(b)(i) preserve applicable contractual terms; keep their actual calendar unit or fixed date.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
+      "http_status": 403,
+      "fetched_at": "2026-09-16",
+      "content_hash": "",
+      "source_last_modified": "",
+      "content_hash_covers": ""
     },
     {
       "title": "Queensland payment and payment-schedule deadlines",
       "url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2017-043",
       "checked_at": "2026-09-14",
       "fact": "Sections 73(1)(a) and 76(1)(a) preserve applicable contractual deadlines, subject to the relevant statutory limits.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2017-043",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "e6c37ef9ea63025820043376fa994dd3d2428fdf2fb08f77281fa03b30b58579",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     }
   ]
 }

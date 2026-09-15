@@ -90,12 +90,27 @@ python -m mypy
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
+python scripts/build_coverage.py --check
 git diff --check
 ```
 
-The 5 Python checks are the gates `.github/workflows/verify.yml` runs. Ruff
-and mypy run in its `lint` job, then the 3 verification checks run on Python 3.10,
-3.12 and 3.13.
+The 6 Python checks are the gates `.github/workflows/verify.yml` runs. Ruff
+and mypy run in its `lint` job, then the 4 verification checks run on Python 3.10,
+3.12 and 3.13. A third job scans the full history with gitleaks against
+`.gitleaks.toml`, which carries client-identifier rules on top of the default
+credential rules.
+
+`pre-commit install` runs the same gates before a commit lands rather than
+after a push. `tests/test_contributor_checks.py` fails when a CI gate has no
+matching hook, so the two lists cannot drift apart.
+
+Re-fetch the indexed primary sources with
+`python scripts/source_refresh.py --write`. It records a content digest per
+source so a later sweep can report which pages moved, and it never touches
+`checked_at`: that date means a person read the source, and only a person
+changes it. `.github/workflows/source-sweep.yml` runs the sweep weekly and
+files the result as an issue. `coverage.json` carries the result per skill,
+including any source that published a change after its last review.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate

@@ -7,14 +7,26 @@
       "url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
       "checked_at": "2026-08-28",
       "fact": "Contract combination, directly related costs and cost-based progress tests come from AASB 15; the operative compilation must be confirmed for the period.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "192f073051d7624ba483499761ddaf6ce11ef07c99039ced41a51533af06f73c",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     },
     {
       "title": "AASB 137 Provisions, Contingent Liabilities and Contingent Assets",
       "url": "https://standards.aasb.gov.au/aasb-137-dec-2022",
       "checked_at": "2026-08-28",
       "fact": "Onerous-contract recognition and measurement sit in AASB 137 rather than AASB 15; confirm the current compilation before relying on paragraph numbers.",
-      "volatile": true
+      "volatile": true,
+      "final_url": "https://standards.aasb.gov.au/aasb-137-dec-2022",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "74c3efee5c04616f085eab795acf59a96a796c7c7c18436a17ca7a284a31c584",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
     }
   ]
 }

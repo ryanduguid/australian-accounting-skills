@@ -1,0 +1,78 @@
+# Local gates, matching .github/workflows/verify.yml.
+#
+# Everything here already runs in CI. Running it before the commit lands turns
+# a push, a wait and a red check into a few seconds at the keyboard. The two
+# lists must not drift: tests/test_contributor_checks.py fails when a gate
+# exists in one place and not the other.
+#
+# Ruff and mypy are pinned to the versions verify.yml installs, so a hook that
+# passes here cannot fail there on a version difference.
+#
+#   pip install pre-commit && pre-commit install
+#   pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+      - id: ruff-check
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v2.3.1
+    hooks:
+      - id: mypy
+        # pyproject.toml already names the files to check, so the hook must not
+        # narrow the run to the staged paths and miss a caller it broke.
+        pass_filenames: false
+        args: []
+        # No type stubs. verify.yml installs PyYAML, which ships no inline
+        # types, so `ignore_missing_imports` applies there. Adding stubs here
+        # makes the hook stricter than the gate it stands in for, and it then
+        # blocks a commit over three pre-existing findings in
+        # scripts/strict_yaml.py that CI does not raise. A hook that fails
+        # where CI passes is the drift this file exists to prevent.
+        additional_dependencies: []
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: unittest
+        name: skill metadata, coverage matrix and gate tests
+        entry: python -m unittest discover -s tests
+        language: python
+        additional_dependencies: ["PyYAML==6.0.3"]
+        pass_filenames: false
+        types: [python]
+
+      - id: validation-pack
+        name: fabricated validation pack
+        entry: python scripts/validate_validation.py
+        language: python
+        additional_dependencies: ["PyYAML==6.0.3"]
+        pass_filenames: false
+        files: ^(validation/|scripts/validate_validation\.py|\.claude/skills/)
+
+      - id: skills-cli-discovery
+        name: Skills CLI discovery
+        entry: python tests/verify_skills_cli.py
+        language: python
+        additional_dependencies: ["PyYAML==6.0.3"]
+        pass_filenames: false
+        files: ^(\.claude/skills/|\.claude-plugin/|tests/verify_skills_cli\.py)
+
+      - id: coverage-matrix
+        name: coverage.json matches the tree
+        entry: python scripts/build_coverage.py --check
+        language: python
+        pass_filenames: false
+        files: ^(\.claude/skills/|validation/cases/|tests/|scripts/build_coverage\.py|coverage\.json)
+
+      - id: whitespace
+        name: git diff --check
+        entry: git diff --check
+        language: system
+        pass_filenames: false
