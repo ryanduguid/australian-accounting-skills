@@ -23,7 +23,7 @@ Only the facts in the scenario are available. No additional source documents, am
 
 ## Deliberately unavailable evidence
 
-The evidence gap named in the scenario remains unavailable. No current legal rates, thresholds or deadlines are supplied. No external action is authorised.
+The evidence gap named in the scenario remains unavailable. No current Victorian rates, thresholds or deadlines are supplied: the NSW table in the scenario is the inapplicable one. No external action is authorised.
 
 ## Required checks
 

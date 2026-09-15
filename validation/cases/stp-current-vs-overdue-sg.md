@@ -53,6 +53,10 @@ Synthetic Worker A differs between the payroll register and STP report.
 - Flag the legacy item because its supplied due-date status has passed and
   receipt evidence is missing.
 - Produce separate PAYG and SG roll-forwards agreeing to closing balances.
+- Tie the SG ageing total to the SG roll-forward's closing GL balance, or
+  record the difference as a reviewer-facing exception with its owner and
+  next action. A roll-forward that closes correctly does not establish that
+  the aged items sum to it.
 - Give the worker mismatch evidence, owner, status and next action.
 - Where first-contribution or s 18C facts are missing, keep the outcome
   `UNKNOWN` and do not call SGC.
