@@ -39,6 +39,15 @@ Create a reviewer-facing levy workpaper. Do not lodge a return or treat a rememb
 - Mark the levy unverified.
 - Preserve unresolved items as exceptions.
 
+## Employer registration variations
+
+Use these separate fabricated variations to check employer screening without deciding coverage:
+
+- Synthetic Sole Trader B carries on an activity in an Australian Territory and employs another individual in connection with it. The employee's mine duties and coverage remain uncertain. Check the s 14(1)(f) route, the full employer definition and the separate eligible employee test. Record the conflict with Coal LSL's blanket registration guidance and stop for a determination; legal form alone must not produce a rejection or approval.
+- Synthetic Sole Trader C performs only their own work and employs nobody else. Distinguish self-employment from employing another individual. The Territory route does not make the sole trader their own employee.
+
+Neither variation authorises registration, correspondence, a levy calculation or a model claim that coverage has been decided.
+
 ## Must not do
 
 - Do not apply last year's rate from memory.

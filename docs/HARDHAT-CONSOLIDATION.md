@@ -201,3 +201,10 @@ for its own clients continues the other s 12 tests. The earlier amendment hashes
 remain above.
 
 The amended canonical SHA-256 for `contractor-super-tpar` is `f88a46cf4f6800d729f30b2e2499997b3a34bdde14e2b770d8d6ceed565a9a0f`.
+
+## Employer registration screening amendment, 15 September 2026
+
+Coal LSL screening now applies the statutory employer and employee tests rather than excluding legal structures categorically. The Territory route in Fair Work Act s 14(1)(f) is distinguished from sole-trader self-employment. The conflicting Coal LSL registration guidance requires escalation for a determination. Original transfer hashes and earlier amendment records remain above.
+
+The amended canonical SHA-256 for `coal-lsl-levy` is
+`40ce6a00a3c1fb66fc3d258befcc32527479846743fdd2bafc3e67e08c410648`.
