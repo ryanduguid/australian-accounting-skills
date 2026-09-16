@@ -100,8 +100,8 @@ and mypy run in its `lint` job, then the 4 verification checks run on Python 3.1
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
 
-`pre-commit install` runs the same gates before a commit lands rather than
-after a push. `tests/test_contributor_checks.py` fails when a CI gate has no
+`pre-commit install` installs both the pre-commit and commit-msg stages and runs
+the same gates before a commit lands rather than after a push. `tests/test_contributor_checks.py` fails when a CI gate has no
 matching hook, so the two lists cannot drift apart.
 
 Re-fetch the indexed primary sources with
