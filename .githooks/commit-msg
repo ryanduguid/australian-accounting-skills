@@ -1,9 +1,9 @@
 #!/bin/sh
 # Refuse AI authorship credit before a commit is written.
 #
-# Enable once per clone:
+# Enable once per clone with the repository's other checks:
 #
-#     git config core.hooksPath .githooks
+#     pre-commit install
 #
 # This mirrors the "No AI attribution" CI guard so a commit fails here rather
 # than after a push. It checks the two things that guard checks: authorship
@@ -29,7 +29,7 @@ VENDOR='claude|anthropic|codex|openai|cursor|copilot|chatgpt|gemini|devin|codeiu
 DOMAIN='claude\.ai|claude\.com|anthropic\.com|openai\.com|chatgpt\.com|cursor\.(com|sh)|codeium\.com|windsurf\.com|cognition\.ai|devin\.ai|nousresearch\.com|qodo\.ai|openhands\.dev|all-hands\.dev'
 
 # Vendor words that are not plausible human names, so they can be matched alone.
-SOLE='claude|anthropic|openai|chatgpt|copilot|codex|cursor|codeium|windsurf|antigravity|qodo|openhands|nousresearch'
+SOLE='anthropic|openai|chatgpt|copilot|codex|cursor|codeium|windsurf|antigravity|qodo|openhands|nousresearch'
 
 status=0
 
@@ -38,10 +38,10 @@ status=0
 # set globally by an agent runtime.
 ai_name() {
 	printf '%s' "$1" | grep -Eqi \
-		"^($SOLE)\$|^claude (opus|sonnet|haiku|fable)( [0-9.]+)?|\
-^($VENDOR)[-_ ](code|agent|bot|assist|review)|\
-^($VENDOR)([-_ ][a-z0-9]+)*\[bot\]|\
-^(openai[-_ ]codex|github[-_ ]copilot|qodo[-_ ]code[-_ ]review|gemini[-_ ]code[-_ ]assist)"
+		"^($SOLE)\$|^claude (opus|sonnet|haiku|fable)( [0-9.]+)?\$|\
+^($VENDOR)[-_ ](code|agent|bot|assist|review|fixes)\$|\
+^($VENDOR)([-_ ][a-z0-9]+)*\[bot\]\$|\
+^(openai[-_ ]codex|github[-_ ]copilot|qodo[-_ ]code[-_ ]review|gemini[-_ ]code[-_ ]assist|review (bot|agent|fixes))\$"
 }
 
 check_identity() {
@@ -52,8 +52,8 @@ check_identity() {
 	email=${rest%%>*}
 
 	hit=''
-	if printf '%s' "$email" | grep -Eqi "^($DOMAIN)\$|@($DOMAIN)\$"; then
-		hit="vendor email domain"
+	if printf '%s' "$email" | grep -Eqi '^claude\[bot\]@users\.noreply\.github\.com$|^github-actions\[bot\]@users\.noreply\.github\.com$|^copilot\[bot\]@users\.noreply\.github\.com$'; then
+		hit="automated email address"
 	elif ai_name "$name"; then
 		hit="vendor name"
 	else
@@ -94,9 +94,9 @@ awk -v vendor="$VENDOR" -v domain="$DOMAIN" -v hook="$hook" '
 			flag("agent by-line trailer")
 		else if (line ~ ("^[ \t]*(" vendor ")[-_ ]?(session|run|thread|trace|id):"))
 			flag("session trailer")
-		else if (line ~ ("^[ \t]*_?[^a-z0-9]*\xf0\x9f\xa4\x96.*(" vendor ")"))
+		else if (line ~ ("^[ \t]*_?[^a-z0-9]*🤖.*(" vendor ")"))
 			flag("robot emoji credit")
-		else if (line ~ ("^[ \t]*_?(generated|written|created|produced|assisted) (with|by) .*(" vendor ")"))
+		else if (line ~ ("^[ \t]*_?(generated|written|created|produced|assisted|implemented|reviewed|fixed|resolved|addressed|handled) (with|by) .*(" vendor ")"))
 			flag("generated-with footer")
 		else if (line ~ ("^[ \t]*[_<(]*https?://([a-z0-9.-]+\\.)?(" domain ")"))
 			flag("bare vendor url")
