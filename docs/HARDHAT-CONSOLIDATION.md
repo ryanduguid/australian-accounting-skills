@@ -208,3 +208,22 @@ Coal LSL screening now applies the statutory employer and employee tests rather 
 
 The amended canonical SHA-256 for `coal-lsl-levy` is
 `40ce6a00a3c1fb66fc3d258befcc32527479846743fdd2bafc3e67e08c410648`.
+
+## Calculator-use amendment, 18 September 2026
+
+`coal-lsl-levy` gains step 5a: what a levy calculator does and does not decide,
+how to confirm it supports the reporting month in question rather than merely
+accepting the date, what to send it and what never to, and what evidence to
+keep of what it consumed. A remote calculator is used only where the user has
+explicitly permitted that call for that question, and never as a fallback when
+a local tool refuses. The shared rule in `.claude/rules/accounting-safety.md`
+carries the same boundary for every skill, with the period, evidence and
+engine-label rules beside it.
+
+No statutory requirement, refusal rule, source-review date or human authority
+changed. Original transfer hashes and every earlier amendment record above are
+unchanged.
+
+| Skill | Amended canonical SHA-256 |
+|---|---|
+| `coal-lsl-levy` | `9b5d9278db05da1ee59d09d0fcea6af5681441109e5b79d055fa232b075b6212` |
