@@ -12,7 +12,13 @@ name: Source sweep
 # It only opens an issue for findings an edit here can resolve. Several of
 # these hosts refuse automated retrieval outright and always will, so gating on
 # those would hold an issue open for ever and teach the reader to ignore it.
-# They stay in the body of every report.
+# They stay in the body of every report, and the closing comment counts them
+# rather than claiming every source was checked.
+#
+# scripts/sweep_outcome.py is the only thing that turns the exit status into
+# an outcome. It accepts exit 0 or 2 only with a report written during this run
+# whose counts agree with that status; exit 1, any other code, a missing or
+# stale report, or a report that contradicts the status fails the job.
 
 on:
   schedule:
@@ -49,22 +55,18 @@ jobs:
 
       - name: Sweep the indexed sources
         id: sweep
-        # A source that moved or cannot be retrieved exits 2. That is the
-        # reportable outcome, not a failure of the job, so it is captured here
-        # and the run itself only fails on an unexpected exit code.
         run: |
+          rm -f sweep.md
+          started="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           set +e
           python scripts/source_refresh.py --check --report sweep.md
           status=$?
           set -e
-          echo "status=$status" >> "$GITHUB_OUTPUT"
-          if [ "$status" -gt 2 ]; then
-            echo "source_refresh.py exited $status" >&2
-            exit "$status"
-          fi
+          python scripts/sweep_outcome.py --status "$status" --report sweep.md --started "$started" \
+            >> "$GITHUB_OUTPUT"
 
       - name: File the result
-        if: steps.sweep.outputs.status == '2'
+        if: steps.sweep.outputs.outcome == 'findings'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TITLE: Primary source sweep
@@ -80,17 +82,17 @@ jobs:
           fi
 
       - name: Close the issue when nothing here needs an edit
-        if: steps.sweep.outputs.status == '0'
+        if: steps.sweep.outputs.outcome == 'clean'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TITLE: Primary source sweep
+          COMMENT: ${{ steps.sweep.outputs.comment }}
         run: |
           existing=$(gh issue list --state open --search "$TITLE in:title" \
             --json number,title \
             --jq "[.[] | select(.title == env.TITLE) | .number] | first // empty")
           if [ -n "$existing" ]; then
-            gh issue close "$existing" \
-              --comment "Every indexed source was retrieved and none had moved."
+            gh issue close "$existing" --comment "$COMMENT"
           fi
 
       - name: Publish the report
@@ -99,4 +101,4 @@ jobs:
         with:
           name: source-sweep
           path: sweep.md
-          if-no-files-found: warn
+          if-no-files-found: error
