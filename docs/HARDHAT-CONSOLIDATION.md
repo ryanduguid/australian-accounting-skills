@@ -216,9 +216,13 @@ how to confirm it supports the reporting month in question rather than merely
 accepting the date, what to send it and what never to, and what evidence to
 keep of what it consumed. A remote calculator is used only where the user has
 explicitly permitted that call for that question, and never as a fallback when
-a local tool refuses. The shared rule in `.claude/rules/accounting-safety.md`
-carries the same boundary for every skill, with the period, evidence and
-engine-label rules beside it.
+a local tool refuses, and that a calculator's own labels stay its own rather
+than becoming a verdict or a review state. The shared rule in
+`.claude/rules/accounting-safety.md` carries the same boundaries for a
+contributor reading the repository. Neither plugin manifest ships that file,
+so a consumer installing one skill gets the skill alone; the boundaries a
+calculator-using skill depends on are written into the skill itself, and
+`tests/test_hardhat_consolidation.py` checks that they are.
 
 No statutory requirement, refusal rule, source-review date or human authority
 changed. Original transfer hashes and every earlier amendment record above are
@@ -226,4 +230,4 @@ unchanged.
 
 | Skill | Amended canonical SHA-256 |
 |---|---|
-| `coal-lsl-levy` | `9b5d9278db05da1ee59d09d0fcea6af5681441109e5b79d055fa232b075b6212` |
+| `coal-lsl-levy` | `424302826e8721dea1e5fbc92880e5d944f09b334fcf3e0166e4074334cc185a` |

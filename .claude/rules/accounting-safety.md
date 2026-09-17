@@ -48,11 +48,16 @@ individual skill remains the detailed procedure.
    period you need is unsupported, say so and stop; do not substitute the
    nearest supported period's figure.
 9. Capture what a calculation consumed, not just what it produced. Record the
-   calculator and its version, the period, the statutory rate tables named in
-   its own response, the boundary statement it returned, the exact inputs
-   supplied and the date. A figure whose response carried no such statement, or
-   whose stored evidence no longer matches its own record, must not be relied
-   on: obtain it again from the calculator that owns it.
+   calculator and its version, the period, the exact inputs supplied and the
+   date, plus the statutory rate tables and the boundary statement its own
+   response names where it publishes them. A calculator whose published
+   contract includes a boundary statement and returns a figure without one has
+   returned something its own contract does not describe, and that figure must
+   not be relied on: obtain it again from the calculator that owns it. A local
+   deterministic tool that publishes no such statement is a different case; the
+   boundary is the workflow's own, and what has to be recorded is the tool, its
+   version and its inputs, so the run can be reproduced. Stored evidence that
+   no longer matches its own record must not be relied on either way.
 10. A calculator's own labels stay its own. A compliance flag, a deemed amount,
     an accepted classification or a status word is that engine's description of
     its own arithmetic. Report it as that, beside the inputs it used. Do not map

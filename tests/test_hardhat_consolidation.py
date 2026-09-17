@@ -25,7 +25,7 @@ TRANSFERRED_SKILL_HASHES = {
 
 # Destination-owned changes are recorded separately from the original transfer.
 AMENDED_SKILL_HASHES = {
-    "coal-lsl-levy": "9b5d9278db05da1ee59d09d0fcea6af5681441109e5b79d055fa232b075b6212",
+    "coal-lsl-levy": "424302826e8721dea1e5fbc92880e5d944f09b334fcf3e0166e4074334cc185a",
     "contract-cost-tracking": "7e8ee6f47caa283fa7fa0d282c43b902600fe87f9e6237ad15f2daab348a7957",
     "contracting-exports": "ad35a00cd2f093463f09eab096d032ed0de1e0a863686e170426d59ef0d2d7ef",
     "contractor-super-tpar": "f88a46cf4f6800d729f30b2e2499997b3a34bdde14e2b770d8d6ceed565a9a0f",
@@ -83,3 +83,52 @@ class HardhatConsolidationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CalculatorSafeguardTests(unittest.TestCase):
+    """A skill that uses a calculator must carry the calculator boundaries.
+
+    Neither plugin manifest ships `.claude/rules/`, so a consumer installing
+    one skill gets the skill and nothing else. AGENTS.md already requires each
+    SKILL.md to be self-contained enough for individual installation; this
+    checks it for the rules a calculator-using skill depends on, which is the
+    place the gap actually mattered.
+    """
+
+    #: Each safeguard, and a phrase the skill has to carry in its own words.
+    #: Phrases, not the rule text, because a skill states a rule in its own
+    #: workflow's terms and copying the rule verbatim would be worse writing.
+    REQUIRED_PHRASES = {
+        "local first (rule 7)": ("never as a fallback when a local tool refuses",),
+        "supported periods (rule 8)": ("supports the reporting month",),
+        "evidence captured (rule 9)": ("Record what it consumed",),
+        "labels stay the engine's (rule 10)": ("own labels as its own",),
+    }
+
+    def test_no_manifest_ships_the_shared_rules(self) -> None:
+        # The premise of the test below. If a manifest starts shipping the
+        # rules, this fails and the requirement can be relaxed deliberately.
+        for manifest in (
+            REPOSITORY / ".claude-plugin" / "plugin.json",
+            REPOSITORY / ".codex-plugin" / "plugin.json",
+        ):
+            text = manifest.read_text(encoding="utf-8")
+            self.assertNotIn(".claude/rules", text, f"{manifest.name} now ships the rules")
+
+    def test_a_skill_that_uses_a_calculator_carries_the_calculator_boundaries(self) -> None:
+        skills = sorted((REPOSITORY / ".claude" / "skills").iterdir())
+        using = [
+            path for path in skills
+            if path.is_dir() and "calculator" in (path / "SKILL.md").read_text(
+                encoding="utf-8",
+            ).lower()
+        ]
+        self.assertTrue(using, "no skill mentions a calculator; the check has lost its subject")
+        for path in using:
+            text = (path / "SKILL.md").read_text(encoding="utf-8")
+            for safeguard, phrases in self.REQUIRED_PHRASES.items():
+                with self.subTest(skill=path.name, safeguard=safeguard):
+                    self.assertTrue(
+                        any(phrase in text for phrase in phrases),
+                        f"{path.name}/SKILL.md does not carry {safeguard}",
+                    )
