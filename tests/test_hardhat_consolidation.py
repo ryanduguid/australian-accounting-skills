@@ -25,7 +25,7 @@ TRANSFERRED_SKILL_HASHES = {
 
 # Destination-owned changes are recorded separately from the original transfer.
 AMENDED_SKILL_HASHES = {
-    "coal-lsl-levy": "424302826e8721dea1e5fbc92880e5d944f09b334fcf3e0166e4074334cc185a",
+    "coal-lsl-levy": "f5b9a018e12a438d1c82d0abf546c09327bc8a88b9e6a55a0d119843ebd72deb",
     "contract-cost-tracking": "7e8ee6f47caa283fa7fa0d282c43b902600fe87f9e6237ad15f2daab348a7957",
     "contracting-exports": "ad35a00cd2f093463f09eab096d032ed0de1e0a863686e170426d59ef0d2d7ef",
     "contractor-super-tpar": "f88a46cf4f6800d729f30b2e2499997b3a34bdde14e2b770d8d6ceed565a9a0f",

@@ -230,4 +230,4 @@ unchanged.
 
 | Skill | Amended canonical SHA-256 |
 |---|---|
-| `coal-lsl-levy` | `424302826e8721dea1e5fbc92880e5d944f09b334fcf3e0166e4074334cc185a` |
+| `coal-lsl-levy` | `f5b9a018e12a438d1c82d0abf546c09327bc8a88b9e6a55a0d119843ebd72deb` |
