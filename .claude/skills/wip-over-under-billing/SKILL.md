@@ -41,6 +41,12 @@ Build a contract-by-contract WIP schedule that measures progress under AASB 15, 
 - Every change in measure of progress is treated as a change in estimate under AASB 108 through current-period revenue (para 43), with comparatives unrestated and the cumulative catch-up quantified
 - Constrained variable consideration is listed with the para 57 factor relied on for each amount excluded, and every contract asset is included in the AASB 9 ECL population
 
+## Calculator safeguards
+
+- Prefer the local deterministic WIP Tally tool. Use a remote calculator only when the user explicitly permits that call for this question, and never as a fallback when the local tool refuses.
+- Confirm the engine supports the reporting period; a parsed date is not proof of support. Retain the engine version, period applicability, boundary statement, exact inputs, date, schedule response and companion evidence for the same run.
+- Treat engine flags, classifications and status labels as that engine's descriptions, not human conclusions. If calculators disagree, report both figures and conventions, escalate the difference with the primary source, and never choose the more favourable result.
+
 ## Portable safety boundary
 
 - Current mutable facts must come from a current authoritative primary source; if the source is unavailable, leave the fact blank or explicitly unverified and do not rely on it.
@@ -57,6 +63,8 @@ Build a contract-by-contract WIP schedule that measures progress under AASB 15, 
 - Do not invent WIP arithmetic. The required schedule engine is [`wip-tally schedule`](https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally) when a contract CSV is in the approved environment; if it is unavailable, stop and ask. The agent still must not decide over-time versus point in time, claim enforceability, or an onerous-contract provision.
 - Do not assume tax follows AASB 15. Do not carry the accounting progress measure into a tax computation; the ATO position on long-term construction contracts must be confirmed at ato.gov.au for the relevant year, and any deferred tax difference flagged rather than assumed away.
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude identifiers the task does not need; keep job cost exports and generated schedules outside every version-control checkout, not merely ignored by one.
+
+Retain the complete `wip-tally schedule` response with the input CSV and date. Because the schedule response may not include the engine version, supported period or boundary statement, also generate and retain the engine's companion evidence or review-pack response for that same run. Check that it identifies the run and records the engine version, period applicability, boundary statement, exact inputs and date before using any figure; do not treat a review flag as a human conclusion.
 
 The schedule engine reference is pinned to commit `f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a`. When installation
 is approved, use the identical revision and package path:

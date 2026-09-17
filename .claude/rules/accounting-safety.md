@@ -50,9 +50,12 @@ individual skill remains the detailed procedure.
 9. Capture what a calculation consumed, not just what it produced. Record the
    calculator and its version, the period, the statutory rate tables named in
    its own response, the boundary statement it returned, the exact inputs
-   supplied and the date. A figure whose response carried no such statement, or
-   whose stored evidence no longer matches its own record, must not be relied
-   on: obtain it again from the calculator that owns it.
+   supplied and the date. The metadata may be in the calculator response or in
+   a companion evidence or review-pack response that identifies the same run;
+   retain both together. A figure whose response and companion evidence carry
+   no such statement, or whose stored evidence no longer matches its own
+   record, must not be relied on: obtain it again from the calculator that
+   owns it.
 10. A calculator's own labels stay its own. A compliance flag, a deemed amount,
     an accepted classification or a status word is that engine's description of
     its own arithmetic. Report it as that, beside the inputs it used. Do not map
