@@ -16,7 +16,6 @@ else is a failed run, not a quiet one.
 from __future__ import annotations
 
 import argparse
-import os
 import re
 import sys
 from dataclasses import dataclass
@@ -122,10 +121,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
     for line in result.lines():
         print(line)
-    output = os.environ.get("GITHUB_OUTPUT")
-    if output:
-        with open(output, "a", encoding="utf-8") as handle:
-            handle.write("\n".join(result.lines()) + "\n")
     return 0
 
 

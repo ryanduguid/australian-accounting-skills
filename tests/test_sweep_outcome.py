@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -145,12 +146,18 @@ class MainTests(unittest.TestCase):
     def run_main(self, argv: list[str], output: Path | None = None) -> tuple[int, str, str]:
         out, err = io.StringIO(), io.StringIO()
         env = {"GITHUB_OUTPUT": str(output)} if output else {}
-        with mock.patch.dict(sweep_outcome.os.environ, env, clear=True):
+        with mock.patch.dict(os.environ, env, clear=True):
             with redirect_stdout(out), redirect_stderr(err):
                 code = sweep_outcome.main(argv)
         return code, out.getvalue(), err.getvalue()
 
-    def test_writes_the_outcome_to_github_output(self) -> None:
+    def test_the_outcome_goes_to_stdout_for_the_workflow_to_redirect(self) -> None:
+        """source-sweep.yml appends this script's stdout to $GITHUB_OUTPUT.
+
+        The script must not append to that file as well: two writers put every
+        key in twice, and reading the path out of the environment made it a
+        path-injection sink.
+        """
         with tempfile.TemporaryDirectory() as directory:
             report = Path(directory) / "sweep.md"
             report.write_text(report_text({source_refresh.UNCHANGED: 1}), encoding="utf-8")
@@ -160,7 +167,7 @@ class MainTests(unittest.TestCase):
             )
             self.assertEqual((code, err), (0, ""))
             self.assertIn("outcome=clean\n", out)
-            self.assertEqual(output.read_text(encoding="utf-8"), out)
+            self.assertFalse(output.exists())
 
     def test_reports_a_failure_and_exits_1(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
