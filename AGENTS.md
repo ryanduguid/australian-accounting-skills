@@ -109,7 +109,9 @@ Re-fetch the indexed primary sources with
 source so a later sweep can report which pages moved, and it never touches
 `checked_at`: that date means a person read the source, and only a person
 changes it. `.github/workflows/source-sweep.yml` runs the sweep weekly and
-files the result as an issue. `coverage.json` carries the result per skill,
+files the result as an issue; `scripts/sweep_outcome.py` is what turns the
+sweep's exit status and report into that outcome, and it fails the run on
+exit 1, any unexpected code, or a missing, stale or contradictory report. `coverage.json` carries the result per skill,
 including any source that published a change after its last review.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
