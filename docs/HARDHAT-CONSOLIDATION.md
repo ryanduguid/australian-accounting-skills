@@ -209,7 +209,7 @@ Coal LSL screening now applies the statutory employer and employee tests rather 
 The amended canonical SHA-256 for `coal-lsl-levy` is
 `40ce6a00a3c1fb66fc3d258befcc32527479846743fdd2bafc3e67e08c410648`.
 
-## Calculator-use amendment, 18 September 2026
+## Calculator-use amendment, 17 September 2026
 
 `coal-lsl-levy` gains step 5a: what a levy calculator does and does not decide,
 how to confirm it supports the reporting month in question rather than merely
