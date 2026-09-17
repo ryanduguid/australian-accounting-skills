@@ -81,8 +81,6 @@ class HardhatConsolidationTests(unittest.TestCase):
         self.assertNotIn("install both", record.lower())
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 class CalculatorSafeguardTests(unittest.TestCase):
@@ -132,3 +130,7 @@ class CalculatorSafeguardTests(unittest.TestCase):
                         any(phrase in text for phrase in phrases),
                         f"{path.name}/SKILL.md does not carry {safeguard}",
                     )
+
+
+if __name__ == "__main__":
+    unittest.main()
