@@ -35,3 +35,34 @@ individual skill remains the detailed procedure.
    Calculate each difference from its named source amounts; calculate a range
    as maximum minus minimum. Verify that report totals measure the same
    population before treating numerical agreement as a reconciliation.
+7. Prefer a local deterministic tool over a remote calculator. Where both can
+   answer, use the local one: it needs no network, sends nothing anywhere, and
+   its version is the version you are looking at. Reach for a remote calculator
+   only when the user has explicitly permitted this call, for this question, on
+   fabricated or firm-approved inputs, and never as a fallback when a local tool
+   refuses. A local refusal is an answer: it means the facts do not settle the
+   question, and a second opinion from elsewhere does not settle it either.
+8. Ask a calculator which periods it supports before assuming one. A rate or
+   method verified for one period does not vouch for another, and a calculator
+   that parses a date is not a calculator that has been checked for it. If the
+   period you need is unsupported, say so and stop; do not substitute the
+   nearest supported period's figure.
+9. Capture what a calculation consumed, not just what it produced. Record the
+   calculator and its version, the period, the exact inputs supplied and the
+   date, plus the statutory rate tables and the boundary statement its own
+   response names where it publishes them. A calculator whose published
+   contract includes a boundary statement and returns a figure without one has
+   returned something its own contract does not describe, and that figure must
+   not be relied on: obtain it again from the calculator that owns it. A local
+   deterministic tool that publishes no such statement is a different case; the
+   boundary is the workflow's own, and what has to be recorded is the tool, its
+   version and its inputs, so the run can be reproduced. Stored evidence that
+   no longer matches its own record must not be relied on either way.
+10. A calculator's own labels stay its own. A compliance flag, a deemed amount,
+    an accepted classification or a status word is that engine's description of
+    its own arithmetic. Report it as that, beside the inputs it used. Do not map
+    it onto a verdict, an approval field or a review state, and do not let it
+    stand in for the human decision the workflow names. Where two engines
+    disagree, report both figures and the conventions behind them, and hand the
+    difference to the responsible person with the primary source it turns on.
+    Never choose between them on which figure is more favourable.
