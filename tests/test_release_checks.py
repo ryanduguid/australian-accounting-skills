@@ -10,6 +10,7 @@ POLICY = "2adf9e19b7c73970a1dd6703afb3f9c27b7972d7"
 # aggregate gates. Review the list when a component's CI contract changes.
 REQUIRED = {
     "release.yml": [
+        ".github/workflows/no-ai-attribution.yml: Attribution policy / Attribution policy runner",
         ".github/workflows/verify.yml: lint",
         ".github/workflows/verify.yml: secrets",
         ".github/workflows/verify.yml: shared conformance / verify skill-pack consumer",
