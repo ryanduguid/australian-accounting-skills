@@ -49,3 +49,13 @@ The suite checks skill metadata and structure. Add a test when your change intro
 Cite the provision, ruling or ATO page behind any technical change, and give its date. When you alter a rule, search for every other place that states or polices it. The same rule tends to appear in a checklist, a tie-out and a worked example.
 
 For a potential security vulnerability, follow [SECURITY.md](SECURITY.md) rather than opening an issue.
+
+## Release checks
+
+The release caller names the component checks that must have succeeded for the
+exact release commit on `main`. It advances the policy SHA, `required-checks`
+and `actions: read` together. Skipped, missing, cancelled or failed checks block
+publication, including component tests skipped by a path filter. An aggregate
+gates job cannot replace those checks. Before tagging, choose a main-branch
+commit with successful component CI; a successful run for an older commit is
+not evidence for the release. Tags and publication still require explicit approval.
