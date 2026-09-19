@@ -4,9 +4,10 @@ name: No AI attribution
 # in commit messages or author and committer identities on the branch.
 # Product references are allowed.
 #
-# The local commit-msg guard catches commits written on Ryan's machine; this
-# workflow hands pull request metadata to the shared Attribution policy runner
-# from the trusted base branch and audits commits on every branch push.
+# A commit-msg guard installed on Ryan's machine, outside this repository,
+# catches commits as they are written; this workflow hands pull request
+# metadata to the shared Attribution policy runner from the trusted base
+# branch and audits commits on every branch push.
 # It never runs pull request code.
 
 on:
