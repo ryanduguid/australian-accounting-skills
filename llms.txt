@@ -8,10 +8,11 @@
 Preparation only, and not advice. The skills never lodge, file, submit,
 transmit, declare, pay or finalise anything with the Australian Taxation Office
 or any other agency, and they give no tax, legal, financial or assurance
-conclusion. An authorised human reviews, decides and lodges. Rates, thresholds,
-BAS labels and due dates are verified at a primary source at use time, never
-recalled from memory. Not affiliated with or endorsed by the Australian
-Taxation Office.
+conclusion. An authorised human reviews, decides and lodges. Each skill
+instructs the agent to verify rates, thresholds, BAS labels and due dates at a
+primary source at use time rather than recall them; a Markdown skill cannot
+enforce that, so the runtime and the reviewer must check it happened. Not
+affiliated with or endorsed by the Australian Taxation Office.
 
 ## Install
 
