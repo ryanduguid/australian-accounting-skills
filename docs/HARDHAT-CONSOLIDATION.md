@@ -35,6 +35,11 @@ gates.
 
 ## Destination-owned amendments
 
+Each entry below records a change this pack made after the transfer. A digest
+quoted in an entry is the file's state on that date, not a claim about the
+file today: once a skill is here it evolves like the other 40, and git holds
+its current bytes.
+
 On 9 September 2026, `contracting-exports` gained explicit manifest timestamp,
 filter, total and rounding-bridge requirements, including re-export after a
 filter change and pending authorised review. This responds to the recorded
