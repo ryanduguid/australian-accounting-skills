@@ -57,6 +57,8 @@ judgement remain with the reviewer.
 
 ## Required checks
 
+### Complete-input scenario
+
 - Show 10000.00 + 4000.00 + 2000.00 - 2500.00 = 13500.00.
 - Show both debtor and creditor roll-forwards ending at 0.00.
 - Reconcile all 3 source movements to all 3 ledger movements.
@@ -64,6 +66,17 @@ judgement remain with the reviewer.
 - Record the source, period, basis, filters and no-rounding assumption.
 - State that the supplied arithmetic ties, with no reconciliation exception
   identified on these facts, while leaving reviewer approval pending.
+
+### Incomplete-input variant
+
+- Identify the missing 2500.00 bank-statement movement as an evidence gap and
+  state that bank agreement remains unverified.
+- Show the remaining statement evidence of 16000.00 against the ledger closing
+  balance of 13500.00, without inventing an unpresented cheque or changing the
+  ledger to force a tie.
+- Preserve the debtor roll-forward ending at 0.00 and the creditor arithmetic
+  ending at 0.00 on the supplied ledger.
+- State that creditor settlement evidence is missing and retain the exception.
 
 ## Must not do
 
