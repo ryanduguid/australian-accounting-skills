@@ -46,7 +46,30 @@ DATED_SOURCE_LIST = re.compile(
 SKILLS_CLI_COMMAND = re.compile(r"npx (?:--?\w[\w-]*(?:=\S+)? )*skills(@\S+)? add\b")
 # Only an exact release pins anything. `latest`, `next`, a range and a bare
 # name all let npm choose the code, which is the thing being prevented.
-EXACT_VERSION = re.compile(r"^@\d+\.\d+\.\d+(?:[-+][\w.]+)?$")
+EXACT_VERSION = re.compile(
+    r"@(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)"
+    r"(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?"
+    r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
+)
+
+
+def is_exact_cli_version(specifier: str) -> bool:
+    if len(specifier) > 257:
+        return False
+    match = EXACT_VERSION.fullmatch(specifier)
+    if match is None:
+        return False
+    # npm's semver parser limits core numbers to JavaScript's safe integers.
+    core = specifier[1:].split("-", 1)[0].split("+", 1)[0]
+    if any(int(part) > 9007199254740991 for part in core.split(".")):
+        return False
+    # Invalid semantic versions can be mutable npm tags. Numeric prerelease
+    # identifiers cannot have leading zeroes; build metadata can.
+    return all(
+        not part.isdigit() or part == "0" or not part.startswith("0")
+        for part in (match.group(1) or "").split(".")
+    )
+
 
 STRICT_YAML = REPOSITORY / "scripts" / "strict_yaml.py"
 STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", STRICT_YAML)
@@ -288,10 +311,34 @@ class SkillMetadataTests(unittest.TestCase):
             body = " ".join(path.read_text(encoding="utf-8").split())
             for match in SKILLS_CLI_COMMAND.finditer(body):
                 specifier = match.group(1) or ""
-                if not EXACT_VERSION.match(specifier):
+                if not is_exact_cli_version(specifier):
                     name = path.relative_to(REPOSITORY).as_posix()
                     unpinned.append(f"{name}: {match.group(0)}")
         self.assertEqual(unpinned, [])
+
+    def test_cli_commands_reject_mutable_and_malformed_version_tags(self) -> None:
+        for version in (
+            "",
+            "@latest",
+            "@^1.5.22",
+            "@1.2.3-foo_bar",
+            "@01.2.3",
+            "@1.2.3-01",
+            "@1.2.3-alpha..1",
+            "@1.2.3+build_tag",
+            "@9007199254740992.0.0",
+            "@1.2.3+" + "a" * 260,
+        ):
+            with self.subTest(version=version):
+                match = SKILLS_CLI_COMMAND.search(f"npx --yes skills{version} add owner/repo")
+                self.assertIsNotNone(match)
+                assert match is not None
+                self.assertFalse(is_exact_cli_version(match.group(1) or ""))
+
+    def test_cli_commands_accept_exact_releases_and_prereleases(self) -> None:
+        for version in ("@1.5.22", "@1.5.22-rc.1", "@0.0.0-0+build.01"):
+            with self.subTest(version=version):
+                self.assertTrue(is_exact_cli_version(version))
 
     def test_every_skill_marks_embedded_instructions_as_untrusted(self) -> None:
         skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
