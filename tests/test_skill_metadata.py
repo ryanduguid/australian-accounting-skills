@@ -244,7 +244,7 @@ class SkillMetadataTests(unittest.TestCase):
         for route in (
             "/plugin marketplace add ryanduguid/australian-accounting-skills",
             "codex plugin add australian-accounting-skills@ryanduguid",
-            "npx skills add ryanduguid/australian-accounting-skills",
+            "npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills",
         ):
             with self.subTest(route=route):
                 self.assertIn(route, index)
