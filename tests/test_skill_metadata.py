@@ -35,6 +35,10 @@ DATED_SOURCE_LIST = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 
+# An install command for the skills CLI that names no version. A bare mention
+# of the tool is prose; `add <target>` is a command an agent runs.
+UNPINNED_SKILLS_CLI = re.compile(r"npx\s+(?:--?\w+\s+)*skills\s+add\b")
+
 STRICT_YAML = REPOSITORY / "scripts" / "strict_yaml.py"
 STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", STRICT_YAML)
 if STRICT_YAML_SPEC is None or STRICT_YAML_SPEC.loader is None:  # pragma: no cover - import machinery guard
@@ -248,6 +252,25 @@ class SkillMetadataTests(unittest.TestCase):
         ):
             with self.subTest(route=route):
                 self.assertIn(route, index)
+
+    def test_no_published_file_installs_the_cli_without_a_version(self) -> None:
+        """An unpinned npx line runs whatever npm serves when an agent reads it.
+
+        The name belongs to vercel-labs and nobody else can claim it, but a
+        later release of that CLI would change what these files tell an agent
+        to do. Qodo found two copies this repository had missed, so the rule
+        lives here rather than in one reviewer's memory.
+        """
+        unpinned = []
+        for path in sorted(REPOSITORY.glob("**/*.md")) + sorted(REPOSITORY.glob("**/*.txt")):
+            if any(part in {".git", "node_modules", ".venv"} for part in path.parts):
+                continue
+            for number, line in enumerate(
+                path.read_text(encoding="utf-8").splitlines(), start=1
+            ):
+                if UNPINNED_SKILLS_CLI.search(line):
+                    unpinned.append(f"{path.relative_to(REPOSITORY).as_posix()}:{number}")
+        self.assertEqual(unpinned, [])
 
     def test_every_skill_marks_embedded_instructions_as_untrusted(self) -> None:
         skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
