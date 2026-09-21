@@ -40,7 +40,10 @@ DATED_SOURCE_LIST = re.compile(
 # carries. A bare mention of the tool is prose; `add <target>` is a command an
 # agent runs. Read against whitespace-collapsed text, so a command wrapped
 # across two lines in a paragraph is still one command.
-SKILLS_CLI_COMMAND = re.compile(r"npx (?:--?[\w-]+(?:=\S+)? )*skills(@\S+)? add\b")
+# A flag body starts with a word character, so the dashes and the body cannot
+# both claim the same character. Letting them made `npx -- -- --` backtrack
+# exponentially, which CodeQL caught as py/redos.
+SKILLS_CLI_COMMAND = re.compile(r"npx (?:--?\w[\w-]*(?:=\S+)? )*skills(@\S+)? add\b")
 # Only an exact release pins anything. `latest`, `next`, a range and a bare
 # name all let npm choose the code, which is the thing being prevented.
 EXACT_VERSION = re.compile(r"^@\d+\.\d+\.\d+(?:[-+][\w.]+)?$")
