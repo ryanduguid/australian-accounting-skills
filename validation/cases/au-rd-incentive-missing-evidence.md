@@ -21,6 +21,27 @@ Use `au-rd-incentive` to prepare the supported work and an unresolved-items hand
 
 Only the facts in the scenario are available. No additional source documents, amounts or approvals are implied.
 
+## Worked cost-to-activity schedule
+
+The fabricated ledger contains the following gross AUD expenses. No GST or
+tax eligibility conclusion is requested.
+
+| Source | Ledger cost | Supplied activity allocation |
+|---|---:|---|
+| INV-01 | 6000.00 | Experiment X: 4000.00; routine support: 2000.00 |
+| INV-02 | 3000.00 | Experiment X: 2500.00; unallocated: 500.00 |
+| INV-03 | 1200.00 | Marketing: 1200.00 |
+
+Reconcile ledger costs of 10200.00 to Experiment X 6500.00, routine support
+2000.00, marketing 1200.00 and unallocated 500.00. Preserve each invoice link.
+The 6500.00 is a supplied activity allocation, not qualifying R&D expenditure.
+Experiment records, eligibility, registration and any offset remain unverified.
+
+In the incomplete variant, remove INV-02's allocation only. Keep its full
+3000.00 unallocated, so the supported Experiment X allocation becomes 4000.00
+and the ledger total stays 10200.00. Do not drop the invoice, invent an
+experiment or calculate an offset from an assumed rate.
+
 ## Deliberately unavailable evidence
 
 The evidence gap named in the scenario remains unavailable. No current legal rates, thresholds or deadlines are supplied. No external action is authorised.
