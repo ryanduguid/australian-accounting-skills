@@ -61,7 +61,7 @@ One command, using the [`skills` CLI](https://github.com/vercel-labs/skills). It
 `.claude/skills/` layout this repo uses, so no extra manifest is needed:
 
 ```bash
-npx skills add ryanduguid/australian-accounting-skills
+npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills
 ```
 
 That installs into the current project (`./.claude/skills/`). Add `-g` to install into
