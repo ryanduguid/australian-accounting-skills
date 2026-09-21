@@ -26,6 +26,17 @@ could decide the labels. Do not allocate labels merely to complete the draft.
 | Routine materials | 1,250.00 | Purchases | Consumed in ordinary work |
 | Software subscription | 400.00 | Purchases | Recurring operating service |
 
+## Worked arithmetic before classification
+
+The 3 supplied purchases total 6150.00 excluding GST: 4500.00 + 1250.00 +
+400.00. Prepare a purchase register with one row per item, its supplied nature,
+source label and unresolved BAS classification. This total reconciles the
+supplied list only; neither GST nor G10/G11 allocations can be inferred from it.
+
+The completed workpaper must show 6150.00 as the unallocated purchase total.
+Removing the machine evidence must leave its 4500.00 on the exception list.
+Do not omit it or treat the remaining 1650.00 as the complete ledger.
+
 ## Deliberately unavailable evidence
 
 - No current BAS instructions or turnover-condition evidence is supplied.

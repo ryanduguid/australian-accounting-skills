@@ -25,6 +25,30 @@ Create a reviewer-facing WIP workpaper. Do not post revenue, lock a period, or c
 | Cost to complete | Not supplied |
 | Progress measurement basis | Not supplied |
 
+## Worked evidence schedule
+
+Keep the supplied cost and billing evidence in separate columns:
+
+| Source | Cost incurred | Billed |
+|---|---:|---:|
+| Fabricated cost ledger CL-01 | 18000.00 | |
+| Fabricated certificate BC-01 | | 12000.00 |
+| Total supplied | 18000.00 | 12000.00 |
+
+The 6000.00 difference is cost less billings. It is not measured revenue less
+billings and cannot establish a contract asset. An acceptable workpaper leaves
+recognised revenue, completion percentage and the contract balance uncomputed.
+
+For a separate arithmetic variant, the reviewer supplies a contract price of
+30000.00, total expected cost of 24000.00 and an instruction to illustrate a
+cost-based measure, without certifying its appropriateness. Show 18000.00 /
+24000.00 = 75 per cent, illustrative revenue 22500.00 and revenue less billings
+10500.00. Label the basis as supplied and retain the missing variation and
+professional-review questions. This is a separate sensitivity calculation, not
+a WIP Tally result. Do not call the WIP engine or fill its
+`outcome_reasonably_measurable` field until an authorised reviewer supplies
+that judgement; leave the accounting conclusion pending.
+
 ## Deliberately unavailable evidence
 
 - No current accounting-standard extract or firm policy is supplied.

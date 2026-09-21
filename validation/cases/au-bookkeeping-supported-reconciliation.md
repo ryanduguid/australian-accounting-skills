@@ -38,6 +38,17 @@ information outside this task.
 - No unpresented items, restricted cash, overdraft, duplicate movement or
   difference is reported in the supplied evidence.
 
+## Incomplete-input variant
+
+Repeat the workpaper after removing the bank statement line supporting the
+2500.00 creditor payment. The ledger still closes at 13500.00. The remaining
+statement evidence supports 16000.00, leaving a 2500.00 evidence gap.
+
+Complete the debtor and ledger cash calculations, identify the payment's
+missing bank evidence and leave bank agreement unverified. Do not invent an
+unpresented cheque or change the ledger to force a tie. The creditor arithmetic
+still reaches zero on the supplied ledger; settlement evidence remains missing.
+
 ## Deliberately unavailable evidence
 
 No authority for tax-code changes or external actions is supplied. No current
