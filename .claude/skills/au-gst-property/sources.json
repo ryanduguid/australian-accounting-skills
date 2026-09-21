@@ -19,14 +19,14 @@
       "title": "A New Tax System (Goods and Services Tax) Act 1999",
       "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
       "checked_at": "2026-09-10",
-      "fact": "The purchase-credit and separate-cost rules the workflow relies on: s 75-20 (a supply under the margin scheme is not a creditable acquisition, so it gives rise to no input tax credit) and the Division 11 creditable-acquisition provisions for construction and other separate costs. The skill's reference line records the check against compilation C2026C00081 on 10 September 2026; the text view fetched on 2026-09-19 served that same compilation C2026C00081 and carries the s 75-20 margin-scheme wording.",
+      "fact": "The purchase-credit and separate-cost rules the workflow relies on: GST Act s 75-20 and Division 11. On 22 September 2026 (Australia/Sydney, UTC+10), the Register served compilation C2026C00081, compilation 96 dated 1 January 2026. Its volume 1 contains the margin-scheme exclusion in s 75-20 and the creditable-acquisition conditions in ss 11-5, 11-15 and 11-20. These provisions support the existing workflow distinction between the property acquisition and separate costs. No rate, eligibility conclusion or new tax treatment is adopted.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "The Register's text view serves the whole compilation. Retrieve the operative s 75-20 and Division 11 text for the work's period and confirm the compilation is current before allowing or refusing a credit; this index is not authority for a period it does not name.",
+      "limitations": "Automated source verification is recorded in docs/source-review-2026-09-22.md. The existing human review date is retained. The digest covers the Register HTML response, which can change without a change to the provisions. Retrieve the operative text and check amendments and application rules for the work's period before deciding any credit; this record is not current-law approval.",
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/C2004A00446/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-19",
-      "content_hash": "8f49e8e69f5262a40937aa3163e218725a1900616319d5485349e9fc8f05c30e",
+      "fetched_at": "2026-09-22",
+      "content_hash": "4cefd0d7fd35098b14fc8c18b778d1fd366479e404fb91cc8e769c575e329f08",
       "source_last_modified": "",
       "content_hash_covers": "html"
     }
