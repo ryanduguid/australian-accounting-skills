@@ -44,7 +44,10 @@ For a separate arithmetic variant, the reviewer supplies a contract price of
 cost-based measure, without certifying its appropriateness. Show 18000.00 /
 24000.00 = 75 per cent, illustrative revenue 22500.00 and revenue less billings
 10500.00. Label the basis as supplied and retain the missing variation and
-professional-review questions.
+professional-review questions. This is a separate sensitivity calculation, not
+a WIP Tally result. Do not call the WIP engine or fill its
+`outcome_reasonably_measurable` field until an authorised reviewer supplies
+that judgement; leave the accounting conclusion pending.
 
 ## Deliberately unavailable evidence
 
