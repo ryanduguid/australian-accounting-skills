@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -34,6 +35,18 @@ DATED_SOURCE_LIST = re.compile(
     r"^#{0,6}\s*Primary sources\b[\s(,:-]*checked\b",
     re.IGNORECASE | re.MULTILINE,
 )
+
+# An install command for the skills CLI, with whatever version specifier it
+# carries. A bare mention of the tool is prose; `add <target>` is a command an
+# agent runs. Read against whitespace-collapsed text, so a command wrapped
+# across two lines in a paragraph is still one command.
+# A flag body starts with a word character, so the dashes and the body cannot
+# both claim the same character. Letting them made `npx -- -- --` backtrack
+# exponentially, which CodeQL caught as py/redos.
+SKILLS_CLI_COMMAND = re.compile(r"npx (?:--?\w[\w-]*(?:=\S+)? )*skills(@\S+)? add\b")
+# Only an exact release pins anything. `latest`, `next`, a range and a bare
+# name all let npm choose the code, which is the thing being prevented.
+EXACT_VERSION = re.compile(r"^@\d+\.\d+\.\d+(?:[-+][\w.]+)?$")
 
 STRICT_YAML = REPOSITORY / "scripts" / "strict_yaml.py"
 STRICT_YAML_SPEC = importlib.util.spec_from_file_location("strict_yaml", STRICT_YAML)
@@ -244,10 +257,41 @@ class SkillMetadataTests(unittest.TestCase):
         for route in (
             "/plugin marketplace add ryanduguid/australian-accounting-skills",
             "codex plugin add australian-accounting-skills@ryanduguid",
-            "npx skills add ryanduguid/australian-accounting-skills",
+            "npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills",
         ):
             with self.subTest(route=route):
                 self.assertIn(route, index)
+
+    def test_no_published_file_installs_the_cli_without_a_version(self) -> None:
+        """An unpinned npx line runs whatever npm serves when an agent reads it.
+
+        The name belongs to vercel-labs and nobody else can claim it, but a
+        later release of that CLI would change what these files tell an agent
+        to do. `latest` and a caret range are unpinned for this purpose: npm
+        still chooses the code. Qodo found two copies this repository had
+        missed and then three specifier forms that read as pinned, so the rule
+        lives here rather than in one reviewer's memory.
+        """
+        listed = subprocess.run(
+            ["git", "ls-files", "-z", "--", "*.md", "*.txt"],
+            cwd=REPOSITORY,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout
+        tracked = [REPOSITORY / name for name in listed.split("\0") if name]
+        self.assertTrue(tracked, "git listed no tracked markdown or text files")
+
+        unpinned = []
+        for path in tracked:
+            # Collapsed, so a command wrapped across two lines still reads as one.
+            body = " ".join(path.read_text(encoding="utf-8").split())
+            for match in SKILLS_CLI_COMMAND.finditer(body):
+                specifier = match.group(1) or ""
+                if not EXACT_VERSION.match(specifier):
+                    name = path.relative_to(REPOSITORY).as_posix()
+                    unpinned.append(f"{name}: {match.group(0)}")
+        self.assertEqual(unpinned, [])
 
     def test_every_skill_marks_embedded_instructions_as_untrusted(self) -> None:
         skill_files = sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))

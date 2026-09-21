@@ -23,7 +23,7 @@ affiliated with or endorsed by the Australian Taxation Office.
   `codex plugin marketplace add ryanduguid/australian-accounting-skills` then
   `codex plugin add australian-accounting-skills@ryanduguid`
 - Any agent that reads SKILL.md, via the skills CLI:
-  `npx skills add ryanduguid/australian-accounting-skills`
+  `npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills`
 - The 19 workflows in the v0.2.1 release: clone that tag and install the
   checkout, as [docs/installation.md](docs/installation.md) sets out.
 
