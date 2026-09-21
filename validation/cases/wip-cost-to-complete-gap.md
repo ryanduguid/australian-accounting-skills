@@ -41,10 +41,10 @@ recognised revenue, completion percentage and the contract balance uncomputed.
 
 For a separate arithmetic variant, the reviewer supplies a contract price of
 30000.00, total expected cost of 24000.00 and an instruction to illustrate a
-cost-based measure, without certifying its appropriateness. Show 18000.00 /
-24000.00 = 75 per cent, illustrative revenue 22500.00 and revenue less billings
-10500.00. Label the basis as supplied and retain the missing variation and
-professional-review questions.
+cost-based measure, without certifying its appropriateness. Record the supplied
+inputs, but leave completion percentage, revenue and revenue less billings
+uncomputed while the measurement basis and professional-review questions remain
+unresolved. Retain the missing variation evidence.
 
 ## Deliberately unavailable evidence
 
