@@ -32,18 +32,18 @@
     },
     {
       "title": "Income Tax Assessment Act 1997",
-      "url": "https://www.legislation.gov.au/C1997A00038/latest/text",
+      "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
       "checked_at": "2026-09-19",
-      "fact": "The legislation behind the two concessions the workflow reviews, as the skill's reference line records: ITAA 1997 s 291-20 for the concessional contributions rules the carry-forward eligibility test reads against, and s 292-85 for the non-concessional cap the bring-forward review reads against.",
+      "fact": "The legislation behind the two concessions the workflow reviews: ITAA 1997 s 291-20(3)-(7) addresses unused concessional contribution amounts, and s 292-85(2)-(7) addresses the non-concessional cap and bring-forward rules. On 22 September 2026, the Register served compilation C2026C00324, compilation 266 dated 1 July 2026, with the relevant provisions in volume 6. No cap amount, balance threshold or eligibility conclusion is adopted.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "The Register's text view for this Act serves a landing view rather than inline section text, so the operative s 291-20 and s 292-85 provisions must be retrieved through the Register for the relevant period before either concession is concluded. This index records the pointer and the retrieval of the landing view only: it names no compilation, and the compilation current at the work's period must be identified when the operative provisions are retrieved.",
+      "limitations": "The former C1997A00038 URL is not this Act and the browser redirected to a title-loading error. The correct title ID is C2004A05138. The Register labelled the retrieved compilation latest while displaying the period 1 July 2026 to 26 August 2026; this record does not establish the operative law for a later date. Check the work's period, subsequent amendments and application rules before using either concession. The existing human review date is retained; automated source verification is recorded in docs/source-review-2026-09-22.md.",
       "volatile": true,
-      "final_url": "https://www.legislation.gov.au/C1997A00038/latest/text",
+      "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-19",
-      "content_hash": "7fcd27d58a3cde405506b8542cb26bfbb8857b936a65a3953e2c7e07527fb415",
-      "source_last_modified": "",
-      "content_hash_covers": "html"
+      "fetched_at": "2026-09-22",
+      "content_hash": "903531afceffcd61f14e1a226ae53037f19060f2b9910d884f1b678dcf5b8ead",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
     }
   ]
 }
