@@ -19,7 +19,7 @@
       "title": "A New Tax System (Goods and Services Tax) Act 1999",
       "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
       "checked_at": "2026-09-10",
-      "fact": "The purchase-credit and separate-cost rules the workflow relies on: GST Act s 75-20 and Division 11. On 22 September 2026, the Register served compilation C2026C00081, compilation 96 dated 1 January 2026. Its volume 1 contains the margin-scheme exclusion in s 75-20 and the creditable-acquisition conditions in ss 11-5, 11-15 and 11-20. These provisions support the existing workflow distinction between the property acquisition and separate costs. No rate, eligibility conclusion or new tax treatment is adopted.",
+      "fact": "The purchase-credit and separate-cost rules the workflow relies on: GST Act s 75-20 and Division 11. On 22 September 2026 (Australia/Sydney, UTC+10), the Register served compilation C2026C00081, compilation 96 dated 1 January 2026. Its volume 1 contains the margin-scheme exclusion in s 75-20 and the creditable-acquisition conditions in ss 11-5, 11-15 and 11-20. These provisions support the existing workflow distinction between the property acquisition and separate costs. No rate, eligibility conclusion or new tax treatment is adopted.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Automated source verification is recorded in docs/source-review-2026-09-22.md. The existing human review date is retained. The digest covers the Register HTML response, which can change without a change to the provisions. Retrieve the operative text and check amendments and application rules for the work's period before deciding any credit; this record is not current-law approval.",
       "volatile": true,

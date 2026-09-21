@@ -6,6 +6,12 @@ identity and the provisions supporting the workflows, without deciding a tax
 position. Existing human `checked_at` dates and discovery-only verification
 statuses remain unchanged.
 
+Dates in this note and the refreshed `fetched_at` fields use Australia/Sydney
+(UTC+10). The retrieval occurred on 22 September locally and 21 September UTC.
+`source_refresh.py` writes `fetched_at` using the execution host's `date.today()`;
+its report header separately uses UTC. The two calendar dates describe the
+same execution, not a planned future check.
+
 ## Property GST
 
 The [GST Act text view](https://www.legislation.gov.au/C2004A00446/latest/text)
