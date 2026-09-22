@@ -43,6 +43,12 @@ Build a contract-by-contract WIP schedule that measures progress under AASB 15, 
 
 ## Portable safety boundary
 
+Claim a tool check only after observing its successful execution and result.
+Record the actual tool, inputs and result; leave unavailable version or date
+metadata unverified. If no tool is available, show supported arithmetic and
+state that tool verification was not performed. Never invent a tool run or its
+evidence. This does not replace any required workflow engine or human judgement.
+
 - Current mutable facts must come from a current authoritative primary source; if the source is unavailable, leave the fact blank or explicitly unverified and do not rely on it.
 - Real client data must stay in a firm-approved environment, outside repositories and unapproved cloud prompts, with unnecessary identifiers excluded.
 - Write client output only to a configured firm-approved secure path; if none is supplied, stop and ask, create no fallback, and do not edit `.gitignore`.

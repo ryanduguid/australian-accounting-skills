@@ -58,6 +58,12 @@ individual skill remains the detailed procedure.
    boundary is the workflow's own, and what has to be recorded is the tool, its
    version and its inputs, so the run can be reproduced. Stored evidence that
    no longer matches its own record must not be relied on either way.
+   Claim a tool check only after observing its successful execution and result.
+   Record the actual tool, inputs, result and available version/date evidence;
+   leave unavailable metadata unverified. If no tool is available, show supported
+   arithmetic and state that tool verification was not performed. Do not invent
+   a tool run or its evidence. A workflow that requires a particular engine
+   still stops when that engine is unavailable.
 10. A calculator's own labels stay its own. A compliance flag, a deemed amount,
     an accepted classification or a status word is that engine's description of
     its own arithmetic. Report it as that, beside the inputs it used. Do not map

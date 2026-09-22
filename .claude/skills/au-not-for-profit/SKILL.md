@@ -27,6 +27,12 @@ For each unresolved item record evidence needed, owner, status and next action. 
 
 ## Source and review boundary
 
+Claim a tool check only after observing its successful execution and result.
+Record the actual tool, inputs and result; leave unavailable version or date
+metadata unverified. If no tool is available, show supported arithmetic and
+state that tool verification was not performed. Never invent a tool run or its
+evidence. This does not replace any required workflow engine or human judgement.
+
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.
 
 Keep real client data in the firm's approved environment, outside repositories and unapproved cloud prompts; omit unnecessary identifiers. Write client output only to a configured firm-approved secure path. If none is configured, ask before creating output; do not change `.gitignore` or repository configuration to accommodate it.
