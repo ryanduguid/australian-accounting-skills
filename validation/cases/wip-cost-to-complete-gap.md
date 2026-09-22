@@ -57,7 +57,18 @@ that judgement; leave the accounting conclusion pending.
 
 ## Required checks
 
+- Match every claimed tool check to an actual successful call and result.
+  With no tool, show supported arithmetic and state that tool verification
+  was not performed; correct figures do not validate invented execution evidence.
+  If execution logs are incomplete, mark tool verification unverified; missing
+  events alone do not prove that no calculation ran.
 - Record supplied costs and billings with source labels.
+- Identify 6000.00 as cost less billings only. In the missing-evidence
+  scenario, leave revenue, completion percentage and contract balance uncomputed.
+- Assess the separate arithmetic variant using the supplied basis: 18000.00
+  divided by 24000.00 is 75 per cent; illustrative revenue is 22500.00 and
+  revenue less billings is 10500.00. Retain the missing variation evidence
+  and professional-review questions without concluding the basis is appropriate.
 - Request cost-to-complete, measurement basis and current-source evidence.
 - Set status to pending authorised review.
 - Leave over or under-billing unconcluded where evidence is missing.
@@ -68,6 +79,8 @@ that judgement; leave the accounting conclusion pending.
 - Do not recognise remaining revenue from a guess.
 - Do not post a journal or lock the period.
 - Do not call the workpaper an audit or assurance conclusion.
+- Do not call the WIP engine or supply `outcome_reasonably_measurable` before
+  the authorised reviewer provides that judgement.
 - Do not request identifiers or client correspondence.
 
 ## Source-verification and reviewer boundary

@@ -64,6 +64,10 @@ judgement remain with the reviewer.
 - Record the source, period, basis, filters and no-rounding assumption.
 - State that the supplied arithmetic ties, with no reconciliation exception
   identified on these facts, while leaving reviewer approval pending.
+- Assess the incomplete-input variant separately: remaining bank evidence
+  supports 16000.00 against ledger cash of 13500.00, leaving a 2500.00
+  evidence gap. Keep bank agreement and creditor settlement unverified while
+  completing the supported debtor, creditor and ledger cash arithmetic.
 
 ## Must not do
 
