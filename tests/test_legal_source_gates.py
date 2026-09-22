@@ -201,7 +201,9 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("maximum contributions base", text)
         self.assertIn("in relation to this employer", text)
         self.assertIn("Under s 17A(2)", text)
-        self.assertIn("12% charge percentage", text)
+        self.assertIn("charge percentage verified for that payment", text)
+        self.assertIn("rounding rule from the SGAA compilation", text)
+        self.assertIn("return `UNKNOWN` without calculating", text)
         self.assertIn("seventh business day", text)
         self.assertIn("20th business day", text)
         self.assertIn("ss 18A and 18B", text)
@@ -224,7 +226,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("each payment in its actual payment order", text)
         self.assertIn("2 or more payments on the same QE day", text)
         self.assertIn("sum their s 10A(6)-adjusted amounts", text)
-        self.assertIn("QE-day total once by the 12% charge percentage", text)
+        self.assertIn("QE-day total once by the charge percentage verified for that payment", text)
 
     def test_post_payday_super_certificate_sets_nil_only_with_evidence(self) -> None:
         text = skill_text("contractor-super-tpar")

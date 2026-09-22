@@ -236,3 +236,19 @@ unchanged.
 | Skill | Amended canonical SHA-256 |
 |---|---|
 | `coal-lsl-levy` | `f5b9a018e12a438d1c82d0abf546c09327bc8a88b9e6a55a0d119843ebd72deb` |
+
+## Audit citation record, 23 September 2026
+
+The 22 September portfolio audit names 2 superseded references: the
+*Payroll Tax Act 1971* (NSW) s 35(2), and Coal LSL Schedule 1 cl 19(4).
+Neither citation appears in this repository's imported skill or its available
+skill history. The second reference also lacks an instrument title in the
+audit. Their claimed earlier use is therefore unverified; this record does
+not certify that the 14 September commit replaced them.
+
+The current workflow points to the *Payroll Tax Act 2007* (NSW), including
+Part 3 Divisions 7 and 8 and Part 5, and the *Coal Mining Industry (Long Service
+Leave) Payroll Levy Collection Act 1992* s 3B. Use the compilation applying to
+the period. The September wage correction changed the treatment of overtime,
+penalties and allowances within the category-specific comparison, as shown in
+commit `57d5e84`. The statutory source gaps are now explicit in the skills.

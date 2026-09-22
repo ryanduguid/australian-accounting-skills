@@ -1,6 +1,6 @@
 {
   "skill": "contractor-super-tpar",
-  "notes": "Reviewed source paths transferred from hardhat-ledger commit eb3b8a6ba47dfcdc05cea434f2f6a7dba82f96ef. Re-verify status and compilations at use time.",
+  "notes": "Reviewed source paths transferred from hardhat-ledger commit eb3b8a6ba47dfcdc05cea434f2f6a7dba82f96ef. Re-verify status and compilations at use time. At use time verify the charge percentage, cap and rounding under the applicable SGAA compilation. The Payday Super amendment source is https://www.legislation.gov.au/C2025A00057/asmade/text; it is a discovery link, not an added human review.",
   "sources": [
     {
       "title": "Superannuation Guarantee (Administration) Act 1992",

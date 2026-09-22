@@ -1,6 +1,6 @@
 {
   "skill": "payroll-tax-contractors",
-  "notes": "NSW discovery sources only. The skill requires a separate current-source test in every jurisdiction where work is performed.",
+  "notes": "NSW discovery sources only. The skill requires a separate current-source test in every jurisdiction where work is performed. UNVERIFIED: agency liability (Part 3 Division 8, ss 37-40 and 60) and grouping (Part 5, ss 70-74 and 79) require a current statutory check. The Act URL below returned 403. No new human review is asserted.",
   "sources": [
     {
       "title": "Payroll Tax Act 2007 (NSW)",
