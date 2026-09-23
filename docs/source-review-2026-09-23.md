@@ -49,13 +49,32 @@ relied on.
 | Joint and several liability: check the provision | s 81 | Cited |
 | s 79 exclusion only for s 71 to s 73 groups, on a "substantially independent" test | s 79(4) extends to s 74 groups; s 79(3) bars a body corporate related through Corporations Act s 50; s 79(8) bars s 74A groups; s 79(2) requires the business to be carried on independently of, and not connected with, any other member's business | Restated from the Act |
 
+## AAS-3: Coal LSL eligible wages (checked 24 September 2026)
+
+Source: *Coal Mining Industry (Long Service Leave) Payroll Levy Collection
+Act 1992*, compilation C2026C00364 (compilation 12, in force from
+1 September 2026, includes amendments up to Act No. 63, 2026), read from the
+Word download on the Federal Register of Legislation Downloads tab
+(SHA-256 `d6e3a5a442369e26ff33d4f2936d8a73d19f4de168b8dc2ae451aa0abc432bb7`).
+The HTML text view still failed to load.
+
+| Skill claim | Section 3B | Result |
+| --- | --- | --- |
+| Non-casual base-rate employee: greater of Formula A and Formula B | s 3B(1): greater of (a) base rate including incentive-based payments and bonuses, and (b) 75% of base rate including those payments, overtime or penalty rates, and allowances other than expense reimbursements | Matches |
+| Base pay taken before salary sacrifice | s 3B(4)(a), (aa) and (b) | Matches |
+| Incentives and bonuses count only if paid at least monthly | s 3B(4)(c) and (d) | Matches |
+| Annual salary: include incentives and bonuses, exclude overtime, penalty rates and shift loading | s 3B(2) | Matches |
+| Casual: base pay plus incentives, bonuses and a quantifiable casual loading; otherwise ordinary pay plus incentives and bonuses | s 3B(3)(a) and (b); (a) applies only where an industrial instrument covering the employee specifies a casual loading | Matches |
+| Casual method from 1 January 2024 | Endnotes: s 3B amended by Act No. 43, 2023 (Schedule 6 items 12 to 17), commencing 1 January 2024 | Supported; the amending Act's application item was not read |
+| Casual hours counted by payroll weeks ending in the month | Not in s 3B | Guidance only |
+| Insurer-paid workers compensation or income protection excluded | Not in s 3B | Guidance only |
+
+Schedule 1 clause 11(b) assumes s 3B(1)(b) never applied when working out
+an unpaid levy payment arrangement; the skill already defers those terms to
+a current-source read.
+
 ## Not resolved
 
-- AAS-3: the Payroll Levy Collection Act 1992 is at compilation C2026C00364
-  (compilation 12, in force from 1 September 2026, no unincorporated
-  amendments, per the Federal Register of Legislation API). The section text
-  renders only by script, and the API document download returned 404, so
-  s 3B was not read. The wage methods stay unverified.
 - AAS-2 already requires the charge percentage, cap and rounding to be read
   from the applicable compilation at use time; no further check was made.
 - AAS-5 concerns imported history, which a source check cannot restore.
