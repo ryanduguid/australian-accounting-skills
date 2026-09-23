@@ -262,8 +262,9 @@ Payroll Levy Collection Act 1992* carried no carve out and no power to excuse. I
 records Schedule 1 clause 19(4), which provides that sections 5 and 10 do not apply,
 and are taken never to have applied, to the employment of an employee covered by a
 Board-approved unpaid levy payment arrangement. Clause 19(2) switches off sections 6,
-7 and 9(2) for the unpaid levy on those wages, and clause 12 requires the arrangement
-to carry its own auditor's report. Read in compilation C2026C00364 (compilation 12,
+7 and 9(2) for the unpaid levy on those wages until the employer fails to comply,
+when clause 28(5) switches them back on for the outstanding amount; clause 12 requires
+the arrangement to carry its own auditor's report. Read in compilation C2026C00364 (compilation 12,
 in force 1 September 2026) on 16 and 23 September 2026. Schedule 1 arrived with the
 *Coal Mining Industry (Long Service Leave) Legislation Amendment Act 2026*.
 `sources.json` gains the Act, which the skill cited without an index entry.
@@ -281,5 +282,5 @@ to treat them as unverified references.
 
 | Skill | Amended canonical SHA-256 |
 |---|---|
-| `coal-lsl-levy` | `eb551fc0a2ab16adb0b61496d3b2b4d93474f75b691d96bb44cb6fe54f432dc8` |
+| `coal-lsl-levy` | `202c8b870fa1901c09b7be73dd53edfdff6ec433e0bcaf0d33166081556c6989` |
 | `plant-and-equipment-costing` | `93c35646ee89746f6c9a13d55f838d6cfa00aa832246fba6b7cc636af6055657` |
