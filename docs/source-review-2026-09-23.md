@@ -49,7 +49,7 @@ relied on.
 | Joint and several liability: check the provision | s 81 | Cited |
 | s 79 exclusion only for s 71 to s 73 groups, on a "substantially independent" test | s 79(4) extends to s 74 groups; s 79(3) bars a body corporate related through Corporations Act s 50; s 79(8) bars s 74A groups; s 79(2) requires the business to be carried on independently of, and not connected with, any other member's business | Restated from the Act |
 
-## AAS-3: Coal LSL eligible wages (checked 24 September 2026)
+## AAS-3: Coal LSL eligible wages (checked 23 September 2026)
 
 Source: *Coal Mining Industry (Long Service Leave) Payroll Levy Collection
 Act 1992*, compilation C2026C00364 (compilation 12, in force from
@@ -65,7 +65,7 @@ The HTML text view still failed to load.
 | Incentives and bonuses count only if paid at least monthly | s 3B(4)(c) and (d) | Matches |
 | Annual salary: include incentives and bonuses, exclude overtime, penalty rates and shift loading | s 3B(2) | Matches |
 | Casual: base pay plus incentives, bonuses and a quantifiable casual loading; otherwise ordinary pay plus incentives and bonuses | s 3B(3)(a) and (b); (a) applies only where an industrial instrument covering the employee specifies a casual loading | Matches |
-| Casual method from 1 January 2024 | Endnotes: s 3B amended by Act No. 43, 2023 (Schedule 6 items 12 to 17), commencing 1 January 2024 | Supported; the amending Act's application item was not read |
+| Casual method from 1 January 2024 | Act No. 43, 2023, Schedule 6 item 17(4): the amendments apply to payments made on or after 1 January 2024 for service days on or after 1 January 2024 | Supported; item 17(4) supplies the payment-date and service-day boundary |
 | Casual hours counted by payroll weeks ending in the month | Not in s 3B | Guidance only |
 | Insurer-paid workers compensation or income protection excluded | Not in s 3B | Guidance only |
 
