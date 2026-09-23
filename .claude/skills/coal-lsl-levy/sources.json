@@ -1,6 +1,6 @@
 {
   "skill": "coal-lsl-levy",
-  "notes": "Controlling Commonwealth sources. Re-verify current compilations and Coal LSL operational guidance at use time. Human review pending: an agent read s 3B in compilation C2026C00364 on 24 September 2026 and found the wage methods in s 3B(1) to (4), with the casual method commencing 1 January 2024 under Act No. 43, 2023, Schedule 6 (docs/source-review-2026-09-23.md). The payroll-week allocation for casuals and the insurer-payment treatment remain administrator guidance. Read s 3B and incorporated provisions at https://www.legislation.gov.au/C2004A04352/latest/text before calculating. No human check date is asserted for this discovery link.",
+  "notes": "Controlling Commonwealth sources. Re-verify current compilations and Coal LSL operational guidance at use time. Human review pending: an agent read s 3B in compilation C2026C00364 on 24 September 2026 and found the wage methods in s 3B(1) to (4), with the casual method applying under Act No. 43, 2023, Schedule 6 item 17(4) to eligible wages paid on or after 1 January 2024 that relate to days on or after that date (docs/source-review-2026-09-23.md). The payroll-week allocation for casuals and the insurer-payment treatment remain administrator guidance. Read s 3B and incorporated provisions at https://www.legislation.gov.au/C2004A04352/latest/text before calculating. No human check date is asserted for this discovery link.",
   "sources": [
     {
       "title": "Coal Mining Industry (Long Service Leave) Administration Act 1992",

@@ -65,7 +65,7 @@ The HTML text view still failed to load.
 | Incentives and bonuses count only if paid at least monthly | s 3B(4)(c) and (d) | Matches |
 | Annual salary: include incentives and bonuses, exclude overtime, penalty rates and shift loading | s 3B(2) | Matches |
 | Casual: base pay plus incentives, bonuses and a quantifiable casual loading; otherwise ordinary pay plus incentives and bonuses | s 3B(3)(a) and (b); (a) applies only where an industrial instrument covering the employee specifies a casual loading | Matches |
-| Casual method from 1 January 2024 | Endnotes: s 3B amended by Act No. 43, 2023 (Schedule 6 items 12 to 17), commencing 1 January 2024 | Supported; the amending Act's application item was not read |
+| Casual method from 1 January 2024 | Act No. 43, 2023 as made, Schedule 6 item 13 substitutes s 3B(3); item 17(4) applies it to eligible wages paid on or after 1 January 2024, to the extent they relate to days on or after that date | Supported; item 17(4) read on the Register on 24 September 2026 |
 | Casual hours counted by payroll weeks ending in the month | Not in s 3B | Guidance only |
 | Insurer-paid workers compensation or income protection excluded | Not in s 3B | Guidance only |
 
