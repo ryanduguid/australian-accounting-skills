@@ -1,5 +1,7 @@
 # Disclaimer
 
+Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation, or lodgement.
+
 Australian Accounting Skills is a set of workflow skills for Australian
 public-practice and contracting-business accounting. It is not tax, legal,
 accounting, financial, investment, BAS-agent,
