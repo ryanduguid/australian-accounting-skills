@@ -1,6 +1,6 @@
 # Source claim check, 23 September 2026
 
-An agent checked the unverified claims behind audit findings AAS-1, AAS-4 and
+An agent checked the unverified claims behind audit findings AAS-1, AAS-3, AAS-4 and
 AAS-6 against public primary sources. This is not a human review. No human
 `checked_at` date, `fact` or record URL was changed; the skills keep a visible
 "Human review pending" flag and still require a source check at use time.
@@ -64,7 +64,7 @@ The HTML text view still failed to load.
 | Base pay taken before salary sacrifice | s 3B(4)(a), (aa) and (b) | Matches |
 | Incentives and bonuses count only if paid at least monthly | s 3B(4)(c) and (d) | Matches |
 | Annual salary: include incentives and bonuses, exclude overtime, penalty rates and shift loading | s 3B(2) | Matches |
-| Casual: base pay plus incentives, bonuses and a quantifiable casual loading; otherwise ordinary pay plus incentives and bonuses | s 3B(3)(a) and (b); (a) applies only where an industrial instrument covering the employee specifies a casual loading | Matches |
+| Casual: base pay plus incentives, bonuses and the casual loading where an industrial instrument covering the employee specifies a casual loading and it can be quantified; otherwise ordinary pay plus incentives and bonuses | s 3B(3)(a) and (b); (a) applies only where an industrial instrument covering the employee specifies a casual loading | Matches |
 | Casual method from 1 January 2024 | Act No. 43, 2023 as made, Schedule 6 item 13 substitutes s 3B(3); item 17(4) applies it to eligible wages paid on or after 1 January 2024, to the extent they relate to days on or after that date | Supported; item 17(4) read on the Register on 24 September 2026 |
 | Casual hours counted by payroll weeks ending in the month | Not in s 3B | Guidance only |
 | Insurer-paid workers compensation or income protection excluded | Not in s 3B | Guidance only |
