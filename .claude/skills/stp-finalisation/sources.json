@@ -1,6 +1,6 @@
 {
   "skill": "stp-finalisation",
-  "notes": "Mutable ATO and Treasury facts. Re-verify at use time. This index is provenance, not a substitute for a live source check. UNVERIFIED: the 1 July 2026 STP field commencement claim has no indexed specification; the finalisation deadline source returned 404. SKILL.md requires current source evidence or UNKNOWN.",
+  "notes": "Mutable ATO and Treasury facts. Re-verify at use time. This index is provenance, not a substitute for a live source check. Human review pending: the finalisation record's URL returns 404, and the 1 July 2026 STP commencement is supported by ATO QC 107592 but its field codes have no indexed specification. See docs/source-review-2026-09-23.md for the agent check and the live URLs a person should review before re-pointing and re-dating these records. SKILL.md requires current source evidence or UNKNOWN.",
   "sources": [
     {
       "title": "ATO Payday Super",
