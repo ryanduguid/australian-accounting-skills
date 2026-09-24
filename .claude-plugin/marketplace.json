@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "australian-accounting-skills",
-      "description": "Fifty-one Australian accounting and tax preparation workflows with source checks and human review.",
+      "description": "Fifty-two Australian accounting and tax preparation workflows with source checks and human review.",
       "author": {
         "name": "Ryan Duguid"
       },
@@ -58,6 +58,7 @@
         "./.claude/skills/au-transfer-duty",
         "./.claude/skills/au-transfer-pricing",
         "./.claude/skills/au-trust-distributions",
+        "./.claude/skills/au-wfh-deductions",
         "./.claude/skills/bas-preparation",
         "./.claude/skills/cashflow-forecast-13week",
         "./.claude/skills/coal-lsl-levy",
