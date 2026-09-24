@@ -18,6 +18,7 @@ EXPECTED_SKILLS = {
     "au-bookkeeping",
     "au-business-formation",
     "au-capital-gains",
+    "au-car-expenses",
     "au-company-tax",
     "au-crypto-tax",
     "au-deceased-estates",

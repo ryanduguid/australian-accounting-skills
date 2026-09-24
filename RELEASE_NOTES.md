@@ -1,6 +1,6 @@
 # v0.3.0 (unreleased)
 
-Adds 40 original Australian preparation skills, bringing the pack to 59.
+Adds 41 original Australian preparation skills, bringing the pack to 60.
 The coverage map accounts for 38 OpenAccountants topic names while reusing
 existing BAS, FBT, Division 7A and super workflows. Guide bodies were not
 copied. Each addition includes a source-discovery record and a fabricated
@@ -8,18 +8,18 @@ missing-evidence case.
 
 The new skills require applicable primary authority at use time; source
 discovery is not current-law approval. No fresh agent evaluation of these
-40 additions is recorded. The original 19 skill bodies remain unchanged.
+41 additions is recorded. The original 19 skill bodies remain unchanged.
 
-The validation pack now has 61 cards, including 3 supported-arithmetic
+The validation pack now has 62 cards, including 3 supported-arithmetic
 cases for bookkeeping, financial-statement mapping and payroll tie-outs.
 These check whether the model completes supported calculations while keeping
-statutory conclusions and approval with the responsible human. All 61 cards
+statutory conclusions and approval with the responsible human. All 62 cards
 need confirmed results before release; the 17-card historical runs
 do not cover this expansion. The evaluation guide also requires separate
 evidence for source retrieval and behaviour with action tools available.
 
 The README recommends the tagged v0.2.1 installation. Development installation
-commands remain available for evaluating the unreleased 59-skill pack.
+commands remain available for evaluating the unreleased 60-skill pack.
 
 # v0.2.1
 

@@ -34,6 +34,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | Bookkeeping intake and coding review |
 | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | Business formation preparation checklist |
 | [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md) | Capital gains workpaper |
+| [`au-car-expenses`](../.claude/skills/au-car-expenses/SKILL.md) | Work-related car expense workpapers: cents per kilometre or logbook, decline in value and the 2026-27 standard deduction comparison |
 | [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | Company tax workpapers |
 | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) | Crypto transaction reconciliation |
 | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | Deceased estate tax workpapers |
