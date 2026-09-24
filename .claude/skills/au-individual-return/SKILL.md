@@ -47,3 +47,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 Pre-fill contains salary only, while bank interest is evidenced elsewhere. Add a completeness exception and reconcile both sources rather than relying on pre-fill alone.
+
+For an occupation with an ATO guide, record the guide title and URL, test an evidenced work-related expense against it, and keep an unsupported usual expense as a draft question rather than a proposed claim.

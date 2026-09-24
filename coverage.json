@@ -8,7 +8,7 @@
     "skills_with_unreachable_sources": 11,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 16,
-    "skills_with_only_the_seeded_case": 28
+    "skills_with_only_the_seeded_case": 27
   },
   "skills": [
     {
@@ -290,11 +290,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-individual-return-missing-evidence"
+          "au-individual-return-missing-evidence",
+          "au-individual-return-occupation-guide"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
