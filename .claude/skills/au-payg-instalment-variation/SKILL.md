@@ -15,7 +15,7 @@ The instalment notice or activity statement showing the option used (amount at T
 
 2. Build the estimate of instalment income for the full year from year-to-date actuals plus a documented forecast. Record each assumption and its source; an unsupported forecast leaves the variation `UNVERIFIED`.
 
-3. Estimate the tax on that income for the year, using the ATO calculator or a manual estimate, and show the rates and offsets applied with their sources.
+3. Estimate the tax on that income for the year, using the ATO's online PAYG instalments tool or a manual estimate, and show the rates and offsets applied with their sources.
 
 4. Amount option: apply the ATO's cumulative percentages for the quarter (for example 75% of estimated tax by the third quarter) and subtract instalments already paid; if the result is nil or negative, work out any credit available at 5B. Rate option: varied rate = estimated tax divided by estimated instalment income, times 100.
 
