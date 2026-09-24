@@ -46,7 +46,7 @@ class HardhatConsolidationTests(unittest.TestCase):
                 content = (SKILLS / name / "SKILL.md").read_bytes()
                 self.assertNotIn(b"\r", content.replace(b"\r\n", b"\n"))
 
-    def test_marketplace_exposes_the_complete_fifty_skill_inventory(self) -> None:
+    def test_marketplace_exposes_the_complete_skill_inventory(self) -> None:
         marketplace = json.loads(
             (REPOSITORY / ".claude-plugin" / "marketplace.json").read_text(
                 encoding="utf-8"
@@ -59,7 +59,7 @@ class HardhatConsolidationTests(unittest.TestCase):
             path.parent.name for path in SKILLS.glob("*/SKILL.md")
         }
         self.assertEqual(declared, discovered)
-        self.assertEqual(len(discovered), 50)
+        self.assertEqual(len(discovered), 51)
         self.assertLessEqual(set(TRANSFERRED_SKILL_HASHES), discovered)
 
     def test_transition_record_preserves_replace_then_remove_order(self) -> None:
