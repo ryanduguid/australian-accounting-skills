@@ -7,7 +7,7 @@ description: "Use when preparing an Australian employee's work-related car expen
 
 ## Inputs
 
-Income year, car ownership or lease details, a record of work-related kilometres (diary or logbook), odometer readings, a valid logbook if claimed (at least 12 continuous weeks), receipts for fuel or charging, registration, insurance, servicing, repairs, lease and interest, the car's purchase price and date, and any employer reimbursements or car allowances.
+Income year, car ownership or lease details, a record of work-related kilometres (diary or logbook), odometer readings, a valid logbook if claimed (at least 12 continuous weeks), receipts for fuel or charging, registration, insurance, servicing, repairs, lease and interest, the car's purchase price and date, any employer reimbursements or car allowances, and for 2026-27 onwards the facts for the standard deduction: residency, assessable labour income and every other claimed work-related expense of a kind that reduces it.
 
 ## Workflow
 
@@ -19,7 +19,7 @@ Income year, car ownership or lease details, a record of work-related kilometres
 
 4. Decline in value: apply the car limit for the year of purchase and the effective life, and multiply by the work-use percentage. For electric and plug-in hybrid cars, use actual charging costs or the ATO's home charging rate method, not both where the ATO forbids it.
 
-5. Compare both methods where both are supported. From 2026-27, car expenses for earning labour income reduce the standard deduction dollar for dollar; compare the itemised claim plus any remaining standard deduction with the maximum standard deduction.
+5. Compare both methods where both are supported. From 2026-27, check standard deduction eligibility and its maximum (the lower of the ATO amount and assessable labour income). Car expenses for earning labour income, with every other claimed expense of a kind that reduces it, reduce the standard deduction dollar for dollar. Compare all itemised claims plus any remaining standard deduction with the maximum standard deduction; if eligibility or the other expenses are unknown, leave the comparison `UNVERIFIED`.
 
 ## Hand-off and checks
 
