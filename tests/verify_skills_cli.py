@@ -34,6 +34,7 @@ EXPECTED_SKILLS = {
     "au-nonresident-cgt",
     "au-not-for-profit",
     "au-partnership-tax",
+    "au-payg-instalment-variation",
     "au-payroll-review",
     "au-psi-review",
     "au-rd-incentive",

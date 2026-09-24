@@ -1,0 +1,19 @@
+{
+  "skill": "au-payg-instalment-variation",
+  "sources": [
+    {
+      "title": "ATO: How to vary your PAYG instalments",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/how-to-vary-your-payg-instalments",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 23 June 2026); not yet reviewed by a person. Vary by amount (option 1, T7) or rate (option 2, T2). Instalment income is gross business and investment income excluding GST. Quarterly amount: cumulative share of estimated tax for the quarter less instalments paid (for example 75% by the third quarter, 100% by the fourth); a nil or negative result may give a credit at 5B. Varied rate is estimated tax divided by estimated instalment income times 100. If varied instalments are less than 85% of total tax payable, GIC may apply to the difference, and penalties in some circumstances; no penalty or interest where reasonable care was taken.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/how-to-vary-your-payg-instalments",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "3c1a93cb7176a1b743485b9c677e00fede72c1cb082e84d742e36992a35be6fe",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-23"
+    }
+  ]
+}
