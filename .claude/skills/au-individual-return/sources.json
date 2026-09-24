@@ -14,6 +14,20 @@
       "content_hash": "9ed8089b10f2019579fd048490b18060f5cb03c0a22b80decdab07f9ed3176f0",
       "source_last_modified": "2026-08-29",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "ATO guides for occupations and industries",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/guides-for-occupations-and-industries",
+      "checked_at": "2026-09-24",
+      "fact": "Read 24 September 2026. Index of ATO occupation and industry guides on income and allowances to declare and expenses that may be deductible. No rate, threshold or eligibility conclusion is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Index page only. Open the guide for the taxpayer's occupation and income year at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/guides-for-occupations-and-industries",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "e6331c83c2ba252cac4feafc58863a8df53ec3f39ea3a238010c76398fa13021",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-05-09"
     }
   ]
 }
