@@ -521,7 +521,7 @@ class SkillMetadataTests(unittest.TestCase):
             )
 
     def test_readme_evaluation_counts_match_the_recorded_runs(self) -> None:
-        """The install section's evaluation claim must follow validation/."""
+        """The evaluation claim in the install section must follow validation/."""
         readme = " ".join((REPOSITORY / "README.md").read_text(encoding="utf-8").split())
         cards = len(list((REPOSITORY / "validation" / "cases").glob("*.md")))
         runs = [
