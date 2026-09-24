@@ -7,7 +7,7 @@ description: Use when running or reviewing a month-end close (bank reconciliatio
 
 Drive a close to done with a checklist, reconcile every control account, and end with a variance review a reviewer can sign. One artefact comes out: the close pack.
 
-If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) expects, run `review-ready gate --profile month_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not period-lock approval. For trial-balance exception review after the gate, use [Monthly Close Controls](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/monthly-close-control-plane).
+If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) expects, run `review-ready gate --profile month_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not period-lock approval, and it does not mean every control ran: the bank reconciliation is optional in that profile, so a pack without `bank_rec.csv` can still be `READY`. Before handing a `READY` pack on, read the summary's "Controls not run" section and confirm `bank_rec.csv` is present; review-ready-gate 0.1.7 and earlier print no such section. A pack whose bank control did not run goes back to the preparer, because bank reconciliation reports are a required input here. For trial-balance exception review after the gate, use [Monthly Close Controls](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/monthly-close-control-plane).
 
 ## Inputs needed
 
