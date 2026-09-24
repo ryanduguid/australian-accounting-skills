@@ -26,6 +26,16 @@ Build the Div 7A picture for a private company: what's been advanced, what's cov
 6. **Trust UPEs.** Identify unpaid present entitlements owed to corporate beneficiaries. The High Court held in *Bendel* [2026] HCA 18 that a UPE is not of itself a Div 7A loan; whether the arrangement went further than a UPE still turns on the deed and the facts, so flag that rather than assuming either way. Do not state the ATO's current administrative position from memory. Check and cite the decision impact statement, the current status of TD 2022/11 and TR 2010/3, and any legislative response, all as at the date of the work. If ato.gov.au is unreachable from this session, stop and ask the user, record it as 'per [name], [date], unverified', and flag it on the register. Never construct a citation from memory. The position goes to the reviewer; this skill does not assert it.
 7. **Output the register.** Per counterparty: opening balance, movements, agreement status, minimum repayment versus actual, exposure, action required before lodgement day. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
+## Local engine, when available
+
+If the `aus-accounting` MCP tools are available in this session (the Claude Code plugin starts them), use them to check the arithmetic in steps 3 and 4. They read a bundled table and contact no service, so they never replace the step 3 source check:
+
+- Complete step 3 first. Then call `get_div7a_benchmark_rate` with `response_detail` set to `full` for the income year and compare its rate with the one from ato.gov.au. `UNKNOWN` means the table does not cover the year.
+- Only when the two rates agree, call `review_div7a_loan` once per amalgamated loan, passing only facts the records establish, and compare its minimum yearly repayment with step 4. An omitted fact stays `UNKNOWN`, which is not a failed limb.
+- If the rates differ, or the engine returns `UNKNOWN`, rely on the ato.gov.au rate and the step 4 calculation, do not use the engine's repayment figures, and record the difference as an exception on the register.
+
+Record what the engine consumed and returned: tool name, package version, inputs, the rate's source and check date from the full response, the comparison with ato.gov.au, and every `UNKNOWN` or `REFUSED` result. Keep the engine's own labels as its own on the register: its shortfall is an experimental review aid, not an assessed deemed dividend. The engine does not classify s 109R repayments, UPEs, distributable surplus, interposed entities or debt forgiveness, so steps 2, 5 and 6 stay manual. Without the tools, follow steps 3 and 4 as written.
+
 ## Checks before handing over
 
 - Benchmark rate cited with ATO source and check date

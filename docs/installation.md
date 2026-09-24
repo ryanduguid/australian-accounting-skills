@@ -39,6 +39,15 @@ present at the repository revision it installs under the stable namespace:
 
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
+The plugin also starts the local [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)
+server, pinned to `aus-accounting-mcp==0.2.7` and launched with `uvx`, so it needs
+[uv](https://docs.astral.sh/uv/) on the path. The first launch downloads the package
+from PyPI; tool calls then run locally and send nothing to the ATO or any other
+service. `div7a-compliance` and `contractor-super-tpar` use its Division 7A and
+Payday Super tools, when available, to cross-check their own calculations;
+the current primary-source checks in each skill still run. To run the skills without the server, disable it with
+`/mcp` in Claude Code. The `npx skills` and Codex routes do not start it.
+
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
 If the Hardhat Ledger plugin is installed, uninstall or disable
