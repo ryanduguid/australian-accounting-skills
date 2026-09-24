@@ -13,21 +13,21 @@ Income year, employment type and assessable labour income, the record of hours w
 
 1. Fix the income year and read the ATO fixed rate method page for that year's rate per work hour. If the page does not publish a rate for the year, mark the fixed rate result `UNVERIFIED` and leave it blank. Do not carry a prior year's rate forward.
 
-2. Build the hours schedule from records kept when the work happened. Exclude any period supported only by an estimate, even a reasonable one, and show the excluded period and hours separately. The hours total must agree to the underlying timesheet, roster or calendar.
+2. Build the hours evidence for the method. Fixed rate: a record of the actual hours worked from home for the whole year, kept when the work happened; exclude any period supported only by an estimate and show the excluded period and hours separately. Actual cost: either a record of the actual hours for the whole year or a continuous 4-week record of the usual work-from-home pattern; the ATO accepts either. The hours total must agree to the underlying timesheet, roster, calendar or diary.
 
-3. Fixed rate method: multiply the recorded hours by the verified rate. Confirm at least one record exists for each running expense the rate covers (energy, phone, internet or data, stationery and computer consumables) and that no separate claim for those expenses appears elsewhere in the return. Claim depreciating assets separately under the depreciating asset rules for the year.
+3. Fixed rate method: multiply the recorded hours by the verified rate. Confirm at least one record exists for each covered running expense the person actually incurred (energy, phone, internet or data, stationery and computer consumables); a covered category the person did not incur needs no record. Confirm no separate claim for those expenses appears elsewhere in the return. Claim depreciating assets separately under the depreciating asset rules for the year.
 
-4. Actual cost method: work out each additional running expense from bills, apportioned on a fair and reasonable basis using the hours record and the 4-week diary. Use the ATO's energy calculation inputs (cost per unit, appliance consumption, work hours) and a continuous 4-week period for itemised phone and internet use. Show each apportionment percentage beside the evidence it came from.
+4. Actual cost method: work out each additional running expense from its own evidence, apportioned on a fair and reasonable basis. Energy: cost per unit from the bill, appliance consumption and work hours from the hours record or diary. Itemised phone and internet bills: work-related use over a continuous 4-week period, applied to the year. Stationery and consumables: receipts, with any private use removed. Depreciating assets: receipts and the percentage of work use. Show each apportionment percentage beside the evidence it came from.
 
 5. Treat occupancy expenses (such as rent or mortgage interest) and home office cleaning as reviewer items. The ATO allows them only in limited circumstances where there is a dedicated home office, so prepare the floor-area and private-use evidence and stop at a flag.
 
 6. Total the claim with cents disregarded, as the ATO manual steps direct, and tie it to the return label.
 
-7. From 2026-27, check eligibility for the standard deduction for work-related expenses. Working from home expenses reduce it dollar for dollar. Prepare both positions: claiming itemised work-related expenses with full written evidence, or receiving the standard deduction and not claiming them. The client and reviewer choose.
+7. From 2026-27, check eligibility for the standard deduction for work-related expenses. Every claimed work-related expense of the kinds the ATO lists, including working from home expenses, reduces it dollar for dollar, and any remaining standard deduction still applies. Collect all such expenses, not only working from home. Prepare both positions: the itemised claims (with written evidence) plus any remaining standard deduction, and the maximum standard deduction with those expenses not claimed. The client and reviewer choose.
 
 ## Hand-off and checks
 
-An hours schedule tied to source records with estimated periods excluded, a method comparison where both methods are supported, a covered-expense evidence checklist, an apportionment table for actual costs, and for 2026-27 onwards a standard deduction comparison. The claimed total agrees to the return workpaper. Method choice, occupancy claims and the standard deduction choice are reviewer decisions.
+An hours schedule tied to source records with estimated periods excluded, a method comparison where both methods are supported, a covered-expense evidence checklist, an apportionment table for actual costs, and for 2026-27 onwards a standard deduction comparison covering all claimed work-related expenses. The claimed total agrees to the return workpaper. Method choice, occupancy claims and the standard deduction choice are reviewer decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
