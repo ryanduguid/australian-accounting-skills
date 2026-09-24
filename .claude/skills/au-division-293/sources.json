@@ -1,0 +1,33 @@
+{
+  "skill": "au-division-293",
+  "sources": [
+    {
+      "title": "ATO: Division 293 tax on concessional contributions by high-income earners",
+      "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/division-293-tax-on-concessional-contributions-by-high-income-earners",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 24 August 2026); not yet reviewed by a person. Division 293 tax is 15% of the lesser of taxable super contributions and the excess of combined Division 293 income and super contributions over $250,000. Division 293 income uses the Medicare levy surcharge income components, disregarding reportable super contributions. Contributions are concessional contributions less excess concessional contributions, and all contributions within a carried-forward higher cap count. Defined benefit amounts are deferred to a debt account. An election to release money from super may be made within 60 days of the assessment and does not change the due date. Super guarantee amnesty contributions do not count.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, the income year and ITAA 1997 Division 293 at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/division-293-tax-on-concessional-contributions-by-high-income-earners",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "b98476a88a7272623bd8a5fa8a1fe24f773ecff9780eb32a901ea2f345359a65",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-08"
+    },
+    {
+      "title": "ATO: Key superannuation rates and thresholds, Division 293 tax",
+      "url": "https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/division-293-tax",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 7 August 2026); not yet reviewed by a person. Division 293 threshold: $250,000 for 2017-18 onwards; $300,000 for 2012-13 to 2016-17. Rate 15%. End-of-year interest on a deferred debt account in debit uses the average 10-year Treasury bond rate for the year: 4.6148% for 2025-26.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the threshold and interest rate for the income year at use time.",
+      "final_url": "https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/division-293-tax",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "6a259390119c8f16e6be56063a5dcde8405290758798275e1824bb47df3db0fb",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
+    }
+  ]
+}
