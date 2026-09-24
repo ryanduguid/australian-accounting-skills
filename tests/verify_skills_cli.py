@@ -23,6 +23,7 @@ EXPECTED_SKILLS = {
     "au-deceased-estates",
     "au-division-293",
     "au-division-296",
+    "au-etp-redundancy",
     "au-financial-statements",
     "au-foreign-income",
     "au-forex-review",
