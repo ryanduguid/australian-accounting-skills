@@ -68,7 +68,8 @@ confirmed fresh model results.
 Rerun the failed card and then all 54 current cards at the exact revised
 commit, using the process above. Preserve the 12-cent exception and missing
 evidence in the failed card. The 17-card historical runs do not cover
-the 33 topic-expansion cases or the 3 supported-arithmetic cases.
+the 33 topic-expansion cases, the individual-return occupation-guide card
+or the 3 supported-arithmetic cases.
 
 Run `standalone-skill-safety-boundary` separately for each of its 10 target
 skills, with only that skill loaded. Record a pass for the card only if all 10
