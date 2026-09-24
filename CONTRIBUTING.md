@@ -33,8 +33,8 @@ python scripts/build_coverage.py --check
 ```
 
 Those 6 checks are the gates `.github/workflows/verify.yml` runs. Ruff and
-mypy run in its `lint` job, then the 4 verification checks run on Python 3.10, 3.12
-and 3.13. `python tests/verify_skills_cli.py` needs `npx` and hard-codes the
+mypy run in its `lint` job, then the 4 verification checks run on Python 3.10, 3.12,
+3.13 and 3.14. `python tests/verify_skills_cli.py` needs `npx` and hard-codes the
 expected skill names, so renaming a skill fails there even when the unittest
 suite passes. A third job scans the full history with gitleaks.
 
