@@ -18,7 +18,7 @@ ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
 # Published releases and the skill inventory each one shipped. A version string
 # that already labels a release must never label a second, different inventory.
 RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19}
-INVENTORY_WORDS = {9: "nine", 19: "nineteen", 50: "fifty", 51: "fifty-one"}
+INVENTORY_WORDS = {9: "nine", 19: "nineteen", 50: "fifty", 51: "fifty-one", 52: "fifty-two"}
 # One llms.txt skill entry. The back-reference makes the link text and the path
 # the same name, so a renamed directory cannot keep its old label.
 LLMS_SKILL_LINK = re.compile(
