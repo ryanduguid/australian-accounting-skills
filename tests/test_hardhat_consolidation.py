@@ -59,7 +59,7 @@ class HardhatConsolidationTests(unittest.TestCase):
             path.parent.name for path in SKILLS.glob("*/SKILL.md")
         }
         self.assertEqual(declared, discovered)
-        self.assertEqual(len(discovered), 55)
+        self.assertEqual(len(discovered), 56)
         self.assertLessEqual(set(TRANSFERRED_SKILL_HASHES), discovered)
 
     def test_transition_record_preserves_replace_then_remove_order(self) -> None:

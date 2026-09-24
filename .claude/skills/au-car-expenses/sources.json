@@ -1,0 +1,33 @@
+{
+  "skill": "au-car-expenses",
+  "sources": [
+    {
+      "title": "ATO: Cents per kilometre method",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/cars-transport-and-travel/motor-vehicle-and-car-expenses/expenses-for-a-car-you-own-or-lease/cents-per-kilometre-method",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 12 August 2026); not yet reviewed by a person. 91 cents per kilometre for 2026-27; 88 cents for 2024-25 and 2025-26; 85 cents for 2023-24. Maximum 5,000 work-related kilometres a year per car. The rate covers all car expenses including decline in value, registration, insurance, maintenance, repairs and fuel.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/cars-transport-and-travel/motor-vehicle-and-car-expenses/expenses-for-a-car-you-own-or-lease/cents-per-kilometre-method",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "ba3bd21b565169091e34012584467ef488c6e4a887cf23d1ebd41f117f62dd54",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-08-12"
+    },
+    {
+      "title": "ATO: Logbook method",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/cars-transport-and-travel/motor-vehicle-and-car-expenses/expenses-for-a-car-you-own-or-lease/logbook-method",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 12 June 2026); not yet reviewed by a person. Logbook covers at least 12 continuous weeks, is broadly representative, records purpose, destination and odometer readings for each work journey, and is valid for 5 years unless circumstances change. Fuel may be receipted or reasonably estimated from odometer readings, consumption and average price. Decline in value is limited by the car limit ($69,674 for 2025-26 in the page example); effective life generally 8 years. EV and PHEV electricity by actual cost or the home charging rate in PCG 2024/2.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/cars-transport-and-travel/motor-vehicle-and-car-expenses/expenses-for-a-car-you-own-or-lease/logbook-method",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "8cbe83ef3f591b23de1a3d6bc3327e44780406dd0d1c1cb66fc20b74f51b6f01",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-07-24"
+    }
+  ]
+}
