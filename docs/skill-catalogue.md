@@ -51,6 +51,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | Non-resident CGT review pack |
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | Not-for-profit tax status review pack |
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | Partnership tax workpapers |
+| [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | PAYG instalment variation workpapers: instalment income and tax estimate, varied amount or rate, and the 85% test |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | Pay-run preparation review |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | Personal services income review pack |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
@@ -59,6 +60,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | Small business CGT concession review |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | SMSF annual workpaper preparation |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | Sole trader tax workpapers |
+| [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | Super contribution cap workpapers: concessional carry-forward, non-concessional bring-forward and excess contributions |
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | Tax planning evidence and options |
 | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Tax-period source register |
 | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | Tax residency and departure review pack |
