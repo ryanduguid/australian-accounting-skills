@@ -24,7 +24,7 @@ git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-acc
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The 31 skills `main` adds to the tag have no recorded model evaluation.
+That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The 32 skills `main` adds to the tag have no recorded model evaluation.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
@@ -41,7 +41,7 @@ An agent runtime is still required. Ask it to prepare the BAS workpaper from the
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
-The development installation resolves the default branch and adds 31 workflows to v0.2.1. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The development installation resolves the default branch and adds 32 workflows to v0.2.1. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) remains pinned to v0.1.5, the original 9-skill practice pack. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
