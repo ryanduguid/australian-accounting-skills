@@ -30,6 +30,7 @@ topics reuse existing skills and which have original new workflows.
 
 | Skill | Use it for |
 | --- | --- |
+| [`au-ato-penalties-interest`](../.claude/skills/au-ato-penalties-interest/SKILL.md) | ATO general interest charge, shortfall interest charge and failure to lodge penalty workpapers, with remission evidence |
 | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | Bookkeeping intake and coding review |
 | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | Business formation preparation checklist |
 | [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md) | Capital gains workpaper |

@@ -16,6 +16,7 @@
       "description": "One verdict per card, keyed by the card id from validation/cases/ without the .md suffix. A card appears at most once because a JSON object holds one value per key.",
       "minProperties": 1,
       "propertyNames": {"enum": [
+        "au-ato-penalties-interest-missing-evidence",
         "au-bookkeeping-missing-evidence",
         "au-bookkeeping-supported-reconciliation",
         "au-business-formation-missing-evidence",
