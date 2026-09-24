@@ -17,7 +17,7 @@ Income year, the individual's income tax return or its components (taxable incom
 
 3. Build Division 293 super contributions from each fund's report: concessional contributions, including any counted under a carried-forward higher cap, less excess concessional contributions. Exclude super guarantee amnesty contributions the ATO says do not count. A fund report that is missing or late leaves the result `UNVERIFIED`; do not treat it as nil.
 
-4. Taxable contributions are the lesser of Division 293 super contributions and the amount by which Division 293 income plus those contributions exceeds the threshold. Apply the rate to that amount. Show both limbs of the comparison.
+4. If Division 293 income plus Division 293 super contributions does not exceed the threshold, taxable contributions are nil. Otherwise they are the lesser of Division 293 super contributions and the excess over the threshold, that is max(0, min(contributions, income + contributions - threshold)). Apply the rate to that amount and show both limbs of the comparison. A nil result still needs every fund report; a missing report keeps it `UNVERIFIED`.
 
 5. Defined benefit interests: identify the part of the tax attributable to defined benefit contributions, which the ATO defers to a debt account. Record the deferred amount separately and note the end-of-year interest the ATO applies to a debt account in debit.
 
