@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "australian-accounting-skills",
-      "description": "Fifty-six Australian accounting and tax preparation workflows with source checks and human review.",
+      "description": "Fifty-seven Australian accounting and tax preparation workflows with source checks and human review.",
       "author": {
         "name": "Ryan Duguid"
       },
@@ -47,6 +47,7 @@
         "./.claude/skills/au-nonresident-cgt",
         "./.claude/skills/au-not-for-profit",
         "./.claude/skills/au-partnership-tax",
+        "./.claude/skills/au-payg-instalment-variation",
         "./.claude/skills/au-payroll-review",
         "./.claude/skills/au-psi-review",
         "./.claude/skills/au-rd-incentive",

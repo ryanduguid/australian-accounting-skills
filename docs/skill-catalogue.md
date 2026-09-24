@@ -50,6 +50,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | Non-resident CGT review pack |
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | Not-for-profit tax status review pack |
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | Partnership tax workpapers |
+| [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | PAYG instalment variation workpapers: instalment income and tax estimate, varied amount or rate, and the 85% test |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | Pay-run preparation review |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | Personal services income review pack |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
