@@ -42,6 +42,7 @@ EXPECTED_SKILLS = {
     "au-small-business-cgt",
     "au-smsf-year-end",
     "au-sole-trader",
+    "au-super-contribution-caps",
     "au-tax-planning-review",
     "au-tax-rates-verification",
     "au-tax-residency",

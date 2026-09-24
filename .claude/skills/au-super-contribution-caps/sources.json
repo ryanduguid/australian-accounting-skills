@@ -1,0 +1,33 @@
+{
+  "skill": "au-super-contribution-caps",
+  "sources": [
+    {
+      "title": "ATO: Concessional contributions cap",
+      "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/concessional-contributions-cap",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 2 July 2026); not yet reviewed by a person. Concessional cap $32,500 from 1 July 2026; $30,000 from 1 July 2024 to 30 June 2026. Carry-forward needs a total super balance under $500,000 at 30 June of the previous year; unused amounts from up to 5 previous years, starting from 2018-19, applied oldest first and expiring after 5 years. Excess concessional contributions are assessable with a 15% offset; up to 85% can be released; the election window is 60 days (available online up to 120 days); unreleased excess counts as non-concessional.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/concessional-contributions-cap",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "823e999ac89da551be5953be7672259665fc1b6cc4e3c587f862302238ae5a74",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-02"
+    },
+    {
+      "title": "ATO: Non-concessional contributions cap",
+      "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/non-concessional-contributions-cap",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 7 May 2026); not yet reviewed by a person. Non-concessional cap $130,000 for 2026-27 ($120,000 for 2024-25 and 2025-26). Nil cap where total super balance at the end of the previous year is at or above the general transfer balance cap ($2.1 million from 2026-27). Bring-forward for 2026-27: under $1.84 million, $390,000 over 3 years; $1.84 million to under $1.97 million, $260,000 over 2 years; $1.97 million to under $2.1 million, $130,000 with no bring-forward. Available if under 75 at any time in the year.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/non-concessional-contributions-cap",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "f81b8fff274e5f1683fd7afe71378f0429a7246fda273420bcdd970f1858e8c6",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-05-22"
+    }
+  ]
+}
