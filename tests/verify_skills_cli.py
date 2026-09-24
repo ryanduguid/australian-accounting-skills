@@ -37,6 +37,7 @@ EXPECTED_SKILLS = {
     "au-partnership-tax",
     "au-payg-instalment-variation",
     "au-payroll-review",
+    "au-payroll-tax-states",
     "au-psi-review",
     "au-rd-incentive",
     "au-rental-property",

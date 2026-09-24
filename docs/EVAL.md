@@ -65,10 +65,10 @@ both totals, a documented rounding bridge and re-export after a filter change.
 The existing verdict remains unchanged. These wording changes still need
 confirmed fresh model results.
 
-Rerun the failed card and then all 60 current cards at the exact revised
+Rerun the failed card and then all 61 current cards at the exact revised
 commit, using the process above. Preserve the 12-cent exception and missing
 evidence in the failed card. The 17-card historical runs do not cover
-the 39 topic-expansion cases, the individual-return occupation-guide card
+the 40 topic-expansion cases, the individual-return occupation-guide card
 or the 3 supported-arithmetic cases.
 
 Run `standalone-skill-safety-boundary` separately for each of its 10 target

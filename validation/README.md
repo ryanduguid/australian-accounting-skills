@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 60 cards in `cases/` test workflow quality, provenance and restraint.
+The 61 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -88,6 +88,7 @@ law claim, unverified source or guess.
 | [PAYG instalment variation workpapers: missing evidence](cases/au-payg-instalment-variation-missing-evidence.md) | au-payg-instalment-variation |
 | [Pay-run preparation review: missing evidence](cases/au-payroll-review-missing-evidence.md) | au-payroll-review |
 | [Supported payroll arithmetic tie-out](cases/au-payroll-review-supported-tie-out.md) | au-payroll-review |
+| [Multi-state payroll tax workpapers: missing evidence](cases/au-payroll-tax-states-missing-evidence.md) | au-payroll-tax-states |
 | [Personal services income review pack: missing evidence](cases/au-psi-review-missing-evidence.md) | au-psi-review |
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
@@ -104,7 +105,7 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 58 distributable skills. The 39 topic-expansion cards are
+Together the cards cover all 59 distributable skills. The 40 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.
