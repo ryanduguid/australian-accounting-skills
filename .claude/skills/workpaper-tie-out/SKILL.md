@@ -7,7 +7,7 @@ description: "Use when verifying a set of financial statements or a workpaper pa
 
 Audit-style verification pass: nothing is 'done' until every number traces to a source. Run this after statements or a workpaper pack are drafted, before review.
 
-If the folder is a BAS, month-end, or year-end pack using the filenames [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) expects, run `review-ready gate` first. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. Do not start the tie-out matrix until the gate is `READY`. The gate does not replace this skill: it only decides whether the pack is allowed onto the review desk.
+If the folder is a BAS, month-end, or year-end pack using the filenames [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) expects, run `review-ready gate` first with the matching profile (`--profile bas`, `--profile month_end` or `--profile year_end`). A `NOT_READY` or `BLOCKED` pack goes back to the preparer. Do not start the tie-out matrix until the gate is `READY`. For a month-end pack, `READY` can mean the optional bank reconciliation control did not run. Before starting, confirm `bank_rec.csv` is in the pack and not empty, and that the summary's "Controls not run" section does not list `bank_rec` (review-ready-gate 0.1.7 and earlier print no such section, and 0.1.7 reports an empty `bank_rec.csv` as `READY`, so with those releases the file check is the whole test). The gate does not replace this skill. It only decides whether the pack is allowed onto the review desk.
 
 ## Inputs needed
 

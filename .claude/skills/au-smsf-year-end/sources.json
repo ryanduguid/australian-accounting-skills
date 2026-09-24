@@ -44,6 +44,51 @@
       "content_hash": "903531afceffcd61f14e1a226ae53037f19060f2b9910d884f1b678dcf5b8ead",
       "content_hash_covers": "html",
       "source_last_modified": ""
+    },
+    {
+      "title": "ATO income stream (pension) rules and payments for SMSFs",
+      "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf/paying-smsf-benefits/income-stream-pension-rules-and-payments",
+      "checked_at": "2026-09-24",
+      "fact": "The minimum pension standards the workflow tests: the balance and age day, pro-rating in a commencement year, no minimum for a pension starting on or after 1 June, rounding to the nearest $10, and the consequences of a shortfall. No percentage factor or amount is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Located and read on 24 September 2026 by an agent on the maintainer's instruction; see docs/source-review-2026-09-24.md. Verify the page for the work's period at use time.",
+      "volatile": true,
+      "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf/paying-smsf-benefits/income-stream-pension-rules-and-payments",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "8430599b4f586ef4c308154daf44fcf39ffa3ea4437580207b0b83aae59535e3",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-04-30"
+    },
+    {
+      "title": "Superannuation Industry (Supervision) Regulations 1994",
+      "url": "https://www.legislation.gov.au/F1996B00580/latest/text",
+      "checked_at": "2026-09-24",
+      "fact": "Schedule 7 sets the minimum annual payment for account-based pensions (clauses 1 to 5). Compilation 159, in force from 1 July 2026, was read. No factor or amount is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Located and read on 24 September 2026 by an agent on the maintainer's instruction; see docs/source-review-2026-09-24.md. Verify the page for the work's period at use time.",
+      "volatile": true,
+      "final_url": "https://www.legislation.gov.au/F1996B00580/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "042bb14c764be74e3b3da7a4541106a4ce313da0dbd60994d426259abdbc32f6",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO when to lodge a transfer balance account report for SMSFs",
+      "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf/smsf-administration-and-reporting/when-to-lodge-a-transfer-balance-account-report-for-smsfs",
+      "checked_at": "2026-09-24",
+      "fact": "Which transfer balance events an SMSF reports on a TBAR and when. No due date is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Located and read on 24 September 2026 by an agent on the maintainer's instruction; see docs/source-review-2026-09-24.md. Verify the page for the work's period at use time.",
+      "volatile": true,
+      "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf/smsf-administration-and-reporting/when-to-lodge-a-transfer-balance-account-report-for-smsfs",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "83054e607c726fdb363ae7aa828219d988a8b3d8ca117653fa874ccce5087a6c",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-03-09"
     }
   ]
 }
