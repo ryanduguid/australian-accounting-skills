@@ -38,6 +38,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) | Crypto transaction reconciliation |
 | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | Deceased estate tax workpapers |
 | [`au-division-293`](../.claude/skills/au-division-293/SKILL.md) | Division 293 tax workpapers: income and contribution schedules, the lesser-of calculation and notice reconciliation |
+| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | Division 296 tax workpapers: TSB reference amount, earnings by fund, threshold proportions and deferred amounts |
 | [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md) | Financial statement preparation pack |
 | [`au-foreign-income`](../.claude/skills/au-foreign-income/SKILL.md) | Foreign income and tax-offset workpapers |
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | Foreign currency tax reconciliation |

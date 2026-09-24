@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 56 cards in `cases/` test workflow quality, provenance and restraint.
+The 57 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -70,6 +70,7 @@ law claim, unverified source or guess.
 | [Crypto transaction reconciliation: missing evidence](cases/au-crypto-tax-missing-evidence.md) | au-crypto-tax |
 | [Deceased estate tax workpapers: missing evidence](cases/au-deceased-estates-missing-evidence.md) | au-deceased-estates |
 | [Division 293 tax workpapers: missing evidence](cases/au-division-293-missing-evidence.md) | au-division-293 |
+| [Division 296 tax workpapers: missing evidence](cases/au-division-296-missing-evidence.md) | au-division-296 |
 | [Financial statement preparation pack: missing evidence](cases/au-financial-statements-missing-evidence.md) | au-financial-statements |
 | [Supported trial-balance mapping](cases/au-financial-statements-supported-mapping.md) | au-financial-statements |
 | [Foreign income and tax-offset workpapers: missing evidence](cases/au-foreign-income-missing-evidence.md) | au-foreign-income |
@@ -100,7 +101,7 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 54 distributable skills. The 35 topic-expansion cards are
+Together the cards cover all 55 distributable skills. The 36 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.
