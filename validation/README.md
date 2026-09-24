@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 54 cards in `cases/` test workflow quality, provenance and restraint.
+The 56 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -61,6 +61,7 @@ law claim, unverified source or guess.
 | [Tax invoice and RCTI review: missing evidence](cases/tax-invoice-review-missing-evidence.md) | tax-invoice-review |
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
+| [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
 | [Business formation preparation checklist: missing evidence](cases/au-business-formation-missing-evidence.md) | au-business-formation |
@@ -97,8 +98,9 @@ law claim, unverified source or guess.
 | [State transfer duty review pack: missing evidence](cases/au-transfer-duty-missing-evidence.md) | au-transfer-duty |
 | [Transfer pricing evidence pack: missing evidence](cases/au-transfer-pricing-missing-evidence.md) | au-transfer-pricing |
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
+| [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 52 distributable skills. The 33 topic-expansion cards are
+Together the cards cover all 54 distributable skills. The 35 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.

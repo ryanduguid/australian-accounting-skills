@@ -1,0 +1,47 @@
+{
+  "skill": "au-wfh-deductions",
+  "sources": [
+    {
+      "title": "ATO: Fixed rate method",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/fixed-rate-method",
+      "checked_at": "2026-09-24",
+      "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 8 June 2026): Rate per work hour: 70 cents for 2024-25 and 2025-26, 67 cents for 2022-23 and 2023-24, 52 cents for 2020-21 and 2021-22. The page publishes no rate for 2026-27. Records: the actual hours worked from home for the entire income year (an estimate of hours is not acceptable) and at least one record for each running expense the rate covers. The manual total is claimed with cents disregarded, not rounded.",
+      "volatile": true,
+      "limitations": "The 2026-27 rate was unpublished when read. Verify the complete page, applicable income year and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/fixed-rate-method",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "a13e7a9b83acbafb845f64daa00adfb535adfbc0681270a244df085da470647e",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-10"
+    },
+    {
+      "title": "ATO: Actual cost method",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/actual-cost-method",
+      "checked_at": "2026-09-24",
+      "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 8 June 2026): Records: either the actual hours worked from home for the entire income year or a continuous 4-week period representing the usual work-from-home pattern, plus receipts and bills for the additional running expenses and how the deduction was worked out. Energy uses cost per unit, consumption per hour and work hours; stationery uses receipts. Itemised phone or internet bills: work-related use over a continuous 4-week period may be applied to the whole year. Occupancy expenses only in limited circumstances.",
+      "volatile": true,
+      "limitations": "Verify the complete page, applicable income year and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/actual-cost-method",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "7b80de77552dd9291cd8634d25ccc821de897c2a3ed890bc2c9cbbe4eb8938f4",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-08"
+    },
+    {
+      "title": "ATO: Standard deduction for work-related expenses",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses",
+      "checked_at": "2026-09-24",
+      "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 14 September 2026): From the 2026-27 income year, eligible Australian residents with assessable labour income receive a standard deduction of up to $1,000 (or total assessable labour income if lower). It is not available for 2025-26. Claimed work-related expenses, including working from home expenses, reduce it dollar for dollar. From 1 July 2026 the $300 work-related expense and $150 laundry record-keeping exceptions no longer apply. The page cites draft LCR 2026/D5.",
+      "volatile": true,
+      "limitations": "The page relies on a draft Law Companion Ruling. Verify the complete page, the ruling's current status and the applicable income year at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "9f8733fdf9efb8908a90d75e4f5b71c00b28507b8d5829f0cf1fa2e96a1e0aac",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-15"
+    }
+  ]
+}

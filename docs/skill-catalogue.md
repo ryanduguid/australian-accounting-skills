@@ -30,6 +30,7 @@ topics reuse existing skills and which have original new workflows.
 
 | Skill | Use it for |
 | --- | --- |
+| [`au-ato-penalties-interest`](../.claude/skills/au-ato-penalties-interest/SKILL.md) | ATO general interest charge, shortfall interest charge and failure to lodge penalty workpapers, with remission evidence |
 | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | Bookkeeping intake and coding review |
 | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | Business formation preparation checklist |
 | [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md) | Capital gains workpaper |
@@ -62,6 +63,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-transfer-duty`](../.claude/skills/au-transfer-duty/SKILL.md) | State transfer duty review pack |
 | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | Transfer pricing evidence pack |
 | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | Trust distribution review pack |
+| [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | Working from home deduction workpapers, fixed rate or actual cost, with the 2026-27 standard deduction comparison |
 
 Also included:
 
