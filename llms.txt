@@ -1,6 +1,6 @@
 # Australian Accounting Skills
 
-> Sixty agent skills for Australian public-practice, tax and contracting-business
+> Sixty-one agent skills for Australian public-practice, tax and contracting-business
 > preparation, packaged as a Claude Code plugin marketplace and as portable
 > SKILL.md files. Each skill states its inputs, its evidence and tie-out checks,
 > and the decisions it hands to a person.
@@ -16,7 +16,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 
 ## Install
 
-- Claude Code plugin marketplace, delivering the 60 skills on `main`:
+- Claude Code plugin marketplace, delivering the 61 skills on `main`:
   `/plugin marketplace add ryanduguid/australian-accounting-skills` then
   `/plugin install australian-accounting-skills@ryanduguid`
 - Codex plugin, the same revision:
@@ -77,6 +77,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [contractor-super-tpar](.claude/skills/contractor-super-tpar/SKILL.md)
 - [div7a-compliance](.claude/skills/div7a-compliance/SKILL.md)
 - [fbt-annual-workflow](.claude/skills/fbt-annual-workflow/SKILL.md)
+- [financial-modelling](.claude/skills/financial-modelling/SKILL.md)
 - [fuel-tax-credits](.claude/skills/fuel-tax-credits/SKILL.md)
 - [month-end-close](.claude/skills/month-end-close/SKILL.md)
 - [payroll-tax-contractors](.claude/skills/payroll-tax-contractors/SKILL.md)
