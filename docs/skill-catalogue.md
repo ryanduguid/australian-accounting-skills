@@ -59,6 +59,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | Small business CGT concession review |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | SMSF annual workpaper preparation |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | Sole trader tax workpapers |
+| [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | Super contribution cap workpapers: concessional carry-forward, non-concessional bring-forward and excess contributions |
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | Tax planning evidence and options |
 | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Tax-period source register |
 | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | Tax residency and departure review pack |
