@@ -40,6 +40,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | Deceased estate tax workpapers |
 | [`au-division-293`](../.claude/skills/au-division-293/SKILL.md) | Division 293 tax workpapers: income and contribution schedules, the lesser-of calculation and notice reconciliation |
 | [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | Division 296 tax workpapers: TSB reference amount, earnings by fund, threshold proportions and deferred amounts |
+| [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | Termination payment workpapers: genuine redundancy tax-free limit, ETP and whole-of-income caps, and withholding |
 | [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md) | Financial statement preparation pack |
 | [`au-foreign-income`](../.claude/skills/au-foreign-income/SKILL.md) | Foreign income and tax-offset workpapers |
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | Foreign currency tax reconciliation |
@@ -51,7 +52,9 @@ topics reuse existing skills and which have original new workflows.
 | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | Non-resident CGT review pack |
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | Not-for-profit tax status review pack |
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | Partnership tax workpapers |
+| [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | PAYG instalment variation workpapers: instalment income and tax estimate, varied amount or rate, and the 85% test |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | Pay-run preparation review |
+| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | Multi-state payroll tax workpapers: registration, apportioned thresholds and deductions, and rates by jurisdiction |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | Personal services income review pack |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | Rental property workpapers |
@@ -59,6 +62,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | Small business CGT concession review |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | SMSF annual workpaper preparation |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | Sole trader tax workpapers |
+| [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | Super contribution cap workpapers: concessional carry-forward, non-concessional bring-forward and excess contributions |
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | Tax planning evidence and options |
 | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Tax-period source register |
 | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | Tax residency and departure review pack |

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 58 cards in `cases/` test workflow quality, provenance and restraint.
+The 62 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -72,6 +72,7 @@ law claim, unverified source or guess.
 | [Deceased estate tax workpapers: missing evidence](cases/au-deceased-estates-missing-evidence.md) | au-deceased-estates |
 | [Division 293 tax workpapers: missing evidence](cases/au-division-293-missing-evidence.md) | au-division-293 |
 | [Division 296 tax workpapers: missing evidence](cases/au-division-296-missing-evidence.md) | au-division-296 |
+| [Termination payment and redundancy workpapers: missing evidence](cases/au-etp-redundancy-missing-evidence.md) | au-etp-redundancy |
 | [Financial statement preparation pack: missing evidence](cases/au-financial-statements-missing-evidence.md) | au-financial-statements |
 | [Supported trial-balance mapping](cases/au-financial-statements-supported-mapping.md) | au-financial-statements |
 | [Foreign income and tax-offset workpapers: missing evidence](cases/au-foreign-income-missing-evidence.md) | au-foreign-income |
@@ -85,8 +86,10 @@ law claim, unverified source or guess.
 | [Non-resident CGT review pack: missing evidence](cases/au-nonresident-cgt-missing-evidence.md) | au-nonresident-cgt |
 | [Not-for-profit tax status review pack: missing evidence](cases/au-not-for-profit-missing-evidence.md) | au-not-for-profit |
 | [Partnership tax workpapers: missing evidence](cases/au-partnership-tax-missing-evidence.md) | au-partnership-tax |
+| [PAYG instalment variation workpapers: missing evidence](cases/au-payg-instalment-variation-missing-evidence.md) | au-payg-instalment-variation |
 | [Pay-run preparation review: missing evidence](cases/au-payroll-review-missing-evidence.md) | au-payroll-review |
 | [Supported payroll arithmetic tie-out](cases/au-payroll-review-supported-tie-out.md) | au-payroll-review |
+| [Multi-state payroll tax workpapers: missing evidence](cases/au-payroll-tax-states-missing-evidence.md) | au-payroll-tax-states |
 | [Personal services income review pack: missing evidence](cases/au-psi-review-missing-evidence.md) | au-psi-review |
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
@@ -94,6 +97,7 @@ law claim, unverified source or guess.
 | [Small business CGT concession review: missing evidence](cases/au-small-business-cgt-missing-evidence.md) | au-small-business-cgt |
 | [SMSF annual workpaper preparation: missing evidence](cases/au-smsf-year-end-missing-evidence.md) | au-smsf-year-end |
 | [Sole trader tax workpapers: missing evidence](cases/au-sole-trader-missing-evidence.md) | au-sole-trader |
+| [Super contribution cap workpapers: missing evidence](cases/au-super-contribution-caps-missing-evidence.md) | au-super-contribution-caps |
 | [Tax planning evidence and options: missing evidence](cases/au-tax-planning-review-missing-evidence.md) | au-tax-planning-review |
 | [Tax-period source register: missing evidence](cases/au-tax-rates-verification-missing-evidence.md) | au-tax-rates-verification |
 | [Tax residency and departure review pack: missing evidence](cases/au-tax-residency-missing-evidence.md) | au-tax-residency |
@@ -102,7 +106,7 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 56 distributable skills. The 37 topic-expansion cards are
+Together the cards cover all 60 distributable skills. The 41 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.
