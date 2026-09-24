@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 51 cards in `cases/` test workflow quality, provenance and restraint.
+The 52 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -74,6 +74,7 @@ law claim, unverified source or guess.
 | [Property GST review pack: missing evidence](cases/au-gst-property-missing-evidence.md) | au-gst-property |
 | [GST turnover and purchase credits: missing evidence](cases/au-gst-registration-review-missing-evidence.md) | au-gst-registration-review |
 | [Individual return preparation pack: missing evidence](cases/au-individual-return-missing-evidence.md) | au-individual-return |
+| [Individual return occupation-guide review](cases/au-individual-return-occupation-guide.md) | au-individual-return |
 | [State land tax assessment review: missing evidence](cases/au-land-tax-missing-evidence.md) | au-land-tax |
 | [Medicare levy and surcharge workpapers: missing evidence](cases/au-medicare-review-missing-evidence.md) | au-medicare-review |
 | [Non-resident CGT review pack: missing evidence](cases/au-nonresident-cgt-missing-evidence.md) | au-nonresident-cgt |
