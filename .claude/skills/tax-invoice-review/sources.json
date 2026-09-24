@@ -1,0 +1,19 @@
+{
+  "skill": "tax-invoice-review",
+  "sources": [
+    {
+      "title": "ATO: Tax invoices, including eInvoicing and recipient-created tax invoices",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices",
+      "checked_at": "2026-09-24",
+      "fact": "Read 24 September 2026 (page last updated 18 September 2026). Lists tax invoice requirements by value band, accepts a compliant Peppol eInvoice as intended to be a tax invoice, sets RCTI issue conditions and issuer checks. No figure is adopted into the skill.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "82beab4f9dc64e9da74b16ae7bdde2a3546e34b3b4bcbe20a9f09a23a8be1cee",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-18"
+    }
+  ]
+}

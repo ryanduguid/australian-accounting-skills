@@ -8,6 +8,7 @@
 | `fbt-annual-workflow` | FBT year-end: benefit identification, declarations, gross-up, RFBA |
 | `div7a-compliance` | Division 7A loan register, complying-agreement checks, minimum repayments |
 | `stp-finalisation` | STP year-end finalisation: payroll versus GL versus filed totals, super guarantee checks |
+| `tax-invoice-review` | Check tax invoices, RCTIs and Peppol eInvoices against the GST report before credits are claimed |
 | `year-end-workpapers` | Review-ready annual workpaper pack from a trial balance export |
 | `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |
