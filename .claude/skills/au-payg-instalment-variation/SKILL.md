@@ -11,13 +11,13 @@ The instalment notice or activity statement showing the option used (amount at T
 
 ## Workflow
 
-1. Identify the instalment option in use and every instalment already paid or varied this year. Tie them to the ATO account or activity statements.
+1. Identify the instalment option in use, every instalment already paid or varied this year, and any credit claimed at 5B in an earlier quarter. Tie them to the ATO account or activity statements.
 
 2. Build the estimate of instalment income for the full year from year-to-date actuals plus a documented forecast. Record each assumption and its source; an unsupported forecast leaves the variation `UNVERIFIED`.
 
 3. Estimate the tax on that income for the year, using the ATO's online PAYG instalments tool or a manual estimate, and show the rates and offsets applied with their sources.
 
-4. Amount option: apply the ATO's cumulative percentages for the quarter (for example 75% of estimated tax by the third quarter) and subtract instalments already paid; if the result is nil or negative, work out any credit available at 5B. Rate option: varied rate = estimated tax divided by estimated instalment income, times 100.
+4. Amount option: apply the ATO's cumulative percentage for the quarter (for example 75% of estimated tax by the third quarter), subtract instalments already paid and add back any 5B credits claimed in earlier quarters, as the ATO's quarterly steps direct; if the result is nil or negative, work out any credit available at 5B. Rate option: if estimated instalment income is zero, the varied rate is zero and no tax estimate is needed; otherwise varied rate = estimated tax divided by estimated instalment income, times 100. If estimated instalment income is zero under the amount option, the varied amount can be zero.
 
 5. Test the variation against the ATO's 85% benchmark: GIC may apply to the shortfall if varied instalments fall below 85% of the tax payable. Record the reasonable-care basis for the estimate, which the ATO says it considers before applying penalties or interest.
 
