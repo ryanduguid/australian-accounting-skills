@@ -60,6 +60,7 @@ EXPECTED_SKILLS = {
     "progress-claim-preparation",
     "retention-schedule",
     "stp-finalisation",
+    "tax-invoice-review",
     "workpaper-tie-out",
     "wip-over-under-billing",
     "xero-exports",

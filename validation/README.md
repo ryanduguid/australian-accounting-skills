@@ -58,6 +58,7 @@ law claim, unverified source or guess.
 | [Fuel tax credits missing docket](cases/fuel-tax-credits-missing-docket.md) | fuel-tax-credits |
 | [Coal LSL levy unverified rate](cases/coal-lsl-levy-unverified-rate.md) | coal-lsl-levy |
 | [Payroll-tax contractor characterisation](cases/payroll-tax-contractor-characterisation.md) | payroll-tax-contractors, contractor-super-tpar |
+| [Tax invoice and RCTI review: missing evidence](cases/tax-invoice-review-missing-evidence.md) | tax-invoice-review |
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |

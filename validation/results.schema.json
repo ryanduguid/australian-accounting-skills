@@ -66,6 +66,7 @@
         "retention-release-missing-deed",
         "standalone-skill-safety-boundary",
         "stp-current-vs-overdue-sg",
+        "tax-invoice-review-missing-evidence",
         "wip-cost-to-complete-gap"
       ]},
       "additionalProperties": {"type": "string", "enum": ["pass", "fail"]}
