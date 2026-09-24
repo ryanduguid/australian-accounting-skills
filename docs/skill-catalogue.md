@@ -12,6 +12,7 @@
 | `year-end-workpapers` | Review-ready annual workpaper pack from a trial balance export |
 | `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |
+| `financial-modelling` | Build or review a driver-based financial model workbook: live formulas, check rows and scenarios |
 | `progress-claim-preparation` | Prepare and review payment claims, variations, retention and reference-date evidence |
 | `retention-schedule` | Roll forward contractual retentions and test jurisdiction-specific trust controls |
 | `wip-over-under-billing` | Prepare per-contract WIP inputs and route arithmetic through TheWIPTally |

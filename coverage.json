@@ -2,12 +2,12 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date scripts/source_refresh.py last retrieved it, and never stands in for a review.",
   "totals": {
-    "skills": 60,
+    "skills": 61,
     "sources_indexed": 113,
-    "skills_source_exempt": 6,
+    "skills_source_exempt": 7,
     "skills_with_unreachable_sources": 9,
     "skills_with_sources_moved_since_review": 4,
-    "skills_with_behavioural_gate": 16,
+    "skills_with_behavioural_gate": 17,
     "skills_with_only_the_seeded_case": 37
   },
   "skills": [
@@ -1193,6 +1193,32 @@
       "gates": {
         "behavioural": [
           "test_validation_pack.py"
+        ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "financial-modelling",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "financial-modelling-structure-faults"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_financial_modelling_card.py"
         ],
         "inventory": [
           "verify_skills_cli.py"

@@ -11,9 +11,10 @@ abstract: >-
   human review boundaries. This record is pinned to the tagged v0.1.5
   release, the nine-skill practice pack. The nineteen-skill v0.2.0 release
   of 2 September 2026 added the ten contracting workflows; cite that tag
-  when relying on them. The development branch prepares v0.3.0 with sixty
-  skills, including 31 new Australian preparation workflows; this citation
-  still identifies v0.1.5, not the unreleased expansion.
+  when relying on them. The development branch prepares v0.3.0 with
+  sixty-one skills, including 31 new Australian preparation workflows and one
+  financial modelling workflow; this citation still identifies v0.1.5, not the
+  unreleased expansion.
 version: 0.1.5
 date-released: 2026-08-23
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"

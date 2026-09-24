@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "australian-accounting-skills",
-      "description": "Sixty Australian accounting and tax preparation workflows with source checks and human review.",
+      "description": "Sixty-one Australian accounting and tax preparation workflows with source checks and human review.",
       "author": {
         "name": "Ryan Duguid"
       },
@@ -75,6 +75,7 @@
         "./.claude/skills/contractor-super-tpar",
         "./.claude/skills/div7a-compliance",
         "./.claude/skills/fbt-annual-workflow",
+        "./.claude/skills/financial-modelling",
         "./.claude/skills/fuel-tax-credits",
         "./.claude/skills/month-end-close",
         "./.claude/skills/payroll-tax-contractors",

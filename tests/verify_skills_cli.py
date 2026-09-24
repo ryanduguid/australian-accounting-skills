@@ -62,6 +62,7 @@ EXPECTED_SKILLS = {
     "contractor-super-tpar",
     "div7a-compliance",
     "fbt-annual-workflow",
+    "financial-modelling",
     "fuel-tax-credits",
     "month-end-close",
     "payroll-tax-contractors",
