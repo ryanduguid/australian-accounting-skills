@@ -1,0 +1,47 @@
+{
+  "skill": "au-etp-redundancy",
+  "sources": [
+    {
+      "title": "ATO: Key super rates and thresholds, employment termination payments",
+      "url": "https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/employment-termination-payments",
+      "checked_at": "2026-09-24",
+      "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 17 April 2026): ETP cap: $270,000 for 2026-27, $260,000 for 2025-26, $245,000 for 2024-25. Genuine redundancy and early retirement tax-free limit: $13,598 plus $6,801 per complete year of service for 2026-27; $13,100 plus $6,552 for 2025-26; $12,524 plus $6,264 for 2024-25.",
+      "volatile": true,
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/employment-termination-payments",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "ec6354b2435de9540a6b631f57973b78c21fa4a0326215dc09c9ae67e04e5853",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Applying the ETP caps",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/engaging-a-worker/when-a-worker-leaves-your-business/taxation-of-termination-payments/applying-the-etp-caps",
+      "checked_at": "2026-09-24",
+      "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 24 July 2025): ETP cap applies to excluded payments (genuine redundancy and early retirement amounts over the tax-free limit, certain compensation, death benefits); the lesser of the ETP cap and the whole-of-income cap applies to non-excluded payments (golden handshakes, gratuities, non-genuine redundancy, payments in lieu of notice, unused sick leave or rostered days off). The ETP cap is reduced by earlier ETPs in the year and for the same termination; the whole-of-income cap by other taxable payments in the year.",
+      "volatile": true,
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/engaging-a-worker/when-a-worker-leaves-your-business/taxation-of-termination-payments/applying-the-etp-caps",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "0417257d387e61763fdd4c449a5380bde26f7f198ab684cef646da26850c41c5",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-12-16"
+    },
+    {
+      "title": "ATO: Schedule 11 tax table for employment termination payments",
+      "url": "https://www.ato.gov.au/tax-rates-and-codes/payg-withholding-schedule-11-tax-table-for-employment-termination-payments",
+      "checked_at": "2026-09-24",
+      "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 17 June 2026): For 2026-27: ETP cap $270,000; whole-of-income cap $180,000. Life benefit ETP withholding up to the relevant cap: 32% under preservation age, 17% at or over it; 47% above the cap.",
+      "volatile": true,
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/tax-rates-and-codes/payg-withholding-schedule-11-tax-table-for-employment-termination-payments",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "b5962058d26876c4da4a22f99866f047dc8086913f2a5c852bff6929ff9d04fe",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-17"
+    }
+  ]
+}
