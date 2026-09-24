@@ -10,7 +10,7 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Install all 50 workflows from the plugin marketplace. This route delivers the `main` inventory, the 50-skill development set preparing v0.3.0, not a published release:
+Install all 51 workflows from the plugin marketplace. This route delivers the `main` inventory, the 51-skill development set preparing v0.3.0, not a published release:
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -49,7 +49,7 @@ The development installation resolves the default branch and adds 31 workflows t
 
 - [Install, uninstall and versioning](docs/installation.md)
 - [First run and BAS walkthrough](docs/bas-walkthrough.md)
-- [Fifty skills and their supporting files](docs/skill-catalogue.md)
+- [Fifty-one skills and their supporting files](docs/skill-catalogue.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)
