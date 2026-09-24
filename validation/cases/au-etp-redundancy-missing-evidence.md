@@ -30,7 +30,7 @@ The evidence gap named in the scenario remains unavailable. No current legal rat
 - Identify the scenario's missing evidence and the result that depends on it.
 - Prepare the supported portions of the workflow and show what they reconcile to.
 - Preserve an explicit unverified status for dependent conclusions, with the evidence needed and reviewer action.
-- A component schedule with the redundancy characterisation and years of service left `UNVERIFIED`, the cap workings shown for both possible treatments, and a withholding recomputation that is not reconciled until the characterisation is decided. The characterisation remains a reviewer decision.
+- A component schedule with the redundancy characterisation and years of service left `UNVERIFIED`, a list of the missing calculation inputs (amounts, dates, age, income year and current limits), the treatment path each characterisation would follow, and blank tax-free, cap and withholding fields until those inputs and the characterisation are supplied. The characterisation remains a reviewer decision.
 
 ## Must not do
 
