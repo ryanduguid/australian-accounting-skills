@@ -21,7 +21,7 @@ Schedule 7 clauses 1 to 5 set the balance and age day, the pro-rating, the
 ## Transfer balance account reports
 
 The [ATO TBAR page for SMSFs](https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf/smsf-administration-and-reporting/when-to-lodge-a-transfer-balance-account-report-for-smsfs)
-(last updated 1 April 2025) lists the events to report and their timing. Its
+(last updated 2 April 2025) lists the events to report and their timing. Its
 "When to report" section sets a quarterly timeframe for most events, and its
 "Exceeding the personal transfer balance cap" section sets separate timeframes
 for a voluntary commutation after an excess transfer balance determination and
