@@ -1,0 +1,61 @@
+{
+  "skill": "au-ato-penalties-interest",
+  "sources": [
+    {
+      "title": "ATO: General interest charge (GIC) rates",
+      "url": "https://www.ato.gov.au/tax-rates-and-codes/general-interest-charge-rates",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 4 September 2026); not yet reviewed by a person. GIC annual and daily rates: October to December 2026 11.51% (0.03153425%); July to September 2026 11.43% (0.03131507%); April to June 2026 10.96% (0.03002740%). Section 8AAD of the Taxation Administration Act 1953 specifies how the rate is calculated; the daily rate is the annual rate divided by the days in the calendar year. Rates for the next quarter are generally announced 2 weeks before it starts.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Quarterly rates change. Verify the rate for each day of the period at use time.",
+      "final_url": "https://www.ato.gov.au/tax-rates-and-codes/general-interest-charge-rates",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "f89727a6ba2889eca6f744086300078606208c8e7d522873861de563069588fe",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-04"
+    },
+    {
+      "title": "ATO: Shortfall interest charge (SIC) rates",
+      "url": "https://www.ato.gov.au/tax-rates-and-codes/shortfall-interest-charge-rates",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026; not yet reviewed by a person. SIC annual and daily rates: October to December 2026 7.51% (0.02057534%); July to September 2026 7.43% (0.02035616%); April to June 2026 6.96% (0.01906849%).",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Read from the page's published table without its last-updated date. Quarterly rates change; verify each quarter at use time.",
+      "final_url": "https://www.ato.gov.au/tax-rates-and-codes/shortfall-interest-charge-rates",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "a87ce60bf293de43fd31f768c271f98603074a9122d7e801a2d0ee019e12b2d6",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-04"
+    },
+    {
+      "title": "ATO: Penalty units",
+      "url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/penalty-units",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 26 June 2026); not yet reviewed by a person. Penalty unit amount by date the infringement occurred: $364 on or after 1 July 2026; $330 from 7 November 2024 to 30 June 2026; $313 from 1 July 2023 to 6 November 2024. Penalties are not deductible.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the value for the infringement date at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/penalty-units",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "590ce37e11e9c25533ca60e0cf925490da77c00429c9ba8c3a63f2239623372f",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-26"
+    },
+    {
+      "title": "ATO: Failure to lodge on time penalty",
+      "url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/failure-to-lodge-on-time-penalty",
+      "checked_at": "2026-09-24",
+      "fact": "Read by an agent on 24 September 2026 (page last updated 22 June 2026); not yet reviewed by a person. Base penalty: one penalty unit for every 28 days or part thereof that the document is overdue, up to 5 penalty units, for individuals and small withholders. Multiplied by 2 for a medium withholder, 5 for a large withholder and 500 for a significant global entity, tested in the month the document was due. Generally no penalty notice for a late return or activity statement that results in a refund or nil, with stated exceptions. Remission criteria and the registered agent safe harbour are set out on the page.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Verify the complete page, the withholder definitions and PS LA 2011/19 at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/failure-to-lodge-on-time-penalty",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "75dd9bda1c51858c7b1bf967ecda82bf43f8a6ed76ac355963f818c2ad65f8fb",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-10"
+    }
+  ]
+}

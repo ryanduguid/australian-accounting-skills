@@ -14,6 +14,7 @@ SKILLS_CLI_VERSION = "1.5.22"
 # A registry download and a skill listing take seconds; 5 minutes is a stall.
 NPX_TIMEOUT_SECONDS = 300
 EXPECTED_SKILLS = {
+    "au-ato-penalties-interest",
     "au-bookkeeping",
     "au-business-formation",
     "au-capital-gains",
