@@ -384,6 +384,17 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertEqual(codex["safety"]["noLodgment"], True)
         self.assertIn("DISCLAIMER.md", codex["interface"]["termsOfServiceURL"])
 
+    def test_bundled_mcp_server_is_pinned_and_documented(self) -> None:
+        plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        server = plugin["mcpServers"]["aus-accounting"]
+        self.assertEqual(server["command"], "uvx")
+        (spec,) = server["args"]
+        name, _, version = spec.partition("==")
+        self.assertEqual(name, "aus-accounting-mcp")
+        self.assertRegex(version, r"^\d+\.\d+\.\d+$", "pin an exact release, never a range")
+        installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
+        self.assertIn(f"`{spec}`", installation)
+
     def test_seeded_skills_ship_a_sources_index(self) -> None:
         required = {"title", "url", "checked_at", "fact"}
         seeded = ("bas-preparation", "stp-finalisation")
