@@ -1,5 +1,5 @@
 {
   "skill": "xero-exports",
   "exempt": true,
-  "reason": "This skill has no mutable rate, threshold, or form-label facts that belong in a sources index. Live source checks stay in the skill text and happen at use time."
+  "reason": "The skill's form-label facts (the exact AU export menu labels and the Payment Summary Details report name) are evidenced by the firm's dated product inspection recorded in SKILL.md at its lines 48 to 49 and the fixture manifest, not by a public page. The four Xero Central pages carrying the labels are JavaScript-rendered: scripts/source_refresh.py retrieves each with HTTP 200 but extracts no readable text, so an entry for them cannot carry the digest the index contract requires (tests/test_coverage_matrix.py: a retrieved source must carry a digest). The pages are leads for a manual check, not indexed sources: https://central.xero.com/0/tag/aAUUv0000004QuROAU/reports, https://central.xero.com/0/article/Payroll-Activity-Summary-report, https://central.xero.com/0/article/Payment-Summary-Details-report, https://central.xero.com/0/article/Superannuation-Accrual-report. Re-check the labels against a fresh product inspection before relying on them."
 }
