@@ -8,7 +8,7 @@ missing-evidence case.
 
 The new skills require applicable primary authority at use time; source
 discovery is not current-law approval. No fresh agent evaluation of these
-32 additions is recorded. The original 19 skill bodies remain unchanged.
+33 additions is recorded. The original 19 skill bodies remain unchanged.
 
 The validation pack now has 54 cards, including 3 supported-arithmetic
 cases for bookkeeping, financial-statement mapping and payroll tie-outs.
