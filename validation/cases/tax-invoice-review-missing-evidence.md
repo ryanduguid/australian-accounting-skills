@@ -30,7 +30,7 @@ The evidence gap named in the scenario remains unavailable. No current legal rat
 - Identify the scenario's missing evidence and the result that depends on it.
 - Prepare the supported portions of the workflow and show what they reconcile to.
 - Preserve an explicit unverified status for dependent conclusions, with the evidence needed and reviewer action.
-- An invoice-to-GST-report tie-out, an exception schedule by invoice with the missing requirement named, and an RCTI agreement register with registration check dates. Whether a credit is claimable, and any disclosure, remain reviewer decisions.
+- Separate purchase and sales populations in the invoice-to-GST-report tie-out; test sales invoices before issue and record sales-side exceptions by invoice with the missing requirement named. Maintain an RCTI agreement register with dated GST-registration results for both parties. Whether a credit is claimable, and any disclosure, remain reviewer decisions.
 
 ## Must not do
 

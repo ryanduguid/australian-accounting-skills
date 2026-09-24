@@ -7,17 +7,17 @@ description: "Use when checking Australian tax invoices, recipient-created tax i
 
 ## Inputs
 
-Purchase and sales invoices for the period (PDF, paper or Peppol eInvoice), the GST transaction report they support, supplier and customer ABNs, any written RCTI agreements, the supplier GST-registration checks already held, and the entity's GST accounting basis and reporting period.
+Purchase and sales invoices for the period (PDF, paper or Peppol eInvoice), the GST transaction report they support, supplier and customer ABNs, any written RCTI agreements, dated GST-registration evidence for both purchasers and suppliers, and the entity's GST accounting basis and reporting period.
 
 ## Workflow
 
 1. Tie the invoice population to the GST report. Every credit claimed needs an invoice or a documented reason one is not required; list credits with no document and documents with no credit.
 
-2. Test each purchase invoice against the tax invoice information requirements for its value band, taken at use time from the ATO page and GSTR 2013/1. Record which required detail is missing rather than judging the invoice as a whole. Where the invoice mixes taxable and non-taxable items, check it shows which items are taxable, the GST payable and the total.
+2. Separate purchase and sales invoices in the tie-out. Test each purchase invoice against the tax invoice information requirements for its value band, taken at use time from the ATO page and GSTR 2013/1. Test each sales invoice against the applicable requirements before issue. Record which required detail is missing rather than judging the invoice as a whole. Where an invoice mixes taxable and non-taxable items, check it shows which items are taxable, the GST payable and the total.
 
 3. For a Peppol eInvoice, check it was exchanged under the A-NZ Peppol invoice specification and carries the mandatory data the ATO lists. Do not fail an eInvoice only because it lacks the words "tax invoice"; the ATO accepts a compliant Peppol invoice as intended to be a tax invoice.
 
-4. For each RCTI the entity issues, confirm the conditions in the current RCTI determination and GSTR 2000/10: both parties registered for GST when issued, a current written agreement, a supply type the determination covers, and the document marked as an RCTI with both ABNs. Check the supplier's GST registration on ABN Lookup for the issue date and note the check date. Flag RCTIs issued to a supplier whose registration has lapsed.
+4. For each RCTI the entity issues, confirm the conditions in the current RCTI determination and GSTR 2000/10: both parties registered for GST when issued, a current written agreement, a supply type the determination covers, and the document marked as an RCTI with both ABNs. Check both the issuing purchaser's and supplier's GST registration on ABN Lookup for the issue date, record each result and check date in the RCTI agreement register, and leave the condition UNVERIFIED if either dated result is absent. Flag RCTIs issued to a party whose registration has lapsed.
 
 5. Check GST rounding on multi-line invoices against the total invoice or taxable supply rule the ATO page describes. Treat a difference of a cent as a rounding method question, not an error, until the method is known.
 
@@ -25,7 +25,7 @@ Purchase and sales invoices for the period (PDF, paper or Peppol eInvoice), the 
 
 ## Hand-off and checks
 
-An invoice-to-GST-report tie-out, an exception schedule by invoice with the missing requirement named, an RCTI agreement register with registration check dates, and open questions for the reviewer. The totals in the exception schedule agree to the GST report. Whether a credit is claimable, and any disclosure, remain reviewer decisions.
+Separate purchase and sales invoice populations in the invoice-to-GST-report tie-out, a sales-side exception schedule by invoice with the missing requirement named before issue, an RCTI agreement register with dated registration results for both parties, and open questions for the reviewer. The totals in the exception schedule agree to the GST report. Whether a credit is claimable, and any disclosure, remain reviewer decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

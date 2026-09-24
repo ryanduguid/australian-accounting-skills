@@ -153,7 +153,11 @@ def source_evidence(skill: str) -> SourceSummary:
 
     payload = json.loads(index.read_text(encoding="utf-8"))
     sources = [record for record in payload.get("sources", []) if isinstance(record, dict)]
-    reviewed = sorted(str(r.get("checked_at", "")) for r in sources if r.get("checked_at"))
+    reviewed = sorted(
+        str(r.get("checked_at", ""))
+        for r in sources
+        if r.get("checked_at") and r.get("verification_status") == "human-reviewed"
+    )
     fetched = sorted(str(r.get("fetched_at", "")) for r in sources if r.get("fetched_at"))
     unreachable = sum(1 for record in sources if record.get("http_status") not in (200, None))
     moved = sorted(
