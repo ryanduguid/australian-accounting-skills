@@ -2,15 +2,39 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date scripts/source_refresh.py last retrieved it, and never stands in for a review.",
   "totals": {
-    "skills": 52,
-    "sources_indexed": 84,
+    "skills": 55,
+    "sources_indexed": 93,
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 11,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 16,
-    "skills_with_only_the_seeded_case": 29
+    "skills_with_only_the_seeded_case": 32
   },
   "skills": [
+    {
+      "skill": "au-ato-penalties-interest",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "2026-09-24",
+        "fetched": "2026-09-24",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-ato-penalties-interest-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
     {
       "skill": "au-bookkeeping",
       "sources": {
@@ -146,6 +170,30 @@
         "cases": 1,
         "case_ids": [
           "au-deceased-estates-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-division-293",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "2026-09-24",
+        "fetched": "2026-09-24",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-division-293-missing-evidence"
         ],
         "only_seeded_case": true
       },
@@ -779,6 +827,30 @@
         "cases": 1,
         "case_ids": [
           "au-trust-distributions-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "au-wfh-deductions",
+      "sources": {
+        "indexed": 3,
+        "exempt": false,
+        "reviewed": "2026-09-24",
+        "fetched": "2026-09-24",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-wfh-deductions-missing-evidence"
         ],
         "only_seeded_case": true
       },

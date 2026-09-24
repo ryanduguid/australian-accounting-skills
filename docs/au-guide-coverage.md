@@ -1,6 +1,6 @@
 # Australian guide topic coverage
 
-The pack contains 52 skills: the original 19, 31 new preparation workflows, a later tax invoice review and a Division 296 tax workflow.
+The pack contains 55 skills: the original 19, 31 new preparation workflows, a later tax invoice review, a working from home deduction workflow and an ATO penalties, interest workflow, a Division 293 tax workflow and a Division 296 tax workflow.
 This map accounts for all 38 guide filenames in the [OpenAccountants Australian folder](https://github.com/openaccountants/openaccountants/tree/66912a14e86095f150c2b0c37703d195938f8f1d/skills/international/australia), inspected on 8 September 2026. The additional `references.md` is a bibliography, not a separate workflow.
 
 This is a topic-to-workflow mapping. It does not claim identical coverage of each Guide's body or validate its tax content. Six topics reuse existing skills; 2 residency topics share one new skill. The new workflows identify evidence, reconciliations and decisions for qualified review. They do not encode complete tax engines.

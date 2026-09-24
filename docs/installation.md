@@ -18,7 +18,7 @@ fixes the installed revision; it does not certify model outputs. The
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
-They can deliver unreleased changes, including the 52-workflow inventory
+They can deliver unreleased changes, including the 55-workflow inventory
 preparing v0.3.0. Choose them when you intend to test development work.
 
 | Need | Install | What you get |
@@ -70,7 +70,7 @@ without installing anything.
 
 ### Unreleased Australian topic expansion
 
-The default `main` branch contains 52 skills, including
+The default `main` branch contains 55 skills, including
 31 new Australian preparation workflows. To try that revision in a separate
 project, clone it and install the local checkout:
 
@@ -80,7 +80,7 @@ npx --yes skills@1.5.22 add ./accounting-skills-source --agent codex claude-code
 ```
 
 This installs into the current project. Use a separate project to avoid
-overwriting skills already installed there. The command copies all 52 skills
+overwriting skills already installed there. The command copies all 55 skills
 into the Codex and Claude Code project directories; it does not install them
 globally.
 

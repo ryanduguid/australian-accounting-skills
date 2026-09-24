@@ -16,6 +16,7 @@
       "description": "One verdict per card, keyed by the card id from validation/cases/ without the .md suffix. A card appears at most once because a JSON object holds one value per key.",
       "minProperties": 1,
       "propertyNames": {"enum": [
+        "au-ato-penalties-interest-missing-evidence",
         "au-bookkeeping-missing-evidence",
         "au-bookkeeping-supported-reconciliation",
         "au-business-formation-missing-evidence",
@@ -23,6 +24,7 @@
         "au-company-tax-missing-evidence",
         "au-crypto-tax-missing-evidence",
         "au-deceased-estates-missing-evidence",
+        "au-division-293-missing-evidence",
         "au-division-296-missing-evidence",
         "au-financial-statements-missing-evidence",
         "au-financial-statements-supported-mapping",
@@ -52,6 +54,7 @@
         "au-transfer-duty-missing-evidence",
         "au-transfer-pricing-missing-evidence",
         "au-trust-distributions-missing-evidence",
+        "au-wfh-deductions-missing-evidence",
         "bas-export-manifest-rounding",
         "bas-g10-g11",
         "bas-stp-w3-w4",
