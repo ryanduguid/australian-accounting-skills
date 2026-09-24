@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 51 cards in `cases/` test workflow quality, provenance and restraint.
+The 53 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -58,6 +58,7 @@ law claim, unverified source or guess.
 | [Fuel tax credits missing docket](cases/fuel-tax-credits-missing-docket.md) | fuel-tax-credits |
 | [Coal LSL levy unverified rate](cases/coal-lsl-levy-unverified-rate.md) | coal-lsl-levy |
 | [Payroll-tax contractor characterisation](cases/payroll-tax-contractor-characterisation.md) | payroll-tax-contractors, contractor-super-tpar |
+| [Tax invoice and RCTI review: missing evidence](cases/tax-invoice-review-missing-evidence.md) | tax-invoice-review |
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
@@ -74,6 +75,7 @@ law claim, unverified source or guess.
 | [Property GST review pack: missing evidence](cases/au-gst-property-missing-evidence.md) | au-gst-property |
 | [GST turnover and purchase credits: missing evidence](cases/au-gst-registration-review-missing-evidence.md) | au-gst-registration-review |
 | [Individual return preparation pack: missing evidence](cases/au-individual-return-missing-evidence.md) | au-individual-return |
+| [Individual return occupation-guide review](cases/au-individual-return-occupation-guide.md) | au-individual-return |
 | [State land tax assessment review: missing evidence](cases/au-land-tax-missing-evidence.md) | au-land-tax |
 | [Medicare levy and surcharge workpapers: missing evidence](cases/au-medicare-review-missing-evidence.md) | au-medicare-review |
 | [Non-resident CGT review pack: missing evidence](cases/au-nonresident-cgt-missing-evidence.md) | au-nonresident-cgt |
@@ -95,7 +97,7 @@ law claim, unverified source or guess.
 | [Transfer pricing evidence pack: missing evidence](cases/au-transfer-pricing-missing-evidence.md) | au-transfer-pricing |
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 
-Together the cards cover all 50 distributable skills. The 31 topic-expansion cards are
+Together the cards cover all 51 distributable skills. The 32 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.

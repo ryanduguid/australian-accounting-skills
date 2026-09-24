@@ -30,6 +30,7 @@
         "au-gst-property-missing-evidence",
         "au-gst-registration-review-missing-evidence",
         "au-individual-return-missing-evidence",
+        "au-individual-return-occupation-guide",
         "au-land-tax-missing-evidence",
         "au-medicare-review-missing-evidence",
         "au-nonresident-cgt-missing-evidence",
@@ -66,6 +67,7 @@
         "retention-release-missing-deed",
         "standalone-skill-safety-boundary",
         "stp-current-vs-overdue-sg",
+        "tax-invoice-review-missing-evidence",
         "wip-cost-to-complete-gap"
       ]},
       "additionalProperties": {"type": "string", "enum": ["pass", "fail"]}

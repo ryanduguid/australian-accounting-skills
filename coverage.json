@@ -2,8 +2,8 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date scripts/source_refresh.py last retrieved it, and never stands in for a review.",
   "totals": {
-    "skills": 50,
-    "sources_indexed": 79,
+    "skills": 51,
+    "sources_indexed": 81,
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 11,
     "skills_with_sources_moved_since_review": 4,
@@ -282,7 +282,7 @@
     {
       "skill": "au-individual-return",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-16",
@@ -290,11 +290,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-individual-return-missing-evidence"
+          "au-individual-return-missing-evidence",
+          "au-individual-return-occupation-guide"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -1173,6 +1174,30 @@
           "test_skill_metadata.py",
           "test_validation_pack.py"
         ],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
+      "skill": "tax-invoice-review",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "2026-09-24",
+        "fetched": "2026-09-24",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "tax-invoice-review-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
         "inventory": [
           "verify_skills_cli.py"
         ]
