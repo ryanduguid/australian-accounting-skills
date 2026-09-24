@@ -21,7 +21,7 @@ The ATO notice or account statement showing each liability, its original due dat
 
 5. Note the ATO's stated practice on late returns that result in a refund or nil amount, and its exceptions, without assuming a penalty was or will be raised.
 
-6. Remission and safe harbour: assemble the facts the ATO page asks for (the event, how it caused the delay, whether it was beyond the taxpayer's control, and why more time was not requested). For safe harbour, collect evidence that all relevant information reached the registered agent in time. Prepare a draft request; do not send it.
+6. Remission and safe harbour: assemble the facts the ATO page asks for (the event, how it caused the delay, whether it was beyond the taxpayer's control, and why more time was not requested). For safe harbour, test both conditions on the ATO page: evidence that all relevant information reached the registered tax or BAS agent in time to lodge by the due date, and whether the agent's failure was not due to recklessness or intentional disregard of the tax law. The second condition is a reviewer judgement; record the facts and leave it open. Prepare a draft request; do not send it.
 
 ## Hand-off and checks
 
