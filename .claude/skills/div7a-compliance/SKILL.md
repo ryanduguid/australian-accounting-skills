@@ -28,12 +28,13 @@ Build the Div 7A picture for a private company: what's been advanced, what's cov
 
 ## Local engine, when available
 
-If the `aus-accounting` MCP tools are available in this session (the Claude Code plugin starts them), use them for the arithmetic in steps 3 and 4 instead of working it by hand:
+If the `aus-accounting` MCP tools are available in this session (the Claude Code plugin starts them), use them to check the arithmetic in steps 3 and 4. They read a bundled table and contact no service, so they never replace the step 3 source check:
 
-- `get_div7a_benchmark_rate` with `response_detail` set to `full` for the income year. It reads a reviewed local table and returns `UNKNOWN` for a year the table does not cover. On `UNKNOWN`, go back to the step 3 source check; do not guess the rate.
-- `review_div7a_loan` once per amalgamated loan, passing only facts the records establish. An omitted fact stays `UNKNOWN`, which is not a failed limb.
+- Complete step 3 first. Then call `get_div7a_benchmark_rate` with `response_detail` set to `full` for the income year and compare its rate with the one from ato.gov.au. `UNKNOWN` means the table does not cover the year.
+- Only when the two rates agree, call `review_div7a_loan` once per amalgamated loan, passing only facts the records establish, and compare its minimum yearly repayment with step 4. An omitted fact stays `UNKNOWN`, which is not a failed limb.
+- If the rates differ, or the engine returns `UNKNOWN`, rely on the ato.gov.au rate and the step 4 calculation, do not use the engine's repayment figures, and record the difference as an exception on the register.
 
-Record what the engine consumed and returned: tool name, package version, inputs, the rate's source and check date from the full response, and every `UNKNOWN` or `REFUSED` result. Keep the engine's own labels as its own on the register: its shortfall is an experimental review aid, not an assessed deemed dividend. The engine does not classify s 109R repayments, UPEs, distributable surplus, interposed entities or debt forgiveness, so steps 2, 5 and 6 stay manual. Without the tools, follow steps 3 and 4 as written.
+Record what the engine consumed and returned: tool name, package version, inputs, the rate's source and check date from the full response, the comparison with ato.gov.au, and every `UNKNOWN` or `REFUSED` result. Keep the engine's own labels as its own on the register: its shortfall is an experimental review aid, not an assessed deemed dividend. The engine does not classify s 109R repayments, UPEs, distributable surplus, interposed entities or debt forgiveness, so steps 2, 5 and 6 stay manual. Without the tools, follow steps 3 and 4 as written.
 
 ## Checks before handing over
 
