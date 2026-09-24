@@ -3,7 +3,7 @@
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date scripts/source_refresh.py last retrieved it, and never stands in for a review.",
   "totals": {
     "skills": 51,
-    "sources_indexed": 85,
+    "sources_indexed": 80,
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 11,
     "skills_with_sources_moved_since_review": 4,
@@ -1181,7 +1181,7 @@
     {
       "skill": "tax-invoice-review",
       "sources": {
-        "indexed": 6,
+        "indexed": 1,
         "exempt": false,
         "reviewed": "2026-09-24",
         "fetched": "2026-09-24",
