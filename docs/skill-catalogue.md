@@ -51,6 +51,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | Not-for-profit tax status review pack |
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | Partnership tax workpapers |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | Pay-run preparation review |
+| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | Multi-state payroll tax workpapers: registration, apportioned thresholds and deductions, and rates by jurisdiction |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | Personal services income review pack |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | Rental property workpapers |
