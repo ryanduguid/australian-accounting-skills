@@ -46,6 +46,7 @@ EXPECTED_SKILLS = {
     "au-transfer-duty",
     "au-transfer-pricing",
     "au-trust-distributions",
+    "au-wfh-deductions",
     "bas-preparation",
     "cashflow-forecast-13week",
     "coal-lsl-levy",
