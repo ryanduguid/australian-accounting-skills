@@ -520,6 +520,18 @@ class SkillMetadataTests(unittest.TestCase):
                 "a cited version that differs from VERSION must name the release it pins to",
             )
 
+    def test_readme_evaluation_counts_match_the_recorded_runs(self) -> None:
+        """The install section's evaluation claim must follow validation/."""
+        readme = " ".join((REPOSITORY / "README.md").read_text(encoding="utf-8").split())
+        cards = len(list((REPOSITORY / "validation" / "cases").glob("*.md")))
+        runs = [
+            json.loads(path.read_text(encoding="utf-8"))["results"]
+            for path in (REPOSITORY / "validation" / "results").glob("*.json")
+        ]
+        judged = set().union(*runs)
+        self.assertIn(f"Recorded model runs cover {len(judged)} of the {cards}", readme)
+        self.assertIn(f"The other {cards - len(judged)} cards", readme)
+
     def test_readme_keeps_the_payroll_tax_jurisdiction_fence(self) -> None:
         """The skills table must not advertise beyond a skill's own scope."""
         readme = (REPOSITORY / "docs" / "skill-catalogue.md").read_text(encoding="utf-8")

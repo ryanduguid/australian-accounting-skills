@@ -25,7 +25,7 @@ git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-acc
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The 41 skills `main` adds to the tag have no recorded model evaluation.
+That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 62 [validation cards](validation/README.md): Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. The other 45 cards, including one for each of the 41 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 60 skills; [coverage.json](coverage.json) gives each skill's state.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
