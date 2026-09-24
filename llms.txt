@@ -1,6 +1,6 @@
 # Australian Accounting Skills
 
-> Fifty-six agent skills for Australian public-practice, tax and contracting-business
+> Fifty-nine agent skills for Australian public-practice, tax and contracting-business
 > preparation, packaged as a Claude Code plugin marketplace and as portable
 > SKILL.md files. Each skill states its inputs, its evidence and tie-out checks,
 > and the decisions it hands to a person.
@@ -16,7 +16,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 
 ## Install
 
-- Claude Code plugin marketplace, delivering the 56 skills on `main`:
+- Claude Code plugin marketplace, delivering the 59 skills on `main`:
   `/plugin marketplace add ryanduguid/australian-accounting-skills` then
   `/plugin install australian-accounting-skills@ryanduguid`
 - Codex plugin, the same revision:
@@ -38,6 +38,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [au-deceased-estates](.claude/skills/au-deceased-estates/SKILL.md)
 - [au-division-293](.claude/skills/au-division-293/SKILL.md)
 - [au-division-296](.claude/skills/au-division-296/SKILL.md)
+- [au-etp-redundancy](.claude/skills/au-etp-redundancy/SKILL.md)
 - [au-financial-statements](.claude/skills/au-financial-statements/SKILL.md)
 - [au-foreign-income](.claude/skills/au-foreign-income/SKILL.md)
 - [au-forex-review](.claude/skills/au-forex-review/SKILL.md)
@@ -49,6 +50,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [au-nonresident-cgt](.claude/skills/au-nonresident-cgt/SKILL.md)
 - [au-not-for-profit](.claude/skills/au-not-for-profit/SKILL.md)
 - [au-partnership-tax](.claude/skills/au-partnership-tax/SKILL.md)
+- [au-payg-instalment-variation](.claude/skills/au-payg-instalment-variation/SKILL.md)
 - [au-payroll-review](.claude/skills/au-payroll-review/SKILL.md)
 - [au-payroll-tax-states](.claude/skills/au-payroll-tax-states/SKILL.md)
 - [au-psi-review](.claude/skills/au-psi-review/SKILL.md)
@@ -58,6 +60,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [au-small-business-cgt](.claude/skills/au-small-business-cgt/SKILL.md)
 - [au-smsf-year-end](.claude/skills/au-smsf-year-end/SKILL.md)
 - [au-sole-trader](.claude/skills/au-sole-trader/SKILL.md)
+- [au-super-contribution-caps](.claude/skills/au-super-contribution-caps/SKILL.md)
 - [au-tax-planning-review](.claude/skills/au-tax-planning-review/SKILL.md)
 - [au-tax-rates-verification](.claude/skills/au-tax-rates-verification/SKILL.md)
 - [au-tax-residency](.claude/skills/au-tax-residency/SKILL.md)

@@ -7,7 +7,7 @@
   "author": {
     "name": "Ryan Duguid"
   },
-  "description": "Fifty-six Australian accounting and tax preparation workflows with source checks and human review. Not tax advice.",
+  "description": "Fifty-nine Australian accounting and tax preparation workflows with source checks and human review. Not tax advice.",
   "skills": "./.claude/skills/",
   "keywords": [
     "australian tax",
@@ -32,7 +32,7 @@
     "displayName": "Australian accounting skills",
     "developerName": "Ryan Duguid",
     "shortDescription": "Public-practice BAS, FBT, Div 7A and STP workflows",
-    "longDescription": "Fifty-six workflow skills for Australian public-practice, tax and contracting-business preparation. Each skill specifies inputs, evidence checks and reviewer decisions. Mutable rules require primary-source verification at use time. Not tax advice. Not affiliated with or endorsed by the Australian Taxation Office.",
+    "longDescription": "Fifty-nine workflow skills for Australian public-practice, tax and contracting-business preparation. Each skill specifies inputs, evidence checks and reviewer decisions. Mutable rules require primary-source verification at use time. Not tax advice. Not affiliated with or endorsed by the Australian Taxation Office.",
     "category": "Productivity",
     "capabilities": [
       "Read",
