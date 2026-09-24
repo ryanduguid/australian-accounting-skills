@@ -1,6 +1,6 @@
 {
   "skill": "stp-finalisation",
-  "notes": "Mutable ATO and Treasury facts. Re-verify at use time. This index is provenance, not a substitute for a live source check. Human review pending: the finalisation record's URL returns 404, and the 1 July 2026 STP commencement is supported by ATO QC 107592 but its field codes have no indexed specification. See docs/source-review-2026-09-23.md for the agent check and the live URLs a person should review before re-pointing and re-dating these records. SKILL.md requires current source evidence or UNKNOWN.",
+  "notes": "Mutable ATO and Treasury facts. Re-verify at use time. This index is provenance, not a substitute for a live source check. Human review pending: the finalisation record was repointed on 24 September 2026 from a 404 URL to the live end-of-year page but a person has not yet re-dated it, and the 1 July 2026 STP commencement is supported by ATO QC 107592 but its field codes have no indexed specification. See docs/source-review-2026-09-23.md for the agent check and the live URLs a person should review before re-dating these records. SKILL.md requires current source evidence or UNKNOWN.",
   "sources": [
     {
       "title": "ATO Payday Super",
@@ -56,16 +56,16 @@
     },
     {
       "title": "STP finalisation",
-      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/in-detail/finalisation",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/start-reporting/end-of-year-finalisation-through-stp",
       "checked_at": "2026-08-20",
       "fact": "The finalisation declaration is due by 14 July for most employers. Verify the current deadline and any concession for closely held payees before treating a file as late.",
       "volatile": true,
-      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/in-detail/finalisation",
-      "http_status": 404,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
-      "source_last_modified": "",
-      "content_hash_covers": ""
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/start-reporting/end-of-year-finalisation-through-stp",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "632e9c62285a3e4a04edd711e4fb8bf26fae3670129a77158332d447d0970bfb",
+      "source_last_modified": "2025-12-16",
+      "content_hash_covers": "html"
     }
   ]
 }

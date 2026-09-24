@@ -17,16 +17,16 @@
     },
     {
       "title": "ATO fuel tax credit rates",
-      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/fuel-schemes/fuel-tax-credits-business/rates-business",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/fuel-schemes/fuel-tax-credits-business/rates-business",
       "checked_at": "2026-08-28",
       "fact": "Rates vary by period and use and must be read live for the fuel acquisition date; this index is not a rate table.",
       "volatile": true,
-      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/fuel-schemes/fuel-tax-credits-business/rates-business",
-      "http_status": 404,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
-      "source_last_modified": "",
-      "content_hash_covers": ""
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/fuel-schemes/fuel-tax-credits-business/rates-business",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "8bb8272d9a845fdf1bc463086a79f9cca3910b3a51c75292d5b668628c625409",
+      "source_last_modified": "2026-07-29",
+      "content_hash_covers": "html"
     }
   ]
 }

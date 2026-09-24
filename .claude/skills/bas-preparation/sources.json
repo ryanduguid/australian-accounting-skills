@@ -30,29 +30,29 @@
     },
     {
       "title": "Pay as you go (PAYG) withholding",
-      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/pay-as-you-go-withholding",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/pay-as-you-go-payg-withholding",
       "checked_at": "2026-08-19",
       "fact": "A large withholder reporting through STP no longer needs to report an amount at W1. That relief is a large-withholder rule, not a rule for every STP reporter. Non-payroll withholding does not all belong at W1/W2: no-ABN withholding sits at its own label (W4 at time of writing) and other amounts withheld sit at W3; the current label set must be confirmed at ato.gov.au before lodging.",
       "volatile": true,
-      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/pay-as-you-go-withholding",
-      "http_status": 404,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
-      "source_last_modified": "",
-      "content_hash_covers": ""
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/pay-as-you-go-payg-withholding",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "eff6899acf0a2bf09f587ab89e353f15e49a1e8a77179086453ae20f817ff2f8",
+      "source_last_modified": "2025-10-02",
+      "content_hash_covers": "html"
     },
     {
-      "title": "Activity statement instructions",
-      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/activity-statements/in-detail/activity-statement-instructions",
+      "title": "GST reporting methods",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/gst-reporting-methods",
       "checked_at": "2026-08-19",
       "fact": "Simpler BAS entities report G1, 1A and 1B in the GST section where the current turnover test is met. G10/G11 capital vs non-capital mapping follows the entity's reporting method.",
       "volatile": true,
-      "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/activity-statements/in-detail/activity-statement-instructions",
-      "http_status": 404,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
-      "source_last_modified": "",
-      "content_hash_covers": ""
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/gst-reporting-methods",
+      "http_status": 200,
+      "fetched_at": "2026-09-24",
+      "content_hash": "f87fda84b33efb06e736cb63cc9b3499dada66aa4ef6092ec35eb3e25dfad63c",
+      "source_last_modified": "2025-12-24",
+      "content_hash_covers": "html"
     },
     {
       "title": "Simpler BAS and GST bookkeeping: capital purchases",
@@ -62,7 +62,7 @@
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst",
       "http_status": 200,
-      "fetched_at": "2026-09-16",
+      "fetched_at": "2026-09-24",
       "content_hash": "15462e13b658ac61b8d8d90527d4632dd59b8069edbb21d7dcee7c76af796945",
       "source_last_modified": "2025-12-16",
       "content_hash_covers": "html"
