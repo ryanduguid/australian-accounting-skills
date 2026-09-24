@@ -21,5 +21,13 @@
     "codex",
     "agent skills"
   ],
-  "skills": "./.claude/skills"
+  "skills": "./.claude/skills",
+  "mcpServers": {
+    "aus-accounting": {
+      "command": "uvx",
+      "args": [
+        "aus-accounting-mcp==0.2.7"
+      ]
+    }
+  }
 }

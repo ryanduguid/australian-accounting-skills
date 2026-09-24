@@ -1,6 +1,6 @@
 # Sibling command-line tools
 
-For local Payday Super timing and ATO benchmark ratios through an agent, see [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp), distribution `aus-accounting-mcp`.
+For local Payday Super timing, Division 7A loan review and ATO benchmark ratios through an agent, see [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp), distribution `aus-accounting-mcp`. The Claude Code plugin starts it, pinned, from `.claude-plugin/plugin.json`; see [installation](installation.md#claude-code-plugin).
 
 These skills name 5 maintained tools rather than asking the agent to invent the same work. Each now lives in a monorepo; the distribution and command names are unchanged.
 

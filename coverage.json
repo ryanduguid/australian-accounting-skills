@@ -5,7 +5,7 @@
     "skills": 60,
     "sources_indexed": 110,
     "skills_source_exempt": 6,
-    "skills_with_unreachable_sources": 12,
+    "skills_with_unreachable_sources": 9,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 16,
     "skills_with_only_the_seeded_case": 37
@@ -502,8 +502,8 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-09-08",
-        "fetched": "2026-09-16",
-        "unreachable": 1,
+        "fetched": "2026-09-24",
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -988,7 +988,7 @@
         "exempt": false,
         "reviewed": "2026-08-14",
         "fetched": "2026-09-16",
-        "unreachable": 2,
+        "unreachable": 0,
         "moved_since_review": [
           "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works"
         ]
@@ -1206,7 +1206,7 @@
         "exempt": false,
         "reviewed": "2026-08-28",
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1372,7 +1372,7 @@
         "exempt": false,
         "reviewed": "2026-08-20",
         "fetched": "2026-09-16",
-        "unreachable": 2,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
