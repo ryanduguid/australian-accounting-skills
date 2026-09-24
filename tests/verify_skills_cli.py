@@ -20,6 +20,7 @@ EXPECTED_SKILLS = {
     "au-company-tax",
     "au-crypto-tax",
     "au-deceased-estates",
+    "au-division-296",
     "au-financial-statements",
     "au-foreign-income",
     "au-forex-review",

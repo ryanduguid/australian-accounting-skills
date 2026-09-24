@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 53 cards in `cases/` test workflow quality, provenance and restraint.
+The 54 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -68,6 +68,7 @@ law claim, unverified source or guess.
 | [Company tax workpapers: missing evidence](cases/au-company-tax-missing-evidence.md) | au-company-tax |
 | [Crypto transaction reconciliation: missing evidence](cases/au-crypto-tax-missing-evidence.md) | au-crypto-tax |
 | [Deceased estate tax workpapers: missing evidence](cases/au-deceased-estates-missing-evidence.md) | au-deceased-estates |
+| [Division 296 tax workpapers: missing evidence](cases/au-division-296-missing-evidence.md) | au-division-296 |
 | [Financial statement preparation pack: missing evidence](cases/au-financial-statements-missing-evidence.md) | au-financial-statements |
 | [Supported trial-balance mapping](cases/au-financial-statements-supported-mapping.md) | au-financial-statements |
 | [Foreign income and tax-offset workpapers: missing evidence](cases/au-foreign-income-missing-evidence.md) | au-foreign-income |
@@ -97,7 +98,7 @@ law claim, unverified source or guess.
 | [Transfer pricing evidence pack: missing evidence](cases/au-transfer-pricing-missing-evidence.md) | au-transfer-pricing |
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 
-Together the cards cover all 51 distributable skills. The 32 topic-expansion cards are
+Together the cards cover all 52 distributable skills. The 33 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.
