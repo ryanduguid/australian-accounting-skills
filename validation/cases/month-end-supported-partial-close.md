@@ -47,7 +47,8 @@ supplied. No tool execution or authority to post or lock is supplied.
 ## Required checks
 
 - Show 12500.00 + 500.00 - 800.00 = 12200.00, agreeing to TB-B. Retain the
-  two unpresented items for clearance follow-up. Agreement is not clearance.
+  outstanding deposit and unpresented payment for clearance follow-up.
+  Agreement is not clearance.
 - Show the receivables difference of 250.00, with TB-B above AR-A. Keep it
   open with source-period context and a request for reconciling evidence.
 - Report payables agreement at 6000.00.
