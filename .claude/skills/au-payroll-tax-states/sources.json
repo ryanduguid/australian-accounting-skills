@@ -79,11 +79,11 @@
       "volatile": true,
       "limitations": "The page's rate table merges columns; the bands above follow its registration threshold and RevenueSA's calculator. Verify the complete page, applicable period and current status at use time.",
       "final_url": "https://revenuesa.sa.gov.au/payrolltax/rates-and-thresholds",
-      "http_status": 403,
-      "fetched_at": "2026-09-24",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "5f2449004279819f36550431528785143ad9db968befd6f9727efd146093d546",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-07-08"
     },
     {
       "title": "SRO Tasmania: Payroll tax rates and thresholds",
@@ -121,11 +121,11 @@
       "volatile": true,
       "limitations": "Verify the complete page, applicable period and current status at use time.",
       "final_url": "https://treasury.nt.gov.au/dtf/territory-revenue-office/payroll-tax/payroll-tax-rates-and-thresholds",
-      "http_status": 403,
-      "fetched_at": "2026-09-24",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "13c27244702ea07e43545297897da977a669facf1a963cd7faae5129eacadaaf",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-05-07"
     }
   ]
 }

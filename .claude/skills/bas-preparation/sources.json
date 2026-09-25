@@ -10,7 +10,7 @@
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas",
       "http_status": 200,
-      "fetched_at": "2026-09-16",
+      "fetched_at": "2026-09-25",
       "content_hash": "a044c5b57a081d0ea6cba4a5e89c02d9629adededd7e45435b242ee835a9281a",
       "source_last_modified": "2025-10-02",
       "content_hash_covers": "html"
@@ -23,7 +23,7 @@
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works",
       "http_status": 200,
-      "fetched_at": "2026-09-16",
+      "fetched_at": "2026-09-25",
       "content_hash": "2dc8c98999b9ae5b2a4eef99add93ae235212c5e1dc63295d0fb8a4a0eebf524",
       "source_last_modified": "2026-09-14",
       "content_hash_covers": "html"
@@ -36,7 +36,7 @@
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/pay-as-you-go-payg-withholding",
       "http_status": 200,
-      "fetched_at": "2026-09-24",
+      "fetched_at": "2026-09-25",
       "content_hash": "eff6899acf0a2bf09f587ab89e353f15e49a1e8a77179086453ae20f817ff2f8",
       "source_last_modified": "2025-10-02",
       "content_hash_covers": "html"
@@ -49,7 +49,7 @@
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/gst-reporting-methods",
       "http_status": 200,
-      "fetched_at": "2026-09-24",
+      "fetched_at": "2026-09-25",
       "content_hash": "f87fda84b33efb06e736cb63cc9b3499dada66aa4ef6092ec35eb3e25dfad63c",
       "source_last_modified": "2025-12-24",
       "content_hash_covers": "html"
@@ -62,7 +62,7 @@
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst",
       "http_status": 200,
-      "fetched_at": "2026-09-24",
+      "fetched_at": "2026-09-25",
       "content_hash": "15462e13b658ac61b8d8d90527d4632dd59b8069edbb21d7dcee7c76af796945",
       "source_last_modified": "2025-12-16",
       "content_hash_covers": "html"

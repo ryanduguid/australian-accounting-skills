@@ -9,11 +9,11 @@
       "fact": "Section 5 coverage and exclusions are applied to the actual work and purpose; the skill does not make the legal coverage conclusion.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "e641988ac70bc2068fc9b355c3a0de11259943ac469567568ab05b027b69c196",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "Cadia Holdings Pty Ltd v Downer EDI Mining Pty Ltd [2020] NSWSC 1588",
@@ -35,11 +35,11 @@
       "fact": "Sections 11(1A)(b), 11(1B)(b), 11(1C)(a) and 14(4)(b)(i) preserve applicable contractual terms; keep their actual calendar unit or fixed date.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "e641988ac70bc2068fc9b355c3a0de11259943ac469567568ab05b027b69c196",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "Queensland payment and payment-schedule deadlines",

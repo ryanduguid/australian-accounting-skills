@@ -63,6 +63,7 @@ exports/
 !/docs/integrations.md
 !/docs/skill-catalogue.md
 !/docs/EVAL.md
+!/docs/source-review-2026-09-25.md
 !/RELEASE_NOTES.md
 !/RELEASING.md
 !/CLAUDE.md
@@ -77,8 +78,10 @@ exports/
 !/validation/README.md
 !/validation/cases/
 !/validation/cases/*.md
-# Result files hold a pass or fail per card and nothing else; the validator
-# enforces that shape, so a transcript cannot ride in under the exception.
+!/validation/cases/cashflow-supported-roll-forward.md
+!/validation/cases/month-end-supported-partial-close.md
+# Result files hold verdicts or versioned trial digests. The validator rejects
+# prompts, outputs and transcripts under this exception.
 !/validation/results.schema.json
 !/validation/results/
 !/validation/results/*.json

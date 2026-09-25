@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 63 cards in `cases/` test workflow quality, provenance and restraint.
+The 65 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -46,6 +46,8 @@ law claim, unverified source or guess.
 | [BAS labels with separate withholding support](cases/bas-stp-w3-w4.md) | bas-preparation |
 | [BAS G10/G11 classification](cases/bas-g10-g11.md) | bas-preparation |
 | [SG ageing and STP mismatch](cases/stp-current-vs-overdue-sg.md) | month-end-close, stp-finalisation |
+| [Supported cash-flow roll-forward](cases/cashflow-supported-roll-forward.md) | cashflow-forecast-13week |
+| [Supported checks in an incomplete close](cases/month-end-supported-partial-close.md) | month-end-close |
 | [Super-regime transition cashflow](cases/cashflow-super-regime-transition.md) | cashflow-forecast-13week, stp-finalisation |
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
@@ -118,6 +120,11 @@ pending. Their supplied evidence is sufficient for the bounded arithmetic,
 not for a tax or compliance conclusion. They complement the missing-evidence
 cases and have no confirmed model verdicts yet.
 
+Two further cards require a complete 13-week cash roll-forward and supported
+reconciliations within an incomplete month-end close. They have no confirmed
+model verdicts. For trials with the grading answers withheld, use the separate
+[task-only procedure](../docs/EVAL.md#task-only-trials).
+
 The GST registration card now includes a current-turnover reconciliation and
 missing capital-asset evidence that blocks projected turnover. It draws on questions raised by
 the Library's *GST / Registration*, paragraph 3-030, and *Claiming Input Tax
@@ -147,6 +154,13 @@ or duplicate-key YAML, undecodable UTF-8, unexpected/untracked validation files,
 symlinks, ignored files, unsafe local links, traversal targets, trailing
 whitespace and common identifier or credential patterns. Static checks cannot
 prove a live legal position or judge an agent response.
+
+Version 2 records distinguish task-only and whole-card inputs and retain
+digests of the input, context manifest, rubric and observed output. Prepared
+and observed records contain no verdicts. Only a human-confirmed record may
+contain `pass` or `fail`, for exactly its provenance cases. Legacy records
+remain unchanged and have no inferred input mode. See the [recording
+procedure](../docs/EVAL.md#record) for the fields and evidence requirements.
 
 ## Maintenance rules
 

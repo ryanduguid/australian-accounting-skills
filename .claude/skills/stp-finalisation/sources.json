@@ -9,11 +9,11 @@
       "fact": "For paydays from 1 July 2026, the ordinary period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday.",
       "volatile": true,
       "final_url": "https://softwaredevelopers.ato.gov.au/PaydaySuper",
-      "http_status": 0,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "6f8cc3ad8db5c51a1441d965a6e6a6bce4a03301f09c7ed1d14f3b7b95bb014f",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "ATO Payday Super for employers",

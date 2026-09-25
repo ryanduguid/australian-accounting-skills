@@ -154,13 +154,13 @@
       "checked_at": "2026-09-25",
       "fact": "The NSW retention money trust requirements are in Part 2. Clause 6 limits application to head contractors whose main contract is valued at $20 million or more, including variations. If the threshold is reached through a later variation, cl 6(4) applies only to subcontracts entered into after that point. For head contractors to whom Part 2 applies, cl 8 requires retention money to be held in trust for the entitled subcontractor and paid to a retention money trust account with an approved ADI as soon as possible and within 5 business days of being required to retain it. The version read is in force from 1 March 2021. No retention classification is adopted from this record.",
       "verification_status": "unavailable-http-403",
-      "limitations": "Located and read on 25 September 2026 by an agent on the maintainer's instruction. The instrument is due to be automatically repealed under the Subordinate Legislation Act 1989 (NSW) on 1 September 2027. Confirm the version in force for the project's period at the instrument. Direct retrieval by scripts/source_refresh.py returned HTTP 403 on 25 September 2026 and no digest was published. The instrument text was read the same day through an extraction service that returned 200. Open an authoritative source at use time before relying on any rule.",
+      "limitations": "Located and read on 25 September 2026 by an agent on the maintainer's instruction. The instrument is due to be automatically repealed under the Subordinate Legislation Act 1989 (NSW) on 1 September 2027. Confirm the version in force for the project's period at the instrument. Direct retrieval by scripts/source_refresh.py returned HTTP 403 on 25 September 2026 and supplied no digest. A later Firecrawl raw HTML retrieval returned HTTP 200 and supplied the digest now recorded here through the repository's existing text canonicaliser. Open an authoritative source at use time before relying on any rule.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/sl-2020-0504",
-      "http_status": 403,
+      "http_status": 200,
       "fetched_at": "2026-09-25",
-      "content_hash": "",
-      "content_hash_covers": "",
+      "content_hash": "1eebc91163117f00141762f3092c69cae155d68db2af8f301678306c8d9a13ae",
+      "content_hash_covers": "html",
       "source_last_modified": ""
     },
     {
@@ -169,13 +169,13 @@
       "checked_at": "2026-09-25",
       "fact": "The Security of Payment Act supplies part of the legal context for the AASB 15 para B12 entitlement analysis. It governs payment claims and adjudication for construction work in NSW, and s 12A enables the retention money trust requirements imposed by the Regulation. The version read is in force from 20 August 2024. No entitlement or enforceability conclusion is adopted from this record.",
       "verification_status": "unavailable-http-403",
-      "limitations": "Located and read on 25 September 2026 by an agent on the maintainer's instruction. Confirm the security of payment regime that applies in the project's own jurisdiction rather than assuming the NSW position carries across. Direct retrieval by scripts/source_refresh.py returned HTTP 403 on 25 September 2026 and no digest was published. The instrument text was read the same day through an extraction service that returned 200. Open an authoritative source at use time before relying on any rule.",
+      "limitations": "Located and read on 25 September 2026 by an agent on the maintainer's instruction. Confirm the security of payment regime that applies in the project's own jurisdiction rather than assuming the NSW position carries across. Direct retrieval by scripts/source_refresh.py returned HTTP 403 on 25 September 2026 and supplied no digest. A later Firecrawl raw HTML retrieval returned HTTP 200 and supplied the digest now recorded here through the repository's existing text canonicaliser. Open an authoritative source at use time before relying on any rule.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
-      "http_status": 403,
+      "http_status": 200,
       "fetched_at": "2026-09-25",
-      "content_hash": "",
-      "content_hash_covers": "",
+      "content_hash": "e641988ac70bc2068fc9b355c3a0de11259943ac469567568ab05b027b69c196",
+      "content_hash_covers": "html",
       "source_last_modified": ""
     }
   ]

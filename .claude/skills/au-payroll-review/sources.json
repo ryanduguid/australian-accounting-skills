@@ -9,11 +9,11 @@
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
       "final_url": "https://www.fairwork.gov.au/tools-and-resources/fact-sheets/rights-and-obligations/record-keeping-pay-slips",
-      "http_status": 0,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "0fdc36b69cd47019ea5915e9a782685720efc96c29d93a2180828586e41441b6",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     }
   ]
 }
