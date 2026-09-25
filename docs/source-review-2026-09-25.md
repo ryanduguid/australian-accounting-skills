@@ -14,7 +14,7 @@ that its interpretation is current.
 
 Each digest covers the captured page or instrument as a whole. This table records
 retrieval, not a legal proposition. Provision-specific facts and locators remain
-in the corresponding skill's `sources.json` file.
+in the corresponding `sources.json` file for each skill.
 
 The existing `scripts/source_refresh.py --skill bas-preparation --write` command
 retrieved all 5 BAS pages. Their readable-text digests were unchanged. The
@@ -32,15 +32,15 @@ and the two NSW sources below. Each returned HTTP 200 at its indexed URL.
 | [NSW Security of Payment Regulation 2020](https://legislation.nsw.gov.au/view/whole/html/inforce/current/sl-2020-0504) | `wip-over-under-billing` | `1eebc91163117f00141762f3092c69cae155d68db2af8f301678306c8d9a13ae` |
 | [NSW Security of Payment Act 1999](https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046) | `wip-over-under-billing` | `e641988ac70bc2068fc9b355c3a0de11259943ac469567568ab05b027b69c196` |
 
-The captured HTML was passed through the repository's existing `body_digest` and
+The captured HTML was passed through the existing repository `body_digest` and
 `upstream_last_modified` functions, then `apply_fetch` updated only machine-owned
-fields. These are HTML digests, not hashes of Firecrawl's Markdown. No new source
+fields. These are HTML digests, not hashes of Markdown from Firecrawl. No new source
 refresh dependency or automated fallback was added. The parser found no supported
 last-modified value in those four responses, so none was invented.
 
 The six records now describe successful retrieval through Firecrawl. This does not
 prove the direct-fetch CI job can reach those hosts. A later sweep may report a
-transport failure again; retain that result and use an approved browser to inspect
+transport failure again. Retain that result and use an approved browser to inspect
 the source before relying on it.
 
 ## First-pass review work
@@ -58,7 +58,7 @@ model-run results. No new model evaluation or human source review was claimed.
 The later pass on 25 September checked the remaining ten failed source records
 across five skills. Four distinct pages were retrieved through Firecrawl with
 `rawHtml`, `maxAge=0` and `onlyMainContent=false`. The two NSW Security of Payment
-captures above were reused from the same day's successful retrieval.
+captures above were reused from the successful retrieval earlier that day.
 
 | Skill | Records updated |
 | --- | ---: |
@@ -71,8 +71,8 @@ captures above were reused from the same day's successful retrieval.
 The first NSW Payroll Tax Act and Federal Register responses contained only page
 shells despite HTTP 200. Those bodies were rejected. A second capture with
 `waitFor=5000` contained the legislative text and supplied the recorded digest.
-The three payroll-contractor URLs share one page and differ only by fragment;
-their indexed URLs remain unchanged.
+The three payroll-contractor URLs share one page and differ only by fragment.
+Their indexed URLs remain unchanged.
 
 Every updated record now has HTTP 200 and an HTML digest computed through the
 existing canonicaliser. The coverage register has zero recorded retrieval
@@ -83,4 +83,4 @@ All human-owned fields, including `checked_at`, facts and limitations, remain
 unchanged in these ten records. The four changed-source review flags above remain
 open. Retrieval does not establish legal correctness, the applicable historical
 version or human review. The two new validation cards are separate preparation
-work described in [EVAL.md](EVAL.md); neither has a confirmed model result.
+work described in [EVAL.md](EVAL.md). Neither has a confirmed model result.

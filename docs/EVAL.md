@@ -9,7 +9,7 @@ This method supplies the whole card, including its required checks and
 prohibitions. It measures adherence to visible instructions, not whether the
 model discovers an error without that guidance. Describe results on that basis.
 An evaluation of independent error detection would need a separate task-only
-input and a withheld grading rubric; its results would not be directly
+input and a withheld grading rubric. Its results would not be directly
 comparable with these runs.
 
 ## Run
@@ -29,7 +29,7 @@ comparable with these runs.
 
 Write one file per record as `validation/results/YYYY-MM-DD-<slug>.json` in the
 shape of [validation/results.schema.json](../validation/results.schema.json).
-Existing records without `schema_version` retain this legacy shape:
+Existing records without `schema_version` retain this legacy shape.
 
 ```json
 {
@@ -47,17 +47,17 @@ Existing records without `schema_version` retain this legacy shape:
 A run may cover any subset of the cards. `results` is keyed by card ID, so a
 card appears at most once. Only `pass` and `fail` are verdicts. Keep prompts,
 outputs, transcripts and assessment notes in the firm-approved location
-outside this repository. Never infer a legacy record's input mode or add
+outside this repository. Never infer the input mode of a legacy record or add
 provenance that was not recorded when it ran.
 
 For new records, add `schema_version: 2`, `input_mode` (`task-only` or
 `whole-card`), `status` and `provenance`. The common fields above remain
 required. `runner` names the preparer or observer until a person confirms the
-verdicts; for `confirmed`, it names that person. `run_date` is the date the
+verdicts. For `confirmed`, it names that person. `run_date` is the date the
 recorded stage completed and must match the filename. For preparation, name
 the planned model, or use `unselected` if none has been chosen.
 
-`provenance` maps each case ID to lower-case SHA-256 digests:
+`provenance` maps each case ID to lower-case SHA-256 digests.
 
 - `input_sha256`: the exact UTF-8 task bytes supplied or prepared for the model.
 - `context_sha256`: the exact UTF-8 context manifest retained with the working
@@ -70,17 +70,17 @@ the planned model, or use `unselected` if none has been chosen.
   preparation.
 
 Hash the retained bytes without normalising line endings. These digests bind a
-record to retained evidence; format validation cannot prove that the evidence
+record to retained evidence. Format validation cannot prove that the evidence
 exists, that execution was complete or that a person reviewed it.
 
 | Status | Meaning | `results` |
 | --- | --- | --- |
-| `prepared` | Inputs are frozen; no model observation is claimed. | Empty object |
-| `observed` | A response exists; assessment remains pending. | Empty object |
+| `prepared` | Inputs are frozen. No model observation is claimed. | Empty object |
+| `observed` | A response exists. Assessment remains pending. | Empty object |
 | `confirmed` | The named person has assessed every recorded case. | Exactly one verdict per provenance case |
 
 Preserve earlier records when recording a later stage. Use a new filename with
-a stage suffix. An incomplete execution can remain observed; it is not an
+a stage suffix. An incomplete execution can remain observed. It is not an
 automatic behavioural failure. The validator reports each stage separately.
 
 `scripts/validate_validation.py` reads every result file, rejects any other
@@ -89,7 +89,7 @@ file name, and the identifier patterns it screens the cards for. It also holds
 the schema's card list to the card inventory and its verdict list to `pass`
 and `fail`. For version 2 it checks the stage, digest fields and exact match
 between confirmed verdicts and provenance cases. JSON Schema describes the
-structure; the Python validator also enforces that cross-field match. Adding a
+structure. The Python validator also enforces that cross-field match. Adding a
 card means adding it to the schema in the same change. Stage new result files before running
 the checker, as `validation/README.md` describes, because it verifies the
 tracked inventory.
@@ -134,9 +134,9 @@ unavailable evidence`. Withhold `Required checks`, `Must not do` and
 skills still supply their normal safety and review instructions.
 
 Freeze the exact card and skill bytes before running. Keep their hashes, the
-model input and the assessor's full rubric outside this repository, alongside
+model input and the full assessment rubric outside this repository, alongside
 the runtime and tool-availability record. Check that the task contains no
-grading answers. Give each case a fresh session and keep the assessor's files
+grading answers. Give each case a fresh session and keep the assessment files
 out of its accessible context.
 
 Assess useful completed work as well as retained exceptions. A blanket refusal
