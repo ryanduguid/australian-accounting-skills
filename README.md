@@ -11,19 +11,15 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Install all 61 workflows from the plugin marketplace. This route delivers the `main` inventory, the 61-skill development set preparing v0.3.0, not a published release:
-
-```
-/plugin marketplace add ryanduguid/australian-accounting-skills
-/plugin install australian-accounting-skills@ryanduguid
-```
-
-To install the 19 workflows in the latest published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), clone that tag from a separate project directory instead:
+Start with the 19 workflows in the published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), by checking out its recorded commit from a separate project directory.
 
 ```bash
-git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git -C accounting-skills-release checkout --detach 527b0a22c8be5ce10855f12f052cd3bda7b7b827
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
+
+Clone once per project. To repeat or retry from that directory, rerun only the checkout and install commands.
 
 That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 63 [validation cards](validation/README.md). Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. The other 46 cards, including one for each of the 42 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 61 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
@@ -39,6 +35,15 @@ An agent runtime is still required. Ask it to prepare the BAS workpaper from the
 <summary>Installation, worked example, skill catalogue and boundaries</summary>
 
 ## Runtime and release
+
+### Development installation
+
+As at 25 September 2026, the default branch contains 61 workflows preparing v0.3.0. The plugin marketplace installs this development inventory. It is not a published release.
+
+```
+/plugin marketplace add ryanduguid/australian-accounting-skills
+/plugin install australian-accounting-skills@ryanduguid
+```
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
