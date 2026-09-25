@@ -202,8 +202,9 @@ def build() -> Matrix:
         note=(
             "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: "
             "tests/test_coverage_matrix.py rebuilds this file and fails on any difference. "
-            "'reviewed' is the date a person last read the source; 'fetched' is the date "
-            "of the latest recorded retrieval attempt, and never stands in for a review."
+            "'reviewed' is the earliest recorded human review date across a skill's sources; "
+            "'fetched' is the earliest of their last recorded retrieval-attempt dates. "
+            "A retrieval is not a human review."
         ),
         totals=Totals(
             skills=len(skills),

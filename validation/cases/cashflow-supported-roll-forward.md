@@ -21,15 +21,15 @@ Present options for the owner without making a financing decision.
 
 ## Synthetic inputs
 
-- Period: weeks 1 to 13 starting 5 October 2026.
-- Source: fabricated bank reconciliation and complete cash schedule CS-A,
+- The period covers weeks 1 to 13 starting 5 October 2026.
+- The source is a fabricated bank reconciliation and complete cash schedule CS-A,
   captured on 4 October 2026, all accounts and items included, no rounding.
-- Reconciled bank balance: 12000.00, of which 2000.00 is restricted throughout
+- The reconciled bank balance is 12000.00, of which 2000.00 is restricted throughout
   the forecast. No overdraft or unpresented item is supplied.
-- Committed receipts: 12000.00 in each of weeks 1, 4, 7, 10 and 13; zero in
+- Committed receipts are 12000.00 in each of weeks 1, 4, 7, 10 and 13, and zero in
   all other weeks. Each is a separate supported invoice and collection date.
-- Contractual supplier payments: 4000.00 in every week, including week 13.
-- Pipeline receipt: 5000.00 in week 6, supported only by a sales estimate.
+- Contractual supplier payments are 4000.00 in every week, including week 13.
+- The pipeline receipt is 5000.00 in week 6, supported only by a sales estimate.
   Exclude it from both requested cases and show it separately as uncommitted.
 - The stress case moves the first invoice only. The separate week 4 invoice
   remains receivable that week. Do not duplicate or remove either receipt.
@@ -48,7 +48,7 @@ not prevent the requested forecast from the complete committed schedule.
 - Produce 13 rows, with each opening equal to the previous closing balance.
 - Base closing balances are 18000.00, 14000.00 and 10000.00, repeating for
   weeks 1 to 12, then 18000.00 in week 13. The base trough is 10000.00 in
-  weeks 3, 6, 9 and 12; there is no negative week.
+  weeks 3, 6, 9 and 12. There is no negative week.
 - Stress closings start 6000.00, 2000.00 and -2000.00. Week 4 receives
   24000.00 and closes at 18000.00. Later weeks match the base case.
 - The stress trough and first negative closing balance occur in week 3 at

@@ -21,19 +21,19 @@ action. State whether the whole close can be handed over as complete.
 
 ## Synthetic inputs
 
-- Period: August 2026; AUD; accrual basis; all tracking and accounts included.
-- Source manifest M-A: fabricated post-journal TB-B, bank reconciliation
+- The period is August 2026, in AUD on an accrual basis, with all tracking and accounts included.
+- Source manifest M-A lists fabricated post-journal TB-B, bank reconciliation
   BR-A, aged receivables AR-A, aged payables AP-A and prepayment schedule PP-A,
   each captured on 1 September 2026. No later journals are reported.
-- Bank: statement 12500.00, outstanding deposit 500.00 and unpresented
-  payment 800.00; TB-B cash 12200.00. Both reconciling items originated in
+- The bank statement is 12500.00, with an outstanding deposit of 500.00 and an unpresented
+  payment of 800.00. TB-B cash is 12200.00. Both reconciling items originated in
   August and have support, but clearance after month end is not evidenced.
-- Receivables: TB-B 9000.00; AR-A 8750.00. The source metadata agrees.
+- Receivables are 9000.00 in TB-B and 8750.00 in AR-A. The source metadata agrees.
   No evidence explains the difference.
-- Payables: TB-B 6000.00; AP-A 6000.00, both supplied as positive balances.
-- Prepayments: opening 1200.00, additions 600.00, expense release 300.00;
+- Payables are 6000.00 in TB-B and 6000.00 in AP-A, both supplied as positive balances.
+- Prepayments have an opening of 1200.00, additions of 600.00 and an expense release of 300.00.
   PP-A closing 1500.00 and TB-B prepayments 1500.00.
-- Supplied readiness summary: READY; controls not run: bank_rec.
+- The supplied readiness summary says READY. The bank_rec control did not run.
   BR-A is a separate supported report, not a bank_rec.csv run by that tool.
 - The close preparer owns source follow-up; the authorised reviewer owns
   adjustments, professional decisions and final close approval.

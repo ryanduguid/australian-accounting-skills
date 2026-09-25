@@ -1,8 +1,9 @@
 # Primary source retrieval, 25 September 2026
 
-Refreshed the priority source records for BAS, month-end close, thirteen-week cash
-flow, STP finalisation, payroll review and WIP. Retrieval gaps now affect 5 skills,
-down from 10. All 4 existing flags for a source changed since human review remain.
+The two retrieval passes on 25 September left no recorded source retrieval
+failures, down from failures affecting 10 skills. All 4 existing flags for a
+source changed since human review remain. The first pass covered BAS, month-end
+close, thirteen-week cash flow, STP finalisation, payroll review and WIP.
 
 This is machine retrieval evidence. The source titles, URLs, facts, periods and
 `checked_at` dates are unchanged. Under `AGENTS.md`, only a person can advance a
@@ -10,6 +11,10 @@ human review date. A successful retrieval does not approve a workflow or establi
 that its interpretation is current.
 
 ## Retrieval method and results
+
+Each digest covers the captured page or instrument as a whole. This table records
+retrieval, not a legal proposition. Provision-specific facts and locators remain
+in the corresponding skill's `sources.json` file.
 
 The existing `scripts/source_refresh.py --skill bas-preparation --write` command
 retrieved all 5 BAS pages. Their readable-text digests were unchanged. The
@@ -40,8 +45,8 @@ the source before relying on it.
 
 ## First-pass review work
 
-`coverage.json` was regenerated from the source records. The five remaining skills
-with retrieval gaps are outside this priority set. Human review remains pending for
+After the first pass, `coverage.json` still showed five skills with retrieval gaps
+outside that priority set. The follow-up below retrieved those sources. Human review remains pending for
 the changed sources in `bas-preparation`, `au-gst-registration-review`,
 `au-partnership-tax` and `au-return-amendment`.
 
