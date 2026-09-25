@@ -28,10 +28,15 @@ EXPECTED_SUPPORT = {
     "tests/test_validation_pack.py",
 }
 # A recorded run: YYYY-MM-DD-<slug>.json under validation/results/. Any number
-# may exist; each must be tracked and must hold only a pass or fail per card.
+# may exist; each must be tracked. Version 2 also records trial provenance.
 RESULT_FILE_RE = re.compile(r"^validation/results/(\d{4}-\d{2}-\d{2})-[a-z0-9]+(?:-[a-z0-9]+)*\.json$")
 RESULT_KEYS = ("model", "run_date", "skills_version", "runner", "results")
+RESULT_V2_KEYS = (*RESULT_KEYS, "schema_version", "input_mode", "status", "provenance")
 RESULT_VERDICTS = ("pass", "fail")
+RESULT_STATUSES = ("prepared", "observed", "confirmed")
+RESULT_INPUT_MODES = ("task-only", "whole-card")
+RESULT_DIGESTS = ("input_sha256", "context_sha256", "rubric_sha256")
+SHA256_PATTERN = r"[0-9a-f]{64}"
 # One line each and short: room for a model name or a version, not for a
 # pasted output or a note on why a case failed.
 RESULT_FIELD_MAX_LENGTH = 120
@@ -382,6 +387,44 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
         raise ValidationError(
             f"results schema verdict enum must be exactly {', '.join(RESULT_VERDICTS)}, got {verdicts}"
         )
+    try:
+        properties = schema["properties"]
+        assert set(properties) == set(RESULT_V2_KEYS)
+        assert properties["schema_version"] == {"const": 2, "type": "integer"}
+        assert properties["status"]["enum"] == list(RESULT_STATUSES)
+        assert properties["input_mode"]["enum"] == list(RESULT_INPUT_MODES)
+        evidence = properties["provenance"]["additionalProperties"]
+        assert schema["additionalProperties"] is False
+        assert schema["required"] == list(RESULT_KEYS)
+        assert evidence["additionalProperties"] is False
+        assert properties["provenance"]["minProperties"] == 1
+        assert properties["provenance"]["propertyNames"] == {"$ref": "#/properties/results/propertyNames"}
+        assert evidence["required"] == list(RESULT_DIGESTS)
+        assert set(evidence["properties"]) == {*RESULT_DIGESTS, "output_sha256"}
+        assert all(item == {"type": "string", "pattern": f"^{SHA256_PATTERN}$", "minLength": 64,
+                            "maxLength": 64} for item in evidence["properties"].values())
+        rules, = schema["allOf"]
+        assert rules["if"] == {"required": ["schema_version"]}
+        assert rules["then"]["required"] == ["input_mode", "status", "provenance"]
+        verdict_rule, output_rule = rules["then"]["allOf"]
+        assert verdict_rule == {
+            "if": {"properties": {"status": {"const": "confirmed"}}},
+            "then": {"properties": {"results": {"minProperties": 1}}},
+            "else": {"properties": {"results": {"maxProperties": 0}}},
+        }
+        assert output_rule == {
+            "if": {"properties": {"status": {"const": "prepared"}}},
+            "then": {"properties": {"provenance": {"additionalProperties": {
+                "not": {"required": ["output_sha256"]}}}}},
+            "else": {"properties": {"provenance": {"additionalProperties": {
+                "required": ["output_sha256"]}}}},
+        }
+        assert rules["else"] == {
+            "not": {"anyOf": [{"required": [key]} for key in ("input_mode", "status", "provenance")]},
+            "properties": {"results": {"minProperties": 1}},
+        }
+    except (AssertionError, KeyError, TypeError, ValueError) as error:
+        raise ValidationError("results schema version 2 provenance contract has changed") from error
 
 
 def check_published_inventories(skills: set[str], root: Path = ROOT) -> None:
@@ -418,15 +461,17 @@ def check_published_inventories(skills: set[str], root: Path = ROOT) -> None:
             )
 
 
-def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> None:
-    """A run records a pass or fail per card and nothing else."""
+def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> str:
+    """Validate a legacy result or a versioned trial without publishing raw evidence."""
     match = RESULT_FILE_RE.match(rel)
     if match is None:
         raise ValidationError("result file name must be YYYY-MM-DD-<slug>.json")
     data = _strict_json(text, rel)
-    if not isinstance(data, dict) or sorted(data) != sorted(RESULT_KEYS):
+    version_two = isinstance(data, dict) and "schema_version" in data
+    keys = RESULT_V2_KEYS if version_two else RESULT_KEYS
+    if not isinstance(data, dict) or sorted(data) != sorted(keys):
         raise ValidationError(
-            f"result keys must be exactly {', '.join(RESULT_KEYS)}; "
+            f"result keys must be exactly {', '.join(keys)}; "
             "prompts, outputs and transcripts do not belong in a result file"
         )
     for key in ("model", "run_date", "skills_version", "runner"):
@@ -445,7 +490,32 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
     if run_date.isoformat() != match.group(1):
         raise ValidationError("run_date must match the file name")
     results = data["results"]
-    if not isinstance(results, dict) or not results:
+    status = "legacy"
+    if version_two:
+        if type(data["schema_version"]) is not int or data["schema_version"] != 2:
+            raise ValidationError("schema_version must be 2")
+        if data["input_mode"] not in RESULT_INPUT_MODES or data["status"] not in RESULT_STATUSES:
+            raise ValidationError("unknown trial input_mode or status")
+        status = data["status"]
+        provenance = data["provenance"]
+        if not isinstance(provenance, dict) or not provenance:
+            raise ValidationError("provenance must identify at least one case")
+        digest_keys = set(RESULT_DIGESTS)
+        if status != "prepared":
+            digest_keys.add("output_sha256")
+        for case, evidence in provenance.items():
+            if case not in known:
+                raise ValidationError(f"unknown case: {case!r}")
+            if not isinstance(evidence, dict) or set(evidence) != digest_keys:
+                raise ValidationError(f"{case}: provenance fields do not match trial status")
+            if any(not isinstance(value, str) or re.fullmatch(SHA256_PATTERN, value) is None
+                   for value in evidence.values()):
+                raise ValidationError(f"{case}: provenance must contain lower-case SHA-256 digests")
+        if status != "confirmed" and results != {}:
+            raise ValidationError("only human-confirmed trials may contain verdicts")
+        if status == "confirmed" and (not isinstance(results, dict) or set(results) != set(provenance)):
+            raise ValidationError("confirmed verdicts must cover exactly the provenance cases")
+    if not isinstance(results, dict) or (status in ("legacy", "confirmed") and not results):
         raise ValidationError("results must map at least one card id to a verdict")
     # A card can only appear once: _strict_json rejects a repeated key.
     for case, verdict in results.items():
@@ -457,6 +527,7 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
     # free-text fields are where an identifier or a pasted output would land.
     for key in ("model", "skills_version", "runner"):
         check_sensitive_content(data[key])
+    return status
 
 
 def check_text(relative_path: str, text: str) -> None:
@@ -572,12 +643,13 @@ def main(root: Path = ROOT) -> int:
             check_results_schema(schema_text, known)
         except ValidationError as error:
             errors.append(f"validation/results.schema.json: {error}")
+    result_counts = dict.fromkeys(("legacy", *RESULT_STATUSES), 0)
     for rel in sorted(result_files):
         text = read_sources.get(rel)
         if text is None:
             continue
         try:
-            check_result_file(rel, text, known)
+            result_counts[check_result_file(rel, text, known)] += 1
         except ValidationError as error:
             errors.append(f"{rel}: {error}")
 
@@ -595,7 +667,8 @@ def main(root: Path = ROOT) -> int:
     print(
         "Validation pack checks passed: "
         f"{len(case_names)} fabricated cards, "
-        f"{len(discovered_skills)} skills, {len(result_files)} recorded runs, "
+        f"{len(discovered_skills)} skills, {len(result_files)} result records "
+        f"({', '.join(f'{key}={value}' for key, value in result_counts.items())}), "
         "exact tracked inventory."
     )
     return 0

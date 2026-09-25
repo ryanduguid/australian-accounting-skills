@@ -91,22 +91,11 @@ def build_fixture(root: Path, cards: int = 6) -> None:
 
     identifiers = sorted(path.stem for path in chosen)
     write(root / "validation" / "README.md", "# Fixture validation pack\n")
+    schema = json.loads(validator.read_utf8(REPOSITORY / "validation" / "results.schema.json"))
+    schema["properties"]["results"]["propertyNames"]["enum"] = identifiers
     write(
         root / "validation" / "results.schema.json",
-        json.dumps(
-            {
-                "properties": {
-                    "results": {
-                        "propertyNames": {"enum": identifiers},
-                        "additionalProperties": {
-                            "enum": list(validator.RESULT_VERDICTS)
-                        },
-                    }
-                }
-            },
-            indent=2,
-        )
-        + "\n",
+        json.dumps(schema, indent=2) + "\n",
     )
     write(
         root / "validation" / "results" / "2026-01-31-fixture.json",
@@ -593,6 +582,66 @@ class RecordedRunTests(unittest.TestCase):
     )
     NAME = "validation/results/2026-01-31-example-model.json"
 
+    def version_two(self, status: str = "prepared") -> dict:
+        data = json.loads(self.GOOD)
+        data.update(schema_version=2, input_mode="task-only", status=status,
+                    provenance={"bas-g10-g11": {
+                        "input_sha256": "a" * 64, "context_sha256": "b" * 64,
+                        "rubric_sha256": "c" * 64}})
+        if status != "prepared":
+            data["provenance"]["bas-g10-g11"]["output_sha256"] = "d" * 64
+        if status != "confirmed":
+            data["results"] = {}
+        return data
+
+    def test_version_two_keeps_preparation_observation_and_confirmation_distinct(self) -> None:
+        for status in ("prepared", "observed", "confirmed"):
+            with self.subTest(status=status):
+                data = self.version_two(status)
+                self.assertEqual(validator.check_result_file(self.NAME, json.dumps(data)), status)
+                data["input_mode"] = "whole-card"
+                self.assertEqual(validator.check_result_file(self.NAME, json.dumps(data)), status)
+
+    def test_version_two_refuses_incomplete_or_mislabelled_evidence(self) -> None:
+        changes = [
+            ("schema_version", True), ("schema_version", 3), ("status", "passed"),
+            ("input_mode", "unknown"), ("provenance", {}), ("provenance", []),
+            ("results", {"bas-g10-g11": "pass"}),
+        ]
+        for key, value in changes:
+            data = self.version_two()
+            data[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(validator.ValidationError):
+                validator.check_result_file(self.NAME, json.dumps(data))
+        for status in ("prepared", "observed", "confirmed"):
+            for key in ("schema_version", "input_mode", "status", "provenance"):
+                data = self.version_two(status)
+                del data[key]
+                with self.subTest(status=status, missing=key), self.assertRaises(validator.ValidationError):
+                    validator.check_result_file(self.NAME, json.dumps(data))
+        for value in ("", "A" * 64, "a" * 63, "a" * 65, None, 1, {}, "a" * 64 + "\n"):
+            data = self.version_two()
+            data["provenance"]["bas-g10-g11"]["input_sha256"] = value
+            with self.subTest(digest=value), self.assertRaises(validator.ValidationError):
+                validator.check_result_file(self.NAME, json.dumps(data))
+        for status in ("prepared", "observed", "confirmed"):
+            data = self.version_two(status)
+            evidence = data["provenance"]["bas-g10-g11"]
+            if status == "prepared":
+                evidence["output_sha256"] = "d" * 64
+            else:
+                del evidence["output_sha256"]
+            with self.subTest(status=status), self.assertRaises(validator.ValidationError):
+                validator.check_result_file(self.NAME, json.dumps(data))
+        data = self.version_two("confirmed")
+        data["results"] = {"coal-lsl-levy-unverified-rate": "pass"}
+        with self.assertRaises(validator.ValidationError):
+            validator.check_result_file(self.NAME, json.dumps(data))
+        data = self.version_two()
+        data["provenance"]["unknown"] = data["provenance"].pop("bas-g10-g11")
+        with self.assertRaises(validator.ValidationError):
+            validator.check_result_file(self.NAME, json.dumps(data))
+
     def test_accepts_a_minimal_run(self) -> None:
         validator.check_result_file(self.NAME, self.GOOD)
 
@@ -643,6 +692,15 @@ class RecordedRunTests(unittest.TestCase):
             validator.check_results_schema(schema.replace('"bas-g10-g11",\n', '5,\n'))
         with self.assertRaisesRegex(validator.ValidationError, "verdict enum"):
             validator.check_results_schema(schema.replace('"pass",', '"PASS",'))
+
+    def test_schema_cannot_loosen_the_trial_stage_contract(self) -> None:
+        text = validator.read_utf8(REPOSITORY / "validation/results.schema.json")
+        for before, after in (('"maxProperties": 0', '"maxProperties": 1'),
+                              ('"const": "confirmed"', '"const": "observed"'),
+                              ('"minLength": 64', '"minLength": 63'),
+                              ('"task-only"', '"unknown"')):
+            with self.subTest(before=before), self.assertRaises(validator.ValidationError):
+                validator.check_results_schema(text.replace(before, after))
 
     def test_inventory_splits_runs_from_the_fixed_set(self) -> None:
         fixed, runs = validator.split_result_files({
@@ -704,6 +762,21 @@ class FullRunTests(unittest.TestCase):
         status, output = self.run_main(self.copy())
         self.assertEqual(status, 0, output)
         self.assertIn("Validation pack checks passed", output)
+
+    def test_prepared_records_are_reported_separately_without_verdicts(self) -> None:
+        root = self.copy()
+        case = self.cards(root)[0].stem
+        data = RecordedRunTests().version_two()
+        data["provenance"][case] = data["provenance"].pop("bas-g10-g11")
+        path = root / "validation/results/2026-01-31-prepared.json"
+        write(path, json.dumps(data) + "\n")
+        git(root, "add", str(path))
+        status, output = self.run_main(root)
+        self.assertEqual(status, 0, output)
+        self.assertIn("legacy=1, prepared=1, observed=0, confirmed=0", output)
+        data["results"] = {case: "pass"}
+        write(path, json.dumps(data) + "\n")
+        self.assert_refused(root, "only human-confirmed trials may contain verdicts")
 
     def test_extra_skill_directory_entries_are_not_skills(self) -> None:
         """A loose file or a folder without SKILL.md is skipped, not installed."""

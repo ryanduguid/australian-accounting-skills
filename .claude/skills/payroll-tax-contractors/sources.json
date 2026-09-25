@@ -9,11 +9,11 @@
       "fact": "The relevant-contract and exemption tests must be read from the in-force Act for NSW and must not be projected into another jurisdiction.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "8016657ccddd6931f71f371aed47ed16c3ec160ffdeace1addda1b8d58a27736",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "Revenue NSW contractors and payroll tax",
@@ -35,11 +35,11 @@
       "fact": "Wholly NSW services use subsection (1)(a); the conditional interstate hierarchy is subsection (1)(b). Wholly overseas services and months without services have separate rules.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "8016657ccddd6931f71f371aed47ed16c3ec160ffdeace1addda1b8d58a27736",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "Payroll Tax Act 2007 (NSW), section 32",
@@ -48,11 +48,11 @@
       "fact": "Subsection (2)(d) covers vehicle-supplied goods conveyance. It has no insurance-procurement or door-to-door-sales subparagraphs.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "8016657ccddd6931f71f371aed47ed16c3ec160ffdeace1addda1b8d58a27736",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     }
   ]
 }

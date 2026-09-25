@@ -9,11 +9,11 @@
       "fact": "Section 12A provides the NSW retention-money trust head power; coverage and action conclusions remain with a qualified human.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "e641988ac70bc2068fc9b355c3a0de11259943ac469567568ab05b027b69c196",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "Building and Construction Industry Security of Payment Regulation 2020 (NSW)",
@@ -22,11 +22,11 @@
       "fact": "Part 2 controls the current NSW trust trigger, account, deposit, withdrawal, notice and record requirements.",
       "volatile": true,
       "final_url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/sl-2020-0504",
-      "http_status": 403,
-      "fetched_at": "2026-09-16",
-      "content_hash": "",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "1eebc91163117f00141762f3092c69cae155d68db2af8f301678306c8d9a13ae",
       "source_last_modified": "",
-      "content_hash_covers": ""
+      "content_hash_covers": "html"
     },
     {
       "title": "Queensland retention trust account duties, compilation from 28 May 2026",

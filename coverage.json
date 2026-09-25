@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date scripts/source_refresh.py last retrieved it, and never stands in for a review.",
+  "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand: tests/test_coverage_matrix.py rebuilds this file and fails on any difference. 'reviewed' is the date a person last read the source; 'fetched' is the date of the latest recorded retrieval attempt, and never stands in for a review.",
   "totals": {
     "skills": 61,
     "sources_indexed": 123,
     "skills_source_exempt": 7,
-    "skills_with_unreachable_sources": 10,
+    "skills_with_unreachable_sources": 0,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 17,
     "skills_with_only_the_seeded_case": 37
@@ -576,8 +576,8 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-09-08",
-        "fetched": "2026-09-16",
-        "unreachable": 1,
+        "fetched": "2026-09-25",
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -602,7 +602,7 @@
         "exempt": false,
         "reviewed": "2026-09-24",
         "fetched": "2026-09-24",
-        "unreachable": 2,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -987,7 +987,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "2026-08-14",
-        "fetched": "2026-09-16",
+        "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": [
           "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works"
@@ -1019,13 +1019,14 @@
         "exempt": false,
         "reviewed": "2026-08-20",
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "cashflow-super-regime-transition"
+          "cashflow-super-regime-transition",
+          "cashflow-supported-roll-forward"
         ],
         "only_seeded_case": false
       },
@@ -1259,12 +1260,13 @@
         "exempt": false,
         "reviewed": "2026-08-20",
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
+          "month-end-supported-partial-close",
           "post-journal-provenance-tie-out",
           "stp-current-vs-overdue-sg"
         ],
@@ -1287,7 +1289,7 @@
         "exempt": false,
         "reviewed": "2026-08-28",
         "fetched": "2026-09-16",
-        "unreachable": 3,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1315,7 +1317,7 @@
         "exempt": false,
         "reviewed": "2026-08-28",
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1342,7 +1344,7 @@
         "exempt": false,
         "reviewed": "2026-08-15",
         "fetched": "2026-09-16",
-        "unreachable": 2,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1370,7 +1372,7 @@
         "exempt": false,
         "reviewed": "2026-08-15",
         "fetched": "2026-09-16",
-        "unreachable": 2,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1398,7 +1400,7 @@
         "exempt": false,
         "reviewed": "2026-08-20",
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1452,7 +1454,7 @@
         "exempt": false,
         "reviewed": "2026-08-28",
         "fetched": "2026-09-25",
-        "unreachable": 2,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {

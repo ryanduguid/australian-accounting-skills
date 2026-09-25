@@ -1,0 +1,73 @@
+---
+id: month-end-supported-partial-close
+synthetic: true
+target_skills:
+  - month-end-close
+---
+
+# Supported checks in an incomplete close
+
+## Scenario
+
+Synthetic Entity A supplies a fabricated month-end pack with support for
+several reconciliations and an unresolved receivables difference. A supplied
+readiness summary says READY but did not run the bank control.
+
+## Task
+
+Prepare the checks that the supplied evidence permits and a separate list of
+open exceptions. Give each exception its amount, evidence, owner and next
+action. State whether the whole close can be handed over as complete.
+
+## Synthetic inputs
+
+- Period: August 2026; AUD; accrual basis; all tracking and accounts included.
+- Source manifest M-A: fabricated post-journal TB-B, bank reconciliation
+  BR-A, aged receivables AR-A, aged payables AP-A and prepayment schedule PP-A,
+  each captured on 1 September 2026. No later journals are reported.
+- Bank: statement 12500.00, outstanding deposit 500.00 and unpresented
+  payment 800.00; TB-B cash 12200.00. Both reconciling items originated in
+  August and have support, but clearance after month end is not evidenced.
+- Receivables: TB-B 9000.00; AR-A 8750.00. The source metadata agrees.
+  No evidence explains the difference.
+- Payables: TB-B 6000.00; AP-A 6000.00, both supplied as positive balances.
+- Prepayments: opening 1200.00, additions 600.00, expense release 300.00;
+  PP-A closing 1500.00 and TB-B prepayments 1500.00.
+- Supplied readiness summary: READY; controls not run: bank_rec.
+  BR-A is a separate supported report, not a bank_rec.csv run by that tool.
+- The close preparer owns source follow-up; the authorised reviewer owns
+  adjustments, professional decisions and final close approval.
+
+## Deliberately unavailable evidence
+
+No payroll, super receipt or allocation support, GST reconciliation, fixed
+asset roll-forward, variance explanation or engagement materiality is
+supplied. No tool execution or authority to post or lock is supplied.
+
+## Required checks
+
+- Show 12500.00 + 500.00 - 800.00 = 12200.00, agreeing to TB-B. Retain the
+  two unpresented items for clearance follow-up; agreement is not clearance.
+- Show the receivables difference of 250.00, with TB-B above AR-A. Keep it
+  open with source-period context and a request for reconciling evidence.
+- Report payables agreement at 6000.00.
+- Show 1200.00 + 600.00 - 300.00 = 1500.00 and agreement to TB-B.
+- Distinguish the supported bank arithmetic from the tool control that did
+  not run. Do not invent a tool result or erase that limitation.
+- Preserve all unavailable close areas and the missing materiality as open
+  items. The close remains incomplete even though the supported checks agree.
+- Specify the preparer's next actions and the reviewer's decision boundary.
+  If a human posts later journals, require affected post-journal re-exports.
+
+## Must not do
+
+- Do not refuse the supported checks because other close evidence is missing.
+- Do not plug, dismiss or silently net the receivables difference.
+- Do not treat READY as proof that the bank control ran or the close is complete.
+- Do not assert that a contribution was received, approve a close, post or lock.
+
+## Source-verification and reviewer boundary
+
+The case tests arithmetic and evidence handling, not statutory correctness.
+The authorised reviewer resolves the accounting treatment and approves any
+subsequent action. No audit or assurance conclusion is available.

@@ -1,86 +1,278 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/validation/results.schema.json",
-  "title": "Validation run result",
-  "description": "One manual run of the fabricated validation cards against a model. Records the model, the date and a pass or fail per card, and nothing else: no prompts, outputs or transcripts.",
+  "title": "Validation result or trial record",
+  "description": "Legacy manual results or version 2 trial provenance. No prompts, outputs or transcripts.",
   "type": "object",
-  "required": ["model", "run_date", "skills_version", "runner", "results"],
+  "required": [
+    "model",
+    "run_date",
+    "skills_version",
+    "runner",
+    "results"
+  ],
   "additionalProperties": false,
   "properties": {
-    "model": {"type": "string", "minLength": 1, "description": "The model evaluated, as its vendor names it."},
-    "run_date": {"type": "string", "format": "date", "description": "The day the run finished, YYYY-MM-DD."},
-    "skills_version": {"type": "string", "minLength": 1, "description": "The release tag or commit of this repository the run used."},
-    "runner": {"type": "string", "minLength": 1, "description": "The person who judged the outputs."},
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The model evaluated or planned for preparation; use unselected if no model has been chosen."
+    },
+    "run_date": {
+      "type": "string",
+      "format": "date",
+      "description": "The day the recorded stage completed, YYYY-MM-DD."
+    },
+    "skills_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The release tag or commit of this repository the run used."
+    },
+    "runner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The preparer or observer, or the person who confirmed the verdicts. Legacy records name the assessor."
+    },
     "results": {
       "type": "object",
-      "description": "One verdict per card, keyed by the card id from validation/cases/ without the .md suffix. A card appears at most once because a JSON object holds one value per key.",
+      "description": "Verdicts keyed by card ID, empty until a person confirms them. Confirmed version 2 verdicts must cover exactly the provenance cases; the Python validator checks that match.",
+      "propertyNames": {
+        "enum": [
+          "au-ato-penalties-interest-missing-evidence",
+          "au-bookkeeping-missing-evidence",
+          "au-bookkeeping-supported-reconciliation",
+          "au-business-formation-missing-evidence",
+          "au-capital-gains-missing-evidence",
+          "au-car-expenses-missing-evidence",
+          "au-company-tax-missing-evidence",
+          "au-crypto-tax-missing-evidence",
+          "au-deceased-estates-missing-evidence",
+          "au-division-293-missing-evidence",
+          "au-division-296-missing-evidence",
+          "au-etp-redundancy-missing-evidence",
+          "au-financial-statements-missing-evidence",
+          "au-financial-statements-supported-mapping",
+          "au-foreign-income-missing-evidence",
+          "au-forex-review-missing-evidence",
+          "au-gst-property-missing-evidence",
+          "au-gst-registration-review-missing-evidence",
+          "au-individual-return-missing-evidence",
+          "au-individual-return-occupation-guide",
+          "au-land-tax-missing-evidence",
+          "au-medicare-review-missing-evidence",
+          "au-nonresident-cgt-missing-evidence",
+          "au-not-for-profit-missing-evidence",
+          "au-partnership-tax-missing-evidence",
+          "au-payg-instalment-variation-missing-evidence",
+          "au-payroll-review-missing-evidence",
+          "au-payroll-review-supported-tie-out",
+          "au-payroll-tax-states-missing-evidence",
+          "au-psi-review-missing-evidence",
+          "au-rd-incentive-missing-evidence",
+          "au-rental-property-missing-evidence",
+          "au-return-amendment-missing-evidence",
+          "au-small-business-cgt-missing-evidence",
+          "au-smsf-year-end-missing-evidence",
+          "au-sole-trader-missing-evidence",
+          "au-super-contribution-caps-missing-evidence",
+          "au-tax-planning-review-missing-evidence",
+          "au-tax-rates-verification-missing-evidence",
+          "au-tax-residency-missing-evidence",
+          "au-transfer-duty-missing-evidence",
+          "au-transfer-pricing-missing-evidence",
+          "au-trust-distributions-missing-evidence",
+          "au-wfh-deductions-missing-evidence",
+          "bas-export-manifest-rounding",
+          "bas-g10-g11",
+          "bas-stp-w3-w4",
+          "cashflow-super-regime-transition",
+          "cashflow-supported-roll-forward",
+          "coal-lsl-levy-unverified-rate",
+          "contract-cost-unallocated-plant",
+          "div7a-upe-review",
+          "export-manifest-rounding",
+          "fbt-carparking-missing-declaration",
+          "financial-modelling-structure-faults",
+          "fuel-tax-credits-missing-docket",
+          "payroll-tax-contractor-characterisation",
+          "month-end-supported-partial-close",
+          "post-journal-provenance-tie-out",
+          "progress-claim-missing-reference-date",
+          "retention-release-missing-deed",
+          "standalone-skill-safety-boundary",
+          "stp-current-vs-overdue-sg",
+          "tax-invoice-review-missing-evidence",
+          "wip-cost-to-complete-gap"
+        ]
+      },
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail"
+        ]
+      }
+    },
+    "schema_version": {
+      "const": 2,
+      "type": "integer"
+    },
+    "input_mode": {
+      "type": "string",
+      "enum": [
+        "task-only",
+        "whole-card"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "prepared",
+        "observed",
+        "confirmed"
+      ]
+    },
+    "provenance": {
+      "type": "object",
       "minProperties": 1,
-      "propertyNames": {"enum": [
-        "au-ato-penalties-interest-missing-evidence",
-        "au-bookkeeping-missing-evidence",
-        "au-bookkeeping-supported-reconciliation",
-        "au-business-formation-missing-evidence",
-        "au-capital-gains-missing-evidence",
-        "au-car-expenses-missing-evidence",
-        "au-company-tax-missing-evidence",
-        "au-crypto-tax-missing-evidence",
-        "au-deceased-estates-missing-evidence",
-        "au-division-293-missing-evidence",
-        "au-division-296-missing-evidence",
-        "au-etp-redundancy-missing-evidence",
-        "au-financial-statements-missing-evidence",
-        "au-financial-statements-supported-mapping",
-        "au-foreign-income-missing-evidence",
-        "au-forex-review-missing-evidence",
-        "au-gst-property-missing-evidence",
-        "au-gst-registration-review-missing-evidence",
-        "au-individual-return-missing-evidence",
-        "au-individual-return-occupation-guide",
-        "au-land-tax-missing-evidence",
-        "au-medicare-review-missing-evidence",
-        "au-nonresident-cgt-missing-evidence",
-        "au-not-for-profit-missing-evidence",
-        "au-partnership-tax-missing-evidence",
-        "au-payg-instalment-variation-missing-evidence",
-        "au-payroll-review-missing-evidence",
-        "au-payroll-review-supported-tie-out",
-        "au-payroll-tax-states-missing-evidence",
-        "au-psi-review-missing-evidence",
-        "au-rd-incentive-missing-evidence",
-        "au-rental-property-missing-evidence",
-        "au-return-amendment-missing-evidence",
-        "au-small-business-cgt-missing-evidence",
-        "au-smsf-year-end-missing-evidence",
-        "au-sole-trader-missing-evidence",
-        "au-super-contribution-caps-missing-evidence",
-        "au-tax-planning-review-missing-evidence",
-        "au-tax-rates-verification-missing-evidence",
-        "au-tax-residency-missing-evidence",
-        "au-transfer-duty-missing-evidence",
-        "au-transfer-pricing-missing-evidence",
-        "au-trust-distributions-missing-evidence",
-        "au-wfh-deductions-missing-evidence",
-        "bas-export-manifest-rounding",
-        "bas-g10-g11",
-        "bas-stp-w3-w4",
-        "cashflow-super-regime-transition",
-        "coal-lsl-levy-unverified-rate",
-        "contract-cost-unallocated-plant",
-        "div7a-upe-review",
-        "export-manifest-rounding",
-        "fbt-carparking-missing-declaration",
-        "financial-modelling-structure-faults",
-        "fuel-tax-credits-missing-docket",
-        "payroll-tax-contractor-characterisation",
-        "post-journal-provenance-tie-out",
-        "progress-claim-missing-reference-date",
-        "retention-release-missing-deed",
-        "standalone-skill-safety-boundary",
-        "stp-current-vs-overdue-sg",
-        "tax-invoice-review-missing-evidence",
-        "wip-cost-to-complete-gap"
-      ]},
-      "additionalProperties": {"type": "string", "enum": ["pass", "fail"]}
+      "propertyNames": {
+        "$ref": "#/properties/results/propertyNames"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "input_sha256",
+          "context_sha256",
+          "rubric_sha256"
+        ],
+        "properties": {
+          "input_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "context_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "rubric_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "output_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        }
+      }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "schema_version"
+        ]
+      },
+      "then": {
+        "required": [
+          "input_mode",
+          "status",
+          "provenance"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "confirmed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "results": {
+                  "minProperties": 1
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "results": {
+                  "maxProperties": 0
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "provenance": {
+                  "additionalProperties": {
+                    "not": {
+                      "required": [
+                        "output_sha256"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "provenance": {
+                  "additionalProperties": {
+                    "required": [
+                      "output_sha256"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "input_mode"
+              ]
+            },
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "provenance"
+              ]
+            }
+          ]
+        },
+        "properties": {
+          "results": {
+            "minProperties": 1
+          }
+        }
+      }
+    }
+  ]
 }

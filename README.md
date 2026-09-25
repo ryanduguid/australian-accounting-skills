@@ -21,7 +21,7 @@ npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-cod
 
 Clone once per project. To repeat or retry from that directory, rerun only the checkout and install commands.
 
-That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 63 [validation cards](validation/README.md). Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. The other 46 cards, including one for each of the 42 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 61 skills, and [coverage.json](coverage.json) gives the state of each skill.
+That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 65 [validation cards](validation/README.md). Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. The other 48 cards, including one for each of the 42 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 61 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 

@@ -22,9 +22,9 @@
       "fact": "Division 40 separates tax decline in value and effective-life choices from the management-accounting machine rate.",
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
-      "http_status": 0,
-      "fetched_at": "2026-09-16",
-      "content_hash": "903531afceffcd61f14e1a226ae53037f19060f2b9910d884f1b678dcf5b8ead",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "c58a4ffb243cca077bedac797c13ef816e3fa6c8d11a97de0c0fee3369baff91",
       "source_last_modified": "",
       "content_hash_covers": "html"
     }
