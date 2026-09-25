@@ -11,14 +11,7 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Install all 61 workflows from the plugin marketplace. This route delivers the `main` inventory, the 61-skill development set preparing v0.3.0, not a published release:
-
-```
-/plugin marketplace add ryanduguid/australian-accounting-skills
-/plugin install australian-accounting-skills@ryanduguid
-```
-
-To install the 19 workflows in the latest published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), clone that tag from a separate project directory instead:
+Start with the 19 workflows in the published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), by cloning that tag from a separate project directory:
 
 ```bash
 git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
@@ -39,6 +32,15 @@ An agent runtime is still required. Ask it to prepare the BAS workpaper from the
 <summary>Installation, worked example, skill catalogue and boundaries</summary>
 
 ## Runtime and release
+
+### Development installation
+
+Install all 61 workflows from the plugin marketplace. This route delivers the `main` inventory, the 61-skill development set preparing v0.3.0, not a published release:
+
+```
+/plugin marketplace add ryanduguid/australian-accounting-skills
+/plugin install australian-accounting-skills@ryanduguid
+```
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
