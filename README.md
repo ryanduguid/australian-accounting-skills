@@ -11,7 +11,7 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Start with the 19 workflows in the published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), by cloning that tag from a separate project directory:
+Start with the 19 workflows in the published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), by cloning that tag from a separate project directory.
 
 ```bash
 git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
@@ -35,7 +35,7 @@ An agent runtime is still required. Ask it to prepare the BAS workpaper from the
 
 ### Development installation
 
-Install all 61 workflows from the plugin marketplace. This route delivers the `main` inventory, the 61-skill development set preparing v0.3.0, not a published release:
+As at 25 September 2026, the default branch contains 61 workflows preparing v0.3.0. The plugin marketplace installs this development inventory. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
