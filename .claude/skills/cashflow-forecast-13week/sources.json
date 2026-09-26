@@ -53,6 +53,20 @@
       "content_hash": "907d2da12182f70dfb4b62f35591322c761b2e0427b67f75870c9781aec986c0",
       "source_last_modified": "",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "ATO: Denying deductions for ATO interest charges",
+      "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/deny-deductions-for-ato-interest-charges",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 8 June 2026). GIC and SIC incurred on or after 1 July 2025 are not deductible for income years starting on or after that date, whatever year the debt relates to, and a later remission of such an amount is not assessable. GIC or SIC incurred before 1 July 2025 remains deductible for 2024-25 and earlier years, and a later remission of a deducted amount is assessable. An entity with a substituted accounting period loses the deduction from its next accounting period starting after 1 July 2025. GIC on unpaid income tax is incurred daily; SIC is incurred in the year the amended assessment notice is served.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO summary of the law change. Confirm the provisions of the Treasury Laws Amendment (Tax Incentives and Integrity) Act 2025 for the period at use time.",
+      "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/deny-deductions-for-ato-interest-charges",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "3fd06e65651711c74e82e65a3bc5dca76d4f25bc6aaa74e6b5153c757490b17e",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-08"
     }
   ]
 }

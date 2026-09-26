@@ -17,14 +17,15 @@ Weekly cash view, 13 weeks out, rebuilt on actuals every week. The forecast's jo
 6. Known one-offs: capex, tax assessments, dividends/drawings
 7. Receipts and invoice history for the last 3 to 6 months, the source of actual days-to-pay by major customer
 8. Sales forecast or pipeline with expected invoice dates, if the owner wants expected receipts in the grid. Otherwise forecast committed receipts only
+9. Balances of any bank account the entity keeps aside for GST, PAYG withholding, super or PAYG instalments, if it keeps one
 
 ## Workflow
 
 1. **Frame the grid.** Weeks 1 to 13 as columns; receipts, payments (by category), net movement and closing balance as rows. Week 1 starts from confirmed available cash, never the ledger balance. For every week, closing cash = opening cash + receipts − payments, and the next week's opening cash must equal the prior closing cash. Show overdrafts, restricted cash and unavailable balances separately.
 2. **Receipts curve.** Spread aged AR into weeks using actual debtor behaviour (history of days-to-pay by major customer beats stated terms). Add forecast new sales receipts at the entity's realistic conversion lag. Separate 'committed' (invoiced) from 'expected' (pipeline), and shade confidence. With no pipeline input, the expected row stays empty and flagged as such, never estimated.
 3. **Payments.** Creditors by due date honouring critical suppliers first; payroll on its calendar with PAYG remitted on its cycle; super with each pay cycle per the supported payday-super timing control below; loan and rent on contract dates.
-4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgement cycle at ato.gov.au, since agent lodgement often shifts them). If ato.gov.au is unreachable from this session, stop and ask the user for the current dates, record them as 'per [name], [date], unverified', and flag them on the forecast. Never construct a citation from memory. GST collected is not the entity's money, and the forecast makes that visible by pairing strong sales weeks with their BAS week.
-5. **Stress the trough.** Identify the minimum closing balance week. Test it: receipts one week late, largest debtor pays late, no pipeline receipts. If the stressed trough goes negative, list the levers (invoice earlier, terms, financing, deferral requests) as options for the owner, not decisions.
+4. **ATO timing.** BAS/IAS payments in their due weeks (verify current due dates for the lodgement cycle at ato.gov.au, since agent lodgement often shifts them). If ato.gov.au is unreachable from this session, stop and ask the user for the current dates, record them as 'per [name], [date], unverified', and flag them on the forecast. Never construct a citation from memory. GST collected is not the entity's money, and the forecast makes that visible by pairing strong sales weeks with their BAS week. Where the entity keeps a tax set-aside account, compare its balance each week with the GST, PAYG withholding, super and PAYG instalment amounts it is meant to cover, and show any shortfall as its own line.
+5. **Stress the trough.** Identify the minimum closing balance week. Test it: receipts one week late, largest debtor pays late, no pipeline receipts. If the stressed trough goes negative, list the levers (invoice earlier, terms, financing, deferral requests, an ATO payment plan) as options for the owner, not decisions. Show an ATO payment plan's general interest charge as a cost of that option, and check the ATO page on [denying deductions for ATO interest charges](https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/deny-deductions-for-ato-interest-charges) before treating the charge as deductible; the page says GIC and SIC incurred on or after 1 July 2025 are not.
 6. **Weekly cadence.** Each week: replace forecast with actuals, note variance per line, push the horizon one week out, and record *why* the misses missed. The assumptions log is what makes week 10's forecast better than week 1's.
 
 ## Payday Super timing control
@@ -64,6 +65,7 @@ The 13-week grid, a dated assumptions log, and a narrative stating the base and 
 - Week 1 agrees to supported available cash; overdrafts and restricted cash remain separate
 - Committed and pipeline receipts remain separate in the base and stress cases
 - Each tax and payroll payment has an amount, date source, payment-plan status and confidence level
+- Any tax set-aside balance is compared with the obligations it covers, and a shortfall is shown rather than netted
 - The base and stress troughs state the assumptions that produce them
 
 ## Boundaries
