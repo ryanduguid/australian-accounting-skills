@@ -14,6 +14,34 @@
       "content_hash": "feaeb9002e454e728f051fa7de16c97b17c859474b0770aa7ce8059b0ddf2017",
       "source_last_modified": "",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "ATO: Tax reform, reforming negative gearing and capital gains tax",
+      "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/individuals/tax-reform-boosting-home-ownership-reforming-negative-gearing-and-capital-gains-tax",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 29 June 2026). States the measures are law and apply from 1 July 2027: negative gearing for residential property investments is limited to new builds, and the 50% CGT discount for individuals, trusts and partnerships is replaced by cost base indexation and a 30% minimum tax rate on capital gains. Properties held at 7:30 pm AEST on 12 May 2026 are exempt from the negative gearing change, and the CGT reforms apply only to gains accruing after 1 July 2027.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO summary. Apply the Act's provisions and application rules, not this page.",
+      "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/individuals/tax-reform-boosting-home-ownership-reforming-negative-gearing-and-capital-gains-tax",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "6e6d1f7ba1b206951a61e8deac6c68eb6b6ac844f9b875a64ce152cbea183f7a",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-29"
+    },
+    {
+      "title": "Treasury Laws Amendment (Tax Reform No. 1) Act 2026",
+      "url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 through the Federal Register API (C2026A00049, made 26 June 2026). Schedule 1 inserts cost base indexation for individuals and trusts for CGT events on or after 1 July 2027 (s 110-36(1A)) and Division 119, a minimum rate of tax on capital gains. Schedule 2 inserts s 26-155, which quarantines deductions for residential dwellings used as residential accommodation, with exceptions including a dwelling last acquired before 7.30 pm (ACT legal time) on 12 May 2026 and a new residential dwelling.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "As-made text. Read the application provisions and the ITAA 1997 compilation for the period.",
+      "final_url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "4cf8f8cd62a936ad90fc09f79da626d942e75d83586ef1abfb2d387aeca6b2fc",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
     }
   ]
 }

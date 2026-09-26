@@ -14,6 +14,20 @@
       "content_hash": "1ac2a4458807bba7407691015d53b6f0bfed3400a13b428ac4f908b1b6dd8472",
       "source_last_modified": "2025-07-25",
       "content_hash_covers": "bytes"
+    },
+    {
+      "title": "ATO: Tax reform, introducing a minimum tax on discretionary trusts",
+      "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 3 September 2026). States the measure is not yet law: a 30% minimum tax on discretionary trusts from 1 July 2028 at the trustee level, with a non-refundable credit for non-corporate presently entitled beneficiaries, and a 3-year restructure rollover available from 1 July 2027. Treasury consulted on exposure draft legislation from 3 to 18 September 2026.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Announced measure, not law when read. Check its current status before relying on it.",
+      "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "ad20d47f139d3924af4851302aebc82bdb52c7e795df232c9337389fdfd6b2ce",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-03"
     }
   ]
 }
