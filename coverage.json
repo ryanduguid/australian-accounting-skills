@@ -2,19 +2,43 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 61,
-    "sources_indexed": 123,
+    "skills": 62,
+    "sources_indexed": 143,
     "skills_source_exempt": 7,
-    "skills_with_unreachable_sources": 0,
+    "skills_with_unreachable_sources": 3,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 17,
-    "skills_with_only_the_seeded_case": 37
+    "skills_with_only_the_seeded_case": 36
   },
   "skills": [
     {
+      "skill": "au-aml-ctf-client-coverage",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "2026-09-26",
+        "fetched": "2026-09-26",
+        "unreachable": 5,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-aml-ctf-client-coverage-missing-evidence"
+        ],
+        "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": [
+          "verify_skills_cli.py"
+        ]
+      }
+    },
+    {
       "skill": "au-ato-penalties-interest",
       "sources": {
-        "indexed": 4,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-09-24",
         "fetched": "2026-09-24",
@@ -22,11 +46,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-ato-penalties-interest-deductibility-split",
           "au-ato-penalties-interest-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -87,7 +112,7 @@
     {
       "skill": "au-capital-gains",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-16",
@@ -135,7 +160,7 @@
     {
       "skill": "au-company-tax",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-16",
@@ -573,7 +598,7 @@
     {
       "skill": "au-payroll-review",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-25",
@@ -581,9 +606,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-payroll-review-missing-evidence",
+          "au-payroll-review-pay-item-settings",
           "au-payroll-review-supported-tie-out"
         ],
         "only_seeded_case": false
@@ -646,7 +672,7 @@
     {
       "skill": "au-rd-incentive",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-16",
@@ -670,7 +696,7 @@
     {
       "skill": "au-rental-property",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-16",
@@ -936,7 +962,7 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-08",
         "fetched": "2026-09-16",
@@ -1015,7 +1041,7 @@
     {
       "skill": "cashflow-forecast-13week",
       "sources": {
-        "indexed": 4,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-08-20",
         "fetched": "2026-09-16",
@@ -1256,16 +1282,17 @@
     {
       "skill": "month-end-close",
       "sources": {
-        "indexed": 4,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-08-20",
         "fetched": "2026-09-16",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
+          "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
           "post-journal-provenance-tie-out",
           "stp-current-vs-overdue-sg"
@@ -1426,19 +1453,20 @@
     {
       "skill": "tax-invoice-review",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-24",
         "fetched": "2026-09-24",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "month-end-supplier-bank-detail-change",
           "tax-invoice-review-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],

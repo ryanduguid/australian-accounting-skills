@@ -21,7 +21,7 @@ npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-cod
 
 Clone once per project. To repeat or retry from that directory, rerun only the checkout and install commands.
 
-That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 65 [validation cards](validation/README.md). Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. The other 48 cards, including one for each of the 42 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 61 skills, and [coverage.json](coverage.json) gives the state of each skill.
+That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 69 [validation cards](validation/README.md). Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. The other 52 cards, including one for each of the 43 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 62 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
@@ -38,7 +38,7 @@ An agent runtime is still required. Ask it to prepare the BAS workpaper from the
 
 ### Development installation
 
-As at 25 September 2026, the default branch contains 61 workflows preparing v0.3.0. The plugin marketplace installs this development inventory. It is not a published release.
+As at 26 September 2026, the default branch contains 62 workflows preparing v0.3.0. The plugin marketplace installs this development inventory. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -47,7 +47,7 @@ As at 25 September 2026, the default branch contains 61 workflows preparing v0.3
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
-The development installation resolves the default branch and adds 42 workflows to v0.2.1. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The development installation resolves the default branch and adds 43 workflows to v0.2.1. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) remains pinned to v0.1.5, the original 9-skill practice pack. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
@@ -55,7 +55,7 @@ The development installation resolves the default branch and adds 42 workflows t
 
 - [Install, uninstall and versioning](docs/installation.md)
 - [First run and BAS walkthrough](docs/bas-walkthrough.md)
-- [Sixty-one skills and their supporting files](docs/skill-catalogue.md)
+- [Sixty-two skills and their supporting files](docs/skill-catalogue.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)

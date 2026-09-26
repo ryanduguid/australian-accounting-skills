@@ -1,7 +1,7 @@
 # v0.3.0 (unreleased)
 
-Adds 41 original Australian preparation skills and one financial modelling
-workflow, bringing the pack to 61.
+Adds 42 original Australian preparation skills and one financial modelling
+workflow, bringing the pack to 62.
 The coverage map accounts for 38 OpenAccountants topic names while reusing
 existing BAS, FBT, Division 7A and super workflows. Guide bodies were not
 copied. Each of those additions includes a source-discovery record and a
@@ -10,19 +10,25 @@ source-exempt and ships with a structure-faults case.
 
 The new skills require applicable primary authority at use time; source
 discovery is not current-law approval. No fresh agent evaluation of these
-41 additions or the financial modelling workflow is recorded. The original
-19 skill bodies remain unchanged.
+42 additions or the financial modelling workflow is recorded. Three of the
+original 19 skill bodies change: month-end-close gains a supplier bank-detail
+step, cashflow-forecast-13week a tax set-aside check and a GIC deductibility
+note, and fbt-annual-workflow a status check on the announced electric car
+discount changes. Six skills gain dated sources for 2026-27 Budget measures,
+and au-ato-penalties-interest, au-payroll-review and tax-invoice-review gain
+a GIC deductibility split, a pay-item settings review and a payee-detail
+check.
 
-The validation pack now has 63 cards, including 3 supported-arithmetic
+The validation pack now has 69 cards, including 3 supported-arithmetic
 cases for bookkeeping, financial-statement mapping and payroll tie-outs.
 These check whether the model completes supported calculations while keeping
-statutory conclusions and approval with the responsible human. All 63 cards
+statutory conclusions and approval with the responsible human. All 69 cards
 need confirmed results before release; the 17-card historical runs
 do not cover this expansion. The evaluation guide also requires separate
 evidence for source retrieval and behaviour with action tools available.
 
 The README recommends the tagged v0.2.1 installation. Development installation
-commands remain available for evaluating the unreleased 61-skill pack.
+commands remain available for evaluating the unreleased 62-skill pack.
 
 # v0.2.1
 

@@ -103,7 +103,7 @@ both totals, a documented rounding bridge and re-export after a filter change.
 The existing verdict remains unchanged. These wording changes still need
 confirmed fresh model results.
 
-Rerun the failed card and then all 65 current cards at the exact revised
+Rerun the failed card and then all 69 current cards at the exact revised
 commit, using the process above. Preserve the 12-cent exception and missing
 evidence in the failed card. The 17-card historical runs do not cover
 the 41 topic-expansion cases, the individual-return occupation-guide card

@@ -1,0 +1,89 @@
+{
+  "skill": "au-aml-ctf-client-coverage",
+  "sources": [
+    {
+      "title": "AUSTRAC: Accountants",
+      "url": "https://www.austrac.gov.au/industry-and-business/your-industry/accountants",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026. AUSTRAC's page for accountants links a checker for whether a business is regulated, the professional designated services, the accountant program starter kit, enrolment and obligations guidance. No legal rule is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Landing page only. Open the guidance for the specific obligation at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/your-industry/accountants",
+      "http_status": 0,
+      "fetched_at": "2026-09-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "AUSTRAC: About the AML/CTF reforms",
+      "url": "https://www.austrac.gov.au/industry-and-business/about-amlctf-reforms/about-reforms",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 25 September 2026). Businesses providing certain designated services typically provided by accountants are regulated by AUSTRAC from 1 July 2026. The amending Act passed Parliament on 29 November 2024, and changes to the tipping-off offence started on 31 March 2025.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Summary guidance, not law. Confirm the designated services and obligations in the Act and Rules at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/about-amlctf-reforms/about-reforms",
+      "http_status": 0,
+      "fetched_at": "2026-09-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "AUSTRAC: Customer due diligence",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026. Index of AUSTRAC's customer due diligence guidance: initial and ongoing due diligence, customer risk ratings, reliance on third parties, enhanced due diligence, politically exposed persons, targeted financial sanctions, source of funds and wealth, and transitioning existing customers.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Index page only. Open the page for the obligation in question at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence",
+      "http_status": 0,
+      "fetched_at": "2026-09-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "AUSTRAC: Reviewing and updating customers' ML/TF risk and KYC information",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/ongoing-customer-due-diligence/reviewing-and-updating-customers-mltf-risk-and-kyc-information",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 25 March 2026). Refers to ss 26F and 30 of the Act and s 5-2 of the Rules. In a business relationship, the reporting entity must review and, where appropriate, update its assessment of a customer's ML/TF risk after specified changes, including to the customer type, beneficial owners, designated services, delivery channels and countries, and must review KYC information at a frequency appropriate to that risk. The entity's policies set the frequency and the triggers.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Guidance, not law. Confirm the provisions and the firm's own policies at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/ongoing-customer-due-diligence/reviewing-and-updating-customers-mltf-risk-and-kyc-information",
+      "http_status": 0,
+      "fetched_at": "2026-09-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "AUSTRAC: Transitioning existing customers",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/transitioning-existing-customers",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 1 July 2026). A customer receiving a professional designated service on 1 July 2026, or in a business relationship involving one before that date, is a pre-commencement customer. Designated services can continue without initial customer due diligence unless a suspicious matter report obligation arises or a significant change raises the customer's ML/TF risk to medium or high; ongoing customer due diligence obligations still apply.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Guidance, not law. Confirm the transitional provisions in the Act and Rules at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/transitioning-existing-customers",
+      "http_status": 0,
+      "fetched_at": "2026-09-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Anti-Money Laundering and Counter-Terrorism Financing Act 2006",
+      "url": "https://www.legislation.gov.au/C2006A00169/latest",
+      "checked_at": "2026-09-26",
+      "fact": "Identity checked 26 September 2026 on the Federal Register API: C2006A00169, in force. The operative provisions were not reviewed for this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Read the current compilation and the AML/CTF Rules for the period at use time.",
+      "final_url": "https://www.legislation.gov.au/C2006A00169/latest",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "98dcde7eb2774abfdff9082c9c36ac8ec282bb5b0cd32ccef59f8f5b13861419",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
+    }
+  ]
+}

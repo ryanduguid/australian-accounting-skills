@@ -31,6 +31,7 @@ topics reuse existing skills and which have original new workflows.
 
 | Skill | Use it for |
 | --- | --- |
+| [`au-aml-ctf-client-coverage`](../.claude/skills/au-aml-ctf-client-coverage/SKILL.md) | AML/CTF client coverage review: the practice client list reconciled to the customer due diligence register, with missing, incomplete and overdue checks |
 | [`au-ato-penalties-interest`](../.claude/skills/au-ato-penalties-interest/SKILL.md) | ATO general interest charge, shortfall interest charge and failure to lodge penalty workpapers, with remission evidence |
 | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | Bookkeeping intake and coding review |
 | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | Business formation preparation checklist |

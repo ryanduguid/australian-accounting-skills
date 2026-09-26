@@ -38,6 +38,8 @@
       "description": "Verdicts keyed by card ID, empty until a person confirms them. Confirmed version 2 verdicts must cover exactly the provenance cases; the Python validator checks that match.",
       "propertyNames": {
         "enum": [
+          "au-aml-ctf-client-coverage-missing-evidence",
+          "au-ato-penalties-interest-deductibility-split",
           "au-ato-penalties-interest-missing-evidence",
           "au-bookkeeping-missing-evidence",
           "au-bookkeeping-supported-reconciliation",
@@ -65,6 +67,7 @@
           "au-partnership-tax-missing-evidence",
           "au-payg-instalment-variation-missing-evidence",
           "au-payroll-review-missing-evidence",
+          "au-payroll-review-pay-item-settings",
           "au-payroll-review-supported-tie-out",
           "au-payroll-tax-states-missing-evidence",
           "au-psi-review-missing-evidence",
@@ -95,6 +98,7 @@
           "financial-modelling-structure-faults",
           "fuel-tax-credits-missing-docket",
           "payroll-tax-contractor-characterisation",
+          "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
           "post-journal-provenance-tie-out",
           "progress-claim-missing-reference-date",
