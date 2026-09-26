@@ -53,6 +53,20 @@
       "content_hash": "907d2da12182f70dfb4b62f35591322c761b2e0427b67f75870c9781aec986c0",
       "source_last_modified": "",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "ASD's ACSC: Preventing business email compromise",
+      "url": "https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026. Recommends an approval process for requests to change payment details or make a large transfer, and verifying such a request by calling the sender on a known and verified phone number, not one given in the email. No legal rule, rate or threshold is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Guidance for small and medium businesses, not law. The firm's own payment approval policy governs. The automated refresh could not retrieve the page on 26 September 2026 (connection closed); it opened normally in a browser.",
+      "final_url": "https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise",
+      "http_status": 0,
+      "fetched_at": "2026-09-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
