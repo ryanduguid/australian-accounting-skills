@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 65 cards in `cases/` test workflow quality, provenance and restraint.
+The 69 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -48,6 +48,7 @@ law claim, unverified source or guess.
 | [SG ageing and STP mismatch](cases/stp-current-vs-overdue-sg.md) | month-end-close, stp-finalisation |
 | [Supported cash-flow roll-forward](cases/cashflow-supported-roll-forward.md) | cashflow-forecast-13week |
 | [Supported checks in an incomplete close](cases/month-end-supported-partial-close.md) | month-end-close |
+| [Supplier bank-detail change in a month-end close](cases/month-end-supplier-bank-detail-change.md) | month-end-close, tax-invoice-review |
 | [Super-regime transition cashflow](cases/cashflow-super-regime-transition.md) | cashflow-forecast-13week, stp-finalisation |
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
@@ -65,6 +66,8 @@ law claim, unverified source or guess.
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
 | [Financial model workbook with structure faults](cases/financial-modelling-structure-faults.md) | financial-modelling |
 | [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
+| [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
+| [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
 | [Business formation preparation checklist: missing evidence](cases/au-business-formation-missing-evidence.md) | au-business-formation |
@@ -92,6 +95,7 @@ law claim, unverified source or guess.
 | [PAYG instalment variation workpapers: missing evidence](cases/au-payg-instalment-variation-missing-evidence.md) | au-payg-instalment-variation |
 | [Pay-run preparation review: missing evidence](cases/au-payroll-review-missing-evidence.md) | au-payroll-review |
 | [Supported payroll arithmetic tie-out](cases/au-payroll-review-supported-tie-out.md) | au-payroll-review |
+| [Pay-item settings changed without approval](cases/au-payroll-review-pay-item-settings.md) | au-payroll-review |
 | [Multi-state payroll tax workpapers: missing evidence](cases/au-payroll-tax-states-missing-evidence.md) | au-payroll-tax-states |
 | [Personal services income review pack: missing evidence](cases/au-psi-review-missing-evidence.md) | au-psi-review |
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
@@ -109,7 +113,7 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 61 distributable skills. The 41 topic-expansion cards are
+Together the cards cover all 62 distributable skills. The 42 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.

@@ -21,6 +21,7 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
 7. Payroll activity summary for the month per the payroll system (gross, PAYG withheld, super accrued), and the pay dates falling in the month. Step 2 reconciles the PAYG withholding and superannuation payable accounts to these
 8. Super payment evidence showing the date each contribution was RECEIVED by the fund, not the date it left the employer or the clearing house. Step 2 tests receipt, so a remittance date alone cannot clear the balance. A clearing-house or fund confirmation carries this; a bank payment date does not
 9. Source manifest: report/version, run time, period, basis, tracking filters and whether each report reflects post-journal balances
+10. Supplier master change report for the month: suppliers created and bank or payment details changed, with who made each change and when, plus any evidence that each change was confirmed independently of the request. Step 6 tests these
 
 ## Workflow
 
@@ -33,7 +34,8 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
 3. **Schedules roll.** Accruals and prepayments: roll last month's schedule, release what expired, add what's new, agree closing balances to the TB. Same for any loan or intercompany schedules. Intercompany balances must mirror each other across entities.
 4. **Fixed assets.** Additions/disposals posted to the register, depreciation journal posted, register closing WDV agrees to TB.
 5. **Variance review.** P&L versus prior month and versus budget. Flag lines moving beyond the agreed materiality; one-line explanation per flag. Unexplained flags stay open. They don't disappear.
-6. **Close out.** Checklist with per-item status and preparer initials/date, plus exceptions with owner/status. After an authorised human approves and posts final journals, re-export affected trial balances, bank reconciliations, subledgers and schedules; verify the close pack reflects that post-journal position. Leave period locking as a separate authorised-human action after this check. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
+6. **Supplier payment details.** List every supplier created and every bank or payment detail changed in the month. For each change, record the evidence that it was confirmed independently of the request, such as a call to a phone number already on file rather than one given in the requesting email, and who confirmed it; the Australian Signals Directorate's [guidance on preventing business email compromise](https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise) describes this check. A change without that evidence is an open exception, and the supplier's next payment waits for an authorised human to confirm the details. Do not edit the supplier master, contact the supplier or release a payment.
+7. **Close out.** Checklist with per-item status and preparer initials/date, plus exceptions with owner/status. After an authorised human approves and posts final journals, re-export affected trial balances, bank reconciliations, subledgers and schedules; verify the close pack reflects that post-journal position. Leave period locking as a separate authorised-human action after this check. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
 ## Payday Super timing control
 
@@ -58,6 +60,7 @@ Primary sources (checked 20 August 2026):
 ## Checks before handing over
 
 - No control account difference left unexplained (an immaterial, *explained* difference is acceptable; an unexplained one is not)
+- Every supplier created or bank detail changed in the month has independent confirmation evidence, or is an open exception with that supplier's next payment waiting for an authorised human
 - Post-journal re-exports agree; the authorised-human period-lock action is recorded as pending or complete
 - Close pack index: checklist, recs, schedules, variance commentary
 - Every open exception has an owner, status and source-period context

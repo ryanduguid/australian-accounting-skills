@@ -14,6 +14,34 @@
       "content_hash": "9d5c3ba3d9f9d8db368a1e666f127fd33ffd797064b32e89303733dd05ab9973",
       "source_last_modified": "",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "ATO: Tax reform, tax loss carry back",
+      "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-tax-loss-carry-back",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 (page last updated 27 August 2026). States the measure is law: corporate tax entities with aggregated annual global turnover under $1 billion may carry back a revenue tax loss against tax paid in either or both of the 2 previous income years, limited by the franking account balance, for income years starting on or after 1 July 2026.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO summary. Apply Division 160 of the ITAA 1997 as substituted, not this page.",
+      "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-tax-loss-carry-back",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "ccde2b043240f7d073b9d41640baf1a46c30721fbf2b416b8cc20be363ea581b",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-08-27"
+    },
+    {
+      "title": "Treasury Laws Amendment (Tax Reform No. 2) Act 2026",
+      "url": "https://www.legislation.gov.au/C2026A00071/asmade/text",
+      "checked_at": "2026-09-26",
+      "fact": "Read 26 September 2026 through the Federal Register API (C2026A00071, made 26 August 2026). Schedule 1 substitutes Division 160 of the ITAA 1997, the corporate loss carry back tax offset for businesses that are not significant global entities. Schedule 2 covers the $20,000 instant asset write-off.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "As-made text. Read the application provisions and the ITAA 1997 compilation for the period.",
+      "final_url": "https://www.legislation.gov.au/C2026A00071/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "8a491614963a39a05c99c471eeb3e50fe8e6743fb026fb797d54d6b4cb37a454",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
     }
   ]
 }
