@@ -21,7 +21,7 @@ Purchase and sales invoices for the period (PDF, paper or Peppol eInvoice), the 
 
 5. Check GST rounding on multi-line invoices against the total invoice or taxable supply rule the ATO page describes. Treat a difference of a cent as a rounding method question, not an error, until the method is known.
 
-6. Compare the payee bank details on each unpaid purchase invoice with the supplier master. Flag an invoice whose details differ, and any invoice from a supplier created in the period, for confirmation through a contact already on file before it is paid, as the Australian Signals Directorate's [guidance on preventing business email compromise](https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise) describes. Do not update the supplier master or treat the invoice's details as correct.
+6. Compare the payee bank details on each unpaid purchase invoice with the supplier master. Flag an invoice whose details differ, and any invoice from a supplier created in the period, for confirmation through contact details obtained independently of the invoice and any covering email before it is paid, as the Australian Signals Directorate's [guidance on preventing business email compromise](https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise) describes. Do not update the supplier master or treat the invoice's details as correct.
 
 7. Prepare the exception list: missing or invalid invoices, credits at risk, RCTI agreements needing renewal, payee details awaiting confirmation, and suppliers to re-check. Route any credit already claimed on an invalid RCTI to the reviewer as a possible voluntary disclosure.
 
