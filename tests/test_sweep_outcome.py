@@ -77,10 +77,12 @@ class OutcomeTests(unittest.TestCase):
         return sweep_outcome.outcome(status, self.report, STARTED)
 
     def test_exit_0_with_a_clean_current_report_is_clean(self) -> None:
-        self.write({source_refresh.UNCHANGED: 3})
-        result = self.outcome(0)
-        self.assertEqual(result.name, "clean")
-        self.assertEqual(result.comment, "Every indexed source was retrieved and none had moved.")
+        for category in (source_refresh.UNCHANGED, source_refresh.RECORDED, source_refresh.SCHEDULED):
+            with self.subTest(category=category):
+                self.write({category: 3})
+                result = self.outcome(0)
+                self.assertEqual(result.name, "clean")
+                self.assertEqual(result.comment, "No actionable source findings were reported.")
 
     def test_an_overdue_manual_review_is_a_finding(self) -> None:
         self.write({source_refresh.UNCHANGED: 2, source_refresh.REVIEW_DUE: 1})

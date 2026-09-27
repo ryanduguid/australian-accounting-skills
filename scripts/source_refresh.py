@@ -12,19 +12,20 @@ these moved" in one pass. Two dates are kept apart on purpose:
 * ``checked_at`` is the date a person reviewed the source. Only a person
   changes it, because only a person can judge whether the material still
   supports the workflow.
-* ``fetched_at`` is the date this script last retrieved the page. A machine
+* ``fetched_at`` is the date this script last attempted retrieval. A machine
   writes it, and it never stands in for a review.
+
+``final_url`` describes the latest attempt. ``content_url`` accompanies the
+last readable digest and survives failed attempts. Older records establish
+that destination baseline on their next readable fetch; their existing
+digests still detect content changes during that transition.
 
 For an HTML page the digest covers the readable text, with scripts, styles
 and markup removed, and prefers the ``<main>`` region when the page has one.
-Raw bytes are useless there: every one of these hosts varies build ids, nonces
-and cache tags between two requests for an unchanged page.
+Without that region, changes to page navigation can also change the digest.
 
-Six of these sources are PDFs rather than pages. Those are hashed as raw
-bytes, which is both simpler and the only correct reading: a PDF put through
-an HTML parser is decoded as text it is not, with undecodable bytes silently
-replaced, and the result is megabytes of object tables and font data standing
-in for the document. The served bytes are stable, so the digest is too.
+PDFs are hashed as raw bytes. A change to their metadata can change the digest
+even when the visible text is unchanged.
 """
 
 from __future__ import annotations
@@ -60,9 +61,10 @@ USER_AGENT = (
     "(+https://github.com/ryanduguid/australian-accounting-skills)"
 )
 
-# Machine-written fields. A record carries all of them or none; a person never
-# edits them by hand, and `checked_at` and `fact` are never touched here.
+# A write supplies every machine field. Older records may lack `content_url`.
+# `checked_at` and `fact` are never touched here.
 DIGEST_FIELD = "content_hash"
+CONTENT_URL_FIELD = "content_url"
 FETCHED_FIELD = "fetched_at"
 FINAL_URL_FIELD = "final_url"
 STATUS_FIELD = "http_status"
@@ -75,6 +77,7 @@ DIGEST_KIND_FIELD = "content_hash_covers"
 MACHINE_FIELDS = (
     DIGEST_FIELD,
     DIGEST_KIND_FIELD,
+    CONTENT_URL_FIELD,
     FETCHED_FIELD,
     FINAL_URL_FIELD,
     STATUS_FIELD,
@@ -450,21 +453,26 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
         if fetched.status in REFUSED_STATUSES:
             return BLOCKED, f"{reason}. This host refuses automated retrieval: review by hand."
         return UNREACHABLE, f"{reason}. Open the source by hand before relying on the workflow."
-    previous_url = urldefrag(str(record.get(FINAL_URL_FIELD, ""))).url
+    previous_url = urldefrag(str(record.get(CONTENT_URL_FIELD, ""))).url
     current_url = urldefrag(fetched.final_url).url
     if previous_url and current_url and previous_url != current_url:
         return CHANGED, f"Source destination changed: {previous_url} -> {current_url}."
     stored = str(record.get(DIGEST_FIELD, ""))
     if not stored:
-        return RECORDED, "First digest recorded. A later run can compare against it."
+        return RECORDED, "First readable content and destination baseline recorded."
     if str(record.get(DIGEST_KIND_FIELD, "")) != fetched.kind:
         return RECORDED, (
             f"Digest re-recorded over {fetched.content_type or 'this content type'}: "
             "the stored one covered a different reading of the response."
         )
     if stored == fetched.digest:
-        return UNCHANGED, "Readable text is unchanged since the last sweep."
-    return CHANGED, f"Readable text changed since {record.get(FETCHED_FIELD, 'the last sweep')}."
+        if not previous_url:
+            return RECORDED, (
+                "Readable text matches the stored digest; destination baseline recorded "
+                "for future comparisons."
+            )
+        return UNCHANGED, "Readable text and destination are unchanged since the last readable sweep."
+    return CHANGED, "Readable text changed since the last readable sweep."
 
 
 def apply_fetch(record: dict[str, object], fetched: Fetched, today: str) -> None:
@@ -475,10 +483,12 @@ def apply_fetch(record: dict[str, object], fetched: Fetched, today: str) -> None
     if fetched.readable:
         record[DIGEST_FIELD] = fetched.digest
         record[DIGEST_KIND_FIELD] = fetched.kind
+        record[CONTENT_URL_FIELD] = fetched.final_url
         record[UPSTREAM_FIELD] = fetched.last_modified
     else:
         record.setdefault(DIGEST_FIELD, "")
         record.setdefault(DIGEST_KIND_FIELD, "")
+        record.setdefault(CONTENT_URL_FIELD, "")
         record.setdefault(UPSTREAM_FIELD, "")
 
 
@@ -580,7 +590,7 @@ def render(report: Report, *, write: bool) -> str:
         f"- unreachable (transport fault, may clear): {counts[UNREACHABLE]}",
         f"- review-due (scheduled manual review overdue): {counts[REVIEW_DUE]}",
         f"- scheduled (reviewed by hand, next review {next_review}): {counts[SCHEDULED]}",
-        f"- first digest recorded: {counts[RECORDED]}",
+        f"- baseline recorded: {counts[RECORDED]}",
         f"- unchanged: {counts[UNCHANGED]}",
         "",
     ]
@@ -606,7 +616,7 @@ def render(report: Report, *, write: bool) -> str:
             )
         lines.append("")
     else:
-        lines += ["Nothing changed and nothing was unreachable.", ""]
+        lines += ["No actionable or network findings were reported.", ""]
     if write and report.written:
         lines += [f"Updated {len(report.written)} index files.", ""]
     return "\n".join(lines)
