@@ -39,7 +39,9 @@ SCHEMA_VERSION = 1
 # other mention of a skill name in tests is a check on that skill's own text.
 # `inventory_sweeps_still_sweep` proves each one still names nearly every
 # skill, so this list cannot quietly become wrong.
-INVENTORY_SWEEPS = frozenset({"verify_skills_cli.py"})
+# No test names every skill by hand any more: verify_skills_cli.py derives its set
+# from the tree, so nothing is an inventory sweep today.
+INVENTORY_SWEEPS: frozenset[str] = frozenset()
 INVENTORY_SHARE = 0.8
 
 # The seeded card. A skill whose only validation card is this one has the

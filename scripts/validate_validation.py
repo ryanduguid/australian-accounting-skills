@@ -19,7 +19,6 @@ import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
 
 ROOT = Path(__file__).resolve().parents[1]
-VALIDATION = ROOT / "validation"
 EXPECTED_SUPPORT = {
     "CLAUDE.md",
     ".claude/rules/accounting-safety.md",
@@ -122,7 +121,6 @@ def case_ids(case_names: set[str]) -> frozenset[str]:
 
 
 EXPECTED_CASE_NAMES = discover_case_names()
-EXPECTED_VALIDATION = expected_validation(EXPECTED_CASE_NAMES)
 CASE_IDS = case_ids(EXPECTED_CASE_NAMES)
 
 

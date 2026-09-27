@@ -7,7 +7,7 @@
     "skills_source_exempt": 7,
     "skills_with_unreachable_sources": 3,
     "skills_with_sources_moved_since_review": 4,
-    "skills_with_behavioural_gate": 17,
+    "skills_with_behavioural_gate": 13,
     "skills_with_only_the_seeded_case": 37
   },
   "skills": [
@@ -30,9 +30,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -55,9 +53,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -80,9 +76,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -104,9 +98,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -128,9 +120,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -152,9 +142,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -176,9 +164,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -200,9 +186,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -224,9 +208,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -248,9 +230,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -272,9 +252,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -296,9 +274,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -321,9 +297,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -345,9 +319,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -369,9 +341,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -393,9 +363,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -419,9 +387,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -444,9 +410,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -468,9 +432,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -492,9 +454,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -516,9 +476,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -540,9 +498,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -566,9 +522,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -590,9 +544,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -616,9 +568,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -640,9 +590,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -664,9 +612,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -688,9 +634,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -712,9 +656,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -738,9 +680,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -762,9 +702,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -786,9 +724,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -810,9 +746,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -834,9 +768,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -858,9 +790,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -882,9 +812,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -906,9 +834,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -930,9 +856,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -954,9 +878,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -978,9 +900,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1002,9 +922,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1026,9 +944,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1057,9 +973,7 @@
           "test_skill_metadata.py",
           "test_validation_pack.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1085,9 +999,7 @@
           "test_payday_super_guidance.py",
           "test_validation_pack.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1110,12 +1022,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_hardhat_consolidation.py",
           "test_legal_source_gates.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1137,12 +1046,8 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [
-          "test_hardhat_consolidation.py"
-        ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "behavioural": [],
+        "inventory": []
       }
     },
     {
@@ -1164,12 +1069,8 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [
-          "test_hardhat_consolidation.py"
-        ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "behavioural": [],
+        "inventory": []
       }
     },
     {
@@ -1192,12 +1093,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_hardhat_consolidation.py",
           "test_legal_source_gates.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1219,9 +1117,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1245,9 +1141,7 @@
         "behavioural": [
           "test_validation_pack.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1271,9 +1165,7 @@
         "behavioural": [
           "test_financial_modelling_card.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1295,12 +1187,8 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [
-          "test_hardhat_consolidation.py"
-        ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "behavioural": [],
+        "inventory": []
       }
     },
     {
@@ -1328,9 +1216,7 @@
           "test_payday_super_guidance.py",
           "test_validation_pack.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1353,12 +1239,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_hardhat_consolidation.py",
           "test_legal_source_gates.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1380,12 +1263,8 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [
-          "test_hardhat_consolidation.py"
-        ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "behavioural": [],
+        "inventory": []
       }
     },
     {
@@ -1408,12 +1287,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_hardhat_consolidation.py",
           "test_legal_source_gates.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1436,12 +1312,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_hardhat_consolidation.py",
           "test_legal_source_gates.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1469,9 +1342,7 @@
           "test_skill_metadata.py",
           "test_validation_pack.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1494,9 +1365,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1519,12 +1388,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_hardhat_consolidation.py",
           "test_legal_source_gates.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1548,9 +1414,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1576,9 +1440,7 @@
           "test_legal_source_gates.py",
           "test_validation_pack.py"
         ],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     },
     {
@@ -1600,9 +1462,7 @@
       },
       "gates": {
         "behavioural": [],
-        "inventory": [
-          "verify_skills_cli.py"
-        ]
+        "inventory": []
       }
     }
   ]
