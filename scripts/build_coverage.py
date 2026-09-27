@@ -158,7 +158,8 @@ def source_evidence(skill: str) -> SourceSummary:
     # A source reviewed by hand on a schedule is not fetched, so its last status says nothing.
     unreachable = sum(
         1 for record in sources
-        if record.get("http_status") not in (200, None) and "manual_review" not in record
+        if record.get("http_status") not in (200, None)
+        and not isinstance(record.get("manual_review"), dict)
     )
     moved = sorted(
         str(record.get("url", ""))

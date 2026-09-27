@@ -307,6 +307,7 @@ class SweepTests(unittest.TestCase):
 
         self.assertEqual([o.outcome for o in on_time.outcomes], [source_refresh.SCHEDULED])
         self.assertEqual(on_time.actionable, [])
+        self.assertIn("Reviewed by hand monthly, next review 2026-10-26.", on_time.outcomes[0].detail)
         self.assertIn("- scheduled (reviewed by hand, next review 2026-10-26): 1",
                       source_refresh.render(on_time, write=False))
         self.assertEqual([o.outcome for o in overdue.outcomes], [source_refresh.REVIEW_DUE])
@@ -316,6 +317,24 @@ class SweepTests(unittest.TestCase):
         # Not fetched, so the machine fields are never written for it.
         record = json.loads((skill / "sources.json").read_text(encoding="utf-8"))["sources"][0]
         self.assertNotIn(source_refresh.FETCHED_FIELD, record)
+
+    def test_a_mistyped_review_date_counts_as_due(self) -> None:
+        """2026-99-99 sorts after any real date and would keep the source unreviewed for ever."""
+        for value in ("2026-99-99", "26 October 2026", "", "2026-10-26T00:00"):
+            with self.subTest(value=value):
+                self.assertEqual(source_refresh.review_date({"next_review": value}), "")
+        self.assertEqual(source_refresh.review_date({"next_review": "2026-10-26"}), "2026-10-26")
+
+    def test_every_manual_review_in_the_index_names_a_cadence_and_a_real_date(self) -> None:
+        for path in source_refresh.index_files():
+            for record in json.loads(path.read_text(encoding="utf-8")).get("sources", []):
+                schedule = record.get(source_refresh.SCHEDULE_FIELD)
+                if schedule is None:
+                    continue
+                with self.subTest(skill=path.parent.name, url=record.get("url")):
+                    self.assertIsInstance(schedule, dict)
+                    self.assertTrue(schedule.get("cadence"))
+                    self.assertTrue(source_refresh.review_date(schedule))
 
 
 if __name__ == "__main__":

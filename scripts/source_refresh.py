@@ -403,6 +403,19 @@ def index_files(skills: Path = SKILLS_DIRECTORY) -> Iterator[Path]:
     yield from sorted(skills.glob("*/sources.json"))
 
 
+def review_date(schedule: dict[str, object]) -> str:
+    """The schedule's next review date, or an empty string when it is not a real ISO date.
+
+    A mistyped date such as 2026-99-99 would otherwise sort as a date far ahead and keep the
+    source scheduled, unfetched and unreviewed indefinitely, so it counts as due instead.
+    """
+    due = str(schedule.get("next_review", ""))
+    try:
+        return due if date.fromisoformat(due).isoformat() == due else ""
+    except ValueError:
+        return ""
+
+
 def load_index(path: Path) -> dict[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -492,7 +505,7 @@ def refresh(
 
         schedule = record.get(SCHEDULE_FIELD)
         if isinstance(schedule, dict):
-            due = str(schedule.get("next_review", ""))
+            due = review_date(schedule)
             late = not due or due < stamp
             report.outcomes.append(
                 Outcome(
@@ -501,10 +514,10 @@ def refresh(
                     url=url,
                     outcome=REVIEW_DUE if late else SCHEDULED,
                     detail=(
-                        f"Manual review was due {due or 'with no date set'}: read the source, "
-                        "then update checked_at and manual_review.next_review by hand."
+                        f"Manual review was due {due or 'with no valid date set'}. Read the "
+                        "source, then update checked_at and manual_review.next_review by hand."
                         if late
-                        else f"Reviewed by hand {schedule.get('cadence', '')}; next review {due}."
+                        else f"Reviewed by hand {schedule.get('cadence', '')}, next review {due}."
                     ),
                     checked_at=str(record.get("checked_at", "")),
                     fetched=Fetched(0, "", "", "", "", "", "not fetched: reviewed by hand"),
