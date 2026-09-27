@@ -109,6 +109,54 @@ class ClassifyTests(unittest.TestCase):
         outcome, _ = source_refresh.classify(self.record(), fetched(digest="b" * 64))
         self.assertEqual(outcome, source_refresh.CHANGED)
 
+    def test_a_changed_destination_is_reported_even_when_the_text_matches(self) -> None:
+        previous = "https://example.test/old"
+        current = "https://example.test/new"
+        for kind in (source_refresh.HTML_KIND, source_refresh.BYTES_KIND):
+            with self.subTest(kind=kind):
+                outcome, detail = source_refresh.classify(
+                    self.record(final_url=previous), fetched(final_url=current, kind=kind)
+                )
+                self.assertEqual(outcome, source_refresh.CHANGED)
+                self.assertIn(previous, detail)
+                self.assertIn(current, detail)
+
+    def test_an_unchanged_destination_ignores_fragments(self) -> None:
+        for previous in ("https://example.test/page", "https://example.test/page#section"):
+            with self.subTest(previous=previous):
+                outcome, _ = source_refresh.classify(
+                    self.record(final_url=previous), fetched()
+                )
+                self.assertEqual(outcome, source_refresh.UNCHANGED)
+
+    def test_an_existing_redirect_is_not_reported_again(self) -> None:
+        destination = "https://example.test/current"
+        outcome, _ = source_refresh.classify(
+            self.record(url="https://example.test/legacy", final_url=destination),
+            fetched(final_url=destination),
+        )
+        self.assertEqual(outcome, source_refresh.UNCHANGED)
+
+    def test_a_first_destination_does_not_invent_a_change(self) -> None:
+        outcome, _ = source_refresh.classify(
+            self.record(content_hash=""), fetched(final_url="https://example.test/new")
+        )
+        self.assertEqual(outcome, source_refresh.RECORDED)
+
+    def test_a_different_failure_destination_keeps_its_failure_outcome(self) -> None:
+        for status, expected in (
+            (200, source_refresh.UNREADABLE),
+            (404, source_refresh.MISSING),
+            (403, source_refresh.BLOCKED),
+            (0, source_refresh.UNREACHABLE),
+        ):
+            with self.subTest(status=status):
+                outcome, _ = source_refresh.classify(
+                    self.record(final_url="https://example.test/old"),
+                    fetched(status=status, digest=""),
+                )
+                self.assertEqual(outcome, expected)
+
     def test_a_readable_response_with_no_digest_is_a_fault_here(self) -> None:
         outcome, detail = source_refresh.classify(self.record(), fetched(digest=""))
         self.assertEqual(outcome, source_refresh.UNREADABLE)
@@ -253,6 +301,36 @@ class SweepTests(unittest.TestCase):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
         return Path(directory.name) / "skills"
+
+    def test_a_new_destination_fails_check_and_preserves_review_fields(self) -> None:
+        skills = self.temporary_skills_directory()
+        skill = skills / "example-skill"
+        skill.mkdir(parents=True)
+        record = {
+            "url": "https://example.test/page",
+            "checked_at": "2026-09-08",
+            "fact": "A discovery link, not approval of a current rule.",
+            "verification_status": "indexed-source-discovery-only",
+            "limitations": "Read the authority at use time.",
+            "final_url": "https://example.test/old",
+            "content_hash": UNCHANGED_DIGEST,
+            "content_hash_covers": source_refresh.HTML_KIND,
+        }
+        path = skill / "sources.json"
+        path.write_text(json.dumps({"skill": "example-skill", "sources": [record]}),
+                        encoding="utf-8")
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched()):
+            report = source_refresh.refresh(skills=skills, spacing=0, write=True)
+        with mock.patch.object(source_refresh, "refresh", return_value=report), \
+                mock.patch("sys.stdout"):
+            self.assertEqual(source_refresh.main(["--check"]), 2)
+        rendered = source_refresh.render(report, write=True)
+        self.assertIn("https://example.test/old", rendered)
+        self.assertIn("https://example.test/page", rendered)
+        saved = json.loads(path.read_text(encoding="utf-8"))["sources"][0]
+        for key in ("checked_at", "fact", "verification_status", "limitations", "url"):
+            self.assertEqual(saved[key], record[key])
+        self.assertEqual(saved["final_url"], "https://example.test/page")
 
     def test_sections_of_one_page_are_retrieved_once(self) -> None:
         """A fragment never reaches the server.

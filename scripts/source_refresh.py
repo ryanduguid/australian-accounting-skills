@@ -4,7 +4,7 @@ The sources index records where a workflow's primary-source material lives. It
 adopts no rate, threshold, deadline or eligibility conclusion, so the index
 cannot go wrong in the way a cached figure can. It can still go stale: a page
 is rewritten, retitled, redirected or withdrawn, and nothing in the repository
-notices until someone re-reads all 62 URLs by hand.
+notices until someone re-reads the indexed URLs by hand.
 
 This records a content digest per source so the next run can answer "which of
 these moved" in one pass. Two dates are kept apart on purpose:
@@ -53,7 +53,7 @@ TIMEOUT = 30
 TRIES = 3
 RETRY_DELAY = 6.0
 # Spacing between requests to the same run. These are public-sector sites
-# serving a 62-URL sweep; a courteous pace costs about a minute in total.
+# serving the source sweep; a courteous pace avoids a burst of requests.
 REQUEST_SPACING = 1.0
 USER_AGENT = (
     "australian-accounting-skills source-refresh "
@@ -450,6 +450,10 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
         if fetched.status in REFUSED_STATUSES:
             return BLOCKED, f"{reason}. This host refuses automated retrieval: review by hand."
         return UNREACHABLE, f"{reason}. Open the source by hand before relying on the workflow."
+    previous_url = urldefrag(str(record.get(FINAL_URL_FIELD, ""))).url
+    current_url = urldefrag(fetched.final_url).url
+    if previous_url and current_url and previous_url != current_url:
+        return CHANGED, f"Source destination changed: {previous_url} -> {current_url}."
     stored = str(record.get(DIGEST_FIELD, ""))
     if not stored:
         return RECORDED, "First digest recorded. A later run can compare against it."
@@ -623,8 +627,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="Exit 2 when a source changed, went missing or could not be read. A source "
-        "blocked by its host is reported but does not fail the run.",
+        help="Exit 2 when source text or destination changes, a source goes missing or is "
+        "unreadable, or a manual review is overdue. Blocked and unreachable sources are "
+        "reported without failing the run.",
     )
     parser.add_argument("--report", default="", help="Also write the Markdown report to this path.")
     parser.add_argument(
