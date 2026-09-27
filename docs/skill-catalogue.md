@@ -67,6 +67,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | Super contribution cap workpapers: concessional carry-forward, non-concessional bring-forward and excess contributions |
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | Tax planning evidence and options |
 | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Tax-period source register |
+| [`au-tax-research`](../.claude/skills/au-tax-research/SKILL.md) | Tax research file note: question framing, source status and currency, alternative views |
 | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | Tax residency and departure review pack |
 | [`au-transfer-duty`](../.claude/skills/au-transfer-duty/SKILL.md) | State transfer duty review pack |
 | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | Transfer pricing evidence pack |
