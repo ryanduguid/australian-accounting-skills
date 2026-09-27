@@ -143,7 +143,7 @@ class ClassifyTests(unittest.TestCase):
             self.record(content_hash="", content_url=""),
             fetched(final_url="https://example.test/new"),
         )
-        self.assertEqual(outcome, source_refresh.RECORDED)
+        self.assertEqual(outcome, source_refresh.BASELINE_REQUIRED)
 
     def test_a_different_failure_destination_keeps_its_failure_outcome(self) -> None:
         for status, expected in (
@@ -159,14 +159,18 @@ class ClassifyTests(unittest.TestCase):
                 )
                 self.assertEqual(outcome, expected)
 
-    def test_a_legacy_record_establishes_its_destination_without_trusting_the_last_attempt(self) -> None:
+    def test_a_legacy_record_requires_a_baseline_without_trusting_the_last_attempt(self) -> None:
         for status in (0, 200, 403, 404):
             with self.subTest(status=status):
                 record = self.record(final_url="https://example.test/old", http_status=status)
                 del record[source_refresh.CONTENT_URL_FIELD]
                 outcome, detail = source_refresh.classify(record, fetched())
-                self.assertEqual(outcome, source_refresh.RECORDED)
+                self.assertEqual(outcome, source_refresh.BASELINE_REQUIRED)
                 self.assertIn("destination baseline", detail)
+                self.assertEqual(
+                    source_refresh.classify(record, fetched(kind=source_refresh.BYTES_KIND))[0],
+                    source_refresh.BASELINE_REQUIRED,
+                )
                 self.assertEqual(
                     source_refresh.classify(record, fetched(digest="b" * 64))[0],
                     source_refresh.CHANGED,
@@ -196,11 +200,11 @@ class ClassifyTests(unittest.TestCase):
         )
         self.assertEqual(outcome, source_refresh.RECORDED)
 
-    def test_a_record_without_a_digest_is_recorded_not_unchanged(self) -> None:
+    def test_a_record_without_a_digest_requires_a_baseline(self) -> None:
         outcome, _ = source_refresh.classify(
             self.record(**{source_refresh.DIGEST_FIELD: ""}), fetched()
         )
-        self.assertEqual(outcome, source_refresh.RECORDED)
+        self.assertEqual(outcome, source_refresh.BASELINE_REQUIRED)
 
     def test_the_failure_outcomes_say_what_to_do_about_them(self) -> None:
         """Three failures, three different actions, so three outcomes."""
@@ -233,7 +237,7 @@ class ClassifyTests(unittest.TestCase):
         self.assertEqual(
             set(source_refresh.ACTIONABLE),
             {source_refresh.CHANGED, source_refresh.MISSING, source_refresh.UNREADABLE,
-             source_refresh.REVIEW_DUE},
+             source_refresh.REVIEW_DUE, source_refresh.BASELINE_REQUIRED},
         )
         for outcome in (source_refresh.BLOCKED, source_refresh.UNREACHABLE):
             with self.subTest(outcome=outcome):
@@ -266,7 +270,7 @@ class ApplyFetchTests(unittest.TestCase):
                 self.assertEqual(record[source_refresh.CONTENT_URL_FIELD], "")
                 self.assertEqual(
                     source_refresh.classify(record, fetched(final_url="https://example.test/new"))[0],
-                    source_refresh.RECORDED,
+                    source_refresh.BASELINE_REQUIRED,
                 )
 
     def test_recovery_compares_with_the_last_readable_destination(self) -> None:

@@ -202,6 +202,41 @@ class SourceRefreshExitTests(unittest.TestCase):
         path.write_text(json.dumps({"skill": "example-skill", "sources": records}), encoding="utf-8")
         return path
 
+    def test_read_only_runs_require_a_persisted_destination_baseline(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            record = {
+                "url": "https://example.test/page", "checked_at": "2026-09-08",
+                "fact": "Read the primary source at use time.", "http_status": 200,
+                "final_url": "https://example.test/old", "content_hash": "a" * 64,
+                "content_hash_covers": source_refresh.HTML_KIND,
+            }
+            index = self.index(Path(directory) / "skills", [record])
+            original = index.read_bytes()
+            report = Path(directory) / "sweep.md"
+            response = fetched()
+
+            def run(*extra: str) -> tuple[int, str]:
+                started = datetime.now(timezone.utc)
+                with mock.patch.object(source_refresh, "index_files", return_value=[index]), \
+                        mock.patch.object(source_refresh, "fetch", return_value=response), \
+                        redirect_stdout(io.StringIO()):
+                    code = source_refresh.main(["--check", "--report", str(report), "--spacing", "0", *extra])
+                return code, sweep_outcome.outcome(code, report, started).name
+
+            for _ in range(2):
+                self.assertEqual(run(), (2, "findings"))
+                self.assertEqual(index.read_bytes(), original)
+                self.assertIn("baseline-required", report.read_text(encoding="utf-8"))
+            self.assertEqual(run("--write"), (0, "clean"))
+            saved = json.loads(index.read_text(encoding="utf-8"))["sources"][0]
+            self.assertEqual(saved["content_url"], response.final_url)
+            self.assertEqual(saved["checked_at"], record["checked_at"])
+            self.assertEqual(saved["fact"], record["fact"])
+            self.assertEqual(run(), (0, "clean"))
+            response.final_url = "https://example.test/new"
+            self.assertEqual(run(), (2, "findings"))
+            self.assertIn("Source destination changed", report.read_text(encoding="utf-8"))
+
     def test_an_empty_source_set_exits_1_and_writes_no_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             skills = self.index(Path(directory) / "skills", [])

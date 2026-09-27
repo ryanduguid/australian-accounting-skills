@@ -35,7 +35,7 @@ python scripts/build_coverage.py --check
 Those 6 checks are the gates `.github/workflows/verify.yml` runs. Ruff and
 mypy run in its `lint` job, then the 4 verification checks run on Python 3.10, 3.12,
 3.13 and 3.14. `python tests/verify_skills_cli.py` needs `npx` and compares the
-CLI's reported skill names with the skill directories in the current tree.
+reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
 
 `pip install pre-commit && pre-commit install` runs all of it before the commit

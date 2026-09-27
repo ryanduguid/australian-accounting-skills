@@ -17,8 +17,9 @@ these moved" in one pass. Two dates are kept apart on purpose:
 
 ``final_url`` describes the latest attempt. ``content_url`` accompanies the
 last readable digest and survives failed attempts. Older records establish
-that destination baseline on their next readable fetch; their existing
-digests still detect content changes during that transition.
+that destination baseline on their next reviewed write. Until then, read-only
+checks report the missing baseline and existing comparable digests still
+detect content changes.
 
 For an HTML page the digest covers the readable text, with scripts, styles
 and markup removed, and prefers the ``<main>`` region when the page has one.
@@ -54,7 +55,7 @@ TIMEOUT = 30
 TRIES = 3
 RETRY_DELAY = 6.0
 # Spacing between requests to the same run. These are public-sector sites
-# serving the source sweep; a courteous pace avoids a burst of requests.
+# serving the source sweep. A courteous pace avoids a burst of requests.
 REQUEST_SPACING = 1.0
 USER_AGENT = (
     "australian-accounting-skills source-refresh "
@@ -84,8 +85,8 @@ MACHINE_FIELDS = (
     UPSTREAM_FIELD,
 )
 
-# Outcome vocabulary. `unchanged` and `changed` need a stored digest to mean
-# anything, so a record without one is `recorded`, not silently `unchanged`.
+# An unchanged result needs persisted content and destination baselines.
+# Missing baselines require review and an explicit write.
 #
 # The three failure outcomes are kept apart because they ask for three
 # different things. `missing` is a defect in this repository: the indexed URL
@@ -96,6 +97,7 @@ MACHINE_FIELDS = (
 UNCHANGED = "unchanged"
 CHANGED = "changed"
 RECORDED = "recorded"
+BASELINE_REQUIRED = "baseline-required"
 MISSING = "missing"
 BLOCKED = "blocked"
 UNREACHABLE = "unreachable"
@@ -107,7 +109,7 @@ UNREADABLE = "unreadable"
 # `review-due` is one whose next review date has passed, which asks a person for a review.
 SCHEDULED = "scheduled"
 REVIEW_DUE = "review-due"
-NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE)
+NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
 # What `--check` fails on, which is narrower than what it reports.
 #
 # A changed, missing or unreadable source means something here is wrong and
@@ -117,9 +119,10 @@ NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DU
 # would leave the scheduled issue permanently open, and an alert that can
 # never be cleared is one nobody reads. They stay in every report instead,
 # and coverage.json counts them per skill.
-ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE)
+ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
 REPORTED_OUTCOMES = (
-    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, SCHEDULED, RECORDED, UNCHANGED,
+    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED,
+    SCHEDULED, RECORDED, UNCHANGED,
 )
 
 # Status codes that settle the question rather than inviting a retry.
@@ -456,23 +459,22 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
     previous_url = urldefrag(str(record.get(CONTENT_URL_FIELD, ""))).url
     current_url = urldefrag(fetched.final_url).url
     if previous_url and current_url and previous_url != current_url:
-        return CHANGED, f"Source destination changed: {previous_url} -> {current_url}."
+        return CHANGED, f"Source destination changed from {previous_url} to {current_url}."
     stored = str(record.get(DIGEST_FIELD, ""))
-    if not stored:
-        return RECORDED, "First readable content and destination baseline recorded."
-    if str(record.get(DIGEST_KIND_FIELD, "")) != fetched.kind:
-        return RECORDED, (
-            f"Digest re-recorded over {fetched.content_type or 'this content type'}: "
-            "the stored one covered a different reading of the response."
+    same_reading = str(record.get(DIGEST_KIND_FIELD, "")) == fetched.kind
+    if stored and same_reading and stored != fetched.digest:
+        return CHANGED, "Readable text changed since the last readable sweep."
+    if not stored or not previous_url:
+        return BASELINE_REQUIRED, (
+            "A readable content or destination baseline is missing. A person must review "
+            "the source, then run python scripts/source_refresh.py --write to record it."
         )
-    if stored == fetched.digest:
-        if not previous_url:
-            return RECORDED, (
-                "Readable text matches the stored digest; destination baseline recorded "
-                "for future comparisons."
-            )
-        return UNCHANGED, "Readable text and destination are unchanged since the last readable sweep."
-    return CHANGED, "Readable text changed since the last readable sweep."
+    if not same_reading:
+        return RECORDED, (
+            f"The digest covers a different reading of {fetched.content_type or 'this content type'}. "
+            "A reviewed write can update the baseline."
+        )
+    return UNCHANGED, "Readable text and destination are unchanged since the last readable sweep."
 
 
 def apply_fetch(record: dict[str, object], fetched: Fetched, today: str) -> None:
@@ -550,6 +552,12 @@ def refresh(
         fetched = seen[target]
 
         outcome, detail = classify(record, fetched)
+        if write:
+            apply_fetch(record, fetched, stamp)
+            touched[path] = payload
+            if outcome == BASELINE_REQUIRED:
+                outcome = RECORDED
+                detail = "Readable content and destination baseline recorded."
         report.outcomes.append(
             Outcome(
                 skill=skill,
@@ -561,9 +569,6 @@ def refresh(
                 fetched=fetched,
             )
         )
-        if write:
-            apply_fetch(record, fetched, stamp)
-            touched[path] = payload
 
     for path, payload in touched.items():
         dump_index(path, payload)
@@ -589,8 +594,9 @@ def render(report: Report, *, write: bool) -> str:
         f"- blocked (host refuses automation, review by hand): {counts[BLOCKED]}",
         f"- unreachable (transport fault, may clear): {counts[UNREACHABLE]}",
         f"- review-due (scheduled manual review overdue): {counts[REVIEW_DUE]}",
+        f"- baseline-required (review and record a readable baseline): {counts[BASELINE_REQUIRED]}",
         f"- scheduled (reviewed by hand, next review {next_review}): {counts[SCHEDULED]}",
-        f"- baseline recorded: {counts[RECORDED]}",
+        f"- baseline recorded or reading changed: {counts[RECORDED]}",
         f"- unchanged: {counts[UNCHANGED]}",
         "",
     ]
@@ -638,7 +644,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--check",
         action="store_true",
         help="Exit 2 when source text or destination changes, a source goes missing or is "
-        "unreadable, or a manual review is overdue. Blocked and unreachable sources are "
+        "unreadable, a readable baseline is missing, or a manual review is overdue. "
+        "Blocked and unreachable sources are "
         "reported without failing the run.",
     )
     parser.add_argument("--report", default="", help="Also write the Markdown report to this path.")
