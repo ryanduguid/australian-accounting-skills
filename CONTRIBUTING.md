@@ -34,9 +34,9 @@ python scripts/build_coverage.py --check
 
 Those 6 checks are the gates `.github/workflows/verify.yml` runs. Ruff and
 mypy run in its `lint` job, then the 4 verification checks run on Python 3.10, 3.12,
-3.13 and 3.14. `python tests/verify_skills_cli.py` needs `npx` and hard-codes the
-expected skill names, so renaming a skill fails there even when the unittest
-suite passes. A third job scans the full history with gitleaks.
+3.13 and 3.14. `python tests/verify_skills_cli.py` needs `npx` and compares the
+reported skill names from the CLI with the skill directories in the current tree.
+A third job scans the full history with gitleaks.
 
 `pip install pre-commit && pre-commit install` runs all of it before the commit
 lands. `.pre-commit-config.yaml` pins Ruff and mypy to the versions CI

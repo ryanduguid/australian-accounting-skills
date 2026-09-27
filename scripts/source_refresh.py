@@ -4,7 +4,7 @@ The sources index records where a workflow's primary-source material lives. It
 adopts no rate, threshold, deadline or eligibility conclusion, so the index
 cannot go wrong in the way a cached figure can. It can still go stale: a page
 is rewritten, retitled, redirected or withdrawn, and nothing in the repository
-notices until someone re-reads all 62 URLs by hand.
+notices until someone re-reads the indexed URLs by hand.
 
 This records a content digest per source so the next run can answer "which of
 these moved" in one pass. Two dates are kept apart on purpose:
@@ -12,19 +12,22 @@ these moved" in one pass. Two dates are kept apart on purpose:
 * ``checked_at`` is the date a person reviewed the source. Only a person
   changes it, because only a person can judge whether the material still
   supports the workflow.
-* ``fetched_at`` is the date this script last retrieved the page. A machine
+* ``fetched_at`` is the date this script last attempted retrieval. A machine
   writes it, and it never stands in for a review.
+
+``final_url`` records the response URL when available, otherwise the requested
+URL. ``content_url`` accompanies the last readable digest and survives failed
+attempts. Older records establish
+that destination baseline on their next reviewed write. Until then, read-only
+checks report the missing baseline and existing comparable digests still
+detect content changes.
 
 For an HTML page the digest covers the readable text, with scripts, styles
 and markup removed, and prefers the ``<main>`` region when the page has one.
-Raw bytes are useless there: every one of these hosts varies build ids, nonces
-and cache tags between two requests for an unchanged page.
+Without that region, changes to page navigation can also change the digest.
 
-Six of these sources are PDFs rather than pages. Those are hashed as raw
-bytes, which is both simpler and the only correct reading: a PDF put through
-an HTML parser is decoded as text it is not, with undecodable bytes silently
-replaced, and the result is megabytes of object tables and font data standing
-in for the document. The served bytes are stable, so the digest is too.
+PDFs are hashed as raw bytes. A change to their metadata can change the digest
+even when the visible text is unchanged.
 """
 
 from __future__ import annotations
@@ -53,16 +56,17 @@ TIMEOUT = 30
 TRIES = 3
 RETRY_DELAY = 6.0
 # Spacing between requests to the same run. These are public-sector sites
-# serving a 62-URL sweep; a courteous pace costs about a minute in total.
+# serving the source sweep. A courteous pace avoids a burst of requests.
 REQUEST_SPACING = 1.0
 USER_AGENT = (
     "australian-accounting-skills source-refresh "
     "(+https://github.com/ryanduguid/australian-accounting-skills)"
 )
 
-# Machine-written fields. A record carries all of them or none; a person never
-# edits them by hand, and `checked_at` and `fact` are never touched here.
+# A write supplies every machine field. Older records may lack `content_url`.
+# `checked_at` and `fact` are never touched here.
 DIGEST_FIELD = "content_hash"
+CONTENT_URL_FIELD = "content_url"
 FETCHED_FIELD = "fetched_at"
 FINAL_URL_FIELD = "final_url"
 STATUS_FIELD = "http_status"
@@ -75,14 +79,15 @@ DIGEST_KIND_FIELD = "content_hash_covers"
 MACHINE_FIELDS = (
     DIGEST_FIELD,
     DIGEST_KIND_FIELD,
+    CONTENT_URL_FIELD,
     FETCHED_FIELD,
     FINAL_URL_FIELD,
     STATUS_FIELD,
     UPSTREAM_FIELD,
 )
 
-# Outcome vocabulary. `unchanged` and `changed` need a stored digest to mean
-# anything, so a record without one is `recorded`, not silently `unchanged`.
+# An unchanged result needs persisted content and destination baselines.
+# Missing baselines require review and an explicit write.
 #
 # The three failure outcomes are kept apart because they ask for three
 # different things. `missing` is a defect in this repository: the indexed URL
@@ -93,6 +98,7 @@ MACHINE_FIELDS = (
 UNCHANGED = "unchanged"
 CHANGED = "changed"
 RECORDED = "recorded"
+BASELINE_REQUIRED = "baseline-required"
 MISSING = "missing"
 BLOCKED = "blocked"
 UNREACHABLE = "unreachable"
@@ -104,7 +110,7 @@ UNREADABLE = "unreadable"
 # `review-due` is one whose next review date has passed, which asks a person for a review.
 SCHEDULED = "scheduled"
 REVIEW_DUE = "review-due"
-NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE)
+NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
 # What `--check` fails on, which is narrower than what it reports.
 #
 # A changed, missing or unreadable source means something here is wrong and
@@ -114,9 +120,10 @@ NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DU
 # would leave the scheduled issue permanently open, and an alert that can
 # never be cleared is one nobody reads. They stay in every report instead,
 # and coverage.json counts them per skill.
-ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE)
+ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
 REPORTED_OUTCOMES = (
-    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, SCHEDULED, RECORDED, UNCHANGED,
+    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED,
+    SCHEDULED, RECORDED, UNCHANGED,
 )
 
 # Status codes that settle the question rather than inviting a retry.
@@ -343,7 +350,7 @@ def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY) -> Fetche
             # A refusal is settled; only a transport fault is worth retrying.
             return Fetched(
                 status=error.code,
-                final_url=url,
+                final_url=error.geturl() or url,
                 digest="",
                 kind="",
                 content_type="",
@@ -450,17 +457,25 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
         if fetched.status in REFUSED_STATUSES:
             return BLOCKED, f"{reason}. This host refuses automated retrieval: review by hand."
         return UNREACHABLE, f"{reason}. Open the source by hand before relying on the workflow."
+    previous_url = urldefrag(str(record.get(CONTENT_URL_FIELD, ""))).url
+    current_url = urldefrag(fetched.final_url).url
+    if previous_url and current_url and previous_url != current_url:
+        return CHANGED, f"Source destination changed from {previous_url} to {current_url}."
     stored = str(record.get(DIGEST_FIELD, ""))
-    if not stored:
-        return RECORDED, "First digest recorded. A later run can compare against it."
-    if str(record.get(DIGEST_KIND_FIELD, "")) != fetched.kind:
-        return RECORDED, (
-            f"Digest re-recorded over {fetched.content_type or 'this content type'}: "
-            "the stored one covered a different reading of the response."
+    same_reading = str(record.get(DIGEST_KIND_FIELD, "")) == fetched.kind
+    if stored and same_reading and stored != fetched.digest:
+        return CHANGED, "Readable text changed since the last readable sweep."
+    if not stored or not previous_url:
+        return BASELINE_REQUIRED, (
+            "A readable content or destination baseline is missing. A person must review "
+            "the source, then run python scripts/source_refresh.py --write to record it."
         )
-    if stored == fetched.digest:
-        return UNCHANGED, "Readable text is unchanged since the last sweep."
-    return CHANGED, f"Readable text changed since {record.get(FETCHED_FIELD, 'the last sweep')}."
+    if not same_reading:
+        return RECORDED, (
+            f"The digest covers a different reading of {fetched.content_type or 'this content type'}. "
+            "A reviewed write can update the baseline."
+        )
+    return UNCHANGED, "Readable text and destination are unchanged since the last readable sweep."
 
 
 def apply_fetch(record: dict[str, object], fetched: Fetched, today: str) -> None:
@@ -471,10 +486,12 @@ def apply_fetch(record: dict[str, object], fetched: Fetched, today: str) -> None
     if fetched.readable:
         record[DIGEST_FIELD] = fetched.digest
         record[DIGEST_KIND_FIELD] = fetched.kind
+        record[CONTENT_URL_FIELD] = fetched.final_url
         record[UPSTREAM_FIELD] = fetched.last_modified
     else:
         record.setdefault(DIGEST_FIELD, "")
         record.setdefault(DIGEST_KIND_FIELD, "")
+        record.setdefault(CONTENT_URL_FIELD, "")
         record.setdefault(UPSTREAM_FIELD, "")
 
 
@@ -536,6 +553,12 @@ def refresh(
         fetched = seen[target]
 
         outcome, detail = classify(record, fetched)
+        if write:
+            apply_fetch(record, fetched, stamp)
+            touched[path] = payload
+            if outcome == BASELINE_REQUIRED:
+                outcome = RECORDED
+                detail = "Readable content and destination baseline recorded."
         report.outcomes.append(
             Outcome(
                 skill=skill,
@@ -547,9 +570,6 @@ def refresh(
                 fetched=fetched,
             )
         )
-        if write:
-            apply_fetch(record, fetched, stamp)
-            touched[path] = payload
 
     for path, payload in touched.items():
         dump_index(path, payload)
@@ -575,8 +595,9 @@ def render(report: Report, *, write: bool) -> str:
         f"- blocked (host refuses automation, review by hand): {counts[BLOCKED]}",
         f"- unreachable (transport fault, may clear): {counts[UNREACHABLE]}",
         f"- review-due (scheduled manual review overdue): {counts[REVIEW_DUE]}",
+        f"- baseline-required (review and record a readable baseline): {counts[BASELINE_REQUIRED]}",
         f"- scheduled (reviewed by hand, next review {next_review}): {counts[SCHEDULED]}",
-        f"- first digest recorded: {counts[RECORDED]}",
+        f"- baseline recorded or reading changed: {counts[RECORDED]}",
         f"- unchanged: {counts[UNCHANGED]}",
         "",
     ]
@@ -602,7 +623,7 @@ def render(report: Report, *, write: bool) -> str:
             )
         lines.append("")
     else:
-        lines += ["Nothing changed and nothing was unreachable.", ""]
+        lines += ["No actionable or network findings were reported.", ""]
     if write and report.written:
         lines += [f"Updated {len(report.written)} index files.", ""]
     return "\n".join(lines)
@@ -623,8 +644,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="Exit 2 when a source changed, went missing or could not be read. A source "
-        "blocked by its host is reported but does not fail the run.",
+        help="Exit 2 when source text or destination changes, a source goes missing or is "
+        "unreadable, a readable baseline is missing, or a manual review is overdue. "
+        "Blocked and unreachable sources are "
+        "reported without failing the run.",
     )
     parser.add_argument("--report", default="", help="Also write the Markdown report to this path.")
     parser.add_argument(

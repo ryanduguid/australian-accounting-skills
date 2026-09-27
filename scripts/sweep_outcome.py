@@ -30,13 +30,14 @@ SWEPT = re.compile(
     re.M,
 )
 COUNT = re.compile(
-    r"^- (?P<name>changed|missing|unreadable|review-due|blocked|unreachable)[^:]*: (?P<count>\d+)$", re.M
+    r"^- (?P<name>changed|missing|unreadable|review-due|baseline-required|blocked|unreachable)"
+    r"[^:]*: (?P<count>\d+)$", re.M
 )
 STAMP_FORMAT = "%Y-%m-%d %H:%M"
-# What `--check` fails on: the same three outcomes `source_refresh.ACTIONABLE`
+# What `--check` fails on: the same outcomes `source_refresh.ACTIONABLE`
 # names. The counts come from the report, so a report that disagrees with the
 # exit status is caught here rather than trusted.
-ACTIONABLE = ("changed", "missing", "unreadable", "review-due")
+ACTIONABLE = ("changed", "missing", "unreadable", "review-due", "baseline-required")
 UNCHECKED = ("blocked", "unreachable")
 
 
@@ -86,7 +87,7 @@ def decide(status: int, counts: dict[str, int]) -> Outcome:
         raise SweepError(f"exit 0 with a report that lists {actionable} actionable sources")
     unchecked = {name: counts[name] for name in UNCHECKED if counts[name]}
     if not unchecked:
-        return Outcome("clean", "Every indexed source was retrieved and none had moved.")
+        return Outcome("clean", "No actionable source findings were reported.")
     listed = " and ".join(f"{count} {name}" for name, count in unchecked.items())
     return Outcome(
         "clean",

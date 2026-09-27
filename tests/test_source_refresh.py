@@ -12,6 +12,8 @@ import json
 import sys
 import tempfile
 import unittest
+import urllib.error
+from email.message import Message
 from pathlib import Path
 from unittest import mock
 
@@ -96,6 +98,7 @@ class ClassifyTests(unittest.TestCase):
             "checked_at": "2026-09-08",
             source_refresh.DIGEST_FIELD: UNCHANGED_DIGEST,
             source_refresh.DIGEST_KIND_FIELD: source_refresh.HTML_KIND,
+            source_refresh.CONTENT_URL_FIELD: "https://example.test/page",
             source_refresh.FETCHED_FIELD: "2026-09-16",
         }
         base.update(overrides)
@@ -108,6 +111,78 @@ class ClassifyTests(unittest.TestCase):
     def test_a_different_digest_is_changed(self) -> None:
         outcome, _ = source_refresh.classify(self.record(), fetched(digest="b" * 64))
         self.assertEqual(outcome, source_refresh.CHANGED)
+
+    def test_a_changed_destination_is_reported_even_when_the_text_matches(self) -> None:
+        previous = "https://example.test/old"
+        current = "https://example.test/new"
+        for kind in (source_refresh.HTML_KIND, source_refresh.BYTES_KIND):
+            with self.subTest(kind=kind):
+                outcome, detail = source_refresh.classify(
+                    self.record(content_url=previous), fetched(final_url=current, kind=kind)
+                )
+                self.assertEqual(outcome, source_refresh.CHANGED)
+                self.assertIn(previous, detail)
+                self.assertIn(current, detail)
+
+    def test_an_unchanged_destination_ignores_fragments(self) -> None:
+        for previous in ("https://example.test/page", "https://example.test/page#section"):
+            with self.subTest(previous=previous):
+                outcome, _ = source_refresh.classify(
+                    self.record(content_url=previous), fetched()
+                )
+                self.assertEqual(outcome, source_refresh.UNCHANGED)
+
+    def test_an_existing_redirect_is_not_reported_again(self) -> None:
+        destination = "https://example.test/current"
+        outcome, _ = source_refresh.classify(
+            self.record(url="https://example.test/legacy", content_url=destination),
+            fetched(final_url=destination),
+        )
+        self.assertEqual(outcome, source_refresh.UNCHANGED)
+
+    def test_a_first_destination_does_not_invent_a_change(self) -> None:
+        outcome, _ = source_refresh.classify(
+            self.record(content_hash="", content_url=""),
+            fetched(final_url="https://example.test/new"),
+        )
+        self.assertEqual(outcome, source_refresh.BASELINE_REQUIRED)
+
+    def test_a_different_failure_destination_keeps_its_failure_outcome(self) -> None:
+        for status, expected in (
+            (200, source_refresh.UNREADABLE),
+            (404, source_refresh.MISSING),
+            (403, source_refresh.BLOCKED),
+            (0, source_refresh.UNREACHABLE),
+        ):
+            with self.subTest(status=status):
+                outcome, _ = source_refresh.classify(
+                    self.record(content_url="https://example.test/old"),
+                    fetched(status=status, digest=""),
+                )
+                self.assertEqual(outcome, expected)
+
+    def test_a_legacy_record_requires_a_baseline_without_trusting_the_last_attempt(self) -> None:
+        for status in (0, 200, 403, 404):
+            with self.subTest(status=status):
+                record = self.record(final_url="https://example.test/old", http_status=status)
+                del record[source_refresh.CONTENT_URL_FIELD]
+                outcome, detail = source_refresh.classify(record, fetched())
+                self.assertEqual(outcome, source_refresh.BASELINE_REQUIRED)
+                self.assertIn("destination baseline", detail)
+                self.assertEqual(
+                    source_refresh.classify(record, fetched(kind=source_refresh.BYTES_KIND))[0],
+                    source_refresh.BASELINE_REQUIRED,
+                )
+                self.assertEqual(
+                    source_refresh.classify(record, fetched(digest="b" * 64))[0],
+                    source_refresh.CHANGED,
+                )
+                source_refresh.apply_fetch(record, fetched(), "2026-09-16")
+                self.assertEqual(source_refresh.classify(record, fetched())[0], source_refresh.UNCHANGED)
+                self.assertEqual(
+                    source_refresh.classify(record, fetched(final_url="https://example.test/new"))[0],
+                    source_refresh.CHANGED,
+                )
 
     def test_a_readable_response_with_no_digest_is_a_fault_here(self) -> None:
         outcome, detail = source_refresh.classify(self.record(), fetched(digest=""))
@@ -127,11 +202,11 @@ class ClassifyTests(unittest.TestCase):
         )
         self.assertEqual(outcome, source_refresh.RECORDED)
 
-    def test_a_record_without_a_digest_is_recorded_not_unchanged(self) -> None:
+    def test_a_record_without_a_digest_requires_a_baseline(self) -> None:
         outcome, _ = source_refresh.classify(
             self.record(**{source_refresh.DIGEST_FIELD: ""}), fetched()
         )
-        self.assertEqual(outcome, source_refresh.RECORDED)
+        self.assertEqual(outcome, source_refresh.BASELINE_REQUIRED)
 
     def test_the_failure_outcomes_say_what_to_do_about_them(self) -> None:
         """Three failures, three different actions, so three outcomes."""
@@ -164,7 +239,7 @@ class ClassifyTests(unittest.TestCase):
         self.assertEqual(
             set(source_refresh.ACTIONABLE),
             {source_refresh.CHANGED, source_refresh.MISSING, source_refresh.UNREADABLE,
-             source_refresh.REVIEW_DUE},
+             source_refresh.REVIEW_DUE, source_refresh.BASELINE_REQUIRED},
         )
         for outcome in (source_refresh.BLOCKED, source_refresh.UNREACHABLE):
             with self.subTest(outcome=outcome):
@@ -187,9 +262,61 @@ class ClassifyTests(unittest.TestCase):
                 self.assertIn(outcome, source_refresh.NEEDS_ATTENTION)
 
 
+class FetchTests(unittest.TestCase):
+    def test_an_http_error_records_the_resolved_destination(self) -> None:
+        destination = "https://example.test/redirected"
+        error = urllib.error.HTTPError(destination, 404, "Not Found", Message(), None)
+        with mock.patch.object(source_refresh.urllib.request, "urlopen", side_effect=error):
+            result = source_refresh.fetch("https://example.test/page", tries=1, delay=0)
+        self.assertEqual(result.status, 404)
+        self.assertEqual(result.final_url, destination)
+        record: dict[str, object] = {"url": "https://example.test/page"}
+        source_refresh.apply_fetch(record, fetched(final_url="https://example.test/old"), "2026-09-15")
+        source_refresh.apply_fetch(record, result, "2026-09-16")
+        self.assertEqual(record[source_refresh.FINAL_URL_FIELD], destination)
+        self.assertEqual(record[source_refresh.CONTENT_URL_FIELD], "https://example.test/old")
+
+
 class ApplyFetchTests(unittest.TestCase):
+    def test_a_first_failed_write_does_not_establish_a_destination(self) -> None:
+        for status in (0, 403, 404, 200):
+            with self.subTest(status=status):
+                record: dict[str, object] = {"url": "https://example.test/page"}
+                source_refresh.apply_fetch(record, fetched(status=status, digest=""), "2026-09-16")
+                self.assertEqual(set(record) - {"url"}, set(source_refresh.MACHINE_FIELDS))
+                self.assertEqual(record[source_refresh.CONTENT_URL_FIELD], "")
+                self.assertEqual(
+                    source_refresh.classify(record, fetched(final_url="https://example.test/new"))[0],
+                    source_refresh.BASELINE_REQUIRED,
+                )
+
+    def test_recovery_compares_with_the_last_readable_destination(self) -> None:
+        for status in (0, 403, 404, 200):
+            for destination, expected in (
+                ("https://example.test/old", source_refresh.UNCHANGED),
+                ("https://example.test/new", source_refresh.CHANGED),
+            ):
+                with self.subTest(status=status, destination=destination):
+                    record: dict[str, object] = {"url": "https://example.test/page"}
+                    source_refresh.apply_fetch(
+                        record, fetched(final_url="https://example.test/old"), "2026-09-15"
+                    )
+                    source_refresh.apply_fetch(
+                        record, fetched(status=status, digest=""), "2026-09-16"
+                    )
+                    source_refresh.apply_fetch(
+                        record, fetched(status=status, digest="", final_url="https://example.test/temporary"),
+                        "2026-09-17",
+                    )
+                    self.assertEqual(record[source_refresh.CONTENT_URL_FIELD], "https://example.test/old")
+                    self.assertEqual(record[source_refresh.FINAL_URL_FIELD], "https://example.test/temporary")
+                    self.assertEqual(record[source_refresh.STATUS_FIELD], status)
+                    self.assertEqual(
+                        source_refresh.classify(record, fetched(final_url=destination))[0], expected
+                    )
+
     def test_a_sweep_writes_every_machine_field_and_only_those(self) -> None:
-        """A record carries the whole set or none of it.
+        """A write supplies the whole machine-field set.
 
         A partially written record reads as a checked source while missing the
         field that would have shown otherwise.
@@ -254,6 +381,38 @@ class SweepTests(unittest.TestCase):
         self.addCleanup(directory.cleanup)
         return Path(directory.name) / "skills"
 
+    def test_a_new_destination_fails_check_and_preserves_review_fields(self) -> None:
+        skills = self.temporary_skills_directory()
+        skill = skills / "example-skill"
+        skill.mkdir(parents=True)
+        record = {
+            "url": "https://example.test/page",
+            "checked_at": "2026-09-08",
+            "fact": "A discovery link, not approval of a current rule.",
+            "verification_status": "indexed-source-discovery-only",
+            "limitations": "Read the authority at use time.",
+            "final_url": "https://example.test/old",
+            "content_url": "https://example.test/old",
+            "content_hash": UNCHANGED_DIGEST,
+            "content_hash_covers": source_refresh.HTML_KIND,
+        }
+        path = skill / "sources.json"
+        path.write_text(json.dumps({"skill": "example-skill", "sources": [record]}),
+                        encoding="utf-8")
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched()):
+            report = source_refresh.refresh(skills=skills, spacing=0, write=True)
+        with mock.patch.object(source_refresh, "refresh", return_value=report), \
+                mock.patch("sys.stdout"):
+            self.assertEqual(source_refresh.main(["--check"]), 2)
+        rendered = source_refresh.render(report, write=True)
+        self.assertIn("https://example.test/old", rendered)
+        self.assertIn("https://example.test/page", rendered)
+        saved = json.loads(path.read_text(encoding="utf-8"))["sources"][0]
+        for key in ("checked_at", "fact", "verification_status", "limitations", "url"):
+            self.assertEqual(saved[key], record[key])
+        self.assertEqual(saved["final_url"], "https://example.test/page")
+        self.assertEqual(saved["content_url"], "https://example.test/page")
+
     def test_sections_of_one_page_are_retrieved_once(self) -> None:
         """A fragment never reaches the server.
 
@@ -310,6 +469,7 @@ class SweepTests(unittest.TestCase):
         self.assertIn("Reviewed by hand monthly, next review 2026-10-26.", on_time.outcomes[0].detail)
         self.assertIn("- scheduled (reviewed by hand, next review 2026-10-26): 1",
                       source_refresh.render(on_time, write=False))
+        self.assertNotIn("Nothing changed", source_refresh.render(on_time, write=False))
         self.assertEqual([o.outcome for o in overdue.outcomes], [source_refresh.REVIEW_DUE])
         self.assertEqual(len(overdue.actionable), 1)
         self.assertIn("- review-due (scheduled manual review overdue): 1",

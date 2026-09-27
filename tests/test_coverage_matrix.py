@@ -159,8 +159,10 @@ class SourceProvenanceTests(unittest.TestCase):
                 self.assertTrue(str(record["final_url"]).startswith("https://"))
                 digest = str(record["content_hash"])
                 published = str(record["source_last_modified"])
-                if record["http_status"] == 200:
-                    self.assertRegex(digest, SHA256, "a retrieved source must carry a digest")
+                content_url = str(record.get("content_url", ""))
+                if content_url:
+                    self.assertTrue(content_url.startswith(("https://", "http://")))
+                    self.assertRegex(digest, SHA256, "a readable destination must carry a digest")
                 if digest:
                     self.assertRegex(digest, SHA256)
                     self.assertIn(
