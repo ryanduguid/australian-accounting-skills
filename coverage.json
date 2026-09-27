@@ -5,7 +5,7 @@
     "skills": 62,
     "sources_indexed": 143,
     "skills_source_exempt": 7,
-    "skills_with_unreachable_sources": 3,
+    "skills_with_unreachable_sources": 2,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 17,
     "skills_with_only_the_seeded_case": 36
@@ -18,7 +18,7 @@
         "exempt": false,
         "reviewed": "2026-09-26",
         "fetched": "2026-09-26",
-        "unreachable": 5,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {

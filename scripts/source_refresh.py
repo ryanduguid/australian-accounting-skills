@@ -66,6 +66,10 @@ DIGEST_FIELD = "content_hash"
 FETCHED_FIELD = "fetched_at"
 FINAL_URL_FIELD = "final_url"
 STATUS_FIELD = "http_status"
+# A person-written schedule, {"cadence": "monthly", "next_review": "YYYY-MM-DD"}, for a source
+# reviewed by hand instead of fetched. AUSTRAC's guidance changes often and its host times out
+# this script, so the sweep listed those pages as unreachable every week and caught nothing.
+SCHEDULE_FIELD = "manual_review"
 UPSTREAM_FIELD = "source_last_modified"
 DIGEST_KIND_FIELD = "content_hash_covers"
 MACHINE_FIELDS = (
@@ -96,7 +100,11 @@ UNREACHABLE = "unreachable"
 # here, not a finding about the source, and it must never be stored as a
 # digest: an empty digest compares equal on every later sweep.
 UNREADABLE = "unreadable"
-NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE)
+# A source on a manual-review schedule is not fetched. `scheduled` counts those not yet due;
+# `review-due` is one whose next review date has passed, which asks a person for a review.
+SCHEDULED = "scheduled"
+REVIEW_DUE = "review-due"
+NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE)
 # What `--check` fails on, which is narrower than what it reports.
 #
 # A changed, missing or unreadable source means something here is wrong and
@@ -106,9 +114,9 @@ NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE)
 # would leave the scheduled issue permanently open, and an alert that can
 # never be cleared is one nobody reads. They stay in every report instead,
 # and coverage.json counts them per skill.
-ACTIONABLE = (CHANGED, MISSING, UNREADABLE)
+ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE)
 REPORTED_OUTCOMES = (
-    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, RECORDED, UNCHANGED,
+    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, SCHEDULED, RECORDED, UNCHANGED,
 )
 
 # Status codes that settle the question rather than inviting a retry.
@@ -363,6 +371,7 @@ class Outcome:
     detail: str
     checked_at: str
     fetched: Fetched
+    next_review: str = ""
 
     @property
     def needs_attention(self) -> bool:
@@ -481,6 +490,29 @@ def refresh(
         if not url:
             continue
 
+        schedule = record.get(SCHEDULE_FIELD)
+        if isinstance(schedule, dict):
+            due = str(schedule.get("next_review", ""))
+            late = not due or due < stamp
+            report.outcomes.append(
+                Outcome(
+                    skill=skill,
+                    title=str(record.get("title", "")),
+                    url=url,
+                    outcome=REVIEW_DUE if late else SCHEDULED,
+                    detail=(
+                        f"Manual review was due {due or 'with no date set'}: read the source, "
+                        "then update checked_at and manual_review.next_review by hand."
+                        if late
+                        else f"Reviewed by hand {schedule.get('cadence', '')}; next review {due}."
+                    ),
+                    checked_at=str(record.get("checked_at", "")),
+                    fetched=Fetched(0, "", "", "", "", "", "not fetched: reviewed by hand"),
+                    next_review=due,
+                )
+            )
+            continue
+
         # A fragment never reaches the server, so two records pointing at
         # different sections of one Act are one retrieval, not two.
         target = urldefrag(url).url
@@ -515,6 +547,8 @@ def refresh(
 def render(report: Report, *, write: bool) -> str:
     """Render the sweep as Markdown, usable as an issue body unchanged."""
     counts = {name: len(report.by_outcome(name)) for name in REPORTED_OUTCOMES}
+    upcoming = sorted(o.next_review for o in report.by_outcome(SCHEDULED))
+    next_review = upcoming[0] if upcoming else "none scheduled"
     swept = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
         "# Primary source sweep",
@@ -527,6 +561,8 @@ def render(report: Report, *, write: bool) -> str:
         f"- unreadable (a fault in this script): {counts[UNREADABLE]}",
         f"- blocked (host refuses automation, review by hand): {counts[BLOCKED]}",
         f"- unreachable (transport fault, may clear): {counts[UNREACHABLE]}",
+        f"- review-due (scheduled manual review overdue): {counts[REVIEW_DUE]}",
+        f"- scheduled (reviewed by hand, next review {next_review}): {counts[SCHEDULED]}",
         f"- first digest recorded: {counts[RECORDED]}",
         f"- unchanged: {counts[UNCHANGED]}",
         "",

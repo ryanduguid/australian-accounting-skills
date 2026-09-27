@@ -158,11 +158,13 @@ class ClassifyTests(unittest.TestCase):
         legislation.nsw.gov.au refuses automated retrieval to every user agent,
         so 7 records can never come back clean from CI. Failing the scheduled
         run on them would hold its issue open for ever and train the reader to
-        ignore it, taking the real findings with it.
+        ignore it, taking the real findings with it. An overdue manual review is
+        different: the review itself clears it.
         """
         self.assertEqual(
             set(source_refresh.ACTIONABLE),
-            {source_refresh.CHANGED, source_refresh.MISSING, source_refresh.UNREADABLE},
+            {source_refresh.CHANGED, source_refresh.MISSING, source_refresh.UNREADABLE,
+             source_refresh.REVIEW_DUE},
         )
         for outcome in (source_refresh.BLOCKED, source_refresh.UNREACHABLE):
             with self.subTest(outcome=outcome):
@@ -281,6 +283,39 @@ class SweepTests(unittest.TestCase):
         self.assertEqual(fetch.call_count, 1)
         self.assertEqual(fetch.call_args.args[0], "https://example.test/act")
         self.assertEqual(len(report.outcomes), 3)
+
+    def test_a_source_reviewed_by_hand_is_not_fetched_and_fails_the_check_once_overdue(self) -> None:
+        """AUSTRAC's pages time out this script and change often, so a person reviews them monthly.
+
+        The sweep listed them as unreachable every week and caught nothing; now it names the
+        next review date, and an overdue review is a finding.
+        """
+        skills = self.temporary_skills_directory()
+        skill = skills / "example-skill"
+        skill.mkdir(parents=True)
+        schedule = {"cadence": "monthly", "next_review": "2026-10-26"}
+        (skill / "sources.json").write_text(
+            json.dumps({"skill": "example-skill", "sources": [
+                {"url": "https://example.test/guidance", "checked_at": "2026-09-26",
+                 "manual_review": schedule},
+            ]}),
+            encoding="utf-8",
+        )
+        with mock.patch.object(source_refresh, "fetch", side_effect=AssertionError("fetched")):
+            on_time = source_refresh.refresh(skills=skills, spacing=0, today="2026-10-26", write=True)
+            overdue = source_refresh.refresh(skills=skills, spacing=0, today="2026-10-27")
+
+        self.assertEqual([o.outcome for o in on_time.outcomes], [source_refresh.SCHEDULED])
+        self.assertEqual(on_time.actionable, [])
+        self.assertIn("- scheduled (reviewed by hand, next review 2026-10-26): 1",
+                      source_refresh.render(on_time, write=False))
+        self.assertEqual([o.outcome for o in overdue.outcomes], [source_refresh.REVIEW_DUE])
+        self.assertEqual(len(overdue.actionable), 1)
+        self.assertIn("- review-due (scheduled manual review overdue): 1",
+                      source_refresh.render(overdue, write=False))
+        # Not fetched, so the machine fields are never written for it.
+        record = json.loads((skill / "sources.json").read_text(encoding="utf-8"))["sources"][0]
+        self.assertNotIn(source_refresh.FETCHED_FIELD, record)
 
 
 if __name__ == "__main__":

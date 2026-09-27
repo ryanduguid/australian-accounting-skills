@@ -29,12 +29,14 @@ SWEPT = re.compile(
     r"(?P<stamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}) UTC\.$",
     re.M,
 )
-COUNT = re.compile(r"^- (?P<name>changed|missing|unreadable|blocked|unreachable)[^:]*: (?P<count>\d+)$", re.M)
+COUNT = re.compile(
+    r"^- (?P<name>changed|missing|unreadable|review-due|blocked|unreachable)[^:]*: (?P<count>\d+)$", re.M
+)
 STAMP_FORMAT = "%Y-%m-%d %H:%M"
 # What `--check` fails on: the same three outcomes `source_refresh.ACTIONABLE`
 # names. The counts come from the report, so a report that disagrees with the
 # exit status is caught here rather than trusted.
-ACTIONABLE = ("changed", "missing", "unreadable")
+ACTIONABLE = ("changed", "missing", "unreadable", "review-due")
 UNCHECKED = ("blocked", "unreachable")
 
 

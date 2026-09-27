@@ -82,6 +82,12 @@ class OutcomeTests(unittest.TestCase):
         self.assertEqual(result.name, "clean")
         self.assertEqual(result.comment, "Every indexed source was retrieved and none had moved.")
 
+    def test_an_overdue_manual_review_is_a_finding(self) -> None:
+        self.write({source_refresh.UNCHANGED: 2, source_refresh.REVIEW_DUE: 1})
+        result = self.outcome(2)
+        self.assertEqual(result.name, "findings")
+        self.assertIn("1 sources need an edit", result.comment)
+
     def test_exit_2_with_a_findings_report_is_findings(self) -> None:
         self.write({source_refresh.UNCHANGED: 2, source_refresh.CHANGED: 1, source_refresh.MISSING: 1})
         result = self.outcome(2)

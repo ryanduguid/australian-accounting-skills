@@ -13,7 +13,11 @@
       "fetched_at": "2026-09-26",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-26"
+      }
     },
     {
       "title": "AUSTRAC: About the AML/CTF reforms",
@@ -27,7 +31,11 @@
       "fetched_at": "2026-09-26",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-26"
+      }
     },
     {
       "title": "AUSTRAC: Customer due diligence",
@@ -41,7 +49,11 @@
       "fetched_at": "2026-09-26",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-26"
+      }
     },
     {
       "title": "AUSTRAC: Reviewing and updating customers' ML/TF risk and KYC information",
@@ -55,7 +67,11 @@
       "fetched_at": "2026-09-26",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-26"
+      }
     },
     {
       "title": "AUSTRAC: Transitioning existing customers",
@@ -69,7 +85,11 @@
       "fetched_at": "2026-09-26",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-26"
+      }
     },
     {
       "title": "Anti-Money Laundering and Counter-Terrorism Financing Act 2006",
