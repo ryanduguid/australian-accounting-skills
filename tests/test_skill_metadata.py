@@ -545,5 +545,34 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertNotIn("State or Territory", rows[0])
 
 
+# An environment variable that holds a credential, as a skill would name one.
+CREDENTIAL_VARIABLE = re.compile(r"\b[A-Z][A-Z0-9_]*(?:SECRET|TOKEN|PASSWORD|API_KEY)\b")
+NO_READ_NO_ECHO = (
+    "never read `.env` or any other credential file, never print a secret value "
+    "or pass one on a command line, and never ask for one in chat"
+)
+
+
+class CredentialBoundaryTests(unittest.TestCase):
+    """A skill that tells an agent to supply a credential also says how not to leak it.
+
+    xero-exports named XERO_CLIENT_SECRET and a `.env` file with no rule against
+    reading or echoing either (roadmap finding AI-5).
+    """
+
+    def test_a_skill_naming_a_credential_variable_carries_the_rule(self) -> None:
+        for skill in sorted(SKILLS_DIRECTORY.glob("*/SKILL.md")):
+            text = " ".join(skill.read_text(encoding="utf-8").split())
+            if CREDENTIAL_VARIABLE.search(text):
+                with self.subTest(skill=skill.parent.name):
+                    self.assertIn(NO_READ_NO_ECHO, text)
+
+    def test_the_shared_rules_carry_the_credential_boundary(self) -> None:
+        rules = REPOSITORY / ".claude" / "rules" / "accounting-safety.md"
+        text = " ".join(rules.read_text(encoding="utf-8").split())
+        self.assertIn("never print a secret value or pass one on a command line", text)
+        self.assertIn("never ask for one in chat", text)
+
+
 if __name__ == "__main__":
     unittest.main()

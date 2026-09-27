@@ -72,3 +72,7 @@ individual skill remains the detailed procedure.
     disagree, report both figures and the conventions behind them, and hand the
     difference to the responsible person with the primary source it turns on.
     Never choose between them on which figure is more favourable.
+11. Credentials stay with the operator, who sets an API client ID, client
+    secret or token in the process environment before the session. Never read
+    `.env` or any other credential file, never print a secret value or pass one
+    on a command line, and never ask for one in chat.
