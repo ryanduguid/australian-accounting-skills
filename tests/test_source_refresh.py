@@ -12,6 +12,7 @@ import json
 import sys
 import tempfile
 import unittest
+import urllib.error
 from pathlib import Path
 from unittest import mock
 
@@ -258,6 +259,21 @@ class ClassifyTests(unittest.TestCase):
         ):
             with self.subTest(outcome=outcome):
                 self.assertIn(outcome, source_refresh.NEEDS_ATTENTION)
+
+
+class FetchTests(unittest.TestCase):
+    def test_an_http_error_records_the_resolved_destination(self) -> None:
+        destination = "https://example.test/redirected"
+        error = urllib.error.HTTPError(destination, 404, "Not Found", None, None)
+        with mock.patch.object(source_refresh.urllib.request, "urlopen", side_effect=error):
+            result = source_refresh.fetch("https://example.test/page", tries=1, delay=0)
+        self.assertEqual(result.status, 404)
+        self.assertEqual(result.final_url, destination)
+        record: dict[str, object] = {"url": "https://example.test/page"}
+        source_refresh.apply_fetch(record, fetched(final_url="https://example.test/old"), "2026-09-15")
+        source_refresh.apply_fetch(record, result, "2026-09-16")
+        self.assertEqual(record[source_refresh.FINAL_URL_FIELD], destination)
+        self.assertEqual(record[source_refresh.CONTENT_URL_FIELD], "https://example.test/old")
 
 
 class ApplyFetchTests(unittest.TestCase):

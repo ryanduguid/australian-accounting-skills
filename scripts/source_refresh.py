@@ -15,8 +15,9 @@ these moved" in one pass. Two dates are kept apart on purpose:
 * ``fetched_at`` is the date this script last attempted retrieval. A machine
   writes it, and it never stands in for a review.
 
-``final_url`` describes the latest attempt. ``content_url`` accompanies the
-last readable digest and survives failed attempts. Older records establish
+``final_url`` records the response URL when available, otherwise the requested
+URL. ``content_url`` accompanies the last readable digest and survives failed
+attempts. Older records establish
 that destination baseline on their next reviewed write. Until then, read-only
 checks report the missing baseline and existing comparable digests still
 detect content changes.
@@ -349,7 +350,7 @@ def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY) -> Fetche
             # A refusal is settled; only a transport fault is worth retrying.
             return Fetched(
                 status=error.code,
-                final_url=url,
+                final_url=error.geturl() or url,
                 digest="",
                 kind="",
                 content_type="",
