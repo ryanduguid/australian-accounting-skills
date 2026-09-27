@@ -13,6 +13,7 @@ import sys
 import tempfile
 import unittest
 import urllib.error
+from email.message import Message
 from pathlib import Path
 from unittest import mock
 
@@ -264,7 +265,7 @@ class ClassifyTests(unittest.TestCase):
 class FetchTests(unittest.TestCase):
     def test_an_http_error_records_the_resolved_destination(self) -> None:
         destination = "https://example.test/redirected"
-        error = urllib.error.HTTPError(destination, 404, "Not Found", None, None)
+        error = urllib.error.HTTPError(destination, 404, "Not Found", Message(), None)
         with mock.patch.object(source_refresh.urllib.request, "urlopen", side_effect=error):
             result = source_refresh.fetch("https://example.test/page", tries=1, delay=0)
         self.assertEqual(result.status, 404)
