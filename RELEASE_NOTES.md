@@ -11,8 +11,8 @@ source-exempt and ships with a structure-faults case.
 The new skills require applicable primary authority at use time; source
 discovery is not current-law approval. No fresh agent evaluation of these
 42 additions or the financial modelling workflow is recorded. Three of the
-original 19 skill bodies change: month-end-close gains a supplier bank-detail
-step, cashflow-forecast-13week a tax set-aside check and a GIC deductibility
+original 19 skill bodies gain new steps beyond the corrections listed below:
+month-end-close gains a supplier bank-detail step, cashflow-forecast-13week a tax set-aside check and a GIC deductibility
 note, and fbt-annual-workflow a status check on the announced electric car
 discount changes. Six skills gain dated sources for 2026-27 Budget measures,
 and au-ato-penalties-interest, au-payroll-review and tax-invoice-review gain
@@ -29,6 +29,52 @@ evidence for source retrieval and behaviour with action tools available.
 
 The README recommends the tagged v0.2.1 installation. Development installation
 commands remain available for evaluating the unreleased 62-skill pack.
+
+## Corrections since v0.2.1
+
+Recorded 27 September 2026. Each passage below was wrong or unsupported in
+v0.2.1 and is corrected on `main`. Anyone using v0.2.1 should check the
+passage against the corrected text before relying on it.
+
+- `bas-preparation`: W1 gross payments under a voluntary agreement came from
+  the PAYG withholding payable account, which holds only the amount withheld.
+  They now come from the payroll report or the payment records, with the
+  withholding reconciled separately (#113). Label mapping now starts from the
+  entity's own statement and a checked ATO source (#103).
+- `fuel-tax-credits`: step 10 reduced non-cash attribution to the invoice
+  alone. It now attributes the credit to the earlier of the period in which
+  consideration is provided or an invoice is issued, provided the tax invoice
+  is held at lodgement, and treats the s 65-5(4) to (6) later-period election
+  as a separate choice (#113).
+- `coal-lsl-levy`: v0.2.1 said there is no carve-out and no power to excuse.
+  Schedule 1 clause 19(4) disapplies ss 5 and 10 for employment covered by a
+  Board-approved unpaid levy payment arrangement (#151). Employer screening now
+  applies the Fair Work Act s 14 definition, including the Territory route,
+  rather than legal form (#117), and eligible wages follow the s 3B formulas,
+  including the Formula A and Formula B comparison (#115).
+- `plant-and-equipment-costing`: v0.2.1 offered substantiation as an
+  alternative to a Chief Commissioner determination for a wet-hire split;
+  s 35(2) requires the determination (#151).
+- `contractor-super-tpar`: the domestic-work exclusion now needs a direct
+  arrangement between the payer and the worker for domestic work done for the
+  payer (*Newton* [2010] FCA 1440, TR 2023/4) (#116).
+- `payroll-tax-contractors`: wages for services performed wholly in NSW follow
+  s 11(1)(a) even if the worker lives elsewhere; the residence hierarchy
+  applies only to services across jurisdictions (#115).
+- `progress-claim-preparation` and `retention-schedule`: deadlines keep their
+  contractual unit instead of all counting as business days, and Queensland
+  retention trust account timing follows ss 34(2) and 35(2) (#115).
+- `xero-exports`: totals in the inspected exports use live formulas of several
+  kinds, not only `SUM`; the nil side of a debit or credit column can hold a
+  numeric zero; and the Transactions by BAS Field tab has no `Net` column
+  (#115).
+- `cashflow-forecast-13week`, `stp-finalisation`, `contractor-super-tpar`,
+  `payroll-tax-contractors` and `coal-lsl-levy`: statements the skill could
+  not source are now marked UNVERIFIED and leave the outcome `UNKNOWN` until
+  checked, including stp-finalisation's 14 July deadline and its claimed
+  1 July 2026 payday super STP fields (#103, #148).
+- `wip-over-under-billing`: the schedule engine link pointed at the retired
+  TheWIPTally repository; it now pins the australian-accounting package (#103).
 
 # v0.2.1
 

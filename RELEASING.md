@@ -72,7 +72,7 @@ only direction is forward, so cut a new version rather than try to get behind it
 
 ## Preserved squash-boundary releases
 
-Five published tags point at pull-request-side commits that preceded their
+Six published tags point at pull-request-side commits that preceded their
 squash merges to `main`. They are intentional historical exceptions outside
 current `main` ancestry:
 
@@ -83,9 +83,11 @@ current `main` ancestry:
 | `v0.1.4` | `e522b3cb24cc972ec8bdc183eecf464137fa7d2e` | `ef8415da22c9d6408df4b637e166b452a3f4bd23` |
 | `v0.1.5` | `ba7496f613d552cb9fdbb49083848d3baf180c08` | `57f7bef712fa856db7f073fab65c4cf016885197` |
 | `v0.2.0` | `578e7f17669db807d8a43d08d10962e66f3274f0` | `1d6b9f12c6faed307018c524d76a3c6689db3f46` |
+| `v0.2.1` | `fcec4d6d4689ccbdd17372ee9150a72fa453cdd6` | `527b0a22c8be5ce10855f12f052cd3bda7b7b827` |
 
 The `v0.2.0` peeled commit carries the same tree as its squash merge
-`29475b9`, so the released files match `main` at that point exactly.
+`29475b9`, and the `v0.2.1` peeled commit the same tree as `2decdc5`, so the
+released files match `main` at those points exactly.
 
 Ancestry and release attestation are separate facts. `gh release verify`
 succeeds for `v0.1.5`. It returns `no attestations for tag` for `v0.1.1`,
