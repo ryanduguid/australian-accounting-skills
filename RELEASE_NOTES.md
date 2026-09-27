@@ -11,8 +11,8 @@ source-exempt and ships with a structure-faults case.
 The new skills require applicable primary authority at use time; source
 discovery is not current-law approval. No fresh agent evaluation of these
 42 additions or the financial modelling workflow is recorded. Three of the
-original 19 skill bodies change: month-end-close gains a supplier bank-detail
-step, cashflow-forecast-13week a tax set-aside check and a GIC deductibility
+original 19 skill bodies gain new steps beyond the corrections listed below:
+month-end-close gains a supplier bank-detail step, cashflow-forecast-13week a tax set-aside check and a GIC deductibility
 note, and fbt-annual-workflow a status check on the announced electric car
 discount changes. Six skills gain dated sources for 2026-27 Budget measures,
 and au-ato-penalties-interest, au-payroll-review and tax-invoice-review gain
@@ -29,6 +29,58 @@ evidence for source retrieval and behaviour with action tools available.
 
 The README recommends the tagged v0.2.1 installation. Development installation
 commands remain available for evaluating the unreleased 62-skill pack.
+
+## Corrections since v0.2.1
+
+Recorded 27 September 2026. Each passage below was wrong or unsupported in
+v0.2.1 and is corrected on `main`. Anyone using v0.2.1 should check the
+passage against the corrected text before relying on it.
+
+- In `bas-preparation`, W1 gross payments under a voluntary agreement came
+  from the PAYG withholding payable account, which holds only the amount
+  withheld. They now come from the payroll report or the payment records, with
+  the withholding reconciled separately (#113). Label mapping now starts from
+  the entity's own statement and a checked ATO source (#103).
+- In `fuel-tax-credits`, step 10 reduced non-cash attribution to the invoice
+  alone. Under s 65-5 of the *Fuel Tax Act 2006* it now attributes the credit
+  to the earlier of the period in which consideration is provided or an
+  invoice is issued, provided the tax invoice is held at lodgement, and treats
+  the later-period election in s 65-5(4) to (6) as a separate choice (#113).
+- In `coal-lsl-levy`, v0.2.1 said there is no carve-out and no power to
+  excuse. Schedule 1 clause 19(4) of the *Coal Mining Industry (Long Service
+  Leave) Payroll Levy Collection Act 1992* disapplies ss 5 and 10 for
+  employment covered by a Board-approved unpaid levy payment arrangement
+  (#151). Employer screening now applies the definition in s 14 of the *Fair
+  Work Act 2009*, including the Territory route, rather than legal form (#117).
+  Eligible wages follow the formulas in s 3B of the same Payroll Levy
+  Collection Act, including the Formula A and Formula B comparison (#115).
+- In `plant-and-equipment-costing`, v0.2.1 offered a self-substantiated labour
+  split as an alternative to a Chief Commissioner determination. Section 35(2)
+  of the *Payroll Tax Act 2007* (NSW) requires the determination (#151).
+- In `contractor-super-tpar`, the domestic-work exclusion in s 12(11) of the
+  *Superannuation Guarantee (Administration) Act 1992* now needs a direct
+  arrangement between the payer and the worker for domestic work done for the
+  payer, following *Newton* [2010] FCA 1440 and TR 2023/4 (#116).
+- In `payroll-tax-contractors`, wages for services performed wholly in NSW
+  follow s 11(1)(a) of the *Payroll Tax Act 2007* (NSW) even if the worker
+  lives elsewhere. The residence hierarchy applies only to services across
+  jurisdictions (#115).
+- In `progress-claim-preparation`, deadlines keep their contractual unit
+  instead of all counting as business days (#115).
+- In `retention-schedule`, Queensland retention trust account timing follows
+  ss 34(2) and 35(2) of the *Building Industry Fairness (Security of Payment)
+  Act 2017* (Qld) (#115).
+- In `xero-exports`, totals in the inspected exports use live formulas of
+  several kinds, not only `SUM`. The nil side of a debit or credit column can
+  hold a numeric zero, and the Transactions by BAS Field tab has no `Net`
+  column (#115).
+- In `cashflow-forecast-13week`, `stp-finalisation`, `contractor-super-tpar`,
+  `payroll-tax-contractors` and `coal-lsl-levy`, statements the skill could
+  not source are now marked UNVERIFIED and leave the outcome `UNKNOWN` until
+  checked. They include the 14 July finalisation deadline and the claimed
+  1 July 2026 payday super STP fields in `stp-finalisation` (#103, #148).
+- In `wip-over-under-billing`, the schedule engine link pointed at the retired
+  TheWIPTally repository. It now pins the australian-accounting package (#103).
 
 # v0.2.1
 
