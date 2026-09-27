@@ -50,6 +50,7 @@ EXPECTED_SKILLS = {
     "au-super-contribution-caps",
     "au-tax-planning-review",
     "au-tax-rates-verification",
+    "au-tax-research",
     "au-tax-residency",
     "au-transfer-duty",
     "au-transfer-pricing",

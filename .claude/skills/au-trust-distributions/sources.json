@@ -28,6 +28,48 @@
       "content_hash": "ad20d47f139d3924af4851302aebc82bdb52c7e795df232c9337389fdfd6b2ce",
       "content_hash_covers": "html",
       "source_last_modified": "2026-09-03"
+    },
+    {
+      "title": "TR 2022/4 Income tax: section 100A reimbursement agreements",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20224/NAT/ATO/00001",
+      "checked_at": "2026-09-27",
+      "fact": "Read 27 September 2026 (issued 8 December 2022; consolidated 27 September 2023). States the Commissioner's view of section 100A reimbursement agreements: the connection, benefits-to-another and tax reduction purpose requirements and the ordinary dealing exception. The page states the ruling is being reviewed as a result of Commissioner of Taxation v Bendel [2026] HCA 18.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Under review since the Bendel decision impact statement of 26 June 2026. Check for an addendum or withdrawal before relying on it.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20224/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-09-27",
+      "content_hash": "b2e15d3e3dcc4848441280f05a775ebb930b1079e43e4c20339b8286ec0bdf22",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
+    },
+    {
+      "title": "PCG 2022/2 Section 100A reimbursement agreements: ATO compliance approach",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20222/NAT/ATO/00001",
+      "checked_at": "2026-09-27",
+      "fact": "Read 27 September 2026 (issued 8 December 2022; consolidated 27 September 2023). Sets the ATO's section 100A compliance approach in white, green and red zones with worked scenarios. The page states the guideline is being reviewed as a result of Commissioner of Taxation v Bendel [2026] HCA 18.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "A zone describes how the ATO allocates compliance resources, not the law. Under review since 26 June 2026.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20222/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-09-27",
+      "content_hash": "d8b398462e8c3bf82d9f5fd05483849e3985bceed3b2bf5c660bc33d2e3051c1",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Decision impact statement: Commissioner of Taxation v Bendel [2026] HCA 18",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=LIT/ICD/M47/2025/00001",
+      "checked_at": "2026-09-27",
+      "fact": "Read 27 September 2026 (published 26 June 2026; High Court judgment 10 June 2026). The majority held that a private company beneficiary's unpaid entitlement, left without action, was not a loan under subsection 109D(3). The ATO will not treat such an entitlement as a Division 7A loan (paragraph 33); steps that satisfy, replace or convert it can still create a loan (paragraph 34). Subdivision EA and section 100A may still apply (paragraphs 27, 35 and 36). TD 2022/11 will be withdrawn and TR 2022/4 and PCG 2022/2 are under review (paragraphs 43 and 44).",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "The ATO's view of the decision, not the judgment itself. Read the High Court's reasons for the facts the outcome turned on.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=LIT/ICD/M47/2025/00001",
+      "http_status": 200,
+      "fetched_at": "2026-09-27",
+      "content_hash": "afc6e1edf7b6d27ca6782858522b6a1f6107badcb12a072c5c5e86aeb91213af",
+      "content_hash_covers": "html",
+      "source_last_modified": ""
     }
   ]
 }

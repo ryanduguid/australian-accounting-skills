@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 69 cards in `cases/` test workflow quality, provenance and restraint.
+The 70 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -107,13 +107,14 @@ law claim, unverified source or guess.
 | [Super contribution cap workpapers: missing evidence](cases/au-super-contribution-caps-missing-evidence.md) | au-super-contribution-caps |
 | [Tax planning evidence and options: missing evidence](cases/au-tax-planning-review-missing-evidence.md) | au-tax-planning-review |
 | [Tax-period source register: missing evidence](cases/au-tax-rates-verification-missing-evidence.md) | au-tax-rates-verification |
+| [Tax research file note: missing evidence](cases/au-tax-research-missing-evidence.md) | au-tax-research |
 | [Tax residency and departure review pack: missing evidence](cases/au-tax-residency-missing-evidence.md) | au-tax-residency |
 | [State transfer duty review pack: missing evidence](cases/au-transfer-duty-missing-evidence.md) | au-transfer-duty |
 | [Transfer pricing evidence pack: missing evidence](cases/au-transfer-pricing-missing-evidence.md) | au-transfer-pricing |
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 62 distributable skills. The 42 topic-expansion cards are
+Together the cards cover all 63 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory; no fresh agent run of these additions
 has been recorded. The existing recorded run covers the original 17 cards.
