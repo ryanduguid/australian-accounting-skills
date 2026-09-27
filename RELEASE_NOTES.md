@@ -17,7 +17,10 @@ note, and fbt-annual-workflow a status check on the announced electric car
 discount changes. Six skills gain dated sources for 2026-27 Budget measures,
 and au-ato-penalties-interest, au-payroll-review and tax-invoice-review gain
 a GIC deductibility split, a pay-item settings review and a payee-detail
-check.
+check. xero-exports and the shared accounting-safety rules keep credentials
+with the operator: an agent never reads `.env` or another credential file,
+never prints a secret value or passes one on a command line, and never asks
+for one in chat.
 
 The validation pack now has 69 cards, including 3 supported-arithmetic
 cases for bookkeeping, financial-statement mapping and payroll tie-outs.
