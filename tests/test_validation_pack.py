@@ -12,6 +12,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 # The not-advice sentence has to travel with a single copied skill folder, so a
@@ -644,6 +645,27 @@ class RecordedRunTests(unittest.TestCase):
 
     def test_accepts_a_minimal_run(self) -> None:
         validator.check_result_file(self.NAME, self.GOOD)
+
+    def test_skills_version_may_be_a_full_commit_id(self) -> None:
+        # The digit run 295695377 alone would read as an unlabelled identifier.
+        commit = "f4acd41fae295695377d80564f27228eac8acdeb"
+        for data in (json.loads(self.GOOD), self.version_two("observed")):
+            data["skills_version"] = commit
+            with self.subTest(schema_version=data.get("schema_version", 1)):
+                validator.check_result_file(self.NAME, json.dumps(data))
+        for value in (commit[:39], commit.upper(), "123456789", "v123456789"):
+            data = json.loads(self.GOOD)
+            data["skills_version"] = value
+            with self.subTest(value=value), self.assertRaises(validator.ValidationError):
+                validator.check_result_file(self.NAME, json.dumps(data))
+
+    def test_a_commit_id_is_spared_only_the_numeric_screen(self) -> None:
+        data = json.loads(self.GOOD)
+        data["skills_version"] = "f4acd41fae295695377d80564f27228eac8acdeb"
+        rule = {"hex credential": re.compile("f4acd41f")}
+        with mock.patch.dict(validator.SENSITIVE_PATTERNS, rule):
+            with self.assertRaisesRegex(validator.ValidationError, "possible hex credential"):
+                validator.check_result_file(self.NAME, json.dumps(data))
 
     def test_rejects_shape_drift(self) -> None:
         for label, name, text in (
