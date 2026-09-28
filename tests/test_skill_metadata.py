@@ -544,6 +544,18 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn("NSW", rows[0])
         self.assertNotIn("State or Territory", rows[0])
 
+    def test_skills_point_only_at_files_an_install_ships(self) -> None:
+        """Installs copy the skill folders alone, so docs/ and the root need full URLs."""
+        for path in sorted(SKILLS_DIRECTORY.rglob("*")):
+            if path.suffix not in {".md", ".json"}:
+                continue
+            text = re.sub(
+                r"\[[^\]]*\]\(https?://[^)\s]*\)|https?://\S+", "", path.read_text(encoding="utf-8")
+            )
+            with self.subTest(path=path.relative_to(SKILLS_DIRECTORY).as_posix()):
+                self.assertNotRegex(text, r"\]\(\s*<?\.\./\.\./")
+                self.assertNotRegex(text, r"(?<![\w/.-])(?:\.\.?/)*docs/[\w.-]+\.md")
+
 
 # An environment variable that holds a credential, as a skill would name one.
 CREDENTIAL_VARIABLE = re.compile(r"\b[A-Z][A-Z0-9_]*(?:SECRET|TOKEN|PASSWORD|API_KEY)\b")
