@@ -36,6 +36,10 @@ RESULT_STATUSES = ("prepared", "observed", "confirmed")
 RESULT_INPUT_MODES = ("task-only", "whole-card")
 RESULT_DIGESTS = ("input_sha256", "context_sha256", "rubric_sha256")
 SHA256_PATTERN = r"[0-9a-f]{64}"
+# A full commit id, which skills_version may carry; its digits can run long
+# enough to look like an identifier, so that one screen is waived for it.
+GIT_COMMIT_PATTERN = r"[0-9a-f]{40}"
+GIT_COMMIT_WAIVED = frozenset({"unlabelled long numeric identifier"})
 # One line each and short: room for a model name or a version, not for a
 # pasted output or a note on why a case failed.
 RESULT_FIELD_MAX_LENGTH = 120
@@ -292,11 +296,11 @@ def normalise_for_sensitive_scan(text: str) -> str:
     )
 
 
-def check_sensitive_content(text: str) -> None:
+def check_sensitive_content(text: str, waived: frozenset[str] = frozenset()) -> None:
     """Reject common private-data, credential and stale-rule fixture content."""
     scan_text = normalise_for_sensitive_scan(text)
     for label, pattern in SENSITIVE_PATTERNS.items():
-        if pattern.search(scan_text):
+        if label not in waived and pattern.search(scan_text):
             raise ValidationError(f"possible {label}")
     if DATED_RULE.search(scan_text):
         raise ValidationError("embeds a dated/rate rule instead of a live-source check")
@@ -521,10 +525,12 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
             raise ValidationError(f"unknown case: {case!r}")
         if verdict not in RESULT_VERDICTS:
             raise ValidationError(f"{case}: verdict must be pass or fail")
-    # The date is the one long numeric string a run legitimately carries; the
-    # free-text fields are where an identifier or a pasted output would land.
+    # The date and a full commit id in skills_version are the long numeric
+    # strings a run legitimately carries; the free-text fields are where an
+    # identifier or a pasted output would land.
     for key in ("model", "skills_version", "runner"):
-        check_sensitive_content(data[key])
+        commit = key == "skills_version" and re.fullmatch(GIT_COMMIT_PATTERN, data[key])
+        check_sensitive_content(data[key], GIT_COMMIT_WAIVED if commit else frozenset())
     return status
 
 
