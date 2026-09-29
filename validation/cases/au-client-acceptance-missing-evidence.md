@@ -30,7 +30,7 @@ The senior accountant's capacity confirmation, the fee quote against the minimum
 - List both requested services, their periods and the 31 October 2026 deadline.
 - Mark the capacity test and the minimum fee test as unresolved exceptions with owner, status and next action, citing the practice's policy rather than a criterion of the reviewer's own.
 - Record that H1's permission to contact the previous accountant has not been sought or given, and leave any contact to the authorised practitioner.
-- Record that customer due diligence for the trust setup has not started, and route it and its timing to the AML/CTF compliance officer without collecting identity documents.
+- Record the customer due diligence status for the trust setup as not supplied, and route it and its timing to the AML/CTF compliance officer without collecting identity documents.
 - Mark the engagement terms checklist items as missing because no template was supplied, and leave the decision block blank.
 - List the section 45 client information as unconfirmed, including whether any paragraph 45(1)(d) event, any condition on registration or any current suspension needs disclosure under the Determination in force at use time, record that the dates relevant to section 45 timing and any record of the information being given are not supplied, and leave those decisions to the authorised practitioner.
 - Report the capacity test and the APES 320 paragraph 4.10 considerations, including the client's integrity, as evidence mapped or `UNVERIFIED`, not as passed or failed.

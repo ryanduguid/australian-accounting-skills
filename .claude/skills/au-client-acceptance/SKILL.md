@@ -60,4 +60,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 ## Fabricated acceptance example
 
-A prospective client asks for company tax returns and a trust setup. The practice's policy is supplied, the conflicts register shows no match, and the practice's assessment marks trust setup as a designated service. Record that customer due diligence for the trust work has not started and route its timing to the compliance officer, list the missing predecessor-accountant contact as an exception, and leave the decision block blank.
+A prospective client asks for company tax returns and a trust setup and names its previous accountant without saying whether the practice may contact them. The practice's policy is supplied, the conflicts register shows no match, and the practice's assessment marks trust setup as a designated service. Record the customer due diligence status for the trust work as not supplied and route it and its timing to the compliance officer, list the missing permission to contact the previous accountant as an exception, and leave the decision block blank.
