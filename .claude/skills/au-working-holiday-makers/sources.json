@@ -70,7 +70,7 @@
       "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/engaging-a-worker/hiring-a-new-worker/employers-of-working-holiday-makers",
       "checked_at": "2026-09-29",
       "reverify_by": "2027-09-29",
-      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 24 July 2025): check permission to work through VEVO; the working holiday maker table applies to salary or wages, termination payments, unused leave, back payments, commissions, bonuses and similar payments, and payments to actors and entertainers; without a TFN, withhold at the top rate; withholding continues under the working holiday maker table unless the employer receives a PAYG variation notice for the worker. Working holiday makers are entitled to super like other employees. An employee who provides an ABN is still taxed with the working holiday maker table. The Addy decision does not affect employers.",
+      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 24 July 2025): check permission to work through VEVO; the working holiday maker table applies to salary or wages, termination payments, unused leave, back payments, commissions, bonuses and similar payments, and payments to actors and entertainers; without a TFN, withhold at the top rate; withholding continues under the working holiday maker table unless the employer receives a PAYG variation notice for the worker. This page does not deal with a worker's written request to withhold more, which the ATO's varying your PAYG withholding page describes as an upward variation. Working holiday makers are entitled to super like other employees. An employee who provides an ABN is still taxed with the working holiday maker table. The Addy decision does not affect employers.",
       "volatile": true,
       "limitations": "Verify the complete page, applicable period and current status at use time.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/engaging-a-worker/hiring-a-new-worker/employers-of-working-holiday-makers",
@@ -176,6 +176,26 @@
       "content_hash_covers": "html",
       "content_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/varying-your-payg-withholding",
       "source_last_modified": "2026-09-21"
+    },
+    {
+      "title": "High Court of Australia: Addy v Commissioner of Taxation [2021] HCA 34",
+      "url": "https://www.hcourt.gov.au/cases-and-judgments/judgments/judgments-1998-current/addy-v-commissioner-taxation",
+      "checked_at": "2026-09-29",
+      "reverify_by": "2027-09-29",
+      "manual_review": {
+        "cadence": "annual",
+        "next_review": "2027-09-29"
+      },
+      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction: judgment of 3 November 2021. The catchwords concern Art 25(1) of the convention between Australia and the United Kingdom, under which United Kingdom nationals are not to be subjected in Australia to other or more burdensome taxation than Australian nationals in the same circumstances, in particular with respect to residence, and Part III of Schedule 7 to the Income Tax Rates Act 1986.",
+      "volatile": true,
+      "limitations": "A judgment on the United Kingdom convention; other treaties need their own reading.",
+      "final_url": "https://www.hcourt.gov.au/cases-and-judgments/judgments/judgments-1998-current/addy-v-commissioner-taxation",
+      "http_status": 0,
+      "fetched_at": "2026-09-29",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": "",
+      "source_last_modified": ""
     }
   ]
 }
