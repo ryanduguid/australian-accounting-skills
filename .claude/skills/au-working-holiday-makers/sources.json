@@ -38,7 +38,7 @@
       "url": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
       "checked_at": "2026-09-29",
       "reverify_by": "2027-06-30",
-      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (published 17 June 2026): a registered employer withholds a flat 15% until total payments to the working holiday maker in the income year exceed $45,000, then uses Table A (columns by total payments, and column 6 where no TFN was given); an unregistered employer withholds at foreign resident rates from the weekly, fortnightly or monthly tables. Working holiday makers cannot claim Medicare levy adjustments or tax offsets to reduce withholding; a resident claims any entitlement in the tax return.",
+      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (published 17 June 2026): the schedule applies to payments from 1 July 2026, and its Table A gives the 2026-27 rates of 15% on each $1 up to $45,000 and 30% on each $1 over $45,000 to $135,000, with higher bands above. A registered employer withholds a flat 15% until total payments to the working holiday maker in the income year exceed $45,000, then uses Table A (columns by total payments, and column 6 where no TFN was given); an unregistered employer withholds at foreign resident rates from the weekly, fortnightly or monthly tables. Working holiday makers cannot claim Medicare levy adjustments or tax offsets to reduce withholding; a resident claims any entitlement in the tax return.",
       "volatile": true,
       "limitations": "Verify the complete page, applicable period and current status at use time.",
       "final_url": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
