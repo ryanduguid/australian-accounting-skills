@@ -1,0 +1,101 @@
+{
+  "skill": "au-client-acceptance",
+  "sources": [
+    {
+      "title": "APESB: APES 320 Quality Management for Firms that provide Non-Assurance Services",
+      "url": "https://apesb.org.au/standards-guidance/quality-management-for-firms-that-provide-non-assurance-services/",
+      "checked_at": "2026-09-29",
+      "fact": "Read 29 September 2026. APES 320 (2022) is effective from 1 January 2023. Paragraph 4.10 requires a firm's acceptance and continuance policies to give reasonable confidence that it undertakes or continues an engagement only where it is competent and has the capabilities, including time and resources, can comply with professional standards and has considered the client's integrity.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Landing page; the paragraph was read in the February 2022 standard linked from it. Paragraph references only: APESB text is not reproduced.",
+      "final_url": "https://apesb.org.au/standards-guidance/quality-management-for-firms-that-provide-non-assurance-services/",
+      "http_status": 200,
+      "fetched_at": "2026-09-29",
+      "content_hash": "6e9042abe00787f68b7ef3838cd972a7ac6b35b29771c961753cca68f385ed4c",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://apesb.org.au/standards-guidance/quality-management-for-firms-that-provide-non-assurance-services/"
+    },
+    {
+      "title": "APESB: APES 305 Terms of Engagement",
+      "url": "https://apesb.org.au/standards-guidance/terms-of-engagement/",
+      "checked_at": "2026-09-29",
+      "fact": "Read 29 September 2026. The page lists APES 305 Terms of Engagement (2024), effective from 1 January 2025, which replaced the 2020 standard effective from 1 July 2021.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Landing page only. Open the current standard for the content an engagement document must carry.",
+      "final_url": "https://apesb.org.au/standards-guidance/terms-of-engagement/",
+      "http_status": 200,
+      "fetched_at": "2026-09-29",
+      "content_hash": "e9ce42982c08ddadd2c2c8912fa4e4932e67f330efc864dac464e812e8cfc062",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://apesb.org.au/standards-guidance/terms-of-engagement/"
+    },
+    {
+      "title": "APESB: APES 110 Code of Ethics for Professional Accountants",
+      "url": "https://apesb.org.au/standards-guidance/apes-110-code-of-ethics/",
+      "checked_at": "2026-09-29",
+      "fact": "Read 29 September 2026 in the compiled Code of January 2025. Section 310 deals with conflicts of interest and Section 320 with professional appointments, including client and engagement acceptance and communication with an existing or predecessor accountant (R320.4 to R320.8).",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "The compilation read was January 2025; APESB's page names a later compilation. Check the current compilation and its transitional provisions.",
+      "final_url": "https://apesb.org.au/standards-guidance/apes-110-code-of-ethics/",
+      "http_status": 200,
+      "fetched_at": "2026-09-29",
+      "content_hash": "c4dab40abe676969d251cd6f33cb01e233f13c610405b90c7bcca01e0e43d636",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://apesb.org.au/standards-guidance/apes-110-code-of-ethics/"
+    },
+    {
+      "title": "TPB(GS) 54/2024 Keeping your clients informed",
+      "url": "https://www.tpb.gov.au/tpb-gs-54-2024-keeping-your-clients-informed",
+      "checked_at": "2026-09-29",
+      "fact": "Read 29 September 2026. Issued 23 December 2024 and updated 15 July 2026. Explains the TPB's position on section 45 of the Tax Agent Services (Code of Professional Conduct) Determination 2024, which requires registered tax practitioners to give current and prospective clients prescribed information.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Guidance, not legislation. The TPB and Code Determination changes from 1 October 2026 postdate this reading.",
+      "final_url": "https://www.tpb.gov.au/tpb-gs-54-2024-keeping-your-clients-informed",
+      "http_status": 0,
+      "fetched_at": "2026-09-29",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-29"
+      }
+    },
+    {
+      "title": "Tax Agent Services (Code of Professional Conduct) Determination 2024",
+      "url": "https://www.legislation.gov.au/F2024L00849/latest",
+      "checked_at": "2026-09-29",
+      "fact": "Read 29 September 2026. The Federal Register of Legislation page for the Determination, whose section 45 sets the information registered tax practitioners must give clients.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Amendments apply from 1 October 2026. Open the compilation in force for the work's period.",
+      "final_url": "https://www.legislation.gov.au/F2024L00849/latest",
+      "http_status": 200,
+      "fetched_at": "2026-09-29",
+      "content_hash": "7f62d66178caf8f41bc8fb76e871b034c0d5b2b31377efc2d62065e777e35d67",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/F2024L00849/latest"
+    },
+    {
+      "title": "AUSTRAC: Customer due diligence",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence",
+      "checked_at": "2026-09-29",
+      "fact": "Read 29 September 2026. AUSTRAC's customer due diligence guidance index. Accountants providing a designated service must generally complete initial customer due diligence before providing it.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Index page only. AUSTRAC's host times out automated reads; review by hand.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence",
+      "http_status": 0,
+      "fetched_at": "2026-09-29",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "manual_review": {
+        "cadence": "monthly",
+        "next_review": "2026-10-29"
+      }
+    }
+  ]
+}

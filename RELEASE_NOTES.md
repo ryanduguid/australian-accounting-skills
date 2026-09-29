@@ -1,3 +1,12 @@
+# v0.3.1 (unreleased)
+
+Adds one client acceptance and engagement terms review workflow,
+au-client-acceptance, bringing the pack to 64. It prepares an acceptance or
+continuance review and engagement terms for an authorised practitioner to
+decide, and ships with a source-discovery record and a fabricated
+missing-evidence case, bringing the validation pack to 71 cards. That card
+needs a confirmed result before this release.
+
 # v0.3.0
 
 Adds 43 original Australian preparation skills and one financial modelling
