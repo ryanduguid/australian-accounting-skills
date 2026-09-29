@@ -3,7 +3,7 @@
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 65,
-    "sources_indexed": 167,
+    "sources_indexed": 168,
     "skills_source_exempt": 7,
     "skills_with_unreachable_sources": 3,
     "skills_with_sources_moved_since_review": 4,
@@ -972,7 +972,7 @@
     {
       "skill": "au-working-holiday-makers",
       "sources": {
-        "indexed": 10,
+        "indexed": 11,
         "exempt": false,
         "reviewed": "2026-09-29",
         "fetched": "2026-09-29",

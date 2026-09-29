@@ -499,7 +499,7 @@ class SweepTests(unittest.TestCase):
 
 
 class ReverifyTests(unittest.TestCase):
-    """A recorded fact expires on its `reverify_by` date, whatever the page does."""
+    """A recorded fact expires after its `reverify_by` date, whatever the page does."""
 
     def sweep(self, record: dict[str, object], today: str, **fetch: object):
         directory = tempfile.TemporaryDirectory()

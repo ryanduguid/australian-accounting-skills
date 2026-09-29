@@ -70,7 +70,7 @@
       "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/engaging-a-worker/hiring-a-new-worker/employers-of-working-holiday-makers",
       "checked_at": "2026-09-29",
       "reverify_by": "2027-09-29",
-      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 24 July 2025): check permission to work through VEVO; the working holiday maker table applies to salary or wages, termination payments, unused leave, back payments, commissions, bonuses and similar payments, and payments to actors and entertainers; without a TFN, withhold at the top rate; only a PAYG variation notice changes the amount. Working holiday makers are entitled to super like other employees. An employee who provides an ABN is still taxed with the working holiday maker table. The Addy decision does not affect employers.",
+      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 24 July 2025): check permission to work through VEVO; the working holiday maker table applies to salary or wages, termination payments, unused leave, back payments, commissions, bonuses and similar payments, and payments to actors and entertainers; without a TFN, withhold at the top rate; withholding continues under the working holiday maker table unless the employer receives a PAYG variation notice for the worker. Working holiday makers are entitled to super like other employees. An employee who provides an ABN is still taxed with the working holiday maker table. The Addy decision does not affect employers.",
       "volatile": true,
       "limitations": "Verify the complete page, applicable period and current status at use time.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/engaging-a-worker/hiring-a-new-worker/employers-of-working-holiday-makers",
@@ -150,7 +150,7 @@
       "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "checked_at": "2026-09-29",
       "reverify_by": "2027-06-30",
-      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 21 April 2026): a claim generally needs super accumulated on a temporary resident visa (other than subclasses 405 and 410), the visa to have ceased, the person to have left Australia holding no other active Australian visa, and the person not to be an Australian or New Zealand citizen or a permanent resident. Working holiday maker rate: 65% on the taxed and untaxed elements of the taxable component, nil on the tax-free component, where the payment includes amounts attributable to contributions made while the person held a 417 or 462 or associated bridging visa.",
+      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 21 April 2026): a claim generally needs super accumulated on a temporary resident visa (other than subclasses 405 and 410), the visa to have ceased, the person to have left Australia holding no other active Australian visa, and the person not to be an Australian or New Zealand citizen or a permanent resident. Working holiday maker rate: 65% on the taxed and untaxed elements of the taxable component, nil on the tax-free component, where the payment includes amounts attributable to contributions made while the person held a 417 or 462 or associated bridging visa; the rate then applies to the entire payment, including super earned under a different visa.",
       "volatile": true,
       "limitations": "Verify the complete page, applicable period and current status at use time.",
       "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
@@ -160,6 +160,22 @@
       "content_hash_covers": "html",
       "content_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "source_last_modified": "2026-05-04"
+    },
+    {
+      "title": "ATO: Varying your PAYG withholding",
+      "url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/varying-your-payg-withholding",
+      "checked_at": "2026-09-29",
+      "reverify_by": "2027-09-29",
+      "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 5 June 2026): an upward variation increases the tax withheld; a payee arranges one by asking the payer in writing, in any format, to vary the rate or amount, or by completing a withholding declaration through ATO online services.",
+      "volatile": true,
+      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/varying-your-payg-withholding",
+      "http_status": 200,
+      "fetched_at": "2026-09-29",
+      "content_hash": "34c432cad8b781ea6723829e5ccdb3ad9def58b9fc356c79a5859ce52d4d8abe",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/varying-your-payg-withholding",
+      "source_last_modified": "2026-09-21"
     }
   ]
 }
