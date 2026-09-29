@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 70 cards in `cases/` test workflow quality, provenance and restraint.
+The 71 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -73,6 +73,7 @@ law claim, unverified source or guess.
 | [Business formation preparation checklist: missing evidence](cases/au-business-formation-missing-evidence.md) | au-business-formation |
 | [Capital gains workpaper: missing evidence](cases/au-capital-gains-missing-evidence.md) | au-capital-gains |
 | [Work-related car expense workpapers: missing evidence](cases/au-car-expenses-missing-evidence.md) | au-car-expenses |
+| [Client acceptance and engagement terms review: missing evidence](cases/au-client-acceptance-missing-evidence.md) | au-client-acceptance |
 | [Company tax workpapers: missing evidence](cases/au-company-tax-missing-evidence.md) | au-company-tax |
 | [Crypto transaction reconciliation: missing evidence](cases/au-crypto-tax-missing-evidence.md) | au-crypto-tax |
 | [Deceased estate tax workpapers: missing evidence](cases/au-deceased-estates-missing-evidence.md) | au-deceased-estates |
@@ -114,10 +115,11 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 
-Together the cards cover all 63 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 64 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
-confirmed on 29 September, covers them along with every other card. See
+confirmed on 29 September, covers them along with every other card except
+`au-client-acceptance-missing-evidence`, added afterwards for v0.3.1. See
 [results](results/).
 
 Three further cards check whether the model completes supported bank,
