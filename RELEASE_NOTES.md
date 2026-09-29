@@ -1,4 +1,4 @@
-# v0.3.0 (unreleased)
+# v0.3.0
 
 Adds 43 original Australian preparation skills and one financial modelling
 workflow, bringing the pack to 63.
@@ -9,8 +9,8 @@ fabricated missing-evidence case. The financial modelling workflow is
 source-exempt and ships with a structure-faults case.
 
 The new skills require applicable primary authority at use time; source
-discovery is not current-law approval. No fresh agent evaluation of these
-43 additions or the financial modelling workflow is recorded. Three of the
+discovery is not current-law approval. Every addition's card has a
+confirmed result, described below. Three of the
 original 19 skill bodies gain new steps beyond the corrections listed below:
 month-end-close gains a supplier bank-detail step, cashflow-forecast-13week a tax set-aside check and a GIC deductibility
 note, and fbt-annual-workflow a status check on the announced electric car
@@ -26,12 +26,16 @@ The validation pack now has 70 cards, including 3 supported-arithmetic
 cases for bookkeeping, financial-statement mapping and payroll tie-outs.
 These check whether the model completes supported calculations while keeping
 statutory conclusions and approval with the responsible human. All 70 cards
-need confirmed results before release; the 17-card historical runs
-do not cover this expansion. The evaluation guide also requires separate
-evidence for source retrieval and behaviour with action tools available.
+have confirmed results. Claude Opus 5.5 ran each card whole, with only its
+target skills to read, against skills commit f4acd41 on 28 September 2026,
+and Ryan Duguid judged every card a pass on 29 September
+([confirmed record](validation/results/2026-09-29-whole-card-confirmed.json)). Skills changed after f4acd41
+only in link targets. The runs could read nothing else and had no action
+tools, so they do not establish source retrieval or restraint with action
+tools available; the evaluation guide requires separate evidence for both.
 
-The README recommends the tagged v0.2.1 installation. Development installation
-commands remain available for evaluating the unreleased 63-skill pack.
+The README recommends the tagged v0.3.0 installation. Development installation
+commands resolve the default branch, which can be ahead of this release.
 
 ## Corrections since v0.2.1
 
