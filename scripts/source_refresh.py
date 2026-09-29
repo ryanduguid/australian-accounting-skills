@@ -74,6 +74,10 @@ STATUS_FIELD = "http_status"
 # reviewed by hand instead of fetched. AUSTRAC's guidance changes often and its host times out
 # this script, so the sweep listed those pages as unreachable every week and caught nothing.
 SCHEDULE_FIELD = "manual_review"
+# A person-written date, YYYY-MM-DD, on every volatile record: the last day its
+# recorded fact may serve as a cross-check without a fresh reading of the
+# source. Like `checked_at`, only a person changes it; a later date is a review.
+REVERIFY_FIELD = "reverify_by"
 UPSTREAM_FIELD = "source_last_modified"
 DIGEST_KIND_FIELD = "content_hash_covers"
 MACHINE_FIELDS = (
@@ -107,7 +111,8 @@ UNREACHABLE = "unreachable"
 # digest: an empty digest compares equal on every later sweep.
 UNREADABLE = "unreadable"
 # A source on a manual-review schedule is not fetched. `scheduled` counts those not yet due;
-# `review-due` is one whose next review date has passed, which asks a person for a review.
+# `review-due` is one whose next review date has passed, or any record whose `reverify_by`
+# date has passed, which asks a person for a review.
 SCHEDULED = "scheduled"
 REVIEW_DUE = "review-due"
 NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
@@ -348,15 +353,18 @@ def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY) -> Fetche
                 )
         except urllib.error.HTTPError as error:
             # A refusal is settled; only a transport fault is worth retrying.
-            return Fetched(
-                status=error.code,
-                final_url=error.geturl() or url,
-                digest="",
-                kind="",
-                content_type="",
-                last_modified="",
-                error=f"HTTP {error.code} {error.reason}",
-            )
+            # The error holds the response open until closed; left to the
+            # garbage collector it closes late, with a ResourceWarning.
+            with error:
+                return Fetched(
+                    status=error.code,
+                    final_url=error.geturl() or url,
+                    digest="",
+                    kind="",
+                    content_type="",
+                    last_modified="",
+                    error=f"HTTP {error.code} {error.reason}",
+                )
         except Exception as error:  # noqa: BLE001 - every transport fault is reportable
             last_error = f"{type(error).__name__}: {error}"
             if attempt < tries:
@@ -421,6 +429,28 @@ def review_date(schedule: dict[str, object]) -> str:
         return due if date.fromisoformat(due).isoformat() == due else ""
     except ValueError:
         return ""
+
+
+def reverify_passed(record: dict[str, object], today: str) -> str:
+    """The record's `reverify_by` date once it has passed, else an empty string.
+
+    The date itself is the last usable day, so a record is due the day after. A
+    mistyped date counts as passed, for the reason `review_date` gives.
+    """
+    if REVERIFY_FIELD not in record:
+        return ""
+    value = str(record.get(REVERIFY_FIELD, ""))
+    usable = review_date({"next_review": value})
+    if usable and usable >= today:
+        return ""
+    return usable or f"{value!r}, not a real date"
+
+
+def reverify_note(passed: str) -> str:
+    return (
+        f"The recorded fact passed its reverify_by date ({passed}). Read the source, then "
+        "update checked_at, the fact and reverify_by by hand."
+    )
 
 
 def load_index(path: Path) -> dict[str, object]:
@@ -520,22 +550,29 @@ def refresh(
         if not url:
             continue
 
+        passed = reverify_passed(record, stamp)
         schedule = record.get(SCHEDULE_FIELD)
         if isinstance(schedule, dict):
             due = review_date(schedule)
             late = not due or due < stamp
+            if late:
+                detail = (
+                    f"Manual review was due {due or 'with no valid date set'}. Read the "
+                    "source, then update checked_at and manual_review.next_review by hand."
+                )
+                if passed:
+                    detail = f"{detail} {reverify_note(passed)}"
+            elif passed:
+                detail = reverify_note(passed)
+            else:
+                detail = f"Reviewed by hand {schedule.get('cadence', '')}, next review {due}."
             report.outcomes.append(
                 Outcome(
                     skill=skill,
                     title=str(record.get("title", "")),
                     url=url,
-                    outcome=REVIEW_DUE if late else SCHEDULED,
-                    detail=(
-                        f"Manual review was due {due or 'with no valid date set'}. Read the "
-                        "source, then update checked_at and manual_review.next_review by hand."
-                        if late
-                        else f"Reviewed by hand {schedule.get('cadence', '')}, next review {due}."
-                    ),
+                    outcome=REVIEW_DUE if late or passed else SCHEDULED,
+                    detail=detail,
                     checked_at=str(record.get("checked_at", "")),
                     fetched=Fetched(0, "", "", "", "", "", "not fetched: reviewed by hand"),
                     next_review=due,
@@ -559,6 +596,15 @@ def refresh(
             if outcome == BASELINE_REQUIRED:
                 outcome = RECORDED
                 detail = "Readable content and destination baseline recorded."
+        if passed:
+            # A fetch finding that already asks for an edit keeps its name; an
+            # expired fact otherwise outranks an unchanged or unreachable page.
+            if outcome in (CHANGED, MISSING, UNREADABLE, BASELINE_REQUIRED):
+                detail = f"{detail} {reverify_note(passed)}"
+            elif outcome in (BLOCKED, UNREACHABLE):
+                outcome, detail = REVIEW_DUE, f"{reverify_note(passed)} Retrieval: {detail}"
+            else:
+                outcome, detail = REVIEW_DUE, reverify_note(passed)
         report.outcomes.append(
             Outcome(
                 skill=skill,
@@ -594,7 +640,7 @@ def render(report: Report, *, write: bool) -> str:
         f"- unreadable (a fault in this script): {counts[UNREADABLE]}",
         f"- blocked (host refuses automation, review by hand): {counts[BLOCKED]}",
         f"- unreachable (transport fault, may clear): {counts[UNREACHABLE]}",
-        f"- review-due (scheduled manual review overdue): {counts[REVIEW_DUE]}",
+        f"- review-due (manual review overdue or reverify_by passed): {counts[REVIEW_DUE]}",
         f"- baseline-required (review and record a readable baseline): {counts[BASELINE_REQUIRED]}",
         f"- scheduled (reviewed by hand, next review {next_review}): {counts[SCHEDULED]}",
         f"- baseline recorded or reading changed: {counts[RECORDED]}",

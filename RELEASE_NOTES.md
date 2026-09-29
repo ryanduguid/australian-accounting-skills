@@ -1,11 +1,23 @@
 # v0.3.1 (unreleased)
 
 Adds one client acceptance and engagement terms review workflow,
-au-client-acceptance, bringing the pack to 64. It prepares an acceptance or
+au-client-acceptance. It prepares an acceptance or
 continuance review and engagement terms for an authorised practitioner to
 decide, and ships with a source-discovery record and a fabricated
-missing-evidence case, bringing the validation pack to 71 cards. That card
-needs a confirmed result before this release.
+missing-evidence case.
+
+Adds a working holiday maker workflow, au-working-holiday-makers, bringing the
+pack to 65. It runs in an employer mode (registration, Schedule 15
+withholding, STP income type and country code, super) or an individual mode
+(working holiday maker income, residency, the non-discrimination treaty
+position after Addy, lodgement and departure), with a reviewed source record
+and a fabricated missing-evidence case, bringing the validation pack to 72
+cards. The two new cards need confirmed results before this release.
+
+Every volatile source record now carries a `reverify_by` date. The weekly
+sweep reports a record past that date as review-due, and each skill whose
+instructions point at `sources.json` says not to use an expired record even
+as a cross-check.
 
 # v0.3.0
 

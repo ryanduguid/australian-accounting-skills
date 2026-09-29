@@ -5,6 +5,7 @@
       "title": "ATO: Tax invoices, including eInvoicing and recipient-created tax invoices",
       "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices",
       "checked_at": "2026-09-24",
+      "reverify_by": "2027-09-24",
       "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 18 September 2026): tax invoice requirements by sale value, eInvoices issued under the A-NZ Peppol specification treated as intended to be tax invoices, and the conditions and issuer checks for recipient-created tax invoices. Thresholds and time limits are read from the page at use time, not from this record.",
       "volatile": true,
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices",

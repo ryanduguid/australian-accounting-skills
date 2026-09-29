@@ -114,12 +114,14 @@ law claim, unverified source or guess.
 | [Transfer pricing evidence pack: missing evidence](cases/au-transfer-pricing-missing-evidence.md) | au-transfer-pricing |
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
+| [Working holiday maker withholding and return review: missing evidence](cases/au-working-holiday-makers-missing-evidence.md) | au-working-holiday-makers |
 
-Together the cards cover all 64 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 65 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card except
-`au-client-acceptance-missing-evidence`, added afterwards for v0.3.1. See
+`au-client-acceptance-missing-evidence` and `au-working-holiday-makers-missing-evidence`,
+added afterwards for v0.3.1. See
 [results](results/).
 
 Three further cards check whether the model completes supported bank,
