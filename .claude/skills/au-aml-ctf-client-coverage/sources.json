@@ -94,16 +94,17 @@
     {
       "title": "Anti-Money Laundering and Counter-Terrorism Financing Act 2006",
       "url": "https://www.legislation.gov.au/C2006A00169/latest",
-      "checked_at": "2026-09-26",
+      "checked_at": "2026-09-30",
       "fact": "Identity checked 26 September 2026 on the Federal Register API: C2006A00169, in force. The operative provisions were not reviewed for this record.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Read the current compilation and the AML/CTF Rules for the period at use time.",
       "final_url": "https://www.legislation.gov.au/C2006A00169/latest",
       "http_status": 200,
-      "fetched_at": "2026-09-26",
+      "fetched_at": "2026-09-30",
       "content_hash": "98dcde7eb2774abfdff9082c9c36ac8ec282bb5b0cd32ccef59f8f5b13861419",
       "content_hash_covers": "html",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/C2006A00169/latest"
     }
   ]
 }

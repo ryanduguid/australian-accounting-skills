@@ -34,7 +34,7 @@
     {
       "title": "Income Tax Assessment Act 1997",
       "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
-      "checked_at": "2026-09-19",
+      "checked_at": "2026-09-30",
       "reverify_by": "2027-09-19",
       "fact": "The legislation behind the two concessions the workflow reviews: ITAA 1997 s 291-20(3)-(7) addresses unused concessional contribution amounts, and s 292-85(2)-(7) addresses the non-concessional cap and bring-forward rules. On 22 September 2026 (Australia/Sydney, UTC+10), the Register served compilation C2026C00324, compilation 266 dated 1 July 2026, with the relevant provisions in volume 6. No cap amount, balance threshold or eligibility conclusion is adopted.",
       "verification_status": "indexed-source-discovery-only",
@@ -42,10 +42,11 @@
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-22",
-      "content_hash": "903531afceffcd61f14e1a226ae53037f19060f2b9910d884f1b678dcf5b8ead",
+      "fetched_at": "2026-09-30",
+      "content_hash": "c9315cce7c7789beb9bda49ad49b152033998919818fde97fa42780a5f7e1eb6",
       "content_hash_covers": "html",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/C2004A05138/latest/text"
     },
     {
       "title": "ATO income stream (pension) rules and payments for SMSFs",
@@ -66,7 +67,7 @@
     {
       "title": "Superannuation Industry (Supervision) Regulations 1994",
       "url": "https://www.legislation.gov.au/F1996B00580/latest/text",
-      "checked_at": "2026-09-24",
+      "checked_at": "2026-09-30",
       "reverify_by": "2027-09-24",
       "fact": "Schedule 7 sets the minimum annual payment for account-based pensions (clauses 1 to 5). Compilation 159, in force from 1 July 2026, was read. No factor or amount is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
@@ -74,10 +75,11 @@
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/F1996B00580/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-24",
+      "fetched_at": "2026-09-30",
       "content_hash": "042bb14c764be74e3b3da7a4541106a4ce313da0dbd60994d426259abdbc32f6",
       "content_hash_covers": "html",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/F1996B00580/latest/text"
     },
     {
       "title": "ATO when to lodge a transfer balance account report for SMSFs",
