@@ -61,6 +61,7 @@ The development installation resolves the default branch and adds 44 workflows t
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)
+- [Supplier information for a firm's AI register](docs/ai-register-entry.md)
 - [Discovery and GitHub About copy](docs/DISCOVERY.md)
 
 Skills specify the workflow and require current primary authority for mutable rates, thresholds, labels and due dates. Keep real client files in the firm's approved environment, outside this repository.

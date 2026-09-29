@@ -59,6 +59,7 @@ exports/
 !/CONTRIBUTING.md
 !/docs/
 !/docs/*.md
+!/docs/ai-register-entry.md
 !/docs/bas-walkthrough.md
 !/docs/installation.md
 !/docs/integrations.md
