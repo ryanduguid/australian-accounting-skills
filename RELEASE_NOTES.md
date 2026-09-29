@@ -32,7 +32,7 @@ and Ryan Duguid judged every card a pass on 29 September
 ([confirmed record](validation/results/2026-09-29-whole-card-confirmed.json)). Skills changed after f4acd41
 only in link targets. The runs could read nothing else and had no action
 tools, so they do not establish source retrieval or restraint with action
-tools available; the evaluation guide requires separate evidence for both.
+tools available. The evaluation guide requires separate evidence for both.
 
 The README recommends the tagged v0.3.0 installation. Development installation
 commands resolve the default branch, which can be ahead of this release.
