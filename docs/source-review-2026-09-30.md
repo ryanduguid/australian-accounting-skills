@@ -1,6 +1,6 @@
 # Source review, 30 September 2026
 
-Ryan Duguid confirmed that he had reviewed the sources raised in issue #195 and that they were good. This records his review of the 50 records missing a baseline and the 5 records whose source text changed. These are 55 records across 27 skills and 45 distinct URLs.
+Ryan Duguid confirmed that he had reviewed the 55 actionable records raised in issue #195 and that they were good: 50 records missing a baseline and 5 records whose source text changed. These span 27 skills and 45 distinct URLs.
 
 The records' `checked_at` dates are now 30 September 2026. Existing `reverify_by` dates and substantive limitations remain. The review does not adopt a tax position for a particular taxpayer or extend a source beyond its applicable period.
 
