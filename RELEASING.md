@@ -47,7 +47,7 @@ intended version changes and bind verification to the exact source and policy
 commit:
 
 ```bash
-tag=v0.2.1
+tag=v0.3.0
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
@@ -56,14 +56,14 @@ for file in *; do
     --source-digest "$release_commit" \
     --source-ref "refs/tags/$tag" \
     --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-    --signer-digest 99a6314ca2cd4ea21b465614b73d108fd8fe2077
+    --signer-digest 87767ec809dc7f77bcd45808219adaf67841ae7b
 done
 gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
   --predicate-type https://spdx.dev/Document/v2.3 \
   --source-digest "$release_commit" \
   --source-ref "refs/tags/$tag" \
   --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-  --signer-digest 99a6314ca2cd4ea21b465614b73d108fd8fe2077
+  --signer-digest 87767ec809dc7f77bcd45808219adaf67841ae7b
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a

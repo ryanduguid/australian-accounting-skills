@@ -100,15 +100,15 @@ The [8 September Codex run](../validation/results/2026-09-08-codex.json)
 records 16 passes out of 17 cases, with `export-manifest-rounding` failing.
 The contracting export skill now explicitly requires the timestamp, filters,
 both totals, a documented rounding bridge and re-export after a filter change.
-The existing verdict remains unchanged. These wording changes still need
-confirmed fresh model results.
+The existing verdict remains unchanged. The
+[28 September whole-card run](../validation/results/2026-09-29-whole-card-confirmed.json)
+reran all 70 current cards, this one included, at skills commit f4acd41,
+and Ryan Duguid confirmed a pass for each on 29 September 2026. Skills
+changed after f4acd41 only in link targets.
 
-Rerun the failed card and then all 70 current cards at the exact revised
-commit, using the process above. Preserve the 12-cent exception and missing
-evidence in the failed card. The 17-card historical runs do not cover
-the 42 topic-expansion cases, the individual-return occupation-guide card
-or the 3 supported-arithmetic cases. The supported cash-flow roll-forward and
-partial month-end close cards also have no confirmed model verdicts.
+When a skill's wording changes, rerun its cards at the exact revised commit,
+using the process above. Preserve the 12-cent exception and missing evidence
+in `export-manifest-rounding`.
 
 Run `standalone-skill-safety-boundary` separately for each of its 10 target
 skills, with only that skill loaded. Record a pass for the card only if all 10

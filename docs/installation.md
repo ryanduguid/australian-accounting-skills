@@ -1,16 +1,16 @@
 ## Install
 
-### Tagged 19-workflow release
+### Tagged 63-workflow release
 
-Start with v0.2.1, the latest published release. From a separate project
+Start with v0.3.0, the latest published release. From a separate project
 directory, install from a checkout of that tag:
 
 ```bash
-git clone --branch v0.2.1 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone --branch v0.3.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-This copies all 19 released workflows into the current project's Codex
+This copies all 63 released workflows into the current project's Codex
 and Claude Code directories. It leaves global installations unchanged. A tag
 fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
@@ -18,8 +18,7 @@ fixes the installed revision; it does not certify model outputs. The
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
-They can deliver unreleased changes, including the 63-workflow inventory
-preparing v0.3.0. Choose them when you intend to test development work.
+They can deliver unreleased changes made after v0.3.0. Choose them when you intend to test development work.
 
 | Need | Install | What you get |
 | --- | --- | --- |
@@ -77,11 +76,10 @@ That installs into the current project (`./.claude/skills/`). Add `-g` to instal
 `~/.claude/skills` instead, `-a claude-code` to target one agent, and `-l` to list the skills
 without installing anything.
 
-### Unreleased Australian topic expansion
+### Development checkout
 
-The default `main` branch contains 63 skills, including
-31 new Australian preparation workflows. To try that revision in a separate
-project, clone it and install the local checkout:
+v0.3.0 contains 63 skills, and the default `main` branch can be ahead of it.
+To try `main` in a separate project, clone it and install the local checkout:
 
 ```bash
 git clone --branch main https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-source
@@ -89,7 +87,7 @@ npx --yes skills@1.5.22 add ./accounting-skills-source --agent codex claude-code
 ```
 
 This installs into the current project. Use a separate project to avoid
-overwriting skills already installed there. The command copies all 63 skills
+overwriting skills already installed there. The command copies every skill on `main`
 into the Codex and Claude Code project directories; it does not install them
 globally.
 
@@ -126,9 +124,9 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 
 ### Versioning
 
-The tagged `v0.2.1` release contains and tests all 19 skills as a set, as
-`v0.2.0` did. The earlier `v0.1.5` release contained the original 9
-practice skills. Installing
+The tagged `v0.3.0` release contains and tests all 63 skills as a set.
+`v0.2.1` and `v0.2.0` contained 19, and the earlier `v0.1.5` release the
+original 9 practice skills. Installing
 a subset by hand can break skills that call their siblings:
 
 - `bas-preparation`, `month-end-close` and `year-end-workpapers` depend on `xero-exports`
@@ -138,7 +136,7 @@ a subset by hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
-The [recommended installation](#tagged-19-workflow-release) pins v0.2.1.
+The [recommended installation](#tagged-63-workflow-release) pins v0.3.0.
 The [development options](#development-installations) can be ahead of that tag.
 Install the full tagged pack so sibling references stay consistent. The
 9-skill `v0.1.5` pack remains available from its tag for anyone who cites

@@ -116,18 +116,19 @@ law claim, unverified source or guess.
 
 Together the cards cover all 63 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
-checks their structure and inventory; no fresh agent run of these additions
-has been recorded. The existing recorded run covers the original 17 cards.
+checks their structure and inventory, and the 28 September whole-card run,
+confirmed on 29 September, covers them along with every other card. See
+[results](results/).
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic while keeping professional decisions
 pending. Their supplied evidence is sufficient for the bounded arithmetic,
 not for a tax or compliance conclusion. They complement the missing-evidence
-cases and have no confirmed model verdicts yet.
+cases.
 
 Two further cards require a complete 13-week cash roll-forward and supported
-reconciliations within an incomplete month-end close. They have no confirmed
-model verdicts. For trials with the grading answers withheld, use the separate
+reconciliations within an incomplete month-end close. For trials with the
+grading answers withheld, use the separate
 [task-only procedure](../docs/EVAL.md#task-only-trials).
 
 The GST registration card now includes a current-turnover reconciliation and

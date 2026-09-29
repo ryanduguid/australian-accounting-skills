@@ -1,0 +1,432 @@
+{
+  "model": "claude-opus-5-5",
+  "run_date": "2026-09-28",
+  "skills_version": "f4acd41",
+  "runner": "Ryan Duguid (observation run; verdicts pending)",
+  "results": {},
+  "schema_version": 2,
+  "input_mode": "whole-card",
+  "status": "observed",
+  "provenance": {
+    "au-aml-ctf-client-coverage-missing-evidence": {
+      "input_sha256": "ac2995875a28be97241b237beb9e9844139a20cd57af5fda5fe976b090628ea8",
+      "context_sha256": "0d227ec7da546f6866774de101ec7e631878d07c503394b4d4f80fc69269f6af",
+      "rubric_sha256": "ac2995875a28be97241b237beb9e9844139a20cd57af5fda5fe976b090628ea8",
+      "output_sha256": "3f0b26b26b7d8045939984151e971902a5268063656459d4fb7a164b4c82c7a6"
+    },
+    "au-ato-penalties-interest-deductibility-split": {
+      "input_sha256": "443f6829f02c1af9ed9444edd979864bf7045a8d054671178f36a09e0c648d37",
+      "context_sha256": "2a7b82bb9767ca8e74b98d12732dafbe0989823e55b29fa2fae7350e4958d20c",
+      "rubric_sha256": "443f6829f02c1af9ed9444edd979864bf7045a8d054671178f36a09e0c648d37",
+      "output_sha256": "22d0ebd28d923e3813ea14c1878ecd6df8d902aa6a6a391b130001530a3ac6db"
+    },
+    "au-ato-penalties-interest-missing-evidence": {
+      "input_sha256": "c8a4e7627f77e85daacfab25318366aa1e8f4254a180ec06f44fb7b291cb9df7",
+      "context_sha256": "73aab9415f6c1e2d7182d0df13f0ea59579190f7d85c85386e49a4b6e577c8a9",
+      "rubric_sha256": "c8a4e7627f77e85daacfab25318366aa1e8f4254a180ec06f44fb7b291cb9df7",
+      "output_sha256": "0295556669d463481c31cd1e71d7daa81cec8a237f1d4b11805eda10f76626e5"
+    },
+    "au-bookkeeping-missing-evidence": {
+      "input_sha256": "da9e1da9f124356db1426f42fd2296fffe63913efa91d945910ff9d8db04e1f5",
+      "context_sha256": "423de148411319735b788e681f79742bae18671c23b1a7447c40bf8b1d09c270",
+      "rubric_sha256": "da9e1da9f124356db1426f42fd2296fffe63913efa91d945910ff9d8db04e1f5",
+      "output_sha256": "f12aa7635fe2e6cb7ab6dad02f1d6097f676efbd3655753a62bae2ebbf3d7521"
+    },
+    "au-bookkeeping-supported-reconciliation": {
+      "input_sha256": "ca776d5e3860cc0be2b03adfb9caaffeae3d8e991b2bf8c7b701c65f784c171c",
+      "context_sha256": "54390e27a38b3809cfdee78764ec625bb1d2d09ebf085dc8b80e3f8c31971217",
+      "rubric_sha256": "ca776d5e3860cc0be2b03adfb9caaffeae3d8e991b2bf8c7b701c65f784c171c",
+      "output_sha256": "c3137f407e6588179750ebdc1805221208a6d3cd3510d00a05588abfcc47a190"
+    },
+    "au-business-formation-missing-evidence": {
+      "input_sha256": "986efceba0fd4b2fe4cd97dd6fab4545ecfa0e40501c5e8850f74ceac511d18c",
+      "context_sha256": "a2740df8479af3726efc9b6a827cdf5e0470f15d2756bd6054a70d241996b994",
+      "rubric_sha256": "986efceba0fd4b2fe4cd97dd6fab4545ecfa0e40501c5e8850f74ceac511d18c",
+      "output_sha256": "ad97d6f59714600a39372235b99d097d1af62f19080febeed08904a46bc93bd4"
+    },
+    "au-capital-gains-missing-evidence": {
+      "input_sha256": "09e1403f81ad1363cae997c0cdfae16c4651ec733ffd8b54bd0e11c10a9727c1",
+      "context_sha256": "3e3a2fdc7ea1f419256017f7c4c34bf45193e0e99a4f06861e25aa44db5f9967",
+      "rubric_sha256": "09e1403f81ad1363cae997c0cdfae16c4651ec733ffd8b54bd0e11c10a9727c1",
+      "output_sha256": "8a28be9ea6084d53b6e7d35a2a72fa76a3febe86fec879423e1c434881fe2354"
+    },
+    "au-car-expenses-missing-evidence": {
+      "input_sha256": "8fc23d534ab75bf4f53c2b7a4f9beab3744f5c355ab891642bea143451e7e4ec",
+      "context_sha256": "ccafef3c6bb9b69fc9eac6d6b08dbcd61b22b3966b43ed1549a4026eadb70bf7",
+      "rubric_sha256": "8fc23d534ab75bf4f53c2b7a4f9beab3744f5c355ab891642bea143451e7e4ec",
+      "output_sha256": "1f964ef5f6311002315f2343b8c4f011589b61d6b9797146b3d55cb0e7c50b96"
+    },
+    "au-company-tax-missing-evidence": {
+      "input_sha256": "95613e96a0867d1422620ca939a61ad245b6d64839933923268533f40a6c5417",
+      "context_sha256": "3d9cf95acbdcccf16e757bb6b4295ce43c8d4ac54a788a2940c77c95762cb548",
+      "rubric_sha256": "95613e96a0867d1422620ca939a61ad245b6d64839933923268533f40a6c5417",
+      "output_sha256": "70956f16db7808e09dafb46b7f216be1262919811977e689c8e3a889ed0a1c3c"
+    },
+    "au-crypto-tax-missing-evidence": {
+      "input_sha256": "403a6339efa647ba0a69b4df7365c68d072aac3d84525fec76a28da22f2b4617",
+      "context_sha256": "3adf6be19baa158c3c6072e1de4fa2da8aff9dc62774a0b326a5a8f8d7e4ded5",
+      "rubric_sha256": "403a6339efa647ba0a69b4df7365c68d072aac3d84525fec76a28da22f2b4617",
+      "output_sha256": "ed69c4c23f6b679c6a864abd2788e9fdcf85bf8b4493bb0773c2d43e1dd7b806"
+    },
+    "au-deceased-estates-missing-evidence": {
+      "input_sha256": "4f493356114f945ee07ff51a90a8cd0089ad767d343b788b0a98591e0ccd794e",
+      "context_sha256": "030d6a044dbab0cacb2561604a9e0deeaa11cbbc3d516b49d2dc366b7eb71959",
+      "rubric_sha256": "4f493356114f945ee07ff51a90a8cd0089ad767d343b788b0a98591e0ccd794e",
+      "output_sha256": "281e2b4e036c27c167db5c7d83f6eab67d090ac4edefda6469d0b89effd973d1"
+    },
+    "au-division-293-missing-evidence": {
+      "input_sha256": "1c3f447122f29185e2c051e5955ce89aec82afe7a65f9fc4dfe69d5935311088",
+      "context_sha256": "b81d88638e6cdcc6055c603a13dd01e2ebb37b8ce1d080017faa6be36fec613c",
+      "rubric_sha256": "1c3f447122f29185e2c051e5955ce89aec82afe7a65f9fc4dfe69d5935311088",
+      "output_sha256": "f8ba5902e288226601e57d735097384042f96f2e3a627192cebab6c67243ed43"
+    },
+    "au-division-296-missing-evidence": {
+      "input_sha256": "30a246c0382171c3fb906b014522320bac3213130c0d0f081e614d30a2f6fcec",
+      "context_sha256": "ec5237dd1d2fae51ecd0427d040b4d6d3ddc7fe0b28ad450c1d412a6b98443b8",
+      "rubric_sha256": "30a246c0382171c3fb906b014522320bac3213130c0d0f081e614d30a2f6fcec",
+      "output_sha256": "05e1f94e064dfd25750068b66f8c58192a0313c86354a2a3c8697c81b9e1b206"
+    },
+    "au-etp-redundancy-missing-evidence": {
+      "input_sha256": "d6f06fc2c568037f3bf078ad9bd37a86b4fcfe8e65ef3f9e618f451e9f60ef87",
+      "context_sha256": "6bdae9bdccd0683fe8718619f187606e1efd4bfdfdb64346ccfed289082d5e21",
+      "rubric_sha256": "d6f06fc2c568037f3bf078ad9bd37a86b4fcfe8e65ef3f9e618f451e9f60ef87",
+      "output_sha256": "477541d95d558bd0a05f395e21bba99f55f06e7633bfe5937835e2b899b306da"
+    },
+    "au-financial-statements-missing-evidence": {
+      "input_sha256": "fc44628985f6998f1b3294ef9ef3529f3b2516035e2ab09fdacd5f2e66664f63",
+      "context_sha256": "684ef5a8eb00069dea240f5019ee6301d7727f236ec8c1b73495e9df5e8aab04",
+      "rubric_sha256": "fc44628985f6998f1b3294ef9ef3529f3b2516035e2ab09fdacd5f2e66664f63",
+      "output_sha256": "d2811c7a6031a5b5954ea8fe47108ff034d9d413d498f5a5532b4997291c6749"
+    },
+    "au-financial-statements-supported-mapping": {
+      "input_sha256": "98cceedc26cf9dd4db0708f2267d82207244dae00a510dd1ed444a4da7b28c4f",
+      "context_sha256": "d65e640a92ac116323e52df754e636686934981e0322bc5ff93a24d4b1c9fe17",
+      "rubric_sha256": "98cceedc26cf9dd4db0708f2267d82207244dae00a510dd1ed444a4da7b28c4f",
+      "output_sha256": "956e39573b2996fc4013cf5048b465a61ba412dc8181524bc49698ed99581aec"
+    },
+    "au-foreign-income-missing-evidence": {
+      "input_sha256": "f1010cbf9673e4a73a5c3a2a6d9c6d2c63ee3cfaef039c56dd2d5c82672774a5",
+      "context_sha256": "b8ef46669f5cf8d20c28a933edfde23590bf7ed41afc387f4ac72d8f11911020",
+      "rubric_sha256": "f1010cbf9673e4a73a5c3a2a6d9c6d2c63ee3cfaef039c56dd2d5c82672774a5",
+      "output_sha256": "e5ca8ad3e608ab0b16de666433f58c49e5a995a7a83589e4f8f0685809e1b6da"
+    },
+    "au-forex-review-missing-evidence": {
+      "input_sha256": "6bfcc77ce6fc5c6807b3c814e240a5ca4996d756a2f1249752865494e5d7b699",
+      "context_sha256": "99226660fdb1e578a6e1e1048dad45a99c6ec6891227012a3aad03d33d308fd0",
+      "rubric_sha256": "6bfcc77ce6fc5c6807b3c814e240a5ca4996d756a2f1249752865494e5d7b699",
+      "output_sha256": "c801e7ff51245caf21936a32afae2bdbe3e38b8a8b4def3ad5c745292874c163"
+    },
+    "au-gst-property-missing-evidence": {
+      "input_sha256": "b6deb33db7b5046fcd4a4757436cb2ecfd03aa86d7d3921ce8f104eceaaf5e71",
+      "context_sha256": "0e01793bbe5a2b69966c23d5cad2e6d43fd032318b3cee6f22eb8d136b999aa9",
+      "rubric_sha256": "b6deb33db7b5046fcd4a4757436cb2ecfd03aa86d7d3921ce8f104eceaaf5e71",
+      "output_sha256": "8ae19ddfe37290f236e10c866ce8a982e1b4628cd4cdd7c292ff3c7bbd791abc"
+    },
+    "au-gst-registration-review-missing-evidence": {
+      "input_sha256": "919ccb306db676b7368e79b8a19a0264319fe3aad21cba42d3a852e6f59f4cb9",
+      "context_sha256": "7fafcb242b2d66112bbd982f88ad0e08086373e80a2490ff9a4256f01d138a5a",
+      "rubric_sha256": "919ccb306db676b7368e79b8a19a0264319fe3aad21cba42d3a852e6f59f4cb9",
+      "output_sha256": "0a4231d4f314340bcbc69aa36a7c860e4e22a0d78ea5b2b6a183e4d3e06f3c79"
+    },
+    "au-individual-return-missing-evidence": {
+      "input_sha256": "7370d67561f86a5a94770528715cc779236ed02978425027232140fe7001c480",
+      "context_sha256": "95f1f1d5faf34605e4ab9e40ec192d14a8acb4465bdb2bb92340485fc8828fb5",
+      "rubric_sha256": "7370d67561f86a5a94770528715cc779236ed02978425027232140fe7001c480",
+      "output_sha256": "3946cc6c6425778ff696867f7d61c5c1d1b44565b92af5c3595c99ce50c759ed"
+    },
+    "au-individual-return-occupation-guide": {
+      "input_sha256": "7ec47750d9d2729fcef12eb9fd989ac85290a1e0ebe7572d595bf36f9617d84d",
+      "context_sha256": "ead485e615264e2e31090edf1b52fb7bb6aa97089be6e5141efb3fb49caad54e",
+      "rubric_sha256": "7ec47750d9d2729fcef12eb9fd989ac85290a1e0ebe7572d595bf36f9617d84d",
+      "output_sha256": "2ba73dba4b6b3a5a3f3f95d9b1f3d728b44b0d7fe866c30209223ff9d2dd7185"
+    },
+    "au-land-tax-missing-evidence": {
+      "input_sha256": "2b57157f78f47b12eda6b681646953ff9274ca2a295d33065153797bccf444a6",
+      "context_sha256": "440728273454eb3d074082e15fc9f40b4b52fbda4a29e13b882494ae1cf3b569",
+      "rubric_sha256": "2b57157f78f47b12eda6b681646953ff9274ca2a295d33065153797bccf444a6",
+      "output_sha256": "0a1a775d23d990cce9078cfe1310db3aaa5942f171b1284525d4d8fa3ae33e5a"
+    },
+    "au-medicare-review-missing-evidence": {
+      "input_sha256": "6c8ecbc75b9c2db903e667dd1205c4a0db2e1b8bc44d8274b1da154320261fa5",
+      "context_sha256": "6c3d5b0fd834c991324c54c2c2aaca5b77654b2af433fd6146cbf5b577ff177d",
+      "rubric_sha256": "6c8ecbc75b9c2db903e667dd1205c4a0db2e1b8bc44d8274b1da154320261fa5",
+      "output_sha256": "ba4ac676c509ad6fd36cde39bf85cfe5b739e4e99ab35e4851c262d27544fa09"
+    },
+    "au-nonresident-cgt-missing-evidence": {
+      "input_sha256": "fe3d737281857bb67fa6c818780d04225288e0f04056d03ece22f560ae3ab875",
+      "context_sha256": "a5873446ae26a098dbb0e6bde63a6cbf6f9f82d53de812c1172283bd02863f9a",
+      "rubric_sha256": "fe3d737281857bb67fa6c818780d04225288e0f04056d03ece22f560ae3ab875",
+      "output_sha256": "a60a16e971c97305956c28c0d93fe685cb8e6e70c48ef85cb789034a2e01cd34"
+    },
+    "au-not-for-profit-missing-evidence": {
+      "input_sha256": "d2237073eac685866d8e645edbd25a47dbc0c972876127de2002c8bf4ecef810",
+      "context_sha256": "57b78b7c402f35b8f4d74b0e95c5ef6047377764d8c34648a379c019859e059a",
+      "rubric_sha256": "d2237073eac685866d8e645edbd25a47dbc0c972876127de2002c8bf4ecef810",
+      "output_sha256": "10b43dbf5f1a4bab88f11b8cc15f2d52216778b317550da3f96e315379bc9b94"
+    },
+    "au-partnership-tax-missing-evidence": {
+      "input_sha256": "e9eb6bfbe5afbccb3acb36e250d828b7a0cdc90b83132f569c47683fc8269686",
+      "context_sha256": "b44f58a38612e814d7e2d4a871fc7b0eb37e9205839b7322ef78d8bdaefbc8ec",
+      "rubric_sha256": "e9eb6bfbe5afbccb3acb36e250d828b7a0cdc90b83132f569c47683fc8269686",
+      "output_sha256": "fcaf2088a74b8f796d9ce02babc1ce762b7fd36944379713d6ba42f76afc455d"
+    },
+    "au-payg-instalment-variation-missing-evidence": {
+      "input_sha256": "9508176aae19d222ace9b842fa574705d222a307f39e2770c1f70232fbcb3e5e",
+      "context_sha256": "5c861163ffde51c8a977bb9284f16f4ed08cddbf270a14be8a47a32c831f88c9",
+      "rubric_sha256": "9508176aae19d222ace9b842fa574705d222a307f39e2770c1f70232fbcb3e5e",
+      "output_sha256": "f3ef967923bf2a6c1bdb6ad514615d6b0a499661254314daf91f3f2fdf0bdfe7"
+    },
+    "au-payroll-review-missing-evidence": {
+      "input_sha256": "f8ff14f2c6a31972f127f522c8785a03518f907ca70bf4fb0ab3204ac1eecac8",
+      "context_sha256": "87edcccf09b8b234e50aae95370eb51f1868b3e557bd5c5d3e20feaf58cb3416",
+      "rubric_sha256": "f8ff14f2c6a31972f127f522c8785a03518f907ca70bf4fb0ab3204ac1eecac8",
+      "output_sha256": "cc08100dde740148c50e6dfb34ac3e14eae5db0168a316822e217612e3d98f49"
+    },
+    "au-payroll-review-pay-item-settings": {
+      "input_sha256": "d64e2a7ff0e8aa1e2693d228b7d4e31c0c72b4fa3a7e261b32475cdcb4929849",
+      "context_sha256": "42f77ddd8bd4514e0207ee48739631bfa7ffaeb1fc3108eaace762f4cda25cc1",
+      "rubric_sha256": "d64e2a7ff0e8aa1e2693d228b7d4e31c0c72b4fa3a7e261b32475cdcb4929849",
+      "output_sha256": "d75dcc0941bdd13796cc3ca0b1c47ffa345dc5879f30ee027b3fcfe5450c6dc4"
+    },
+    "au-payroll-review-supported-tie-out": {
+      "input_sha256": "8a52a9939cb6be301d801257fef2e6ce13ebae6db6f985f5e7a8ed45b59c7bef",
+      "context_sha256": "e2d7f9a42239b2a3402e438ea7fa491cd4d0d8fc1c3f2680059c3e9fe283bd0b",
+      "rubric_sha256": "8a52a9939cb6be301d801257fef2e6ce13ebae6db6f985f5e7a8ed45b59c7bef",
+      "output_sha256": "e237a50aa0ea54c62a90ca5940b83c8be3ce830579ab2b69f9a8327a0edb9721"
+    },
+    "au-payroll-tax-states-missing-evidence": {
+      "input_sha256": "e42d89b95911de8788fefd062fb7c75191efaebf7806b465b54ffc3aaf146cf7",
+      "context_sha256": "13cd6305f034975b110675547d00ebdaeb5bb59f7d8dd2af0a85d8db854e2e32",
+      "rubric_sha256": "e42d89b95911de8788fefd062fb7c75191efaebf7806b465b54ffc3aaf146cf7",
+      "output_sha256": "7e0d2004b9e0f4406c82a7a0c37a4413ef4b32de42ded77ba163fe75d3bd5da0"
+    },
+    "au-psi-review-missing-evidence": {
+      "input_sha256": "193dcdafee16669664be0556e653aabba36704207ed442e57370e4cfbf30bdd3",
+      "context_sha256": "ac6109bd74481d1614a1af846d43e2eee2d6632cf261e783ebeac341e211c09b",
+      "rubric_sha256": "193dcdafee16669664be0556e653aabba36704207ed442e57370e4cfbf30bdd3",
+      "output_sha256": "38d5d6d2eea0de7508eb9c9fa152f94e8be23a8ad8d80413614e1ab6cce0223d"
+    },
+    "au-rd-incentive-missing-evidence": {
+      "input_sha256": "63c8a153dad3d776643d96d10e149b02cf3055082739c3476ff3a8f9daef74bf",
+      "context_sha256": "8e178ac33df8f395be4ff24e7ac1a0aac7eb4beda37bf2049e47727ed4cd30a4",
+      "rubric_sha256": "63c8a153dad3d776643d96d10e149b02cf3055082739c3476ff3a8f9daef74bf",
+      "output_sha256": "124ab3c7e135b604434beefd58fcb12ff1e8ecab33ff3eb405990ec2ff087dba"
+    },
+    "au-rental-property-missing-evidence": {
+      "input_sha256": "b9dc7c73552da3d3139b4e936daa677f510de79a80f0227597b79c2aec9152c5",
+      "context_sha256": "55d450214cae43bbf786f1c89f4c5b92d5c6707c4a3760f590bc47b6f718a80a",
+      "rubric_sha256": "b9dc7c73552da3d3139b4e936daa677f510de79a80f0227597b79c2aec9152c5",
+      "output_sha256": "312f255708a6c6424aae9761324cb40d8893fab746571389853726a601aa826f"
+    },
+    "au-return-amendment-missing-evidence": {
+      "input_sha256": "c0fecdb464dfb6359445b8f343fa4b8f329e2c9667f8dc5d3c8eb56fdbb1380c",
+      "context_sha256": "6be9d8b6cecb2cfc5b4479cde1c5a35529d213a9692fb507a133a93658ab0485",
+      "rubric_sha256": "c0fecdb464dfb6359445b8f343fa4b8f329e2c9667f8dc5d3c8eb56fdbb1380c",
+      "output_sha256": "2b3e3965af63d501d663b4a688ae087e9e1d7dec8edd45d56c8f427af74587d8"
+    },
+    "au-small-business-cgt-missing-evidence": {
+      "input_sha256": "c106a04905544b9d2c009f6e60f1c28a34a10a55e57a5b60b98fd7612f1cc59f",
+      "context_sha256": "3f38e25e5ff7d433da0528a78c5f76e5f9961ab9417ce0147720b16f8673246b",
+      "rubric_sha256": "c106a04905544b9d2c009f6e60f1c28a34a10a55e57a5b60b98fd7612f1cc59f",
+      "output_sha256": "d6914a0f91e701fecb62c3640107c4216d5986b2108ef89d634fdfbbffd61fa5"
+    },
+    "au-smsf-year-end-missing-evidence": {
+      "input_sha256": "16e74ab799c93d97cb182d200c68aa2883c41d2cd082354e92580843a5dd0bfc",
+      "context_sha256": "06eb08cf37cfe0437fb23d20a6f81d0c0c7597a95d94f5f710c9bc42f635b35c",
+      "rubric_sha256": "16e74ab799c93d97cb182d200c68aa2883c41d2cd082354e92580843a5dd0bfc",
+      "output_sha256": "a7c70bff6d667abb00e4d5d345d118eeb8d889b612faa057dd5681294d039f91"
+    },
+    "au-sole-trader-missing-evidence": {
+      "input_sha256": "59fd5c2a283efa180bf596215916ef49f793d7a3e92b969ab1ad23a851759911",
+      "context_sha256": "ce378110c796ee7602b4e67daab0c38f44d46fdd532887cb119fe56fcbf7b996",
+      "rubric_sha256": "59fd5c2a283efa180bf596215916ef49f793d7a3e92b969ab1ad23a851759911",
+      "output_sha256": "f8565e32dcaf4542146df3dd67f38008fc558eb3034ddb84c37a1d30029e80e3"
+    },
+    "au-super-contribution-caps-missing-evidence": {
+      "input_sha256": "eab71623541c894f8f463b129a72c49434c1b7ce0ada9223ffbe8b7c42a84b4d",
+      "context_sha256": "5b0c1b2950e42017b74002919d2a17f6958fc2a4450f2c9959e6ae9b163e1e66",
+      "rubric_sha256": "eab71623541c894f8f463b129a72c49434c1b7ce0ada9223ffbe8b7c42a84b4d",
+      "output_sha256": "0f2c02bd8b61de6c646e077001ed72076aac0788e328137cda2a556a05ea1bfd"
+    },
+    "au-tax-planning-review-missing-evidence": {
+      "input_sha256": "3d3b1275a8554006a16d2339993d5c2d9f43b6ef2b0a82acfaf68fcb7b5b7856",
+      "context_sha256": "ee9aeccc743d457b26e1cf5169c6c662cd1e2b1556e9d08bd6dbba768fbe4891",
+      "rubric_sha256": "3d3b1275a8554006a16d2339993d5c2d9f43b6ef2b0a82acfaf68fcb7b5b7856",
+      "output_sha256": "db3f80851b84666abc4aacd28bdfcd5a7962d153155047641e4da98cd78e96e2"
+    },
+    "au-tax-rates-verification-missing-evidence": {
+      "input_sha256": "2d0fcf1e5884b0d5c58dda6865f07296ba9e99e8cb8d0235aee69f8001b12876",
+      "context_sha256": "b9f87d7bdf594dd875066e14155947e3850a0d1d28d86444b00bb8fcfe6d490b",
+      "rubric_sha256": "2d0fcf1e5884b0d5c58dda6865f07296ba9e99e8cb8d0235aee69f8001b12876",
+      "output_sha256": "bc8890037e9e435555624db187a1eafbe028b0f7ee605d3739a57cf0501ffc62"
+    },
+    "au-tax-research-missing-evidence": {
+      "input_sha256": "b0c97f01160a01ce2d366510dc6342b54d62526d744b107395f880e8374fd8c4",
+      "context_sha256": "d09f2107d17acc15ce87d000a596302727d7533bc790119f10bc718f8bec83da",
+      "rubric_sha256": "b0c97f01160a01ce2d366510dc6342b54d62526d744b107395f880e8374fd8c4",
+      "output_sha256": "e8931484c18f52ce29313c3d3dc91410c6bb71aba7c008cde5bfbb2954938a90"
+    },
+    "au-tax-residency-missing-evidence": {
+      "input_sha256": "04f0b5a52f023963e103b73260970db21bd8277a75d1dbd843de273176fa6b59",
+      "context_sha256": "14f6f68e1f498745aa6303fb78c9b0eb71ac5ecc374d8aec786875ad26542de8",
+      "rubric_sha256": "04f0b5a52f023963e103b73260970db21bd8277a75d1dbd843de273176fa6b59",
+      "output_sha256": "a66d455cc4fbd894213117ab597c315846cb091569f1e67a04b8377483d07090"
+    },
+    "au-transfer-duty-missing-evidence": {
+      "input_sha256": "6f004f96036056f1b78dd21188e38465091ffdf5dacf91232ee30fdaa6a3739a",
+      "context_sha256": "4adc792913d8cf94032f173b36f51d2592d11e9eceb1c9246226eb9dfe18e75b",
+      "rubric_sha256": "6f004f96036056f1b78dd21188e38465091ffdf5dacf91232ee30fdaa6a3739a",
+      "output_sha256": "ae2b9e6fe4911370cb342caa3e7cfa2ef0b12c7892091b12a8a58aa39b26db41"
+    },
+    "au-transfer-pricing-missing-evidence": {
+      "input_sha256": "981a1b745117392aeb4237d84909d6afa4a70b1895dbe1dbacf05c44c941610b",
+      "context_sha256": "b43211e59c3102e38633d666bf5d06c09fd9563d4cb35eb4e816b86094672aa5",
+      "rubric_sha256": "981a1b745117392aeb4237d84909d6afa4a70b1895dbe1dbacf05c44c941610b",
+      "output_sha256": "84502d7bc60d891fe804be7aadc1768d3d6b7f39a863264e696a807c5711025a"
+    },
+    "au-trust-distributions-missing-evidence": {
+      "input_sha256": "a77946a525bc9bf80cbed85e1a1c5b1aa213d0f1ab9cee992e62897e1e26f18c",
+      "context_sha256": "5872e3d9ec4b6c22c483e1262d73c2fd6d626181c1eb758ab16a6b8c0f6f3c2c",
+      "rubric_sha256": "a77946a525bc9bf80cbed85e1a1c5b1aa213d0f1ab9cee992e62897e1e26f18c",
+      "output_sha256": "b54dfa8da9ae7e098cd68bd79e3f76371d61424418cad82253194e40b090e0a9"
+    },
+    "au-wfh-deductions-missing-evidence": {
+      "input_sha256": "b31429e47adab102db1fd6b2320adc4358f8d6a23039baa0fee66557908c2888",
+      "context_sha256": "3d50a3f85c192358e5bbd6b7fd72cd8d18c88ff9001a72e4f398b9b2ea5ad129",
+      "rubric_sha256": "b31429e47adab102db1fd6b2320adc4358f8d6a23039baa0fee66557908c2888",
+      "output_sha256": "9ee9d58436b58e9dd026112da86032cb473014f58281d2fe60bffaac8303e1ff"
+    },
+    "bas-export-manifest-rounding": {
+      "input_sha256": "fcdf5944baf5f44bbe0e3f1e21efd86b0d2517b75b836e2e1470306f217062fc",
+      "context_sha256": "5656e6250905f820e7ede01cff0e6b6658edea821d2001a4f68b6f83e64591c1",
+      "rubric_sha256": "fcdf5944baf5f44bbe0e3f1e21efd86b0d2517b75b836e2e1470306f217062fc",
+      "output_sha256": "81239ca562d324251ba40fe3640094d321fcd49757d012af245c3755b6d51928"
+    },
+    "bas-g10-g11": {
+      "input_sha256": "7ec6687442e35f60957b440b66d2ec85bcd6c8a3d8ca71aeb04e262906c5a577",
+      "context_sha256": "594c0055ed4f27b1d77b41251ac458d40379cb45dc748d3c6066b25e012e31bb",
+      "rubric_sha256": "7ec6687442e35f60957b440b66d2ec85bcd6c8a3d8ca71aeb04e262906c5a577",
+      "output_sha256": "060a6b802b4e2363a7c30d262000ba5f2034dee5025c07ee51f466da69a9198e"
+    },
+    "bas-stp-w3-w4": {
+      "input_sha256": "67eeabd68f783e65f996aa2498de3a053e10820497ee5b6070c2a74146b6c1a2",
+      "context_sha256": "7b50252389b41388a696a8a21b44d09c7ce48bdd946917471fb94d9801180697",
+      "rubric_sha256": "67eeabd68f783e65f996aa2498de3a053e10820497ee5b6070c2a74146b6c1a2",
+      "output_sha256": "e60e0af9657334fc2ef187af23b503cb3bc6533b5ce53f7843a4d43e650712df"
+    },
+    "cashflow-super-regime-transition": {
+      "input_sha256": "4afffec827317ddb1169f0cbb54ba26d30fea3cf55819d3b61deae71463d431c",
+      "context_sha256": "23fe52f191d8fdc3cafc98981344e5a2f9338bc80a5080a430369cabb9d01576",
+      "rubric_sha256": "4afffec827317ddb1169f0cbb54ba26d30fea3cf55819d3b61deae71463d431c",
+      "output_sha256": "b37b95a471ef3524a812a22fbd56cfc0af0fadf315f5e6ee1098d272cb02565e"
+    },
+    "cashflow-supported-roll-forward": {
+      "input_sha256": "e4816c7d70b5e836f23c15e6473b1a40d5eb4d3dcf2336e9e342d8205207dae6",
+      "context_sha256": "8e34c7a5dca6171df22f4f0750886d7a5fa8a262c95327073dc03f5b7aee0871",
+      "rubric_sha256": "e4816c7d70b5e836f23c15e6473b1a40d5eb4d3dcf2336e9e342d8205207dae6",
+      "output_sha256": "87f74c553f9dbbf92377267bbe515abbefae3f55a1ac20b23a8bdf128a4af592"
+    },
+    "coal-lsl-levy-unverified-rate": {
+      "input_sha256": "15f99b0b0e5d51a85754f3a33e558b613fe4b45601e7b808fedb6c6278d16e76",
+      "context_sha256": "48415776ed5df84095af3b4962ca3d987c5f54727e49c471fdc243f325607bea",
+      "rubric_sha256": "15f99b0b0e5d51a85754f3a33e558b613fe4b45601e7b808fedb6c6278d16e76",
+      "output_sha256": "45dee0fce2fef8f2ffaeb6198116fef49309413b94662c2607854c44354f7a84"
+    },
+    "contract-cost-unallocated-plant": {
+      "input_sha256": "9df50bb894ed9b7a8f8698d4425175f2493259de12727345f44b823281ccc405",
+      "context_sha256": "f016e0bce35024c29a0f2dd40c0832eff2d97260491b6c992eae3418018bebfa",
+      "rubric_sha256": "9df50bb894ed9b7a8f8698d4425175f2493259de12727345f44b823281ccc405",
+      "output_sha256": "48a0f9a7e7310f1ccc6f422fe017804a7ee6ed3d6d1c16fef111b3d34c3621ea"
+    },
+    "div7a-upe-review": {
+      "input_sha256": "86e542b120f3cf03556711ecc553d8f2a2bf8490cf585e009e3804a2d7d88ef0",
+      "context_sha256": "cc19794ef4fd80d7ef637eab8890d6dfb1e04a67e5be4f81e766d8a21427644e",
+      "rubric_sha256": "86e542b120f3cf03556711ecc553d8f2a2bf8490cf585e009e3804a2d7d88ef0",
+      "output_sha256": "96005039b5421ebd80ca912fcfb9597d93e5c73fb717da0d09f444e1f1ec5531"
+    },
+    "export-manifest-rounding": {
+      "input_sha256": "951da86c9981c3d386a4bbb9a3e42454160bfe71ca5164721507b4776afd7598",
+      "context_sha256": "6f764a417178e251916db0f9947487a63a50dc03c400bd6e7c96d3fff0740b47",
+      "rubric_sha256": "951da86c9981c3d386a4bbb9a3e42454160bfe71ca5164721507b4776afd7598",
+      "output_sha256": "520506a336bc3966401dd5769cfdd9df46f5af68e87c047686c3e92e44d5f1ed"
+    },
+    "fbt-carparking-missing-declaration": {
+      "input_sha256": "ee2ad11ae343b697a837edf03b4eaa3a4e9b36cc16321fc564f029076f7cee13",
+      "context_sha256": "f78c25b934a89a57da4ff59c119884758b87d21c5dea2dcc081818a20f741c4c",
+      "rubric_sha256": "ee2ad11ae343b697a837edf03b4eaa3a4e9b36cc16321fc564f029076f7cee13",
+      "output_sha256": "dc580eb44b774b47f2474a609069a6c6ef9908cb236acb425bf36684452c43e4"
+    },
+    "financial-modelling-structure-faults": {
+      "input_sha256": "ebef9d9919cc8c47c08ad3e2fd87bd3742d99497946636c0b06ad937f0fac1b4",
+      "context_sha256": "487855cc1ff340abd95a2242fe14b918237a04776cea89897d09b27c2e3668b6",
+      "rubric_sha256": "ebef9d9919cc8c47c08ad3e2fd87bd3742d99497946636c0b06ad937f0fac1b4",
+      "output_sha256": "81b65260b28e3fe54ff94a45dfb631612a10abdcc83769e0aa6590cc6a14d9d3"
+    },
+    "fuel-tax-credits-missing-docket": {
+      "input_sha256": "6554a0cc1c9a574424a117eb25b55cdfb66e808d788c4844aa8c69c4dab45911",
+      "context_sha256": "113b7b2e6546d9e3b1c417307d51ba12d2e0394ac10d21f9d26bc81d01d9c915",
+      "rubric_sha256": "6554a0cc1c9a574424a117eb25b55cdfb66e808d788c4844aa8c69c4dab45911",
+      "output_sha256": "66bcc805c526fd7c885d8be066ee3d703d90f0701d48dcf5514594917009dffb"
+    },
+    "month-end-supplier-bank-detail-change": {
+      "input_sha256": "32aff3e84292a1c32bb23953c814804fcbb9ee7a8804e0c1328cf04057fc65d2",
+      "context_sha256": "6265b3def1f1ab952f5ea48dbcc35982b3629f43e13497b92f8a708bf2214497",
+      "rubric_sha256": "32aff3e84292a1c32bb23953c814804fcbb9ee7a8804e0c1328cf04057fc65d2",
+      "output_sha256": "cea918fa5260635e27c3529b4b95cbe2bf8a778d874ae08cc64c7f049ece040c"
+    },
+    "month-end-supported-partial-close": {
+      "input_sha256": "99c141d31388d2d039c9900d3350ae92e992d7a64ba2f9f4e55e68046edc1710",
+      "context_sha256": "4169b6a0a83cee265b1325f0847a02399b20cbd489595921ddda521fe7a0aff4",
+      "rubric_sha256": "99c141d31388d2d039c9900d3350ae92e992d7a64ba2f9f4e55e68046edc1710",
+      "output_sha256": "f574f256ce4be532e97d9afc59690246501c8ff9ffb6e18b5e84945845305f83"
+    },
+    "payroll-tax-contractor-characterisation": {
+      "input_sha256": "164134c6268690323e0520a274ad0bb87a3f2dd48ae3394847fd895a5bec1dff",
+      "context_sha256": "bd0d14d3dd16308bab29ad322dea5e889b7e57652019e12e566928fbe7a35968",
+      "rubric_sha256": "164134c6268690323e0520a274ad0bb87a3f2dd48ae3394847fd895a5bec1dff",
+      "output_sha256": "b99cdc16fc9d16e6acb245d90083670699386b2669bc4326ae7c1fa8dfe0c163"
+    },
+    "post-journal-provenance-tie-out": {
+      "input_sha256": "54bbb15d333f505c580b8582498fbca80b2f1521b526112829a0dbdb827b0830",
+      "context_sha256": "bd23f28ec5af54b83a7a45416d7ce95f5542018876f073247ebe1d1531f3cb8b",
+      "rubric_sha256": "54bbb15d333f505c580b8582498fbca80b2f1521b526112829a0dbdb827b0830",
+      "output_sha256": "e71e2d8ecec07844b698ef11f12375a88e117ed77429986d822f192c7216ce09"
+    },
+    "progress-claim-missing-reference-date": {
+      "input_sha256": "521ca8d4766ecbf3e7c607b2815356392fa3cccdebcb1781684714d7ad630c6d",
+      "context_sha256": "4cade9cfd3e4214730cdd31d1a8c55ebb6d68f5756fe9f2412d16a0a4ec6976e",
+      "rubric_sha256": "521ca8d4766ecbf3e7c607b2815356392fa3cccdebcb1781684714d7ad630c6d",
+      "output_sha256": "5c4e537cf9149c07c615eb29e9dcf6bcbbfadd8b3d2f3d9c980e933f21fc88bc"
+    },
+    "retention-release-missing-deed": {
+      "input_sha256": "33845860b8c570fa15b41cdd054de47516d697d7120c211a99967e55275bec52",
+      "context_sha256": "bc43bbb60ccb2a417457473dea26308ca04aac73c575ca79ed59fa44abca41f5",
+      "rubric_sha256": "33845860b8c570fa15b41cdd054de47516d697d7120c211a99967e55275bec52",
+      "output_sha256": "e1d5af3d1a443ef86ecae8a9d8cbce819232cbcd7990864402227c2774f234bf"
+    },
+    "standalone-skill-safety-boundary": {
+      "input_sha256": "1c2e8f2f16e3b25f6c353c960f27297ffc680b0b1e0a5cdee4e5c162f6e3c1fe",
+      "context_sha256": "3df9a2b9bb20d403f77f14dfe0dd46d62e2ac3e2a3bce1c2b9e4108437de8e0d",
+      "rubric_sha256": "1c2e8f2f16e3b25f6c353c960f27297ffc680b0b1e0a5cdee4e5c162f6e3c1fe",
+      "output_sha256": "a4eca9071e9a7e073a0ff8fbeb259a0f22cc7b8e9a72b5ea924dffddab64a5c5"
+    },
+    "stp-current-vs-overdue-sg": {
+      "input_sha256": "acf47c84099c7a50c94fdf9ac582460428cf7c6de6a1ecea3aab5fae263cba1d",
+      "context_sha256": "a874e94289a33f83ca69b632dac598a1e06fc1c8bb2fdff136723893bac47088",
+      "rubric_sha256": "acf47c84099c7a50c94fdf9ac582460428cf7c6de6a1ecea3aab5fae263cba1d",
+      "output_sha256": "09410b12c621548253f90b3fadbd952aa2ca36988ad297be84449dde83b99a3d"
+    },
+    "tax-invoice-review-missing-evidence": {
+      "input_sha256": "db46215ac72c786fd9b12ecc7bdb921e6254fc6b79f1af286148c09966787b9b",
+      "context_sha256": "4a5614e64df47c365c13b92eca50c4c9dbc1fdae917c48813b6d86a676fdf894",
+      "rubric_sha256": "db46215ac72c786fd9b12ecc7bdb921e6254fc6b79f1af286148c09966787b9b",
+      "output_sha256": "b8e4c264eb49813e4b8c8aa2c0eaa0dd89471c1fa6ffc04954dc01367ce6a852"
+    },
+    "wip-cost-to-complete-gap": {
+      "input_sha256": "1970cf80bb9704e1476f114f50bc8e3d275436ebac935ee477e981fa077923a1",
+      "context_sha256": "560dff0167a7f2d9619b7ff6a55e4d1c46473e2e8a4b2bcec64708f240af7e67",
+      "rubric_sha256": "1970cf80bb9704e1476f114f50bc8e3d275436ebac935ee477e981fa077923a1",
+      "output_sha256": "5748be25e9b0734e620128586f6bea4159e57ae1f869bdf43a93221492c5d76b"
+    }
+  }
+}

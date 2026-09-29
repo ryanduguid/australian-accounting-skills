@@ -11,19 +11,19 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Start with the 19 workflows in the published release, [v0.2.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.2.1), by checking out its recorded commit from a separate project directory.
+Start with the 63 workflows in the published release, [v0.3.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.3.0), by checking out its tag from a separate project directory.
 
 ```bash
 git clone https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
-git -C accounting-skills-release checkout --detach 527b0a22c8be5ce10855f12f052cd3bda7b7b827
+git -C accounting-skills-release checkout --detach v0.3.0
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
 Clone once per project. To repeat or retry from that directory, rerun only the checkout and install commands.
 
-v0.2.1 carries passages that `main` has since corrected in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on the release.
+v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on v0.2.1.
 
-That copies the 19 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 17 of the 70 [validation cards](validation/README.md). Claude Opus 5 passed all 17 on 6 September 2026 and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither record states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The other 53 cards, including one for each of the 44 skills `main` adds to the tag, have no confirmed model verdict. Static checks cover all 63 skills, and [coverage.json](coverage.json) gives the state of each skill.
+That copies the 63 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover all 70 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 in a whole-card run on 28 September 2026, confirmed on 29 September. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. Static checks cover all 63 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
@@ -40,7 +40,7 @@ An agent runtime is still required. Ask it to prepare the BAS workpaper from the
 
 ### Development installation
 
-As at 27 September 2026, the default branch contains 63 workflows preparing v0.3.0. The plugin marketplace installs this development inventory. It is not a published release.
+The plugin marketplace installs the default branch, which can be ahead of v0.3.0. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -49,7 +49,7 @@ As at 27 September 2026, the default branch contains 63 workflows preparing v0.3
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
-The development installation resolves the default branch and adds 44 workflows to v0.2.1. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The development installation resolves the default branch, which can carry changes made after v0.3.0. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) remains pinned to v0.1.5, the original 9-skill practice pack. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
