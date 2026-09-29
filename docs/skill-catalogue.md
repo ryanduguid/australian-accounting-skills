@@ -74,6 +74,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | Transfer pricing evidence pack |
 | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | Trust distribution review pack |
 | [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | Working from home deduction workpapers, fixed rate or actual cost, with the 2026-27 standard deduction comparison |
+| [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | Working holiday maker workpapers in two modes: the employer's registration, Schedule 15 withholding, STP income type and super, or the person's WHM income, residency, NDA treaty position, lodgement and departure |
 
 Also included:
 

@@ -6,7 +6,7 @@ through [CLAUDE.md](./CLAUDE.md).
 
 ## What this repository is
 
-Sixty-four agent skills for Australian public-practice and contracting-business
+Sixty-five agent skills for Australian public-practice and contracting-business
 accounting. The Australian topic expansion adds tax returns, investment and
 cross-border workpapers, state-tax evidence, financial statements and formation
 checklists.
@@ -108,7 +108,10 @@ Re-fetch the indexed primary sources with
 `python scripts/source_refresh.py --write`. It records a content digest per
 source so a later sweep can report which pages moved, and it never touches
 `checked_at`: that date means a person read the source, and only a person
-changes it. `.github/workflows/source-sweep.yml` runs the sweep weekly and
+changes it. The same holds for `reverify_by`, which every volatile record
+carries: the last day its recorded fact may serve as a cross-check, never more
+than 400 days after `checked_at`. The sweep reports a record past that date as
+review-due. `.github/workflows/source-sweep.yml` runs the sweep weekly and
 files the result as an issue; `scripts/sweep_outcome.py` is what turns the
 sweep's exit status and report into that outcome, and it fails the run on
 exit 1, any unexpected code, or a missing, stale or contradictory report. `coverage.json` carries the result per skill,

@@ -39,6 +39,7 @@ exports/
 !/.claude/skills/**/*.json
 !/.claude/skills/au-tax-research/sources.json
 !/.claude/skills/au-client-acceptance/sources.json
+!/.claude/skills/au-working-holiday-makers/sources.json
 !.claude-plugin/marketplace.json
 !.claude-plugin/plugin.json
 !/.codex-plugin/
@@ -74,6 +75,7 @@ exports/
 !/.claude/skills/**/*.md
 !/.claude/skills/au-tax-research/SKILL.md
 !/.claude/skills/au-client-acceptance/SKILL.md
+!/.claude/skills/au-working-holiday-makers/SKILL.md
 !/.claude/rules/
 !/.claude/rules/**/*.md
 
@@ -87,6 +89,7 @@ exports/
 !/validation/cases/month-end-supported-partial-close.md
 !/validation/cases/au-tax-research-missing-evidence.md
 !/validation/cases/au-client-acceptance-missing-evidence.md
+!/validation/cases/au-working-holiday-makers-missing-evidence.md
 # Result files hold verdicts or versioned trial digests. The validator rejects
 # prompts, outputs and transcripts under this exception.
 !/validation/results.schema.json

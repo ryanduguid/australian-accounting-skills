@@ -1,6 +1,6 @@
 # Australian guide topic coverage
 
-The pack contains 64 skills: the original 19, 31 new preparation workflows, a later tax invoice review, a working from home deduction workflow and an ATO penalties, interest workflow, a Division 293 tax workflow, a Division 296 tax workflow, a super contribution caps workflow, a PAYG instalment variation workflow and a termination payment, redundancy workflow, a multi-state payroll tax workflow, a work-related car expense workflow, a financial modelling workflow, an AML/CTF client coverage workflow, a client acceptance and engagement terms workflow and a tax research file-note workflow.
+The pack contains 65 skills: the original 19, 31 new preparation workflows, a later tax invoice review, a working from home deduction workflow and an ATO penalties, interest workflow, a Division 293 tax workflow, a Division 296 tax workflow, a super contribution caps workflow, a PAYG instalment variation workflow and a termination payment, redundancy workflow, a multi-state payroll tax workflow, a work-related car expense workflow, a financial modelling workflow, an AML/CTF client coverage workflow, a client acceptance and engagement terms workflow, a tax research file-note workflow and a working holiday maker workflow.
 This map accounts for all 38 guide filenames in the [OpenAccountants Australian folder](https://github.com/openaccountants/openaccountants/tree/66912a14e86095f150c2b0c37703d195938f8f1d/skills/international/australia), inspected on 8 September 2026. The additional `references.md` is a bibliography, not a separate workflow.
 
 This is a topic-to-workflow mapping. It does not claim identical coverage of each Guide's body or validate its tax content. Six topics reuse existing skills; 2 residency topics share one new skill. The new workflows identify evidence, reconciliations and decisions for qualified review. They do not encode complete tax engines.
@@ -47,6 +47,18 @@ This is a topic-to-workflow mapping. It does not claim identical coverage of eac
 | `australia-tax-optimization` | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
 | `australia-transfer-pricing` | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
 | `leaving-australia-tax-residency-cgt` | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | New | Shares the residency skill's arrival/departure workflow. |
+
+## Guides added upstream after 8 September
+
+Read on 29 September 2026 at [commit ada1fae](https://github.com/openaccountants/openaccountants/tree/ada1faee45be23b0506caf9997c9ef7e652b23a4/packages/australia), where the Australian guides now sit under `packages/australia`. The table above keeps its 8 September scope.
+
+| Upstream topic | Skill | Delivery | Scope |
+| --- | --- | --- | --- |
+| `au-employment-termination-payments` | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | Existing | Termination payment classification, caps and withholding already exist. |
+| `au-payroll-tax` | [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | Existing | Multi-state thresholds, rates, grouping and apportionment already exist. |
+| `au-tpar` | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md) | Existing | TPAR pathways and periods already exist. |
+| `au-working-holiday-makers` | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
+| `au-rates-2026-27` | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Existing | A list of rates rather than a workflow; the skill records which period's rates apply and where each comes from. |
 
 ## Provenance and reuse
 

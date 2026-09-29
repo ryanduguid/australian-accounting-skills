@@ -13,6 +13,7 @@ import sys
 import tempfile
 import unittest
 import urllib.error
+from datetime import date
 from email.message import Message
 from pathlib import Path
 from unittest import mock
@@ -472,7 +473,7 @@ class SweepTests(unittest.TestCase):
         self.assertNotIn("Nothing changed", source_refresh.render(on_time, write=False))
         self.assertEqual([o.outcome for o in overdue.outcomes], [source_refresh.REVIEW_DUE])
         self.assertEqual(len(overdue.actionable), 1)
-        self.assertIn("- review-due (scheduled manual review overdue): 1",
+        self.assertIn("- review-due (manual review overdue or reverify_by passed): 1",
                       source_refresh.render(overdue, write=False))
         # Not fetched, so the machine fields are never written for it.
         record = json.loads((skill / "sources.json").read_text(encoding="utf-8"))["sources"][0]
@@ -495,6 +496,82 @@ class SweepTests(unittest.TestCase):
                     self.assertIsInstance(schedule, dict)
                     self.assertTrue(schedule.get("cadence"))
                     self.assertTrue(source_refresh.review_date(schedule))
+
+
+class ReverifyTests(unittest.TestCase):
+    """A recorded fact expires after its `reverify_by` date, whatever the page does."""
+
+    def sweep(self, record: dict[str, object], today: str, **fetch: object):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        skill = Path(directory.name) / "skills" / "example-skill"
+        skill.mkdir(parents=True)
+        (skill / "sources.json").write_text(
+            json.dumps({"skill": "example-skill", "sources": [record]}), encoding="utf-8"
+        )
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched(**fetch)):
+            report = source_refresh.refresh(skills=skill.parent, spacing=0, today=today)
+        [outcome] = report.outcomes
+        return outcome
+
+    def record(self, **overrides: object) -> dict[str, object]:
+        base = ClassifyTests().record(reverify_by="2027-06-30")
+        base.update(overrides)
+        return base
+
+    def test_the_date_itself_is_the_last_usable_day(self) -> None:
+        self.assertEqual(self.sweep(self.record(), "2027-06-30").outcome, source_refresh.UNCHANGED)
+        late = self.sweep(self.record(), "2027-07-01")
+        self.assertEqual(late.outcome, source_refresh.REVIEW_DUE)
+        self.assertIn("passed its reverify_by date (2027-06-30)", late.detail)
+
+    def test_a_mistyped_date_counts_as_passed(self) -> None:
+        outcome = self.sweep(self.record(reverify_by="30 June 2027"), "2026-10-01")
+        self.assertEqual(outcome.outcome, source_refresh.REVIEW_DUE)
+        self.assertIn("not a real date", outcome.detail)
+
+    def test_a_record_without_the_field_never_expires(self) -> None:
+        record = self.record()
+        del record["reverify_by"]
+        self.assertEqual(self.sweep(record, "2099-01-01").outcome, source_refresh.UNCHANGED)
+
+    def test_a_fetch_finding_that_asks_for_an_edit_keeps_its_name(self) -> None:
+        changed = self.sweep(self.record(), "2027-07-01", digest="b" * 64)
+        self.assertEqual(changed.outcome, source_refresh.CHANGED)
+        self.assertIn("reverify_by", changed.detail)
+        missing = self.sweep(self.record(), "2027-07-01", status=404, digest="", kind="", error="HTTP 404")
+        self.assertEqual(missing.outcome, source_refresh.MISSING)
+
+    def test_an_unreachable_page_is_still_a_review_due_once_the_fact_expires(self) -> None:
+        blocked = self.sweep(self.record(), "2027-07-01", status=403, digest="", kind="", error="HTTP 403")
+        self.assertEqual(blocked.outcome, source_refresh.REVIEW_DUE)
+        self.assertIn("Retrieval: HTTP 403", blocked.detail)
+        self.assertTrue(blocked.actionable)
+
+    def test_an_expired_fact_on_a_hand_reviewed_source_is_due_before_its_schedule(self) -> None:
+        record = self.record(manual_review={"cadence": "monthly", "next_review": "2027-07-26"})
+        outcome = self.sweep(record, "2027-07-01")
+        self.assertEqual(outcome.outcome, source_refresh.REVIEW_DUE)
+        self.assertIn("passed its reverify_by date", outcome.detail)
+
+    def test_a_write_never_touches_the_reverify_date(self) -> None:
+        record: dict[str, object] = {"url": "https://example.test/page", "checked_at": "2026-09-08",
+                                     "reverify_by": "2027-06-30"}
+        source_refresh.apply_fetch(record, fetched(), "2026-09-16")
+        self.assertEqual(record["reverify_by"], "2027-06-30")
+
+    def test_every_volatile_record_carries_a_reverify_date_within_400_days(self) -> None:
+        """Extending the date past 400 days needs a fresh human `checked_at` as well."""
+        for path in source_refresh.index_files():
+            for record in json.loads(path.read_text(encoding="utf-8")).get("sources", []):
+                if not record.get("volatile") and source_refresh.REVERIFY_FIELD not in record:
+                    continue
+                with self.subTest(skill=path.parent.name, url=record.get("url")):
+                    due = source_refresh.review_date({"next_review": record.get("reverify_by", "")})
+                    self.assertTrue(due, "reverify_by must be a real YYYY-MM-DD date")
+                    checked = date.fromisoformat(str(record["checked_at"]))
+                    self.assertLessEqual(checked, date.fromisoformat(due))
+                    self.assertLessEqual((date.fromisoformat(due) - checked).days, 400)
 
 
 if __name__ == "__main__":

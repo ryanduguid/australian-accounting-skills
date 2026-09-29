@@ -14,8 +14,8 @@ abstract: >-
   when relying on them. The sixty-three-skill v0.3.0 release of
   29 September 2026 added 43 Australian preparation workflows and one
   financial modelling workflow. Cite that tag when relying on them. The
-  development branch has sixty-four skills with a client acceptance
-  workflow. This citation still identifies v0.1.5.
+  development branch has sixty-five skills with a client acceptance
+  workflow and a working holiday maker workflow. This citation still identifies v0.1.5.
 version: 0.1.5
 date-released: 2026-08-23
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"
