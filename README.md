@@ -11,11 +11,11 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Start with the 63 workflows in the published release, [v0.3.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.3.0), by checking out its tag from a separate project directory.
+Start with the 63 workflows in the published release, [v0.3.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.3.0), by checking out its recorded commit from a separate project directory.
 
 ```bash
 git clone https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
-git -C accounting-skills-release checkout --detach v0.3.0
+git -C accounting-skills-release checkout --detach 1776cc31c7041b7263a6c475bd6c2f0bc05984e7
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
