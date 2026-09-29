@@ -33,29 +33,31 @@
     {
       "title": "Treasury Laws Amendment (Payday Superannuation) Act 2025, Schedule 1 / SGAA s 18C",
       "url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
-      "checked_at": "2026-08-20",
+      "checked_at": "2026-09-30",
       "fact": "Statutory payday-super timing and the s 18C alignment conditions sit in this Act. Missing facts produce UNKNOWN, not an SGC determination.",
       "volatile": false,
       "final_url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
       "http_status": 200,
-      "fetched_at": "2026-09-16",
+      "fetched_at": "2026-09-30",
       "content_hash": "35db9d1c12699f672be0ac157a6241f6e06efd7cef4adb5e55bbf8a6a5b2f7cd",
       "source_last_modified": "",
-      "content_hash_covers": "html"
+      "content_hash_covers": "html",
+      "content_url": "https://www.legislation.gov.au/C2025A00057/asmade/text"
     },
     {
       "title": "Superannuation Guarantee (Administration) Regulations 2018",
       "url": "https://www.legislation.gov.au/F2018L01289/latest/text",
-      "checked_at": "2026-08-20",
+      "checked_at": "2026-09-30",
       "reverify_by": "2027-08-20",
       "fact": "Use the current compilation, including the 1 July 2026 compilation where that is the law in force for the year being finalised.",
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/F2018L01289/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-16",
+      "fetched_at": "2026-09-30",
       "content_hash": "907d2da12182f70dfb4b62f35591322c761b2e0427b67f75870c9781aec986c0",
       "source_last_modified": "",
-      "content_hash_covers": "html"
+      "content_hash_covers": "html",
+      "content_url": "https://www.legislation.gov.au/F2018L01289/latest/text"
     },
     {
       "title": "STP finalisation",

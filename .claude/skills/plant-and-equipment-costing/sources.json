@@ -5,30 +5,32 @@
     {
       "title": "AASB 116 Property, Plant and Equipment",
       "url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
-      "checked_at": "2026-08-28",
+      "checked_at": "2026-09-30",
       "reverify_by": "2027-08-28",
       "fact": "Recognition, depreciation and component-accounting requirements come from the compilation operative for the reporting period.",
       "volatile": true,
       "final_url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
       "http_status": 200,
-      "fetched_at": "2026-09-16",
+      "fetched_at": "2026-09-30",
       "content_hash": "af554ee9ed9dc6c6b0d94f57625913b2b3b5863c030cde0d7e1f7f58fb6e51ca",
       "source_last_modified": "",
-      "content_hash_covers": "html"
+      "content_hash_covers": "html",
+      "content_url": "https://standards.aasb.gov.au/aasb-116-dec-2022"
     },
     {
       "title": "Income Tax Assessment Act 1997",
       "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
-      "checked_at": "2026-08-28",
+      "checked_at": "2026-09-30",
       "reverify_by": "2027-08-28",
       "fact": "Division 40 separates tax decline in value and effective-life choices from the management-accounting machine rate.",
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-25",
-      "content_hash": "c58a4ffb243cca077bedac797c13ef816e3fa6c8d11a97de0c0fee3369baff91",
+      "fetched_at": "2026-09-30",
+      "content_hash": "c9315cce7c7789beb9bda49ad49b152033998919818fde97fa42780a5f7e1eb6",
       "source_last_modified": "",
-      "content_hash_covers": "html"
+      "content_hash_covers": "html",
+      "content_url": "https://www.legislation.gov.au/C2004A05138/latest/text"
     }
   ]
 }

@@ -32,16 +32,17 @@
     {
       "title": "Treasury Laws Amendment (Tax Reform No. 2) Act 2026",
       "url": "https://www.legislation.gov.au/C2026A00071/asmade/text",
-      "checked_at": "2026-09-26",
+      "checked_at": "2026-09-30",
       "fact": "Read 26 September 2026 through the Federal Register API (C2026A00071, made 26 August 2026). Schedule 1 substitutes Division 160 of the ITAA 1997, the corporate loss carry back tax offset for businesses that are not significant global entities. Schedule 2 covers the $20,000 instant asset write-off.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "As-made text. Read the application provisions and the ITAA 1997 compilation for the period.",
       "final_url": "https://www.legislation.gov.au/C2026A00071/asmade/text",
       "http_status": 200,
-      "fetched_at": "2026-09-26",
+      "fetched_at": "2026-09-30",
       "content_hash": "8a491614963a39a05c99c471eeb3e50fe8e6743fb026fb797d54d6b4cb37a454",
       "content_hash_covers": "html",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/C2026A00071/asmade/text"
     }
   ]
 }
