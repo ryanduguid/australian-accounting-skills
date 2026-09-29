@@ -33,7 +33,7 @@ The senior accountant's capacity confirmation, the fee quote against the minimum
 - Record that customer due diligence must be completed before the trust setup starts, and route it to the AML/CTF compliance officer without collecting identity documents.
 - Mark the engagement terms checklist items as missing because no template was supplied, and leave the decision block blank.
 - List the section 45 client information as unconfirmed, including whether any paragraph 45(1)(d) event, any condition on registration or any current suspension needs disclosure under the Determination in force at use time, and leave that decision to the authorised practitioner.
-- Report the capacity and integrity criteria as evidence mapped or `UNVERIFIED`, not as passed or failed.
+- Report the capacity test and the APES 320 paragraph 4.10 considerations, including the client's integrity, as evidence mapped or `UNVERIFIED`, not as passed or failed.
 - Cite APES 320, APES 110 Sections 310 and 320, APES 305 and the TPB Code Determination section 45 guidance as opened at use time.
 
 ## Must not do
