@@ -76,11 +76,10 @@ That installs into the current project (`./.claude/skills/`). Add `-g` to instal
 `~/.claude/skills` instead, `-a claude-code` to target one agent, and `-l` to list the skills
 without installing anything.
 
-### Unreleased Australian topic expansion
+### Development checkout
 
-The default `main` branch contains 63 skills, including
-31 new Australian preparation workflows. To try that revision in a separate
-project, clone it and install the local checkout:
+v0.3.0 contains 63 skills, and the default `main` branch can be ahead of it.
+To try `main` in a separate project, clone it and install the local checkout:
 
 ```bash
 git clone --branch main https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-source
@@ -88,7 +87,7 @@ npx --yes skills@1.5.22 add ./accounting-skills-source --agent codex claude-code
 ```
 
 This installs into the current project. Use a separate project to avoid
-overwriting skills already installed there. The command copies all 63 skills
+overwriting skills already installed there. The command copies every skill on `main`
 into the Codex and Claude Code project directories; it does not install them
 globally.
 

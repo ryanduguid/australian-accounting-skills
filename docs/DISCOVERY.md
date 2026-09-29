@@ -13,8 +13,8 @@ repository admin). GitHub has no public pin API; pin this repository from the
 profile **Customize your pins** dialog.
 
 skills.sh has no public submit API. `npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills`
-resolves the default branch, with the CLI version this repository verifies. The v0.3.0 development inventory contains 63
-skills. Keep About copy evergreen. Document versioned counts in the README and
+resolves the default branch, with the CLI version this repository verifies. The v0.3.0 release contains 63
+skills, and the default branch can be ahead of it. Keep About copy evergreen. Document versioned counts in the README and
 installation guide. Verify the installed revision before advertising its count. Do not claim a skills.sh directory page until
 that host serves one for this repository. The index is install telemetry, not a
 form.

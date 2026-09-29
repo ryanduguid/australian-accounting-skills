@@ -116,8 +116,9 @@ law claim, unverified source or guess.
 
 Together the cards cover all 63 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
-checks their structure and inventory, and the confirmed 29 September
-whole-card run in [results](results/) covers them along with every other card.
+checks their structure and inventory, and the 28 September whole-card run,
+confirmed on 29 September, covers them along with every other card; see
+[results](results/).
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic while keeping professional decisions
