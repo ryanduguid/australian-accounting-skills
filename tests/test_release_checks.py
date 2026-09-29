@@ -6,8 +6,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = "87767ec809dc7f77bcd45808219adaf67841ae7b"
-# These are component jobs from successful main-branch runs, never skip-tolerant
-# aggregate gates. Review the list when a component's CI contract changes.
+# These are component jobs from successful main-branch runs, plus aggregates that
+# require every job in their workflow to succeed; never a skip-tolerant aggregate
+# gate. Review the list when a component's CI contract changes.
 REQUIRED = {
     "release.yml": [
         ".github/workflows/no-ai-attribution.yml: Attribution policy / Attribution policy runner",
@@ -17,7 +18,8 @@ REQUIRED = {
         ".github/workflows/verify.yml: verify (3.10)",
         ".github/workflows/verify.yml: verify (3.12)",
         ".github/workflows/verify.yml: verify (3.13)",
-        ".github/workflows/verify.yml: verify (3.14)"
+        ".github/workflows/verify.yml: verify (3.14)",
+        ".github/workflows/verify.yml: verify-gates"
     ]
 }
 
