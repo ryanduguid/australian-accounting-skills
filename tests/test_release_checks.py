@@ -19,7 +19,10 @@ REQUIRED = {
         ".github/workflows/verify.yml: verify (3.12)",
         ".github/workflows/verify.yml: verify (3.13)",
         ".github/workflows/verify.yml: verify (3.14)",
-        ".github/workflows/verify.yml: verify-gates"
+        ".github/workflows/verify.yml: verify-gates",
+        ".github/workflows/codeql.yml: Analyze (actions)",
+        ".github/workflows/codeql.yml: Analyze (python)",
+        ".github/workflows/codeql.yml: codeql-gates",
     ]
 }
 
