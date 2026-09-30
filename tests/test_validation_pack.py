@@ -9,6 +9,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -517,6 +518,15 @@ class PublishedInventoryTests(unittest.TestCase):
     def test_accepts_the_committed_inventories(self) -> None:
         validator.check_published_inventories(self.skills())
 
+    def test_rejects_multiple_plugins(self) -> None:
+        marketplace, catalogue = self.published()
+        data = json.loads(marketplace)
+        data["plugins"].append({"name": "unexpected", "skills": ["./unshipped"]})
+        with self.assertRaisesRegex(validator.ValidationError, "does not declare one plugin"):
+            validator.check_published_inventories(
+                self.skills(), self.elsewhere(json.dumps(data), catalogue)
+            )
+
     def test_card_and_skill_sets_come_from_the_directories(self) -> None:
         cases = REPOSITORY / "validation" / "cases"
         self.assertEqual(
@@ -732,6 +742,35 @@ class RecordedRunTests(unittest.TestCase):
         })
         self.assertEqual(runs, {"validation/results/2026-01-31-example-model.json"})
         self.assertEqual(fixed, {"validation/README.md", "validation/results/notes.json"})
+
+    def test_schema_enums_must_be_lists_of_strings(self) -> None:
+        for cases, verdicts in (
+            ("ab", list(validator.RESULT_VERDICTS)),
+            ({"a": True, "b": True}, list(validator.RESULT_VERDICTS)),
+            (["a", "b"], dict.fromkeys(validator.RESULT_VERDICTS)),
+            (["a", 5], list(validator.RESULT_VERDICTS)),
+        ):
+            schema = {"properties": {"results": {
+                "propertyNames": {"enum": cases},
+                "additionalProperties": {"enum": verdicts},
+            }}}
+            with self.subTest(cases=cases, verdicts=verdicts):
+                with self.assertRaisesRegex(validator.ValidationError, "does not declare"):
+                    validator.check_results_schema(json.dumps(schema), frozenset({"a", "b"}))
+
+
+class OptimisedValidationTests(unittest.TestCase):
+    def test_inventory_validation_survives_optimisation(self) -> None:
+        result = subprocess.run(
+            [sys.executable, "-O", "-m", "unittest",
+             "test_validation_pack.PublishedInventoryTests",
+             "test_validation_pack.RecordedRunTests"],
+            cwd=Path(__file__).resolve().parent,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 
 class FullRunTests(unittest.TestCase):
