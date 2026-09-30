@@ -372,13 +372,16 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
     """The published schema must name exactly the cards and verdicts the checker knows."""
     schema = _strict_json(text, "validation/results.schema.json")
     try:
-        assert isinstance(schema, dict)
+        if not isinstance(schema, dict):
+            raise TypeError("schema must be an object")
         results = schema["properties"]["results"]
         enum = results["propertyNames"]["enum"]
         verdicts = results["additionalProperties"]["enum"]
-        assert isinstance(enum, list) and isinstance(verdicts, list)
-        assert all(isinstance(item, str) for item in enum + verdicts)
-    except (AssertionError, KeyError, TypeError) as error:
+        if not isinstance(enum, list) or not isinstance(verdicts, list):
+            raise TypeError("enums must be lists")
+        if not all(isinstance(item, str) for item in enum + verdicts):
+            raise TypeError("enum entries must be strings")
+    except (KeyError, TypeError) as error:
         raise ValidationError("results schema does not declare the case and verdict enums") from error
     if sorted(enum) != sorted(known) or len(enum) != len(known):
         raise ValidationError(
@@ -391,41 +394,58 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
         )
     try:
         properties = schema["properties"]
-        assert set(properties) == set(RESULT_V2_KEYS)
-        assert properties["schema_version"] == {"const": 2, "type": "integer"}
-        assert properties["status"]["enum"] == list(RESULT_STATUSES)
-        assert properties["input_mode"]["enum"] == list(RESULT_INPUT_MODES)
+        if not (set(properties) == set(RESULT_V2_KEYS)):
+            raise ValueError("schema contract mismatch")
+        if not (properties["schema_version"] == {"const": 2, "type": "integer"}):
+            raise ValueError("schema contract mismatch")
+        if not (properties["status"]["enum"] == list(RESULT_STATUSES)):
+            raise ValueError("schema contract mismatch")
+        if not (properties["input_mode"]["enum"] == list(RESULT_INPUT_MODES)):
+            raise ValueError("schema contract mismatch")
         evidence = properties["provenance"]["additionalProperties"]
-        assert schema["additionalProperties"] is False
-        assert schema["required"] == list(RESULT_KEYS)
-        assert evidence["additionalProperties"] is False
-        assert properties["provenance"]["minProperties"] == 1
-        assert properties["provenance"]["propertyNames"] == {"$ref": "#/properties/results/propertyNames"}
-        assert evidence["required"] == list(RESULT_DIGESTS)
-        assert set(evidence["properties"]) == {*RESULT_DIGESTS, "output_sha256"}
-        assert all(item == {"type": "string", "pattern": f"^{SHA256_PATTERN}$", "minLength": 64,
-                            "maxLength": 64} for item in evidence["properties"].values())
+        if schema["additionalProperties"] is not False:
+            raise ValueError("schema contract mismatch")
+        if not (schema["required"] == list(RESULT_KEYS)):
+            raise ValueError("schema contract mismatch")
+        if evidence["additionalProperties"] is not False:
+            raise ValueError("schema contract mismatch")
+        if not (properties["provenance"]["minProperties"] == 1):
+            raise ValueError("schema contract mismatch")
+        if not (properties["provenance"]["propertyNames"] == {"$ref": "#/properties/results/propertyNames"}):
+            raise ValueError("schema contract mismatch")
+        if not (evidence["required"] == list(RESULT_DIGESTS)):
+            raise ValueError("schema contract mismatch")
+        if not (set(evidence["properties"]) == {*RESULT_DIGESTS, "output_sha256"}):
+            raise ValueError("schema contract mismatch")
+        if not (all(item == {"type": "string", "pattern": f"^{SHA256_PATTERN}$", "minLength": 64,
+                            "maxLength": 64} for item in evidence["properties"].values())):
+            raise ValueError("schema contract mismatch")
         rules, = schema["allOf"]
-        assert rules["if"] == {"required": ["schema_version"]}
-        assert rules["then"]["required"] == ["input_mode", "status", "provenance"]
+        if not (rules["if"] == {"required": ["schema_version"]}):
+            raise ValueError("schema contract mismatch")
+        if not (rules["then"]["required"] == ["input_mode", "status", "provenance"]):
+            raise ValueError("schema contract mismatch")
         verdict_rule, output_rule = rules["then"]["allOf"]
-        assert verdict_rule == {
+        if not (verdict_rule == {
             "if": {"properties": {"status": {"const": "confirmed"}}},
             "then": {"properties": {"results": {"minProperties": 1}}},
             "else": {"properties": {"results": {"maxProperties": 0}}},
-        }
-        assert output_rule == {
+        }):
+            raise ValueError("schema contract mismatch")
+        if not (output_rule == {
             "if": {"properties": {"status": {"const": "prepared"}}},
             "then": {"properties": {"provenance": {"additionalProperties": {
                 "not": {"required": ["output_sha256"]}}}}},
             "else": {"properties": {"provenance": {"additionalProperties": {
                 "required": ["output_sha256"]}}}},
-        }
-        assert rules["else"] == {
+        }):
+            raise ValueError("schema contract mismatch")
+        if not (rules["else"] == {
             "not": {"anyOf": [{"required": [key]} for key in ("input_mode", "status", "provenance")]},
             "properties": {"results": {"minProperties": 1}},
-        }
-    except (AssertionError, KeyError, TypeError, ValueError) as error:
+        }):
+            raise ValueError("schema contract mismatch")
+    except (KeyError, TypeError, ValueError) as error:
         raise ValidationError("results schema version 2 provenance contract has changed") from error
 
 
@@ -438,13 +458,15 @@ def check_published_inventories(skills: set[str], root: Path = ROOT) -> None:
     """
     marketplace = _strict_json(read_utf8(root / PurePosixPath(MARKETPLACE)), MARKETPLACE)
     try:
-        assert isinstance(marketplace, dict)
+        if not isinstance(marketplace, dict):
+            raise TypeError("marketplace must be an object")
         plugins = marketplace["plugins"]
-        assert isinstance(plugins, list) and len(plugins) == 1
+        if not isinstance(plugins, list) or len(plugins) != 1:
+            raise TypeError("plugins must be a list containing one plugin")
         declared = plugins[0]["skills"]
-        assert isinstance(declared, list)
-        assert all(isinstance(item, str) for item in declared)
-    except (AssertionError, KeyError, TypeError) as error:
+        if not isinstance(declared, list) or not all(isinstance(item, str) for item in declared):
+            raise TypeError("skills must be a list of strings")
+    except (KeyError, TypeError) as error:
         raise ValidationError(
             f"{MARKETPLACE} does not declare one plugin and its skill list"
         ) from error
