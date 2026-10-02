@@ -55,7 +55,7 @@ SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 TIMEOUT = 30
 TRIES = 3
 RETRY_DELAY = 6.0
-# Spacing between requests to the same run. These are public-sector sites
+# Spacing between requests to the same run. These are public sector sites
 # serving the source sweep. A courteous pace avoids a burst of requests.
 REQUEST_SPACING = 1.0
 USER_AGENT = (
