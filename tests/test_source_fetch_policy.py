@@ -23,6 +23,7 @@ class Response(io.BytesIO):
         for name, value in headers.items():
             self.headers[name.replace("_", "-")] = value
         self.read_sizes = []
+        self.close_count = 0
 
     def geturl(self):
         return self.url
@@ -30,6 +31,10 @@ class Response(io.BytesIO):
     def read(self, size=-1):
         self.read_sizes.append(size)
         return super().read(size)
+
+    def close(self):
+        self.close_count += 1
+        super().close()
 
 
 def redirect(url, location):
@@ -59,7 +64,8 @@ class SourceFetchPolicyTests(unittest.TestCase):
         self.assertEqual(policy.checked_url(URL + "#fact"), URL)
 
     def test_public_resolution_matrix_and_mixed_answers(self):
-        for address in ["127.0.0.1", "10.0.0.1", "169.254.1.1", "100.64.0.1", "0.0.0.0",
+        # Rejected address fixtures; this test never binds a listening socket.
+        for address in ["127.0.0.1", "10.0.0.1", "169.254.1.1", "100.64.0.1", "0.0.0.0",  # nosec B104
                         "224.0.0.1", "::1", "fc00::1", "fe80::1", "ff02::1", "192.0.2.1"]:
             with self.subTest(address=address), mock.patch.object(policy.socket, "getaddrinfo",
                     return_value=[(0, 0, 0, "", ("8.8.8.8", 443)), (0, 0, 0, "", (address, 443))]), \
@@ -120,3 +126,57 @@ class SourceFetchPolicyTests(unittest.TestCase):
         source_refresh.apply_fetch(record, result, "2026-10-03")
         self.assertEqual({key: record[key] for key in before}, before)
         self.assertEqual(record["sha256"], "previous")
+
+    def test_destination_is_checked_before_reading_and_response_closes_once(self):
+        for destination in (URL, URL + "/unexpected", "https://unreviewed.test/source"):
+            with self.subTest(destination=destination):
+                response = Response(url=destination)
+                result, count = self.fetch([response])
+                self.assertEqual(count, 1)
+                self.assertEqual(response.close_count, 1)
+                self.assertEqual(result.readable, destination == URL)
+                if destination != URL:
+                    self.assertEqual(response.read_sizes, [])
+
+    def test_settled_http_error_closes_once_and_transport_fault_alone_retries(self):
+        body = Response(b"")
+        error = urllib.error.HTTPError(URL, 403, "blocked", Message(), body)
+        with mock.patch.object(source_refresh.urllib.request, "build_opener") as build, \
+                mock.patch.object(source_refresh, "check_public_resolution"), \
+                mock.patch.object(source_refresh.time, "sleep") as sleep:
+            build.return_value.open.side_effect = error
+            result = source_refresh.fetch(URL, tries=3, delay=1)
+            self.assertEqual(result.status, 403)
+            self.assertEqual(build.return_value.open.call_count, 1)
+            self.assertEqual(body.close_count, 1)
+            sleep.assert_not_called()
+            response = Response()
+            build.return_value.open.reset_mock()
+            build.return_value.open.side_effect = [OSError("fabricated transport fault"), response]
+            result = source_refresh.fetch(URL, tries=3, delay=1)
+            self.assertTrue(result.readable)
+            self.assertEqual(build.return_value.open.call_count, 2)
+            self.assertEqual(response.close_count, 1)
+            sleep.assert_called_once_with(1)
+
+    def test_public_resolution_precedes_each_redirect_open(self):
+        events = []
+        next_url = URL + "/next"
+        response = Response(url=next_url)
+        redirects = [redirect(URL, next_url), response]
+
+        def open_response(request, **kwargs):
+            events.append(("open", request.full_url))
+            value = redirects.pop(0)
+            if isinstance(value, Exception):
+                raise value
+            return value
+
+        with mock.patch.object(source_refresh.urllib.request, "build_opener") as build, \
+                mock.patch.object(source_refresh, "check_public_resolution",
+                                  side_effect=lambda url: events.append(("resolve", url))):
+            build.return_value.open.side_effect = open_response
+            self.assertTrue(source_refresh.fetch(URL, tries=1).readable)
+        self.assertEqual(events, [("resolve", URL), ("open", URL),
+                                  ("resolve", next_url), ("open", next_url)])
+        self.assertEqual(response.close_count, 1)

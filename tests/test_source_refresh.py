@@ -809,6 +809,43 @@ class PreflightTests(unittest.TestCase):
                 source_refresh.main(["--preflight", "--skill", "example-skill", *extra])
             self.assertEqual(error.exception.code, 2)
 
+    def test_first_human_problem_precedes_retrieval_and_schedule_problems(self) -> None:
+        cases: list[tuple[dict[str, object], str]] = [
+            ({"pending_review": {}, "checked_at": "", "fact": ""}, "Pending human review:"),
+            ({"checked_at": "", "fact": ""}, "Missing, malformed or future human check date."),
+            ({"fact": "", "review_required_since": "2026-10-03"}, "The human review does not record a fact."),
+            ({"review_required_since": "2026-10-03", "reverify_by": "2026-10-02"}, "Human acceptance must bind"),
+            ({"reverify_by": "2026-10-02", "verification_status": "indexed-source-discovery-only"}, "The fact needs a current reverify_by date."),
+            ({"verification_status": "indexed-source-discovery-only"}, "The record is discovery-only;"),
+            ({}, "The source changed after the recorded human review."),
+        ]
+        outcome = source_refresh.Outcome("example-skill", "Example", str(self.record["url"]),
+                                         source_refresh.CHANGED, "fabricated", "2026-09-26",
+                                         fetched(last_modified="2026-10-01"))
+        for changes, first in cases:
+            with self.subTest(changes=changes):
+                record = {**self.record, "manual_review": "malformed", **changes}
+                ready, detail = source_refresh.source_readiness(record, outcome, "2026-10-03")
+                self.assertFalse(ready)
+                self.assertTrue(detail.startswith(first), detail)
+
+    def test_cli_replaces_the_explicit_report_in_both_modes(self) -> None:
+        outcome = source_refresh.Outcome("example-skill", "Example", str(self.record["url"]),
+                                         source_refresh.UNCHANGED, "fabricated", "2026-09-26", fetched())
+        report = source_refresh.Report(outcomes=[outcome])
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "report.md"
+            for mode in ([], ["--preflight", "--skill", "example-skill"]):
+                with self.subTest(mode=mode):
+                    path.write_text("Existing operator report", encoding="utf-8")
+                    with mock.patch.object(source_refresh, "preflight", return_value=("Preflight report", 2)), \
+                            mock.patch.object(source_refresh, "refresh", return_value=report), \
+                            mock.patch.object(source_refresh, "render", return_value="Sweep report"), \
+                            mock.patch("sys.stdout"):
+                        code = source_refresh.main([*mode, "--report", str(path)], skills=self.skills)
+                    self.assertEqual(code, 2 if mode else 0)
+                    self.assertEqual(path.read_text(encoding="utf-8"), "Preflight report" if mode else "Sweep report")
+
 
 class LinkedIndexTests(unittest.TestCase):
     def test_linked_files_and_skill_directories_are_rejected_without_reading_or_writing(self) -> None:

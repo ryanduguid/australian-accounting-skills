@@ -108,10 +108,10 @@ Re-fetch the indexed primary sources with
 `python scripts/source_refresh.py --write`. It records changed or missing
 baselines as pending candidates and preserves the reviewed baseline. Follow
 [explicit human acceptance](docs/source-preflight.md) to bind a reviewed digest,
-reading and destination to its human date. The sweep never touches
-`checked_at`: that date means a person read the source, and only a person
-changes it. The same holds for `reverify_by`, which every volatile record
-carries: the last day its recorded fact may serve as a cross-check, never more
+reading and destination to its human date. A person changes `checked_at`
+after reading the source and completing that acceptance procedure. The sweep
+preserves this human review date. A person also sets `reverify_by`, which every
+volatile record carries: the last day its recorded fact may serve as a cross-check, never more
 than 400 days after `checked_at`. The sweep reports a record past that date as
 review-due. `.github/workflows/source-sweep.yml` runs the sweep weekly and
 files the result as an issue; `scripts/sweep_outcome.py` is what turns the

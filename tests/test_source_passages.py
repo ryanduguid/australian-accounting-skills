@@ -57,3 +57,17 @@ class SourcePassageTests(unittest.TestCase):
                 source_passages.load_snapshot(path)
             with self.assertRaises(SystemExit):
                 source_passages.main(["snapshot", "--url", url, "--output", str(path)])
+
+    def test_snapshot_flags_require_actual_booleans(self):
+        url = next(str(record["url"]) for _, _, record in source_refresh.records(source_refresh.index_files()))
+        value = {"url": url, "final_url": url, "available": True, "text_truncated": False,
+                 "source_digest": "a" * 64, "text": "", "text_sha256": hashlib.sha256(b"").hexdigest()}
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "snapshot.json"
+            path.write_text(json.dumps(value), encoding="utf-8")
+            self.assertEqual(source_passages.load_snapshot(path), value)
+            for field in ("available", "text_truncated"):
+                for flag in (0, 1, "true", None):
+                    with self.subTest(field=field, flag=flag), self.assertRaises(ValueError):
+                        path.write_text(json.dumps({**value, field: flag}), encoding="utf-8")
+                        source_passages.load_snapshot(path)

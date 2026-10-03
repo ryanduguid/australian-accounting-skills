@@ -332,6 +332,68 @@ class Fetched:
         return self.reachable and bool(self.digest)
 
 
+def _open_checked_response(opener, url: str):
+    """Validate every redirect before opening it; the caller owns the final response."""
+    target = checked_url(url)
+    seen = {target}
+    for hop in range(MAX_REDIRECTS + 1):
+        check_public_resolution(target)
+        request = urllib.request.Request(target, headers={
+            "User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml,*/*",
+            "Accept-Encoding": "identity",
+        })
+        try:
+            response = opener.open(request, timeout=TIMEOUT)
+            return response, target
+        except urllib.error.HTTPError as redirect:
+            if redirect.code not in {301, 302, 303, 307, 308}:
+                raise
+            with redirect:
+                location = redirect.headers.get("Location")
+                if not location or hop == MAX_REDIRECTS:
+                    raise SourcePolicyError("Missing redirect location or redirect ceiling exceeded.")
+                following = checked_url(urljoin(target, location))
+                hosts = (urlsplit(target).hostname, urlsplit(following).hostname)
+                if hosts[0] != hosts[1] and hosts not in APPROVED_REDIRECT_EDGES:
+                    raise SourcePolicyError("Cross-host redirect has not been reviewed.")
+                if following in seen:
+                    raise SourcePolicyError("Redirect loop.")
+                seen.add(following)
+                target = following
+
+
+def _interpret_response(response, target: str, include_text: bool) -> Fetched:
+    """Close the response after destination validation and bounded interpretation."""
+    with response:
+        final_url = checked_url(response.geturl())
+        if final_url != target:
+            raise SourcePolicyError("Unexpected response destination.")
+        body = bounded_body(response)
+        content_type = (response.headers.get_content_type() or "").lower()
+        digest, kind = body_digest(
+            body, content_type, response.headers.get_content_charset()
+        )
+        text = (readable_text(body, response.headers.get_content_charset())
+                if include_text and content_type in MARKUP_TYPES else
+                body.decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+                if include_text and content_type == "text/plain" else "")
+        return Fetched(
+            status=response.status,
+            final_url=final_url,
+            digest=digest,
+            kind=kind,
+            content_type=content_type,
+            last_modified=upstream_last_modified(
+                body,
+                response.headers.get("Last-Modified"),
+                response.headers.get("Date"),
+            ),
+            error="",
+            text=text[:32768],
+            text_truncated=len(text) > 32768,
+        )
+
+
 def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY,
           include_text: bool = False) -> Fetched:
     """Retrieve one source. A blocked or missing page is data, not a failure.
@@ -345,60 +407,8 @@ def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY,
     last_error = ""
     for attempt in range(1, tries + 1):
         try:
-            target = checked_url(url)
-            seen = {target}
-            for hop in range(MAX_REDIRECTS + 1):
-                check_public_resolution(target)
-                request = urllib.request.Request(target, headers={
-                    "User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml,*/*",
-                    "Accept-Encoding": "identity",
-                })
-                try:
-                    response = opener.open(request, timeout=TIMEOUT)
-                    break
-                except urllib.error.HTTPError as redirect:
-                    if redirect.code not in {301, 302, 303, 307, 308}:
-                        raise
-                    with redirect:
-                        location = redirect.headers.get("Location")
-                        if not location or hop == MAX_REDIRECTS:
-                            raise SourcePolicyError("Missing redirect location or redirect ceiling exceeded.")
-                        following = checked_url(urljoin(target, location))
-                        hosts = (urlsplit(target).hostname, urlsplit(following).hostname)
-                        if hosts[0] != hosts[1] and hosts not in APPROVED_REDIRECT_EDGES:
-                            raise SourcePolicyError("Cross-host redirect has not been reviewed.")
-                        if following in seen:
-                            raise SourcePolicyError("Redirect loop.")
-                        seen.add(following)
-                        target = following
-            with response:
-                final_url = checked_url(response.geturl())
-                if final_url != target:
-                    raise SourcePolicyError("Unexpected response destination.")
-                body = bounded_body(response)
-                content_type = (response.headers.get_content_type() or "").lower()
-                digest, kind = body_digest(
-                    body, content_type, response.headers.get_content_charset()
-                )
-                text = (readable_text(body, response.headers.get_content_charset())
-                        if include_text and content_type in MARKUP_TYPES else
-                        body.decode(response.headers.get_content_charset() or "utf-8", errors="replace")
-                        if include_text and content_type == "text/plain" else "")
-                return Fetched(
-                    status=response.status,
-                    final_url=final_url,
-                    digest=digest,
-                    kind=kind,
-                    content_type=content_type,
-                    last_modified=upstream_last_modified(
-                        body,
-                        response.headers.get("Last-Modified"),
-                        response.headers.get("Date"),
-                    ),
-                    error="",
-                    text=text[:32768],
-                    text_truncated=len(text) > 32768,
-                )
+            response, target = _open_checked_response(opener, url)
+            return _interpret_response(response, target, include_text)
         except SourcePolicyError as error:
             return Fetched(0, url, "", "", "", "", f"Source policy: {error}")
         except urllib.error.HTTPError as error:
@@ -758,33 +768,47 @@ def render(report: Report, *, write: bool) -> str:
     return "\n".join(lines)
 
 
-def source_readiness(record: dict[str, object], outcome: Outcome, today: str) -> tuple[bool, str]:
-    """Assess one record independently of weekly sweep health."""
-    if PENDING_FIELD in record:
-        return False, "Pending human review: explicitly accept the candidate baseline by hand."
-    checked = review_date({"next_review": record.get("checked_at", "")})
-    if not checked or checked > today:
-        return False, "Missing, malformed or future human check date."
-    if not isinstance(record.get("fact"), str) or not str(record["fact"]).strip():
-        return False, "The human review does not record a fact."
-    if REVIEW_REQUIRED_FIELD in record:
-        since = review_date({"next_review": record[REVIEW_REQUIRED_FIELD]})
-        binding = record.get(REVIEWED_FIELD)
-        if (not since or checked < since or not isinstance(binding, dict)
+def _review_binding_matches(record: dict[str, object], checked: str) -> bool:
+    since = review_date({"next_review": record[REVIEW_REQUIRED_FIELD]})
+    binding = record.get(REVIEWED_FIELD)
+    return not (not since or checked < since or not isinstance(binding, dict)
                 or any(binding.get(key) != record.get(key)
                        for key in (DIGEST_FIELD, DIGEST_KIND_FIELD, CONTENT_URL_FIELD, "checked_at"))
-                or binding.get(UPSTREAM_FIELD) != record.get(UPSTREAM_FIELD, "")):
-            return False, "Human acceptance must bind the digest, reading, destination, published date and current review date."
+                or binding.get(UPSTREAM_FIELD) != record.get(UPSTREAM_FIELD, ""))
+
+
+def _human_review_readiness(record: dict[str, object], today: str) -> tuple[str, str]:
+    """Return the human check date and its first blocking problem."""
+    checked = ""
+    if PENDING_FIELD in record:
+        return checked, "Pending human review: explicitly accept the candidate baseline by hand."
+    checked = review_date({"next_review": record.get("checked_at", "")})
+    if not checked or checked > today:
+        return checked, "Missing, malformed or future human check date."
+    if not isinstance(record.get("fact"), str) or not str(record["fact"]).strip():
+        return checked, "The human review does not record a fact."
+    if REVIEW_REQUIRED_FIELD in record:
+        if not _review_binding_matches(record, checked):
+            return checked, "Human acceptance must bind the digest, reading, destination, published date and current review date."
     passed = reverify_passed(record, today)
     if passed or (record.get("volatile") and REVERIFY_FIELD not in record):
-        return False, "The fact needs a current reverify_by date."
+        return checked, "The fact needs a current reverify_by date."
     if record.get("volatile"):
         due = review_date({"next_review": record.get(REVERIFY_FIELD, "")})
         if (date.fromisoformat(due) - date.fromisoformat(checked)).days > 400:
-            return False, "The volatile fact exceeds the existing 400-day review bound."
+            return checked, "The volatile fact exceeds the existing 400-day review bound."
     status = str(record.get("verification_status", ""))
     if status == "indexed-source-discovery-only":
-        return False, "The record is discovery-only; a schedule does not establish human review."
+        return checked, "The record is discovery-only; a schedule does not establish human review."
+    return checked, ""
+
+
+def source_readiness(record: dict[str, object], outcome: Outcome, today: str) -> tuple[bool, str]:
+    """Assess one record independently of weekly sweep health."""
+    checked, problem = _human_review_readiness(record, today)
+    if problem:
+        return False, problem
+    status = str(record.get("verification_status", ""))
     modified = latest_upstream_date(record, outcome.fetched)
     if modified and modified > checked:
         return False, "The source changed after the recorded human review."
@@ -857,7 +881,7 @@ def preflight(skill: str, *, skills: Path = SKILLS_DIRECTORY, today: str = "",
     return "\n".join(lines) + boundary, 0 if ready else 2
 
 
-def main(argv: Sequence[str] | None = None, *, skills: Path = SKILLS_DIRECTORY) -> int:
+def _argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python scripts/source_refresh.py",
         description="Re-fetch the indexed primary sources and report which ones moved.",
@@ -886,6 +910,11 @@ def main(argv: Sequence[str] | None = None, *, skills: Path = SKILLS_DIRECTORY) 
         default=REQUEST_SPACING,
         help=f"Seconds between requests (default {REQUEST_SPACING}).",
     )
+    return parser
+
+
+def main(argv: Sequence[str] | None = None, *, skills: Path = SKILLS_DIRECTORY) -> int:
+    parser = _argument_parser()
     arguments = parser.parse_args(argv)
 
     if arguments.preflight:
@@ -894,7 +923,8 @@ def main(argv: Sequence[str] | None = None, *, skills: Path = SKILLS_DIRECTORY) 
         rendered, exit_code = preflight(arguments.skill, skills=skills, spacing=arguments.spacing)
         print(rendered)
         if arguments.report:
-            Path(arguments.report).write_text(rendered, encoding="utf-8")
+            # The local CLI intentionally replaces the operator-selected report.
+            Path(arguments.report).write_text(rendered, encoding="utf-8")  # NOSONAR
         return exit_code
 
     try:
@@ -915,7 +945,8 @@ def main(argv: Sequence[str] | None = None, *, skills: Path = SKILLS_DIRECTORY) 
     rendered = render(report, write=arguments.write)
     print(rendered)
     if arguments.report:
-        Path(arguments.report).write_text(rendered, encoding="utf-8")
+        # The local CLI intentionally replaces the operator-selected report.
+        Path(arguments.report).write_text(rendered, encoding="utf-8")  # NOSONAR
     if arguments.check and report.actionable:
         return 2
     return 0

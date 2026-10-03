@@ -41,7 +41,8 @@ def snapshot(url: str) -> dict:
 def load_snapshot(path: Path) -> dict:
     if path.stat().st_size > 1024 * 1024:
         raise ValueError("Snapshot file exceeds 1 MiB.")
-    value = json.loads(path.read_text(encoding="utf-8"))
+    # The local CLI accepts an operator-selected snapshot and checks its size and contents.
+    value = json.loads(path.read_text(encoding="utf-8"))  # NOSONAR
     if not isinstance(value, dict) or not isinstance(value.get("text"), str):
         raise ValueError("Malformed passage snapshot.")
     if len(value["text"]) > MAX_TEXT_CHARS or hashlib.sha256(value["text"].encode()).hexdigest() != value.get("text_sha256"):
@@ -49,7 +50,8 @@ def load_snapshot(path: Path) -> dict:
     if not isinstance(value.get("url"), str) or not isinstance(value.get("final_url"), str):
         raise ValueError("Malformed snapshot URL.")
     indexed_url(value["url"])
-    if (type(value.get("available")) is not bool or type(value.get("text_truncated")) is not bool
+    # Snapshot flags must be actual booleans, not integers or truthy values.
+    if (type(value.get("available")) is not bool or type(value.get("text_truncated")) is not bool  # pylint: disable=unidiomatic-typecheck
             or not isinstance(value.get("source_digest"), str)
             or (value["available"] and not re.fullmatch(r"[0-9a-f]{64}", value["source_digest"]))):
         raise ValueError("Malformed snapshot availability or source digest.")
