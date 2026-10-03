@@ -105,8 +105,10 @@ after a push. `tests/test_contributor_checks.py` fails when a CI gate has no
 matching hook, so the two lists cannot drift apart.
 
 Re-fetch the indexed primary sources with
-`python scripts/source_refresh.py --write`. It records a content digest per
-source so a later sweep can report which pages moved, and it never touches
+`python scripts/source_refresh.py --write`. It records changed or missing
+baselines as pending candidates and preserves the reviewed baseline. Follow
+[explicit human acceptance](docs/source-preflight.md) to bind a reviewed digest,
+reading and destination to its human date. The sweep never touches
 `checked_at`: that date means a person read the source, and only a person
 changes it. The same holds for `reverify_by`, which every volatile record
 carries: the last day its recorded fact may serve as a cross-check, never more

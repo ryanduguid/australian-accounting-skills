@@ -1,5 +1,8 @@
 # Sibling command-line tools
 
+Before relying on a workflow's mutable facts, use the [skill source preflight](source-preflight.md).
+It keeps source readiness separate from calculator results and review-gate labels.
+
 For local Payday Super timing, Division 7A loan review and ATO benchmark ratios through an agent, see [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp), distribution `aus-accounting-mcp`. The Claude Code plugin starts it, pinned, from `.claude-plugin/plugin.json`; see [installation](installation.md#claude-code-plugin).
 
 These skills name 6 maintained tools rather than asking the agent to invent the same work. Each now lives in a monorepo; the distribution and command names are unchanged. None ships with the skills, since a portable skill install carries no runtime, so install a tool separately when a skill calls for it.

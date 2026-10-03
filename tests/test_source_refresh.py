@@ -179,6 +179,8 @@ class ClassifyTests(unittest.TestCase):
                     source_refresh.CHANGED,
                 )
                 source_refresh.apply_fetch(record, fetched(), "2026-09-16")
+                self.assertEqual(source_refresh.classify(record, fetched())[0], source_refresh.BASELINE_REQUIRED)
+                record[source_refresh.CONTENT_URL_FIELD] = "https://example.test/page"
                 self.assertEqual(source_refresh.classify(record, fetched())[0], source_refresh.UNCHANGED)
                 self.assertEqual(
                     source_refresh.classify(record, fetched(final_url="https://example.test/new"))[0],
@@ -265,14 +267,16 @@ class ClassifyTests(unittest.TestCase):
 
 class FetchTests(unittest.TestCase):
     def test_an_http_error_records_the_resolved_destination(self) -> None:
-        destination = "https://example.test/redirected"
+        destination = "https://www.ato.gov.au/redirected"
         error = urllib.error.HTTPError(destination, 404, "Not Found", Message(), None)
-        with mock.patch.object(source_refresh.urllib.request, "urlopen", side_effect=error):
-            result = source_refresh.fetch("https://example.test/page", tries=1, delay=0)
+        with mock.patch.object(source_refresh.urllib.request, "build_opener") as build, \
+                mock.patch.object(source_refresh, "check_public_resolution"):
+            build.return_value.open.side_effect = error
+            result = source_refresh.fetch("https://www.ato.gov.au/page", tries=1, delay=0)
         self.assertEqual(result.status, 404)
         self.assertEqual(result.final_url, destination)
-        record: dict[str, object] = {"url": "https://example.test/page"}
-        source_refresh.apply_fetch(record, fetched(final_url="https://example.test/old"), "2026-09-15")
+        record: dict[str, object] = {"url": "https://example.test/page",
+                                     source_refresh.CONTENT_URL_FIELD: "https://example.test/old"}
         source_refresh.apply_fetch(record, result, "2026-09-16")
         self.assertEqual(record[source_refresh.FINAL_URL_FIELD], destination)
         self.assertEqual(record[source_refresh.CONTENT_URL_FIELD], "https://example.test/old")
@@ -298,7 +302,10 @@ class ApplyFetchTests(unittest.TestCase):
                 ("https://example.test/new", source_refresh.CHANGED),
             ):
                 with self.subTest(status=status, destination=destination):
-                    record: dict[str, object] = {"url": "https://example.test/page"}
+                    record: dict[str, object] = {"url": "https://example.test/page",
+                                                 source_refresh.CONTENT_URL_FIELD: "https://example.test/old",
+                                                 source_refresh.DIGEST_FIELD: UNCHANGED_DIGEST,
+                                                 source_refresh.DIGEST_KIND_FIELD: source_refresh.HTML_KIND}
                     source_refresh.apply_fetch(
                         record, fetched(final_url="https://example.test/old"), "2026-09-15"
                     )
@@ -325,7 +332,8 @@ class ApplyFetchTests(unittest.TestCase):
         record: dict[str, object] = {"url": "https://example.test/page", "checked_at": "2026-09-08"}
         source_refresh.apply_fetch(record, fetched(), "2026-09-16")
         self.assertEqual(
-            set(record) - {"url", "checked_at"}, set(source_refresh.MACHINE_FIELDS)
+            set(record) - {"url", "checked_at"},
+            set(source_refresh.MACHINE_FIELDS) | {source_refresh.PENDING_FIELD, source_refresh.REVIEW_REQUIRED_FIELD}
         )
 
     def test_a_sweep_never_touches_the_human_review_date(self) -> None:
@@ -412,7 +420,8 @@ class SweepTests(unittest.TestCase):
         for key in ("checked_at", "fact", "verification_status", "limitations", "url"):
             self.assertEqual(saved[key], record[key])
         self.assertEqual(saved["final_url"], "https://example.test/page")
-        self.assertEqual(saved["content_url"], "https://example.test/page")
+        self.assertEqual(saved["content_url"], "https://example.test/old")
+        self.assertEqual(saved["pending_review"]["content_url"], "https://example.test/page")
 
     def test_sections_of_one_page_are_retrieved_once(self) -> None:
         """A fragment never reaches the server.
@@ -572,6 +581,292 @@ class ReverifyTests(unittest.TestCase):
                     checked = date.fromisoformat(str(record["checked_at"]))
                     self.assertLessEqual(checked, date.fromisoformat(due))
                     self.assertLessEqual((date.fromisoformat(due) - checked).days, 400)
+
+
+class PreflightTests(unittest.TestCase):
+    def setUp(self) -> None:
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.skills = Path(temporary.name)
+        directory = self.skills / "example-skill"
+        directory.mkdir()
+        (directory / "SKILL.md").write_text("# Example", encoding="utf-8")
+        self.path = directory / "sources.json"
+        self.record: dict[str, object] = {
+            "url": "https://example.test/page", "checked_at": "2026-09-26",
+            "fact": "A reviewed synthetic source fact.", "content_url": "https://example.test/page",
+            "content_hash": UNCHANGED_DIGEST, "content_hash_covers": source_refresh.HTML_KIND,
+            "volatile": True, "reverify_by": "2026-10-03",
+            "source_last_modified": "",
+        }
+
+    def run_preflight(self, *records: dict[str, object], response: source_refresh.Fetched | None = None) -> tuple[str, int]:
+        self.path.write_text(json.dumps({"skill": "example-skill", "sources": list(records)}), encoding="utf-8")
+        original = self.path.read_bytes()
+        with mock.patch.object(source_refresh, "fetch", return_value=response or fetched()):
+            result = source_refresh.preflight("example-skill", skills=self.skills, today="2026-10-03", spacing=0)
+        self.assertEqual(self.path.read_bytes(), original)
+        return result
+
+    def test_current_record_and_inclusive_expiry_are_ready_without_writes(self) -> None:
+        text, exit_code = self.run_preflight(self.record)
+        self.assertEqual(exit_code, 0)
+        self.assertIn("READY:", text)
+        self.assertIn("effective period at use time", text)
+
+    def test_written_changes_remain_pending_until_explicit_human_acceptance(self) -> None:
+        for response in (fetched(digest="b" * 64),
+                         fetched(final_url="https://example.test/new"),
+                         fetched(kind=source_refresh.BYTES_KIND)):
+            with self.subTest(response=response):
+                self.run_preflight(self.record)
+                with mock.patch.object(source_refresh, "fetch", return_value=response):
+                    source_refresh.refresh(skills=self.skills, today="2026-10-03", spacing=0, write=True)
+                    text, code = source_refresh.preflight("example-skill", skills=self.skills,
+                                                         today="2026-10-03", spacing=0)
+                self.assertEqual(code, 2)
+                self.assertIn("Pending human review", text)
+                saved = json.loads(self.path.read_text(encoding="utf-8"))["sources"][0]
+                for key in ("content_hash", "content_hash_covers", "content_url", "checked_at", "fact"):
+                    self.assertEqual(saved[key], self.record[key])
+                candidate = saved["pending_review"]
+                # Merely removing the pending marker and advancing the machine baseline is insufficient.
+                for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified"):
+                    saved[key] = candidate[key]
+                del saved["pending_review"]
+                self.assertEqual(self.run_preflight(saved, response=response)[1], 2)
+                saved["checked_at"] = "2026-10-03"
+                saved["fact"] = "A person reviewed this synthetic revision."
+                saved["reviewed_content"] = {
+                    key: saved[key] for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified", "checked_at")
+                }
+                text, code = self.run_preflight(saved, response=response)
+                self.assertEqual(code, 0)
+                self.assertIn("READY:", text)
+
+    def test_pending_review_survives_a_return_to_the_old_baseline_and_manual_schedule(self) -> None:
+        self.run_preflight(self.record)
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched(digest="b" * 64)):
+            source_refresh.refresh(skills=self.skills, today="2026-10-03", spacing=0, write=True)
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched()):
+            source_refresh.refresh(skills=self.skills, today="2026-10-03", spacing=0, write=True)
+        saved = json.loads(self.path.read_text(encoding="utf-8"))["sources"][0]
+        for manual in (False, True):
+            record = dict(saved)
+            if manual:
+                record["manual_review"] = {"cadence": "monthly", "next_review": "2026-10-03"}
+            text, code = self.run_preflight(record)
+            self.assertEqual(code, 2)
+            self.assertIn("Pending human review", text)
+
+    def test_human_binding_must_match_the_reading_destination_and_current_review_date(self) -> None:
+        record = {**self.record, "review_required_since": "2026-10-03", "checked_at": "2026-10-03"}
+        binding = {key: record[key] for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified", "checked_at")}
+        for key in binding:
+            with self.subTest(key=key):
+                self.assertEqual(self.run_preflight({**record, "reviewed_content": {**binding, key: "wrong"}})[1], 2)
+        self.assertEqual(self.run_preflight({**record, "reviewed_content": binding})[1], 0)
+
+    def test_post_review_upstream_dates_remain_actionable_through_missing_or_older_writes(self) -> None:
+        for later in (fetched(), fetched(last_modified="2026-09-20")):
+            with self.subTest(later=later):
+                self.run_preflight(self.record)
+                with mock.patch.object(source_refresh, "fetch", return_value=fetched(last_modified="2026-10-01")):
+                    report = source_refresh.refresh(skills=self.skills, today="2026-10-03", spacing=0, write=True)
+                with mock.patch.object(source_refresh, "refresh", return_value=report), mock.patch("sys.stdout"):
+                    self.assertEqual(source_refresh.main(["--write", "--check"]), 2)
+                with mock.patch.object(source_refresh, "fetch", return_value=later):
+                    source_refresh.refresh(skills=self.skills, today="2026-10-03", spacing=0, write=True)
+                saved = json.loads(self.path.read_text(encoding="utf-8"))["sources"][0]
+                self.assertEqual(saved["source_last_modified"], "2026-10-01")
+                self.assertEqual(saved["pending_review"]["source_last_modified"], "2026-10-01")
+                for manual in (False, True):
+                    record = dict(saved)
+                    if manual:
+                        record["manual_review"] = {"cadence": "monthly", "next_review": "2026-10-03"}
+                    text, code = self.run_preflight(record, response=later)
+                    self.assertEqual(code, 2)
+                    self.assertIn("Pending human review", text)
+                candidate = saved.pop("pending_review")
+                for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified"):
+                    saved[key] = candidate[key]
+                saved["checked_at"] = "2026-10-03"
+                saved["fact"] = "Human review acknowledges the published update."
+                saved["reviewed_content"] = {key: saved[key] for key in
+                                            ("content_hash", "content_hash_covers", "content_url", "checked_at")}
+                self.assertEqual(self.run_preflight(saved, response=later)[1], 2)
+                saved["reviewed_content"]["source_last_modified"] = "2026-10-01"
+                self.assertEqual(self.run_preflight(saved, response=later)[1], 0)
+
+    def test_human_dates_status_and_expiry_cannot_be_replaced_by_unchanged_hashes(self) -> None:
+        for changes in ({"checked_at": ""}, {"checked_at": "2026-99-99"}, {"checked_at": "2026-10-04"},
+                        {"reverify_by": "2026-10-02"}, {"reverify_by": "unknown"}, {"fact": ""},
+                        {"verification_status": "indexed-source-discovery-only"},
+                        {"checked_at": "2024-10-03"},
+                        {"verification_status": "indexed-source-discovery-only",
+                         "manual_review": {"cadence": "monthly", "next_review": "2026-10-03"}},
+                        {"verification_status": "unavailable-http-403"}):
+            with self.subTest(changes=changes):
+                self.assertEqual(self.run_preflight({**self.record, **changes})[1], 2)
+        record = dict(self.record)
+        del record["reverify_by"]
+        self.assertEqual(self.run_preflight(record)[1], 2)
+        record["volatile"] = False
+        self.assertEqual(self.run_preflight(record)[1], 0)
+
+    def test_retrieval_failures_and_changed_reading_are_unavailable(self) -> None:
+        for response in (fetched(status=404, error="missing"), fetched(status=403, error="blocked"),
+                         fetched(status=None, error="offline"), fetched(digest="b" * 64),
+                         fetched(digest="", error="empty"), fetched(kind=source_refresh.BYTES_KIND),
+                         fetched(last_modified="2026-10-01")):
+            with self.subTest(response=response):
+                self.assertEqual(self.run_preflight(self.record, response=response)[1], 2)
+        record = dict(self.record)
+        del record["content_hash"]
+        self.assertEqual(self.run_preflight(record)[1], 2)
+
+    def test_manual_review_is_not_fetched_and_remains_subject_to_dates(self) -> None:
+        record = {**self.record, "manual_review": {"cadence": "monthly", "next_review": "2026-10-03"}}
+        self.path.write_text(json.dumps({"skill": "example-skill", "sources": [record]}), encoding="utf-8")
+        with mock.patch.object(source_refresh, "fetch", side_effect=AssertionError("manual source fetched")):
+            text, exit_code = source_refresh.preflight("example-skill", skills=self.skills, today="2026-10-03")
+        self.assertEqual(exit_code, 0)
+        self.assertIn("READY_MANUAL", text)
+        for schedule in ({"cadence": "monthly", "next_review": "2026-10-02"},
+                         {"cadence": "monthly", "next_review": "2026-99-99"}):
+            self.assertEqual(self.run_preflight({**record, "manual_review": schedule})[1], 2)
+
+    def test_manual_review_and_retrieval_warning_have_independent_meanings(self) -> None:
+        record = {**self.record, "manual_review": {"cadence": "monthly", "next_review": "2026-10-03"}}
+        for name in (source_refresh.BLOCKED, source_refresh.UNREACHABLE):
+            outcome = source_refresh.Outcome("example-skill", "Example", str(record["url"]), name,
+                                             "not fetched", "2026-09-26", fetched(status=403))
+            ready, detail = source_refresh.source_readiness(record, outcome, "2026-10-03")
+            self.assertTrue(ready)
+            self.assertIn("Retrieval remains unavailable", detail)
+            self.assertFalse(source_refresh.source_readiness(self.record, outcome, "2026-10-03")[0])
+
+    def test_integrated_manual_review_reports_retrieval_not_attempted_and_recorded_failure(self) -> None:
+        record = {**self.record, "verification_status": "unavailable-http-403",
+                  "manual_review": {"cadence": "monthly", "next_review": "2026-10-03"}}
+        self.path.write_text(json.dumps({"skill": "example-skill", "sources": [record]}), encoding="utf-8")
+        original = self.path.read_bytes()
+        with mock.patch.object(source_refresh, "fetch", side_effect=AssertionError("manual source fetched")):
+            text, exit_code = source_refresh.preflight("example-skill", skills=self.skills, today="2026-10-03")
+        self.assertEqual(exit_code, 0)
+        self.assertIn("READY_MANUAL", text)
+        self.assertIn("retrieval: not attempted: explicit manual review", text)
+        self.assertIn("Recorded automatic retrieval remains unavailable", text)
+        self.assertNotIn("retrieval: scheduled", text)
+        self.assertEqual(self.path.read_bytes(), original)
+        malformed = {**self.record, "manual_review": "monthly"}
+        self.path.write_text(json.dumps({"skill": "example-skill", "sources": [malformed]}), encoding="utf-8")
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched()) as fetch:
+            text, exit_code = source_refresh.preflight("example-skill", skills=self.skills, today="2026-10-03", spacing=0)
+        self.assertEqual(fetch.call_count, 1)
+        self.assertEqual(exit_code, 2)
+        self.assertIn("retrieval: unchanged", text)
+        self.assertNotIn("retrieval: not attempted", text)
+
+    def test_shared_url_does_not_share_human_review(self) -> None:
+        records = [self.record, {**self.record, "verification_status": "indexed-source-discovery-only"}]
+        self.path.write_text(json.dumps({"skill": "example-skill", "sources": records}), encoding="utf-8")
+        with mock.patch.object(source_refresh, "fetch", return_value=fetched()) as fetch:
+            text, exit_code = source_refresh.preflight("example-skill", skills=self.skills, today="2026-10-03", spacing=0)
+        self.assertEqual(fetch.call_count, 1)
+        self.assertEqual(exit_code, 2)
+        self.assertIn("READY:", text)
+        self.assertIn("discovery-only", text)
+
+    def test_overdue_invalid_or_incomplete_manual_schedule_is_a_human_review_finding(self) -> None:
+        for schedule, weekly in (({"cadence": "monthly", "next_review": "2026-10-02"}, source_refresh.REVIEW_DUE),
+                                 ({"cadence": "monthly", "next_review": "2026-99-99"}, source_refresh.REVIEW_DUE),
+                                 ({"cadence": "", "next_review": "2026-10-03"}, source_refresh.SCHEDULED)):
+            with self.subTest(schedule=schedule):
+                record = {**self.record, "manual_review": schedule}
+                self.path.write_text(json.dumps({"skill": "example-skill", "sources": [record]}), encoding="utf-8")
+                original = self.path.read_bytes()
+                with mock.patch.object(source_refresh, "fetch", side_effect=AssertionError("manual source fetched")):
+                    text, exit_code = source_refresh.preflight("example-skill", skills=self.skills, today="2026-10-03")
+                    report = source_refresh.refresh(skills=self.skills, only_skill="example-skill", today="2026-10-03")
+                self.assertEqual(report.outcomes[0].outcome, weekly)
+                self.assertEqual(exit_code, 2)
+                self.assertIn("retrieval: not attempted: explicit manual review", text)
+                self.assertIn("Manual review", text)
+                self.assertNotIn("Retrieval requires review", text)
+                self.assertEqual(self.path.read_bytes(), original)
+
+    def test_unknown_empty_exempt_and_partial_modes_fail_explicitly(self) -> None:
+        self.assertEqual(source_refresh.preflight("missing-skill", skills=self.skills)[1], 1)
+        self.assertEqual(source_refresh.preflight("../example-skill", skills=self.skills)[1], 1)
+        self.path.write_text('{"skill":"example-skill","sources":[]}', encoding="utf-8")
+        self.assertEqual(source_refresh.preflight("example-skill", skills=self.skills)[1], 1)
+        self.path.unlink()
+        (self.path.parent / "sources.exempt.json").write_text('{"exempt":true}', encoding="utf-8")
+        self.assertEqual(source_refresh.preflight("example-skill", skills=self.skills)[1], 2)
+        for extra in (["--write"], ["--check"], ["--url", "https://example.test/page"]):
+            with self.subTest(extra=extra), mock.patch("sys.stderr"), self.assertRaises(SystemExit) as error:
+                source_refresh.main(["--preflight", "--skill", "example-skill", *extra])
+            self.assertEqual(error.exception.code, 2)
+
+
+class LinkedIndexTests(unittest.TestCase):
+    def test_linked_files_and_skill_directories_are_rejected_without_reading_or_writing(self) -> None:
+        for directory_link in (False, True):
+            with self.subTest(directory_link=directory_link), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                skills = root / "skills"
+                external = root / "external"
+                skills.mkdir()
+                external.mkdir()
+                sentinel = external / "sources.json"
+                original = b'{"skill":"example-skill","sources":[{"url":"https://example.test/page"}]}\n'
+                sentinel.write_bytes(original)
+                directory = skills / "example-skill"
+                try:
+                    if directory_link:
+                        directory.symlink_to(external, target_is_directory=True)
+                    else:
+                        directory.mkdir()
+                        (directory / "sources.json").symlink_to(sentinel)
+                except OSError as exc:
+                    self.skipTest(f"Operating system refused test symlink: {exc}")
+                with mock.patch.object(source_refresh, "fetch", side_effect=AssertionError("must not fetch")), \
+                        mock.patch.object(source_refresh, "load_index", side_effect=AssertionError("must not read")):
+                    with self.assertRaisesRegex(ValueError, "Linked|outside"):
+                        source_refresh.refresh(skills=skills, write=True, spacing=0)
+                    with mock.patch.object(source_refresh, "refresh", side_effect=ValueError("Linked source index")), \
+                            mock.patch("sys.stderr"):
+                        self.assertEqual(source_refresh.main(["--write"]), 1)
+                self.assertEqual(sentinel.read_bytes(), original)
+
+    def test_write_rechecks_a_path_replaced_with_a_link_after_discovery(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            skills = root / "skills"
+            directory = skills / "example-skill"
+            directory.mkdir(parents=True)
+            path = directory / "sources.json"
+            original = b'{"skill":"example-skill","sources":[{"url":"https://example.test/page"}]}\n'
+            path.write_bytes(original)
+            sentinel = root / "external.json"
+            sentinel.write_bytes(original)
+            probe = root / "link-probe"
+            try:
+                probe.symlink_to(sentinel)
+            except OSError as exc:
+                self.skipTest(f"Operating system refused test symlink: {exc}")
+            probe.unlink()
+
+            def replace_then_fetch(_url: str) -> source_refresh.Fetched:
+                path.unlink()
+                path.symlink_to(sentinel)
+                return fetched()
+
+            with mock.patch.object(source_refresh, "fetch", side_effect=replace_then_fetch):
+                with self.assertRaisesRegex(ValueError, "Linked|outside"):
+                    source_refresh.refresh(skills=skills, write=True, spacing=0)
+            self.assertEqual(sentinel.read_bytes(), original)
 
 
 if __name__ == "__main__":

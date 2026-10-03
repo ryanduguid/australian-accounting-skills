@@ -1246,8 +1246,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 4,
+        "cases": 6,
         "case_ids": [
+          "debtor-summary-review",
+          "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
           "post-journal-provenance-tie-out",
@@ -1448,11 +1450,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 6,
         "case_ids": [
           "bas-export-manifest-rounding",
+          "debtor-summary-review",
           "div7a-upe-review",
-          "post-journal-provenance-tie-out"
+          "post-journal-provenance-tie-out",
+          "workpaper-stale-reference",
+          "xero-export-duplicate-and-missing"
         ],
         "only_seeded_case": false
       },
@@ -1472,10 +1477,13 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 5,
         "case_ids": [
           "bas-export-manifest-rounding",
-          "post-journal-provenance-tie-out"
+          "debtor-summary-review",
+          "month-end-mismatched-period",
+          "post-journal-provenance-tie-out",
+          "xero-export-duplicate-and-missing"
         ],
         "only_seeded_case": false
       },
@@ -1498,9 +1506,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "post-journal-provenance-tie-out"
+          "post-journal-provenance-tie-out",
+          "workpaper-stale-reference"
         ],
         "only_seeded_case": false
       },
