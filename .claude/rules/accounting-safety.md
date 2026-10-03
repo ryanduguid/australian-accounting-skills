@@ -12,6 +12,13 @@ individual skill remains the detailed procedure.
    source that cannot be checked is unverified. Search snippets and page titles
    are discovery aids, not verified authority. Keep dependent treatment pending;
    continue only calculations supported by the supplied facts.
+   Before relying on a skill's mutable facts in a complete source checkout,
+   run `python scripts/source_refresh.py --skill <exact-skill-name> --preflight`
+   through the applicable authorised retrieval route. Read its separate source
+   readiness report. For copied skills without the root checker, inspect the
+   bundled source index or exemption and perform the required manual source check.
+   The [preflight guide](https://github.com/ryanduguid/australian-accounting-skills/blob/main/docs/source-preflight.md)
+   explains exits and date boundaries. A zero exit does not verify an effective period.
 3. Do not lodge, make declarations, communicate with a regulator or client,
    execute a payment, post a journal or lock financial records. Prepare the
    workpaper and surface the authorised human action.

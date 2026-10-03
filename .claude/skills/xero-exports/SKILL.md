@@ -1,6 +1,6 @@
 ---
 name: xero-exports
-description: Use when working with Xero report exports (trial balance, account transactions, aged receivables/payables, activity statement and GST reconciliation, payroll summaries), including parsing quirks, completeness checks, and file conventions. Reference skill for the other skills in this pack.
+description: Use when working with Xero report exports (trial balance, account transactions, aged receivables/payables, activity statement and GST reconciliation, payroll summaries), including parsing quirks, completeness checks, file conventions and debtor review preparation. Reference skill for the other skills in this pack.
 ---
 
 # Working with Xero exports
@@ -100,6 +100,10 @@ No payroll export headers were obtained, so payroll import profiles remain
 unverified. A report's presence in the menu does not validate its export schema.
 
 ## File conventions
+
+For an aged debtor review, credit-balance investigation or receivables control
+tie-out, read [the debtor review recipe](references/debtor-review.md). It separates
+Summary reconciliation from the Detail evidence needed for invoice decisions.
 
 `{entity}-{report}-{period-end YYYY-MM-DD}-{basis}.csv`, saved in the firm-approved secure client-data location outside version control. If a path beside a checkout is proposed, ask first and confirm it is outside every version-control checkout, not merely ignored by one. Do not change `.gitignore`, output locations or repository configuration without explicit approval.
 

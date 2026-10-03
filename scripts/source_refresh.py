@@ -16,11 +16,10 @@ these moved" in one pass. Two dates are kept apart on purpose:
   writes it, and it never stands in for a review.
 
 ``final_url`` records the response URL when available, otherwise the requested
-URL. ``content_url`` accompanies the last readable digest and survives failed
-attempts. Older records establish
-that destination baseline on their next reviewed write. Until then, read-only
-checks report the missing baseline and existing comparable digests still
-detect content changes.
+URL. ``content_url`` accompanies the reviewed digest and survives failed
+attempts. Changed or missing baselines are stored as ``pending_review``;
+human acceptance binds the candidate to ``reviewed_content`` before readiness
+can resume. See docs/source-preflight.md for the manual acceptance procedure.
 
 For an HTML page the digest covers the readable text, with scripts, styles
 and markup removed, and prefers the ``<main>`` region when the page has one.
@@ -47,7 +46,17 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Iterable, Iterator, Sequence
-from urllib.parse import urldefrag
+from urllib.parse import urldefrag, urljoin, urlsplit
+
+from source_fetch_policy import (
+    APPROVED_REDIRECT_EDGES,
+    MAX_REDIRECTS,
+    NoRedirect,
+    SourcePolicyError,
+    bounded_body,
+    check_public_resolution,
+    checked_url,
+)
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
@@ -80,6 +89,9 @@ SCHEDULE_FIELD = "manual_review"
 REVERIFY_FIELD = "reverify_by"
 UPSTREAM_FIELD = "source_last_modified"
 DIGEST_KIND_FIELD = "content_hash_covers"
+PENDING_FIELD = "pending_review"
+REVIEW_REQUIRED_FIELD = "review_required_since"
+REVIEWED_FIELD = "reviewed_content"  # Human-owned binding; never written by a sweep.
 MACHINE_FIELDS = (
     DIGEST_FIELD,
     DIGEST_KIND_FIELD,
@@ -308,6 +320,8 @@ class Fetched:
     content_type: str
     last_modified: str
     error: str
+    text: str = ""
+    text_truncated: bool = False
 
     @property
     def reachable(self) -> bool:
@@ -318,7 +332,70 @@ class Fetched:
         return self.reachable and bool(self.digest)
 
 
-def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY) -> Fetched:
+def _open_checked_response(opener, url: str):
+    """Validate every redirect before opening it; the caller owns the final response."""
+    target = checked_url(url)
+    seen = {target}
+    for hop in range(MAX_REDIRECTS + 1):
+        check_public_resolution(target)
+        request = urllib.request.Request(target, headers={
+            "User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml,*/*",
+            "Accept-Encoding": "identity",
+        })
+        try:
+            response = opener.open(request, timeout=TIMEOUT)
+            return response, target
+        except urllib.error.HTTPError as redirect:
+            if redirect.code not in {301, 302, 303, 307, 308}:
+                raise
+            with redirect:
+                location = redirect.headers.get("Location")
+                if not location or hop == MAX_REDIRECTS:
+                    raise SourcePolicyError("Missing redirect location or redirect ceiling exceeded.")
+                following = checked_url(urljoin(target, location))
+                hosts = (urlsplit(target).hostname, urlsplit(following).hostname)
+                if hosts[0] != hosts[1] and hosts not in APPROVED_REDIRECT_EDGES:
+                    raise SourcePolicyError("Cross-host redirect has not been reviewed.")
+                if following in seen:
+                    raise SourcePolicyError("Redirect loop.")
+                seen.add(following)
+                target = following
+
+
+def _interpret_response(response, target: str, include_text: bool) -> Fetched:
+    """Close the response after destination validation and bounded interpretation."""
+    with response:
+        final_url = checked_url(response.geturl())
+        if final_url != target:
+            raise SourcePolicyError("Unexpected response destination.")
+        body = bounded_body(response)
+        content_type = (response.headers.get_content_type() or "").lower()
+        digest, kind = body_digest(
+            body, content_type, response.headers.get_content_charset()
+        )
+        text = (readable_text(body, response.headers.get_content_charset())
+                if include_text and content_type in MARKUP_TYPES else
+                body.decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+                if include_text and content_type == "text/plain" else "")
+        return Fetched(
+            status=response.status,
+            final_url=final_url,
+            digest=digest,
+            kind=kind,
+            content_type=content_type,
+            last_modified=upstream_last_modified(
+                body,
+                response.headers.get("Last-Modified"),
+                response.headers.get("Date"),
+            ),
+            error="",
+            text=text[:32768],
+            text_truncated=len(text) > 32768,
+        )
+
+
+def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY,
+          include_text: bool = False) -> Fetched:
     """Retrieve one source. A blocked or missing page is data, not a failure.
 
     Several of these hosts refuse automated retrieval outright, so an
@@ -326,31 +403,14 @@ def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY) -> Fetche
     sweep's job is to tell a reviewer what to look at, and "this one can no
     longer be checked from CI" is exactly that kind of finding.
     """
-    request = urllib.request.Request(
-        url, headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml,*/*"}
-    )
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
     last_error = ""
     for attempt in range(1, tries + 1):
         try:
-            with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
-                body = response.read()
-                content_type = (response.headers.get_content_type() or "").lower()
-                digest, kind = body_digest(
-                    body, content_type, response.headers.get_content_charset()
-                )
-                return Fetched(
-                    status=response.status,
-                    final_url=response.geturl(),
-                    digest=digest,
-                    kind=kind,
-                    content_type=content_type,
-                    last_modified=upstream_last_modified(
-                        body,
-                        response.headers.get("Last-Modified"),
-                        response.headers.get("Date"),
-                    ),
-                    error="",
-                )
+            response, target = _open_checked_response(opener, url)
+            return _interpret_response(response, target, include_text)
+        except SourcePolicyError as error:
+            return Fetched(0, url, "", "", "", "", f"Source policy: {error}")
         except urllib.error.HTTPError as error:
             # A refusal is settled; only a transport fault is worth retrying.
             # The error holds the response open until closed; left to the
@@ -414,8 +474,17 @@ class Report:
         return [outcome for outcome in self.outcomes if outcome.actionable]
 
 
+def checked_index(path: Path, skills: Path) -> None:
+    if path.is_symlink() or path.parent.is_symlink():
+        raise ValueError("Linked source index or skill directory is unsupported")
+    if not path.resolve().is_relative_to(skills.resolve()):
+        raise ValueError("Source index resolves outside the skills tree")
+
+
 def index_files(skills: Path = SKILLS_DIRECTORY) -> Iterator[Path]:
-    yield from sorted(skills.glob("*/sources.json"))
+    for path in sorted(skills.glob("*/sources.json")):
+        checked_index(path, skills)
+        yield path
 
 
 def review_date(schedule: dict[str, object]) -> str:
@@ -453,17 +522,20 @@ def reverify_note(passed: str) -> str:
     )
 
 
-def load_index(path: Path) -> dict[str, object]:
+def load_index(path: Path, *, skills: Path = SKILLS_DIRECTORY) -> dict[str, object]:
+    checked_index(path, skills)
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def dump_index(path: Path, payload: dict[str, object]) -> None:
+def dump_index(path: Path, payload: dict[str, object], *, skills: Path = SKILLS_DIRECTORY) -> None:
+    checked_index(path, skills)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def records(paths: Iterable[Path]) -> Iterator[tuple[Path, dict[str, object], dict[str, object]]]:
+def records(paths: Iterable[Path], *, skills: Path = SKILLS_DIRECTORY
+            ) -> Iterator[tuple[Path, dict[str, object], dict[str, object]]]:
     for path in paths:
-        payload = load_index(path)
+        payload = load_index(path, skills=skills)
         sources = payload.get("sources")
         if not isinstance(sources, list):
             continue
@@ -472,8 +544,15 @@ def records(paths: Iterable[Path]) -> Iterator[tuple[Path, dict[str, object], di
                 yield path, payload, record
 
 
+def latest_upstream_date(record: dict[str, object], fetched: Fetched) -> str:
+    """Latest valid published modification date, including retained evidence."""
+    return max(iso_day(fetched.last_modified), iso_day(str(record.get(UPSTREAM_FIELD, ""))))
+
+
 def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
     """Name what happened to one record, and say why in one line."""
+    if fetched.error.startswith("Source policy:"):
+        return UNREADABLE, fetched.error + " Open the source for manual review."
     if fetched.reachable and not fetched.readable:
         return UNREADABLE, (
             f"Retrieved {fetched.content_type or 'the response'} but extracted no content to "
@@ -487,6 +566,10 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
         if fetched.status in REFUSED_STATUSES:
             return BLOCKED, f"{reason}. This host refuses automated retrieval: review by hand."
         return UNREACHABLE, f"{reason}. Open the source by hand before relying on the workflow."
+    modified = latest_upstream_date(record, fetched)
+    checked = review_date({"next_review": record.get("checked_at", "")})
+    if modified and checked and modified > checked:
+        return CHANGED, f"Published source modification {modified} is later than human review {checked}."
     previous_url = urldefrag(str(record.get(CONTENT_URL_FIELD, ""))).url
     current_url = urldefrag(fetched.final_url).url
     if previous_url and current_url and previous_url != current_url:
@@ -498,12 +581,12 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
     if not stored or not previous_url:
         return BASELINE_REQUIRED, (
             "A readable content or destination baseline is missing. A person must review "
-            "the source, then run python scripts/source_refresh.py --write to record it."
+            "the pending candidate and explicitly accept its reviewed baseline by hand."
         )
     if not same_reading:
         return RECORDED, (
             f"The digest covers a different reading of {fetched.content_type or 'this content type'}. "
-            "A reviewed write can update the baseline."
+            "Human acceptance must bind the new reading to its reviewed baseline."
         )
     return UNCHANGED, "Readable text and destination are unchanged since the last readable sweep."
 
@@ -514,15 +597,21 @@ def apply_fetch(record: dict[str, object], fetched: Fetched, today: str) -> None
     record[STATUS_FIELD] = fetched.status
     record[FETCHED_FIELD] = today
     if fetched.readable:
-        record[DIGEST_FIELD] = fetched.digest
-        record[DIGEST_KIND_FIELD] = fetched.kind
-        record[CONTENT_URL_FIELD] = fetched.final_url
-        record[UPSTREAM_FIELD] = fetched.last_modified
-    else:
-        record.setdefault(DIGEST_FIELD, "")
-        record.setdefault(DIGEST_KIND_FIELD, "")
-        record.setdefault(CONTENT_URL_FIELD, "")
-        record.setdefault(UPSTREAM_FIELD, "")
+        outcome, _ = classify(record, fetched)
+        record[UPSTREAM_FIELD] = latest_upstream_date(record, fetched)
+        if outcome != UNCHANGED or PENDING_FIELD in record:
+            # Preserve the reviewed baseline. Only a human can promote this candidate.
+            if PENDING_FIELD not in record:
+                record[REVIEW_REQUIRED_FIELD] = today
+            record[PENDING_FIELD] = {
+                DIGEST_FIELD: fetched.digest, DIGEST_KIND_FIELD: fetched.kind,
+                CONTENT_URL_FIELD: fetched.final_url, "observed_at": today,
+                UPSTREAM_FIELD: record[UPSTREAM_FIELD],
+            }
+    record.setdefault(DIGEST_FIELD, "")
+    record.setdefault(DIGEST_KIND_FIELD, "")
+    record.setdefault(CONTENT_URL_FIELD, "")
+    record.setdefault(UPSTREAM_FIELD, "")
 
 
 def refresh(
@@ -540,7 +629,7 @@ def refresh(
     seen: dict[str, Fetched] = {}
     touched: dict[Path, dict[str, object]] = {}
 
-    for path, payload, record in records(index_files(skills)):
+    for path, payload, record in records(index_files(skills), skills=skills):
         skill = str(payload.get("skill", path.parent.name))
         url = str(record.get("url", ""))
         if only_skill and skill != only_skill:
@@ -566,12 +655,15 @@ def refresh(
                 detail = reverify_note(passed)
             else:
                 detail = f"Reviewed by hand {schedule.get('cadence', '')}, next review {due}."
+            pending = PENDING_FIELD in record
+            if pending:
+                detail += " Pending human review: explicitly accept the candidate baseline by hand."
             report.outcomes.append(
                 Outcome(
                     skill=skill,
                     title=str(record.get("title", "")),
                     url=url,
-                    outcome=REVIEW_DUE if late or passed else SCHEDULED,
+                    outcome=REVIEW_DUE if late or passed or pending else SCHEDULED,
                     detail=detail,
                     checked_at=str(record.get("checked_at", "")),
                     fetched=Fetched(0, "", "", "", "", "", "not fetched: reviewed by hand"),
@@ -593,9 +685,10 @@ def refresh(
         if write:
             apply_fetch(record, fetched, stamp)
             touched[path] = payload
-            if outcome == BASELINE_REQUIRED:
-                outcome = RECORDED
-                detail = "Readable content and destination baseline recorded."
+        if PENDING_FIELD in record:
+            if outcome not in (CHANGED, MISSING, UNREADABLE, BASELINE_REQUIRED):
+                outcome = REVIEW_DUE
+            detail += " Pending human review: a sweep cannot accept a changed or missing baseline."
         if passed:
             # A fetch finding that already asks for an edit keeps its name; an
             # expired fact otherwise outranks an unchanged or unreachable page.
@@ -618,7 +711,7 @@ def refresh(
         )
 
     for path, payload in touched.items():
-        dump_index(path, payload)
+        dump_index(path, payload, skills=skills)
         report.written.append(path)
     return report
 
@@ -675,17 +768,132 @@ def render(report: Report, *, write: bool) -> str:
     return "\n".join(lines)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def _review_binding_matches(record: dict[str, object], checked: str) -> bool:
+    since = review_date({"next_review": record[REVIEW_REQUIRED_FIELD]})
+    binding = record.get(REVIEWED_FIELD)
+    return not (not since or checked < since or not isinstance(binding, dict)
+                or any(binding.get(key) != record.get(key)
+                       for key in (DIGEST_FIELD, DIGEST_KIND_FIELD, CONTENT_URL_FIELD, "checked_at"))
+                or binding.get(UPSTREAM_FIELD) != record.get(UPSTREAM_FIELD, ""))
+
+
+def _human_review_readiness(record: dict[str, object], today: str) -> tuple[str, str]:
+    """Return the human check date and its first blocking problem."""
+    checked = ""
+    if PENDING_FIELD in record:
+        return checked, "Pending human review: explicitly accept the candidate baseline by hand."
+    checked = review_date({"next_review": record.get("checked_at", "")})
+    if not checked or checked > today:
+        return checked, "Missing, malformed or future human check date."
+    if not isinstance(record.get("fact"), str) or not str(record["fact"]).strip():
+        return checked, "The human review does not record a fact."
+    if REVIEW_REQUIRED_FIELD in record:
+        if not _review_binding_matches(record, checked):
+            return checked, "Human acceptance must bind the digest, reading, destination, published date and current review date."
+    passed = reverify_passed(record, today)
+    if passed or (record.get("volatile") and REVERIFY_FIELD not in record):
+        return checked, "The fact needs a current reverify_by date."
+    if record.get("volatile"):
+        due = review_date({"next_review": record.get(REVERIFY_FIELD, "")})
+        if (date.fromisoformat(due) - date.fromisoformat(checked)).days > 400:
+            return checked, "The volatile fact exceeds the existing 400-day review bound."
+    status = str(record.get("verification_status", ""))
+    if status == "indexed-source-discovery-only":
+        return checked, "The record is discovery-only; a schedule does not establish human review."
+    return checked, ""
+
+
+def source_readiness(record: dict[str, object], outcome: Outcome, today: str) -> tuple[bool, str]:
+    """Assess one record independently of weekly sweep health."""
+    checked, problem = _human_review_readiness(record, today)
+    if problem:
+        return False, problem
+    status = str(record.get("verification_status", ""))
+    modified = latest_upstream_date(record, outcome.fetched)
+    if modified and modified > checked:
+        return False, "The source changed after the recorded human review."
+    schedule = record.get(SCHEDULE_FIELD)
+    if isinstance(schedule, dict) and outcome.outcome == REVIEW_DUE:
+        due = review_date(schedule)
+        return False, (f"Manual review was due {due or 'with no valid date set'}; "
+                       "complete the human review and update its schedule by hand.")
+    if outcome.outcome in (CHANGED, MISSING, UNREADABLE, BASELINE_REQUIRED, RECORDED, REVIEW_DUE):
+        return False, f"Retrieval requires review: {outcome.outcome}."
+    if schedule is not None:
+        if not isinstance(schedule, dict):
+            return False, "Malformed manual review schedule."
+        due = review_date(schedule)
+        if (not due or due < today or not isinstance(schedule.get("cadence"), str)
+                or not str(schedule["cadence"]).strip()):
+            return False, "Manual review is overdue or its schedule is malformed."
+        warning = " Retrieval remains unavailable." if outcome.outcome in (BLOCKED, UNREACHABLE) else ""
+        return True, f"READY_MANUAL: human review {checked}, next review {due}.{warning}"
+    if status.startswith("unavailable"):
+        return False, "The record is explicitly unverified."
+    if outcome.outcome != UNCHANGED:
+        return False, f"Retrieval requires review: {outcome.outcome}."
+    return True, f"READY: human review {checked}; retrieval and destination unchanged."
+
+
+def preflight(skill: str, *, skills: Path = SKILLS_DIRECTORY, today: str = "",
+              spacing: float = REQUEST_SPACING) -> tuple[str, int]:
+    """Read-only check of every indexed source for one exact skill."""
+    stamp = today or date.today().isoformat()
+    heading = f"# Skill source preflight: {skill}\n\nEvaluated: {stamp}\n"
+    boundary = ("\nReadiness concerns recorded source evidence. Verify the exact fact and its "
+                "effective period at use time; this is not legal, tax or professional approval.\n")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", skill):
+        return heading + "\nInvalid exact skill name.\n" + boundary, 1
+    directory = skills / skill
+    if not directory.resolve().is_relative_to(skills.resolve()) or not (directory / "SKILL.md").is_file():
+        return heading + "\nNo matching skill.\n" + boundary, 1
+    index = directory / "sources.json"
+    if not index.is_file():
+        if (directory / "sources.exempt.json").is_file():
+            return heading + "\nUNAVAILABLE: source exemption requires live manual verification.\n" + boundary, 2
+        return heading + "\nNo source index.\n" + boundary, 1
+    if index.is_symlink():
+        return heading + "\nLinked source index is unsupported.\n" + boundary, 1
+    try:
+        payload = load_index(index, skills=skills)
+        entries = payload.get("sources")
+        if (payload.get("skill") != skill or not isinstance(entries, list) or not entries
+                or any(not isinstance(item, dict) or not isinstance(item.get("url"), str)
+                       or not str(item["url"]).strip() for item in entries)):
+            return heading + "\nIncomplete or mismatched source index.\n" + boundary, 1
+        report = refresh(skills=skills, only_skill=skill, spacing=spacing, today=stamp)
+    except (OSError, UnicodeError, ValueError, AttributeError) as exc:
+        return heading + f"\nInvalid source index: {exc}.\n" + boundary, 1
+    if len(report.outcomes) != len(entries):
+        return heading + "\nSource inventory changed or was incomplete.\n" + boundary, 1
+    lines = [heading]
+    ready = True
+    for record, outcome in zip(entries, report.outcomes):
+        usable, detail = source_readiness(record, outcome, stamp)
+        ready = ready and usable
+        lines.append(f"\n- {outcome.url}: {detail}")
+        manual = isinstance(record.get(SCHEDULE_FIELD), dict)
+        retrieval = "not attempted: explicit manual review" if manual else outcome.outcome
+        lines.append(f"  Human check: {record.get('checked_at', 'unknown')}; "
+                     f"retrieval: {retrieval}; reverify by: {record.get(REVERIFY_FIELD, 'not applicable')}.")
+        if manual and str(record.get("verification_status", "")).startswith("unavailable"):
+            lines.append("  Recorded automatic retrieval remains unavailable; it was not retried by this preflight.")
+    return "\n".join(lines) + boundary, 0 if ready else 2
+
+
+def _argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python scripts/source_refresh.py",
         description="Re-fetch the indexed primary sources and report which ones moved.",
     )
     parser.add_argument("--skill", default="", help="Limit the sweep to one skill directory name.")
     parser.add_argument("--url", default="", help="Limit the sweep to one indexed URL.")
+    parser.add_argument("--preflight", action="store_true",
+                        help="Read-only source readiness check for one --skill; separate from weekly sweep health.")
     parser.add_argument(
         "--write",
         action="store_true",
-        help="Record the digest and fetch date in sources.json. Never touches checked_at.",
+        help="Record pending digest candidates and the fetch date. Never accepts a baseline or touches checked_at.",
     )
     parser.add_argument(
         "--check",
@@ -702,14 +910,34 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=REQUEST_SPACING,
         help=f"Seconds between requests (default {REQUEST_SPACING}).",
     )
+    return parser
+
+
+def main(argv: Sequence[str] | None = None, *, skills: Path = SKILLS_DIRECTORY) -> int:
+    parser = _argument_parser()
     arguments = parser.parse_args(argv)
 
-    report = refresh(
-        only_skill=arguments.skill,
-        only_url=arguments.url,
-        write=arguments.write,
-        spacing=arguments.spacing,
-    )
+    if arguments.preflight:
+        if not arguments.skill or arguments.write or arguments.check or arguments.url:
+            parser.error("--preflight requires --skill and cannot use --write, --check or --url")
+        rendered, exit_code = preflight(arguments.skill, skills=skills, spacing=arguments.spacing)
+        print(rendered)
+        if arguments.report:
+            # The local CLI intentionally replaces the operator-selected report.
+            Path(arguments.report).write_text(rendered, encoding="utf-8")  # NOSONAR
+        return exit_code
+
+    try:
+        report = refresh(
+            skills=skills,
+            only_skill=arguments.skill,
+            only_url=arguments.url,
+            write=arguments.write,
+            spacing=arguments.spacing,
+        )
+    except (OSError, UnicodeError, ValueError, AttributeError) as exc:
+        print(f"Invalid source index: {exc}.", file=sys.stderr)
+        return 1
     if not report.outcomes:
         print("No source records matched.", file=sys.stderr)
         return 1
@@ -717,7 +945,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     rendered = render(report, write=arguments.write)
     print(rendered)
     if arguments.report:
-        Path(arguments.report).write_text(rendered, encoding="utf-8")
+        # The local CLI intentionally replaces the operator-selected report.
+        Path(arguments.report).write_text(rendered, encoding="utf-8")  # NOSONAR
     if arguments.check and report.actionable:
         return 2
     return 0

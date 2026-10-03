@@ -95,21 +95,25 @@
           "cashflow-supported-roll-forward",
           "coal-lsl-levy-unverified-rate",
           "contract-cost-unallocated-plant",
+          "debtor-summary-review",
           "div7a-upe-review",
           "export-manifest-rounding",
           "fbt-carparking-missing-declaration",
           "financial-modelling-structure-faults",
           "fuel-tax-credits-missing-docket",
-          "payroll-tax-contractor-characterisation",
+          "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
+          "payroll-tax-contractor-characterisation",
           "post-journal-provenance-tie-out",
           "progress-claim-missing-reference-date",
           "retention-release-missing-deed",
           "standalone-skill-safety-boundary",
           "stp-current-vs-overdue-sg",
           "tax-invoice-review-missing-evidence",
-          "wip-cost-to-complete-gap"
+          "wip-cost-to-complete-gap",
+          "workpaper-stale-reference",
+          "xero-export-duplicate-and-missing"
         ]
       },
       "additionalProperties": {

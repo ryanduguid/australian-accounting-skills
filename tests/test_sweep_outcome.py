@@ -220,18 +220,28 @@ class SourceRefreshExitTests(unittest.TestCase):
                 with mock.patch.object(source_refresh, "index_files", return_value=[index]), \
                         mock.patch.object(source_refresh, "fetch", return_value=response), \
                         redirect_stdout(io.StringIO()):
-                    code = source_refresh.main(["--check", "--report", str(report), "--spacing", "0", *extra])
+                    code = source_refresh.main(["--check", "--report", str(report), "--spacing", "0", *extra],
+                                               skills=index.parent.parent)
                 return code, sweep_outcome.outcome(code, report, started).name
 
             for _ in range(2):
                 self.assertEqual(run(), (2, "findings"))
                 self.assertEqual(index.read_bytes(), original)
                 self.assertIn("baseline-required", report.read_text(encoding="utf-8"))
-            self.assertEqual(run("--write"), (0, "clean"))
+            self.assertEqual(run("--write"), (2, "findings"))
             saved = json.loads(index.read_text(encoding="utf-8"))["sources"][0]
-            self.assertEqual(saved["content_url"], response.final_url)
+            self.assertEqual(saved["content_url"], "")
+            self.assertEqual(saved["pending_review"]["content_url"], response.final_url)
             self.assertEqual(saved["checked_at"], record["checked_at"])
             self.assertEqual(saved["fact"], record["fact"])
+            self.assertEqual(run(), (2, "findings"))
+            candidate = saved.pop("pending_review")
+            for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified"):
+                saved[key] = candidate[key]
+            saved["checked_at"] = saved["review_required_since"]
+            saved["reviewed_content"] = {key: saved[key] for key in
+                                        ("content_hash", "content_hash_covers", "content_url", "source_last_modified", "checked_at")}
+            index.write_text(json.dumps({"skill": "example-skill", "sources": [saved]}), encoding="utf-8")
             self.assertEqual(run(), (0, "clean"))
             response.final_url = "https://example.test/new"
             self.assertEqual(run(), (2, "findings"))
@@ -243,7 +253,8 @@ class SourceRefreshExitTests(unittest.TestCase):
             report = Path(directory) / "sweep.md"
             with mock.patch.object(source_refresh, "index_files", return_value=iter([skills])):
                 with redirect_stderr(io.StringIO()):
-                    code = source_refresh.main(["--check", "--report", str(report), "--spacing", "0"])
+                    code = source_refresh.main(["--check", "--report", str(report), "--spacing", "0"],
+                                               skills=skills.parent.parent)
             self.assertEqual(code, 1)
             self.assertFalse(report.exists())
 
@@ -256,7 +267,8 @@ class SourceRefreshExitTests(unittest.TestCase):
             with mock.patch.object(source_refresh, "index_files", return_value=iter([skills])):
                 with mock.patch.object(source_refresh, "fetch", return_value=fetched()):
                     with redirect_stdout(io.StringIO()), self.assertRaises(OSError):
-                        source_refresh.main(["--check", "--report", str(report), "--spacing", "0"])
+                        source_refresh.main(["--check", "--report", str(report), "--spacing", "0"],
+                                            skills=skills.parent.parent)
 
     def test_a_fetch_exception_raises_instead_of_exiting_0(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -266,7 +278,7 @@ class SourceRefreshExitTests(unittest.TestCase):
             with mock.patch.object(source_refresh, "index_files", return_value=iter([skills])):
                 with mock.patch.object(source_refresh, "fetch", side_effect=RuntimeError("boom")):
                     with self.assertRaisesRegex(RuntimeError, "boom"):
-                        source_refresh.main(["--check", "--spacing", "0"])
+                        source_refresh.main(["--check", "--spacing", "0"], skills=skills.parent.parent)
 
 
 if __name__ == "__main__":

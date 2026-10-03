@@ -10,7 +10,7 @@
 | `stp-finalisation` | STP year-end finalisation: payroll versus GL versus filed totals, super guarantee checks |
 | `tax-invoice-review` | Check tax invoices, RCTIs and Peppol eInvoices against the GST report before credits are claimed |
 | `year-end-workpapers` | Review-ready annual workpaper pack from a trial balance export |
-| `xero-exports` | Pulling and parsing Xero reports: quirks, completeness checks, naming conventions |
+| `xero-exports` | Pulling and parsing Xero reports, completeness checks and debtor review preparation |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance, agings and ATO obligation timing |
 | `financial-modelling` | Build or review a driver-based financial model workbook: live formulas, check rows and scenarios |
 | `progress-claim-preparation` | Prepare and review payment claims, variations, retention and reference-date evidence |
