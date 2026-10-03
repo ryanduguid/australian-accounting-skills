@@ -659,6 +659,31 @@ class PreflightTests(unittest.TestCase):
             self.assertEqual(code, 2)
             self.assertIn("Pending human review", text)
 
+    def test_later_candidate_requires_its_own_binding_without_inventing_a_human_date(self) -> None:
+        self.run_preflight(self.record)
+        first = fetched(digest="b" * 64)
+        latest = fetched(digest="c" * 64)
+        with mock.patch.object(source_refresh, "fetch", return_value=first):
+            source_refresh.refresh(skills=self.skills, today="2026-09-30", spacing=0, write=True)
+        with mock.patch.object(source_refresh, "fetch", return_value=latest):
+            source_refresh.refresh(skills=self.skills, today="2026-10-03", spacing=0, write=True)
+        saved = json.loads(self.path.read_text(encoding="utf-8"))["sources"][0]
+        self.assertEqual(saved["review_required_since"], "2026-09-30")
+        candidate = saved.pop("pending_review")
+        self.assertEqual(candidate["observed_at"], "2026-10-03")
+        for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified"):
+            saved[key] = candidate[key]
+        # Fabricated human review of the exact latest content predates machine observation.
+        saved["checked_at"] = "2026-10-02"
+        saved["fact"] = "A person examined the latest synthetic candidate on 2 October."
+        binding = {key: saved[key] for key in
+                   ("content_hash", "content_hash_covers", "content_url", "source_last_modified", "checked_at")}
+        saved["reviewed_content"] = {**binding, "content_hash": first.digest}
+        self.assertEqual(self.run_preflight(saved, response=latest)[1], 2)
+        saved["reviewed_content"] = binding
+        self.assertEqual(self.run_preflight(saved, response=latest)[1], 0)
+        self.assertEqual(saved["checked_at"], "2026-10-02")
+
     def test_human_binding_must_match_the_reading_destination_and_current_review_date(self) -> None:
         record = {**self.record, "review_required_since": "2026-10-03", "checked_at": "2026-10-03"}
         binding = {key: record[key] for key in ("content_hash", "content_hash_covers", "content_url", "source_last_modified", "checked_at")}

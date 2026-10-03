@@ -65,6 +65,10 @@ triggers pending review even when the digest is unchanged. The latest valid
 `--write --check` result remains actionable with exit `2`.
 `review_required_since` retains the first pending date. Later identical fetches,
 a return to the old content and a manual schedule cannot clear pending review.
+The current candidate's observation date records the sweep, not the human review.
+A person may have examined that exact candidate before the sweep observed it.
+Acceptance still requires that actual review date and the matching content binding;
+an earlier review of different content cannot supply the binding.
 
 After a person examines the actual source and its applicable fact, accept the
 candidate by editing the record explicitly:
