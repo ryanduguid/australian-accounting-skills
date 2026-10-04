@@ -3,7 +3,7 @@
 # dependency stays pinned in requirements-test.txt.
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 files = ["scripts", "tests"]
 # tests/ puts scripts/ on sys.path to import the standalone entry points
 # there by name; mypy has to resolve them from the same place.
@@ -15,7 +15,7 @@ pretty = true
 [tool.ruff]
 line-length = 100
 src = ["scripts", "tests"]
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 # Ruff's default set plus import sorting: pycodestyle errors that are not

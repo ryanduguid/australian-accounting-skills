@@ -15,7 +15,7 @@ REQUIRED = {
         ".github/workflows/verify.yml: lint",
         ".github/workflows/verify.yml: secrets",
         ".github/workflows/verify.yml: shared conformance / verify skill-pack consumer",
-        ".github/workflows/verify.yml: verify (3.10)",
+        ".github/workflows/verify.yml: verify (3.11)",
         ".github/workflows/verify.yml: verify (3.12)",
         ".github/workflows/verify.yml: verify (3.13)",
         ".github/workflows/verify.yml: verify (3.14)",
