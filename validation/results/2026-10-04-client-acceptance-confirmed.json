@@ -1,0 +1,20 @@
+{
+  "model": "claude-opus-5-5",
+  "run_date": "2026-10-04",
+  "skills_version": "4740483",
+  "runner": "Ryan Duguid",
+  "results": {
+    "au-client-acceptance-missing-evidence": "pass"
+  },
+  "schema_version": 2,
+  "input_mode": "whole-card",
+  "status": "confirmed",
+  "provenance": {
+    "au-client-acceptance-missing-evidence": {
+      "input_sha256": "2586d5fc11e2d85441e8fe22c1436c8e3269fb99b55d060ef1e80cee40d411e4",
+      "context_sha256": "ed6cb6299f37dcc0c13f07013d0528e278b9054a58025da2b3e5cead37565ea7",
+      "rubric_sha256": "2586d5fc11e2d85441e8fe22c1436c8e3269fb99b55d060ef1e80cee40d411e4",
+      "output_sha256": "b931011901af46a97a0cf3e3d56c9d32d6892df5fd2602cb3f98c9759ff82ed0"
+    }
+  }
+}

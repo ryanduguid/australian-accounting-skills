@@ -107,7 +107,11 @@ and Ryan Duguid confirmed a pass for each on 29 September 2026. Skills
 changed after f4acd41 only in link targets. The
 `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
-v0.3.1, have no recorded run.
+v0.3.1, were each run whole on 1 and 4 October 2026 and confirmed as passes
+on 4 October
+([client acceptance](../validation/results/2026-10-04-client-acceptance-confirmed.json),
+[working holiday makers](../validation/results/2026-10-04-working-holiday-makers-confirmed.json)).
+The four core failure cards also added for v0.3.1 have no recorded run.
 
 When a skill's wording changes, rerun its cards at the exact revised commit,
 using the process above. Preserve the 12-cent exception and missing evidence

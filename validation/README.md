@@ -123,9 +123,10 @@ law claim, unverified source or guess.
 Together the cards cover all 65 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
-confirmed on 29 September, covers them along with every other card except
-`au-client-acceptance-missing-evidence` and `au-working-holiday-makers-missing-evidence`,
-added afterwards for v0.3.1. See
+confirmed on 29 September, covers them along with every other card then
+current. The `au-client-acceptance-missing-evidence` and
+`au-working-holiday-makers-missing-evidence` cards, added afterwards for
+v0.3.1, were run on 1 and 4 October and confirmed on 4 October. See
 [results](results/).
 
 Three further cards check whether the model completes supported bank,
