@@ -95,7 +95,7 @@ git diff --check
 ```
 
 The 6 Python checks are the gates `.github/workflows/verify.yml` runs. Ruff
-and mypy run in its `lint` job, then the 4 verification checks run on Python 3.10,
+and mypy run in its `lint` job, then the 4 verification checks run on Python 3.11,
 3.12, 3.13 and 3.14. A third job scans the full history with gitleaks against
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
