@@ -1,0 +1,18 @@
+{
+  "model": "claude-opus-5-5",
+  "run_date": "2026-10-04",
+  "skills_version": "120fe99",
+  "runner": "Ryan Duguid (observation run; verdicts pending)",
+  "results": {},
+  "schema_version": 2,
+  "input_mode": "whole-card",
+  "status": "observed",
+  "provenance": {
+    "au-working-holiday-makers-missing-evidence": {
+      "input_sha256": "1aa610b58138f19c61a892fefbd7a8818837ef990811e68f0d8e1cb08cfe3b04",
+      "context_sha256": "e6adc565de7c6ca30faf0ce912e8c75db8147771f25e51a711c282335c697afa",
+      "rubric_sha256": "1aa610b58138f19c61a892fefbd7a8818837ef990811e68f0d8e1cb08cfe3b04",
+      "output_sha256": "69e5e9f0e97f528c36dfdd1809fc90e7f0b91f14ad95e02507bbd825f8bf0932"
+    }
+  }
+}

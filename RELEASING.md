@@ -47,7 +47,7 @@ intended version changes and bind verification to the exact source and policy
 commit:
 
 ```bash
-tag=v0.3.0
+tag=v0.3.1
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"

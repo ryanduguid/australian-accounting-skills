@@ -1,4 +1,4 @@
-# v0.3.1 (unreleased)
+# v0.3.1
 
 Adds one client acceptance and engagement terms review workflow,
 au-client-acceptance. It prepares an acceptance or
@@ -12,12 +12,31 @@ withholding, STP income type and country code, super) or an individual mode
 (working holiday maker income, residency, the non-discrimination treaty
 position after Addy, lodgement and departure), with a reviewed source record
 and a fabricated missing-evidence case, bringing the validation pack to 72
-cards. The two new cards need confirmed results before this release.
+cards. Both cards have confirmed results, described below.
 
 Every volatile source record now carries a `reverify_by` date. The weekly
 sweep reports a record past that date as review-due, and each skill whose
 instructions point at `sources.json` says not to use an expired record even
 as a cross-check.
+
+xero-exports gains aged-receivables review guidance. Four core failure cards
+cover debtor summary differences, repeated transaction identities, absent
+exports, period mismatches and superseded workpaper references, bringing the
+validation pack to 76 cards. Each includes a positive control. Their
+structure and fixture arithmetic can be checked locally; no live agent
+verdict is recorded for them. Source refreshes now keep pending human review,
+bound fetches and redirects, and refuse linked source-index writes.
+
+The client acceptance and working holiday maker cards have confirmed results.
+Claude Opus 5.5 ran each card whole, told to read only the card and its
+target skills: au-client-acceptance-missing-evidence at skills commit 4740483
+on 1 October 2026 and au-working-holiday-makers-missing-evidence at 120fe99
+on 4 October. Ryan Duguid judged both a pass on 4 October
+([client acceptance](validation/results/2026-10-04-client-acceptance-confirmed.json),
+[working holiday makers](validation/results/2026-10-04-working-holiday-makers-confirmed.json)).
+The client acceptance card and its skill files are unchanged between those
+commits. Other tools were available but unused, so the runs do not establish
+source retrieval or restraint with action tools available.
 
 # v0.3.0
 
