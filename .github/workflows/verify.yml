@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: ["3.11", "3.12", "3.13", "3.14"]
+        python: ["3.14"]
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -97,7 +97,7 @@ jobs:
     name: shared conformance
     permissions:
       contents: read
-    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@87767ec809dc7f77bcd45808219adaf67841ae7b
+    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe
     with:
       skills-verification-mode: subcontractor-accounting-v1
 
@@ -113,6 +113,9 @@ jobs:
     permissions:
       contents: read
     steps:
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.14"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false

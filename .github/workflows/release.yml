@@ -19,16 +19,13 @@ jobs:
       attestations: write # Record provenance and SBOM attestations for release assets.
       contents: write # Create the draft release, upload assets and publish it.
       id-token: write # Obtain the OIDC identity required to sign attestations.
-    uses: ryanduguid/release-policy/.github/workflows/release-skills.yml@87767ec809dc7f77bcd45808219adaf67841ae7b
+    uses: ryanduguid/release-policy/.github/workflows/release-skills.yml@f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe
     with:
       required-checks: |
         .github/workflows/no-ai-attribution.yml: Attribution policy / Attribution policy runner
         .github/workflows/verify.yml: lint
         .github/workflows/verify.yml: secrets
         .github/workflows/verify.yml: shared conformance / verify skill-pack consumer
-        .github/workflows/verify.yml: verify (3.11)
-        .github/workflows/verify.yml: verify (3.12)
-        .github/workflows/verify.yml: verify (3.13)
         .github/workflows/verify.yml: verify (3.14)
         .github/workflows/verify.yml: verify-gates
         .github/workflows/codeql.yml: Analyze (actions)
