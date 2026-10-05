@@ -56,14 +56,14 @@ for file in *; do
     --source-digest "$release_commit" \
     --source-ref "refs/tags/$tag" \
     --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-    --signer-digest 87767ec809dc7f77bcd45808219adaf67841ae7b
+    --signer-digest f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe
 done
 gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
   --predicate-type https://spdx.dev/Document/v2.3 \
   --source-digest "$release_commit" \
   --source-ref "refs/tags/$tag" \
   --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-  --signer-digest 87767ec809dc7f77bcd45808219adaf67841ae7b
+  --signer-digest f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a

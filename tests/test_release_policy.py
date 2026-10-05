@@ -24,7 +24,7 @@ class ReleasePolicyTests(unittest.TestCase):
                 "permissions": {"contents": "read"},
                 "uses": (
                     "ryanduguid/release-policy/.github/workflows/verify-skills.yml@"
-                    "87767ec809dc7f77bcd45808219adaf67841ae7b"
+                    "f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe"
                 ),
                 "with": {"skills-verification-mode": "subcontractor-accounting-v1"},
             },
@@ -36,7 +36,7 @@ class ReleasePolicyTests(unittest.TestCase):
         )
         self.assertIn(
             "ryanduguid/release-policy/.github/workflows/release-skills.yml@"
-            "87767ec809dc7f77bcd45808219adaf67841ae7b",
+            "f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe",
             workflow,
         )
         self.assertIn("artifact-stem: australian-accounting-skills", workflow)
