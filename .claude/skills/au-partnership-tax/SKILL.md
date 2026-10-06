@@ -19,6 +19,8 @@ Partnership agreement and changes, partner and residency details limited to the 
 
 4. Roll forward each partner's capital/current account and link partner statements to the partnership totals. Flag agreement changes, special allocations, losses and personal deductions for review.
 
+   Identify the partnership, partner reference, income year and agreement version on each statement. Preserve the supplied income, deduction, loss, credit and withholding components separately from drawings. Match each partner's individual-return row to that statement once, while keeping the partnership workpaper separate. Collect GST/BAS periods, overlap with partner business records and PSI signals as review questions; an allocation schedule does not settle those matters.
+
 ## Hand-off and checks
 
 A partnership reconciliation, allocation schedule and partner account roll-forwards. Allocated amounts sum to the supported partnership totals without using drawings as the allocation rule.

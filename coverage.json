@@ -8,7 +8,7 @@
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 4,
     "skills_with_behavioural_gate": 13,
-    "skills_with_only_the_seeded_case": 39
+    "skills_with_only_the_seeded_case": 38
   },
   "skills": [
     {
@@ -67,10 +67,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-bookkeeping-missing-evidence",
-          "au-bookkeeping-supported-reconciliation"
+          "au-bookkeeping-supported-reconciliation",
+          "statement-correction-revision"
         ],
         "only_seeded_case": false
       },
@@ -423,10 +424,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-individual-return-missing-evidence",
-          "au-individual-return-occupation-guide"
+          "au-individual-return-occupation-guide",
+          "receipt-schedule-conflicts"
         ],
         "only_seeded_case": false
       },
@@ -826,11 +828,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-tax-rates-verification-missing-evidence"
+          "au-tax-rates-verification-missing-evidence",
+          "source-quote-partial-coverage"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -1450,11 +1453,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 6,
+        "cases": 7,
         "case_ids": [
           "bas-export-manifest-rounding",
           "debtor-summary-review",
           "div7a-upe-review",
+          "engagement-completion-evidence",
           "post-journal-provenance-tie-out",
           "workpaper-stale-reference",
           "xero-export-duplicate-and-missing"
@@ -1506,8 +1510,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
+          "engagement-completion-evidence",
           "post-journal-provenance-tie-out",
           "workpaper-stale-reference"
         ],

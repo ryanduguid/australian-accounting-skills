@@ -13,6 +13,8 @@ Income year, relevant income components, residency periods, spouse/dependant cir
 
 1. Create a day-by-day period map for changes in family status, residency, entitlement and hospital cover. Preserve unknown dates.
 
+   Retain one row per private-health statement line with its insurer, evidence reference, benefit code, eligible premiums, rebate received, supplied tax claim code and cover dates or days. Use the minimum policy reference needed to distinguish records. Preserve explicit zero amounts, no-cover answers and zero dependants; qualified statements such as no cover for part of the year require a period check. Keep spouse periods, spouse income components and dependant circumstances separate from the statement rows.
+
 2. Verify the distinct income definitions and rules for levy, levy reduction and surcharge. Reconcile each income measure to its underlying return components.
 
 3. Check exemption evidence and the exact period it supports. Confirm hospital cover qualifies for the relevant surcharge purpose; do not infer cover from an extras policy.
@@ -22,6 +24,8 @@ Income year, relevant income components, residency periods, spouse/dependant cir
 ## Hand-off and checks
 
 Separate levy and surcharge schedules, a coverage-period table and unresolved eligibility questions. A registered agent approves the tax position.
+
+Tie each statement line and proposed return mapping to its own evidence and applicable source. Keep missing statements, unknown codes, overlapping periods and inconsistent family facts visible; a zero rebate or a supplied claim code does not establish eligibility or the correct return treatment.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
@@ -42,3 +46,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 Only extras cover is evidenced and spouse income is absent. Do not infer surcharge exemption or a nil surcharge.
+
+Two insurer statement lines have different benefit codes and one has a zero rebate. Preserve both lines and the zero, and resolve their period and code questions separately. A statement that cover was absent only before March does not establish a full year without cover.

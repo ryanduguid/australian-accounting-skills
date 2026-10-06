@@ -9,3 +9,24 @@ The v0.3.0 development expansion uses OpenAccountants Australian topic names
 for gap identification. No OpenAccountants Guide bodies were copied or
 adapted. The new workflow text is original; primary-source starting points
 and their retrieval limitations are recorded beside each skill.
+
+Additional intake and handoff gaps were identified by reviewing TaxMate
+Australia (nijanthan-dev/taxmate-australia), tree
+42ba67d458439e7882a3e8e0d76bfa6efdecbad7, on 6 October 2026. The new workflow
+text is independently written for these skills. TaxMate runtime code,
+generated source text, cached ATO material and tax tables were not copied.
+The comparison and source licence are recorded in docs/taxmate-adoptions.md.
+
+Additional workflow and regression patterns were inspected on 6 October 2026
+in these MIT-licensed software repositories:
+
+- hearthresearch/citefact, 469bb993e4047b5f3679877bdd4c710485e4e316
+- marinasofia/statement-agent, b34c2ddc3062eff247e151d26fb126241162cab4
+- kiwizznz/au-tax-return, 00256983631cc88cf6f08d78166351ac6d5174d5
+- cynco-labs/ai-accounting-skills, 8d527e57164ee6581612178670234778b0a29440
+- gunba/australian-legal-mcp, f900398e92d509031402534eac1803b45f376a21
+- FoundrySoftHQ/agent-for-accounting, 7a9e8f9a81eb314b70418051b75213cf6230a01f
+
+The new instructions and fabricated validation cards are independently
+written. No upstream code, guide bodies, corpus text, rate tables, email
+access or hosted-service integration is imported.
