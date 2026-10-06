@@ -24,7 +24,7 @@ Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires e
 
 ## Protected failed tag
 
-The annotated `v0.1.2` tag peels to `efc8c5b8f0b6bd1dee65eccba953cb1b60a4aaa4` and is protected by the version-tag ruleset. [Release run 31832538528](https://github.com/ryanduguid/australian-accounting-skills/actions/runs/31832538528) failed at the pre-publication asset-inventory gate before candidate upload, attestation, draft creation or publication. No `v0.1.2` GitHub release exists. Do not move, delete or reuse the tag; `v0.1.3` was its recovery release.
+The annotated `v0.1.2` tag peels to `efc8c5b8f0b6bd1dee65eccba953cb1b60a4aaa4` and is protected by the version-tag ruleset. Release run 31832538528 failed at the pre-publication asset-inventory gate before candidate upload, attestation, draft creation or publication. No `v0.1.2` GitHub release exists. Do not move, delete or reuse the tag; `v0.1.3` was its recovery release.
 
 Verify the downloaded release with:
 
