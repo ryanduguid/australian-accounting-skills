@@ -19,6 +19,8 @@ Legal ownership shares, rental agent and bank statements, lease and availability
 
 4. Apply supported ownership and use apportionment and reconcile each owner's proposed share. Carry missing availability, ownership or capital-works evidence as unresolved; route disposals to a CGT workpaper.
 
+   Keep a property reference and income year on income, expense, loan and owner rows. Attach availability/private-use periods and the apportionment evidence to the affected cost. Reuse the same property and disposal reference in the CGT schedule, with main-residence claim facts retained as reviewer questions, so the income, expense and disposal records remain traceable without counting a disposal twice.
+
 ## Hand-off and checks
 
 A property-by-property income/expense schedule, loan-use bridge and owner allocation. Proposed deductions trace to evidence and verified treatment.

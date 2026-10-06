@@ -119,6 +119,10 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 | [Working holiday maker withholding and return review: missing evidence](cases/au-working-holiday-makers-missing-evidence.md) | au-working-holiday-makers |
+| [Quotations from incomplete source text](cases/source-quote-partial-coverage.md) | au-tax-rates-verification |
+| [Receipt links and conflicting schedule entries](cases/receipt-schedule-conflicts.md) | au-individual-return |
+| [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
+| [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 
 Together the cards cover all 65 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -181,6 +185,10 @@ and observed records contain no verdicts. Only a human-confirmed record may
 contain `pass` or `fail`, for exactly its provenance cases. Legacy records
 remain unchanged and have no inferred input mode. See the [recording
 procedure](../docs/EVAL.md#record) for the fields and evidence requirements.
+
+The four source, receipt, revision and completion cards added on 6 October
+2026 are prepared scenarios. No model run or human-confirmed verdict is
+recorded for them.
 
 ## Maintenance rules
 

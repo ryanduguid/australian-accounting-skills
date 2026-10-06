@@ -19,6 +19,8 @@ Income year, employment type and assessable labour income, the record of hours w
 
 4. Actual cost method: work out each additional running expense from its own evidence, apportioned on a fair and reasonable basis. Energy: cost per unit from the bill, appliance consumption and work hours from the hours record or diary. Itemised phone and internet bills: work-related use over a continuous 4-week period, applied to the year. Stationery and consumables: receipts, with any private use removed. Depreciating assets: receipts and the percentage of work use. Show each apportionment percentage beside the evidence it came from.
 
+   Separate phone/data service costs from device acquisition costs. For each, retain the billed period, purchaser, evidence, work/private use and employer-paid, provided or reimbursed facts. Compare the same expense references with business and GST workpapers as well as the fixed rate schedule; keep any overlap as a review exception until the allocation and treatment are supported.
+
 5. Treat occupancy expenses (such as rent or mortgage interest) and home office cleaning as reviewer items. The ATO allows them only in limited circumstances where there is a dedicated home office, so prepare the floor-area and private-use evidence and stop at a flag.
 
 6. Total the claim with cents disregarded, as the ATO manual steps direct, and tie it to the return label.

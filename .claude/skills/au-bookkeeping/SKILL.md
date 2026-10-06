@@ -13,7 +13,11 @@ Period, entity structure and chart of accounts, source-document register, ledger
 
 1. Reconcile source and ledger coverage by account and date. Identify gaps, duplicates and cut-off differences before proposing coding changes.
 
+   For extracted statements, retain the original document reference and extraction beside the current corrected values. Record each correction's source page or row, reason and revision. Re-run affected balance, period and identity checks after a correction. A review record applies only to the source and revision it names; changed evidence or values reopen the affected item. Show skipped checks separately and record the reviewer's independent check without relabelling them as passed.
+
 2. Match receipts and payments to invoices or other evidence. Separate loans, owner movements and transfers from income and expenditure. Trace each bank movement to every related ledger entry and subledger allocation. A single withdrawal establishes cash movement only; the ledger bank balance, expense and payable remain unverified until their entries reconcile. Keep possible causes separate from findings and leave the correction pending that trace.
+
+   Separate an exact allocation, a timing difference, an amount difference, a possible split and a possible duplicate. Equal amounts alone do not establish a match. Each transaction can belong to only one accepted allocation; retain ambiguous alternatives for review and keep suggestions distinct from a recorded human decision.
 
 3. Apply the firm's documented account mapping and verify tax-code conditions where treatment is uncertain. An invoice's wording or a bank-rule match alone does not establish deductibility or creditability.
 

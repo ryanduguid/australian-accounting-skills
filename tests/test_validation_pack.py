@@ -613,6 +613,25 @@ class RecordedRunTests(unittest.TestCase):
                 data["input_mode"] = "whole-card"
                 self.assertEqual(validator.check_result_file(self.NAME, json.dumps(data)), status)
 
+    def test_new_evidence_cards_cannot_record_a_pass_from_preparation(self) -> None:
+        for case_id in (
+            "engagement-completion-evidence", "receipt-schedule-conflicts",
+            "source-quote-partial-coverage", "statement-correction-revision",
+        ):
+            with self.subTest(case_id=case_id):
+                data = self.version_two()
+                data["provenance"][case_id] = data["provenance"].pop("bas-g10-g11")
+                self.assertEqual(
+                    validator.check_result_file(self.NAME, json.dumps(data)), "prepared"
+                )
+                data["results"] = {case_id: "pass"}
+                with self.assertRaises(validator.ValidationError):
+                    validator.check_result_file(self.NAME, json.dumps(data))
+                data["results"] = {}
+                data["status"] = "observed"
+                with self.assertRaises(validator.ValidationError):
+                    validator.check_result_file(self.NAME, json.dumps(data))
+
     def test_version_two_refuses_incomplete_or_mislabelled_evidence(self) -> None:
         changes = [
             ("schema_version", True), ("schema_version", 3), ("status", "passed"),

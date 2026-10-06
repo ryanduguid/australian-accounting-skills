@@ -17,6 +17,8 @@ Requested period and event dates, taxpayer/entity category, jurisdiction, calcul
 
 3. Record title, URL, section or table, effective start/end, category, units and check date. Inspect footnotes and transitional rules before adopting a figure.
 
+   Record which source and version supplied each passage and whether the text read was the whole document or an excerpt. Check quotations and their stated page or provision against that version. Distinguish an exact quotation from a match after text normalisation. A matching passage still needs its conditions and applicability checked; an absent passage in truncated text remains unverified. Keep legislation, ATO guidance and case-law identifiers separate instead of assuming their labels share one namespace.
+
 4. Compare proposed figures with the supported register and show changes. If sources conflict or cannot be opened, mark the item unverified and block only calculations that rely on it.
 
 ## Hand-off and checks
