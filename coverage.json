@@ -1007,11 +1007,15 @@
         ]
       },
       "validation": {
-        "cases": 3,
+        "cases": 7,
         "case_ids": [
           "bas-export-manifest-rounding",
           "bas-g10-g11",
-          "bas-stp-w3-w4"
+          "bas-gst-credit-and-attribution",
+          "bas-gst-fees-and-evidence",
+          "bas-gst-missing-and-zero",
+          "bas-stp-w3-w4",
+          "xero-export-duplicate-and-missing"
         ],
         "only_seeded_case": false
       },
@@ -1481,9 +1485,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 5,
+        "cases": 7,
         "case_ids": [
           "bas-export-manifest-rounding",
+          "bas-gst-fees-and-evidence",
+          "bas-gst-missing-and-zero",
           "debtor-summary-review",
           "month-end-mismatched-period",
           "post-journal-provenance-tie-out",
