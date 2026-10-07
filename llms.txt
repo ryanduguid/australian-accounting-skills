@@ -74,6 +74,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [au-wfh-deductions](.claude/skills/au-wfh-deductions/SKILL.md)
 - [au-working-holiday-makers](.claude/skills/au-working-holiday-makers/SKILL.md)
 - [bas-preparation](.claude/skills/bas-preparation/SKILL.md)
+- [Transaction GST review](.claude/skills/bas-preparation/references/transaction-gst-review.md): Xero Activity Statement row coverage, treatment, credit entitlement and attribution; unresolved evidence remains visible.
 - [cashflow-forecast-13week](.claude/skills/cashflow-forecast-13week/SKILL.md)
 - [coal-lsl-levy](.claude/skills/coal-lsl-levy/SKILL.md)
 - [contract-cost-tracking](.claude/skills/contract-cost-tracking/SKILL.md)

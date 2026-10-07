@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 76 cards in `cases/` test workflow quality, provenance and restraint.
+The 83 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -45,6 +45,9 @@ law claim, unverified source or guess.
 |---|---|
 | [BAS labels with separate withholding support](cases/bas-stp-w3-w4.md) | bas-preparation |
 | [BAS G10/G11 classification](cases/bas-g10-g11.md) | bas-preparation |
+| [Missing GST and legitimate zero amounts](cases/bas-gst-missing-and-zero.md) | bas-preparation, xero-exports |
+| [Supply GST, buyer credits and period amounts](cases/bas-gst-credit-and-attribution.md) | bas-preparation |
+| [Fee components and unresolved evidence](cases/bas-gst-fees-and-evidence.md) | bas-preparation, xero-exports |
 | [SG ageing and STP mismatch](cases/stp-current-vs-overdue-sg.md) | month-end-close, stp-finalisation |
 | [Supported cash-flow roll-forward](cases/cashflow-supported-roll-forward.md) | cashflow-forecast-13week |
 | [Supported checks in an incomplete close](cases/month-end-supported-partial-close.md) | month-end-close |
@@ -53,7 +56,7 @@ law claim, unverified source or guess.
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
 | [Post-journal provenance tie-out](cases/post-journal-provenance-tie-out.md) | xero-exports, workpaper-tie-out, year-end-workpapers, month-end-close |
-| [Duplicate rows and a missing export](cases/xero-export-duplicate-and-missing.md) | xero-exports, workpaper-tie-out |
+| [Duplicate rows and a missing export](cases/xero-export-duplicate-and-missing.md) | xero-exports, workpaper-tie-out, bas-preparation |
 | [Debtor summary arithmetic and missing decision evidence](cases/debtor-summary-review.md) | xero-exports, month-end-close, workpaper-tie-out |
 | [Matching balances from different periods](cases/month-end-mismatched-period.md) | month-end-close, xero-exports |
 | [Superseded workpaper references](cases/workpaper-stale-reference.md) | workpaper-tie-out, year-end-workpapers |
