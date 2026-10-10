@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-POLICY = "87767ec809dc7f77bcd45808219adaf67841ae7b"
+POLICY = "f068fb4f1d8f90e07429ded7cfb85bdbcc2960fe"
 # These are component jobs from successful main-branch runs, plus aggregates that
 # require every job in their workflow to succeed; never a skip-tolerant aggregate
 # gate. Review the list when a component's CI contract changes.
@@ -15,9 +15,6 @@ REQUIRED = {
         ".github/workflows/verify.yml: lint",
         ".github/workflows/verify.yml: secrets",
         ".github/workflows/verify.yml: shared conformance / verify skill-pack consumer",
-        ".github/workflows/verify.yml: verify (3.11)",
-        ".github/workflows/verify.yml: verify (3.12)",
-        ".github/workflows/verify.yml: verify (3.13)",
         ".github/workflows/verify.yml: verify (3.14)",
         ".github/workflows/verify.yml: verify-gates",
         ".github/workflows/codeql.yml: Analyze (actions)",

@@ -76,7 +76,7 @@ installation or perform the same supported arithmetic with an available local to
 Never invent a tool run when the verifier is absent.
 
 From an Accounting Review Pipeline checkout, this fabricated example runs with
-Python 3.11 or later and no installed dependencies:
+Python 3.14 or later and no installed dependencies:
 
 ```powershell
 python adapters/accounting-excel-toolkit/tools/xero_aged_receivables.py adapters/accounting-excel-toolkit/samples/sample-aged-receivables-review.csv --manifest adapters/accounting-excel-toolkit/samples/sample-aged-receivables-manifest.json --control adapters/accounting-excel-toolkit/samples/sample-aged-receivables-control.json
