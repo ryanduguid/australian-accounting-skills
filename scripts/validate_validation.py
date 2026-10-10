@@ -632,7 +632,8 @@ def main(root: Path = ROOT) -> int:
         try:
             metadata, body = parse_front_matter(text, name)
             skills = metadata["target_skills"]
-            assert isinstance(skills, list)
+            if not isinstance(skills, list):
+                raise ValidationError(f"target_skills must be a list: {name}")
             missing_skills = sorted(set(skills) - discovered_skills)
             if missing_skills:
                 raise ValidationError(f"unknown target skills: {missing_skills}")
