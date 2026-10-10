@@ -74,7 +74,7 @@ class OutcomeTests(unittest.TestCase):
         self.report.write_text(report_text(outcomes, at), encoding="utf-8")
 
     def outcome(self, status: int) -> sweep_outcome.Outcome:
-        return sweep_outcome.outcome(status, self.report, STARTED)
+        return sweep_outcome.outcome(status, self.report, STARTED, within=self.report.parent)
 
     def test_exit_0_with_a_clean_current_report_is_clean(self) -> None:
         for category in (source_refresh.UNCHANGED, source_refresh.RECORDED, source_refresh.SCHEDULED):
@@ -170,9 +170,14 @@ class MainTests(unittest.TestCase):
             report = Path(directory) / "sweep.md"
             report.write_text(report_text({source_refresh.UNCHANGED: 1}), encoding="utf-8")
             output = Path(directory) / "output"
-            code, out, err = self.run_main(
-                ["--status", "0", "--report", str(report), "--started", "2026-09-20T19:00:05Z"], output
-            )
+            previous = os.getcwd()
+            os.chdir(directory)
+            try:
+                code, out, err = self.run_main(
+                    ["--status", "0", "--report", str(report), "--started", "2026-09-20T19:00:05Z"], output
+                )
+            finally:
+                os.chdir(previous)
             self.assertEqual((code, err), (0, ""))
             self.assertIn("outcome=clean\n", out)
             self.assertFalse(output.exists())
@@ -222,7 +227,7 @@ class SourceRefreshExitTests(unittest.TestCase):
                         redirect_stdout(io.StringIO()):
                     code = source_refresh.main(["--check", "--report", str(report), "--spacing", "0", *extra],
                                                skills=index.parent.parent)
-                return code, sweep_outcome.outcome(code, report, started).name
+                return code, sweep_outcome.outcome(code, report, started, within=report.parent).name
 
             for _ in range(2):
                 self.assertEqual(run(), (2, "findings"))
@@ -279,6 +284,29 @@ class SourceRefreshExitTests(unittest.TestCase):
                 with mock.patch.object(source_refresh, "fetch", side_effect=RuntimeError("boom")):
                     with self.assertRaisesRegex(RuntimeError, "boom"):
                         source_refresh.main(["--check", "--spacing", "0"], skills=skills.parent.parent)
+
+
+class ConfinementTests(unittest.TestCase):
+    def test_a_report_outside_the_allowed_directory_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as inside, tempfile.TemporaryDirectory() as outside:
+            escaping = Path(outside) / "sweep.md"
+            escaping.write_text(report_text({}, STARTED), encoding="utf-8")
+            with self.assertRaisesRegex(sweep_outcome.SweepError, "escapes the working directory"):
+                sweep_outcome.outcome(0, escaping, STARTED, within=Path(inside))
+
+    def test_a_traversal_relative_to_the_allowed_directory_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as inside, tempfile.TemporaryDirectory() as outside:
+            (Path(outside) / "sweep.md").write_text(report_text({}, STARTED), encoding="utf-8")
+            escaping = Path(inside) / ".." / Path(outside).name / "sweep.md"
+            with self.assertRaisesRegex(sweep_outcome.SweepError, "escapes the working directory"):
+                sweep_outcome.outcome(0, escaping, STARTED, within=Path(inside))
+
+    def test_a_report_inside_the_allowed_directory_is_read(self) -> None:
+        with tempfile.TemporaryDirectory() as inside:
+            report = Path(inside) / "sweep.md"
+            report.write_text(report_text({source_refresh.UNCHANGED: 1}), encoding="utf-8")
+            outcome = sweep_outcome.outcome(0, report, STARTED, within=Path(inside))
+            self.assertEqual(outcome.name, "clean")
 
 
 if __name__ == "__main__":

@@ -96,9 +96,24 @@ def decide(status: int, counts: dict[str, int]) -> Outcome:
     )
 
 
-def outcome(status: int, report: Path, started: datetime) -> Outcome:
+def _confined(report: Path, within: Path) -> Path:
+    """Resolve a caller-supplied report path and require it inside `within`.
+
+    The path arrives from CLI arguments that an agent can supply, so it is
+    resolved and checked against the directory the tool runs in before any
+    file is read.
+    """
+    root = within.resolve()
+    resolved = report.resolve()
+    if not resolved.is_relative_to(root):
+        raise SweepError(f"report path escapes the working directory: {report}")
+    return resolved
+
+
+def outcome(status: int, report: Path, started: datetime, *, within: Path | None = None) -> Outcome:
     if status not in (0, 2):
         raise SweepError(f"source_refresh.py exited {status}")
+    report = _confined(report, within if within is not None else Path.cwd())
     if not report.is_file():
         raise SweepError(f"source_refresh.py exited {status} but wrote no report at {report}")
     return decide(status, parse_report(report.read_text(encoding="utf-8"), started))
