@@ -28,6 +28,8 @@ That copies the 65 released skills into the current project's Codex and Claude C
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
+Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the complete example.
+
 **Output:** net GST of $3,190.00 ties to the $3,190.00 movement, with exceptions retained and reviewer sign-off blank.
 
 **Human decision:** Resolve the coding exceptions and confirm the reporting basis and evidence before signing off.
