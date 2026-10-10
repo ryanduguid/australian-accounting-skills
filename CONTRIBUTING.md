@@ -34,7 +34,7 @@ python scripts/build_coverage.py --check
 
 Those 6 checks are the gates `.github/workflows/verify.yml` runs. Ruff and
 mypy run in its `lint` job, then the 4 verification checks run on Python 3.11, 3.12,
-3.13 and 3.14. `python tests/verify_skills_cli.py` needs `npx` and compares the
+3.13, 3.14 and 3.15. `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
 
