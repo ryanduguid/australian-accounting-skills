@@ -64,7 +64,12 @@ def parse_report(text: str, started: datetime) -> dict[str, int]:
     stamp = datetime.strptime(swept.group("stamp"), STAMP_FORMAT).replace(tzinfo=timezone.utc)
     if stamp < started.replace(second=0, microsecond=0):
         raise SweepError(f"the report was written at {swept.group('stamp')} UTC, before this run started")
-    counts = {match.group("name"): int(match.group("count")) for match in COUNT.finditer(text)}
+    counts: dict[str, int] = {}
+    for match in COUNT.finditer(text):
+        name = match.group("name")
+        if name in counts:
+            raise SweepError(f"duplicate count for {name}")
+        counts[name] = int(match.group("count"))
     missing = [name for name in ACTIONABLE + UNCHECKED if name not in counts]
     if missing:
         raise SweepError(f"the report has no count for {', '.join(missing)}")
