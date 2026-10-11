@@ -18,6 +18,7 @@ APPROVED_HOSTS = frozenset({
     "treasury.nt.gov.au", "business.gov.au", "www.hcourt.gov.au", "softwaredevelopers.ato.gov.au",
     "coallsl.com.au", "assets.ctfassets.net", "www.cyber.gov.au", "legislation.nsw.gov.au",
     "www.caselaw.nsw.gov.au", "www.legislation.qld.gov.au", "github.com",
+    "www.fedcourt.gov.au", "www.art.gov.au",
 })
 APPROVED_REDIRECT_EDGES: frozenset[tuple[str, str]] = frozenset()
 
