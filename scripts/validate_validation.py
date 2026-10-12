@@ -74,9 +74,9 @@ SENSITIVE_PATTERNS = {
         r"(?<![\d,.])\d(?:[ -]?\d){7,10}(?![\d,.])"
     ),
     "BSB or bank account": re.compile(
-        r"\b(?:BSB|bank\s+account)\s*(?:number|no\.?|[:#-])?\s*\d", re.I
+        r"\b(?:BSB|bank\s+account)\s*(?:(?:number|no\.?|[:#-])\s*)?\d", re.I
     ),
-    "phone number": re.compile(r"\b(?:phone|mobile)\s*(?:number|no\.?|[:#-])?\s*\+?\d", re.I),
+    "phone number": re.compile(r"\b(?:phone|mobile)\s*(?:(?:number|no\.?|[:#-])\s*)?\+?\d", re.I),
     "private key": re.compile(r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----"),
     "bearer credential": re.compile(r"\bBearer\s+[A-Za-z0-9._~-]{12,}\b", re.I),
     "API credential": re.compile(r"\b(?:sk|pk|api)[_-][A-Za-z0-9_-]{12,}\b", re.I),
