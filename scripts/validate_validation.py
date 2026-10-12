@@ -636,7 +636,8 @@ def main(root: Path = ROOT) -> int:
         try:
             metadata, body = parse_front_matter(text, name)
             skills = metadata["target_skills"]
-            if not isinstance(skills, list):
+            # Unreachable: parse_front_matter already refuses a non-list; kept to narrow the type.
+            if not isinstance(skills, list):  # pragma: no cover
                 raise ValidationError(f"target_skills must be a list: {name}")
             missing_skills = sorted(set(skills) - discovered_skills)
             if missing_skills:
