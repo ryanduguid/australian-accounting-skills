@@ -7,6 +7,7 @@ Ryan Duguid is not a registered tax agent or BAS agent. Project support is limit
 [![CodeQL](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=047857)](.claude-plugin/plugin.json)
 [![Codacy code quality](https://app.codacy.com/project/badge/Grade/b46694168d304886be1287d54cf33923?branch=main)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)
+[![SonarCloud](https://img.shields.io/sonar/quality_gate/ryanduguid_australian-accounting-skills?server=https%3A%2F%2Fsonarcloud.io&label=SonarCloud&labelColor=000000)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
 
 Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges. These skills do not provide tax advice or replace professional judgement.
 
