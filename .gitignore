@@ -16,6 +16,7 @@ exports/
 *.csv
 *.txt
 !requirements-test.txt
+!requirements-lint.txt
 # The agent-readable index of this repository, checked against the skill
 # directory by tests/test_skill_metadata.py.
 !/llms.txt
