@@ -243,6 +243,10 @@ def parse_front_matter(text: str, card_name: str) -> tuple[dict[str, object], st
         raise
     except yaml.YAMLError as error:
         raise ValidationError(f"front matter must be valid YAML: {error}") from error
+    except RecursionError as error:
+        # PyYAML composes nested collections recursively, so deep nesting
+        # exhausted the stack and escaped as a traceback.
+        raise ValidationError("front matter is nested too deeply to read") from error
 
     if not isinstance(loaded, dict):
         raise ValidationError("front matter must be a YAML mapping")
