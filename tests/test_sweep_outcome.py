@@ -121,6 +121,15 @@ class OutcomeTests(unittest.TestCase):
         with self.assertRaisesRegex(sweep_outcome.SweepError, "exit 2 with a report that lists nothing"):
             self.outcome(2)
 
+    def test_duplicate_report_counts_fail(self) -> None:
+        for category in (source_refresh.CHANGED, source_refresh.UNCHANGED):
+            with self.subTest(category=category):
+                self.write({category: 1})
+                with self.report.open("a", encoding="utf-8") as stream:
+                    stream.write("- changed: 0\n")
+                with self.assertRaisesRegex(sweep_outcome.SweepError, "duplicate count for changed"):
+                    self.outcome(0)
+
     def test_a_stale_report_from_an_earlier_run_fails(self) -> None:
         self.write({source_refresh.UNCHANGED: 3}, at=STARTED - timedelta(minutes=2))
         with self.assertRaisesRegex(sweep_outcome.SweepError, "before this run started"):
