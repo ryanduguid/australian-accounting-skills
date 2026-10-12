@@ -123,7 +123,7 @@ jobs:
       - name: Run the unit tests under branch coverage
         run: python -m coverage run --branch --source=scripts -m unittest discover -s tests
       - name: Report coverage
-        run: python -m coverage report
+        run: python -m coverage report --fail-under=100
       - name: Write coverage for Codecov
         run: python -m coverage xml -o coverage-codecov.xml
       - name: Keep the coverage report for the Codecov upload
