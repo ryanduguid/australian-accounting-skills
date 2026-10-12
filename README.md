@@ -12,7 +12,7 @@ Ryan Duguid is not a registered tax agent or BAS agent. Project support is limit
 [![SLSA 3](https://img.shields.io/badge/SLSA-level%203-990024?labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-scanned-990024?labelColor=000000&style=flat-square&logo=virustotal&logoColor=FFFFF0)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=66023C&labelColor=000000&style=flat-square)](.claude-plugin/plugin.json)
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-66023C?labelColor=000000&style=flat-square)](LICENSE)
+[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-66023C?labelColor=000000&style=flat-square)](LICENSE)
 
 Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges. These skills do not provide tax advice or replace professional judgement.
 
@@ -77,6 +77,6 @@ Skills specify the workflow and require current primary authority for mutable ra
 
 Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accountants ANZ.
 
-MIT: [LICENSE](LICENSE). Provenance: [NOTICE](NOTICE).
+Apache-2.0: [LICENSE](LICENSE). Attribution and provenance: [NOTICE](NOTICE). Keep the attribution if you redistribute this work or build on it.
 
 </details>
