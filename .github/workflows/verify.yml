@@ -118,10 +118,8 @@ jobs:
         with:
           python-version: "3.14"
           allow-prereleases: true
-      - name: Install test dependencies
-        run: python -m pip install --disable-pip-version-check --no-deps --requirement requirements-test.txt
-      - name: Install the hash-pinned coverage tool
-        run: python -m pip install --disable-pip-version-check --require-hashes --no-deps --only-binary=coverage --requirement requirements-coverage.txt
+      - name: Install the hash-pinned coverage tool and test dependencies
+        run: python -m pip install --disable-pip-version-check --require-hashes --no-deps --only-binary=coverage,pyyaml --requirement requirements-coverage.txt
       - name: Run the unit tests under branch coverage
         run: python -m coverage run --branch --source=scripts -m unittest discover -s tests
       - name: Report coverage
