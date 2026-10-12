@@ -2,7 +2,7 @@
 
 Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation, or lodgement.
 
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-047857)](LICENSE)
+[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-047857)](LICENSE)
 [![Verify](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/verify.yml?branch=main&label=verify&color=047857)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
 [![CodeQL](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=047857)](.claude-plugin/plugin.json)
@@ -71,6 +71,6 @@ Skills specify the workflow and require current primary authority for mutable ra
 
 Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accountants ANZ.
 
-MIT: [LICENSE](LICENSE). Provenance: [NOTICE](NOTICE).
+Apache-2.0: [LICENSE](LICENSE). Attribution and provenance: [NOTICE](NOTICE). Keep the attribution if you redistribute this work or build on it.
 
 </details>
