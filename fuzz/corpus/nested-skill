@@ -1,0 +1,6 @@
+---
+id: fuzz-card
+synthetic: true
+target_skills:
+  - [nested, [list]]
+---
