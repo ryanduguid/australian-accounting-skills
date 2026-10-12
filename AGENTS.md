@@ -84,7 +84,7 @@ it.
 ## Checks before opening a pull request
 
 ```
-python -m pip install --requirement requirements-test.txt "mypy==2.3.1" "ruff==0.16.6"
+python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
 python -m ruff check .
 python -m mypy
 python -m unittest discover -s tests -v
@@ -96,7 +96,7 @@ git diff --check
 
 The 6 Python checks are the gates `.github/workflows/verify.yml` runs. Ruff
 and mypy run in its `lint` job, then the 4 verification checks run on Python 3.11,
-3.12, 3.13 and 3.14. A third job scans the full history with gitleaks against
+3.12, 3.13, 3.14 and 3.15. A third job scans the full history with gitleaks against
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
 

@@ -64,7 +64,7 @@ Read on 29 September 2026 at [commit ada1fae](https://github.com/openaccountants
 
 The OpenAccountants topic names helped identify gaps. Its Guide bodies were not imported or adapted. The new workflow text was written independently, using primary-source discovery and the pack's existing preparation/review conventions.
 
-The current [OpenAccountants Guide licence](https://github.com/openaccountants/openaccountants/blob/66912a14e86095f150c2b0c37703d195938f8f1d/LICENSES/LicenseRef-OA-Guide-License-1.0.txt) treats bulk extraction separately from permitted reference use. These additions do not relicense or redistribute that collection. The pack remains MIT.
+The current [OpenAccountants Guide licence](https://github.com/openaccountants/openaccountants/blob/66912a14e86095f150c2b0c37703d195938f8f1d/LICENSES/LicenseRef-OA-Guide-License-1.0.txt) treats bulk extraction separately from permitted reference use. These additions do not relicense or redistribute that collection. The pack itself is licensed under Apache-2.0.
 
 Ryan's OpenAccountants fork already exists. Its Australian folder has 36 guide files plus references; the 2 absent filenames are `au-amending-individual-income-tax-return-period.md` and `au-foreign-currency-forex-realisation-gains-and.md`. This build neither synchronises that diverged fork nor changes website drafts.
 
