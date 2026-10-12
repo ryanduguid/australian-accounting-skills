@@ -108,7 +108,7 @@ class SmallRefusalTests(unittest.TestCase):
         loader = strict_yaml.unique_key_safe_loader(
             ValueError, field_noun="YAML field", keys_noun="YAML mapping keys")
         with self.assertRaisesRegex(ValueError, "YAML mapping keys must be scalar"):
-            yaml.load("? [a, b]\n: 1\n", Loader=loader)
+            yaml.load("? [a, b]\n: 1\n", Loader=loader)  # nosec B506: the strict SafeLoader subclass under test
 
     def test_a_failed_sweep_exit_is_not_a_result(self) -> None:
         counts = dict.fromkeys((*sweep_outcome.ACTIONABLE, *sweep_outcome.UNCHECKED), 0)

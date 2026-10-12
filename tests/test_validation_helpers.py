@@ -7,8 +7,8 @@ import importlib.util
 import io
 import json
 import os
-import subprocess
 import tempfile
+import types
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
@@ -17,7 +17,8 @@ from unittest import mock
 REPOSITORY = Path(__file__).resolve().parents[1]
 SCRIPT = REPOSITORY / "scripts" / "validate_validation.py"
 SPEC = importlib.util.spec_from_file_location("validate_validation_helpers", SCRIPT)
-assert SPEC is not None and SPEC.loader is not None
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError(f"cannot load {SCRIPT}")
 validator = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(validator)
 
@@ -99,8 +100,9 @@ class FrontMatterTests(unittest.TestCase):
 
 
 class GitInventoryTests(unittest.TestCase):
-    def completed(self, returncode: int = 0, stdout: bytes = b"", stderr: bytes = b"") -> subprocess.CompletedProcess:
-        return subprocess.CompletedProcess([], returncode, stdout, stderr)
+    def completed(self, returncode: int = 0, stdout: bytes = b"", stderr: bytes = b"") -> types.SimpleNamespace:
+        # The checker reads only these 3 fields of the Git result.
+        return types.SimpleNamespace(returncode=returncode, stdout=stdout, stderr=stderr)
 
     def test_git_inventory_fails_closed(self) -> None:
         with mock.patch.object(validator.subprocess, "run", side_effect=OSError("no git")):
