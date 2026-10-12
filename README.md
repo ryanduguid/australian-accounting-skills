@@ -3,6 +3,7 @@
 Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation, or lodgement.
 
 [![Verify](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/verify.yml?branch=main&label=verify&labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/ryanduguid/australian-accounting-skills?label=coverage&labelColor=000000&style=flat-square)](https://codecov.io/gh/ryanduguid/australian-accounting-skills)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/codeql.yml?branch=main&label=CodeQL&labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
 [![Snyk](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/snyk.yml?branch=main&label=Snyk&labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
 [![SonarCloud](https://img.shields.io/sonar/quality_gate/ryanduguid_australian-accounting-skills?server=https%3A%2F%2Fsonarcloud.io&label=SonarCloud&labelColor=000000&style=flat-square)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)

@@ -17,6 +17,7 @@ exports/
 *.txt
 !requirements-test.txt
 !requirements-lint.txt
+!requirements-coverage.txt
 !requirements-fuzz.txt
 # The agent-readable index of this repository, checked against the skill
 # directory by tests/test_skill_metadata.py.
