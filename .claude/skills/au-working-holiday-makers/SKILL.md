@@ -23,7 +23,7 @@ Individual mode: income statements or payment summaries for the income year, the
 
 4. **STP.** Check that payments made while the worker held a working holiday maker visa use the WHM income type, and that the country code is the country of the nationality under which the visa was granted, which can differ from where the worker lives. Where the visa changed during the year, check the amounts are split at the change date and that payments after it use the income type the STP guidance gives for the new visa. Carry any coding left unresolved into the hand-off.
 
-5. **Super.** The ATO says working holiday makers are entitled to super like other employees. Reconcile contributions to ordinary time earnings and the fund, and apply the employee and contractor tests and any exception current for the period rather than treating a temporary visa as an exception.
+5. **Super.** The ATO says working holiday makers are entitled to super like other employees. Reconcile contributions to the earnings base for the period (ordinary time earnings for pay before 1 July 2026, qualifying earnings for paydays from 1 July 2026 under Payday Super) and to the fund's receipt, and apply the employee and contractor tests and any exception current for the period rather than treating a temporary visa as an exception.
 
 6. **Contractors.** A worker who quotes an ABN is not a contractor for that reason. Apply the employee and contractor tests. If the arrangement is employment, the working holiday maker withholding applies despite the ABN.
 

@@ -336,7 +336,7 @@ def _open_checked_response(opener, url: str):
     """Validate every redirect before opening it; the caller owns the final response."""
     target = checked_url(url)
     seen = {target}
-    for hop in range(MAX_REDIRECTS + 1):
+    for hop in range(MAX_REDIRECTS + 1):  # pragma: no branch - the last hop returns or raises
         check_public_resolution(target)
         request = urllib.request.Request(target, headers={
             "User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml,*/*",
