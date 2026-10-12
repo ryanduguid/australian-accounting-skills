@@ -84,7 +84,7 @@ it.
 ## Checks before opening a pull request
 
 ```
-python -m pip install --requirement requirements-test.txt "mypy==2.3.1" "ruff==0.16.6"
+python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
 python -m ruff check .
 python -m mypy
 python -m unittest discover -s tests -v

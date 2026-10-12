@@ -21,3 +21,7 @@ target-version = "py311"
 # Ruff's default set plus import sorting: pycodestyle errors that are not
 # formatting opinions (E4, E7, E9), all of pyflakes (F), and isort (I).
 select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.coverage.report]
+# A script's entry guard only calls main() or run(), which the tests call directly.
+exclude_also = ['if __name__ == "__main__":']
