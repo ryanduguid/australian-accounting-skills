@@ -14,6 +14,7 @@ import sys
 import unicodedata
 from datetime import date
 from pathlib import Path, PurePosixPath
+from typing import cast
 
 import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
@@ -74,9 +75,9 @@ SENSITIVE_PATTERNS = {
         r"(?<![\d,.])\d(?:[ -]?\d){7,10}(?![\d,.])"
     ),
     "BSB or bank account": re.compile(
-        r"\b(?:BSB|bank\s+account)\s*(?:number|no\.?|[:#-])?\s*\d", re.I
+        r"\b(?:BSB|bank\s+account)\s*(?:(?:number|no\.?|[:#-])\s*)?\d", re.I
     ),
-    "phone number": re.compile(r"\b(?:phone|mobile)\s*(?:number|no\.?|[:#-])?\s*\+?\d", re.I),
+    "phone number": re.compile(r"\b(?:phone|mobile)\s*(?:(?:number|no\.?|[:#-])\s*)?\+?\d", re.I),
     "private key": re.compile(r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----"),
     "bearer credential": re.compile(r"\bBearer\s+[A-Za-z0-9._~-]{12,}\b", re.I),
     "API credential": re.compile(r"\b(?:sk|pk|api)[_-][A-Za-z0-9_-]{12,}\b", re.I),
@@ -635,9 +636,8 @@ def main(root: Path = ROOT) -> int:
             continue
         try:
             metadata, body = parse_front_matter(text, name)
-            skills = metadata["target_skills"]
-            if not isinstance(skills, list):
-                raise ValidationError(f"target_skills must be a list: {name}")
+            # parse_front_matter has already required a list of slugs.
+            skills = cast("list[str]", metadata["target_skills"])
             missing_skills = sorted(set(skills) - discovered_skills)
             if missing_skills:
                 raise ValidationError(f"unknown target skills: {missing_skills}")
