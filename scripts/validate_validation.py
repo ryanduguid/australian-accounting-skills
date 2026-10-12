@@ -14,7 +14,6 @@ import sys
 import unicodedata
 from datetime import date
 from pathlib import Path, PurePosixPath
-from typing import cast
 
 import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
@@ -636,8 +635,10 @@ def main(root: Path = ROOT) -> int:
             continue
         try:
             metadata, body = parse_front_matter(text, name)
-            # parse_front_matter has already required a list of slugs.
-            skills = cast("list[str]", metadata["target_skills"])
+            skills = metadata["target_skills"]
+            # Unreachable: parse_front_matter already refuses a non-list; kept to narrow the type.
+            if not isinstance(skills, list):  # pragma: no cover
+                raise ValidationError(f"target_skills must be a list: {name}")
             missing_skills = sorted(set(skills) - discovered_skills)
             if missing_skills:
                 raise ValidationError(f"unknown target skills: {missing_skills}")
