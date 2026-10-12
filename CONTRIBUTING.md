@@ -23,7 +23,7 @@ These skills describe how an agent should work through an Australian accounting 
 Python 3.11 or newer. Install the pinned test dependency, mypy and Ruff first:
 
 ```bash
-python -m pip install --requirement requirements-test.txt "mypy==2.3.1" "ruff==0.16.6"
+python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
 python -m ruff check .
 python -m mypy
 python -m unittest discover -s tests -v
