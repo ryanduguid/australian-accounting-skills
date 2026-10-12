@@ -91,6 +91,8 @@ class FrontMatterTests(unittest.TestCase):
             ("no front matter\n", "front matter must be the first document block"),
             ("---\nid: [unclosed\n---\n", "front matter must be valid YAML"),
             ("---\n- id\n---\n", "front matter must be a YAML mapping"),
+            ("---\nid: " + "[" * 3000 + "]" * 3000 + "\n---\n",
+             "front matter is nested too deeply to read"),
             ("---\nid: card\nsynthetic: true\ntarget_skills:\n  - Not_A_Slug\n---\n",
              "every target skill must be a lowercase hyphenated slug"),
         ):
