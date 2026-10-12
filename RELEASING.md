@@ -44,7 +44,11 @@ Those commands preserve the signer identity of the existing `v0.1.5` release.
 Releases cut after the specialised policy migration are signed by the policy's
 internal publication workflow. For the next release, update `tag` if the
 intended version changes and bind verification to the exact source and policy
-commit:
+commit. The commands use the current policy pin, `a601f1d`; `v0.3.0` to
+`v0.3.2` were signed at `87767ec809dc7f77bcd45808219adaf67841ae7b`, so verify
+those with that digest. Releases from `a601f1d` also carry the signed provenance
+bundle `australian-accounting-skills-<version>.intoto.jsonl`, which the loop
+skips because it holds the attestation itself:
 
 ```bash
 tag=v0.3.1
@@ -52,18 +56,19 @@ repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
 for file in *; do
+  case "$file" in *.intoto.jsonl) continue ;; esac
   gh attestation verify "$file" -R "$repo" \
     --source-digest "$release_commit" \
     --source-ref "refs/tags/$tag" \
     --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-    --signer-digest 87767ec809dc7f77bcd45808219adaf67841ae7b
+    --signer-digest a601f1d8b143f92b0517f709216993660d21f480
 done
 gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
   --predicate-type https://spdx.dev/Document/v2.3 \
   --source-digest "$release_commit" \
   --source-ref "refs/tags/$tag" \
   --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-  --signer-digest 87767ec809dc7f77bcd45808219adaf67841ae7b
+  --signer-digest a601f1d8b143f92b0517f709216993660d21f480
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a

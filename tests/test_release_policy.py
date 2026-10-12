@@ -36,7 +36,7 @@ class ReleasePolicyTests(unittest.TestCase):
         )
         self.assertIn(
             "ryanduguid/release-policy/.github/workflows/release-skills.yml@"
-            "87767ec809dc7f77bcd45808219adaf67841ae7b",
+            "a601f1d8b143f92b0517f709216993660d21f480",
             workflow,
         )
         self.assertIn("artifact-stem: australian-accounting-skills", workflow)
