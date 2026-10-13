@@ -20,7 +20,7 @@ These skills describe how an agent should work through an Australian accounting 
 
 ## Local verification
 
-Python 3.11 or newer. Install the pinned test dependency, mypy and Ruff first:
+Python 3.14 or newer. Install the pinned test dependency, mypy and Ruff first:
 
 ```bash
 python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
@@ -33,8 +33,8 @@ python scripts/build_coverage.py --check
 ```
 
 Those 6 checks are the gates `.github/workflows/verify.yml` runs. Ruff and
-mypy run in its `lint` job, then the 4 verification checks run on Python 3.11, 3.12,
-3.13, 3.14 and 3.15. `python tests/verify_skills_cli.py` needs `npx` and compares the
+mypy run in its `lint` job, then the 4 verification checks run on Python 3.14
+and 3.15. `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
 
