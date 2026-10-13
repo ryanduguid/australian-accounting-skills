@@ -33,6 +33,8 @@ If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryan
 - Every section either supported or flagged, none silent
 - Pack index up front, references used consistently
 
+Bind each claimed completed stage to the supporting artefact and its source version. Check that it contains the required evidence and tie-outs; a filename, empty template or preparer's completion flag cannot establish readiness. Keep supported sections available for review while naming each missing or stale artefact and its dependent stages. Changes to supporting evidence reopen the affected review points.
+
 ## Boundaries
 
 - Accounting policy choices (revenue recognition, ECL approach, depreciation rates) are engagement decisions. Apply the firm's existing positions and flag anything new.

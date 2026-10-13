@@ -1,3 +1,28 @@
+# v0.3.2
+
+bas-preparation gains a transaction GST coding review (#220). It accounts for
+every supplied report row and keeps supply treatment, GST credit entitlement
+and BAS period attribution separate, recording the evidence for each and
+leaving unresolved findings for human review. xero-exports and the BAS
+walkthrough follow it.
+
+The working holiday maker super step reconciles contributions to qualifying
+earnings for paydays from 1 July 2026 under Payday Super, and to ordinary time
+earnings before then (#226).
+
+au-tax-research asks for each decision's AGLC4 medium neutral citation, the
+paragraph relied on and its later history (#218), and indexes the High Court,
+Federal Court and Administrative Review Tribunal decision sources (#227).
+
+Thirteen workflows adopt evidence intake, revision handling, source identity
+and engagement completion checks (#217).
+
+The validation pack grows from 76 to 83 cards. The three BAS GST cards and the
+four source, receipt, revision and completion cards are prepared scenarios
+with no model run or human-confirmed verdict recorded.
+
+The pack still has 65 skills.
+
 # v0.3.1
 
 Adds one client acceptance and engagement terms review workflow,

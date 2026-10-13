@@ -15,6 +15,8 @@ Income year, each fund's contribution report by type (employer, salary sacrifice
 
 2. Classify every contribution by type from the fund reports. Treat a personal contribution as concessional only where evidence shows it will be claimed as a deduction and the ATO's conditions for that deduction are met; otherwise mark its type `UNVERIFIED`. Keep any contribution the ATO excludes from the caps out of both tests and show it separately.
 
+   For a proposed personal deduction, retain the fund reference, contribution date and amount, proposed deduction amount, notice-of-intent evidence and fund acknowledgement as separate fields. Reconcile the proposed deduction to the relevant contributions and statement. A notice sent without acknowledgement, conflicting amounts or a missing date remains an evidence question; keep explicit zero and unknown amounts distinct and retain the separate Division 293 review where relevant.
+
 3. Concessional cap: compare concessional contributions with the general cap. If they exceed it, test carry-forward: total super balance below the ATO limit at 30 June of the previous year, unused amounts from up to 5 previous years starting no earlier than 2018-19, applied oldest first. Unused amounts expire after 5 years. Tie the unused amounts to the ATO online services record.
 
 4. Excess concessional contributions: compute the excess and note that it is included in assessable income with a 15% offset, that up to 85% can be released by election within the ATO's stated window, and that any unreleased excess counts as non-concessional. Prepare the facts for the election; do not lodge it.

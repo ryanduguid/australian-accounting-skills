@@ -16,6 +16,9 @@ exports/
 *.csv
 *.txt
 !requirements-test.txt
+!requirements-lint.txt
+!requirements-coverage.txt
+!requirements-fuzz.txt
 # The agent-readable index of this repository, checked against the skill
 # directory by tests/test_skill_metadata.py.
 !/llms.txt
@@ -67,6 +70,7 @@ exports/
 !/docs/integrations.md
 !/docs/skill-catalogue.md
 !/docs/EVAL.md
+!/fuzz/README.md
 !/docs/source-review-2026-09-25.md
 !/RELEASE_NOTES.md
 !/RELEASING.md
@@ -113,6 +117,7 @@ exports/
 # Python
 __pycache__/
 *.py[cod]
+.coverage
 
 # OS / editor noise
 .DS_Store

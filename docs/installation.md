@@ -2,11 +2,11 @@
 
 ### Tagged 65-workflow release
 
-Start with v0.3.1, the latest published release. From a separate project
+Start with v0.3.2, the latest published release. From a separate project
 directory, install from a checkout of that tag:
 
 ```bash
-git clone --branch v0.3.1 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone --branch v0.3.2 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
@@ -18,7 +18,7 @@ fixes the installed revision; it does not certify model outputs. The
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
-They can deliver unreleased changes made after v0.3.1. Choose them when you intend to test development work.
+They can deliver unreleased changes made after v0.3.2. Choose them when you intend to test development work.
 
 | Need | Install | What you get |
 | --- | --- | --- |
@@ -78,7 +78,7 @@ without installing anything.
 
 ### Development checkout
 
-v0.3.1 contains 65 skills, and the default `main` branch can be ahead of it.
+v0.3.2 contains 65 skills, and the default `main` branch can be ahead of it.
 To try `main` in a separate project, clone it and install the local checkout:
 
 ```bash
@@ -97,8 +97,7 @@ directory, with every installed skill and supporting file matching the source.
 Skills CLI 1.5.22 rejected a GitHub tree URL containing that raw commit SHA
 because it attempted to clone it as a branch. Use the checkout method above.
 
-The [GitHub verification run](https://github.com/ryanduguid/australian-accounting-skills/actions/runs/34200334270)
-for that commit passed lint, shared conformance and verification on Python
+GitHub verification run 34200334270 for that commit passed lint, shared conformance and verification on Python
 3.10, 3.12 and 3.13. Installation proves the files are delivered correctly;
 it does not establish fresh agent behaviour or validate current tax law.
 
@@ -124,7 +123,7 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 
 ### Versioning
 
-The tagged `v0.3.1` release contains and tests all 65 skills as a set.
+The tagged `v0.3.2` release contains and tests all 65 skills as a set.
 `v0.3.0` contained 63, `v0.2.1` and `v0.2.0` 19, and the earlier `v0.1.5` release the
 original 9 practice skills. Installing
 a subset by hand can break skills that call their siblings:
@@ -136,7 +135,7 @@ a subset by hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
-The [recommended installation](#tagged-65-workflow-release) pins v0.3.1.
+The [recommended installation](#tagged-65-workflow-release) pins v0.3.2.
 The [development options](#development-installations) can be ahead of that tag.
 Install the full tagged pack so sibling references stay consistent. The
 9-skill `v0.1.5` pack remains available from its tag for anyone who cites

@@ -6,6 +6,7 @@ import contextlib
 import importlib.util
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -61,6 +62,18 @@ def write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def fixture_git_environment() -> dict[str, str]:
+    """Keep enclosing hook settings out of temporary repositories."""
+    result = subprocess.run(
+        ["git", "rev-parse", "--local-env-vars"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    local_names = set(result.stdout.splitlines())
+    return {name: value for name, value in os.environ.items() if name not in local_names}
+
+
 def git(root: Path, *arguments: str) -> str:
     result = subprocess.run(
         ["git", *arguments],
@@ -69,6 +82,7 @@ def git(root: Path, *arguments: str) -> str:
         text=True,
         encoding="utf-8",
         check=True,
+        env=fixture_git_environment(),
     )
     return result.stdout.strip()
 
@@ -613,6 +627,25 @@ class RecordedRunTests(unittest.TestCase):
                 data["input_mode"] = "whole-card"
                 self.assertEqual(validator.check_result_file(self.NAME, json.dumps(data)), status)
 
+    def test_new_evidence_cards_cannot_record_a_pass_from_preparation(self) -> None:
+        for case_id in (
+            "engagement-completion-evidence", "receipt-schedule-conflicts",
+            "source-quote-partial-coverage", "statement-correction-revision",
+        ):
+            with self.subTest(case_id=case_id):
+                data = self.version_two()
+                data["provenance"][case_id] = data["provenance"].pop("bas-g10-g11")
+                self.assertEqual(
+                    validator.check_result_file(self.NAME, json.dumps(data)), "prepared"
+                )
+                data["results"] = {case_id: "pass"}
+                with self.assertRaises(validator.ValidationError):
+                    validator.check_result_file(self.NAME, json.dumps(data))
+                data["results"] = {}
+                data["status"] = "observed"
+                with self.assertRaises(validator.ValidationError):
+                    validator.check_result_file(self.NAME, json.dumps(data))
+
     def test_version_two_refuses_incomplete_or_mislabelled_evidence(self) -> None:
         changes = [
             ("schema_version", True), ("schema_version", 3), ("status", "passed"),
@@ -805,7 +838,10 @@ class FullRunTests(unittest.TestCase):
 
     def run_main(self, root: Path) -> tuple[int, str]:
         output = io.StringIO()
-        with contextlib.redirect_stdout(output):
+        with (
+            mock.patch.dict(os.environ, fixture_git_environment(), clear=True),
+            contextlib.redirect_stdout(output),
+        ):
             status = validator.main(root)
         return status, output.getvalue()
 
@@ -823,6 +859,23 @@ class FullRunTests(unittest.TestCase):
         status, output = self.run_main(self.copy())
         self.assertEqual(status, 0, output)
         self.assertIn("Validation pack checks passed", output)
+
+    def test_fixtures_ignore_the_enclosing_git_hook_environment(self) -> None:
+        parent = self.copy()
+        git(parent, "rm", "--quiet", "--cached", f"validation/cases/{self.cards(parent)[0].name}")
+        parent_index = parent / ".git" / "index"
+        original_index = parent_index.read_bytes()
+        root = parent.parent / "nested-fixture"
+        with mock.patch.dict(os.environ, {
+            "GIT_DIR": str(parent / ".git"),
+            "GIT_WORK_TREE": str(parent),
+            "GIT_INDEX_FILE": str(parent_index),
+        }):
+            build_fixture(root)
+            self.assertTrue((root / ".git" / "index").is_file())
+            status, output = self.run_main(root)
+            self.assertEqual(status, 0, output)
+        self.assertEqual(parent_index.read_bytes(), original_index)
 
     def test_prepared_records_are_reported_separately_without_verdicts(self) -> None:
         root = self.copy()

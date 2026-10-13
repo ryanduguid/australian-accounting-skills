@@ -7,6 +7,8 @@ description: Use when working with Xero report exports (trial balance, account t
 
 The other skills in this pack assume clean inputs. This skill is how you specify what to export and how you spot a broken export before it poisons a workpaper.
 
+For an Activity Statement transaction GST audit, missing-GST review or improper-credit investigation, use `bas-preparation` and its bundled `references/transaction-gst-review.md`. Export checks and matching totals cannot establish tax treatment. If that procedure is unavailable, report the missing skill/reference and continue export validation without claiming a completed GST review.
+
 ## Export manifest
 
 For every source export, retain the entity or approved pseudonym, report name,

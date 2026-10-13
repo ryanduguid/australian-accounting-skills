@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 76 cards in `cases/` test workflow quality, provenance and restraint.
+The 83 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -45,6 +45,9 @@ law claim, unverified source or guess.
 |---|---|
 | [BAS labels with separate withholding support](cases/bas-stp-w3-w4.md) | bas-preparation |
 | [BAS G10/G11 classification](cases/bas-g10-g11.md) | bas-preparation |
+| [Missing GST and legitimate zero amounts](cases/bas-gst-missing-and-zero.md) | bas-preparation, xero-exports |
+| [Supply GST, buyer credits and period amounts](cases/bas-gst-credit-and-attribution.md) | bas-preparation |
+| [Fee components and unresolved evidence](cases/bas-gst-fees-and-evidence.md) | bas-preparation, xero-exports |
 | [SG ageing and STP mismatch](cases/stp-current-vs-overdue-sg.md) | month-end-close, stp-finalisation |
 | [Supported cash-flow roll-forward](cases/cashflow-supported-roll-forward.md) | cashflow-forecast-13week |
 | [Supported checks in an incomplete close](cases/month-end-supported-partial-close.md) | month-end-close |
@@ -53,7 +56,7 @@ law claim, unverified source or guess.
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
 | [Post-journal provenance tie-out](cases/post-journal-provenance-tie-out.md) | xero-exports, workpaper-tie-out, year-end-workpapers, month-end-close |
-| [Duplicate rows and a missing export](cases/xero-export-duplicate-and-missing.md) | xero-exports, workpaper-tie-out |
+| [Duplicate rows and a missing export](cases/xero-export-duplicate-and-missing.md) | xero-exports, workpaper-tie-out, bas-preparation |
 | [Debtor summary arithmetic and missing decision evidence](cases/debtor-summary-review.md) | xero-exports, month-end-close, workpaper-tie-out |
 | [Matching balances from different periods](cases/month-end-mismatched-period.md) | month-end-close, xero-exports |
 | [Superseded workpaper references](cases/workpaper-stale-reference.md) | workpaper-tie-out, year-end-workpapers |
@@ -119,6 +122,10 @@ law claim, unverified source or guess.
 | [Trust distribution review pack: missing evidence](cases/au-trust-distributions-missing-evidence.md) | au-trust-distributions |
 | [Working from home deduction workpapers: missing evidence](cases/au-wfh-deductions-missing-evidence.md) | au-wfh-deductions |
 | [Working holiday maker withholding and return review: missing evidence](cases/au-working-holiday-makers-missing-evidence.md) | au-working-holiday-makers |
+| [Quotations from incomplete source text](cases/source-quote-partial-coverage.md) | au-tax-rates-verification |
+| [Receipt links and conflicting schedule entries](cases/receipt-schedule-conflicts.md) | au-individual-return |
+| [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
+| [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 
 Together the cards cover all 65 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -181,6 +188,10 @@ and observed records contain no verdicts. Only a human-confirmed record may
 contain `pass` or `fail`, for exactly its provenance cases. Legacy records
 remain unchanged and have no inferred input mode. See the [recording
 procedure](../docs/EVAL.md#record) for the fields and evidence requirements.
+
+The four source, receipt, revision and completion cards added on 6 October
+2026 are prepared scenarios. No model run or human-confirmed verdict is
+recorded for them.
 
 ## Maintenance rules
 

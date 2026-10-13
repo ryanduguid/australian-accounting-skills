@@ -4,6 +4,7 @@ synthetic: true
 target_skills:
   - xero-exports
   - workpaper-tie-out
+  - bas-preparation
 ---
 
 # Duplicate rows and a missing export
@@ -36,6 +37,17 @@ raw rows and separate arithmetic from evidence that remains unavailable.
 Positive control: a separate complete export contains only T-A for 100.00 and
 T-B for 50.00, with a supplied footer of 150.00 and matching manifest settings.
 
+Activity Statement population variant: the primary tax-rate view contains
+S-A for 110.00 gross/10.00 GST, and two distinct transactions S-B and S-C, each
+55.00 gross/5.00 GST with identical displayed dates, descriptions and references.
+Independent source identities establish that S-B and S-C are distinct. The
+BAS-field view has four occurrences: S-A in two different fields, S-B and S-C.
+All three are linked to the primary view by supplied transaction evidence.
+The primary footer is 220.00 gross/20.00 GST; its formula cache is zero.
+A second variant adds two distinct primary details of +33.00/+3.00 and
+-33.00/-3.00, while the footer is unchanged. Raw dates include `04/05/2026`
+and a shifted header precedes the details. No on-screen count is supplied.
+
 ## Deliberately unavailable evidence
 
 - AR-A has no supplied file, rows or footer to inspect.
@@ -49,6 +61,14 @@ T-B for 50.00, with a supplied footer of 150.00 and matching manifest settings.
 - Keep T-B distinct despite its matching contact label.
 - Mark AR-A missing; its manifest entry does not prove receipt or completeness.
 - For the positive control, report that the bounded arithmetic agrees at 150.00.
+- For the Activity Statement variant, retain three primary details and four
+  secondary occurrences, linking representations rather than adding views.
+  Preserve S-B and S-C despite identical displayed values. Recompute primary
+  totals of 220.00/20.00 despite the zero cache, preserving footer evidence.
+- For the offsetting-row variant, require five primary details with unchanged
+  totals; equality alone cannot establish completeness. Account for shifted
+  headers separately, preserve the raw date and parse it as 4 May, and record
+  the on-screen count check as not performed.
 - Give each unresolved item an owner, status and next action.
 
 ## Must not do

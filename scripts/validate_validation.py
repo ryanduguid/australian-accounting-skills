@@ -74,9 +74,9 @@ SENSITIVE_PATTERNS = {
         r"(?<![\d,.])\d(?:[ -]?\d){7,10}(?![\d,.])"
     ),
     "BSB or bank account": re.compile(
-        r"\b(?:BSB|bank\s+account)\s*(?:number|no\.?|[:#-])?\s*\d", re.I
+        r"\b(?:BSB|bank\s+account)\s*(?:(?:number|no\.?|[:#-])\s*)?\d", re.I
     ),
-    "phone number": re.compile(r"\b(?:phone|mobile)\s*(?:number|no\.?|[:#-])?\s*\+?\d", re.I),
+    "phone number": re.compile(r"\b(?:phone|mobile)\s*(?:(?:number|no\.?|[:#-])\s*)?\+?\d", re.I),
     "private key": re.compile(r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----"),
     "bearer credential": re.compile(r"\bBearer\s+[A-Za-z0-9._~-]{12,}\b", re.I),
     "API credential": re.compile(r"\b(?:sk|pk|api)[_-][A-Za-z0-9_-]{12,}\b", re.I),
@@ -243,6 +243,10 @@ def parse_front_matter(text: str, card_name: str) -> tuple[dict[str, object], st
         raise
     except yaml.YAMLError as error:
         raise ValidationError(f"front matter must be valid YAML: {error}") from error
+    except RecursionError as error:
+        # PyYAML composes nested collections recursively, so deep nesting
+        # exhausted the stack and escaped as a traceback.
+        raise ValidationError("front matter is nested too deeply to read") from error
 
     if not isinstance(loaded, dict):
         raise ValidationError("front matter must be a YAML mapping")
@@ -632,7 +636,9 @@ def main(root: Path = ROOT) -> int:
         try:
             metadata, body = parse_front_matter(text, name)
             skills = metadata["target_skills"]
-            assert isinstance(skills, list)
+            # Unreachable: parse_front_matter already refuses a non-list; kept to narrow the type.
+            if not isinstance(skills, list):  # pragma: no cover
+                raise ValidationError(f"target_skills must be a list: {name}")
             missing_skills = sorted(set(skills) - discovered_skills)
             if missing_skills:
                 raise ValidationError(f"unknown target skills: {missing_skills}")
@@ -648,7 +654,8 @@ def main(root: Path = ROOT) -> int:
                 raise ValidationError("required sections are out of order")
             if len(re.findall(r"(?m)^# (?!#)", body)) != 1:
                 raise ValidationError("card must contain exactly one level-one title")
-            if "Synthetic" not in body:
+            # Unreachable while "## Synthetic inputs" is a required section; kept in case that changes.
+            if "Synthetic" not in body:  # pragma: no cover
                 raise ValidationError("card must use an explicit Synthetic placeholder")
 
             check_sensitive_content(body)
@@ -700,12 +707,17 @@ def main(root: Path = ROOT) -> int:
     return 0
 
 
-if __name__ == "__main__":
+def run() -> int:
+    """Run main(), failing closed on an interrupt or an unforeseen error."""
     try:
-        raise SystemExit(main())
+        return main()
     except KeyboardInterrupt:
         print("ERROR: validation interrupted", file=sys.stderr)
-        raise SystemExit(130)
+        return 130
     except Exception as error:  # Fail closed even for an unforeseen parser/runtime error.
         print(f"ERROR: unexpected validation failure: {type(error).__name__}: {error}")
-        raise SystemExit(1)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(run())

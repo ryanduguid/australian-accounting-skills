@@ -19,6 +19,8 @@ Final trial balance and accounts, income and deduction schedules, group and owne
 
 4. Roll forward tax payable and the franking account independently. Reconcile dividends, credits and debits to resolutions and payment evidence. Use an existing verified calculation tool only within its documented scope; retain inputs and version.
 
+   Identify the company and period on every schedule and keep its records separate from shareholder individual-return facts. For dividends, retain recipient references, component amounts, resolutions and payment records. For shareholder/director loans or benefits, retain balances, movements, agreements, terms and repayment evidence for the existing Division 7A review workflow. Preserve conflicts and unknown amounts; an entity-level total must not become an individual's income without the supporting statement and treatment review.
+
 ## Hand-off and checks
 
 A profit-to-tax bridge, rate evidence, loss schedule and separate payable/franking reconciliations. Flag unsupported adjustments and leave approval of returns and distributions to the reviewer.

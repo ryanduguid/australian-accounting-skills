@@ -13,6 +13,8 @@ Asset ownership and residency history, acquisition and disposal contracts, broke
 
 1. Create one row per asset and candidate event. Reconcile disposals against broker, settlement and ledger records; distinguish contract, settlement and payment dates before applying the event-timing rule.
 
+   Give the event a reference reused in rental, crypto, investment and business schedules so the same disposal is not counted again on import. Keep the owner's supported share, acquisition/disposal dates, proceeds, cost components, current-year losses and carried-forward losses separately evidenced.
+
 2. Reconstruct cost base and reduced cost base with separate evidence for each component. Identify expenditure already deducted and missing acquisition history; a missing cost is unknown, not zero.
 
 3. Verify the asset and entity-specific treatment, loss restrictions, discount eligibility and order of application from the period's authority. Keep exemptions and rollovers conditional on their evidence. For a CGT event on or after 1 July 2027, or an asset held on that date, open the *Treasury Laws Amendment (Tax Reform No. 1) Act 2026* and its application provisions before choosing a method: its Schedule 1 inserts cost base indexation for individuals and trusts (s 110-36(1A)) and a minimum rate of tax on capital gains (Division 119), and its s 26-155 quarantined rental amounts can reduce residential capital gains. Record any valuation or apportionment the rules need as evidence to obtain, not an estimate.
@@ -22,6 +24,8 @@ Asset ownership and residency history, acquisition and disposal contracts, broke
 ## Hand-off and checks
 
 An event schedule and loss roll-forward with links to evidence. Every disposal appears once; unresolved basis or eligibility prevents a final taxable-gain conclusion.
+
+For a claimed main-residence exemption, collect ownership, occupation, absence, rental/business-use and spouse residence-choice periods as review facts. Identify missing valuations and overlapping property claims. Keep these facts and any proposed small-business concession in the review queue until the relevant detailed workpaper supports them; a claim in the intake is not an established exemption.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
