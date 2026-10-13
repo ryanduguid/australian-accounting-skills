@@ -51,7 +51,7 @@ bundle `australian-accounting-skills-<version>.intoto.jsonl`, which the loop
 skips because it holds the attestation itself:
 
 ```bash
-tag=v0.3.1
+tag=v0.4.0
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
