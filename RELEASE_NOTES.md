@@ -1,3 +1,20 @@
+# v0.4.0
+
+The pack moves from MIT to the Apache-2.0 licence, with a `NOTICE` file whose
+attribution anyone redistributing the skills or a derivative must keep (#230).
+The plugin manifests declare Apache-2.0. Releases up to v0.3.2 stay under MIT.
+
+The xero-exports debtor review reference now asks for Python 3.14 or later to
+run the Accounting Review Pipeline aged-receivables example, matching that
+repository's requirement (#214).
+
+The repository's validation scripts refuse deeply nested front matter (#242),
+contradictory source sweep reports (#228) and report paths outside the working
+directory (#224, #244), and report a malformed `target_skills` value as a
+validation error (#223, #244). They are not part of the installed skills.
+
+Skill content is otherwise unchanged. The pack still has 65 skills.
+
 # v0.3.2
 
 bas-preparation gains a transaction GST coding review (#220). It accounts for

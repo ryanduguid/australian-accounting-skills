@@ -19,11 +19,11 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Start with the 65 workflows in the published release, [v0.3.2](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.3.2), by checking out its tag from a separate project directory.
+Start with the 65 workflows in the published release, [v0.4.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.4.0), by checking out its tag from a separate project directory.
 
 ```bash
 git clone https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
-git -C accounting-skills-release checkout --detach v0.3.2
+git -C accounting-skills-release checkout --detach v0.4.0
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
@@ -50,7 +50,7 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 
 ### Development installation
 
-The plugin marketplace installs the default branch, which can be ahead of v0.3.2. It is not a published release.
+The plugin marketplace installs the default branch, which can be ahead of v0.4.0. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -59,7 +59,7 @@ The plugin marketplace installs the default branch, which can be ahead of v0.3.2
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
-The development installation resolves the default branch, which can carry changes made after v0.3.2. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The development installation resolves the default branch, which can carry changes made after v0.4.0. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) remains pinned to v0.1.5, the original 9-skill practice pack. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
