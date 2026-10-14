@@ -4,22 +4,30 @@
     {
       "title": "business.gov.au R&D Tax Incentive record keeping",
       "url": "https://business.gov.au/grants-and-programs/research-and-development-tax-incentive/check-if-you-are-eligible-for-the-randd-tax-incentive/record-keeping-for-the-rd-tax-incentive",
-      "checked_at": "2026-09-30",
+      "checked_at": "2026-10-14",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
       "final_url": "https://business.gov.au/grants-and-programs/research-and-development-tax-incentive/check-if-you-are-eligible-for-the-randd-tax-incentive/record-keeping-for-the-rd-tax-incentive",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
-      "content_hash": "05c0522f6c468a80ee2321c4bcf739b0c18129f9a9ec40c10a0946f4cf18db8b",
+      "fetched_at": "2026-10-14",
+      "content_hash": "54b78ea939b8cf2bd2d7cc23581fb8b7d7aee4d558da06664e6dad0d3f424a4f",
       "source_last_modified": "",
       "content_hash_covers": "html",
-      "content_url": "https://business.gov.au/grants-and-programs/research-and-development-tax-incentive/check-if-you-are-eligible-for-the-randd-tax-incentive/record-keeping-for-the-rd-tax-incentive"
+      "content_url": "https://business.gov.au/grants-and-programs/research-and-development-tax-incentive/check-if-you-are-eligible-for-the-randd-tax-incentive/record-keeping-for-the-rd-tax-incentive",
+      "review_required_since": "2026-10-14",
+      "reviewed_content": {
+        "content_hash": "54b78ea939b8cf2bd2d7cc23581fb8b7d7aee4d558da06664e6dad0d3f424a4f",
+        "content_hash_covers": "html",
+        "content_url": "https://business.gov.au/grants-and-programs/research-and-development-tax-incentive/check-if-you-are-eligible-for-the-randd-tax-incentive/record-keeping-for-the-rd-tax-incentive",
+        "source_last_modified": "",
+        "checked_at": "2026-10-14"
+      }
     },
     {
       "title": "ATO: Tax reform, better targeting the Research and Development Tax Incentive",
       "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-better-targeting-the-research-and-development-tax-incentive",
-      "checked_at": "2026-09-26",
+      "checked_at": "2026-10-14",
       "fact": "Read 26 September 2026 (published 12 May 2026). States the measure is not yet law and that all 7 changes would take effect from 1 July 2028, including removing supporting R&D activities from the offset, restricting refundable offsets to a company's first 10 years of operation and raising the minimum expenditure threshold.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Announced measure, not law when read. Check its current status before relying on it.",

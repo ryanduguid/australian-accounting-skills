@@ -20,17 +20,25 @@
     {
       "title": "TheWIPTally schedule engine",
       "url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
-      "checked_at": "2026-09-30",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-12",
       "fact": "The local schedule engine performs reviewed arithmetic only; it does not decide recognition, enforceability or onerous-contract conclusions.",
       "volatile": true,
       "final_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
-      "content_hash": "1cefe5ef3141fcc5587288cd4a2f0aa3804f7c11cc9b4ecb1600b394055a0bc0",
+      "fetched_at": "2026-10-14",
+      "content_hash": "123152aaf13b5dcd5c0dd6c03e604522405f60630a14cbd8eb0d22445ac5b570",
       "source_last_modified": "",
       "content_hash_covers": "html",
-      "content_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally"
+      "content_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
+      "review_required_since": "2026-10-14",
+      "reviewed_content": {
+        "content_hash": "123152aaf13b5dcd5c0dd6c03e604522405f60630a14cbd8eb0d22445ac5b570",
+        "content_hash_covers": "html",
+        "content_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
+        "source_last_modified": "",
+        "checked_at": "2026-10-14"
+      }
     },
     {
       "title": "AASB 9 Financial Instruments",
@@ -154,7 +162,7 @@
     {
       "title": "ATO Taxation Ruling TR 2018/3 Income tax: tax treatment of long term construction contracts",
       "url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR20183/NAT/ATO/00001",
-      "checked_at": "2026-09-25",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-25",
       "fact": "TR 2018/3 para 2 defines long term construction contracts as contracts whose work extends beyond one income year, including contracts shorter than twelve months that cross income years. Paras 5 to 6 describe the basic and estimated profits approaches and require consistent use across the contract years and similar contracts. Under the basic approach, paras 7 to 9 include amounts billed or billable for work carried out and certified for payment, as well as amounts received. Para 44 applies the ruling to years before and after 7 March 2018, subject to its settlement exception. The ruling was published on 7 March 2018 and identifies its PDF as the authorised version. No tax treatment is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
@@ -170,7 +178,7 @@
     {
       "title": "Building and Construction Industry Security of Payment Regulation 2020 (NSW)",
       "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/sl-2020-0504",
-      "checked_at": "2026-09-25",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-06-30",
       "fact": "The NSW retention money trust requirements are in Part 2. Clause 6 limits application to head contractors whose main contract is valued at $20 million or more, including variations. If the threshold is reached through a later variation, cl 6(4) applies only to subcontracts entered into after that point. For head contractors to whom Part 2 applies, cl 8 requires retention money to be held in trust for the entitled subcontractor and paid to a retention money trust account with an approved ADI as soon as possible and within 5 business days of being required to retain it. The version read is in force from 1 March 2021. No retention classification is adopted from this record.",
       "verification_status": "unavailable-http-403",
@@ -186,7 +194,7 @@
     {
       "title": "Building and Construction Industry Security of Payment Act 1999 (NSW)",
       "url": "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-1999-046",
-      "checked_at": "2026-09-25",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-25",
       "fact": "The Security of Payment Act supplies part of the legal context for the AASB 15 para B12 entitlement analysis. It governs payment claims and adjudication for construction work in NSW, and s 12A enables the retention money trust requirements imposed by the Regulation. The version read is in force from 20 August 2024. No entitlement or enforceability conclusion is adopted from this record.",
       "verification_status": "unavailable-http-403",

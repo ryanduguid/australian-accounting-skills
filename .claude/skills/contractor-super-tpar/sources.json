@@ -20,17 +20,25 @@
     {
       "title": "Taxation Administration Act 1953",
       "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
-      "checked_at": "2026-09-30",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-08-15",
       "fact": "TPAR and no-ABN reporting pathways, periods and authorities must be kept distinct and rechecked against the current compilation.",
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
-      "content_hash": "f1f959fb84743ff3b79863f96f8b5984079aa7262cadc261e037e935b97b62ed",
+      "fetched_at": "2026-10-14",
+      "content_hash": "eacda1b07ba700f8b20c770e2c72e99ce1a2a85188ac4286c56c8f040771a866",
       "source_last_modified": "",
       "content_hash_covers": "html",
-      "content_url": "https://www.legislation.gov.au/C1953A00001/latest/text"
+      "content_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "review_required_since": "2026-10-14",
+      "reviewed_content": {
+        "content_hash": "eacda1b07ba700f8b20c770e2c72e99ce1a2a85188ac4286c56c8f040771a866",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+        "source_last_modified": "",
+        "checked_at": "2026-10-14"
+      }
     }
   ]
 }

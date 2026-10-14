@@ -20,7 +20,7 @@
     {
       "title": "TR 2006/10 Public rulings",
       "url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR200610/NAT/ATO/00001",
-      "checked_at": "2026-09-27",
+      "checked_at": "2026-10-14",
       "fact": "Reviewed on 27 September 2026 at Ryan Duguid's direction: issued 4 October 2006, review date 25 February 2031. Paragraph 1 says the Ruling outlines the system of public rulings under Divisions 357 and 358 of Schedule 1 to the Taxation Administration Act 1953; it explains when a public ruling binds the Commissioner and cites subsection 357-60(1).",
       "volatile": false,
       "limitations": "Check the ruling's history for amendments before relying on a specific paragraph.",
@@ -34,7 +34,7 @@
     {
       "title": "PS LA 2008/4 Publication of edited versions of written binding advice",
       "url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS20084/NAT/ATO/00001",
-      "checked_at": "2026-09-27",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-27",
       "fact": "Reviewed on 27 September 2026 at Ryan Duguid's direction: issued 9 August 2013, review date 22 May 2028. Section 2 states that taxpayers cannot rely on edited versions of written binding advice and that the ATO is not bound by an edited version in relation to any taxpayer. Its history records that edited versions over 15 years old are removed from the Legal Database.",
       "volatile": true,
@@ -49,7 +49,7 @@
     {
       "title": "High Court of Australia: Judgments",
       "url": "https://www.hcourt.gov.au/cases-and-judgments/judgments",
-      "checked_at": "2026-10-11",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-10-11",
       "fact": "Reviewed on 11 October 2026 at Ryan Duguid's direction: the page links to Commonwealth Law Reports volumes 1-100 (1903 to 1959), unreported judgments 1906 to 1994 (an incomplete set), judgments since January 1998 and single Justice judgments since January 2024. Portal record only: no rule is adopted from it.",
       "volatile": true,
@@ -65,7 +65,7 @@
     {
       "title": "Federal Court of Australia: Judgment search",
       "url": "https://www.fedcourt.gov.au/digital-law-library/judgments/search",
-      "checked_at": "2026-10-11",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-10-11",
       "fact": "Reviewed on 11 October 2026 at Ryan Duguid's direction: the search form takes a case name or medium neutral citation, judge, reported citation and file number, and filters by National Practice Area, including Taxation. Portal record only: no rule is adopted from it.",
       "volatile": true,
@@ -81,7 +81,7 @@
     {
       "title": "Administrative Review Tribunal: Taxation",
       "url": "https://www.art.gov.au/applying-review/taxation",
-      "checked_at": "2026-10-11",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-10-11",
       "fact": "Reviewed on 11 October 2026 at Ryan Duguid's direction: the page says the Tribunal can review decisions made by the Australian Taxation Office and the Commissioner of Taxation, and that it is not always the first step, since some decisions need an internal review first. Portal record only: no rule is adopted from it.",
       "volatile": true,
@@ -97,7 +97,7 @@
     {
       "title": "TPB: Reasonable care",
       "url": "https://www.tpb.gov.au/reasonable-care",
-      "checked_at": "2026-09-27",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-27",
       "fact": "Reviewed on 27 September 2026 at Ryan Duguid's direction: last modified 30 April 2026. The Code of Professional Conduct requires reasonable care in ascertaining a client's state of affairs (Code item 9) and in ensuring taxation laws are applied correctly (Code item 10). There is no set formula; professional judgement applies.",
       "volatile": true,
@@ -112,7 +112,7 @@
     {
       "title": "TPB(GS) 55/2026 The use of Artificial Intelligence and the Code of Professional Conduct",
       "url": "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct",
-      "checked_at": "2026-09-27",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-27",
       "fact": "Reviewed on 27 September 2026 at Ryan Duguid's direction: issued and last modified 22 July 2026. Practitioners remain ultimately responsible for services provided with AI tools, should verify and review AI-generated content for accuracy at each step of the workflow and document those steps, and must meet the Code item 6 confidentiality obligation when using AI.",
       "volatile": true,
