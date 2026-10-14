@@ -1,3 +1,32 @@
+# v0.4.1 (unreleased)
+
+Adds a short-stay accommodation workflow, au-short-stay-accommodation, and a
+pre-lodgement review workflow, au-pre-lodgement-review, bringing the pack to
+67. It prepares an individual host's gross platform
+income reconciliation, night-by-night use calendar, holiday home evidence
+under s 26-50, TR 2026/1 and PCG 2026/3, the GST residential premises screen
+and state levy checks. It ships with a source-discovery record awaiting
+baseline acceptance and 2 fabricated cases. A further au-capital-gains card
+tests a disposal contract signed before 1 July 2027 that settles after it,
+bringing the validation pack to 89 cards with the 3 pre-lodgement review
+cards.
+
+au-pre-lodgement-review lists the items a reviewer should look at before
+lodgement: missing records, claim conditions from the ATO's claiming
+deductions guidance, claims out of line with occupation guides or small
+business benchmarks, income completeness and ATO focus areas cited from
+ato.gov.au. Every check is marked performed, not performed or not
+applicable. It gives no risk rating or clearance to lodge, and sets no
+claim by reference to the chance of review.
+
+Skill text no longer hard-codes figures that change: au-payg-instalment-variation,
+au-super-contribution-caps, bas-preparation and contractor-super-tpar now
+point to the provision or ATO page that sets them, and a test fails on any
+new dollar amount or percentage in skill prose. The cards for those 4
+skills need a rerun at the revised commit.
+
+The 6 new cards and the reruns need confirmed results before this release.
+
 # v0.4.0
 
 The pack moves from MIT to the Apache-2.0 licence, with a `NOTICE` file whose

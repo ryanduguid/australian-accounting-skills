@@ -43,6 +43,8 @@ exports/
 !/.claude/skills/au-tax-research/sources.json
 !/.claude/skills/au-client-acceptance/sources.json
 !/.claude/skills/au-working-holiday-makers/sources.json
+!/.claude/skills/au-short-stay-accommodation/sources.json
+!/.claude/skills/au-pre-lodgement-review/sources.json
 !.claude-plugin/marketplace.json
 !.claude-plugin/plugin.json
 !/.codex-plugin/
@@ -80,6 +82,8 @@ exports/
 !/.claude/skills/au-tax-research/SKILL.md
 !/.claude/skills/au-client-acceptance/SKILL.md
 !/.claude/skills/au-working-holiday-makers/SKILL.md
+!/.claude/skills/au-short-stay-accommodation/SKILL.md
+!/.claude/skills/au-pre-lodgement-review/SKILL.md
 !/.claude/rules/
 !/.claude/rules/**/*.md
 
@@ -94,6 +98,12 @@ exports/
 !/validation/cases/au-tax-research-missing-evidence.md
 !/validation/cases/au-client-acceptance-missing-evidence.md
 !/validation/cases/au-working-holiday-makers-missing-evidence.md
+!/validation/cases/au-short-stay-accommodation-missing-evidence.md
+!/validation/cases/au-short-stay-accommodation-platform-gst-registration.md
+!/validation/cases/au-capital-gains-contract-straddles-reform.md
+!/validation/cases/au-pre-lodgement-review-claim-calibration.md
+!/validation/cases/au-pre-lodgement-review-missing-evidence.md
+!/validation/cases/au-pre-lodgement-review-rating-not-clearance.md
 # Result files hold verdicts or versioned trial digests. The validator rejects
 # prompts, outputs and transcripts under this exception.
 !/validation/results.schema.json

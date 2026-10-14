@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 65,
-    "sources_indexed": 172,
+    "skills": 67,
+    "sources_indexed": 193,
     "skills_source_exempt": 7,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 13,
-    "skills_with_only_the_seeded_case": 38
+    "skills_with_behavioural_gate": 15,
+    "skills_with_only_the_seeded_case": 36
   },
   "skills": [
     {
@@ -113,11 +113,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-capital-gains-contract-straddles-reform",
           "au-capital-gains-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -400,11 +401,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-gst-registration-review-missing-evidence"
+          "au-gst-registration-review-missing-evidence",
+          "au-short-stay-accommodation-platform-gst-registration"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -614,6 +616,32 @@
       }
     },
     {
+      "skill": "au-pre-lodgement-review",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "2026-10-15",
+        "fetched": "2026-10-15",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 3,
+        "case_ids": [
+          "au-pre-lodgement-review-claim-calibration",
+          "au-pre-lodgement-review-missing-evidence",
+          "au-pre-lodgement-review-rating-not-clearance"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_pre_lodgement_review.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-psi-review",
       "sources": {
         "indexed": 1,
@@ -698,6 +726,31 @@
       },
       "gates": {
         "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-short-stay-accommodation",
+      "sources": {
+        "indexed": 15,
+        "exempt": false,
+        "reviewed": "2026-10-15",
+        "fetched": "2026-10-15",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-short-stay-accommodation-missing-evidence",
+          "au-short-stay-accommodation-platform-gst-registration"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_short_stay_accommodation.py"
+        ],
         "inventory": []
       }
     },

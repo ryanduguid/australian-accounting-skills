@@ -1,6 +1,6 @@
 ---
 name: au-payg-instalment-variation
-description: "Use when preparing or reviewing a PAYG instalment variation for an Australian taxpayer, including the estimate of instalment income and tax, the varied amount or rate, credits claimed and the 85% general interest charge test."
+description: "Use when preparing or reviewing a PAYG instalment variation for an Australian taxpayer, including the estimate of instalment income and tax, the varied amount or rate, credits claimed and the general interest charge shortfall test."
 ---
 
 # PAYG instalment variation workpapers
@@ -17,15 +17,15 @@ The instalment notice or activity statement showing the option used (amount at T
 
 3. Estimate the tax on that income for the year, using the ATO's online PAYG instalments tool or a manual estimate, and show the rates and offsets applied with their sources.
 
-4. Amount option: apply the ATO's cumulative percentage for the quarter (for example 75% of estimated tax by the third quarter), subtract instalments already paid and add back any 5B credits claimed in earlier quarters, as the ATO's quarterly steps direct; if the result is nil or negative, work out any credit available at 5B. Rate option: if estimated instalment income is zero, the varied rate is zero and no tax estimate is needed; otherwise varied rate = estimated tax divided by estimated instalment income, times 100. If estimated instalment income is zero under the amount option, the varied amount can be zero.
+4. Amount option: apply the ATO's cumulative percentage for the quarter, read from its quarterly steps for the income year, subtract instalments already paid and add back any 5B credits claimed in earlier quarters, as the ATO's quarterly steps direct; if the result is nil or negative, work out any credit available at 5B. Rate option: if estimated instalment income is zero, the varied rate is zero and no tax estimate is needed; otherwise varied rate = estimated tax divided by estimated instalment income, times 100. If estimated instalment income is zero under the amount option, the varied amount can be zero.
 
-5. Test the variation against the ATO's 85% benchmark: GIC may apply to the shortfall if varied instalments fall below 85% of the tax payable. Record the reasonable-care basis for the estimate, which the ATO says it considers before applying penalties or interest.
+5. Test the variation against the general interest charge shortfall test in Schedule 1 to the *Taxation Administration Act 1953* for the option used (s 45-232 for an amount worked out on estimated benchmark tax; read the section that applies to a varied rate). Take the percentage of benchmark tax from that section, not from memory; GIC may apply to the shortfall if the estimate falls below it. Record the reasonable-care basis for the estimate, which the ATO says it considers before applying penalties or interest.
 
 6. For a later quarter, reconcile the running position to the latest actuals and flag whether a further variation is warranted.
 
 ## Hand-off and checks
 
-An instalment history tied to the ATO account, an instalment income and tax estimate with documented assumptions, the varied amount or rate workings, any credit claimed, and the 85% benchmark comparison. Whether to vary, and the figures lodged, are decisions for the client and reviewer.
+An instalment history tied to the ATO account, an instalment income and tax estimate with documented assumptions, the varied amount or rate workings, any credit claimed, and the shortfall-test comparison with its section reference. Whether to vary, and the figures lodged, are decisions for the client and reviewer.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
@@ -46,4 +46,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 ## Fabricated acceptance example
 
-A sole trader wants to vary instalments to nil in the third quarter after a slow half-year, but has no management accounts after December and no forecast for the fourth quarter. Do not compute a varied amount or conclude the 85% test is met.
+A sole trader wants to vary instalments to nil in the third quarter after a slow half-year, but has no management accounts after December and no forecast for the fourth quarter. Do not compute a varied amount or conclude the shortfall test is met.

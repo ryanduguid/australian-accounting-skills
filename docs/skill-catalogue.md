@@ -55,13 +55,15 @@ topics reuse existing skills and which have original new workflows.
 | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | Non-resident CGT review pack |
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | Not-for-profit tax status review pack |
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | Partnership tax workpapers |
-| [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | PAYG instalment variation workpapers: instalment income and tax estimate, varied amount or rate, and the 85% test |
+| [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | PAYG instalment variation workpapers: instalment income and tax estimate, varied amount or rate, and the general interest charge shortfall test |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | Pay-run preparation review |
 | [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | Multi-state payroll tax workpapers: registration, apportioned thresholds and deductions, and rates by jurisdiction |
+| [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | Pre-lodgement review list: missing records, claims out of line with income or occupation, income completeness and cited ATO focus areas, with each check marked performed or not performed and no risk rating |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | Personal services income review pack |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | Rental property workpapers |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | Individual return amendment review |
+| [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) | Short-stay accommodation workpapers for an individual host: gross platform income, night-by-night use, holiday home evidence, the GST residential premises screen and state levy checks |
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | Small business CGT concession review |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | SMSF annual workpaper preparation |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | Sole trader tax workpapers |
