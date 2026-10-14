@@ -20,7 +20,8 @@ abstract: >-
   12 October 2026 added transaction GST review to bas-preparation. Cite
   that tag when relying on it. The sixty-five-skill v0.4.0 release of
   14 October 2026 moved the pack to the Apache-2.0 licence. Cite that tag
-  when relying on it. This citation still identifies v0.1.5.
+  when relying on it. The development branch has sixty-six skills with a
+  short-stay accommodation workflow. This citation still identifies v0.1.5.
 version: 0.1.5
 date-released: 2026-08-23
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"

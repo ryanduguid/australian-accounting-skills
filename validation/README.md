@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 83 cards in `cases/` test workflow quality, provenance and restraint.
+The 85 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -109,6 +109,8 @@ law claim, unverified source or guess.
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
 | [Individual return amendment review: missing evidence](cases/au-return-amendment-missing-evidence.md) | au-return-amendment |
+| [Short-stay accommodation workpapers: missing evidence](cases/au-short-stay-accommodation-missing-evidence.md) | au-short-stay-accommodation |
+| [Platform income and a GST registration question](cases/au-short-stay-accommodation-platform-gst-registration.md) | au-short-stay-accommodation, au-gst-registration-review |
 | [Small business CGT concession review: missing evidence](cases/au-small-business-cgt-missing-evidence.md) | au-small-business-cgt |
 | [SMSF annual workpaper preparation: missing evidence](cases/au-smsf-year-end-missing-evidence.md) | au-smsf-year-end |
 | [Sole trader tax workpapers: missing evidence](cases/au-sole-trader-missing-evidence.md) | au-sole-trader |
@@ -127,13 +129,14 @@ law claim, unverified source or guess.
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 
-Together the cards cover all 65 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 66 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
 current. The `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
-v0.3.1, were run on 1 and 4 October and confirmed on 4 October. See
+v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
+short-stay accommodation cards, added for v0.4.1, have no recorded run. See
 [results](results/).
 
 Three further cards check whether the model completes supported bank,

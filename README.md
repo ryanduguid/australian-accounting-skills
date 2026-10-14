@@ -31,7 +31,7 @@ Clone once per project. To repeat or retry from that directory, rerun only the c
 
 v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on v0.2.1.
 
-That copies the 65 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 72 of the 83 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 11 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, and three transaction-GST cases. Static checks cover all 65 skills, and [coverage.json](coverage.json) gives the state of each skill.
+That copies the 65 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Recorded model runs cover 72 of the 85 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 13 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, three transaction-GST and two short-stay accommodation cases. Static checks cover all 66 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
@@ -50,7 +50,7 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 
 ### Development installation
 
-The plugin marketplace installs the default branch, which can be ahead of v0.4.0. It is not a published release.
+The plugin marketplace installs the default branch, which prepares v0.4.1 with 66 workflows. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -67,7 +67,7 @@ The development installation resolves the default branch, which can carry change
 
 - [Install, uninstall and versioning](docs/installation.md)
 - [First run and BAS walkthrough](docs/bas-walkthrough.md)
-- [Sixty-five skills and their supporting files](docs/skill-catalogue.md)
+- [Sixty-six skills and their supporting files](docs/skill-catalogue.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)

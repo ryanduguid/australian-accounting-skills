@@ -62,6 +62,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | Rental property workpapers |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | Individual return amendment review |
+| [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) | Short-stay accommodation workpapers for an individual host: gross platform income, night-by-night use, holiday home evidence, the GST residential premises screen and state levy checks |
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | Small business CGT concession review |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | SMSF annual workpaper preparation |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | Sole trader tax workpapers |

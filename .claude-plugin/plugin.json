@@ -1,8 +1,8 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "australian-accounting-skills",
-  "version": "0.4.0",
-  "description": "Sixty-five Australian accounting and tax preparation workflows with source checks and human review. Not tax advice.",
+  "version": "0.4.1",
+  "description": "Sixty-six Australian accounting and tax preparation workflows with source checks and human review. Not tax advice.",
   "author": {
     "name": "Ryan Duguid"
   },

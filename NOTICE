@@ -36,3 +36,10 @@ in these MIT-licensed software repositories:
 The new instructions and fabricated validation cards are independently
 written. No upstream code, guide bodies, corpus text, rate tables, email
 access or hosted-service integration is imported.
+
+The short-stay accommodation topic gap and the contract-date CGT timing card
+were identified on 15 October 2026 by reviewing the MIT-licensed
+darrentmorgan/au-accounting, commit 8576474dbe0c. The au-short-stay-accommodation
+workflow and its cards are independently written from ATO, legislation and
+State Revenue Office Victoria sources read that day. No upstream skill text,
+evaluation case, code, rates data or refusal codes were copied.
