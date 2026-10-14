@@ -40,7 +40,8 @@ access or hosted-service integration is imported.
 The short-stay accommodation topic gap, the contract-date CGT timing card and
 a test against hard-coded figures in skill prose were identified on
 15 October 2026 by reviewing the MIT-licensed darrentmorgan/au-accounting,
-commit 8576474dbe0c. The au-short-stay-accommodation workflow, its cards and
-tests/test_skill_figures.py are independently written from ATO, legislation and
-State Revenue Office Victoria sources read that day. No upstream skill text,
+commit 8576474dbe0c. The au-short-stay-accommodation workflow and its cards
+are independently written from ATO, legislation and State Revenue Office
+Victoria sources read that day, and tests/test_skill_figures.py is
+independently written. No upstream skill text,
 evaluation case, code, rates data or refusal codes were copied.
