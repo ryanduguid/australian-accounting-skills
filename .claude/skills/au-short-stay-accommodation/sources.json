@@ -13,16 +13,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "121b15e644b921ec782b39c50516e139ecca7fa1b424c2a867dc738ea1710018",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/26-50",
+      "reviewed_content": {
         "content_hash": "121b15e644b921ec782b39c50516e139ecca7fa1b424c2a867dc738ea1710018",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/26-50",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "TR 2026/1 Income tax: rental property income and deductions for individuals who are not in business",
@@ -36,16 +36,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "1f921f90da272f9abd8b27bee7f8d45e4dfdfd23ff55483cd8e421e4964f5150",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20261/NAT/ATO/00001",
+      "reviewed_content": {
         "content_hash": "1f921f90da272f9abd8b27bee7f8d45e4dfdfd23ff55483cd8e421e4964f5150",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20261/NAT/ATO/00001",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "PCG 2026/2 Apportionment of rental property deductions - ATO compliance approach",
@@ -59,16 +59,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "f1c9481fcad3c7b04515df0c0f77b02a259a5ed1a1f85e47f65b36834376f901",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20262/NAT/ATO/00001",
+      "reviewed_content": {
         "content_hash": "f1c9481fcad3c7b04515df0c0f77b02a259a5ed1a1f85e47f65b36834376f901",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20262/NAT/ATO/00001",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "PCG 2026/3 Application of section 26-50 of the ITAA 1997 to holiday homes that you also rent out - ATO compliance approach",
@@ -82,16 +82,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "4e8031026ab153349d22cd118c68031a90d66a7f3e6630c56d75199f4cdefc17",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20263/NAT/ATO/00001",
+      "reviewed_content": {
         "content_hash": "4e8031026ab153349d22cd118c68031a90d66a7f3e6630c56d75199f4cdefc17",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20263/NAT/ATO/00001",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "ITAA 1997 s 26-31, travel related to use of residential premises as residential accommodation",
@@ -105,16 +105,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "158d7eb867fdb5c303c04bc7ddb2854461d859e7e9560cde36ea7dae5eae831d",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/26-31",
+      "reviewed_content": {
         "content_hash": "158d7eb867fdb5c303c04bc7ddb2854461d859e7e9560cde36ea7dae5eae831d",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/26-31",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "ITAA 1997 s 40-27, second-hand assets in residential property",
@@ -128,16 +128,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "200dffcaab6fa24e421abbac1c987fcf25a6bf96a53e865981d0d3b5373c09a3",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/40-27",
+      "reviewed_content": {
         "content_hash": "200dffcaab6fa24e421abbac1c987fcf25a6bf96a53e865981d0d3b5373c09a3",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/40-27",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "GST Act s 40-35, residential rent",
@@ -151,16 +151,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "026b56562a3a5556bc9dc48b598124fe9058dd3fc44347d6a087287947472026",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/40-35",
+      "reviewed_content": {
         "content_hash": "026b56562a3a5556bc9dc48b598124fe9058dd3fc44347d6a087287947472026",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/40-35",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "GST Act s 195-1, dictionary",
@@ -174,16 +174,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "6bbbc0e022b6bf3ed90a412f1e59caad4c57f949abe7569223af870a7de780ef",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/195-1",
+      "reviewed_content": {
         "content_hash": "6bbbc0e022b6bf3ed90a412f1e59caad4c57f949abe7569223af870a7de780ef",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/195-1",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "GST Act s 11-15, creditable purpose",
@@ -197,16 +197,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "14a864aa97d689adb69306b9da08d6becf3395c92dc239c98261db81cd982bcd",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/11-15",
+      "reviewed_content": {
         "content_hash": "14a864aa97d689adb69306b9da08d6becf3395c92dc239c98261db81cd982bcd",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/11-15",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "GST Act s 188-15, current GST turnover",
@@ -220,16 +220,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "e67ff3d4a4605324fff2b894101b5d0557afebfbca0a3395e2ff547fa05cf51a",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/188-15",
+      "reviewed_content": {
         "content_hash": "e67ff3d4a4605324fff2b894101b5d0557afebfbca0a3395e2ff547fa05cf51a",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/188-15",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "GST Act s 23-5, who is required to be registered",
@@ -243,16 +243,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "b3bc085e8e65a379179b539a1b1f25c9adf38abfd032469664441b5b1cb14edf",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/23-5",
+      "reviewed_content": {
         "content_hash": "b3bc085e8e65a379179b539a1b1f25c9adf38abfd032469664441b5b1cb14edf",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19990055/23-5",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "GSTR 2012/6 Goods and services tax: commercial residential premises",
@@ -266,16 +266,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "38716d9b8400584d1430e0ef510a9f1fd350a00a7450e94cce334b461da2aa55",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR20126/NAT/ATO/00001",
+      "reviewed_content": {
         "content_hash": "38716d9b8400584d1430e0ef510a9f1fd350a00a7450e94cce334b461da2aa55",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR20126/NAT/ATO/00001",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "ATO: What is the SERR?",
@@ -289,16 +289,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "2026-01-20",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "288c39825871a4accd52f31ba1ed24f9505ee901d70e8db0e12e198cd97d5eb1",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/third-party-reporting/sharing-economy-reporting-regime/what-is-the-serr",
+      "reviewed_content": {
         "content_hash": "288c39825871a4accd52f31ba1ed24f9505ee901d70e8db0e12e198cd97d5eb1",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/third-party-reporting/sharing-economy-reporting-regime/what-is-the-serr",
-        "observed_at": "2026-10-15",
-        "source_last_modified": "2026-01-20"
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "2026-01-20",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "SRO Victoria: Short stay levy",
@@ -312,16 +312,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "0e0436c6f64660e60fc0645c125901d2b1619a5002b1933ce5a62f90010d1e44",
+      "content_hash_covers": "html",
+      "content_url": "https://www.sro.vic.gov.au/owning-property/short-stay-levy",
+      "reviewed_content": {
         "content_hash": "0e0436c6f64660e60fc0645c125901d2b1619a5002b1933ce5a62f90010d1e44",
         "content_hash_covers": "html",
         "content_url": "https://www.sro.vic.gov.au/owning-property/short-stay-levy",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "title": "ITAA 1997 s 118-190, use of dwelling for producing assessable income",
@@ -335,16 +335,16 @@
       "fetched_at": "2026-10-15",
       "source_last_modified": "",
       "review_required_since": "2026-10-15",
-      "pending_review": {
+      "content_hash": "ec8532feb6aa9ad0382ea75394053d3db6dfc5295438daca1504bd662bf5741d",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/118-190",
+      "reviewed_content": {
         "content_hash": "ec8532feb6aa9ad0382ea75394053d3db6dfc5295438daca1504bd662bf5741d",
         "content_hash_covers": "html",
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/118-190",
-        "observed_at": "2026-10-15",
-        "source_last_modified": ""
-      },
-      "content_hash": "",
-      "content_hash_covers": "",
-      "content_url": ""
+        "source_last_modified": "",
+        "checked_at": "2026-10-15"
+      }
     }
   ]
 }
