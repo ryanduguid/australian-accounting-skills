@@ -4,7 +4,7 @@
     {
       "title": "ATO company return instructions (historical, select applicable income year)",
       "url": "https://www.ato.gov.au/forms-and-instructions/company-tax-return-2019-instructions/instructions-to-complete-the-return",
-      "checked_at": "2026-09-08",
+      "checked_at": "2026-10-14",
       "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
@@ -18,7 +18,7 @@
     {
       "title": "ATO: Tax reform, tax loss carry back",
       "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-tax-loss-carry-back",
-      "checked_at": "2026-09-26",
+      "checked_at": "2026-10-14",
       "fact": "Read 26 September 2026 (page last updated 27 August 2026). States the measure is law: corporate tax entities with aggregated annual global turnover under $1 billion may carry back a revenue tax loss against tax paid in either or both of the 2 previous income years, limited by the franking account balance, for income years starting on or after 1 July 2026.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "ATO summary. Apply Division 160 of the ITAA 1997 as substituted, not this page.",

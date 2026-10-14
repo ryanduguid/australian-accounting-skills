@@ -6,7 +6,7 @@
     "sources_indexed": 172,
     "skills_source_exempt": 7,
     "skills_with_unreachable_sources": 4,
-    "skills_with_sources_moved_since_review": 4,
+    "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 13,
     "skills_with_only_the_seeded_case": 38
   },
@@ -38,7 +38,7 @@
       "sources": {
         "indexed": 6,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -61,7 +61,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -85,8 +85,8 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-30",
-        "fetched": "2026-09-30",
+        "reviewed": "2026-10-14",
+        "fetched": "2026-10-14",
         "unreachable": 0,
         "moved_since_review": []
       },
@@ -107,7 +107,7 @@
       "sources": {
         "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -129,7 +129,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -173,7 +173,7 @@
       "sources": {
         "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -195,7 +195,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -217,7 +217,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -239,7 +239,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -261,7 +261,7 @@
       "sources": {
         "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -283,7 +283,7 @@
       "sources": {
         "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -328,7 +328,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -350,7 +350,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -372,7 +372,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -394,12 +394,10 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -418,7 +416,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -464,7 +462,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -486,7 +484,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -508,7 +506,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-27",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -530,12 +528,10 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/api/public/content/0-f504e4ab-07e9-4138-89a0-5911bb1079d3"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -554,7 +550,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -576,7 +572,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -600,7 +596,7 @@
       "sources": {
         "indexed": 9,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-24",
         "unreachable": 1,
         "moved_since_review": []
@@ -622,7 +618,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -644,7 +640,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-26",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-26",
         "unreachable": 0,
         "moved_since_review": []
@@ -666,7 +662,7 @@
       "sources": {
         "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -688,12 +684,10 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/api/public/content/0-f9693a0f-35d4-4a60-912a-61913daaac0f"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -712,7 +706,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -734,7 +728,7 @@
       "sources": {
         "indexed": 6,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -756,7 +750,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -778,7 +772,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -800,7 +794,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -822,7 +816,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -845,7 +839,7 @@
       "sources": {
         "indexed": 8,
         "exempt": false,
-        "reviewed": "2026-09-27",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-27",
         "unreachable": 5,
         "moved_since_review": []
@@ -867,7 +861,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -911,7 +905,7 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -933,7 +927,7 @@
       "sources": {
         "indexed": 5,
         "exempt": false,
-        "reviewed": "2026-09-08",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -955,7 +949,7 @@
       "sources": {
         "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -999,12 +993,10 @@
       "sources": {
         "indexed": 5,
         "exempt": false,
-        "reviewed": "2026-08-14",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-25",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 7,
@@ -1032,7 +1024,7 @@
       "sources": {
         "indexed": 5,
         "exempt": false,
-        "reviewed": "2026-08-20",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1224,7 +1216,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-27",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -1247,7 +1239,7 @@
       "sources": {
         "indexed": 5,
         "exempt": false,
-        "reviewed": "2026-08-20",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 1,
         "moved_since_review": []
@@ -1277,7 +1269,7 @@
       "sources": {
         "indexed": 4,
         "exempt": false,
-        "reviewed": "2026-08-28",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -1325,7 +1317,7 @@
       "sources": {
         "indexed": 4,
         "exempt": false,
-        "reviewed": "2026-08-15",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -1350,7 +1342,7 @@
       "sources": {
         "indexed": 4,
         "exempt": false,
-        "reviewed": "2026-08-15",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -1375,7 +1367,7 @@
       "sources": {
         "indexed": 5,
         "exempt": false,
-        "reviewed": "2026-08-20",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1403,7 +1395,7 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-24",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 1,
         "moved_since_review": []
@@ -1426,7 +1418,7 @@
       "sources": {
         "indexed": 12,
         "exempt": false,
-        "reviewed": "2026-09-25",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []

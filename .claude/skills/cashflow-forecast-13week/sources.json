@@ -5,7 +5,7 @@
     {
       "title": "ATO Payday Super",
       "url": "https://softwaredevelopers.ato.gov.au/PaydaySuper",
-      "checked_at": "2026-08-20",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-08-20",
       "fact": "For paydays from 1 July 2026, the ordinary period requires the fund to receive the contribution, with enough information to allocate it, by the end of the seventh business day after the payday.",
       "volatile": true,
@@ -19,7 +19,7 @@
     {
       "title": "ATO Payday Super for employers",
       "url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday",
-      "checked_at": "2026-08-20",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-08-20",
       "fact": "Allowable longer periods (first eligible contribution, qualifying out-of-cycle payments, exceptional circumstances, s 18C alignment) are fact-dependent. A remittance date is not fund receipt.",
       "volatile": true,
@@ -62,7 +62,7 @@
     {
       "title": "ATO: Denying deductions for ATO interest charges",
       "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/deny-deductions-for-ato-interest-charges",
-      "checked_at": "2026-09-26",
+      "checked_at": "2026-10-14",
       "fact": "Read 26 September 2026 (page last updated 8 June 2026). GIC and SIC incurred on or after 1 July 2025 are not deductible for income years starting on or after that date, whatever year the debt relates to, and a later remission of such an amount is not assessable. GIC or SIC incurred before 1 July 2025 remains deductible for 2024-25 and earlier years, and a later remission of a deducted amount is assessable. An entity with a substituted accounting period loses the deduction from its next accounting period starting after 1 July 2025. GIC on unpaid income tax is incurred daily; SIC is incurred in the year the amended assessment notice is served.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "ATO summary of the law change. Confirm the provisions of the Treasury Laws Amendment (Tax Incentives and Integrity) Act 2025 for the period at use time.",

@@ -4,7 +4,7 @@
     {
       "title": "ATO: Tax invoices, including eInvoicing and recipient-created tax invoices",
       "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices",
-      "checked_at": "2026-09-24",
+      "checked_at": "2026-10-14",
       "reverify_by": "2027-09-24",
       "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 18 September 2026): tax invoice requirements by sale value, eInvoices issued under the A-NZ Peppol specification treated as intended to be tax invoices, and the conditions and issuer checks for recipient-created tax invoices. Thresholds and time limits are read from the page at use time, not from this record.",
       "volatile": true,
@@ -18,7 +18,7 @@
     {
       "title": "ASD's ACSC: Preventing business email compromise",
       "url": "https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise",
-      "checked_at": "2026-09-26",
+      "checked_at": "2026-10-14",
       "fact": "Read 26 September 2026. Recommends an approval process for requests to change payment details or make a large transfer, and verifying such a request by calling the sender on a known and verified phone number, not one given in the email. No legal rule, rate or threshold is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Guidance for small and medium businesses, not law. The firm's own payment approval policy governs. The automated refresh could not retrieve the page on 26 September 2026 (connection closed); it opened normally in a browser.",

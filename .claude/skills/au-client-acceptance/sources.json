@@ -19,17 +19,25 @@
     {
       "title": "APESB: APES 305 Terms of Engagement",
       "url": "https://apesb.org.au/standards-guidance/terms-of-engagement/",
-      "checked_at": "2026-09-29",
+      "checked_at": "2026-10-14",
       "fact": "Read 29 September 2026. The page lists APES 305 Terms of Engagement (2024), effective from 1 January 2025, which replaced the 2020 standard effective from 1 July 2021.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Landing page only. Open the current standard for the content an engagement document must carry.",
       "final_url": "https://apesb.org.au/standards-guidance/terms-of-engagement/",
       "http_status": 200,
-      "fetched_at": "2026-09-29",
-      "content_hash": "e9ce42982c08ddadd2c2c8912fa4e4932e67f330efc864dac464e812e8cfc062",
+      "fetched_at": "2026-10-14",
+      "content_hash": "593146c9e2d62f279f52789581f33f2b9501c05820e5992ad6a0dab91708af7d",
       "content_hash_covers": "html",
       "source_last_modified": "",
-      "content_url": "https://apesb.org.au/standards-guidance/terms-of-engagement/"
+      "content_url": "https://apesb.org.au/standards-guidance/terms-of-engagement/",
+      "review_required_since": "2026-10-14",
+      "reviewed_content": {
+        "content_hash": "593146c9e2d62f279f52789581f33f2b9501c05820e5992ad6a0dab91708af7d",
+        "content_hash_covers": "html",
+        "content_url": "https://apesb.org.au/standards-guidance/terms-of-engagement/",
+        "source_last_modified": "",
+        "checked_at": "2026-10-14"
+      }
     },
     {
       "title": "APESB: APES 110 Code of Ethics for Professional Accountants",
@@ -67,17 +75,25 @@
     {
       "title": "Tax Agent Services (Code of Professional Conduct) Determination 2024",
       "url": "https://www.legislation.gov.au/F2024L00849/latest",
-      "checked_at": "2026-09-29",
+      "checked_at": "2026-10-14",
       "fact": "Read 29 September 2026. The Federal Register of Legislation page for the Determination, whose section 45 sets the information registered tax practitioners must give clients.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Amendments apply from 1 October 2026. Open the compilation in force for the work's period.",
       "final_url": "https://www.legislation.gov.au/F2024L00849/latest",
       "http_status": 200,
-      "fetched_at": "2026-09-29",
-      "content_hash": "7f62d66178caf8f41bc8fb76e871b034c0d5b2b31377efc2d62065e777e35d67",
+      "fetched_at": "2026-10-14",
+      "content_hash": "6dc0d46c7c94584790c3603957328e3f979c6a270d88312e6b3ab008d8642e8a",
       "content_hash_covers": "html",
       "source_last_modified": "",
-      "content_url": "https://www.legislation.gov.au/F2024L00849/latest"
+      "content_url": "https://www.legislation.gov.au/F2024L00849/latest",
+      "review_required_since": "2026-10-14",
+      "reviewed_content": {
+        "content_hash": "6dc0d46c7c94584790c3603957328e3f979c6a270d88312e6b3ab008d8642e8a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/F2024L00849/latest",
+        "source_last_modified": "",
+        "checked_at": "2026-10-14"
+      }
     },
     {
       "title": "AUSTRAC: Customer due diligence",
