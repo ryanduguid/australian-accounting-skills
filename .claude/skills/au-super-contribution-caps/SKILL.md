@@ -19,7 +19,7 @@ Income year, each fund's contribution report by type (employer, salary sacrifice
 
 3. Concessional cap: compare concessional contributions with the general cap. If they exceed it, test carry-forward: total super balance below the ATO limit at 30 June of the previous year, unused amounts from up to 5 previous years starting no earlier than 2018-19, applied oldest first. Unused amounts expire after 5 years. Tie the unused amounts to the ATO online services record.
 
-4. Excess concessional contributions: compute the excess and note that it is included in assessable income with a 15% offset, that up to 85% can be released by election within the ATO's stated window, and that any unreleased excess counts as non-concessional. Prepare the facts for the election; do not lodge it.
+4. Excess concessional contributions: compute the excess and note that it is included in assessable income with a tax offset under s 291-15 of the *Income Tax Assessment Act 1997*, that part of it can be released by a request under s 131-5 of Schedule 1 to the *Taxation Administration Act 1953* within the time that section allows and up to the limit in s 131-10 (read the percentage and period there), and that any unreleased excess counts as non-concessional. Prepare the facts for the election; do not lodge it.
 
 5. Non-concessional cap: check the total super balance at 30 June of the previous year against the general transfer balance cap (nil cap at or above it), then the bring-forward table for the year and the age condition. Track any open bring-forward period from earlier years before assuming a fresh cap.
 

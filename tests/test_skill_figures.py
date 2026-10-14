@@ -3,10 +3,10 @@
 CONTRIBUTING.md sends the agent to the primary source for anything that
 changes, because a hard-coded current-year figure goes wrong the next year
 without saying so. This gate finds dollar amounts and percentages in skill
-Markdown outside code, inline code and URLs. Each figure already on `main`
-when the gate was added is listed below with its count, so a new figure, or a
-second copy of a listed one, fails until a person either replaces it with a
-source pointer or lists it with a reason.
+Markdown outside code, inline code and URLs. Only the figures listed
+below with a reason may appear, each at most its listed number of times; any
+other figure fails until a person replaces it with a source pointer or lists
+it with a reason.
 """
 
 from __future__ import annotations
@@ -25,22 +25,22 @@ LINK_TARGET = re.compile(r"\]\([^)\s]*\)")
 BARE_URL = re.compile(r"https?://\S+")
 FIGURE = re.compile(r"\$\s?\d[\d,]*(?:\.\d+)?|\b\d+(?:\.\d+)?\s?(?:%|per\s?cent\b)", re.IGNORECASE)
 
-# Figures present on main at acef065 when this gate was added, by file and
-# exact text, with the number of occurrences. They were listed as found, not
-# individually reviewed: each is a candidate for a source pointer or a
-# recorded reason. A new entry needs a person's reason in a comment beside it.
-EXISTING_FIGURES: dict[tuple[str, str], int] = {
-    ("au-payg-instalment-variation/SKILL.md", "75%"): 1,
-    ("au-payg-instalment-variation/SKILL.md", "85%"): 5,
-    ("au-super-contribution-caps/SKILL.md", "15%"): 1,
-    ("au-super-contribution-caps/SKILL.md", "85%"): 1,
-    ("bas-preparation/SKILL.md", "$10"): 1,
-    ("bas-preparation/references/transaction-gst-review.md", "$100"): 2,
-    ("bas-preparation/references/transaction-gst-review.md", "$60"): 1,
-    ("bas-preparation/references/transaction-gst-review.md", "60%"): 1,
-    ("coal-lsl-levy/SKILL.md", "75%"): 1,
-    ("contractor-super-tpar/SKILL.md", "$10"): 1,
-    ("contractor-super-tpar/SKILL.md", "10%"): 2,
+# The only figures allowed in skill prose, by file and exact text, with the
+# number of occurrences and the reason each stays. Every other figure was
+# replaced by a pointer to its primary source on 15 October 2026.
+KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
+    ("bas-preparation/references/transaction-gst-review.md", "$100"): (
+        2, "fabricated input to a worked arithmetic example, not a rate or threshold"),
+    ("bas-preparation/references/transaction-gst-review.md", "$60"): (
+        1, "result of the same fabricated worked example"),
+    ("bas-preparation/references/transaction-gst-review.md", "60%"): (
+        1, "fabricated creditable-use input to the same worked example"),
+    ("coal-lsl-levy/SKILL.md", "75%"): (
+        1, "Formula B in s 3B(1) of the Payroll Levy Collection Act 1992 as read in "
+        "C2026C00364; test_legal_source_gates.py pins the formula wording"),
+    ("contractor-super-tpar/SKILL.md", "10%"): (
+        1, "the turnover condition of determination F2019L00864 as read; "
+        "test_legal_source_gates.py pins the condition wording"),
 }
 
 
@@ -70,20 +70,23 @@ class SkillFigureTests(unittest.TestCase):
         new = {
             key: count
             for key, count in found.items()
-            if count > EXISTING_FIGURES.get(key, 0)
+            if count > KEPT_FIGURES.get(key, (0, ""))[0]
         }
         self.assertEqual(
             new,
             {},
             "replace each figure with a pointer to its primary source, "
-            "or list it in EXISTING_FIGURES with a reason",
+            "or list it in KEPT_FIGURES with a reason",
         )
 
     def test_listed_figures_are_still_present(self) -> None:
         """A removed figure leaves a stale entry that would allow it back."""
         found = skill_figures()
-        stale = {key: count for key, count in EXISTING_FIGURES.items() if found[key] < count}
+        stale = {key: count for key, (count, _) in KEPT_FIGURES.items() if found[key] < count}
         self.assertEqual(stale, {})
+
+    def test_every_kept_figure_has_a_reason(self) -> None:
+        self.assertEqual([key for key, (_, reason) in KEPT_FIGURES.items() if not reason.strip()], [])
 
     def test_detection_ignores_code_and_urls_but_not_prose(self) -> None:
         self.assertEqual(figures_in("Apply the $1,234.50 cap and a 9.5% rate."), ["$1,234.50", "9.5%"])
