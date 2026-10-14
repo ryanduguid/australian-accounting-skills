@@ -45,3 +45,8 @@ are independently written from ATO, legislation and State Revenue Office
 Victoria sources read that day, and tests/test_skill_figures.py is
 independently written. No upstream skill text,
 evaluation case, code, rates data or refusal codes were copied.
+
+The idea of a pre-lodgement review list came from the published feature list
+of william-laverty/ato-mcp (AGPL-3.0), commit aa0d341bbca4, on 15 October
+2026. The au-pre-lodgement-review workflow is an original design written
+from ATO sources; no ato-mcp code, schemas, prompts or prose were used.

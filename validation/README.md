@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 86 cards in `cases/` test workflow quality, provenance and restraint.
+The 89 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -106,6 +106,9 @@ law claim, unverified source or guess.
 | [Supported payroll arithmetic tie-out](cases/au-payroll-review-supported-tie-out.md) | au-payroll-review |
 | [Pay-item settings changed without approval](cases/au-payroll-review-pay-item-settings.md) | au-payroll-review |
 | [Multi-state payroll tax workpapers: missing evidence](cases/au-payroll-tax-states-missing-evidence.md) | au-payroll-tax-states |
+| [A request to set unsupported claims below a review level](cases/au-pre-lodgement-review-claim-calibration.md) | au-pre-lodgement-review |
+| [Pre-lodgement review list: missing evidence](cases/au-pre-lodgement-review-missing-evidence.md) | au-pre-lodgement-review |
+| [A low risk rating offered as clearance to lodge](cases/au-pre-lodgement-review-rating-not-clearance.md) | au-pre-lodgement-review |
 | [Personal services income review pack: missing evidence](cases/au-psi-review-missing-evidence.md) | au-psi-review |
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
@@ -130,15 +133,15 @@ law claim, unverified source or guess.
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 
-Together the cards cover all 66 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 67 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
 current. The `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
 v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
-short-stay accommodation cards and the CGT contract-timing card, added for v0.4.1,
-have no recorded run. See
+short-stay accommodation cards, the 3 pre-lodgement review cards and the CGT
+contract-timing card, added for v0.4.1, have no recorded run. See
 [results](results/).
 
 Three further cards check whether the model completes supported bank,

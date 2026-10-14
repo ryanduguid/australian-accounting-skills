@@ -1,0 +1,143 @@
+{
+  "skill": "au-pre-lodgement-review",
+  "sources": [
+    {
+      "title": "ATO: Records you need to keep",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/records-you-need-to-keep",
+      "checked_at": "2026-10-15",
+      "fact": "Read 15 October 2026 (page last updated 8 June 2026). To claim a work-related expense deduction the taxpayer must have written evidence such as a receipt or invoice; a bank or credit card statement on its own is not written evidence because it is not from the supplier. Records must show how a private-use apportionment was worked out.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO web guidance for individuals. Read the thresholds, exceptions and retention periods for the income year at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/records-you-need-to-keep",
+      "http_status": 200,
+      "fetched_at": "2026-10-15",
+      "source_last_modified": "2026-06-26",
+      "review_required_since": "2026-10-15",
+      "pending_review": {
+        "content_hash": "05da4cc1f065516c18c8c5f53b385aa360e4e595b29036267541e8727a0c8fb9",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/records-you-need-to-keep",
+        "observed_at": "2026-10-15",
+        "source_last_modified": "2026-06-26"
+      },
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: Claiming deductions",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/claiming-deductions",
+      "checked_at": "2026-10-15",
+      "fact": "Read 15 October 2026 (page last updated 13 July 2026). To claim a work-related expense the taxpayer must spend the money and not be reimbursed, the expense must directly relate to earning the income, and a record must prove it. Private, domestic or capital expenses are excluded and mixed-use expenses are apportioned.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO web guidance for individuals; the page also describes a standard deduction that applies from the 2026-27 income year.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/claiming-deductions",
+      "http_status": 200,
+      "fetched_at": "2026-10-15",
+      "source_last_modified": "2026-07-13",
+      "review_required_since": "2026-10-15",
+      "pending_review": {
+        "content_hash": "7c5bc308fda6ff22dc1f1c497e176bd535a5f55d0af1ab284c5ba27892a96e4d",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/claiming-deductions",
+        "observed_at": "2026-10-15",
+        "source_last_modified": "2026-07-13"
+      },
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: Guides for occupations and industries",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/guides-for-occupations-and-industries",
+      "checked_at": "2026-10-15",
+      "fact": "Read 15 October 2026. Index of ATO occupation and industry guides on income and allowances to declare and the expenses that can be claimed.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Index page only. Open the guide for the occupation and income year.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/guides-for-occupations-and-industries",
+      "http_status": 200,
+      "fetched_at": "2026-10-15",
+      "source_last_modified": "2026-05-09",
+      "review_required_since": "2026-10-15",
+      "pending_review": {
+        "content_hash": "e6331c83c2ba252cac4feafc58863a8df53ec3f39ea3a238010c76398fa13021",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/guides-for-occupations-and-industries",
+        "observed_at": "2026-10-15",
+        "source_last_modified": "2026-05-09"
+      },
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: How we use business performance benchmarks",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/small-business-benchmarks/how-we-use-business-performance-benchmarks",
+      "checked_at": "2026-10-15",
+      "fact": "Read 15 October 2026 (page last updated 17 March 2025). The ATO uses benchmarks and other risk indicators to identify businesses that may not be reporting all income, and states it never uses the benchmarks in isolation when deciding to review a business.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO web guidance. Benchmark ranges are published per industry and year on separate pages.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/small-business-benchmarks/how-we-use-business-performance-benchmarks",
+      "http_status": 200,
+      "fetched_at": "2026-10-15",
+      "source_last_modified": "2025-10-02",
+      "review_required_since": "2026-10-15",
+      "pending_review": {
+        "content_hash": "9303ae7c3b767c348f5847d6f31c848081f6396df069e84c9f144dc92f8e2a9c",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/small-business-benchmarks/how-we-use-business-performance-benchmarks",
+        "observed_at": "2026-10-15",
+        "source_last_modified": "2025-10-02"
+      },
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: Small business focus areas",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/our-focus-areas-for-small-business/small-business-focus-areas",
+      "checked_at": "2026-10-15",
+      "fact": "Read 15 October 2026 (page last updated 9 February 2026). Lists focus areas including omitted income, using business money and assets for personal benefit, contractors omitting income, non-commercial business losses, the small business CGT concessions, over-claiming expenses and GST credits, and FBT on private use of work vehicles.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "The list changes; the parent focus-areas page says the ATO highlights risk areas each quarter.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/our-focus-areas-for-small-business/small-business-focus-areas",
+      "http_status": 200,
+      "fetched_at": "2026-10-15",
+      "source_last_modified": "2026-07-01",
+      "review_required_since": "2026-10-15",
+      "pending_review": {
+        "content_hash": "50968f8c383dcdc30374e6bd52c935a87acaed4038af0a932bcc573e0cd10e17",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/our-focus-areas-for-small-business/small-business-focus-areas",
+        "observed_at": "2026-10-15",
+        "source_last_modified": "2026-07-01"
+      },
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: What attracts our attention in small business",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/our-focus-areas-for-small-business/what-attracts-our-attention-in-small-business",
+      "checked_at": "2026-10-15",
+      "fact": "Read 15 October 2026 (page last updated 9 February 2026). Behaviours that attract ATO attention include not declaring all income and over-claiming expenses, not lodging and paying in full and on time, paying employees in cash, using business funds for private lifestyle and poor record keeping.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO web guidance on behaviours, not a test of any return.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/our-focus-areas-for-small-business/what-attracts-our-attention-in-small-business",
+      "http_status": 200,
+      "fetched_at": "2026-10-15",
+      "source_last_modified": "2026-03-10",
+      "review_required_since": "2026-10-15",
+      "pending_review": {
+        "content_hash": "aa981277a1a254678bb7155c8ab9f419414c2feec7eaa4cb26392f1c5c2b981c",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/our-focus-areas-for-small-business/what-attracts-our-attention-in-small-business",
+        "observed_at": "2026-10-15",
+        "source_last_modified": "2026-03-10"
+      },
+      "content_hash": "",
+      "content_hash_covers": "",
+      "content_url": ""
+    }
+  ]
+}
