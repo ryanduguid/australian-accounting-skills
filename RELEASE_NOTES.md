@@ -5,8 +5,10 @@ bringing the pack to 66. It prepares an individual host's gross platform
 income reconciliation, night-by-night use calendar, holiday home evidence
 under s 26-50, TR 2026/1 and PCG 2026/3, the GST residential premises screen
 and state levy checks. It ships with a source-discovery record awaiting
-baseline acceptance and 2 fabricated cases, bringing the validation pack to
-85 cards. Those cards need a confirmed result before this release.
+baseline acceptance and 2 fabricated cases. A further au-capital-gains card
+tests a disposal contract signed before 1 July 2027 that settles after it,
+bringing the validation pack to 86 cards. The 3 new cards need a confirmed
+result before this release.
 
 # v0.4.0
 

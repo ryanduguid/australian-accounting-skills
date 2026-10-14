@@ -113,8 +113,8 @@ on 4 October
 [working holiday makers](../validation/results/2026-10-04-working-holiday-makers-confirmed.json)).
 The four core failure cards also added for v0.3.1 have no recorded run.
 The `au-short-stay-accommodation-missing-evidence` and
-`au-short-stay-accommodation-platform-gst-registration` cards, added for
-v0.4.1, have no recorded run.
+`au-short-stay-accommodation-platform-gst-registration` cards and the
+`au-capital-gains-contract-straddles-reform` card, added for v0.4.1, have no recorded run.
 
 When a skill's wording changes, rerun its cards at the exact revised commit,
 using the process above. Preserve the 12-cent exception and missing evidence

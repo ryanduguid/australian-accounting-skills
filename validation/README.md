@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 85 cards in `cases/` test workflow quality, provenance and restraint.
+The 86 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -79,6 +79,7 @@ law claim, unverified source or guess.
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
 | [Business formation preparation checklist: missing evidence](cases/au-business-formation-missing-evidence.md) | au-business-formation |
 | [Capital gains workpaper: missing evidence](cases/au-capital-gains-missing-evidence.md) | au-capital-gains |
+| [Disposal contract signed before 1 July 2027 that settles after it](cases/au-capital-gains-contract-straddles-reform.md) | au-capital-gains |
 | [Work-related car expense workpapers: missing evidence](cases/au-car-expenses-missing-evidence.md) | au-car-expenses |
 | [Client acceptance and engagement terms review: missing evidence](cases/au-client-acceptance-missing-evidence.md) | au-client-acceptance |
 | [Company tax workpapers: missing evidence](cases/au-company-tax-missing-evidence.md) | au-company-tax |
@@ -136,7 +137,8 @@ confirmed on 29 September, covers them along with every other card then
 current. The `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
 v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
-short-stay accommodation cards, added for v0.4.1, have no recorded run. See
+short-stay accommodation cards and the CGT contract-timing card, added for v0.4.1,
+have no recorded run. See
 [results](results/).
 
 Three further cards check whether the model completes supported bank,

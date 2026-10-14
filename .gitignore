@@ -98,6 +98,7 @@ exports/
 !/validation/cases/au-working-holiday-makers-missing-evidence.md
 !/validation/cases/au-short-stay-accommodation-missing-evidence.md
 !/validation/cases/au-short-stay-accommodation-platform-gst-registration.md
+!/validation/cases/au-capital-gains-contract-straddles-reform.md
 # Result files hold verdicts or versioned trial digests. The validator rejects
 # prompts, outputs and transcripts under this exception.
 !/validation/results.schema.json
