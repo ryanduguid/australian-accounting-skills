@@ -69,6 +69,13 @@ locations or repository configuration without explicit approval.
 - Opening balances tie to the source records and the tie-out is shown
 - The assumptions log records source, owner and date for each driver
 - The stress case names the assumption it stresses and the decision owner
+- Units, currency and scaling agree across inputs, schedules and outputs
+- Formula patterns and range boundaries include the intended first and last
+  periods; hidden rows, columns or sheets do not conceal an override
+- A revision comparison separates changed assumptions, changed formulas,
+  formulas replaced by constants and external/prior-workbook links from formatting
+- Change one identified driver and independently recompute its affected outputs;
+  retain the recalculation evidence or mark that check as not performed
 
 ## Boundaries
 

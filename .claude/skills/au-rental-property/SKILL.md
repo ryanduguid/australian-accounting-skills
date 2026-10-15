@@ -13,6 +13,13 @@ Legal ownership shares, rental agent and bank statements, lease and availability
 
 1. Reconcile gross rent, agent deductions and net receipts. Include other property receipts and explain timing differences.
 
+   Bridge the agent account from opening funds plus receipts, less agent-paid
+   expenses and owner remittances, to closing funds held. Reconcile remittances
+   separately to the owner's bank receipts. Mark which expenses the agent paid
+   and which the owner paid directly; match their source references before
+   adding them so the same expense is not counted twice. A net deposit does not
+   establish gross rent or the amount attributable to the tax period.
+
 2. Build an expense schedule that separates repairs, initial works, improvements, borrowing costs and other capital items for current-law review.
 
 3. Trace borrowed funds to their use, including redraws and private components. Property security and the loan's name alone do not establish interest deductibility. From the 2027-28 income year, check s 26-155 of the *Income Tax Assessment Act 1997* as inserted by the *Treasury Laws Amendment (Tax Reform No. 1) Act 2026*, which limits deductions for residential dwellings to the rental income from them unless an exception applies, such as a dwelling last acquired before 7.30 pm (ACT legal time) on 12 May 2026 or a new residential dwelling. Record the acquisition evidence the exception depends on, and carry any quarantined amount forward in a schedule rather than dropping it.

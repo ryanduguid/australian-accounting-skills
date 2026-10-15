@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 89 cards in `cases/` test workflow quality, provenance and restraint.
+The 93 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -72,11 +72,13 @@ law claim, unverified source or guess.
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
 | [Financial model workbook with structure faults](cases/financial-modelling-structure-faults.md) | financial-modelling |
+| [Formula changes concealed by matching cached totals](cases/financial-modelling-formula-change.md) | financial-modelling, workpaper-tie-out |
 | [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
 | [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
 | [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
+| [Connector business selection and period provenance](cases/au-bookkeeping-business-selection.md) | au-bookkeeping |
 | [Business formation preparation checklist: missing evidence](cases/au-business-formation-missing-evidence.md) | au-business-formation |
 | [Capital gains workpaper: missing evidence](cases/au-capital-gains-missing-evidence.md) | au-capital-gains |
 | [Disposal contract signed before 1 July 2027 that settles after it](cases/au-capital-gains-contract-straddles-reform.md) | au-capital-gains |
@@ -112,6 +114,7 @@ law claim, unverified source or guess.
 | [Personal services income review pack: missing evidence](cases/au-psi-review-missing-evidence.md) | au-psi-review |
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
+| [Rental agent funds and duplicate expense evidence](cases/au-rental-property-agent-balance-bridge.md) | au-rental-property |
 | [Individual return amendment review: missing evidence](cases/au-return-amendment-missing-evidence.md) | au-return-amendment |
 | [Short-stay accommodation workpapers: missing evidence](cases/au-short-stay-accommodation-missing-evidence.md) | au-short-stay-accommodation |
 | [Platform income and a GST registration question](cases/au-short-stay-accommodation-platform-gst-registration.md) | au-short-stay-accommodation, au-gst-registration-review |
@@ -122,6 +125,7 @@ law claim, unverified source or guess.
 | [Tax planning evidence and options: missing evidence](cases/au-tax-planning-review-missing-evidence.md) | au-tax-planning-review |
 | [Tax-period source register: missing evidence](cases/au-tax-rates-verification-missing-evidence.md) | au-tax-rates-verification |
 | [Tax research file note: missing evidence](cases/au-tax-research-missing-evidence.md) | au-tax-research |
+| [Firm-template draft with source and review evidence](cases/au-tax-research-template-output.md) | au-tax-research |
 | [Tax residency and departure review pack: missing evidence](cases/au-tax-residency-missing-evidence.md) | au-tax-residency |
 | [State transfer duty review pack: missing evidence](cases/au-transfer-duty-missing-evidence.md) | au-transfer-duty |
 | [Transfer pricing evidence pack: missing evidence](cases/au-transfer-pricing-missing-evidence.md) | au-transfer-pricing |
@@ -143,6 +147,9 @@ v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
 short-stay accommodation cards, the 3 pre-lodgement review cards and the CGT
 contract-timing card, added for v0.4.1, have no recorded run. See
 [results](results/).
+
+The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no
+recorded model run. Structural checks do not establish behavioural passes.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic while keeping professional decisions
