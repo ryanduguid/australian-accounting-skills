@@ -1,2 +1,10 @@
 language-settings:
   python: '3.14'
+ignore:
+  'snyk:lic:pip:pathspec:MPL-2.0':
+    - '* > pathspec@1.1.1':
+        reason: >-
+          Accept MPL-2.0 for unmodified pathspec 1.1.1 used only by mypy
+          for development linting. Review before any redistribution, modification
+          or use outside linting.
+        expires: '2026-11-15T00:00:00.000Z'

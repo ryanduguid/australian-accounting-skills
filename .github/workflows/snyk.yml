@@ -2,8 +2,8 @@ name: Snyk
 
 # Snyk's free plan cannot read uv.lock, so each locked environment is exported
 # to a requirements file, installed into its own virtual environment and
-# tested through Snyk's pip support. The public repository URL identifies these
-# scans for the open-source test allowance.
+# tested through Snyk's pip support. Each scan receives the repository URL
+# explicitly.
 on:
   schedule:
     - cron: "23 4 * * 1"
@@ -75,7 +75,8 @@ jobs:
             [ -n "$kind" ] || continue
             if [ "$kind" = npm ]; then
               [ -z "$SNYK_TOKEN" ] || snyk test --file="$target" --project-name="$target" \
-                --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" || status=1
+                --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" \
+                --policy-path=.snyk || status=1
               continue
             fi
             work=$(mktemp -d)
@@ -102,7 +103,15 @@ jobs:
               --only-binary=:all: --requirement "$work/requirements.txt" || { status=1; continue; }
             [ -z "$SNYK_TOKEN" ] || snyk test --file="$work/requirements.txt" --package-manager=pip \
               --command="$work/venv/bin/python" --project-name="$kind:$target" \
-              --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" || status=1
+              --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" \
+              --policy-path=.snyk --json-file-output="$RUNNER_TEMP/snyk-${target//\//_}.json" || status=1
           done <<< "$SNYK_TARGETS"
           [ -n "$SNYK_TOKEN" ] || exit 1
           exit "$status"
+      - name: Retain Snyk scan reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: snyk-scan-reports
+          path: ${{ runner.temp }}/snyk-*.json
+          if-no-files-found: error
