@@ -101,6 +101,10 @@ jobs:
             python -m venv "$work/venv"
             "$work/venv/bin/python" -m pip install --quiet --disable-pip-version-check --no-deps \
               --only-binary=:all: --requirement "$work/requirements.txt" || { status=1; continue; }
+            [ -z "$SNYK_TOKEN" ] || snyk monitor --file="$work/requirements.txt" --package-manager=pip \
+              --command="$work/venv/bin/python" --project-name="$kind:$target" --target-reference=main \
+              --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" \
+              --policy-path=.snyk --json > "$RUNNER_TEMP/snyk-monitor-${target//\//_}.json" || status=1
             [ -z "$SNYK_TOKEN" ] || snyk test --file="$work/requirements.txt" --package-manager=pip \
               --command="$work/venv/bin/python" --project-name="$kind:$target" \
               --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" \
