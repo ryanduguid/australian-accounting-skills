@@ -14,3 +14,33 @@ These skills name 6 maintained tools rather than asking the agent to invent the 
 - [The WIP Tally](https://github.com/ryanduguid/australian-accounting/tree/main/packages/the-wip-tally) (`the-wip-tally` in `australian-accounting`; `wip-tally schedule`) for reviewed cost-to-cost arithmetic. The skills retain the unit-of-account, recognition and professional-judgement gates.
 
 Trial-balance exception review after the gate runs through [Monthly Close Controls](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/monthly-close-control-plane) (`monthly-close-control-plane` in `accounting-review-pipeline`), which surfaces exceptions and never locks a period.
+
+## MYOB reads
+
+The `au-bookkeeping` workflow accepts identified MYOB exports or an approved
+connector's read results. Record the selected company file or business, period,
+basis, filters and capture date, and reconcile its identity to the engagement
+before each read. AccountRight and MYOB Business can expose different product
+features; an absent endpoint or unsupported report leaves that evidence missing.
+Use exports when a connector cannot establish the required scope.
+
+MYOB's [authentication](https://developer.myob.com/api/myob-business-api/api-overview/authentication/)
+and [scope documentation](https://developer.myob.com/api/myob-business-api/api-overview/scopes/)
+describe provider-managed sign-in and endpoint permissions. Have the approved
+application manage authorisation and credentials; do not paste them into chat,
+workpapers or this repository. Inspect the connector's actual tools and permissions
+before using it; OAuth access can include writes and does not approve them.
+
+The `@alfe.ai/myob-mcp` package is a separate third-party option, not a bundled
+dependency. Its 0.5.3 metadata declares `UNLICENSED`, and its README requires
+`myobBusinessId` on each MYOB API tool with Alfe-managed OAuth. These are provider
+specific details to recheck at use time, not an instruction to install it or copy
+its code. See the [package metadata](https://registry.npmjs.org/@alfe.ai%2Fmyob-mcp).
+
+## Firm-template deliverables
+
+`au-tax-research` can prepare a draft in a supplied Word, Excel or PowerPoint
+template. Configure the template paths and versions and secure output location
+in the [firm context example](../templates/firm-CLAUDE.md.example). The requested
+layout must preserve citations, source-version evidence and open review items.
+Record rendering and recalculation checks separately from the reviewer's decision.

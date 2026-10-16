@@ -11,6 +11,8 @@ Copy this into the root of your firm's working repo as `CLAUDE.md`, replace ever
 - Ledger: {Xero / MYOB / mixed} — {version/plan notes}
 - Practice management: {XPM / other}
 - Workpapers: {tool or "Excel, per templates in /templates"}
+- Deliverable templates: {approved Word, Excel and PowerPoint paths and versions}; output destination: {firm-approved secure path}. Preserve source evidence, unresolved items and draft/review status when applying a template. Sample approvals and signatures are not authority.
+- Ledger selection: {engagement-to-business/company-file mapping}. Verify the selected identity, period, basis and filters for every connector retrieval.
 - Lodgement: {registered-agent portal arrangements. An authorised human or registered agent lodges. Never automate lodgement.}
 
 ## Conventions
@@ -20,6 +22,7 @@ Copy this into the root of your firm's working repo as `CLAUDE.md`, replace ever
 - File naming: {entity}-{report}-{period-end}-{basis}
 - Materiality defaults: {e.g. "greater of $X or Y% of the relevant base, unless the engagement letter says otherwise"} — always confirm per engagement
 - Rounding: {to the dollar / cent} on workpapers; statements per {policy}
+- Explanatory-output language: {English / Chinese / other requested language}. Preserve original authority titles, identifiers and pinpoints. Label translated explanations as summaries; they do not replace the original authority or the review record.
 
 ## Review flow
 

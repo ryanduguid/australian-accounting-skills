@@ -8,7 +8,7 @@
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 15,
-    "skills_with_only_the_seeded_case": 36
+    "skills_with_only_the_seeded_case": 34
   },
   "skills": [
     {
@@ -67,8 +67,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
+          "au-bookkeeping-business-selection",
           "au-bookkeeping-missing-evidence",
           "au-bookkeeping-supported-reconciliation",
           "statement-correction-revision"
@@ -696,11 +697,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-rental-property-agent-balance-bridge",
           "au-rental-property-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -898,11 +900,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-tax-research-missing-evidence"
+          "au-tax-research-missing-evidence",
+          "au-tax-research-template-output"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -1251,8 +1254,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "financial-modelling-formula-change",
           "financial-modelling-structure-faults"
         ],
         "only_seeded_case": false
@@ -1502,12 +1506,13 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 7,
+        "cases": 8,
         "case_ids": [
           "bas-export-manifest-rounding",
           "debtor-summary-review",
           "div7a-upe-review",
           "engagement-completion-evidence",
+          "financial-modelling-formula-change",
           "post-journal-provenance-tie-out",
           "workpaper-stale-reference",
           "xero-export-duplicate-and-missing"
