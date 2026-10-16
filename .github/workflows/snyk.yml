@@ -2,8 +2,8 @@ name: Snyk
 
 # Snyk's free plan cannot read uv.lock, so each locked environment is exported
 # to a requirements file, installed into its own virtual environment and
-# tested through Snyk's pip support. It runs weekly and when a dependency file
-# changes, which keeps it inside the free plan's monthly test allowance.
+# tested through Snyk's pip support. The public repository URL identifies these
+# scans for the open-source test allowance.
 on:
   schedule:
     - cron: "23 4 * * 1"
@@ -14,12 +14,14 @@ on:
       - "**/uv.lock"
       - "**/requirements*.txt"
       - "**/package-lock.json"
+      - ".snyk"
       - ".github/workflows/snyk.yml"
   pull_request:
     paths:
       - "**/uv.lock"
       - "**/requirements*.txt"
       - "**/package-lock.json"
+      - ".snyk"
       - ".github/workflows/snyk.yml"
 
 permissions:
@@ -42,6 +44,9 @@ jobs:
       # pip:<requirements file> or npm:<package-lock.json>.
       SNYK_TARGETS: |
         pip:requirements-test.txt
+        pip:requirements-lint.txt
+        pip:requirements-fuzz.txt
+        pip:requirements-coverage.txt
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -69,7 +74,8 @@ jobs:
           while IFS=: read -r kind target; do
             [ -n "$kind" ] || continue
             if [ "$kind" = npm ]; then
-              [ -z "$SNYK_TOKEN" ] || snyk test --file="$target" --project-name="$target" || status=1
+              [ -z "$SNYK_TOKEN" ] || snyk test --file="$target" --project-name="$target" \
+                --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" || status=1
               continue
             fi
             work=$(mktemp -d)
@@ -94,8 +100,9 @@ jobs:
             python -m venv "$work/venv"
             "$work/venv/bin/python" -m pip install --quiet --disable-pip-version-check --no-deps \
               --only-binary=:all: --requirement "$work/requirements.txt" || { status=1; continue; }
-            [ -z "$SNYK_TOKEN" ] || snyk test --file="$work/requirements.txt" --package-manager=pip --skip-unresolved \
-              --command="$work/venv/bin/python" --project-name="$kind:$target" || status=1
+            [ -z "$SNYK_TOKEN" ] || snyk test --file="$work/requirements.txt" --package-manager=pip \
+              --command="$work/venv/bin/python" --project-name="$kind:$target" \
+              --org=ryanduguid --remote-repo-url="https://github.com/$GITHUB_REPOSITORY" || status=1
           done <<< "$SNYK_TARGETS"
           [ -n "$SNYK_TOKEN" ] || exit 1
           exit "$status"
