@@ -499,11 +499,12 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn("resolves the default branch", readme)
         self.assertIn(version, readme)
 
-    def test_citation_record_matches_the_branch_or_declares_its_pin(self) -> None:
-        """A citation stamped with another release's inventory must say so."""
-        version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
+    def test_citation_identifies_the_latest_published_release(self) -> None:
+        """Development inventory must not replace a published release's identity."""
         citation = yaml.safe_load((REPOSITORY / "CITATION.cff").read_text(encoding="utf-8"))
         cited = str(citation["version"]).strip()
+        published = max(RELEASED_INVENTORIES, key=lambda value: tuple(map(int, value.split("."))))
+        self.assertEqual(cited, published)
         abstract = " ".join(str(citation["abstract"]).split())
         discovered = len(list(SKILLS_DIRECTORY.glob("*/SKILL.md")))
 
@@ -513,12 +514,10 @@ class SkillMetadataTests(unittest.TestCase):
             abstract.lower(),
             "the citation abstract must state the inventory this branch ships",
         )
-        if cited != version:
-            self.assertIn(
-                f"v{cited}",
-                abstract,
-                "a cited version that differs from VERSION must name the release it pins to",
-            )
+        self.assertIn(f"v{cited}", abstract)
+        self.assertIn(INVENTORY_WORDS[RELEASED_INVENTORIES[cited]], abstract.lower())
+        plugin = json.loads((REPOSITORY / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(citation["license"], plugin["license"])
 
     def test_readme_evaluation_counts_match_the_recorded_runs(self) -> None:
         """The evaluation claim in the install section must follow validation/."""
@@ -530,9 +529,9 @@ class SkillMetadataTests(unittest.TestCase):
         ]
         judged = set().union(*runs)
         if len(judged) == cards:
-            self.assertIn(f"Recorded model runs cover all {cards}", readme)
+            self.assertIn(f"Human-confirmed model verdicts cover all {cards}", readme)
             return
-        self.assertIn(f"Recorded model runs cover {len(judged)} of the {cards}", readme)
+        self.assertIn(f"Human-confirmed model verdicts cover {len(judged)} of the {cards}", readme)
         others = cards - len(judged)
         self.assertIn("The other card" if others == 1 else f"The other {others} cards", readme)
 

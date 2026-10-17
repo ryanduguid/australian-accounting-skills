@@ -1,0 +1,186 @@
+{
+  "schema_version": 2,
+  "model": "gpt-6.1-sol",
+  "run_date": "2026-10-17",
+  "skills_version": "edcbaa91d6217c7dd13be6754b00bb2aeb6afb15",
+  "runner": "Codex observation run; independent proposed assessments retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-bookkeeping-business-selection": {
+      "input_sha256": "1b6bb00e248c551b638a9d0ee79a0f913f5acea5c1d060dfe5d5725007078324",
+      "context_sha256": "d4e27cef99d7ddbb70923f1fce7c81339a045f07fe0c11b0cf841b5e47a81296",
+      "rubric_sha256": "6c7c7a234fe357114b2fc80b413209bfc60b62f0feb62a6f4fa00b14382de672",
+      "output_sha256": "949fb27c65ff4f98d87e2a9bcc834dcd2c674c3da86f74ef56b2420c0ccd2624"
+    },
+    "au-capital-gains-contract-straddles-reform": {
+      "input_sha256": "0fc256d4db12070b590ea193bd9582d3b9046f1e436f8944ffe4cf420ff78f36",
+      "context_sha256": "554637331f996dab88d28282a7923ef8eab6969cf663170684416a391e3cedaf",
+      "rubric_sha256": "f7fde34715d07a0f01260c4e831bce1a380b2f77fde0b1b8ae8438964d8c118a",
+      "output_sha256": "9a94101fe52ee77126a929ebdef8dd57c80e7b554719a6f504d462c94e42f728"
+    },
+    "au-payg-instalment-variation-missing-evidence": {
+      "input_sha256": "d9c7e1d8fbc3f735b3876f2ec719cd4850a3c5ab499bac534d991de570f35633",
+      "context_sha256": "720ad7125b09bb3105496151ae14dc6209a6d32a17a49f2f2a33e7eb9805085c",
+      "rubric_sha256": "9508176aae19d222ace9b842fa574705d222a307f39e2770c1f70232fbcb3e5e",
+      "output_sha256": "4616285c7da41ce06419a399d914e11cccc04a7a2a34d6f4e48720f4a7972dd2"
+    },
+    "au-pre-lodgement-review-claim-calibration": {
+      "input_sha256": "3679b1bdff14defec018ca6cd5fb3103719105830275b60c23a236e6ba9e8d7e",
+      "context_sha256": "caad5d4a7499048dafe7629e80edeb008f16818e3752488b57af093f3a5c9efd",
+      "rubric_sha256": "be3cee8e8d1fe55ee8a2ee6cb019df1cb7b0e7826fd7306ab312b0107f33ca60",
+      "output_sha256": "412d2f365097a311dc0e5bc79360aa7f8d9864bae4ab100895ecd30e64fa50b5"
+    },
+    "au-pre-lodgement-review-missing-evidence": {
+      "input_sha256": "ba94956a1067048af9be3795f59171f94ec2f36a6fd9ce97ad3f9cc814d05dce",
+      "context_sha256": "00d1a4d4c4ddec00171f99ad6ffa0e738beb46eb9920bc8d45bee9ad4b86525a",
+      "rubric_sha256": "14a9225d9e0263644e754baba671d35356c4179c8b51d52d33ff68ae9ad2bc9f",
+      "output_sha256": "1dcb274b1ef50f0ebbd295899fffa117a2d1702cde46a40030804f8da62e82fb"
+    },
+    "au-pre-lodgement-review-rating-not-clearance": {
+      "input_sha256": "1d8850dc9e26312c4234b037d76d4f9e765633071a13619ae477e7142a826759",
+      "context_sha256": "cad3a435702c66eb8424d54627775bd4a646c1f20e750a8d54f9925a7035d441",
+      "rubric_sha256": "a3a2d96b42dc265de73ac20ef5d7c65ad7749f7428f96ed3943751e23a8277e9",
+      "output_sha256": "8d4d13185abdf0d861621e9d5980837748844c3e8cc9da835b902dc137885870"
+    },
+    "au-rental-property-agent-balance-bridge": {
+      "input_sha256": "e346485cebefcc740affc5b4bf66d09e8b5d38e66b3b7b387938e6c2b6495f77",
+      "context_sha256": "a012f779de028694b41aa421e7ab3e02c4a08afe02fb83166da72fd31072ac5f",
+      "rubric_sha256": "9623295a2e22ec7f183d648897303913c7f6966c5b2af9804180c4bd52ca09c2",
+      "output_sha256": "76992fa3a6f2ddc24a99d22c5990d5cf2691f9d8d820f2a5bfe98343aa716791"
+    },
+    "au-short-stay-accommodation-missing-evidence": {
+      "input_sha256": "833a21ac07e6a4b143856cef4c53c83a665187e461967946dd6a43fb93375318",
+      "context_sha256": "f6340544dbd8ab8a0590ce452858e6cf8a65a68ef6704144b7f5a511f66ddfa6",
+      "rubric_sha256": "adabc1114b7f96f29f58ec567f0ca7f7069f0c65b9f75bccc849c16c8fb7e4d0",
+      "output_sha256": "1b5e85afdccade17f9ad5ddad97e3ebcf2b639ca5efbd603b68902e1ff2977fb"
+    },
+    "au-short-stay-accommodation-platform-gst-registration": {
+      "input_sha256": "d6389e5a4627f2499a1718cfe9f4ecba4db4c51eead3292ce6045c9c7b9d2bf0",
+      "context_sha256": "2dacafbc1aa45877c5ba390497214162d04f347501166151e890b7719cdc767f",
+      "rubric_sha256": "d02fe4e53342c7a305e8f36eb2e517fb45a5f30b2299a5caf0685a3f5a4bb820",
+      "output_sha256": "82a13da2ac0714a3142b14ebdb41d31fb1147ec55dc8b4e5ae43dda4ec47d4f3"
+    },
+    "au-super-contribution-caps-missing-evidence": {
+      "input_sha256": "13d17cf4ebdd9d86d52a57b5e7a160c5b1f1b1354ef5eb175da2b72fed753830",
+      "context_sha256": "d9529630d7314cd7bddc80ee81dba4317e6c819ff5144ab63ded590b25a7cd10",
+      "rubric_sha256": "eab71623541c894f8f463b129a72c49434c1b7ce0ada9223ffbe8b7c42a84b4d",
+      "output_sha256": "1c8400f009461213ef226c244902f55baad6dbff7cdddebd6d5302ee83cf47c8"
+    },
+    "au-tax-research-template-output": {
+      "input_sha256": "bb79a8411e17c99ec3644b6cd0476f6d7bd45969e56f979b342be130a21522c7",
+      "context_sha256": "20086eb9101f5f12df9c29d1b1834337bbd5e555065d6a76d86fbd5ddf006de2",
+      "rubric_sha256": "5ae39cf714d172ba66b7a3e2b8c6865c1d6d5bcc39757dbd110b419ed8c2243c",
+      "output_sha256": "b0b83d49ec6edd3aca894a518d94bca3b2100594be5496204eb95f67d1955d37"
+    },
+    "bas-export-manifest-rounding": {
+      "input_sha256": "1805830c0b8a0ef28035a676918276a5e1e9a89efa5c3a1e6aaa99d0e6424843",
+      "context_sha256": "22f5e5216f57c478f0d2709469946143f777492454045de5641d2b3876802428",
+      "rubric_sha256": "fcdf5944baf5f44bbe0e3f1e21efd86b0d2517b75b836e2e1470306f217062fc",
+      "output_sha256": "2ec3870c4c7784ec27525313b28c8eaf7baf22956e84b4404e62b89b5599923a"
+    },
+    "bas-g10-g11": {
+      "input_sha256": "e0de5618b389e8dbc6d9de838d254b439d79806e202515f8ea5733d7151bb34f",
+      "context_sha256": "ead86a2f2b30d8ef72c6358894c20a87602543d594c8a64c43ae8d98a8b1d464",
+      "rubric_sha256": "7ec6687442e35f60957b440b66d2ec85bcd6c8a3d8ca71aeb04e262906c5a577",
+      "output_sha256": "555c3e9686536f94938fb96e225b905838f0a646eac4c8b61409c4312081cb4e"
+    },
+    "bas-gst-credit-and-attribution": {
+      "input_sha256": "3e8d80573c435e024b13aa90f0ae15313d067901a757af6f904d6b3487e51aea",
+      "context_sha256": "03a1f92aa0aec50180a3b7789fa791caa66d4e2f0fc34b68951c67523c35aae1",
+      "rubric_sha256": "de7370cb309ecd88863eb2faaa6d45fa99b7fe8966b885024e62e94829d2fa07",
+      "output_sha256": "0738dac49d5c592b70633a5b66fde2e32d43972389fd5bede14203440e8ca4d6"
+    },
+    "bas-gst-fees-and-evidence": {
+      "input_sha256": "cda9b3c784e1f6fe5046f602d99bdc1027abfdd59ce659938226c38dea088c9b",
+      "context_sha256": "82e0309dacd325714343a88b1fd39d79a5ed9a2ef6b9e7526d5ed89f4c4445b5",
+      "rubric_sha256": "a8edc6b4efd82bb48e577916eab1b603c580e0df92ee14ce1d6ff2153519d412",
+      "output_sha256": "2bb8a4fc4984d0e57ba6f736dcb5d8eade05e9667748cca589dcd8cfb8fcd29b"
+    },
+    "bas-gst-missing-and-zero": {
+      "input_sha256": "ee0b0c6854055c35d474b07da88d38eab51628b56fb8c9a6c5343feb47b83ace",
+      "context_sha256": "5a940ce7a070b615bcd7c36e60be6b1ca40b88bcb98ac395573c856dd351a9e6",
+      "rubric_sha256": "e5226f9e98fdf75edafeeb742c45a23ddf6fc3d46b8fe59fcfff2baf73a5b264",
+      "output_sha256": "ee14f05affa69a630c2057c6d3634ddec18e86ab645105d7f83169981a6ebb05"
+    },
+    "bas-stp-w3-w4": {
+      "input_sha256": "54575a8b74e80bc42d7589cddf5f872c8f12252bd86a9ae7e3738ac605a5ac69",
+      "context_sha256": "25eb3c9f116a8c3b6c13eb3dd8bdbef3263a06c4efbe2a59682935919479b425",
+      "rubric_sha256": "67eeabd68f783e65f996aa2498de3a053e10820497ee5b6070c2a74146b6c1a2",
+      "output_sha256": "836cbff880b187b1b5edb8708b23a6db6d04ec010f9faa1a15fd62133e42f543"
+    },
+    "debtor-summary-review": {
+      "input_sha256": "10b5077583c0727e2d9d1c3917208167e2659bef1bd902dd5a8aa224b8a0cbc9",
+      "context_sha256": "eada23e6e42978c201cbac6e13251ff490726c25b1246caf0ca1d1a00a4ae9e7",
+      "rubric_sha256": "58e43f20059f8b4392734096af375453a4439bb0054a2c9d54069a0e4347ffdc",
+      "output_sha256": "e22f326145ef7ccfd5e04618a1821b90b4c18c8db12b5d062f44eefcb5246067"
+    },
+    "engagement-completion-evidence": {
+      "input_sha256": "22f8d42765dc241ce8d0485dfe063dab72afdda127c8629f312e34c103a7f9e9",
+      "context_sha256": "887400821a38250901c32300a17423e3f8813c03d49792e1689ee4fd5d82aaaf",
+      "rubric_sha256": "19b4f5cb02cfa7138c6e8d464dce536e4d365aa82ca715d900e4e8485f8571ac",
+      "output_sha256": "3a5885534694162674233265bed6e01be7f2fd170b93e8432f83a48daeae2a43"
+    },
+    "export-manifest-rounding": {
+      "input_sha256": "17f8a486dc650ea441a58471d4012e814f296b23f80e53efa3fcf74072806a05",
+      "context_sha256": "dfd8b68fcce156593310106368333ea2d7c2468fdd9f321cd995b67d274f2c8d",
+      "rubric_sha256": "951da86c9981c3d386a4bbb9a3e42454160bfe71ca5164721507b4776afd7598",
+      "output_sha256": "1771c5a3769329aaf3e121f3de6f33698091a1fe8e66dc4ef90d2efbe4a6539e"
+    },
+    "financial-modelling-formula-change": {
+      "input_sha256": "b60a208cb462bebdb0bbeb6972c75c494e60763dcb439b45cd130ad067a50e4d",
+      "context_sha256": "6d3017070fe763d798132147c7f8e28e9a27aec83a1ca31e0160c9858b921e0b",
+      "rubric_sha256": "a693b34420bce95b33b820fd1b14b6da3c4c3e6463c26dde65be82a699527b49",
+      "output_sha256": "c92cc10491afc3f886978d235af5271a96d0b30bc7fff59147b8e60a7fbe42cc"
+    },
+    "month-end-mismatched-period": {
+      "input_sha256": "72116e26537ca7de59e3a109c4da90686fb7670ffb4bb62b3f5bafea98f39f88",
+      "context_sha256": "b1e35a33959129161fa1c4b3b037b88348822efdaa0a71d4742d64973fa20026",
+      "rubric_sha256": "8115a58113fc2c0cee725d447ad1eb4c40682f4a4c02197a2e75709968f1a7c3",
+      "output_sha256": "cf5a26853b2da7b37894a5a864b01e77caff6f45acd491535b37740f54a07046"
+    },
+    "payroll-tax-contractor-characterisation": {
+      "input_sha256": "69d86ab84d0ba0eeffe17f399b90b13cecc0af0f309bd4db6ba634ca0d14f1e9",
+      "context_sha256": "a762077a515abe6a1d3092fbbfc4f813562c5d2e3b61b5b062b09a1873ef992e",
+      "rubric_sha256": "164134c6268690323e0520a274ad0bb87a3f2dd48ae3394847fd895a5bec1dff",
+      "output_sha256": "f0367e09fbb1ef8d3ee08e42e18a57a0ee58f6a924404006e51e264747a64b29"
+    },
+    "receipt-schedule-conflicts": {
+      "input_sha256": "4c41ec5e71e9880b2d810439fe3e65cf4b2bd06e548ee2985d6d269a066c0902",
+      "context_sha256": "26aa355beb2585efff6a18a3ecf7269604a1ada382480a13fe01c22c8b8c8c8a",
+      "rubric_sha256": "45e20fc013da2744126244e5e993c77b8b275b940946895a9a1396db7d5e9723",
+      "output_sha256": "9b1d3336177cf60cb54466858ec59b74405ac9e8488bb3a3bb03037b6a56f279"
+    },
+    "source-quote-partial-coverage": {
+      "input_sha256": "8822a0ce8e120da43772d7621afc6961f7c4c4ee560c8fe86ef066078e4301a2",
+      "context_sha256": "f8f1e93711085bcb1f6bb5a9f33d2590611b78f2ce3bf5a20e75434abbb919b3",
+      "rubric_sha256": "76843a7186aa6d057bd4e4099942293cccf16e294d2066931bd7c4ce1d4a8a4f",
+      "output_sha256": "a06e494d2c6851d314efac8bb615f4ad33bed8157d4522ebb5602c8dd5ed42d4"
+    },
+    "standalone-skill-safety-boundary": {
+      "input_sha256": "f092e242edd90f5f452aee071184e8b8fac62d02487e549d16baaf9a787ad431",
+      "context_sha256": "64bf4592883c27ee48335a924b65dbdd192c59c61182ae05f53ce348eb242baf",
+      "rubric_sha256": "1c2e8f2f16e3b25f6c353c960f27297ffc680b0b1e0a5cdee4e5c162f6e3c1fe",
+      "output_sha256": "7f2885ce7119e05422c40d8b915d8077e076100b3d870f797c47dfd59d296969"
+    },
+    "statement-correction-revision": {
+      "input_sha256": "a302bc8084c2df5369b89e9ecb8d749405d5fa1735b72f4625877b4010829a86",
+      "context_sha256": "6e5b1dee7cfafab095c969575f38b2e4355f00616ebf3d8fe06ed16c3ce4ef81",
+      "rubric_sha256": "742610cd62877333a78b61666d1a58d63c2a5552c6452af3c266c3211f19eb98",
+      "output_sha256": "a7d60e349d62ba676164590a2205fafb6bd9300162abecbfc7c1921cae6681ac"
+    },
+    "workpaper-stale-reference": {
+      "input_sha256": "67e285c1c6839aa6a8de18af7d5cbf72b4d6288889d3ec45e2f043bdd30c2a8d",
+      "context_sha256": "21d6612ad3b886c5291d47495e0ef6ad6c12c40b02274b514672eb76a4d81ec7",
+      "rubric_sha256": "9eea8ba841108dd7db171dd65025e0d5ff5616b0a1da32c586dd8457cfa01c2d",
+      "output_sha256": "0856ee485bc030790f1045483b235cb4895551a3ffd8cb66583c97b6bbbb3402"
+    },
+    "xero-export-duplicate-and-missing": {
+      "input_sha256": "854bb5c40823286abf0fabc89e686e5da896d5a0e2b5aa0e7c6c7e3cc2019bc5",
+      "context_sha256": "5f55fd1023b8ed1184cb87edca3765890a617831a59f11ed29e25cbe2a96ac88",
+      "rubric_sha256": "27ecf7391bcc0d938aa7b811baf20273b1224a7266cd5b188052276eeeac3ccc",
+      "output_sha256": "ec7ea11bdfc3f41516262e3a7e788dc53cb00266eaeada5e29cf304bfad5534f"
+    }
+  }
+}
