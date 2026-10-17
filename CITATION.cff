@@ -6,25 +6,14 @@ authors:
   - family-names: Duguid
     given-names: Ryan
 abstract: >-
-  Nine preparation-only agent skills for Australian public-practice
-  accounting workflows, with source verification, reconciliation checks and
-  human review boundaries. This record is pinned to the tagged v0.1.5
-  release, the nine-skill practice pack. The nineteen-skill v0.2.0 release
-  of 2 September 2026 added the ten contracting workflows; cite that tag
-  when relying on them. The sixty-three-skill v0.3.0 release of
-  29 September 2026 added 43 Australian preparation workflows and one
-  financial modelling workflow. Cite that tag when relying on them. The
-  sixty-five-skill v0.3.1 release of 4 October 2026 added a client
-  acceptance workflow and a working holiday maker workflow. Cite that tag
-  when relying on them. The sixty-five-skill v0.3.2 release of
-  12 October 2026 added transaction GST review to bas-preparation. Cite
-  that tag when relying on it. The sixty-five-skill v0.4.0 release of
-  14 October 2026 moved the pack to the Apache-2.0 licence. Cite that tag
-  when relying on it. The development branch has sixty-seven skills with
-  short-stay accommodation and pre-lodgement review workflows. This
-  citation still identifies v0.1.5.
-version: 0.1.5
-date-released: 2026-08-23
+  Sixty-five preparation-only agent skills for Australian public-practice
+  and contracting workflows, with source verification, reconciliation
+  checks and human review boundaries. This record identifies the published
+  v0.4.0 release under Apache-2.0. The development branch has sixty-seven
+  skills; cite its exact commit when using those changes. Earlier releases
+  retain their original citation records and licences in their tagged revisions.
+version: 0.4.0
+date-released: 2026-10-14
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"
 url: "https://duguid.com.au/tools/australian-tax-ai-agents/"
 license: Apache-2.0

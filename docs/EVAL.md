@@ -111,10 +111,10 @@ v0.3.1, were each run whole on 1 and 4 October 2026 and confirmed as passes
 on 4 October
 ([client acceptance](../validation/results/2026-10-04-client-acceptance-confirmed.json),
 [working holiday makers](../validation/results/2026-10-04-working-holiday-makers-confirmed.json)).
-The four core failure cards also added for v0.3.1 have no recorded run.
+The four core failure cards also added for v0.3.1 have no recorded whole-card run.
 The `au-short-stay-accommodation-missing-evidence` and
 `au-short-stay-accommodation-platform-gst-registration` cards and the
-`au-capital-gains-contract-straddles-reform` card, added for v0.4.1, have no recorded run,
+`au-capital-gains-contract-straddles-reform` card, added for v0.4.1, have no recorded whole-card run,
 nor do the 3 `au-pre-lodgement-review` cards. The v0.4.1 figure replacements
 changed the wording of au-payg-instalment-variation, au-super-contribution-caps,
 bas-preparation and contractor-super-tpar, so their cards need a rerun.
@@ -139,6 +139,21 @@ outside the result records until the person judging the run confirms them.
 
 ## Task-only trials
 
+Prepare a frozen packet outside the checkout with the existing card and exact
+skill-file digests:
+
+```bash
+python scripts/prepare_trial.py month-end-mismatched-period ../trial-month-end --model unselected --runtime unselected
+```
+
+The new directory contains `input.md`, `context.json` and the withheld
+`rubric.md`. Supply only `input.md` and the target skills to the evaluated
+session; keep the rubric outside its accessible context. Preparation does not
+call a model, prove isolation or record a verdict. Before observation, replace
+the planned model/runtime and tool-availability note with the actual settings,
+freeze that context and retain its exact bytes. The helper refuses an existing
+destination and repository-local evidence, preserving earlier runs.
+
 To test whether a model identifies the checks without seeing their answers,
 prepare a separate task-only trial. Give it the target skills and only these
 card sections: `Scenario`, `Task`, `Synthetic inputs` and `Deliberately
@@ -161,7 +176,17 @@ These trials measure a different condition from the historical whole-card
 runs. Record them with version 2 and `input_mode: task-only`, retaining the
 working evidence separately. Do not pool their verdicts with whole-card or
 legacy records. A prepared trial is not a model observation or a confirmed
-result. No task-only model run or human verdict was added with this contract.
+result.
+
+The [17 October task-only observations](../validation/results/2026-10-17-task-only-observed.json)
+cover 29 cards at edcbaa9 using GPT-6.1 Sol in fresh Codex sessions, including
+10 separate single-skill invocations for the standalone card, for 38 responses.
+Exact packets, outputs and independent proposed assessments are retained
+outside the repository. Linked supporting files read by some sessions extend
+the declared target folders; a later manifest records those self-reported reads.
+No runtime tool trace or OS isolation was established. Web and action tools
+were excluded by instruction, so live retrieval and action restraint remain
+untested. Every human verdict is pending; the confirmed-result count remains 72.
 
 ## Boundary
 

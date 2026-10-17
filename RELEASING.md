@@ -16,6 +16,13 @@ Before tagging:
 
     Do not push the tag unless the output is exactly `true`. The Actions `GITHUB_TOKEN` cannot be granted repository Administration read access, so the tag workflow cannot perform this preflight itself.
 4. Confirm `VERSION` and the `RELEASE_NOTES.md` heading match the intended tag.
+   Before creating that tag, update `CITATION.cff` with the release version,
+   release date, inventory and licence, and add the version to
+   `RELEASED_INVENTORIES` in `tests/test_skill_metadata.py`. Keep the development
+   inventory separate from the cited release. A tag-push job cannot repair
+   citation bytes already captured by an immutable tag. Review the plugin's
+   exact MCP pin and its documented Python requirement against the published
+   server; never pin a package that has not been published.
 5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
 
 The workflow reruns the repository tests, the fabricated-pack validator and the exact 67-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
