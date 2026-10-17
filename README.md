@@ -63,6 +63,8 @@ The development installation resolves the default branch, which can carry change
 
 [CITATION.cff](CITATION.cff) identifies the published v0.4.0 release and its 65 workflows. Development prepares v0.4.1 with 67 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
+Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original nine-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.4.0 pack.
+
 ## Reference
 
 - [Install, uninstall and versioning](docs/installation.md)
