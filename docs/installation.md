@@ -51,7 +51,7 @@ present at the repository revision it installs under the stable namespace:
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
 The development plugin also starts the local [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)
-server, pinned to `aus-accounting-mcp==0.5.0` and launched with `uvx`, so it needs
+server, pinned to `aus-accounting-mcp==0.6.0` and launched with `uvx`, so it needs
 Python 3.14 or later and [uv](https://docs.astral.sh/uv/) on the path. The first launch downloads the package
 from PyPI; tool calls then run locally and send nothing to the ATO or any other
 service. `div7a-compliance` and `contractor-super-tpar` use its Division 7A and
