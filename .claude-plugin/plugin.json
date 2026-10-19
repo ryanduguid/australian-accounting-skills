@@ -26,7 +26,7 @@
     "aus-accounting": {
       "command": "uvx",
       "args": [
-        "aus-accounting-mcp==0.5.0"
+        "aus-accounting-mcp==0.6.0"
       ]
     }
   }
