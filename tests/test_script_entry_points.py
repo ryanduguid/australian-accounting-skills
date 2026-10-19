@@ -102,7 +102,9 @@ class SourcePassagesTests(TemporaryDirectory):
 class SmallRefusalTests(unittest.TestCase):
     def test_redirects_are_never_followed(self) -> None:
         handler = source_fetch_policy.NoRedirect()
-        self.assertIsNone(handler.redirect_request(None, None, 302, "Found", {}, "https://example.test/"))
+        # The handler ignores its request, file and headers, so placeholders stand in for them.
+        refusal = handler.redirect_request(None, None, 302, "Found", {}, "https://example.test/")  # pyright: ignore[reportArgumentType]
+        self.assertIsNone(refusal)
 
     def test_a_complex_yaml_key_is_refused(self) -> None:
         loader = strict_yaml.unique_key_safe_loader(
@@ -111,7 +113,7 @@ class SmallRefusalTests(unittest.TestCase):
             yaml.load("? [a, b]\n: 1\n", Loader=loader)  # nosec B506: the strict SafeLoader subclass under test
 
     def test_a_failed_sweep_exit_is_not_a_result(self) -> None:
-        counts = dict.fromkeys((*sweep_outcome.ACTIONABLE, *sweep_outcome.UNCHECKED), 0)
+        counts: dict[str, int] = dict.fromkeys((*sweep_outcome.ACTIONABLE, *sweep_outcome.UNCHECKED), 0)
         with self.assertRaisesRegex(sweep_outcome.SweepError, "source_refresh.py exited 1"):
             sweep_outcome.decide(1, counts)
 

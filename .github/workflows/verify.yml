@@ -39,8 +39,8 @@ jobs:
       - name: Ruff
         run: python -m ruff check .
 
-      - name: Mypy
-        run: python -m mypy
+      - name: Pyright
+        run: python -m pyright
 
   verify:
     needs: lint

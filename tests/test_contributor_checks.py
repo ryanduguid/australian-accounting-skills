@@ -13,12 +13,12 @@ PRE_COMMIT_CONFIG = REPOSITORY / ".pre-commit-config.yaml"
 CONTRIBUTOR_GUIDES = ("AGENTS.md", "CONTRIBUTING.md")
 
 # Which pre-commit hook covers each CI gate. A hook rarely spells its gate
-# the same way: the Ruff and mypy mirrors run their own entry points, so a
+# the same way: the Ruff and Pyright hooks run their own entry points, so a
 # substring search would report drift that is not there and miss drift that
 # is. Naming the pairs makes a new gate with no local hook fail here.
 GATE_HOOKS = {
     "python -m ruff check .": "ruff-check",
-    "python -m mypy": "mypy",
+    "python -m pyright": "pyright",
     "python -m unittest discover -s tests -v": "unittest",
     "python scripts/validate_validation.py": "validation-pack",
     "python tests/verify_skills_cli.py": "skills-cli-discovery",
@@ -69,7 +69,7 @@ class ContributorCheckTests(unittest.TestCase):
     def test_gate_discovery_covers_the_lint_job_and_skips_setup(self) -> None:
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
-        self.assertIn("python -m mypy", gates)
+        self.assertIn("python -m pyright", gates)
         self.assertEqual(len(gates), 6)
         for gate in gates:
             with self.subTest(gate=gate):

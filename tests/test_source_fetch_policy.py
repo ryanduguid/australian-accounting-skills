@@ -4,6 +4,7 @@ import unittest
 import urllib.error
 from email.message import Message
 from pathlib import Path
+from typing import Any
 from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
@@ -28,7 +29,7 @@ class Response(io.BytesIO):
     def geturl(self):
         return self.url
 
-    def read(self, size=-1):
+    def read(self, size: int | None = -1):
         self.read_sizes.append(size)
         return super().read(size)
 
@@ -85,9 +86,11 @@ class SourceFetchPolicyTests(unittest.TestCase):
                 with self.assertRaises(policy.SourcePolicyError):
                     policy.bounded_body(response)
             self.assertTrue(all(0 < n <= policy.READ_CHUNK_BYTES for n in response.read_sizes))
-        for headers in [{"Content_Length": str(policy.MAX_RESPONSE_BYTES + 1)},
-                        {"Content_Encoding": "gzip"}, {"Content_Length": "broken"},
-                        {"Content_Length": "9" * 5000}]:
+        header_cases: list[dict[str, Any]] = [
+            {"Content_Length": str(policy.MAX_RESPONSE_BYTES + 1)},
+            {"Content_Encoding": "gzip"}, {"Content_Length": "broken"},
+            {"Content_Length": "9" * 5000}]
+        for headers in header_cases:
             result, count = self.fetch([Response(**headers)])
             self.assertEqual((result.digest, count), ("", 1))
             self.assertEqual(source_refresh.classify({}, result)[0], source_refresh.UNREADABLE)
