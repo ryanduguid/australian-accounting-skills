@@ -13,6 +13,14 @@ updates:
       codeql-action:
         patterns:
           - "github/codeql-action*"
+      # Minor and patch action updates arrive as one pull request, so they need
+      # one rebase and CI run instead of one each. Majors stay separate for review.
+      actions-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
     ignore:
       # ADR-0001: the release-policy pin is an immutable full commit SHA,
       # advanced only by a reviewed migration that also updates the pin
