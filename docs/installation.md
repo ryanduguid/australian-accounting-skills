@@ -15,6 +15,18 @@ and Claude Code directories. It leaves global installations unchanged. A tag
 fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
 
+To install the same release as a Claude Code plugin, add the marketplace at
+its tag:
+
+```
+/plugin marketplace add ryanduguid/australian-accounting-skills#v0.4.0
+/plugin install australian-accounting-skills@ryanduguid
+```
+
+That plugin carries the v0.4.0 tag's own MCP pin, `aus-accounting-mcp==0.2.7`,
+launched with `uvx`. To move to a later release, remove the marketplace with
+`/plugin marketplace remove ryanduguid` and add it again at the new tag.
+
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
