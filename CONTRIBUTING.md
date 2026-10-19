@@ -20,12 +20,12 @@ These skills describe how an agent should work through an Australian accounting 
 
 ## Local verification
 
-Python 3.14 or newer. Install the pinned test dependency, mypy and Ruff first:
+Python 3.14 or newer. Install the pinned test dependency, Pyright and Ruff first:
 
 ```bash
 python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
 python -m ruff check .
-python -m mypy
+python -m pyright
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
@@ -33,13 +33,13 @@ python scripts/build_coverage.py --check
 ```
 
 Those 6 checks are the gates `.github/workflows/verify.yml` runs. Ruff and
-mypy run in its `lint` job, then the 4 verification checks run on Python 3.14
+Pyright run in its `lint` job, then the 4 verification checks run on Python 3.14
 and 3.15. `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
 
 `pip install pre-commit && pre-commit install` runs all of it before the commit
-lands. `.pre-commit-config.yaml` pins Ruff and mypy to the versions CI
+lands. `.pre-commit-config.yaml` pins Ruff and Pyright to the versions CI
 installs, so a hook that passes locally cannot fail on a version difference.
 
 The suite checks skill metadata and structure. Add a test when your change introduces a rule a reader could get wrong.

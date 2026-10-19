@@ -528,7 +528,7 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
         provenance = data["provenance"]
         if not isinstance(provenance, dict) or not provenance:
             raise ValidationError("provenance must identify at least one case")
-        digest_keys = set(RESULT_DIGESTS)
+        digest_keys: set[str] = set(RESULT_DIGESTS)
         if status != "prepared":
             digest_keys.add("output_sha256")
         for case, evidence in provenance.items():
@@ -676,7 +676,7 @@ def main(root: Path = ROOT) -> int:
             check_results_schema(schema_text, known)
         except ValidationError as error:
             errors.append(f"validation/results.schema.json: {error}")
-    result_counts = dict.fromkeys(("legacy", *RESULT_STATUSES), 0)
+    result_counts: dict[str, int] = dict.fromkeys(("legacy", *RESULT_STATUSES), 0)
     for rel in sorted(result_files):
         text = read_sources.get(rel)
         if text is None:

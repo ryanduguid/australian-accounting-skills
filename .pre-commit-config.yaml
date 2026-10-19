@@ -5,7 +5,7 @@
 # lists must not drift: tests/test_contributor_checks.py fails when a gate
 # exists in one place and not the other.
 #
-# Ruff and mypy are pinned to the versions verify.yml installs, so a hook that
+# Ruff and Pyright are pinned to the versions verify.yml installs, so a hook that
 # passes here cannot fail there on a version difference.
 #
 #   pip install pre-commit && pre-commit install
@@ -17,21 +17,15 @@ repos:
     hooks:
       - id: ruff-check
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.4.0
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.414
     hooks:
-      - id: mypy
+      - id: pyright
         # pyproject.toml already names the files to check, so the hook must not
         # narrow the run to the staged paths and miss a caller it broke.
         pass_filenames: false
-        args: []
-        # No type stubs. verify.yml installs PyYAML, which ships no inline
-        # types, so `ignore_missing_imports` applies there. Adding stubs here
-        # makes the hook stricter than the gate it stands in for, and it then
-        # blocks a commit over three pre-existing findings in
-        # scripts/strict_yaml.py that CI does not raise. A hook that fails
-        # where CI passes is the drift this file exists to prevent.
-        additional_dependencies: []
+        # The same Node.js wheel verify.yml installs, so the hook needs no download.
+        additional_dependencies: ["nodejs-wheel-binaries==24.19.0"]
 
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.1

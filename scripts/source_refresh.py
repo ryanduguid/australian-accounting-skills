@@ -360,6 +360,7 @@ def _open_checked_response(opener, url: str):
                     raise SourcePolicyError("Redirect loop.")
                 seen.add(following)
                 target = following
+    raise AssertionError("unreachable: the last hop returns or raises")  # pragma: no cover
 
 
 def _interpret_response(response, target: str, include_text: bool) -> Fetched:

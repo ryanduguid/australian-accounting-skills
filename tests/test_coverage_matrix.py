@@ -23,7 +23,7 @@ SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 COVERAGE_FILE = REPOSITORY / "coverage.json"
 
 # `scripts/` is a directory of standalone entry points, not a package, so it is
-# put on the path rather than imported through a parent module. `mypy_path` in
+# put on the path rather than imported through a parent module. `extraPaths` in
 # pyproject.toml points the type checker at the same directory.
 sys.path.insert(0, str(REPOSITORY / "scripts"))
 

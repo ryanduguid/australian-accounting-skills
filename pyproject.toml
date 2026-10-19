@@ -2,15 +2,16 @@
 # Python distribution: nothing here is installed or built, and the single test
 # dependency stays pinned in requirements-test.txt.
 
-[tool.mypy]
-python_version = "3.14"
-files = ["scripts", "tests"]
+[tool.pyright]
+pythonVersion = "3.14"
+include = ["scripts", "tests"]
 # tests/ puts scripts/ on sys.path to import the standalone entry points
-# there by name; mypy has to resolve them from the same place.
-mypy_path = "scripts"
-check_untyped_defs = true
-ignore_missing_imports = true
-pretty = true
+# there by name; Pyright has to resolve them from the same place.
+extraPaths = ["scripts"]
+typeCheckingMode = "standard"
+# The lint job installs no runtime packages, so PyYAML is absent there;
+# Pyright's bundled stubs still type-check its use.
+reportMissingModuleSource = "none"
 
 [tool.ruff]
 line-length = 100

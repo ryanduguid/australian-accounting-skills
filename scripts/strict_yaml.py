@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Hashable
+from typing import Any
+
 import yaml
 
 
@@ -21,7 +24,7 @@ def unique_key_safe_loader(
     class UniqueKeySafeLoader(yaml.SafeLoader):
         """Safe YAML loader that rejects aliases and duplicate mapping keys."""
 
-        def compose_node(self, parent: object, index: object) -> yaml.nodes.Node:
+        def compose_node(self, parent: yaml.nodes.Node | None, index: int) -> yaml.nodes.Node | None:
             if self.check_event(yaml.events.AliasEvent):
                 raise error("YAML aliases are not permitted")
             return super().compose_node(parent, index)
@@ -30,8 +33,8 @@ def unique_key_safe_loader(
             self,
             node: yaml.nodes.MappingNode,
             deep: bool = False,
-        ) -> dict[object, object]:
-            mapping: dict[object, object] = {}
+        ) -> dict[Hashable, Any]:
+            mapping: dict[Hashable, Any] = {}
             for key_node, value_node in node.value:
                 key = self.construct_object(key_node, deep=deep)
                 try:
