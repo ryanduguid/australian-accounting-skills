@@ -15,6 +15,18 @@ and Claude Code directories. It leaves global installations unchanged. A tag
 fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
 
+To install the same release as a Claude Code plugin, add the marketplace at
+its tag:
+
+```
+/plugin marketplace add ryanduguid/australian-accounting-skills#v0.4.0
+/plugin install australian-accounting-skills@ryanduguid
+```
+
+That plugin carries the v0.4.0 tag's own MCP pin, `aus-accounting-mcp==0.2.7`,
+launched with `uvx`. To move to a later release, remove the marketplace with
+`/plugin marketplace remove ryanduguid` and add it again at the new tag.
+
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
@@ -39,7 +51,7 @@ present at the repository revision it installs under the stable namespace:
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
 The development plugin also starts the local [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)
-server, pinned to `aus-accounting-mcp==0.5.0` and launched with `uvx`, so it needs
+server, pinned to `aus-accounting-mcp==0.6.0` and launched with `uvx`, so it needs
 Python 3.14 or later and [uv](https://docs.astral.sh/uv/) on the path. The first launch downloads the package
 from PyPI; tool calls then run locally and send nothing to the ATO or any other
 service. `div7a-compliance` and `contractor-super-tpar` use its Division 7A and

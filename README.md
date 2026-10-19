@@ -19,19 +19,14 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Start with the 65 workflows in the published release, [v0.4.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.4.0), by checking out its tag from a separate project directory.
+Start with the 65 workflows in the published release, [v0.4.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.4.0). From a separate project directory, install them from that tag:
 
 ```bash
-git clone https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
-git -C accounting-skills-release checkout --detach v0.4.0
+git clone --branch v0.4.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-Clone once per project. To repeat or retry from that directory, rerun only the checkout and install commands.
-
-v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on v0.2.1.
-
-That copies the 65 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. Human-confirmed model verdicts cover 72 of the 93 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 21 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, three transaction-GST cases, two short-stay accommodation cases, three pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge and a formula-change case. Static checks cover all 67 skills, and [coverage.json](coverage.json) gives the state of each skill.
+That copies the 65 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. For the Claude Code plugin at the same release, add the marketplace at its tag with `/plugin marketplace add ryanduguid/australian-accounting-skills#v0.4.0`, then run `/plugin install australian-accounting-skills@ryanduguid`. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The validation record under the fold gives the model runs and their limits.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
@@ -44,13 +39,21 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 ![Synthetic BAS workpaper showing a $3,190 GST tie-out and blank reviewer sign-off](assets/readme/bas-workpaper-synthetic.svg)
 
 <details>
-<summary>Installation, worked example, skill catalogue and boundaries</summary>
+<summary>Installation, validation record, corrections, skill catalogue and boundaries</summary>
+
+## Validation record
+
+Human-confirmed model verdicts cover 72 of the 93 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 21 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, three transaction-GST cases, two short-stay accommodation cases, three pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge and a formula-change case. Static checks cover all 67 skills, and [coverage.json](coverage.json) gives the state of each skill.
+
+## Corrections to v0.2.1
+
+v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on v0.2.1.
 
 ## Runtime and release
 
 ### Development installation
 
-The plugin marketplace installs the default branch, which prepares v0.4.1 with 67 workflows. It is not a published release.
+The marketplace added without a tag installs the default branch, which prepares v0.4.1 with 67 workflows. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
