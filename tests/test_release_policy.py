@@ -34,10 +34,11 @@ class ReleasePolicyTests(unittest.TestCase):
         workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(
             encoding="utf-8",
         )
-        self.assertIn(
-            "ryanduguid/release-policy/.github/workflows/release-skills.yml@"
-            "0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c",
+        # The pin is the caller's to set; a re-pin edits release.yml and nothing here.
+        self.assertRegex(
             workflow,
+            r"(?m)^\s*uses: ryanduguid/release-policy/\.github/workflows/"
+            r"release-skills\.yml@[0-9a-f]{40}$",
         )
         self.assertIn("artifact-stem: australian-accounting-skills", workflow)
         self.assertIn(
