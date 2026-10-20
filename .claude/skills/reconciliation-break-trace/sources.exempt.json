@@ -1,5 +1,5 @@
 {
   "skill": "reconciliation-break-trace",
   "exempt": true,
-  "reason": "This skill has no mutable rate, threshold, or form-label facts that belong in a sources index. Ledger product behaviour is checked against current documentation at use time."
+  "reason": "This skill has no mutable rate, threshold or form-label facts that belong in a sources index. Ledger product behaviour is checked against current documentation at use time."
 }

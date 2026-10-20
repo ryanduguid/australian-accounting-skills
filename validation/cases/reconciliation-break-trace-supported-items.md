@@ -18,14 +18,15 @@ explain the whole difference.
 
 Trace the difference to its items. For each item, give a one-sentence cause,
 the evidence references, owner, expected clear date where the evidence shows
-one, and the next action. Show how the items and any remainder tie back to
+one and the next action. Show how the items and any remainder tie back to
 the difference.
 
 ## Synthetic inputs
 
 - Source manifest M-B lists fabricated bank statement BS-B (1 to 30 September
-  2026), ledger bank account detail GL-B and October statement excerpt OS-B,
-  each captured on 2 October 2026 on an accrual basis with no filters.
+  2026) and ledger bank account detail GL-B, captured on 2 October 2026, and
+  October statement excerpt OS-B, captured on 4 October 2026, all on an
+  accrual basis with no filters.
 - BS-B closes at 20000.00. GL-B closes at 18940.00, so the ledger is 1060.00
   below the statement.
 - GL-B shows 2 payments of 880.00 to fabricated Supplier S on 28 September:
