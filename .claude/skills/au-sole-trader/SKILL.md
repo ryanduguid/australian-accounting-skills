@@ -21,6 +21,8 @@ Business activities, ledger and bank records, sales and expenses, stock and fixe
 
    Carry the business reference, income year, BAS period, reporting basis and underlying expense references through that bridge. Keep sales, GST, private use, reimbursements and capital items separately identifiable. Compare phone, internet and home-office expense references with employee workpapers; preserve any overlap, missing tax-invoice evidence or conflicting registration answer for review rather than accepting the same expense in both schedules.
 
+5. Keep GST turnover, accounting profit, net small-business income and the individual's taxable income as separate reconciliations. Verify the small-business income tax offset's eligibility, calculation base and cap independently; do not apply an offset percentage to turnover or total tax including Medicare and study-loan repayments. Compare any rough quarterly tax provision with the actual ATO instalment amount/rate and notice, leaving unexplained differences open.
+
 ## Hand-off and checks
 
 A business profit-to-tax bridge, private-use schedule and return mapping with unresolved eligibility items. Drawings are not substituted for profit.

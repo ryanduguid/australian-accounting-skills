@@ -19,6 +19,8 @@ User's commercial objective, entity/group structure, period, forecast and histor
 
 4. Flag anti-avoidance, integrity, legal, payroll, GST, duty and benefit interactions for the relevant adviser. Prepare decision questions rather than recommending a tax scheme or carrying out a restructure.
 
+5. Make comparisons reproducible: hold the period, person/entity or household, income definitions and unaffected assumptions constant between the baseline and each option. Show the component changes and reconcile them to the total. Separate tax saved from expenditure, fees, debt repayments and cash diverted into super or packaged benefits. State whether projections are nominal or in today's dollars and identify inflation and return assumptions. A tax-only model does not establish a benefit entitlement, household disposable-income result or retirement adequacy.
+
 ## Hand-off and checks
 
 A source-backed options comparison with assumptions, costs, unresolved risks and human decisions. No promised savings or implementation authority is implied.

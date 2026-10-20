@@ -21,6 +21,10 @@ Income year, relevant income components, residency periods, spouse/dependant cir
 
 4. Compute each supported component separately using period-specific primary authority, then reconcile to the return workpaper. Missing spouse information or evidence prevents a nil conclusion.
 
+5. When checking a calculator, establish whether it actually supports the relevant family, dependant, senior/pensioner and part-year circumstances. Test low-income phase-in and surcharge tier boundaries separately. A single-person default cannot establish a family's result, and holding hospital cover does not by itself remove the ordinary levy. Keep exclusions beside the comparison result.
+
+   If a calculator is used or compared, prefer a local one and keep its evidence. Before relying on it, confirm it supports the reporting month or income year in question rather than merely accepting the year. Send only figures, never client names or identifiers. Record what it consumed: the tool and its version, revision or URL, the period, the exact inputs, any scope statement it returned and the run date. A remote calculator is used only where the user has explicitly permitted that call for this question, and never as a fallback when a local tool refuses. Keep the calculator's own labels as its own: report its result beside its inputs, never as a compliance verdict or in place of the reviewer's decision.
+
 ## Hand-off and checks
 
 Separate levy and surcharge schedules, a coverage-period table and unresolved eligibility questions. A registered agent approves the tax position.

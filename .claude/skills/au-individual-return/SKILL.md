@@ -33,6 +33,10 @@ For an AI-extracted amount, date or code, show the document and page or row, the
 
 5. Verify the correct year's labels, rates, offsets and Medicare treatment. Assemble the proposed return from reconciled schedules and compare it with the prior year, explaining movements.
 
+6. Where study or training loans apply, build a separate repayment-income bridge from the year's ATO definition, including its add-backs and exclusions. Reconcile reportable super contributions, reportable fringe benefits, net investment losses, exempt foreign employment income and any assessable FHSS release amounts; taxable income or gross salary alone is not the bridge. Apply the repayment method and thresholds for the actual income year, with debt-balance limits checked separately. Keep compulsory repayment, indexation, voluntary payments and PAYG withholding distinct.
+
+7. If a take-home estimate is requested, show income tax after supported offsets, Medicare levy, surcharge and loan repayment separately. Reconcile cash received, withholding and tax-account credits before estimating a refund or debt. An annual liability divided into pay periods does not verify payroll withholding.
+
 ## Hand-off and checks
 
 An income-and-deduction index, return-label mapping and exceptions list. Every proposed figure has a source; no final tax or refund is asserted while dependent evidence is missing.

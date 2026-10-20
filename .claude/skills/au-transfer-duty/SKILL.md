@@ -19,6 +19,10 @@ Jurisdiction, transaction and agreement dates, contracts, asset and ownership de
 
 4. Prepare a conditional calculation using verified period-specific rules and reconcile it to any assessment and settlement provision. NSW references apply only to NSW; obtain local authority for other jurisdictions.
 
+5. For a calculator comparison, match property type (including vacant land or off-the-plan), purchaser category, relevant transaction date and concession conditions. Check each applicable bracket, concession taper, cap and surcharge boundary, including treatment at the endpoint and rounding. Separate transfer duty from registration, title, mortgage and other settlement costs; a duty-only total is not the total cash needed to settle.
+
+   If a calculator is used or compared, prefer a local one and keep its evidence. Before relying on it, confirm it supports the reporting month or income year in question rather than merely accepting the year. Send only figures, never client names or identifiers. Record what it consumed: the tool and its version, revision or URL, the period, the exact inputs, any scope statement it returned and the run date. A remote calculator is used only where the user has explicitly permitted that call for this question, and never as a fallback when a local tool refuses. Keep the calculator's own labels as its own: report its result beside its inputs, never as a compliance verdict or in place of the reviewer's decision.
+
 ## Hand-off and checks
 
 A transaction/evidence matrix and assessment comparison. The conveyancer or lawyer decides liability and performs declarations, assessment submissions and payment.
