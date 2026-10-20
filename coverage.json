@@ -3,7 +3,7 @@
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 68,
-    "sources_indexed": 193,
+    "sources_indexed": 198,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 0,
@@ -106,7 +106,7 @@
     {
       "skill": "au-capital-gains",
       "sources": {
-        "indexed": 3,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -759,9 +759,9 @@
     {
       "skill": "au-small-business-cgt",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-10-14",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -981,9 +981,9 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 5,
+        "indexed": 7,
         "exempt": false,
-        "reviewed": "2026-10-14",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []

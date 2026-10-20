@@ -73,6 +73,44 @@
       "content_hash": "afc6e1edf7b6d27ca6782858522b6a1f6107badcb12a072c5c5e86aeb91213af",
       "content_hash_covers": "html",
       "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Capital gains tax reform",
+      "url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+      "checked_at": "2026-10-20",
+      "fact": "Read 20 October 2026 (published 13 October 2026). States the first stage, the Treasury Laws Amendment (Tax Reform No. 1) Act 2026, is law and the changes apply from 1 July 2027: cost base indexation replaces the 50% CGT discount for resident individuals, trusts and partnerships on gains accruing on or after that date, a minimum 30% tax applies to individuals on certain net capital gains accruing on or after that date, and pre-CGT assets become subject to CGT on gains accruing on or after that date. An asset held on 1 July 2027 is treated as disposed of immediately before and reacquired on that date, valued at market value or by an apportionment method the Government is still developing; the gain or loss is deferred until a later CGT event. New residential dwellings and assets used to provide affordable housing may keep the current arrangements and the 50% discount by choice.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO guidance that the ATO will update as later stages pass; the apportionment method is not yet enacted. Apply the Act's provisions and application rules, not this page.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+      "http_status": 200,
+      "fetched_at": "2026-10-20",
+      "source_last_modified": "2026-10-13",
+      "review_required_since": "2026-10-20",
+      "content_hash": "281c7eb36cb079caca66508f4d6042ef189d844bf53d92b4a6dbb7699262392a",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+      "reviewed_content": {
+        "content_hash": "281c7eb36cb079caca66508f4d6042ef189d844bf53d92b4a6dbb7699262392a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+        "source_last_modified": "2026-10-13",
+        "checked_at": "2026-10-20"
+      }
+    },
+    {
+      "title": "Treasury Laws Amendment (Tax Reform No. 1) Act 2026",
+      "url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
+      "checked_at": "2026-09-30",
+      "fact": "Read 26 September 2026 through the Federal Register API (C2026A00049, made 26 June 2026). Schedule 1 inserts cost base indexation for individuals and trusts for CGT events on or after 1 July 2027 (s 110-36(1A)) and Division 119, a minimum rate of tax on capital gains. Schedule 2 inserts s 26-155, which quarantines deductions for residential dwellings used as residential accommodation, with exceptions including a dwelling last acquired before 7.30 pm (ACT legal time) on 12 May 2026 and a new residential dwelling.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "As-made text. Read the application provisions and the ITAA 1997 compilation for the period.",
+      "final_url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-09-30",
+      "content_hash": "4cf8f8cd62a936ad90fc09f79da626d942e75d83586ef1abfb2d387aeca6b2fc",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/C2026A00049/asmade/text"
     }
   ]
 }
