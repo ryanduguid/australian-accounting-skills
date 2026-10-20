@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 93 cards in `cases/` test workflow quality, provenance and restraint.
+The 95 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -52,6 +52,8 @@ law claim, unverified source or guess.
 | [Supported cash-flow roll-forward](cases/cashflow-supported-roll-forward.md) | cashflow-forecast-13week |
 | [Supported checks in an incomplete close](cases/month-end-supported-partial-close.md) | month-end-close |
 | [Supplier bank-detail change in a month-end close](cases/month-end-supplier-bank-detail-change.md) | month-end-close, tax-invoice-review |
+| [Bank reconciliation break with an unexplained remainder](cases/reconciliation-break-trace-supported-items.md) | reconciliation-break-trace, month-end-close |
+| [Control account breaks with a direct journal and missing detail](cases/reconciliation-break-trace-missing-evidence.md) | reconciliation-break-trace |
 | [Super-regime transition cashflow](cases/cashflow-super-regime-transition.md) | cashflow-forecast-13week, stp-finalisation |
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
@@ -137,15 +139,16 @@ law claim, unverified source or guess.
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 
-Together the cards cover all 67 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 68 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
 current. The `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
 v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
-short-stay accommodation cards, the 3 pre-lodgement review cards and the CGT
-contract-timing card, added for v0.4.1, have no recorded run. See
+short-stay accommodation cards, the 3 pre-lodgement review cards, the CGT
+contract-timing card and the 2 reconciliation break-trace cards, added for
+v0.4.1, have no recorded run. See
 [results](results/).
 
 The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no
