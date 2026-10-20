@@ -2,12 +2,12 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 67,
+    "skills": 68,
     "sources_indexed": 193,
-    "skills_source_exempt": 7,
+    "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 15,
+    "skills_with_behavioural_gate": 16,
     "skills_with_only_the_seeded_case": 34
   },
   "skills": [
@@ -1302,13 +1302,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 6,
+        "cases": 7,
         "case_ids": [
           "debtor-summary-review",
           "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
           "post-journal-provenance-tie-out",
+          "reconciliation-break-trace-supported-items",
           "stp-current-vs-overdue-sg"
         ],
         "only_seeded_case": false
@@ -1390,6 +1391,31 @@
       "gates": {
         "behavioural": [
           "test_legal_source_gates.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "reconciliation-break-trace",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "reconciliation-break-trace-missing-evidence",
+          "reconciliation-break-trace-supported-items"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_reconciliation_break_trace.py"
         ],
         "inventory": []
       }

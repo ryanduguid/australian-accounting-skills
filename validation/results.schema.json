@@ -122,6 +122,8 @@
           "post-journal-provenance-tie-out",
           "progress-claim-missing-reference-date",
           "receipt-schedule-conflicts",
+          "reconciliation-break-trace-missing-evidence",
+          "reconciliation-break-trace-supported-items",
           "retention-release-missing-deed",
           "source-quote-partial-coverage",
           "standalone-skill-safety-boundary",

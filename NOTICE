@@ -50,3 +50,10 @@ The idea of a pre-lodgement review list came from the published feature list
 of william-laverty/ato-mcp (AGPL-3.0), commit aa0d341bbca4, on 15 October
 2026. The au-pre-lodgement-review workflow is an original design written
 from ATO sources; no ato-mcp code, schemas, prompts or prose were used.
+
+The idea of a reconciliation break-trace workflow, with a one-sentence cause
+per break and a diagnose-only boundary, came from the break-trace skill in
+the Apache-2.0-licensed anthropics/financial-services, commit
+574ed3624aeb, read on 20 October 2026. The reconciliation-break-trace
+workflow and its cards are independently written for Australian practice
+ledgers; no upstream skill text, prompts, schemas or code were copied.

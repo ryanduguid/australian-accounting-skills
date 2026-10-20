@@ -115,7 +115,7 @@ The four core failure cards also added for v0.3.1 have no recorded whole-card ru
 The `au-short-stay-accommodation-missing-evidence` and
 `au-short-stay-accommodation-platform-gst-registration` cards and the
 `au-capital-gains-contract-straddles-reform` card, added for v0.4.1, have no recorded whole-card run,
-nor do the 3 `au-pre-lodgement-review` cards. The v0.4.1 figure replacements
+nor do the 3 `au-pre-lodgement-review` cards or the 2 `reconciliation-break-trace` cards. The v0.4.1 figure replacements
 changed the wording of au-payg-instalment-variation, au-super-contribution-caps,
 bas-preparation and contractor-super-tpar, so their cards need a rerun.
 

@@ -5,6 +5,7 @@
 | `bas-preparation` | Prepare/review a BAS; transaction GST coding review with evidence, credit entitlement and attribution; label mapping and GST control tie-out |
 | `month-end-close` | Checklist-driven close: bank recs, control accounts, accruals, variance review |
 | `workpaper-tie-out` | Audit-style verification: every statement line traced to workpaper and source |
+| `reconciliation-break-trace` | Trace each open reconciliation difference to its source entry, with a one-sentence cause, owner and next action |
 | `fbt-annual-workflow` | FBT year-end: benefit identification, declarations, gross-up, RFBA |
 | `div7a-compliance` | Division 7A loan register, complying-agreement checks, minimum repayments |
 | `stp-finalisation` | STP year-end finalisation: payroll versus GL versus filed totals, super guarantee checks |

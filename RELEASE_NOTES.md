@@ -25,7 +25,16 @@ point to the provision or ATO page that sets them, and a test fails on any
 new dollar amount or percentage in skill prose. The cards for those 4
 skills need a rerun at the revised commit.
 
-The 6 new cards and the reruns need confirmed results before this release.
+A reconciliation break-trace workflow, reconciliation-break-trace, brings
+the pack to 68. It traces each difference a bank, control account or
+subledger reconciliation leaves open to its ledger entry and source record,
+states the cause in one sentence and lists the evidence, owner and next
+action. An unexplained remainder stays open, proposed adjustments stay
+unposted drafts, and fresh exports and a rerun follow any posting. Its 2
+fabricated cards test an unexplained remainder and an instruction in a
+journal memo.
+
+The 8 new cards and the reruns need confirmed results before this release.
 
 # v0.4.0
 
