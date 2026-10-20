@@ -28,6 +28,8 @@ Legal ownership shares, rental agent and bank statements, lease and availability
 
    Keep a property reference and income year on income, expense, loan and owner rows. Attach availability/private-use periods and the apportionment evidence to the affected cost. Reuse the same property and disposal reference in the CGT schedule, with main-residence claim facts retained as reviewer questions, so the income, expense and disposal records remain traceable without counting a disposal twice.
 
+5. If cashflow or a tax-saving estimate is requested, bridge cash rent and expenses, interest, principal repayments, capital outlays and non-cash deductions separately. Check construction dates, eligible cost and use periods before applying a capital-works rate; a property value alone is insufficient. Compare supported annual tax with and without the rental result and check any study-loan or surcharge income add-backs separately. A tax loss does not establish a cash surplus or an equal reduction in every income test.
+
 ## Hand-off and checks
 
 A property-by-property income/expense schedule, loan-use bridge and owner allocation. Proposed deductions trace to evidence and verified treatment.

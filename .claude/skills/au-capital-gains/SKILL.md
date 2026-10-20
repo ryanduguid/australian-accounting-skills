@@ -21,6 +21,10 @@ Asset ownership and residency history, acquisition and disposal contracts, broke
 
 4. Roll forward available capital losses separately from revenue losses. Show proceeds, supported basis, preliminary gain or loss and each supported adjustment without silently choosing an election.
 
+5. For a requested tax-impact estimate, compare the same taxpayer's supported annual calculation with and without the net capital gain. Show bracket crossings and affected offsets or levies separately; gain multiplied by the starting marginal rate is not a general incremental-tax calculation. A simple discount calculator cannot decide partial main-residence relief, residency apportionment or another owner's share.
+
+   If a calculator is used or compared, prefer a local one and keep its evidence. Before relying on it, confirm it supports the reporting month or income year in question rather than merely accepting the year. Send only figures, never client names or identifiers. Record what it consumed: the tool and its version, revision or URL, the period, the exact inputs, any scope statement it returned and the run date. A remote calculator is used only where the user has explicitly permitted that call for this question, and never as a fallback when a local tool refuses. Keep the calculator's own labels as its own: report its result beside its inputs, never as a compliance verdict or in place of the reviewer's decision.
+
 ## Hand-off and checks
 
 An event schedule and loss roll-forward with links to evidence. Every disposal appears once; unresolved basis or eligibility prevents a final taxable-gain conclusion.
