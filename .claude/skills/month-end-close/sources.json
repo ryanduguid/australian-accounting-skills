@@ -60,18 +60,19 @@
       "content_url": "https://www.legislation.gov.au/F2018L01289/latest/text"
     },
     {
-      "title": "ASD's ACSC: Preventing business email compromise",
-      "url": "https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise",
-      "checked_at": "2026-10-14",
-      "fact": "Read 26 September 2026. Recommends an approval process for requests to change payment details or make a large transfer, and verifying such a request by calling the sender on a known and verified phone number, not one given in the email. No legal rule, rate or threshold is adopted from this record.",
+      "title": "ASD: Learn about account compromise (How to prevent business email compromise)",
+      "url": "https://www.cyber.gov.au/guidance/learn-about-account-compromise",
+      "checked_at": "2026-10-20",
+      "fact": "Read 26 September 2026 at the retired address; reviewed by Ryan Duguid at this address on 20 October 2026. Recommends an approval process for requests to change payment details or make a large transfer, and verifying such a request by calling the sender on a known and verified phone number, not one given in the email. No legal rule, rate or threshold is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Guidance for small and medium businesses, not law. The firm's own payment approval policy governs. The automated refresh could not retrieve the page on 26 September 2026 (connection closed); it opened normally in a browser.",
-      "final_url": "https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise",
+      "limitations": "Guidance for small and medium businesses, not law. The firm's own payment approval policy governs. The automated refresh could not retrieve the page on 26 September 2026 (connection closed); it opened normally in a browser. Repointed on 20 October 2026: the original preventing-business-email-compromise page now returns 404, and the same two recommendations appear under 'How to prevent business email compromise' on this page.",
+      "final_url": "https://www.cyber.gov.au/guidance/learn-about-account-compromise",
       "http_status": 0,
-      "fetched_at": "2026-09-26",
+      "fetched_at": "2026-10-20",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
