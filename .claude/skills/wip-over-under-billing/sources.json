@@ -128,7 +128,7 @@
     {
       "title": "ASIC Are you a large or small proprietary company",
       "url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
-      "checked_at": "2026-09-30",
+      "checked_at": "2026-10-20",
       "reverify_by": "2027-06-30",
       "fact": "ASIC's section 'Definition of a large proprietary company - financial years commencing on or after 1 July 2019' sets the size criteria. For those years, a proprietary company is large if it meets at least two of consolidated revenue of $50 million or more, consolidated gross assets of $25 million or more at year end, and 100 or more employees at year end. Each criterion includes the company and its controlled entities. That section also requires large proprietary companies to prepare and lodge annual financial and directors' reports, with the financial report audited unless ASIC grants relief. No size or reporting conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
@@ -136,11 +136,19 @@
       "volatile": true,
       "final_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
-      "content_hash": "def79d26ddd14a1ebd5f4c74ca78d8b8ce34e455eb86b9035cf1af1606ccbd4b",
+      "fetched_at": "2026-10-20",
+      "content_hash": "3d396b761953d6b2cc50faa9a45077bafb3a5de54196fe1d13e0928e61a907b5",
       "content_hash_covers": "html",
       "source_last_modified": "",
-      "content_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company"
+      "content_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
+      "review_required_since": "2026-10-20",
+      "reviewed_content": {
+        "content_hash": "3d396b761953d6b2cc50faa9a45077bafb3a5de54196fe1d13e0928e61a907b5",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
+        "source_last_modified": "",
+        "checked_at": "2026-10-20"
+      }
     },
     {
       "title": "ASIC Information Sheet 31 Lodgement of financial reports",
