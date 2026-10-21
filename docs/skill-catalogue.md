@@ -78,7 +78,6 @@ topics reuse existing skills and which have original new workflows.
 | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | Trust distribution review pack |
 | [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | Working from home deduction workpapers, fixed rate or actual cost, with the 2026-27 standard deduction comparison |
 | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | Working holiday maker workpapers in two modes: the employer's registration, Schedule 15 withholding, STP income type and super, or the person's WHM income, residency, NDA treaty position, lodgement and departure |
-
 | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) | DSSP, DRP and bonus-share parcel workpapers |
 | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) | Employee share scheme workpapers |
 | [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) | Foreign pension and annuity workpapers |
