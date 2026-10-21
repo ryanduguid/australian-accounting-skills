@@ -190,6 +190,12 @@ period mismatches and superseded workpaper references. Each includes a positive
 control. Their structure and fixture arithmetic can be checked locally; no live
 agent verdict has been recorded for these additions.
 
+The 12 niche-topic cards added on 21 October have task-only observations,
+including complete SAPTO, DSSP and AMIT arithmetic cases. The mixed-plan DSSP
+trial prompted a workflow clarification and a rerun of both DSSP cards. These
+records contain no human-confirmed verdicts. See the
+[trial evidence and limitations](../docs/EVAL.md#current-evidence-and-rerun).
+
 ## Static checks
 
 Stage intended additions so the checker can verify the exact tracked inventory,
