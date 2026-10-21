@@ -19,7 +19,7 @@ Income year, holder entity and residency, capital-account or trading status, Div
 
 4. Allocate DSSP bonus quantities across participating original acquisition parcels on the supported pro-rata basis before assigning inherited dates or apportioning costs. For an established post-CGT allocation branch, apportion each original parcel's first-element cost and reduced cost base over its original and allocated bonus shares under the applicable authority. Preserve inherited acquisition dates where that branch requires them. Keep pre-CGT parcels, other cost elements, repeated allotments, rounding and fractional cash separate. Neither foregone dividends nor market value automatically creates additional acquisition cost.
 
-5. Roll forward quantities and first-element balances for every participating parcel. Reconcile quantities to registry holdings and total supported first-element balances before and after each allotment. Retain a rounding bridge and keep reduced cost base distinct from cost base. Route a later disposal to the CGT workpaper with the reconciled history.
+5. Roll forward quantities and first-element balances for every participating parcel. Reconcile quantities to registry holdings and total supported first-element balances before and after each allotment. Retain a rounding bridge and keep reduced cost base distinct from cost base. Where supplied facts support a separate method check, complete its conditional per-parcel quantity and monetary bridges, including the DRP consideration candidate. Label these as arithmetic illustrations of the stated branch; keep approved tax fields unverified until authority and scheme coverage are established. Route a later disposal to the CGT workpaper with the reconciled history.
 
 ## Hand-off and checks
 
