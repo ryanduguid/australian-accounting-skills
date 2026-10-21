@@ -9,7 +9,7 @@ abstract: >-
   Sixty-five preparation-only agent skills for Australian public-practice
   and contracting workflows, with source verification, reconciliation
   checks and human review boundaries. This record identifies the published
-  v0.4.0 release under Apache-2.0. The development branch has sixty-eight
+  v0.4.0 release under Apache-2.0. The development branch has seventy-six
   skills; cite its exact commit when using those changes. Earlier releases
   retain their original citation records and licences in their tagged revisions.
 version: 0.4.0

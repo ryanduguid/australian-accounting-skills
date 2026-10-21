@@ -17,6 +17,8 @@ Income year, relevant income components, residency periods, spouse/dependant cir
 
 2. Verify the distinct income definitions and rules for levy, levy reduction and surcharge. Reconcile each income measure to its underlying return components.
 
+   Where seniors thresholds may apply, establish the required SAPTO entitlement through `au-sapto`; age or a pension receipt alone is insufficient. For lump sums in arrears, use `au-lump-sum-arrears` to retain accrual years and separate levy relief from the income-tax and surcharge offsets. If a companion or its required evidence is unavailable, leave that dependent conclusion unverified.
+
 3. Check exemption evidence and the exact period it supports. Confirm hospital cover qualifies for the relevant surcharge purpose; do not infer cover from an extras policy.
 
 4. Compute each supported component separately using period-specific primary authority, then reconcile to the return workpaper. Missing spouse information or evidence prevents a nil conclusion.

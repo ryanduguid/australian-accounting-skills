@@ -27,6 +27,8 @@ Asset ownership and residency history, acquisition and disposal contracts, broke
 
 ## Hand-off and checks
 
+Use the reconciled acquisition history from `au-dssp`, `au-employee-share-schemes` or `au-managed-fund-amit` where those events affect a disposal. Verify each acquisition date, cost-base element and prior inclusion before using it; an unavailable companion or unsupported history leaves the affected basis open. Apply the law for the actual disposal period, including any reform or transitional rules, rather than extending an earlier parcel treatment automatically.
+
 An event schedule and loss roll-forward with links to evidence. Every disposal appears once; unresolved basis or eligibility prevents a final taxable-gain conclusion.
 
 For a claimed main-residence exemption, collect ownership, occupation, absence, rental/business-use and spouse residence-choice periods as review facts. Identify missing valuations and overlapping property claims. Keep these facts and any proposed small-business concession in the review queue until the relevant detailed workpaper supports them; a claim in the intake is not an established exemption.
