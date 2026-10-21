@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "model": "gpt-6.1-sol",
+  "run_date": "2026-10-21",
+  "skills_version": "efe1af850c2cb00430d4dccf08329010cf404c93",
+  "runner": "Codex observation run; independent proposed assessments retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-sapto-complete-asymmetric-bridge": {
+      "input_sha256": "fd6954f8c60ffd8f8ecf729dd14bf52d8937811ef43359531ae09b084a06b799",
+      "context_sha256": "d5d2ba3b09948e254e320076f8d7018efedf227c76acfa9ecdf0cc3807076182",
+      "rubric_sha256": "8b3a861fbec69e0acdef7a06fe0afd3c62c17888791a638bcf100314a98aeeae",
+      "output_sha256": "9b762125b01b9419775d66ab19933be2e9ce4ede5e938a83269f37ad66375e99"
+    },
+    "au-sapto-rebate-income-and-spouse": {
+      "input_sha256": "cebf1d3b55aa6967a92f8799347571c5eeb8ddf70f00c2bc6b32f04f8cdc2930",
+      "context_sha256": "219d3cc6c1b0139284b3d2c30e12982a7b09c6632b9d24694d3fcfeeb4b0d284",
+      "rubric_sha256": "c99ccdb0e2dbce594f2c4718c8b2ab623e1eaed8d050c7908dac93f3359cdf61",
+      "output_sha256": "5cbc5fae57b80b0180a322fe9ef553910c540b1deecee97aa45d7c7aff9b585b"
+    }
+  }
+}

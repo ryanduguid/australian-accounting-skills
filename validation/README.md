@@ -192,8 +192,11 @@ agent verdict has been recorded for these additions.
 
 The 12 niche-topic cards added on 21 October have task-only observations,
 including complete SAPTO, DSSP and AMIT arithmetic cases. The mixed-plan DSSP
-trial prompted a workflow clarification and a rerun of both DSSP cards. These
-records contain no human-confirmed verdicts. See the
+trial prompted a workflow clarification and a rerun of both DSSP cards. Review
+against the ATO worksheet also identified missing SAPTO FHSS and fringe-benefit
+classification inputs; the repaired positive fixture and both SAPTO trials are
+recorded separately. Earlier observations are retained. These records contain
+no human-confirmed verdicts. See the
 [trial evidence and limitations](../docs/EVAL.md#current-evidence-and-rerun).
 
 ## Static checks

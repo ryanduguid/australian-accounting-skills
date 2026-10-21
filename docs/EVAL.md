@@ -145,6 +145,15 @@ monetary bridges. After clarifying that workflow, both DSSP cases were
 at 3bc5d13. The original observations are retained. All records remain observed,
 with no human-confirmed verdicts; the confirmed-card count is unchanged.
 
+Review against the 2025-26 ATO rebate-income worksheet then identified missing
+FHSS and fringe-benefit employer-class inputs in the SAPTO workflow and positive
+fixture. That initial positive observation does not establish a fully supported
+rebate-income bridge. The workflow and fixture now distinguish those inputs,
+with separate provisional section 57A, FHSS and unknown-class comparisons.
+[Both SAPTO cards were observed again](../validation/results/2026-10-21-niche-tax-sapto-rerun-observed.json)
+at efe1af8. Earlier records and frozen evidence remain unchanged. There are 16
+observations across these 12 cases, with no human-confirmed verdicts.
+
 These trials used fresh ephemeral Codex CLI sessions with `gpt-6.1-sol`, high
 reasoning effort, inline target-skill material and task sections only. Rubrics
 were withheld. Web search was disabled, user MCP configuration was excluded
