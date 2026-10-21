@@ -1,0 +1,35 @@
+{
+  "skill": "au-sapto",
+  "sources": [
+    {
+      "title": "Seniors and pensioners tax offset | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset",
+      "http_status": 200,
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Rebate income 2026 | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 21 October 2026. This is the 2025-26 worksheet. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
+      "http_status": 200,
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

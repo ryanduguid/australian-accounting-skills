@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 95 cards in `cases/` test workflow quality, provenance and restraint.
+The 107 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -138,8 +138,20 @@ law claim, unverified source or guess.
 | [Receipt links and conflicting schedule entries](cases/receipt-schedule-conflicts.md) | au-individual-return |
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
+| [SAPTO with an incomplete rebate-income bridge](cases/au-sapto-rebate-income-and-spouse.md) | au-sapto |
+| [Mixed DRP and DSSP share parcels](cases/au-dssp-mixed-plan-parcels.md) | au-dssp |
+| [ESS sale with missing scheme and restriction evidence](cases/au-employee-share-schemes-taxing-point.md) | au-employee-share-schemes |
+| [AMMA attribution, cash and an excessive basis reduction](cases/au-managed-fund-amit-statement-and-basis.md) | au-managed-fund-amit |
+| [Separate activity losses with a pending discretion request](cases/au-non-commercial-losses-activity-roll-forward.md) | au-non-commercial-losses |
+| [Foreign pension net receipts with missing UPP and arrears evidence](cases/au-foreign-pensions-gross-upp-and-arrears.md) | au-foreign-pensions |
+| [Arrears from 2 payers with an unallocated remainder](cases/au-lump-sum-arrears-multiple-payers.md) | au-lump-sum-arrears |
+| [Business offset with unresolved PSI and deferred losses](cases/au-small-business-income-offset-psi-and-losses.md) | au-small-business-income-offset |
+| [PSI testing for 2 individuals in one entity](cases/au-psi-review-individuals-and-test-order.md) | au-psi-review |
+| [Complete asymmetric rebate-income bridges](cases/au-sapto-complete-asymmetric-bridge.md) | au-sapto |
+| [Complete mixed-date parcel and DRP reconciliation](cases/au-dssp-supported-parcel-bridge.md) | au-dssp |
+| [Complete AMMA and reinvestment parcel bridge](cases/au-managed-fund-amit-complete-reinvestment.md) | au-managed-fund-amit |
 
-Together the cards cover all 68 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 76 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -177,6 +189,15 @@ Four core failure cards cover debtor summary differences, repeated transaction i
 period mismatches and superseded workpaper references. Each includes a positive
 control. Their structure and fixture arithmetic can be checked locally; no live
 agent verdict has been recorded for these additions.
+
+The 12 niche-topic cards added on 21 October have task-only observations,
+including complete SAPTO, DSSP and AMIT arithmetic cases. The mixed-plan DSSP
+trial prompted a workflow clarification and a rerun of both DSSP cards. Review
+against the ATO worksheet also identified missing SAPTO FHSS and fringe-benefit
+classification inputs; the repaired positive fixture and both SAPTO trials are
+recorded separately. Earlier observations are retained. These records contain
+no human-confirmed verdicts. See the
+[trial evidence and limitations](../docs/EVAL.md#current-evidence-and-rerun).
 
 ## Static checks
 

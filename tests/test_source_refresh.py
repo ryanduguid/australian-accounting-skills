@@ -614,6 +614,18 @@ class PreflightTests(unittest.TestCase):
         self.assertIn("READY:", text)
         self.assertIn("effective period at use time", text)
 
+    def test_discovery_only_source_cannot_become_ready_from_a_successful_fetch(self) -> None:
+        record: dict[str, object] = {
+            "url": "https://example.test/page", "checked_at": "",
+            "verification_status": "source-discovery-only-human-review-pending",
+            "review_required_since": "2026-10-03", "content_hash": "",
+            "fact": "Primary-source discovery only; human review is pending.",
+        }
+        text, code = self.run_preflight(record)
+        self.assertEqual(code, 2)
+        self.assertNotIn("READY:", text)
+        self.assertEqual(record["checked_at"], "")
+
     def test_written_changes_remain_pending_until_explicit_human_acceptance(self) -> None:
         for response in (fetched(digest="b" * 64),
                          fetched(final_url="https://example.test/new"),

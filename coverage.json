@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 68,
-    "sources_indexed": 198,
+    "skills": 76,
+    "sources_indexed": 209,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 16,
-    "skills_with_only_the_seeded_case": 34
+    "skills_with_only_the_seeded_case": 33
   },
   "skills": [
     {
@@ -281,6 +281,51 @@
       }
     },
     {
+      "skill": "au-dssp",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-dssp-mixed-plan-parcels",
+          "au-dssp-supported-parcel-bridge"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-employee-share-schemes",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-employee-share-schemes-taxing-point"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-etp-redundancy",
       "sources": {
         "indexed": 3,
@@ -341,6 +386,28 @@
           "au-foreign-income-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-foreign-pensions",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-foreign-pensions-gross-upp-and-arrears"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -461,6 +528,51 @@
       }
     },
     {
+      "skill": "au-lump-sum-arrears",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-lump-sum-arrears-multiple-payers"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-managed-fund-amit",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-managed-fund-amit-complete-reinvestment",
+          "au-managed-fund-amit-statement-and-basis"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-medicare-review",
       "sources": {
         "indexed": 1,
@@ -476,6 +588,28 @@
           "au-medicare-review-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-non-commercial-losses",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-non-commercial-losses-activity-roll-forward"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -645,7 +779,7 @@
     {
       "skill": "au-psi-review",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
@@ -653,11 +787,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-psi-review-individuals-and-test-order",
           "au-psi-review-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -732,6 +867,29 @@
       }
     },
     {
+      "skill": "au-sapto",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-sapto-complete-asymmetric-bridge",
+          "au-sapto-rebate-income-and-spouse"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-short-stay-accommodation",
       "sources": {
         "indexed": 15,
@@ -772,6 +930,28 @@
           "au-small-business-cgt-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-small-business-income-offset",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-small-business-income-offset-psi-and-losses"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
