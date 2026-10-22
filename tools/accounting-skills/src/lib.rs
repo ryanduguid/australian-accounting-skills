@@ -1,4 +1,5 @@
 //! Coverage inventory derived from the same tree as scripts/build_coverage.py.
+pub mod sweep;
 use serde::Serialize;
 use serde_json::Value;
 use std::{

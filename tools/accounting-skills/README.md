@@ -29,6 +29,34 @@ be an array. This candidate refuses malformed types rather than reproducing
 Python's conversion of arbitrary values into provenance strings. Non-Unicode
 filenames are refused. Unicode equivalence is sampled, not exhaustive.
 
+## Source sweep outcomes
+
+```sh
+accounting-skills sweep-outcome --status 0 --report sweep.md --started 2026-09-20T19:00:05Z
+```
+
+This command preserves the report's seven required counts, duplicate refusal,
+minute-level freshness, status agreement and distinction between actionable and
+unchecked sources. Counts use nonnegative decimal arithmetic rather than a fixed
+integer width, with Python's default 4,300-digit conversion ceiling. The outcome
+and comment go only to stdout. The command never writes to `GITHUB_OUTPUT`.
+
+Report paths resolve links and parent components before checking confinement to
+the current directory. Missing and escaping paths fail before file reads.
+Like the original, this local tool assumes the report and its directories do not
+change during resolution and reading; it is not concurrent-mutation isolation.
+The native resolver refuses chains beyond 40 links. On Windows, directly supplied
+`link/../report` paths can be refused where Python normalises the parent component
+first and reads an inside report. These are conservative compatibility limits.
+Invalid timestamps, I/O failures and CLI parsing use native diagnostics and exit 1.
+Timestamp month, day and clock fields accept ASCII digits without space padding;
+Python accepts some additional Unicode and space-padded forms. Ordinary producer
+and workflow timestamps use the supported ASCII forms.
+Status operands fit a signed 64-bit integer. Normal flags and `--name=value` are
+supported; argparse's automatic flag abbreviations and help are not ported.
+Decimal classification matches Python 3.14's Unicode 16.0 in qualification;
+new decimal characters in Python 3.15's Unicode 17.0 may be refused.
+
 Original scripts, consumer commands and CI remain in place. Source refresh,
-validation, trial preparation and sweep outcomes are still Python and remain
-unfinished porting work. This crate is not a release or consumer cutover.
+validation and trial preparation remain unfinished porting work. This crate is
+not a release or consumer cutover.

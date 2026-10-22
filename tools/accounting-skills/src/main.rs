@@ -10,7 +10,11 @@ fn run() -> Result<u8> {
     let mut root = std::env::current_dir()?;
     let mut write = false;
     let mut check = false;
-    if args.next().as_deref() != Some(std::ffi::OsStr::new("build-coverage")) {
+    let command = args.next();
+    if command.as_deref() == Some(std::ffi::OsStr::new("sweep-outcome")) {
+        return accounting_skills::sweep::cli(args);
+    }
+    if command.as_deref() != Some(std::ffi::OsStr::new("build-coverage")) {
         return Err(
             "usage: accounting-skills build-coverage [--root PATH] [--write] [--check]".into(),
         );
@@ -58,7 +62,7 @@ fn main() {
     let code = match run() {
         Ok(code) => code,
         Err(error) => {
-            eprintln!("FAIL {error}");
+            let _ = io::stderr().write_all(platform_text(&format!("FAIL {error}\n")).as_bytes());
             1
         }
     };
