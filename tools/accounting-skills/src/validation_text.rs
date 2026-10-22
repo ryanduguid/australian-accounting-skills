@@ -96,20 +96,24 @@ pub fn unescape(text: &str) -> String {
         .into_owned()
 }
 
-pub fn normalise(text: &str) -> Result<String> {
+pub fn unescape_checked(text: &str) -> Result<String> {
     static DECIMAL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"&#([0-9]+)").unwrap());
     for reference in DECIMAL.captures_iter(text) {
         if reference?[1].len() > 4300 {
             return Err("decimal HTML entity exceeds Python's 4,300-digit conversion limit".into());
         }
     }
+    Ok(unescape(text))
+}
+
+pub fn normalise(text: &str) -> Result<String> {
     static MARKUP: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"(?s)<!--.*?-->|<[^>]*>").unwrap());
     static INLINE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"!?\[([^\]\r\n]*)\]\((?:<[^>\r\n]+>|[^)\r\n]+)\)").unwrap());
     static REFERENCE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"!?\[([^\]\r\n]*)\]\[[^\]\r\n]*\]").unwrap());
-    let decoded: String = unescape(text)
+    let decoded: String = unescape_checked(text)?
         .nfkc()
         .filter(|&c| !within(c, data::FORMATS))
         .collect();

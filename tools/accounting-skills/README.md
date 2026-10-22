@@ -110,13 +110,56 @@ values selected by the HTTP caller. The caller must check the URL before DNS and
 disable automatic transport redirects. The library's redirect constants describe
 that requirement; they do not configure an HTTP client.
 
-This module has no consumer command or HTTP transport yet. Redirect handling,
-proxy configuration, retries, response ownership and source-refresh integration
-remain in the original Python caller. Qualification uses fabricated responses
-and resolved addresses; it makes no live DNS or source requests. Native resolver
-failure diagnostics are platform specific. Python 3.15 and future address-table
-changes require renewed comparison.
+The candidate `source-refresh` command below configures the transport and applies
+this policy. Qualification uses fabricated responses and resolved addresses;
+it makes no live DNS or source requests. Native resolver failure diagnostics
+are platform specific. Python 3.15 and future address-table changes require
+renewed comparison.
 
-Original scripts, consumer commands and CI remain in place. Source refresh,
+## Source refresh candidate
+
+```sh
+accounting-skills source-refresh --root /path/to/checkout --skill skill-name --preflight
+accounting-skills source-refresh --root /path/to/checkout --check --report sweep.md
+```
+
+The full command covers retrieval, readable text, digests, published dates,
+classification, pending candidate writes, reports and human readiness checks.
+`--write` preserves reviewed baselines, facts, human dates and review schedules.
+It records machine observations and pending candidates, which require explicit
+human acceptance. Preflight stays read only. Reports intentionally replace the
+operator-selected output path. An actionable check exits 2; blocked and unreachable
+sources are reported without failing the weekly check. Preparation and use still
+require verification of each exact fact and effective period.
+
+ureq supplies synchronous HTTPS with platform certificate verification. Proxies,
+automatic redirects and decompression are disabled. Each redirect passes URL,
+host-edge, loop, ceiling and public DNS checks before opening. Responses close on
+success, policy refusal, HTTP refusal and read failure. Transport faults retry
+up to 3 times, with 6 seconds between attempts. There is a 30-second transport
+deadline per hop and a 1-second courtesy spacing between distinct sources.
+DNS checks preserve the original re-resolution gap and do not pin connections.
+The actual HTTP parser is exercised through a fabricated byte channel, including
+request headers, redirect and error responses, transfer chunks and compressed
+content preservation. Live DNS, TCP, TLS handshakes and platform certificate
+stores remain untested. HTTP reason phrases and transport error diagnostics use
+native forms.
+
+Readable HTML follows the Python 3.14.8 parser callbacks and frozen entity tables,
+including malformed markup, skipped elements, main-region selection and NFC.
+Native decoding supports UTF-8 (including signature form), ASCII, Latin-1,
+Windows-1252, UTF-16 and UTF-32 with their frozen Python aliases. Other codecs and
+RFC 2231 extended charset parameters produce an actionable source-policy refusal;
+use the original Python reader for those sources. This deliberate restriction
+avoids silently changing digests through web-specific legacy decoding rules.
+Large decimal entity refusals and malformed index failures have native diagnostics.
+An oversized numeric timezone returns an empty date, matching Python 3.14.8;
+Python 3.14.4 can instead raise an uncaught overflow error.
+JSON preserves object order and platform newlines within serde_json's standard
+JSON/depth/number limits. Arbitrary malformed scalar conversion and nonstandard
+JSON constants are not compatibility claims. Files must remain stable during
+checks, as with the original; symlink replacement before writes is rechecked.
+
+Original scripts, consumer commands and CI remain in place. Source passages,
 trial preparation and other shared helpers remain unfinished porting work.
 This crate is not a release or consumer cutover.
