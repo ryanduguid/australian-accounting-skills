@@ -91,6 +91,32 @@ used by other scripts and tests. Unicode behaviour is qualified against 16.0;
 future Python Unicode versions require renewed comparison. Files and directories
 must remain stable during checks, as with the original implementation.
 
+## Source fetch policy
+
+The native library now supplies the reviewed URL checks, public-address checks
+and bounded response reader from `scripts/source_fetch_policy.py`. The host list
+and empty cross-host redirect list remain independently reviewed constants.
+URL checks preserve Python 3.14's spelling and fragment behaviour without URL
+canonicalisation. Hostname lowercase follows Python's Unicode rules before the
+ASCII allowlist check, including the Kelvin sign's lowercase `k` mapping.
+Address classifications use Python 3.14's pinned tables, including shared
+address space, exceptions and IPv4-mapped IPv6 multicast.
+Every DNS answer must pass. Resolution does not pin a later HTTP connection.
+
+The reader refuses encoded responses and malformed or oversized Content-Length
+before reading. It reads at most 64 KiB at a time, checks EOF at the exact 8 MiB
+ceiling and returns no prefix on overflow or I/O failure. Headers are the first
+values selected by the HTTP caller. The caller must check the URL before DNS and
+disable automatic transport redirects. The library's redirect constants describe
+that requirement; they do not configure an HTTP client.
+
+This module has no consumer command or HTTP transport yet. Redirect handling,
+proxy configuration, retries, response ownership and source-refresh integration
+remain in the original Python caller. Qualification uses fabricated responses
+and resolved addresses; it makes no live DNS or source requests. Native resolver
+failure diagnostics are platform specific. Python 3.15 and future address-table
+changes require renewed comparison.
+
 Original scripts, consumer commands and CI remain in place. Source refresh,
 trial preparation and other shared helpers remain unfinished porting work.
 This crate is not a release or consumer cutover.

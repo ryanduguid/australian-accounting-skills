@@ -1,4 +1,5 @@
 //! Coverage inventory derived from the same tree as scripts/build_coverage.py.
+pub mod source_fetch_policy;
 mod strict_yaml;
 pub mod sweep;
 pub mod validation;
