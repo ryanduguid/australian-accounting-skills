@@ -11,6 +11,8 @@ publish = false
 fancy-regex = "=0.19.2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "=1.0.154"
+unicode-normalization = "=0.1.24"
+yaml-rust2 = { version = "=0.13.0", default-features = false }
 
 [dev-dependencies]
 tempfile = "=3.27.0"

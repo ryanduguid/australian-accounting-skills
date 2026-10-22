@@ -11,6 +11,9 @@ fn run() -> Result<u8> {
     let mut write = false;
     let mut check = false;
     let command = args.next();
+    if command.as_deref() == Some(std::ffi::OsStr::new("validate-validation")) {
+        return accounting_skills::validation::cli(args);
+    }
     if command.as_deref() == Some(std::ffi::OsStr::new("sweep-outcome")) {
         return accounting_skills::sweep::cli(args);
     }

@@ -1,5 +1,9 @@
 //! Coverage inventory derived from the same tree as scripts/build_coverage.py.
+mod strict_yaml;
 pub mod sweep;
+pub mod validation;
+mod validation_data;
+mod validation_text;
 use serde::Serialize;
 use serde_json::Value;
 use std::{

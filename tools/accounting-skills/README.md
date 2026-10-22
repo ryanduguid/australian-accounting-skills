@@ -57,6 +57,40 @@ supported; argparse's automatic flag abbreviations and help are not ported.
 Decimal classification matches Python 3.14's Unicode 16.0 in qualification;
 new decimal characters in Python 3.15's Unicode 17.0 may be refused.
 
+## Validation pack
+
+```sh
+accounting-skills validate-validation --root /path/to/checkout
+```
+
+This read-only command validates the published skill inventory, strict card YAML,
+privacy rules, strict JSON and recorded-run provenance and preparation stages.
+It checks Git's staged inventory and ignored paths, refuses symlinks and Windows
+reparse points in the validation tree and never reads unexpected content files.
+It requires Git, with no Python runtime or network access.
+
+Privacy checks preserve HTML decoding, Unicode NFKC, format-character removal,
+visible Markdown variants and Python-compatible regex boundaries. The pinned
+unicode-normalization 0.1.24 tables match Python 3.14's Unicode 16.0. The frozen
+HTML entity and character tables derive from Python 3.14; PYTHON-LICENSE.txt
+contains their PSF licence. yaml-rust2 supplies strict YAML events and tokens.
+Card aliases, anchors, tags and duplicate keys are refused.
+Decimal HTML entities preserve Python's default 4,300-digit conversion ceiling;
+larger entities refuse validation rather than disappearing into replacement text.
+
+The default root is the current directory; the original script derives its root
+from its own path. Normal rule refusals use the original stdout report format
+and exit status. Outer I/O, argument and unexpected failures use native exit-1
+diagnostics. YAML nesting is limited to 128 levels. JSON uses serde_json's depth,
+number and standard JSON limits. Schema comparisons preserve JSON number
+representation: a schema `const` of `2.0` is refused where Python's numeric
+equality accepts it as `2`. Arbitrary malformed scalar diagnostics and
+Python's nonstandard JSON constants are not an unrestricted compatibility claim.
+This card-schema helper does not replace the generic Python strict-YAML factory
+used by other scripts and tests. Unicode behaviour is qualified against 16.0;
+future Python Unicode versions require renewed comparison. Files and directories
+must remain stable during checks, as with the original implementation.
+
 Original scripts, consumer commands and CI remain in place. Source refresh,
-validation and trial preparation remain unfinished porting work. This crate is
-not a release or consumer cutover.
+trial preparation and other shared helpers remain unfinished porting work.
+This crate is not a release or consumer cutover.
