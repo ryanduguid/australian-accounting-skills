@@ -125,6 +125,8 @@ exports/
 *client*.pdf
 
 # Python
+/tools/accounting-skills/target/
+!/tools/accounting-skills/README.md
 __pycache__/
 *.py[cod]
 .coverage

@@ -1,0 +1,16 @@
+[package]
+name = "accounting-skills"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "Apache-2.0"
+description = "Native tooling for the accounting skill repository"
+publish = false
+
+[dependencies]
+fancy-regex = "=0.19.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "=1.0.154"
+
+[dev-dependencies]
+tempfile = "=3.27.0"
