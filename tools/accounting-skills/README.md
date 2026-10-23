@@ -160,8 +160,8 @@ JSON/depth/number limits. Arbitrary malformed scalar conversion and nonstandard
 JSON constants are not compatibility claims. Files must remain stable during
 checks, as with the original; symlink replacement before writes is rechecked.
 
-Original scripts, consumer commands and CI remain in place. Trial preparation
-and other shared helpers remain unfinished porting work.
+Original scripts, consumer commands and CI remain in place. Generic shared
+helpers and the documented source-refresh compatibility gaps remain unfinished.
 This crate is not a release or consumer cutover.
 
 ## Source passages candidate
@@ -199,3 +199,35 @@ Snapshots are operator-supplied comparison inputs. Their hashes check
 self-consistency; they do not authenticate retrieval or establish readiness.
 Qualification is offline; capture tests inject fabricated fetch results and no
 indexed source is requested. Original scripts, consumers and CI remain in use.
+
+## Trial preparation candidate
+
+```sh
+accounting-skills prepare-trial case-id /outside/checkout/new-trial --root /path/to/checkout --model model-name --runtime runtime-name
+```
+
+This command freezes the four task sections into `input.md`, preserves the raw
+card as `rubric.md` and records their SHA-256 digests and the target skill file
+digests in `context.json`. The packet preserves Python's section order, path
+component ordering, ASCII JSON escaping and LF bytes on both platforms. Model
+and runtime default to `unselected`. Duplicate headings and malformed card
+frontmatter are refused before output creation.
+
+The destination must be a new directory outside the selected repository.
+Creation is exclusive. Card and context paths refuse symlinks and Windows
+reparse points, including ancestors below the selected root. Credential-like
+context names are refused before reading their contents. Non-Unicode filenames
+and special files are refused. Path resolution inherits the source-passages
+Windows link/parent refusal and 40-level ceiling. Files and directories must
+remain stable during checks and reads; this is not concurrent-mutation isolation.
+
+Success exits 0 without stdout, usage errors exit 2 and processing failures exit
+1 with a native diagnostic. Native flag spelling and outer errors can differ
+from argparse. The default root is the current directory. Card parsing inherits
+the validation candidate's strict YAML restrictions and JSON limits.
+
+Preparation establishes no model observation, tool availability, isolation or
+verdict. Only `input.md` and the declared skill context belong in an evaluated
+session; keep `rubric.md` outside its accessible context. The command creates
+the packet but does not establish that separation or invoke a model. Tests use
+fabricated context. Original trial scripts, consumers and CI remain in use.

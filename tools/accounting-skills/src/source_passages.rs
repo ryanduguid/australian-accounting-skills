@@ -178,7 +178,7 @@ pub fn rendered(value: &Value) -> Result<String> {
     Ok(output)
 }
 
-fn output_path(path: &Path, root: &Path) -> Result<PathBuf> {
+pub(crate) fn output_path(path: &Path, root: &Path) -> Result<PathBuf> {
     let output = crate::sweep::resolve(path, 0)?;
     let root = crate::sweep::resolve(root, 0)?;
     // Windows can collapse parent components before following links. Refuse

@@ -11,6 +11,7 @@ pub mod source_refresh;
 mod source_urls;
 mod strict_yaml;
 pub mod sweep;
+pub mod trial;
 pub mod validation;
 mod validation_data;
 mod validation_text;
