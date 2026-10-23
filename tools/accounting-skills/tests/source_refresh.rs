@@ -423,6 +423,94 @@ fn text_limit_counts_characters_and_digest_covers_the_whole_body() {
     assert_eq!(value.digest, s::content_digest(&text));
     assert_eq!(value.kind, "bytes");
 }
+
+#[test]
+fn extended_parameters_preserve_plain_precedence_and_numeric_order() {
+    for character in ['\u{1c89}', '\u{11db0}', '\u{1e6c0}', '\u{16ea0}'] {
+        let header = format!(
+            "text/plain;x{character}*{}=unused;charset=utf-8",
+            "0".repeat(4301)
+        );
+        assert_eq!(
+            s::transport::content_type(Some(&header)).unwrap(),
+            ("text/plain".into(), Some("utf-8".into()))
+        );
+    }
+    for (header, expected) in [
+        ("text/html; charset*=utf-8''ascii; charset=UTF-8", "utf-8"),
+        ("text/html; charset*1=8; charset*0=utf-", "utf-8"),
+        ("text/html; charset*=ascii; charset*0=utf-8", "utf-8"),
+        ("text/html; charset*=made-up''utf%2D8", "utf-8"),
+        ("text/html; charset*=utf-16''abc", "abc"),
+        ("text/html; charset*=rot13''utf-8", "utf-8"),
+        ("text/html; charset*=cpé037''UTF-8", "utf-8"),
+        ("charset=utf-8", "utf-8"),
+    ] {
+        let (_, charset) = s::transport::content_type(Some(header)).unwrap();
+        assert_eq!(charset.as_deref(), Some(expected), "{header}");
+    }
+    let large = "9".repeat(4300);
+    let header = format!("text/html; charset*{large}=8; charset*0=utf-");
+    assert_eq!(
+        s::transport::content_type(Some(&header))
+            .unwrap()
+            .1
+            .as_deref(),
+        Some("utf-8")
+    );
+}
+
+#[test]
+fn parameter_conversion_errors_and_non_ascii_fallback_are_preserved() {
+    for header in [
+        format!("text/html; x*{}=unused; charset=utf-8", "0".repeat(4301)),
+        "text/html; charset*=utf-8%00''ascii".into(),
+    ] {
+        assert!(s::transport::content_type(Some(&header)).is_err());
+    }
+    assert_eq!(
+        s::transport::content_type(Some("text/html; charset*=utf-8''%FF"))
+            .unwrap()
+            .1,
+        None
+    );
+    assert!(
+        s::transport::content_type(Some("text/html; charset*=utf-7''+AFU-+AFQ-+AEY--8"))
+            .unwrap_err()
+            .to_string()
+            .starts_with("Unqualified source charset ")
+    );
+}
+
+#[test]
+fn extended_charset_and_legacy_body_feed_the_full_html_digest() {
+    let mut spec = Spec::html("");
+    spec.headers = vec![(
+        "Content-Type".into(),
+        "text/html; charset*1*=r; charset*0*=us-ascii''koi8-".into(),
+    )];
+    spec.bytes = [
+        b"<main>".as_slice(),
+        &[0xf0, 0xd2, 0xc9, 0xd7, 0xc5, 0xd4],
+        b"</main>",
+    ]
+    .concat();
+    let mut fake = Fake::new(vec![spec]);
+    let (value, sleeps) = fetch(&mut fake);
+    assert!(value.error.is_empty());
+    assert!(sleeps.is_empty());
+    assert_eq!(value.text, "Привет");
+    assert_eq!(value.digest, s::content_digest("Привет"));
+    assert_eq!(value.kind, "html");
+    assert_eq!(
+        fake.events
+            .borrow()
+            .iter()
+            .filter(|event| *event == "close")
+            .count(),
+        1
+    );
+}
 #[test]
 fn index_write_preserves_human_fields_and_detects_replacement_links() {
     let temp = tempfile::tempdir().unwrap();

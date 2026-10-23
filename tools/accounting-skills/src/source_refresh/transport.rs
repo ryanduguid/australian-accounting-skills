@@ -1,3 +1,4 @@
+pub use super::parameters::content_type;
 use super::{Fetched, iso_day};
 use crate::{Result, source_content as content, source_fetch_policy as policy};
 use fancy_regex::Regex;
@@ -137,66 +138,6 @@ pub fn upstream_last_modified(
         },
     )
 }
-pub fn content_type(value: Option<&str>) -> (String, Option<String>) {
-    let value = value.unwrap_or("text/plain");
-    let kind = value
-        .split(';')
-        .next()
-        .unwrap()
-        .trim_matches(content::space)
-        .to_lowercase();
-    let kind = if kind.matches('/').count() == 1 {
-        kind
-    } else {
-        "text/plain".into()
-    };
-    // email.message._parseparam treats double-quoted semicolons as value data.
-    let mut parts = Vec::new();
-    let mut start = 0;
-    let mut quotes = 0;
-    let mut previous = '\0';
-    for (i, c) in value.char_indices() {
-        if c == '"' && previous != '\\' {
-            quotes += 1;
-        }
-        if c == ';' && quotes % 2 == 0 {
-            parts.push(&value[start..i]);
-            start = i + 1;
-        }
-        previous = c;
-    }
-    parts.push(&value[start..]);
-    let mut charset = None;
-    for part in parts.into_iter().skip(1) {
-        let (key, raw) = part.split_once('=').unwrap_or((part, ""));
-        let key = key.trim_matches(content::space).to_lowercase();
-        if key.starts_with("charset*") {
-            if charset.is_none() {
-                charset = Some("unqualified-rfc2231-charset-parameter".into());
-            }
-            continue;
-        }
-        if key != "charset" || charset.is_some() {
-            continue;
-        }
-        let raw = raw.trim_matches(content::space);
-        let value = if raw.len() > 1 && raw.starts_with('"') && raw.ends_with('"') {
-            raw[1..raw.len() - 1]
-                .replace("\\\\", "\\")
-                .replace("\\\"", "\"")
-        } else if raw.len() > 1 && raw.starts_with('<') && raw.ends_with('>') {
-            raw[1..raw.len() - 1].into()
-        } else {
-            raw.into()
-        };
-        if value.is_ascii() {
-            charset = Some(value.to_ascii_lowercase());
-        } else {
-            break;
-        }
-    }
-    (kind, charset)
-}
 enum Failure {
     Policy(String),
     Transport(String),
@@ -268,7 +209,8 @@ fn attempt(
         let length = response.header("Content-Length").map(str::to_owned);
         let body = policy::bounded_body(&mut response.body, encoding.as_deref(), length.as_deref())
             .map_err(policy_error)?;
-        let (kind, charset) = content_type(response.header("Content-Type"));
+        let (kind, charset) =
+            content_type(response.header("Content-Type")).map_err(interpretation_error)?;
         let (digest, reading) =
             content::body_digest(&body, &kind, charset.as_deref()).map_err(interpretation_error)?;
         let text =

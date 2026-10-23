@@ -3,6 +3,27 @@ use serde_json::{Value, json};
 use std::io::{self, BufRead, Write};
 use std::path::Path;
 
+// An in-memory response qualifies raw text decoding through the production
+// interpreter. It is available only in this offline example, never the CLI.
+struct CodecResponse {
+    header: String,
+    body: Vec<u8>,
+}
+impl p::transport::Transport for CodecResponse {
+    fn resolve(&mut self, _: &str) -> Result<()> {
+        Ok(())
+    }
+    fn open(&mut self, url: &str) -> Result<p::transport::Response> {
+        Ok(p::transport::Response {
+            status: 200,
+            reason: "OK".into(),
+            final_url: url.into(),
+            headers: vec![("Content-Type".into(), self.header.clone())],
+            body: Box::new(std::io::Cursor::new(self.body.clone())),
+        })
+    }
+}
+
 fn request(input: &mut impl BufRead, event: Value) -> Result<Value> {
     println!("{event}");
     io::stdout().flush()?;
@@ -25,6 +46,21 @@ fn invoke(r: &Value, input: &mut impl BufRead) -> Result<Value> {
             .collect::<Vec<_>>()
     };
     Ok(match text("op") {
+        "decoded" => {
+            let charset = text("charset").replace('\\', "\\\\").replace('"', "\\\"");
+            let mut response = CodecResponse {
+                header: format!("text/plain; charset=\"{charset}\""),
+                body: body(),
+            };
+            json!(p::transport::fetch_with(
+                &mut response,
+                "https://www.ato.gov.au/example",
+                1,
+                0.0,
+                true,
+                |_| Ok(())
+            ))
+        }
         "text" => json!(p::readable_text(&body(), r["charset"].as_str())?),
         "digest" => json!(p::body_digest(
             &body(),
@@ -33,7 +69,7 @@ fn invoke(r: &Value, input: &mut impl BufRead) -> Result<Value> {
         )?),
         "hash" => json!(p::content_digest(text("text"))),
         "date" => json!(p::iso_day(text("text"))),
-        "headers" => json!(p::transport::content_type(r["text"].as_str())),
+        "headers" => json!(p::transport::content_type(r["text"].as_str())?),
         "defrag" => json!(p::defrag(text("text"))),
         "join" => json!(p::transport::join(text("base"), text("reference"))),
         "upstream" => json!(p::transport::upstream_last_modified(

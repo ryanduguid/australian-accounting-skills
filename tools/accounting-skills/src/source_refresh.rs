@@ -10,6 +10,7 @@ use std::{
     path::{Path, PathBuf},
     time::Duration,
 };
+mod parameters;
 pub mod transport;
 pub use transport::{fetch, fetch_with};
 

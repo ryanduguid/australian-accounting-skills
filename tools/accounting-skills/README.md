@@ -147,11 +147,31 @@ native forms.
 
 Readable HTML follows the Python 3.14.8 parser callbacks and frozen entity tables,
 including malformed markup, skipped elements, main-region selection and NFC.
-Native decoding supports UTF-8 (including signature form), ASCII, Latin-1,
-Windows-1252, UTF-16 and UTF-32 with their frozen Python aliases. Other codecs and
-RFC 2231 extended charset parameters produce an actionable source-policy refusal;
-use the original Python reader for those sources. This deliberate restriction
-avoids silently changing digests through web-specific legacy decoding rules.
+Native decoding supports UTF-8 (including signature form), ASCII, UTF-16, UTF-32
+and 70 frozen Python single-byte codec mappings, including Latin-1, Windows,
+ISO-8859, DOS, Mac and KOI8 encodings. The 71,680-byte asset stores little-endian
+Unicode scalars with an explicit undefined-byte marker; replacement decoding
+preserves Python's U+FFFD behaviour. The independent checks compare every byte
+of every table with CPython and exercise the full plain-text response interpreter.
+No Python runtime is needed by the native command.
+
+Content-Type parameters preserve Python 3.14.8 quoting, ordinary-parameter
+precedence, stable numerical continuation order, percent-decoded Latin-1 octets
+and RFC 2231 charset/language/value handling. Continuation numbers preserve the
+4,300-digit limit without a fixed integer width. Encoded parameter values use
+strict decoding and Python's fallback to the undecoded value on invalid or
+unknown encodings; only ASCII charset names survive. The header interpreter now
+returns a processing error when parameter conversion fails. Its independent
+oracle uses hash-pinned, unmodified Python 3.14.8 email modules under the included
+PSF licence, with LF line endings.
+
+Multibyte, stateful and other specialised Python codecs remain unqualified,
+including Shift-JIS, GB18030, Big5 and UTF-7. They produce an actionable
+source-policy refusal, whether used by a body or an encoded RFC 2231 parameter;
+use the original Python reader for those sources. Unknown or non-text encoded
+parameter codecs preserve Python's fallback, whilst unknown body codecs remain
+policy refusals. Platform-specific Windows codecs are not qualified. These gaps
+remain migration work; no unrestricted codec equivalence is claimed.
 Large decimal entity refusals and malformed index failures have native diagnostics.
 An oversized numeric timezone returns an empty date, matching Python 3.14.8;
 Python 3.14.4 can instead raise an uncaught overflow error.
@@ -161,7 +181,7 @@ JSON constants are not compatibility claims. Files must remain stable during
 checks, as with the original; symlink replacement before writes is rechecked.
 
 Original scripts, consumer commands and CI remain in place. Generic shared
-helpers and the documented source-refresh compatibility gaps remain unfinished.
+helpers and the documented source-refresh codec and transport gaps remain unfinished.
 This crate is not a release or consumer cutover.
 
 ## Source passages candidate

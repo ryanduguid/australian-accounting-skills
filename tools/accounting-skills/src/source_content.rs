@@ -8,29 +8,55 @@ use unicode_normalization::UnicodeNormalization;
 pub fn space(c: char) -> bool {
     c.is_whitespace() || matches!(c, '\u{1c}'..='\u{1f}')
 }
-pub fn decode(body: &[u8], charset: Option<&str>) -> Result<String> {
-    let supplied = charset.filter(|name| !name.is_empty()).unwrap_or("utf-8");
+pub(crate) fn codec_name(supplied: &str) -> Option<&'static str> {
     let mut normal = String::new();
     let mut punct = false;
-    for c in supplied.to_lowercase().chars() {
-        if c.is_alphanumeric() || c == '.' {
+    // CPython normalises ASCII before alias lookup. Non-ASCII characters act
+    // as separators rather than disappearing or becoming ASCII through case.
+    for c in supplied.chars() {
+        if c.is_ascii_alphanumeric() || c == '.' {
             if punct && !normal.is_empty() {
                 normal.push('_');
             }
-            if c.is_ascii() {
-                normal.push(c);
-            }
+            normal.push(c.to_ascii_lowercase());
             punct = false;
         } else {
             punct = true;
         }
     }
-    // shortcut: other Python codecs require exact native decoding tables before
-    // this candidate can replace those reads. Refuse rather than change a digest.
-    let name = crate::source_codec_rules::canonical(&normal).ok_or_else(|| format!("Unqualified source charset {supplied:?}; use the original Python reader for manual review."))?;
-    Ok(match name {
-        "utf-8-sig" => String::from_utf8_lossy(body.strip_prefix(&[239, 187, 191]).unwrap_or(body))
-            .into_owned(),
+    crate::source_codec_rules::canonical(&normal)
+}
+pub fn decode(body: &[u8], charset: Option<&str>) -> Result<String> {
+    decode_inner(body, charset, false)
+}
+pub(crate) fn decode_strict(body: &[u8], charset: &str) -> Result<String> {
+    decode_inner(body, Some(charset), true)
+}
+fn decode_inner(body: &[u8], charset: Option<&str>, strict: bool) -> Result<String> {
+    let supplied = charset.filter(|name| !name.is_empty()).unwrap_or("utf-8");
+    if supplied.contains('\0') {
+        return Err("embedded null character".into());
+    }
+    let unqualified = || {
+        format!(
+            "Unqualified source charset {supplied:?}; use the original Python reader for manual review."
+        )
+    };
+    let name = codec_name(supplied).ok_or_else(unqualified)?;
+    let mut invalid = false;
+    let value = match name {
+        "utf-8" | "utf-8-sig" => {
+            let bytes = if name == "utf-8-sig" {
+                body.strip_prefix(&[239, 187, 191]).unwrap_or(body)
+            } else {
+                body
+            };
+            if strict {
+                std::str::from_utf8(bytes)?.to_owned()
+            } else {
+                String::from_utf8_lossy(bytes).into_owned()
+            }
+        }
         "utf-16" | "utf-16-le" | "utf-16-be" | "utf16" | "utf-32" | "utf-32-le" | "utf-32-be"
         | "utf32" => {
             let wide = name.contains("32");
@@ -63,7 +89,10 @@ pub fn decode(body: &[u8], charset: Option<&str>) -> Result<String> {
                     } else {
                         u32::from_be_bytes(b)
                     };
-                    out.push(char::from_u32(n).unwrap_or('�'));
+                    out.push(char::from_u32(n).unwrap_or_else(|| {
+                        invalid = true;
+                        '�'
+                    }));
                 }
             } else {
                 let units = bytes.as_chunks::<2>().0.iter().map(|b| {
@@ -73,7 +102,12 @@ pub fn decode(body: &[u8], charset: Option<&str>) -> Result<String> {
                         u16::from_be_bytes([b[0], b[1]])
                     }
                 });
-                out.extend(char::decode_utf16(units).map(|r| r.unwrap_or('�')));
+                out.extend(char::decode_utf16(units).map(|r| {
+                    r.unwrap_or_else(|_| {
+                        invalid = true;
+                        '�'
+                    })
+                }));
             }
             let grouped_tail = !wide && bytes.len() >= 3 && {
                 let i = bytes.len() / 2 * 2 - 2;
@@ -84,23 +118,46 @@ pub fn decode(body: &[u8], charset: Option<&str>) -> Result<String> {
                 };
                 (0xd800..=0xdbff).contains(&unit)
             };
-            if !bytes.len().is_multiple_of(width) && !grouped_tail {
-                out.push('�');
+            if !bytes.len().is_multiple_of(width) {
+                invalid = true;
+                if !grouped_tail {
+                    out.push('�');
+                }
             }
             out
         }
-        "utf-8" => String::from_utf8_lossy(body).into_owned(),
         "ascii" => body
             .iter()
-            .map(|&b| if b < 128 { b as char } else { '�' })
+            .map(|&b| {
+                if b < 128 {
+                    b as char
+                } else {
+                    invalid = true;
+                    '�'
+                }
+            })
             .collect(),
-        "iso8859-1" => body.iter().map(|&b| b as char).collect(),
-        "cp1252" => body
-            .iter()
-            .map(|&b| char::from_u32(crate::source_codec_rules::CP1252[b as usize]).unwrap())
-            .collect(),
-        _ => unreachable!("canonical codec table and decoder disagree"),
-    })
+        "iso8859-1" | "charmap" => body.iter().map(|&b| b as char).collect(),
+        _ => {
+            // shortcut: multibyte/stateful codecs need their exact Python
+            // mappings before this candidate can replace those reads.
+            let table = crate::source_codec_rules::single_byte(name).ok_or_else(unqualified)?;
+            body.iter()
+                .map(|&byte| {
+                    let offset = byte as usize * 4;
+                    let value = u32::from_le_bytes(table[offset..offset + 4].try_into().unwrap());
+                    char::from_u32(value).unwrap_or_else(|| {
+                        invalid = true;
+                        '�'
+                    })
+                })
+                .collect()
+        }
+    };
+    if strict && invalid {
+        return Err("invalid encoded parameter".into());
+    }
+    Ok(value)
 }
 pub fn sha256(body: &[u8]) -> String {
     Sha256::digest(body)
