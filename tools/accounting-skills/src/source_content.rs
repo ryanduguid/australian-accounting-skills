@@ -139,7 +139,10 @@ fn decode_inner(body: &[u8], charset: Option<&str>, strict: bool) -> Result<Stri
             .collect(),
         "iso8859-1" | "charmap" => body.iter().map(|&b| b as char).collect(),
         _ => {
-            // shortcut: multibyte/stateful codecs need their exact Python
+            if let Some(result) = crate::source_multibyte::decode(body, name, strict) {
+                return result;
+            }
+            // Remaining state-exploding or specialised codecs need exact
             // mappings before this candidate can replace those reads.
             let table = crate::source_codec_rules::single_byte(name).ok_or_else(unqualified)?;
             body.iter()

@@ -155,6 +155,17 @@ preserves Python's U+FFFD behaviour. The independent checks compare every byte
 of every table with CPython and exercise the full plain-text response interpreter.
 No Python runtime is needed by the native command.
 
+Fifteen further codecs use exact finite CPython 3.14.8 decoder state graphs:
+Big5, Big5-HKSCS, CP932, CP949, CP950, EUC-JP, EUC-JIS-2004, EUC-JISX0213,
+GB2312, GBK, HZ, Johab, Shift-JIS, Shift-JIS-2004 and Shift-JISX0213. The
+2,920,686-byte asset contains 2,415 states, replacement outputs and strict-error
+flags, including incomplete input at EOF. Outputs can contain multiple Unicode
+scalars. Independent one-shot CPython comparisons cover every reachable state
+witness followed by every byte and EOF through the production response reader,
+plus chained random bodies and aliases. The generated data and manifest are
+covered by the included PSF licence. The private table format is regenerable;
+it is not a consumer interface or persisted user-data format.
+
 Content-Type parameters preserve Python 3.14.8 quoting, ordinary-parameter
 precedence, stable numerical continuation order, percent-decoded Latin-1 octets
 and RFC 2231 charset/language/value handling. Continuation numbers preserve the
@@ -165,8 +176,9 @@ returns a processing error when parameter conversion fails. Its independent
 oracle uses hash-pinned, unmodified Python 3.14.8 email modules under the included
 PSF licence, with LF line endings.
 
-Multibyte, stateful and other specialised Python codecs remain unqualified,
-including Shift-JIS, GB18030, Big5 and UTF-7. They produce an actionable
+Other multibyte, stateful and specialised Python codecs remain unqualified,
+including EUC-KR, GB18030, ISO-2022 variants and UTF-7. Their reachable graphs
+exceeded the exploration cap or need a separate algorithm. They produce an actionable
 source-policy refusal, whether used by a body or an encoded RFC 2231 parameter;
 use the original Python reader for those sources. Unknown or non-text encoded
 parameter codecs preserve Python's fallback, whilst unknown body codecs remain

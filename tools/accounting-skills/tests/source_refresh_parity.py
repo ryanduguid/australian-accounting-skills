@@ -354,7 +354,7 @@ def differential():
                 expected = original["readable_text"](body, charset)
             except Exception as exc:
                 expected = {"error": str(exc)}
-            if charset in ["shift_jis", "gb18030", "big5", "made-up"]:
+            if charset in ["gb18030", "made-up"]:
                 try:
                     actual = rpc("text", body=list(body), charset=charset)
                 except ValueError as exc:

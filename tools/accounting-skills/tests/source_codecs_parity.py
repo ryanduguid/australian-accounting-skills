@@ -143,7 +143,7 @@ try:
     for encoding, encoded in [('utf-8', '%FF'), ('utf-16', '%FF%FE%75%00%74%00%66%00%2D%00%38%00'),
                               ('utf-32-le', '%75%00%00%00%74%00%00%00%66%00%00%00%38%00%00%00')]:
         header(f"text/plain;charset*={encoding}''{encoded}")
-    for value in ["text/html;charset*=utf-7''+AFU-+AFQ-+AEY--8", "text/html;charset*=shift_jis''utf-8"]:
+    for value in ["text/html;charset*=utf-7''+AFU-+AFQ-+AEY--8", "text/html;charset*=gb18030''utf-8"]:
         try:
             rpc('headers', text=value)
         except ValueError as error:

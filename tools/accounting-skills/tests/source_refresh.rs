@@ -400,7 +400,7 @@ fn response_destination_redirect_ceiling_and_charset_fail_closed() {
         4
     );
     let mut spec = Spec::html("bad");
-    spec.headers = vec![("Content-Type".into(), "text/html; charset=shift_jis".into())];
+    spec.headers = vec![("Content-Type".into(), "text/html; charset=gb18030".into())];
     let mut fake = Fake::new(vec![spec]);
     let (value, sleeps) = fetch(&mut fake);
     assert!(
@@ -484,6 +484,30 @@ fn parameter_conversion_errors_and_non_ascii_fallback_are_preserved() {
 
 #[test]
 fn extended_charset_and_legacy_body_feed_the_full_html_digest() {
+    for (encoding, body, expected) in [
+        ("shift_jis", &[0x93, 0xfa, 0x96, 0x7b][..], "日本"),
+        ("hz", b"~{VPND~}".as_slice(), "中文"),
+    ] {
+        let mut spec = Spec::html("");
+        spec.headers = vec![(
+            "Content-Type".into(),
+            format!("text/html; charset*=us-ascii''{encoding}"),
+        )];
+        spec.bytes = [b"<main>".as_slice(), body, b"</main>"].concat();
+        let mut fake = Fake::new(vec![spec]);
+        let (value, sleeps) = fetch(&mut fake);
+        assert!(value.error.is_empty() && sleeps.is_empty());
+        assert_eq!(value.text, expected);
+        assert_eq!(value.digest, s::content_digest(expected));
+        assert_eq!(
+            fake.events
+                .borrow()
+                .iter()
+                .filter(|event| *event == "close")
+                .count(),
+            1
+        );
+    }
     let mut spec = Spec::html("");
     spec.headers = vec![(
         "Content-Type".into(),
