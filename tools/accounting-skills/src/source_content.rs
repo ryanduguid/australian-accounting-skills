@@ -138,6 +138,7 @@ fn decode_inner(body: &[u8], charset: Option<&str>, strict: bool) -> Result<Stri
             })
             .collect(),
         "iso8859-1" | "charmap" => body.iter().map(|&b| b as char).collect(),
+        "gb18030" => return crate::source_gb18030::decode(body, strict),
         _ => {
             if let Some(result) = crate::source_multibyte::decode(body, name, strict) {
                 return result;

@@ -176,8 +176,14 @@ returns a processing error when parameter conversion fails. Its independent
 oracle uses hash-pinned, unmodified Python 3.14.8 email modules under the included
 PSF licence, with LF line endings.
 
+GB18030 uses a separate 129,024-byte two-byte scalar table and 207 contiguous
+four-byte ranges generated exhaustively from CPython 3.14.8. It preserves
+one-byte recovery from illegal complete sequences and a single replacement for
+an incomplete tail. Strict parameter decoding rejects either error. The native
+implementation needs no Python runtime or additional dependency.
+
 Other multibyte, stateful and specialised Python codecs remain unqualified,
-including EUC-KR, GB18030, ISO-2022 variants and UTF-7. Their reachable graphs
+including EUC-KR, ISO-2022 variants and UTF-7. Their reachable graphs
 exceeded the exploration cap or need a separate algorithm. They produce an actionable
 source-policy refusal, whether used by a body or an encoded RFC 2231 parameter;
 use the original Python reader for those sources. Unknown or non-text encoded

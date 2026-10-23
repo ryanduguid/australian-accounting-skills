@@ -339,6 +339,7 @@ def differential():
         "utf-8-sig",
         "shift_jis",
         "gb18030",
+        "euc-kr",
         "big5",
         "koi8-r",
         "made-up",
@@ -354,7 +355,7 @@ def differential():
                 expected = original["readable_text"](body, charset)
             except Exception as exc:
                 expected = {"error": str(exc)}
-            if charset in ["gb18030", "made-up"]:
+            if charset in ["euc-kr", "made-up"]:
                 try:
                     actual = rpc("text", body=list(body), charset=charset)
                 except ValueError as exc:

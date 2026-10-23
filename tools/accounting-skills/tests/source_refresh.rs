@@ -400,7 +400,7 @@ fn response_destination_redirect_ceiling_and_charset_fail_closed() {
         4
     );
     let mut spec = Spec::html("bad");
-    spec.headers = vec![("Content-Type".into(), "text/html; charset=gb18030".into())];
+    spec.headers = vec![("Content-Type".into(), "text/html; charset=euc-kr".into())];
     let mut fake = Fake::new(vec![spec]);
     let (value, sleeps) = fetch(&mut fake);
     assert!(
@@ -487,6 +487,7 @@ fn extended_charset_and_legacy_body_feed_the_full_html_digest() {
     for (encoding, body, expected) in [
         ("shift_jis", &[0x93, 0xfa, 0x96, 0x7b][..], "日本"),
         ("hz", b"~{VPND~}".as_slice(), "中文"),
+        ("gb18030", &[0xc4, 0xe3, 0xba, 0xc3][..], "你好"),
     ] {
         let mut spec = Spec::html("");
         spec.headers = vec![(

@@ -5,6 +5,8 @@ mod source_content;
 mod source_date_rules;
 mod source_dates;
 pub mod source_fetch_policy;
+mod source_gb18030;
+mod source_gb18030_rules;
 mod source_html_rules;
 mod source_multibyte;
 mod source_multibyte_rules;
