@@ -11,6 +11,9 @@ fn run() -> Result<u8> {
     let mut write = false;
     let mut check = false;
     let command = args.next();
+    if command.as_deref() == Some(std::ffi::OsStr::new("source-passages")) {
+        return accounting_skills::source_passages::cli(args);
+    }
     if command.as_deref() == Some(std::ffi::OsStr::new("source-refresh")) {
         return accounting_skills::source_refresh::cli(args);
     }

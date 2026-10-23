@@ -201,7 +201,7 @@ pub fn decide(status: i64, counts: &BTreeMap<String, String>) -> Result<Outcome>
     })
 }
 
-fn resolve(path: &Path, links: usize) -> Result<PathBuf> {
+pub(crate) fn resolve(path: &Path, links: usize) -> Result<PathBuf> {
     if links > 40 {
         return Err("too many report-path links".into());
     }

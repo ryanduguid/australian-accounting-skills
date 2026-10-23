@@ -45,7 +45,7 @@ Report paths resolve links and parent components before checking confinement to
 the current directory. Missing and escaping paths fail before file reads.
 Like the original, this local tool assumes the report and its directories do not
 change during resolution and reading; it is not concurrent-mutation isolation.
-The native resolver refuses chains beyond 40 links. On Windows, directly supplied
+The native resolver refuses nested link resolution beyond 40 levels. On Windows, directly supplied
 `link/../report` paths can be refused where Python normalises the parent component
 first and reads an inside report. These are conservative compatibility limits.
 Invalid timestamps, I/O failures and CLI parsing use native diagnostics and exit 1.
@@ -160,6 +160,42 @@ JSON/depth/number limits. Arbitrary malformed scalar conversion and nonstandard
 JSON constants are not compatibility claims. Files must remain stable during
 checks, as with the original; symlink replacement before writes is rechecked.
 
-Original scripts, consumer commands and CI remain in place. Source passages,
-trial preparation and other shared helpers remain unfinished porting work.
+Original scripts, consumer commands and CI remain in place. Trial preparation
+and other shared helpers remain unfinished porting work.
 This crate is not a release or consumer cutover.
+
+## Source passages candidate
+
+```sh
+accounting-skills source-passages snapshot --root /path/to/checkout --url https://www.ato.gov.au/indexed-path --output /outside/checkout/before.json
+accounting-skills source-passages compare --root /path/to/checkout --before /outside/checkout/before.json --after /outside/checkout/after.json --output /outside/checkout/comparison.json
+```
+
+Capture requires an exact indexed URL and uses the source-refresh transport and
+its documented charset restrictions. Snapshots retain bounded text, its digest,
+availability and the source digest. Loading checks the 1 MiB file ceiling, 32,768
+Unicode character ceiling, text digest, actual boolean flags and source URLs.
+Available snapshots require a lowercase 64-digit hexadecimal source digest.
+Unknown standard JSON fields are preserved within serde_json's documented limits.
+
+Comparison follows Python 3.14.8 difflib, including its repeated-line heuristic,
+two context lines and Unicode line separators. It examines at most 400 lines from
+each text and returns at most 60 diff lines of 240 Unicode characters, marking
+every truncation cause. Source digest or final URL changes still report a
+difference when the bounded text matches. A person must assess any implication.
+The independent comparison oracle is the unmodified Python 3.14.8 module with
+normalised LF endings, frozen by hash under the included PSF licence.
+
+Outputs must be new files outside the selected repository. Resolution follows
+symlinks before parent components and has a 40-level recursion ceiling. Windows
+link/parent spellings with different normalised resolutions are refused.
+Creation is exclusive, with a second path
+check before opening. Directories must remain stable during the check and open,
+as with the original command. Reports preserve Python's ASCII JSON escaping and
+platform newlines. Success exits 0, unavailable results or usage refusals exit 2
+and processing failures emit an unavailable JSON diagnostic and exit 1. Native
+argument spelling and outer I/O/JSON diagnostics can differ from argparse.
+Snapshots are operator-supplied comparison inputs. Their hashes check
+self-consistency; they do not authenticate retrieval or establish readiness.
+Qualification is offline; capture tests inject fabricated fetch results and no
+indexed source is requested. Original scripts, consumers and CI remain in use.

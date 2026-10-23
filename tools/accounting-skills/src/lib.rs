@@ -1,10 +1,12 @@
 //! Coverage inventory derived from the same tree as scripts/build_coverage.py.
+mod passage_diff;
 mod source_codec_rules;
 mod source_content;
 mod source_date_rules;
 mod source_dates;
 pub mod source_fetch_policy;
 mod source_html_rules;
+pub mod source_passages;
 pub mod source_refresh;
 mod source_urls;
 mod strict_yaml;
