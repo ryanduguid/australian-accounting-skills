@@ -6,7 +6,7 @@ through [CLAUDE.md](./CLAUDE.md).
 
 ## What this repository is
 
-Sixty-seven agent skills for Australian public-practice and contracting-business
+Seventy-six agent skills for Australian public-practice and contracting-business
 accounting. The Australian topic expansion adds tax returns, investment and
 cross-border workpapers, state-tax evidence, financial statements and formation
 checklists.

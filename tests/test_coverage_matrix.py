@@ -183,7 +183,18 @@ class SourceProvenanceTests(unittest.TestCase):
         """
         for skill, record in self.source_records():
             with self.subTest(skill=skill, url=record.get("url")):
-                self.assertRegex(str(record["checked_at"]), ISO_DATE)
+                checked = str(record["checked_at"])
+                if not checked:
+                    self.assertEqual(
+                        record.get("verification_status"),
+                        "source-discovery-only-human-review-pending",
+                    )
+                    self.assertRegex(str(record.get("review_required_since", "")), ISO_DATE)
+                    self.assertFalse(record.get("reviewed_content"))
+                    self.assertFalse(record.get("content_hash"))
+                    self.assertFalse(record.get("content_url"))
+                else:
+                    self.assertRegex(checked, ISO_DATE)
                 self.assertNotIn(
                     "checked_at",
                     str(record.get("fetched_at", "")),

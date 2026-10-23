@@ -1,0 +1,35 @@
+{
+  "skill": "au-dssp",
+  "sources": [
+    {
+      "title": "CR 2023/61 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=CLR/CR202361/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=CLR/CR202361/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "TD 2000/3 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=TXD/TD20003/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXD/TD20003/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

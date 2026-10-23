@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "model": "gpt-6.1-sol",
+  "run_date": "2026-10-21",
+  "skills_version": "3bc5d13aec442cb473b2589e83eb769c9e279a83",
+  "runner": "Codex observation run; independent proposed assessments retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-dssp-mixed-plan-parcels": {
+      "input_sha256": "d4f4afb1a7f8d9c78a94455920c827c19d7aeee3a4d4426bfa26fbc3ce7f88f8",
+      "context_sha256": "13ab1c57279483acc2c3027939e8cfef60c7c0a1e7b1059ccceff44c7d1de0ac",
+      "rubric_sha256": "e745ff51eb524a53bdfc1b1079d31943f72626e8ee860f89992d9739895f8b09",
+      "output_sha256": "f19b2afa6b8feafecb5cec130f5256438984a6d5d0ad1c0508759b77dc029596"
+    },
+    "au-dssp-supported-parcel-bridge": {
+      "input_sha256": "4017c9579f9ac0186e8d55193981740dba394b09ac27bb6db086f3b73f7ac8b3",
+      "context_sha256": "b46e95845bc8b23a76d2fc1f36ed14d50dad8215d47caaf8719ef03afbae80ba",
+      "rubric_sha256": "dc507939197e98ea937922a22d1f61c7629ea86b70334a326c7608e694bd200c",
+      "output_sha256": "5043e2813ab89656700dd3b7db50cf1fe71417c8afa0aab20a93c9e14840a948"
+    }
+  }
+}

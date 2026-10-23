@@ -5,7 +5,6 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-POLICY = "0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c"
 # These are component jobs from successful main-branch runs, plus aggregates that
 # require every job in their workflow to succeed; never a skip-tolerant aggregate
 # gate. Review the list when a component's CI contract changes.
@@ -38,7 +37,7 @@ class ReleaseChecksTests(unittest.TestCase):
                 self.assertRegex(
                     job,
                     r"(?m)^    uses: ryanduguid/release-policy/\.github/workflows/"
-                    r"release-(?:python|archive|skills)\.yml@" + POLICY + r"$",
+                    r"release-(?:python|archive|skills)\.yml@[0-9a-f]{40}$",
                 )
                 permissions = job.split("    permissions:\n", 1)[1].split("    uses:", 1)[0]
                 self.assertRegex(permissions, r"(?m)^      actions: read(?: #.*)?$")

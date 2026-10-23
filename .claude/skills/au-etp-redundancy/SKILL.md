@@ -21,6 +21,10 @@ The termination letter and reason, employment start and end dates, the payment b
 
 5. Record any tax-free component only where its evidence exists and the ATO guidance supports it.
 
+6. Keep contractual or industrial entitlements, gross payment components, PAYG withholding and final annual tax as distinct schedules. Verify notice and redundancy entitlements against the applicable employment instrument before accepting a generic calculator's weeks. For unused leave, preserve accrual dates and check the applicable Schedule 7 treatment rather than applying the ETP calculation to every component. A net termination payment is not a verified final annual tax outcome.
+
+   If a calculator is used or compared, prefer a local one and keep its evidence. Before relying on it, confirm it supports the reporting month or income year in question rather than merely accepting the year. Send only figures, never client names or identifiers. Record what it consumed: the tool and its version, revision or URL, the period, the exact inputs, any scope statement it returned and the run date. A remote calculator is used only where the user has explicitly permitted that call for this question, and never as a fallback when a local tool refuses. Keep the calculator's own labels as its own: report its result beside its inputs, never as a compliance verdict or in place of the reviewer's decision.
+
 ## Hand-off and checks
 
 A component schedule with each payment's classification and evidence, the tax-free limit calculation, the cap workings, a withholding recomputation reconciled to payroll, and open characterisation questions. The redundancy characterisation and payment reporting are reviewer decisions.

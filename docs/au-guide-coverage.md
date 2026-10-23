@@ -1,6 +1,6 @@
 # Australian guide topic coverage
 
-The pack contains 67 skills: the original 19, 31 new preparation workflows, a later tax invoice review, a working from home deduction workflow and an ATO penalties, interest workflow, a Division 293 tax workflow, a Division 296 tax workflow, a super contribution caps workflow, a PAYG instalment variation workflow and a termination payment, redundancy workflow, a multi-state payroll tax workflow, a work-related car expense workflow, a financial modelling workflow, an AML/CTF client coverage workflow, a client acceptance and engagement terms workflow, a tax research file-note workflow, a working holiday maker workflow, a short-stay accommodation workflow and a pre-lodgement review workflow.
+The pack contains 76 skills: the original 19, 31 new preparation workflows, a later tax invoice review, a working from home deduction workflow and an ATO penalties, interest workflow, a Division 293 tax workflow, a Division 296 tax workflow, a super contribution caps workflow, a PAYG instalment variation workflow and a termination payment, redundancy workflow, a multi-state payroll tax workflow, a work-related car expense workflow, a financial modelling workflow, an AML/CTF client coverage workflow, a client acceptance and engagement terms workflow, a tax research file-note workflow, a working holiday maker workflow, a short-stay accommodation workflow, a pre-lodgement review workflow a reconciliation break-trace workflow and 8 niche tax workflows listed below.
 This map accounts for all 38 guide filenames in the [OpenAccountants Australian folder](https://github.com/openaccountants/openaccountants/tree/66912a14e86095f150c2b0c37703d195938f8f1d/skills/international/australia), inspected on 8 September 2026. The additional `references.md` is a bibliography, not a separate workflow.
 
 This is a topic-to-workflow mapping. It does not claim identical coverage of each Guide's body or validate its tax content. Six topics reuse existing skills; 2 residency topics share one new skill. The new workflows identify evidence, reconciliations and decisions for qualified review. They do not encode complete tax engines.
@@ -59,6 +59,23 @@ Read on 29 September 2026 at [commit ada1fae](https://github.com/openaccountants
 | `au-tpar` | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md) | Existing | TPAR pathways and periods already exist. |
 | `au-working-holiday-makers` | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
 | `au-rates-2026-27` | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Existing | A list of rates rather than a workflow; the skill records which period's rates apply and where each comes from. |
+
+## Niche tax preparation coverage added on 21 October 2026
+
+The own pack adds the following workflows independently of upstream publication. The existing `au-psi-review` now names the individual-by-individual test sequence, source concentration, determination scope and attribution dependencies. This is preparation coverage, not a complete tax engine or professional approval.
+
+| Topic | Skill |
+| --- | --- |
+| DSSP, DRP and bonus-share parcel workpapers | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) |
+| Employee share scheme workpapers | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) |
+| Foreign pension and annuity workpapers | [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) |
+| Lump sum payments in arrears workpapers | [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) |
+| Managed fund and AMIT member workpapers | [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) |
+| Non-commercial business-loss workpapers | [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) |
+| Seniors and pensioners tax offset workpapers | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) |
+| Small business income tax offset workpapers | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) |
+
+Each addition has an indexed ATO starting point and a fabricated card that combines supported reconciliation with missing evidence. New source records leave the human review date blank and remain discovery-only. Historical pension instructions require the applicable period's authority. Neither a successful HTTP retrieval nor static checks establish current-law approval, a confirmed model verdict or qualified technical review. The original topic-mapping dates above remain unchanged.
 
 ## Provenance and reuse
 

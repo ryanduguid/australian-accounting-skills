@@ -14,6 +14,21 @@
       "content_hash": "4ada25821c7703e2e3789384512b0f57f6671782bbd6f67b3dc60acbe42ff77b",
       "source_last_modified": "",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "Work out if the PSI rules apply to you | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/personal-services-income/working-out-if-the-psi-rules-apply/work-out-if-the-psi-rules-apply-to-you",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/personal-services-income/working-out-if-the-psi-rules-apply/work-out-if-the-psi-rules-apply-to-you",
+      "http_status": 200,
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

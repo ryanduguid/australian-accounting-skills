@@ -16,6 +16,29 @@
       "content_hash_covers": "html"
     },
     {
+      "title": "ATO: Capital gains tax reform",
+      "url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+      "checked_at": "2026-10-20",
+      "fact": "Read 20 October 2026 (published 13 October 2026). States the first stage, the Treasury Laws Amendment (Tax Reform No. 1) Act 2026, is law and the changes apply from 1 July 2027: cost base indexation replaces the 50% CGT discount for resident individuals, trusts and partnerships on gains accruing on or after that date, a minimum 30% tax applies to individuals on certain net capital gains accruing on or after that date, and pre-CGT assets become subject to CGT on gains accruing on or after that date. An asset held on 1 July 2027 is treated as disposed of immediately before and reacquired on that date, valued at market value or by an apportionment method the Government is still developing; the gain or loss is deferred until a later CGT event. New residential dwellings and assets used to provide affordable housing may keep the current arrangements and the 50% discount by choice.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "ATO guidance that the ATO will update as later stages pass; the apportionment method is not yet enacted. Apply the Act's provisions and application rules, not this page.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+      "http_status": 200,
+      "fetched_at": "2026-10-20",
+      "source_last_modified": "2026-10-13",
+      "review_required_since": "2026-10-20",
+      "content_hash": "281c7eb36cb079caca66508f4d6042ef189d844bf53d92b4a6dbb7699262392a",
+      "content_hash_covers": "html",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+      "reviewed_content": {
+        "content_hash": "281c7eb36cb079caca66508f4d6042ef189d844bf53d92b4a6dbb7699262392a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/capital-gains-tax-reform",
+        "source_last_modified": "2026-10-13",
+        "checked_at": "2026-10-20"
+      }
+    },
+    {
       "title": "ATO: Tax reform, reforming negative gearing and capital gains tax",
       "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/individuals/tax-reform-boosting-home-ownership-reforming-negative-gearing-and-capital-gains-tax",
       "checked_at": "2026-10-14",

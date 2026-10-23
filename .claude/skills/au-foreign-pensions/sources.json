@@ -1,0 +1,20 @@
+{
+  "skill": "au-foreign-pensions",
+  "sources": [
+    {
+      "title": "myTax 2025 Foreign pensions and annuities | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/mytax25ForeignPenAndAnnuity",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/your-tax-return/instructions-to-complete-your-tax-return/mytax-instructions/2025/income/foreign-income/foreign-pension-and-annuity",
+      "http_status": 200,
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

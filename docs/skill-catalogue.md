@@ -5,6 +5,7 @@
 | `bas-preparation` | Prepare/review a BAS; transaction GST coding review with evidence, credit entitlement and attribution; label mapping and GST control tie-out |
 | `month-end-close` | Checklist-driven close: bank recs, control accounts, accruals, variance review |
 | `workpaper-tie-out` | Audit-style verification: every statement line traced to workpaper and source |
+| `reconciliation-break-trace` | Trace each open reconciliation difference to its source entry, with a one-sentence cause, owner and next action |
 | `fbt-annual-workflow` | FBT year-end: benefit identification, declarations, gross-up, RFBA |
 | `div7a-compliance` | Division 7A loan register, complying-agreement checks, minimum repayments |
 | `stp-finalisation` | STP year-end finalisation: payroll versus GL versus filed totals, super guarantee checks |
@@ -77,6 +78,14 @@ topics reuse existing skills and which have original new workflows.
 | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | Trust distribution review pack |
 | [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | Working from home deduction workpapers, fixed rate or actual cost, with the 2026-27 standard deduction comparison |
 | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | Working holiday maker workpapers in two modes: the employer's registration, Schedule 15 withholding, STP income type and super, or the person's WHM income, residency, NDA treaty position, lodgement and departure |
+| [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) | DSSP, DRP and bonus-share parcel workpapers |
+| [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) | Employee share scheme workpapers |
+| [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) | Foreign pension and annuity workpapers |
+| [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) | Lump sum payments in arrears workpapers |
+| [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) | Managed fund and AMIT member workpapers |
+| [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) | Non-commercial business-loss workpapers |
+| [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | Seniors and pensioners tax offset workpapers |
+| [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | Small business income tax offset workpapers |
 
 Also included:
 

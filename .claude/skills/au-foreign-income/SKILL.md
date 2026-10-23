@@ -21,6 +21,8 @@ Income year, residency and temporary-residency facts, income by country and type
 
 ## Hand-off and checks
 
+For foreign pensions or annuities, use `au-foreign-pensions` for payment character, UPP and arrears evidence before carrying the supported assessable amount here. Keep that amount distinct from the foreign-tax-offset eligibility and whole-return limit. If the companion or records are unavailable, retain those pension questions as unresolved.
+
 A country-by-income schedule, AUD conversion trail and supported offset calculation or evidence gaps. Reconcile back to receipts and assessments without reporting net cash as gross income.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

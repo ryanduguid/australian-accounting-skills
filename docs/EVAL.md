@@ -115,7 +115,7 @@ The four core failure cards also added for v0.3.1 have no recorded whole-card ru
 The `au-short-stay-accommodation-missing-evidence` and
 `au-short-stay-accommodation-platform-gst-registration` cards and the
 `au-capital-gains-contract-straddles-reform` card, added for v0.4.1, have no recorded whole-card run,
-nor do the 3 `au-pre-lodgement-review` cards. The v0.4.1 figure replacements
+nor do the 3 `au-pre-lodgement-review` cards or the 2 `reconciliation-break-trace` cards. The v0.4.1 figure replacements
 changed the wording of au-payg-instalment-variation, au-super-contribution-caps,
 bas-preparation and contractor-super-tpar, so their cards need a rerun.
 
@@ -136,6 +136,33 @@ tools cannot establish restraint when such tools are available.
 
 Static validation does not establish model behaviour. Proposed verdicts stay
 outside the result records until the person judging the run confirms them.
+
+The [21 October niche-topic observations](../validation/results/2026-10-21-niche-tax-task-only-observed.json)
+cover 12 task-only cases at b9de775, including positive SAPTO, DSSP and AMIT
+preparation. The initial mixed-plan DSSP response omitted supported conditional
+monetary bridges. After clarifying that workflow, both DSSP cases were
+[observed again](../validation/results/2026-10-21-niche-tax-dssp-rerun-observed.json)
+at 3bc5d13. The original observations are retained. All records remain observed,
+with no human-confirmed verdicts; the confirmed-card count is unchanged.
+
+Review against the 2025-26 ATO rebate-income worksheet then identified missing
+FHSS and fringe-benefit employer-class inputs in the SAPTO workflow and positive
+fixture. That initial positive observation does not establish a fully supported
+rebate-income bridge. The workflow and fixture now distinguish those inputs,
+with separate provisional section 57A, FHSS and unknown-class comparisons.
+[Both SAPTO cards were observed again](../validation/results/2026-10-21-niche-tax-sapto-rerun-observed.json)
+at efe1af8. Earlier records and frozen evidence remain unchanged. There are 16
+observations across these 12 cases, with no human-confirmed verdicts.
+
+These trials used fresh ephemeral Codex CLI sessions with `gpt-6.1-sol`, high
+reasoning effort, inline target-skill material and task sections only. Rubrics
+were withheld. Web search was disabled, user MCP configuration was excluded
+and the instructions prohibited tools. The retained traces show no tool calls.
+This establishes neither operating-system read isolation nor source retrieval
+or restraint with consequential action tools. No baseline comparison or
+performance improvement is claimed. Each record binds the exact frozen skill
+and card bytes to the stated commit; those bytes were checked against Git
+after execution. Human source approval remains pending.
 
 ## Task-only trials
 

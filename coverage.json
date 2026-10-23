@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 67,
-    "sources_indexed": 193,
-    "skills_source_exempt": 7,
+    "skills": 76,
+    "sources_indexed": 209,
+    "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 15,
-    "skills_with_only_the_seeded_case": 34
+    "skills_with_behavioural_gate": 16,
+    "skills_with_only_the_seeded_case": 33
   },
   "skills": [
     {
@@ -106,7 +106,7 @@
     {
       "skill": "au-capital-gains",
       "sources": {
-        "indexed": 3,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -281,6 +281,51 @@
       }
     },
     {
+      "skill": "au-dssp",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-dssp-mixed-plan-parcels",
+          "au-dssp-supported-parcel-bridge"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-employee-share-schemes",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-employee-share-schemes-taxing-point"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-etp-redundancy",
       "sources": {
         "indexed": 3,
@@ -348,6 +393,28 @@
       }
     },
     {
+      "skill": "au-foreign-pensions",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-foreign-pensions-gross-upp-and-arrears"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-forex-review",
       "sources": {
         "indexed": 1,
@@ -375,7 +442,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-30",
-        "fetched": "2026-09-16",
+        "fetched": "2026-09-30",
         "unreachable": 0,
         "moved_since_review": []
       },
@@ -461,6 +528,51 @@
       }
     },
     {
+      "skill": "au-lump-sum-arrears",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-lump-sum-arrears-multiple-payers"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-managed-fund-amit",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-managed-fund-amit-complete-reinvestment",
+          "au-managed-fund-amit-statement-and-basis"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-medicare-review",
       "sources": {
         "indexed": 1,
@@ -476,6 +588,28 @@
           "au-medicare-review-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-non-commercial-losses",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-non-commercial-losses-activity-roll-forward"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -645,7 +779,7 @@
     {
       "skill": "au-psi-review",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
@@ -653,11 +787,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-psi-review-individuals-and-test-order",
           "au-psi-review-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -732,6 +867,29 @@
       }
     },
     {
+      "skill": "au-sapto",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-sapto-complete-asymmetric-bridge",
+          "au-sapto-rebate-income-and-spouse"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-short-stay-accommodation",
       "sources": {
         "indexed": 15,
@@ -759,9 +917,9 @@
     {
       "skill": "au-small-business-cgt",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
-        "reviewed": "2026-10-14",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -772,6 +930,28 @@
           "au-small-business-cgt-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-small-business-income-offset",
+      "sources": {
+        "indexed": 1,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-10-21",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-small-business-income-offset-psi-and-losses"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -981,9 +1161,9 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 5,
+        "indexed": 7,
         "exempt": false,
-        "reviewed": "2026-10-14",
+        "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1302,13 +1482,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 6,
+        "cases": 7,
         "case_ids": [
           "debtor-summary-review",
           "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
           "post-journal-provenance-tie-out",
+          "reconciliation-break-trace-supported-items",
           "stp-current-vs-overdue-sg"
         ],
         "only_seeded_case": false
@@ -1390,6 +1571,31 @@
       "gates": {
         "behavioural": [
           "test_legal_source_gates.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "reconciliation-break-trace",
+      "sources": {
+        "indexed": 0,
+        "exempt": true,
+        "reviewed": "",
+        "fetched": "",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "reconciliation-break-trace-missing-evidence",
+          "reconciliation-break-trace-supported-items"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_reconciliation_break_trace.py"
         ],
         "inventory": []
       }

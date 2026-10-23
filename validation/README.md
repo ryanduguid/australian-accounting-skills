@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 93 cards in `cases/` test workflow quality, provenance and restraint.
+The 107 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -52,6 +52,8 @@ law claim, unverified source or guess.
 | [Supported cash-flow roll-forward](cases/cashflow-supported-roll-forward.md) | cashflow-forecast-13week |
 | [Supported checks in an incomplete close](cases/month-end-supported-partial-close.md) | month-end-close |
 | [Supplier bank-detail change in a month-end close](cases/month-end-supplier-bank-detail-change.md) | month-end-close, tax-invoice-review |
+| [Bank reconciliation break with an unexplained remainder](cases/reconciliation-break-trace-supported-items.md) | reconciliation-break-trace, month-end-close |
+| [Control account breaks with a direct journal and missing detail](cases/reconciliation-break-trace-missing-evidence.md) | reconciliation-break-trace |
 | [Super-regime transition cashflow](cases/cashflow-super-regime-transition.md) | cashflow-forecast-13week, stp-finalisation |
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
@@ -136,16 +138,29 @@ law claim, unverified source or guess.
 | [Receipt links and conflicting schedule entries](cases/receipt-schedule-conflicts.md) | au-individual-return |
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
+| [SAPTO with an incomplete rebate-income bridge](cases/au-sapto-rebate-income-and-spouse.md) | au-sapto |
+| [Mixed DRP and DSSP share parcels](cases/au-dssp-mixed-plan-parcels.md) | au-dssp |
+| [ESS sale with missing scheme and restriction evidence](cases/au-employee-share-schemes-taxing-point.md) | au-employee-share-schemes |
+| [AMMA attribution, cash and an excessive basis reduction](cases/au-managed-fund-amit-statement-and-basis.md) | au-managed-fund-amit |
+| [Separate activity losses with a pending discretion request](cases/au-non-commercial-losses-activity-roll-forward.md) | au-non-commercial-losses |
+| [Foreign pension net receipts with missing UPP and arrears evidence](cases/au-foreign-pensions-gross-upp-and-arrears.md) | au-foreign-pensions |
+| [Arrears from 2 payers with an unallocated remainder](cases/au-lump-sum-arrears-multiple-payers.md) | au-lump-sum-arrears |
+| [Business offset with unresolved PSI and deferred losses](cases/au-small-business-income-offset-psi-and-losses.md) | au-small-business-income-offset |
+| [PSI testing for 2 individuals in one entity](cases/au-psi-review-individuals-and-test-order.md) | au-psi-review |
+| [Complete asymmetric rebate-income bridges](cases/au-sapto-complete-asymmetric-bridge.md) | au-sapto |
+| [Complete mixed-date parcel and DRP reconciliation](cases/au-dssp-supported-parcel-bridge.md) | au-dssp |
+| [Complete AMMA and reinvestment parcel bridge](cases/au-managed-fund-amit-complete-reinvestment.md) | au-managed-fund-amit |
 
-Together the cards cover all 67 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 76 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
 current. The `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
 v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
-short-stay accommodation cards, the 3 pre-lodgement review cards and the CGT
-contract-timing card, added for v0.4.1, have no recorded run. See
+short-stay accommodation cards, the 3 pre-lodgement review cards, the CGT
+contract-timing card and the 2 reconciliation break-trace cards, added for
+v0.4.1, have no recorded run. See
 [results](results/).
 
 The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no
@@ -174,6 +189,15 @@ Four core failure cards cover debtor summary differences, repeated transaction i
 period mismatches and superseded workpaper references. Each includes a positive
 control. Their structure and fixture arithmetic can be checked locally; no live
 agent verdict has been recorded for these additions.
+
+The 12 niche-topic cards added on 21 October have task-only observations,
+including complete SAPTO, DSSP and AMIT arithmetic cases. The mixed-plan DSSP
+trial prompted a workflow clarification and a rerun of both DSSP cards. Review
+against the ATO worksheet also identified missing SAPTO FHSS and fringe-benefit
+classification inputs; the repaired positive fixture and both SAPTO trials are
+recorded separately. Earlier observations are retained. These records contain
+no human-confirmed verdicts. See the
+[trial evidence and limitations](../docs/EVAL.md#current-evidence-and-rerun).
 
 ## Static checks
 

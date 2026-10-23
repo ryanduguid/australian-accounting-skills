@@ -2,18 +2,22 @@
 
 Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation, or lodgement.
 
-[![Verify](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/verify.yml?branch=main&label=verify&labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
-[![Codecov](https://img.shields.io/codecov/c/github/ryanduguid/australian-accounting-skills?label=coverage&labelColor=000000&style=flat-square)](https://codecov.io/gh/ryanduguid/australian-accounting-skills)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/codeql.yml?branch=main&label=CodeQL&labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
-[![Snyk](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/snyk.yml?branch=main&label=Snyk&labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
-[![SonarCloud](https://img.shields.io/sonar/quality_gate/ryanduguid_australian-accounting-skills?server=https%3A%2F%2Fsonarcloud.io&label=SonarCloud&labelColor=000000&style=flat-square)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
-[![Codacy code quality](https://img.shields.io/codacy/grade/b46694168d304886be1287d54cf33923?label=Codacy&labelColor=000000&style=flat-square)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)<br>
-[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/ryanduguid/australian-accounting-skills?label=Scorecard&labelColor=000000&style=flat-square)](https://scorecard.dev/viewer/?uri=github.com/ryanduguid/australian-accounting-skills)
-[![OpenSSF Best Practices](https://img.shields.io/cii/level/15423?label=Best%20Practices&labelColor=000000&style=flat-square)](https://www.bestpractices.dev/projects/15423)
-[![SLSA 3](https://img.shields.io/badge/SLSA-level%203-990024?labelColor=000000&style=flat-square)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-scanned-990024?labelColor=000000&style=flat-square&logo=virustotal&logoColor=FFFFF0)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
-[![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=66023C&labelColor=000000&style=flat-square)](.claude-plugin/plugin.json)
-[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-66023C?labelColor=000000&style=flat-square)](LICENSE)
+<div align="center">
+
+[![Verify](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/verify.yml?branch=main&label=verify&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/ryanduguid/australian-accounting-skills?label=coverage&labelColor=000000&style=flat)](https://codecov.io/gh/ryanduguid/australian-accounting-skills)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/codeql.yml?branch=main&label=CodeQL&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
+[![Snyk](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/snyk.yml?branch=main&label=Snyk&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
+[![SonarCloud](https://img.shields.io/sonar/quality_gate/ryanduguid_australian-accounting-skills?server=https%3A%2F%2Fsonarcloud.io&label=SonarCloud&labelColor=000000&style=flat)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
+[![Codacy code quality](https://img.shields.io/codacy/grade/b46694168d304886be1287d54cf33923?label=Codacy&labelColor=000000&style=flat)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)<br>
+[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/ryanduguid/australian-accounting-skills?label=Scorecard&labelColor=000000&style=flat)](https://scorecard.dev/viewer/?uri=github.com/ryanduguid/australian-accounting-skills)
+[![OpenSSF Best Practices](https://img.shields.io/cii/level/15423?label=Best%20Practices&labelColor=000000&style=flat)](https://www.bestpractices.dev/projects/15423)
+[![SLSA 3](https://img.shields.io/badge/SLSA-level%203-990024?labelColor=000000&style=flat&color=990024)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-scanned-990024?labelColor=000000&style=flat&logo=virustotal&logoColor=FFD32A&color=990024)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
+[![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=66023C&labelColor=000000&style=flat)](.claude-plugin/plugin.json)
+[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-66023C?labelColor=000000&style=flat&color=66023C)](LICENSE)
+
+</div>
 
 Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges. These skills do not provide tax advice or replace professional judgement.
 
@@ -43,7 +47,7 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 
 ## Validation record
 
-Human-confirmed model verdicts cover 72 of the 93 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 21 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, three transaction-GST cases, two short-stay accommodation cases, three pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge and a formula-change case. Static checks cover all 67 skills, and [coverage.json](coverage.json) gives the state of each skill.
+Human-confirmed model verdicts cover 72 of the 107 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 35 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, three transaction-GST cases, two short-stay accommodation cases, three pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a formula-change case, two reconciliation break-trace cases and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 76 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
 ## Corrections to v0.2.1
 
@@ -53,7 +57,7 @@ v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-cre
 
 ### Development installation
 
-The marketplace added without a tag installs the default branch, which prepares v0.4.1 with 67 workflows. It is not a published release.
+The marketplace added without a tag installs the default branch, which prepares v0.4.1 with 76 workflows. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -64,7 +68,7 @@ Claude Code is the tested runtime. Codex packaging and portable skill files are 
 
 The development installation resolves the default branch, which can carry changes made after v0.4.0. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
-[CITATION.cff](CITATION.cff) identifies the published v0.4.0 release and its 65 workflows. Development prepares v0.4.1 with 67 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
+[CITATION.cff](CITATION.cff) identifies the published v0.4.0 release and its 65 workflows. Development prepares v0.4.1 with 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
 Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original nine-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.4.0 pack.
 
@@ -72,7 +76,7 @@ Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, t
 
 - [Install, uninstall and versioning](docs/installation.md)
 - [First run and BAS walkthrough](docs/bas-walkthrough.md)
-- [Sixty-seven skills and their supporting files](docs/skill-catalogue.md)
+- [Seventy-six skills and their supporting files](docs/skill-catalogue.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)

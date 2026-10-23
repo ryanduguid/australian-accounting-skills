@@ -17,9 +17,15 @@ Income year, relevant income components, residency periods, spouse/dependant cir
 
 2. Verify the distinct income definitions and rules for levy, levy reduction and surcharge. Reconcile each income measure to its underlying return components.
 
+   Where seniors thresholds may apply, establish the required SAPTO entitlement through `au-sapto`; age or a pension receipt alone is insufficient. For lump sums in arrears, use `au-lump-sum-arrears` to retain accrual years and separate levy relief from the income-tax and surcharge offsets. If a companion or its required evidence is unavailable, leave that dependent conclusion unverified.
+
 3. Check exemption evidence and the exact period it supports. Confirm hospital cover qualifies for the relevant surcharge purpose; do not infer cover from an extras policy.
 
 4. Compute each supported component separately using period-specific primary authority, then reconcile to the return workpaper. Missing spouse information or evidence prevents a nil conclusion.
+
+5. When checking a calculator, establish whether it actually supports the relevant family, dependant, senior/pensioner and part-year circumstances. Test low-income phase-in and surcharge tier boundaries separately. A single-person default cannot establish a family's result, and holding hospital cover does not by itself remove the ordinary levy. Keep exclusions beside the comparison result.
+
+   If a calculator is used or compared, prefer a local one and keep its evidence. Before relying on it, confirm it supports the reporting month or income year in question rather than merely accepting the year. Send only figures, never client names or identifiers. Record what it consumed: the tool and its version, revision or URL, the period, the exact inputs, any scope statement it returned and the run date. A remote calculator is used only where the user has explicitly permitted that call for this question, and never as a fallback when a local tool refuses. Keep the calculator's own labels as its own: report its result beside its inputs, never as a compliance verdict or in place of the reviewer's decision.
 
 ## Hand-off and checks
 
