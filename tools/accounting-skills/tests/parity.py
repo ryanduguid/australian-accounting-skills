@@ -37,7 +37,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="coverage-parity-") as directory:
         root = Path(directory)
         compare(root)
-        for skill in ("alpha", "béta", "zulu"):
+        for skill in ("alpha", "béta", "zulu", "''"):
             folder = root / ".claude/skills" / skill
             folder.mkdir(parents=True)
             (folder / "SKILL.md").write_text("not parsed", encoding="utf-8")
@@ -47,6 +47,8 @@ def main():
         tests.mkdir()
         (tests / "Z.py").write_text("'alpha\" and 'béta'", encoding="utf-8")
         (tests / "a.py").write_text("\"zulu'", encoding="utf-8")
+        # Overlapping occurrences of a quote-named skill: only the outer pair is quoted.
+        (tests / "q.py").write_text("''''", encoding="utf-8")
         (tests / ".py").write_text("'alpha'", encoding="utf-8")
         (cases / ".md").write_text("---\n- alpha\n---\n", encoding="utf-8")
         for separator in ("\n", "\r\n", "\r", "\x85", "\u2028", "\u2029", "\x1c"):
@@ -98,6 +100,8 @@ def main():
         "stale_output_exit": 2, "malformed_frontmatter_refusals": 2,
         "intentional_adaptations": ["explicit/current-directory root", "generic exit-1 processing/argument diagnostics",
             "non-string source date/URL fields and non-array source collections refused", "non-Unicode filenames refused",
+            "a symlinked coverage.json is refused and --write replaces the file instead of writing through links",
+            "argparse abbreviations, -- and help are not accepted",
             "native stdout is UTF-8; CLI byte comparison uses Python -X utf8"]}, indent=2) + "\n")
 
 

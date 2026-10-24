@@ -1,6 +1,5 @@
-use accounting_skills::{Result, platform_text, read_text, rendered};
+use accounting_skills::{Result, platform_text, read_text, rendered, replace_file};
 use std::{
-    fs,
     io::{self, Write},
     path::PathBuf,
 };
@@ -48,7 +47,7 @@ fn run() -> Result<u8> {
     let matrix = rendered(&root)?;
     let coverage = root.join("coverage.json");
     if write {
-        fs::write(coverage, platform_text(&matrix))?;
+        replace_file(&coverage, &platform_text(&matrix))?;
         io::stdout().write_all(platform_text("wrote coverage.json\n").as_bytes())?;
     } else {
         let current = if coverage.is_file() {

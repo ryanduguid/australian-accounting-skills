@@ -24,6 +24,7 @@ use serde_json::Value;
 use std::{
     collections::BTreeMap,
     fs,
+    io::Write,
     path::{Path, PathBuf},
 };
 
@@ -73,6 +74,28 @@ pub struct Matrix {
     note: &'static str,
     totals: Totals,
     skills: Vec<Row>,
+}
+
+/// Replace `path` with `text` without writing through a link. A symlink or
+/// other non-file at `path` is refused, and the bytes are renamed over the
+/// entry, so a file hard-linked to it elsewhere keeps its contents.
+pub fn replace_file(path: &Path, text: &str) -> Result<()> {
+    if fs::symlink_metadata(path).is_ok_and(|metadata| !metadata.file_type().is_file()) {
+        return Err(format!("{} must be a regular file", name(path)?).into());
+    }
+    let mut temporary = path.as_os_str().to_owned();
+    temporary.push(format!(".{}.tmp", std::process::id()));
+    let temporary = PathBuf::from(temporary);
+    let written = fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&temporary)
+        .and_then(|mut file| file.write_all(text.as_bytes()))
+        .and_then(|()| fs::rename(&temporary, path));
+    if written.is_err() {
+        let _ = fs::remove_file(&temporary);
+    }
+    Ok(written?)
 }
 
 pub fn read_text(path: &Path) -> Result<String> {
@@ -286,12 +309,12 @@ pub fn build(root: &Path) -> Result<Matrix> {
         if matches_suffix(&path, ".py")? {
             let text = read_text(&path)?;
             for skill in &skills {
-                if text.match_indices(skill).any(|(offset, _)| {
-                    matches!(text[..offset].chars().next_back(), Some('\'' | '"'))
-                        && matches!(
-                            text[offset + skill.len()..].chars().next(),
-                            Some('\'' | '"')
-                        )
+                // Every opening quote is a candidate, as in Python's regex
+                // search; occurrences of the name itself can overlap.
+                if text.match_indices(['\'', '"']).any(|(offset, quote)| {
+                    text[offset + quote.len()..]
+                        .strip_prefix(skill.as_str())
+                        .is_some_and(|rest| rest.starts_with(['\'', '"']))
                 }) {
                     mentions.get_mut(skill).unwrap().push(name(&path)?);
                 }
