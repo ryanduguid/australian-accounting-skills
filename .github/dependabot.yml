@@ -35,3 +35,19 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+  - package-ecosystem: cargo
+    directory: /tools/accounting-skills
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    ignore:
+      # Pinned so its Unicode 16.0 tables match Python 3.14's normalisation.
+      # A newer release changes the Unicode version and must be requalified
+      # against the Python version the comparisons run. Security updates
+      # still arrive, for that requalification.
+      - dependency-name: unicode-normalization
+        update-types:
+          - version-update:semver-major
+          - version-update:semver-minor
+          - version-update:semver-patch

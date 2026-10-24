@@ -37,6 +37,9 @@ Pyright run in its `lint` job, then the 4 verification checks run on Python 3.14
 and 3.15. `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
+A `native` job builds and tests the Rust port in `tools/accounting-skills/`
+and compares it with the scripts. It runs in CI only, with no pre-commit hook;
+its README lists the local commands.
 
 `pip install pre-commit && pre-commit install` runs all of it before the commit
 lands. `.pre-commit-config.yaml` pins Ruff and Pyright to the versions CI

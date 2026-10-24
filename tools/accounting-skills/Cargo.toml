@@ -1,0 +1,21 @@
+[package]
+name = "accounting-skills"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "Apache-2.0"
+description = "Native tooling for the accounting skill repository"
+publish = false
+
+[dependencies]
+chrono = { version = "=0.4.45", default-features = false, features = ["clock", "std"] }
+fancy-regex = "=0.19.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "=1.0.154", features = ["preserve_order"] }
+sha2 = "=0.11.1"
+ureq = { version = "=3.4.2", default-features = false, features = ["rustls", "platform-verifier"] }
+unicode-normalization = "=0.1.24"
+yaml-rust2 = { version = "=0.13.0", default-features = false }
+
+[dev-dependencies]
+tempfile = "=3.27.0"
