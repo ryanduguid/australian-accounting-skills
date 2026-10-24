@@ -3,6 +3,7 @@ import argparse
 import importlib
 import itertools
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -44,10 +45,16 @@ def main():
             raise original.SweepError(response["error"])
         return original.Outcome(**response["outcome"])
 
+    # Windows cannot start a process from an empty environment block, which an
+    # original test's cleared environment leaves under shells without hidden
+    # drive variables, such as Git Bash. Only SYSTEMROOT is restored.
+    system_root = {"SYSTEMROOT": os.environ["SYSTEMROOT"]} if os.name == "nt" else {}
+
     def native_main(argv):
         nonlocal cli_calls
         cli_calls += 1
         result = subprocess.run([str(binary), "sweep-outcome", *argv], cwd=Path.cwd(),
+                                env={**os.environ, **system_root},
                                 capture_output=True, timeout=10, encoding="utf-8")
         print(result.stdout, end="")
         print(result.stderr, file=sys.stderr, end="")

@@ -67,6 +67,7 @@ Keep client data out of this repository entirely. See Scope and data below.
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |
 | `validation/` | Validation pack the tests exercise |
+| `tools/accounting-skills/` | Native Rust port of `scripts/`; the Python scripts stay authoritative |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip

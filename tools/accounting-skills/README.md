@@ -1,8 +1,57 @@
 # Native accounting skill tooling
 
-This crate is the first local Rust porting slice for the repository tooling.
-It derives the coverage matrix without a Python runtime. It needs no network
-and does not assess whether a source or accounting conclusion is correct.
+This crate ports the repository tooling in `scripts/` to Rust. It needs no
+Python runtime and does not assess whether a source or accounting conclusion
+is correct. The Python scripts remain the authoritative commands for CI, the
+source sweep and contributors; the native commands are candidates beside them.
+
+| Python script | Native command |
+| --- | --- |
+| `build_coverage.py` | `build-coverage` |
+| `sweep_outcome.py` | `sweep-outcome` |
+| `validate_validation.py` | `validate-validation` |
+| `source_fetch_policy.py` | library used by `source-refresh` |
+| `source_refresh.py` | `source-refresh` |
+| `source_passages.py` | `source-passages` |
+| `prepare_trial.py` | `prepare-trial` |
+| `strict_yaml.py` | card YAML within `validate-validation` and `prepare-trial` |
+
+`strict_yaml.py` has no other script caller. Its remaining callers are the
+Python skill-metadata and entry-point tests, which stay with the Python suite.
+The native card reader is stricter than the shared factory: it also refuses
+anchors and tags.
+
+## Build and checks
+
+`rust-toolchain.toml` pins the compiler. From this directory:
+
+```sh
+cargo fmt --check
+cargo clippy --locked --all-targets -- -D warnings
+cargo test --locked --all-targets
+cargo build --locked --release
+cargo install --locked --path .
+```
+
+The `native` job in `.github/workflows/verify.yml` runs these checks on Linux
+and Windows, checks this tree with `validate-validation` and `build-coverage
+--check`, then runs the comparison harnesses in `tests/*_parity.py`. Those
+replay the original Python tests against the native code and compare
+fabricated inputs with the unchanged scripts, with no indexed source fetched.
+To run one locally, build the debug examples first:
+
+```sh
+cargo build --locked --examples --bins
+python -I tests/sweep_parity.py --root ../.. --binary target/debug/accounting-skills --probe target/debug/examples/sweep_probe --record /tmp/sweep.json
+```
+
+The job keeps each platform's release binary, this README and the licences as
+a 7-day workflow artefact. That artefact is an unsigned test candidate, not a
+release: no checksum, attestation or signature covers it, and the repository
+release still ships the skills archive only. Binary releases wait for the
+shared release workflow described in the release policy.
+
+## Coverage matrix
 
 ```sh
 cargo build --locked --release
@@ -87,7 +136,7 @@ representation: a schema `const` of `2.0` is refused where Python's numeric
 equality accepts it as `2`. Arbitrary malformed scalar diagnostics and
 Python's nonstandard JSON constants are not an unrestricted compatibility claim.
 This card-schema helper does not replace the generic Python strict-YAML factory
-used by other scripts and tests. Unicode behaviour is qualified against 16.0;
+that the Python tests use. Unicode behaviour is qualified against 16.0;
 future Python Unicode versions require renewed comparison. Files and directories
 must remain stable during checks, as with the original implementation.
 
@@ -198,9 +247,9 @@ JSON/depth/number limits. Arbitrary malformed scalar conversion and nonstandard
 JSON constants are not compatibility claims. Files must remain stable during
 checks, as with the original; symlink replacement before writes is rechecked.
 
-Original scripts, consumer commands and CI remain in place. Generic shared
-helpers and the documented source-refresh codec and transport gaps remain unfinished.
-This crate is not a release or consumer cutover.
+Original scripts, consumer commands and CI remain in place. The documented
+source-refresh codec and transport gaps remain unfinished. This crate is not a
+release or consumer cutover.
 
 ## Source passages candidate
 

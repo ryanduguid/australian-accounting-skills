@@ -78,6 +78,98 @@ jobs:
       - name: Verify coverage matrix
         run: python scripts/build_coverage.py --check
 
+  # The native Rust port of scripts/ in tools/accounting-skills. The Python
+  # scripts stay authoritative; this job keeps the port building, checks this
+  # tree with it and replays the original tests and fabricated comparisons
+  # against it. No indexed source is fetched.
+  native:
+    name: native
+    timeout-minutes: 30
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
+        working-directory: tools/accounting-skills
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.14"
+
+      - name: Install test dependencies
+        working-directory: .
+        run: python -m pip install --disable-pip-version-check --require-hashes --no-deps --requirement requirements-test.txt
+
+      - name: Install the pinned Rust toolchain
+        # rustup reads the version from rust-toolchain.toml in this directory.
+        run: rustup toolchain install
+
+      - name: Rustfmt
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --locked --all-targets -- -D warnings
+
+      - name: Rust tests
+        run: cargo test --locked --all-targets
+
+      - name: Build
+        run: |
+          cargo build --locked --release
+          cargo build --locked --examples --bins
+
+      - name: Check this tree with the native commands
+        run: |
+          target/release/accounting-skills validate-validation --root "$GITHUB_WORKSPACE"
+          target/release/accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check > /dev/null
+
+      - name: Compare with the original scripts
+        env:
+          RECORDS: ${{ runner.temp }}/native-comparisons
+        run: |
+          exe=""
+          if [ "$RUNNER_OS" = Windows ]; then exe=.exe; fi
+          binary="target/debug/accounting-skills$exe"
+          probes=target/debug/examples
+          mkdir -p "$RECORDS"
+          python -I tests/parity.py --root "$GITHUB_WORKSPACE" --binary "$binary" --record "$RECORDS/coverage.json"
+          for slice in sweep validation source_refresh source_passages trial; do
+            python -I "tests/${slice}_parity.py" --root "$GITHUB_WORKSPACE" --binary "$binary" \
+              --probe "$probes/${slice}_probe$exe" --record "$RECORDS/$slice.json"
+          done
+          python -I tests/fetch_policy_parity.py --root "$GITHUB_WORKSPACE" \
+            --probe "$probes/fetch_policy_probe$exe" --record "$RECORDS/fetch_policy.json"
+          for slice in source_codecs multibyte; do
+            python -I "tests/${slice}_parity.py" --root "$GITHUB_WORKSPACE" \
+              --probe "$probes/source_refresh_probe$exe" --record "$RECORDS/$slice.json"
+          done
+          python -I tests/gb18030_parity.py --root "$GITHUB_WORKSPACE" --probe "$probes/gb18030_probe$exe" \
+            --production-probe "$probes/source_refresh_probe$exe" --record "$RECORDS/gb18030.json"
+
+      # A candidate for local testing, not a release: no checksum, attestation
+      # or signature covers it, and it expires after 7 days.
+      - name: Keep the release binary
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: accounting-skills-${{ runner.os }}
+          path: |
+            tools/accounting-skills/target/release/accounting-skills${{ runner.os == 'Windows' && '.exe' || '' }}
+            tools/accounting-skills/README.md
+            tools/accounting-skills/PYTHON-LICENSE.txt
+            LICENSE
+            NOTICE
+          if-no-files-found: error
+          retention-days: 7
+
   secrets:
     name: secrets
     timeout-minutes: 10
@@ -193,7 +285,7 @@ jobs:
     # unless every job it needs succeeded, when a job in this file is missing
     # from needs, or when a pull request removes a job without adding a
     # "# removed-jobs: <job>" comment to this file.
-    needs: [lint, verify, secrets, shared-conformance, coverage]
+    needs: [lint, verify, native, secrets, shared-conformance, coverage]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5

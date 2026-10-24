@@ -95,3 +95,14 @@ pub fn card_mapping(raw: &str) -> Result<Value> {
     }
     Ok(value)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::card_mapping;
+
+    #[test]
+    fn complex_mapping_keys_are_refused() {
+        let error = card_mapping("? [a, b]\n: 1\n").unwrap_err().to_string();
+        assert_eq!(error, "YAML mapping keys must be scalar");
+    }
+}
