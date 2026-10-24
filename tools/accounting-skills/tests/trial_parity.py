@@ -18,6 +18,10 @@ parser.add_argument("--binary", type=Path, required=True)
 parser.add_argument("--record", type=Path, required=True)
 args = parser.parse_args()
 R = args.root.resolve()
+# The native probe reports canonical paths, but the original link mock matches
+# Path spellings. Hosted Windows runners spell TEMP with 8.3 short names, so
+# resolve it (and any junction in it) to keep both spellings the same.
+tempfile.tempdir = str(Path(tempfile.gettempdir()).resolve())
 sys.path.insert(0, str(R / "scripts"))
 import prepare_trial as p  # noqa: E402
 
