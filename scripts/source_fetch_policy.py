@@ -9,7 +9,8 @@ from urllib.parse import urldefrag, urlsplit
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 READ_CHUNK_BYTES = 64 * 1024
 MAX_REDIRECTS = 3
-# Reviewed against the public index on 3 October 2026. An index cannot authorise itself.
+# Reviewed against the public index on 3 October 2026; docs.peppol.eu, OpenPeppol's
+# specification site, added 26 October 2026. An index cannot authorise itself.
 APPROVED_HOSTS = frozenset({
     "www.austrac.gov.au", "www.legislation.gov.au", "www.ato.gov.au", "www.asic.gov.au",
     "apesb.org.au", "www.tpb.gov.au", "standards.aasb.gov.au", "www.revenue.nsw.gov.au",
