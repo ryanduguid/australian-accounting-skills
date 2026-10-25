@@ -29,6 +29,29 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Peppol Authority: PINT A-NZ Billing release notes",
+      "url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Indexed by an agent on 26 October 2026 so the weekly sweep reports a new PINT A-NZ Billing release; the ATO tax invoice page names the A-NZ Peppol specification without a version. Specification release notes, not law: the ATO page governs which eInvoices are treated as tax invoices. Human source approval remains pending. Read the current release and its jurisdiction rules at use time.",
+      "final_url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
+      "http_status": 200,
+      "fetched_at": "2026-10-26",
+      "review_required_since": "2026-10-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "2026-09-07",
+      "pending_review": {
+        "content_hash": "fd7ca3f09988c3617196e438c6d59a950d968dc0567eab80500cd0674e62ecf1",
+        "content_hash_covers": "html",
+        "content_url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
+        "observed_at": "2026-10-26",
+        "source_last_modified": "2026-09-07"
+      },
+      "content_url": ""
     }
   ]
 }

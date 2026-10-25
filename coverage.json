@@ -3,10 +3,10 @@
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 76,
-    "sources_indexed": 209,
+    "sources_indexed": 210,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
-    "skills_with_sources_moved_since_review": 0,
+    "skills_with_sources_moved_since_review": 1,
     "skills_with_behavioural_gate": 16,
     "skills_with_only_the_seeded_case": 33
   },
@@ -1656,12 +1656,14 @@
     {
       "skill": "tax-invoice-review",
       "sources": {
-        "indexed": 2,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 1,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/"
+        ]
       },
       "validation": {
         "cases": 2,
