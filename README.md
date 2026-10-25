@@ -1,4 +1,11 @@
-# Australian Accounting Skills: show the BAS tie-out
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset=".github/assets/banner-phone-light.svg">
+    <source media="(max-width: 600px)" srcset=".github/assets/banner-phone.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/assets/banner-light.svg">
+    <img src=".github/assets/banner.svg" width="100%" alt="AU Skills. BAS, close and payroll prep. No lodgement or advice. Pixel art of a clipboard checklist beside the AU Skills wordmark in slab-serif block letters.">
+  </picture>
+</p>
 
 Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation, or lodgement.
 
