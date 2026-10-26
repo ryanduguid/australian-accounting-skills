@@ -264,7 +264,7 @@ release or consumer cutover.
 ## Source passages candidate
 
 ```sh
-accounting-skills source-passages snapshot --root /path/to/checkout --url https://www.ato.gov.au/indexed-path --output /outside/checkout/before.json
+accounting-skills source-passages snapshot --root /path/to/checkout --url '<indexed source URL>' --output /outside/checkout/before.json
 accounting-skills source-passages compare --root /path/to/checkout --before /outside/checkout/before.json --after /outside/checkout/after.json --output /outside/checkout/comparison.json
 ```
 

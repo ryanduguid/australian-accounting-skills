@@ -83,7 +83,7 @@
     },
     {
       "title": "ATO: STP Phase 2 income types",
-      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/in-detail/single-touch-payroll-phase-2-employer-reporting-guidelines/reporting-the-amounts-you-have-paid/income-types",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/reporting-the-amounts-you-have-paid/income-types",
       "checked_at": "2026-10-14",
       "reverify_by": "2027-09-29",
       "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 10 February 2023): payments to a working holiday maker use the WHM income type and need a country code, which for WHM is the country of nationality based on the working holiday maker visa, using ISO 3166-1 codes; 'na' means Namibia, not 'not applicable'. When the visa changes, amounts paid before the change stay against WHM and later amounts use the new income type.",
