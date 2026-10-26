@@ -105,7 +105,7 @@
         "./.claude/skills/year-end-workpapers"
       ],
       "homepage": "https://duguid.com.au/tools/australian-tax-ai-agents/",
-      "license": "Apache-2.0"
+      "license": "FSL-1.1-ALv2"
     }
   ]
 }
