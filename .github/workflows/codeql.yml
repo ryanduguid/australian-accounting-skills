@@ -41,8 +41,14 @@ jobs:
           build-mode: none
           # Default setup also treated command-line arguments, environment
           # variables and files as untrusted; keep those local sources.
+          # Tests and fuzz targets run this checkout's builds and probes with
+          # argument lists by design; with local sources they only raise
+          # command-injection alerts that get dismissed by hand.
           config: |
             threat-models: local
+            paths-ignore:
+              - "**/tests/**"
+              - fuzz
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4
