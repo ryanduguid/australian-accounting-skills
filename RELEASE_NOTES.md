@@ -36,6 +36,9 @@ journal memo.
 
 The 8 new cards and the reruns need confirmed results before this release.
 
+Relicensed from Apache-2.0 to FSL-1.1-ALv2 (Functional Source License, with
+Apache-2.0 as the future licence). Released versions keep their licence.
+
 # v0.4.0
 
 The pack moves from MIT to the Apache-2.0 licence, with a `NOTICE` file whose

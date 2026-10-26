@@ -3,7 +3,7 @@ name = "accounting-skills"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.99"
-license = "Apache-2.0"
+license = "FSL-1.1-ALv2"
 description = "Native tooling for the accounting skill repository"
 publish = false
 

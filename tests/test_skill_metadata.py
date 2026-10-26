@@ -521,7 +521,10 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn(f"v{cited}", abstract)
         self.assertIn(INVENTORY_WORDS[RELEASED_INVENTORIES[cited]], abstract.lower())
         plugin = json.loads((REPOSITORY / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(citation["license"], plugin["license"])
+        self.assertEqual(plugin["license"], "FSL-1.1-ALv2")
+        # The citation describes the published release, which keeps the
+        # licence it shipped with; main has since moved to FSL-1.1-ALv2.
+        self.assertEqual(citation["license"], {"0.4.0": "Apache-2.0"}.get(cited))
 
     def test_readme_evaluation_counts_match_the_recorded_runs(self) -> None:
         """The evaluation claim in the install section must follow validation/."""
