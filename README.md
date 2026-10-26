@@ -97,3 +97,7 @@ Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accoun
 Licensed under the Functional Source License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2). You may use, modify and redistribute it for any purpose except a Competing Use as defined in LICENSE (making it available to others in a competing commercial product or service), and each version becomes available under Apache-2.0 two years after it is made available. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Keep the copyright notices if you redistribute this work or build on it.
 
 </details>
+
+---
+
+<p align="center"><sub>Every step written down in advance, Scofield style, minus the tattoos.<br>Made in Newcastle, Australia by <a href="https://duguid.com.au/">Ryan Duguid</a>.</sub></p>
