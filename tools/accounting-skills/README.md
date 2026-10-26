@@ -38,7 +38,9 @@ and Windows, checks this tree with `validate-validation` and `build-coverage
 --check`, then runs the comparison harnesses in `tests/*_parity.py`. Those
 replay the original Python tests against the native code and compare
 fabricated inputs with the unchanged scripts, with no indexed source fetched.
-To run one locally, build the debug examples first:
+Run them on Python 3.14, as the job does: under Python 3.15 the sweep,
+validation and source_refresh harnesses stop at their Unicode 16.0
+qualification checks. To run one locally, build the debug examples first:
 
 ```sh
 cargo build --locked --examples --bins
