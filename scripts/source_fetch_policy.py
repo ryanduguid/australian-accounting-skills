@@ -9,7 +9,8 @@ from urllib.parse import urldefrag, urlsplit
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 READ_CHUNK_BYTES = 64 * 1024
 MAX_REDIRECTS = 3
-# Reviewed against the public index on 3 October 2026. An index cannot authorise itself.
+# Reviewed against the public index on 3 October 2026; docs.peppol.eu, OpenPeppol's
+# specification site, added 26 October 2026. An index cannot authorise itself.
 APPROVED_HOSTS = frozenset({
     "www.austrac.gov.au", "www.legislation.gov.au", "www.ato.gov.au", "www.asic.gov.au",
     "apesb.org.au", "www.tpb.gov.au", "standards.aasb.gov.au", "www.revenue.nsw.gov.au",
@@ -18,7 +19,7 @@ APPROVED_HOSTS = frozenset({
     "treasury.nt.gov.au", "business.gov.au", "www.hcourt.gov.au", "softwaredevelopers.ato.gov.au",
     "coallsl.com.au", "assets.ctfassets.net", "www.cyber.gov.au", "legislation.nsw.gov.au",
     "www.caselaw.nsw.gov.au", "www.legislation.qld.gov.au", "github.com",
-    "www.fedcourt.gov.au", "www.art.gov.au",
+    "www.fedcourt.gov.au", "www.art.gov.au", "docs.peppol.eu",
 })
 APPROVED_REDIRECT_EDGES: frozenset[tuple[str, str]] = frozenset()
 
