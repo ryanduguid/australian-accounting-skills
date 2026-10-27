@@ -123,6 +123,21 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "TPB Annual Report 2025-26",
+      "url": "https://www.tpb.gov.au/sites/default/files/2026-10/TPB%20annual%20report%20202526_digital_0.pdf",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved on 27 October 2026. Printed pages 19 and 32 identify guidance products and factsheets. This retrospective report is a discovery aid, not authority for the law operative for the work. Human source acceptance remains pending.",
+      "final_url": "https://www.tpb.gov.au/sites/default/files/2026-10/TPB%20annual%20report%20202526_digital_0.pdf",
+      "http_status": 200,
+      "fetched_at": "2026-10-27",
+      "review_required_since": "2026-10-27",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
