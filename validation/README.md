@@ -160,7 +160,7 @@ current. The `au-client-acceptance-missing-evidence` and
 v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
 short-stay accommodation cards, the 3 pre-lodgement review cards, the CGT
 contract-timing card and the 2 reconciliation break-trace cards, added for
-v0.4.1, have no recorded run. See
+v0.5.0, have no recorded run. See
 [results](results/).
 
 The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no

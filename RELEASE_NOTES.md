@@ -1,4 +1,9 @@
-# v0.4.1 (unreleased)
+# v0.5.0
+
+The pack moves from Apache-2.0 to the Functional Source License,
+FSL-1.1-ALv2, with Apache-2.0 as the future licence (#289). The plugin
+manifests declare FSL-1.1-ALv2. Releases up to v0.4.0 keep their licence. The pack grows from
+65 to 76 skills and the validation pack from 83 to 107 cards.
 
 Adds a short-stay accommodation workflow, au-short-stay-accommodation, and a
 pre-lodgement review workflow, au-pre-lodgement-review, bringing the pack to
@@ -9,7 +14,7 @@ and state levy checks. It ships with a source-discovery record awaiting
 baseline acceptance and 2 fabricated cases. A further au-capital-gains card
 tests a disposal contract signed before 1 July 2027 that settles after it,
 bringing the validation pack to 89 cards with the 3 pre-lodgement review
-cards.
+cards (#251).
 
 au-pre-lodgement-review lists the items a reviewer should look at before
 lodgement: missing records, claim conditions from the ATO's claiming
@@ -32,12 +37,46 @@ states the cause in one sentence and lists the evidence, owner and next
 action. An unexplained remainder stays open, proposed adjustments stay
 unposted drafts, and fresh exports and a rerun follow any posting. Its 2
 fabricated cards test an unexplained remainder and an instruction in a
-journal memo.
+journal memo (#271).
 
-The 8 new cards and the reruns need confirmed results before this release.
+Eight niche preparation workflows bring the pack to 76 (#279):
+au-dssp (dividend substitution share plans, DRP and bonus-share parcels),
+au-employee-share-schemes, au-foreign-pensions, au-lump-sum-arrears,
+au-managed-fund-amit, au-non-commercial-losses, au-sapto and
+au-small-business-income-offset. au-psi-review applies the PSI and PSB tests
+to each individual and income year, verifies the results test first and
+records a blocked test as unavailable, not failed. Their 12 fabricated cards
+include one for au-psi-review.
 
-Relicensed from Apache-2.0 to FSL-1.1-ALv2 (Functional Source License, with
-Apache-2.0 as the future licence). Released versions keep their licence.
+au-bookkeeping, au-rental-property, au-tax-research, financial-modelling and
+workpaper-tie-out gain evidence requirements for business identity, firm
+templates, rental-agent funds and workpaper review, with 4 fabricated cards,
+and the integrations guide documents a read-only MYOB recipe (#256).
+
+Ten skills gain checks for comparing a result with an external calculator or
+policy model, and every skill that mentions a calculator carries the
+repository's calculator safeguards (#273). au-financial-statements and
+wip-over-under-billing gain steps for verifying and citing a local AASB
+corpus snapshot (#262). au-capital-gains, au-small-business-cgt and
+au-trust-distributions point to the ATO's capital gains tax reform
+transition rules from 1 July 2027 (#277).
+
+Source records follow moved pages: the ASD business email compromise source
+and 9 ATO sources are repointed (#275, #288) and the October change to the
+ATO GST at settlement page is accepted (#274). tax-invoice-review indexes the
+PINT A-NZ Billing release notes (#287), and au-tax-research the Tax
+Practitioners Board annual report as a discovery aid (#292).
+
+The Claude Code plugin starts aus-accounting-mcp 0.6.0, where the v0.4.0
+tag pinned 0.2.7 (#257, #269).
+
+The repository tooling gains a Rust port of `scripts/` in
+`tools/accounting-skills/`, checked against the Python scripts, which stay
+authoritative (#283), and Pyright replaces mypy (#264). Neither is part of
+the installed skills.
+
+Human-confirmed model verdicts cover 72 of the 107 cards. None of the 24
+cards added since v0.4.0 has one.
 
 # v0.4.0
 

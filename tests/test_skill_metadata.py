@@ -17,7 +17,7 @@ SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
 # Published releases and the skill inventory each one shipped. A version string
 # that already labels a release must never label a second, different inventory.
-RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19, "0.3.0": 63, "0.3.1": 65, "0.3.2": 65, "0.4.0": 65}
+RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19, "0.3.0": 63, "0.3.1": 65, "0.3.2": 65, "0.4.0": 65, "0.5.0": 76}
 INVENTORY_WORDS = {9: "nine", 19: "nineteen", 50: "fifty", 51: "fifty-one", 52: "fifty-two", 53: "fifty-three", 54: "fifty-four", 55: "fifty-five", 56: "fifty-six", 57: "fifty-seven", 58: "fifty-eight", 59: "fifty-nine", 60: "sixty", 61: "sixty-one", 62: "sixty-two", 63: "sixty-three", 64: "sixty-four", 65: "sixty-five", 66: "sixty-six", 67: "sixty-seven", 68: "sixty-eight", 76: "seventy-six"}
 # One llms.txt skill entry. The back-reference makes the link text and the path
 # the same name, so a renamed directory cannot keep its old label.
@@ -524,7 +524,7 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertEqual(plugin["license"], "FSL-1.1-ALv2")
         # The citation describes the published release, which keeps the
         # licence it shipped with; main has since moved to FSL-1.1-ALv2.
-        self.assertEqual(citation["license"], {"0.4.0": "Apache-2.0"}.get(cited))
+        self.assertEqual(citation.get("license"), {"0.4.0": "Apache-2.0"}.get(cited))
 
     def test_readme_evaluation_counts_match_the_recorded_runs(self) -> None:
         """The evaluation claim in the install section must follow validation/."""

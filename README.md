@@ -30,14 +30,14 @@ Synthetic example. Prep-only workflow aids. An authorised human reviews, decides
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
-Start with the 65 workflows in the published release, [v0.4.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.4.0). From a separate project directory, install them from that tag:
+Start with the 76 workflows in the published release, [v0.5.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.5.0). From a separate project directory, install them from that tag:
 
 ```bash
-git clone --branch v0.4.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 65 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. For the Claude Code plugin at the same release, add the marketplace at its tag with `/plugin marketplace add ryanduguid/australian-accounting-skills#v0.4.0`, then run `/plugin install australian-accounting-skills@ryanduguid`. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The validation record under the fold gives the model runs and their limits.
+That copies the 76 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. For the Claude Code plugin at the same release, add the marketplace at its tag with `/plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0`, then run `/plugin install australian-accounting-skills@ryanduguid`. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The validation record under the fold gives the model runs and their limits.
 
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
@@ -64,7 +64,7 @@ v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-cre
 
 ### Development installation
 
-The marketplace added without a tag installs the default branch, which prepares v0.4.1 with 76 workflows. It is not a published release.
+The marketplace added without a tag installs the default branch, which can be ahead of v0.5.0. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
@@ -73,11 +73,11 @@ The marketplace added without a tag installs the default branch, which prepares 
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
 
-The development installation resolves the default branch, which can carry changes made after v0.4.0. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The development installation resolves the default branch, which can carry changes made after v0.5.0. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
-[CITATION.cff](CITATION.cff) identifies the published v0.4.0 release and its 65 workflows. Development prepares v0.4.1 with 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
+[CITATION.cff](CITATION.cff) identifies the published v0.5.0 release and its 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
-Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original nine-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.4.0 pack.
+Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original nine-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.5.0 pack.
 
 ## Reference
 
