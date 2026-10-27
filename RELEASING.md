@@ -51,16 +51,16 @@ Those commands preserve the signer identity of the existing `v0.1.5` release.
 Releases cut after the specialised policy migration are signed by the policy's
 internal publication workflow. For the next release, update `tag` if the
 intended version changes and bind verification to the exact source and policy
-commit. The commands verify `v0.4.0`, signed at `a601f1d`; `v0.3.0` to
-`v0.3.2` were signed at `87767ec809dc7f77bcd45808219adaf67841ae7b`, and releases
-after `v0.4.0` at the current policy pin,
-`0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, so verify each with its digest.
+commit. The commands verify `v0.5.0`, signed at the current policy pin,
+`0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`; `v0.4.0` was signed at
+`a601f1d8b143f92b0517f709216993660d21f480` and `v0.3.0` to `v0.3.2` at
+`87767ec809dc7f77bcd45808219adaf67841ae7b`, so verify each with its digest.
 Releases from `a601f1d` also carry the signed provenance
 bundle `australian-accounting-skills-<version>.intoto.jsonl`, which the loop
 skips because it holds the attestation itself:
 
 ```bash
-tag=v0.4.0
+tag=v0.5.0
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
@@ -70,14 +70,14 @@ for file in *; do
     --source-digest "$release_commit" \
     --source-ref "refs/tags/$tag" \
     --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-    --signer-digest a601f1d8b143f92b0517f709216993660d21f480
+    --signer-digest 0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c
 done
 gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
   --predicate-type https://spdx.dev/Document/v2.3 \
   --source-digest "$release_commit" \
   --source-ref "refs/tags/$tag" \
   --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-  --signer-digest a601f1d8b143f92b0517f709216993660d21f480
+  --signer-digest 0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a

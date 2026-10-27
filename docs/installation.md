@@ -1,16 +1,16 @@
 ## Install
 
-### Tagged 65-workflow release
+### Tagged 76-workflow release
 
-Start with v0.4.0, the latest published release. From a separate project
+Start with v0.5.0, the latest published release. From a separate project
 directory, install from a checkout of that tag:
 
 ```bash
-git clone --branch v0.4.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-This copies all 65 released workflows into the current project's Codex
+This copies all 76 released workflows into the current project's Codex
 and Claude Code directories. It leaves global installations unchanged. A tag
 fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
@@ -19,18 +19,18 @@ To install the same release as a Claude Code plugin, add the marketplace at
 its tag:
 
 ```
-/plugin marketplace add ryanduguid/australian-accounting-skills#v0.4.0
+/plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-That plugin carries the v0.4.0 tag's own MCP pin, `aus-accounting-mcp==0.2.7`,
+That plugin carries the v0.5.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
 launched with `uvx`. To move to a later release, remove the marketplace with
 `/plugin marketplace remove ryanduguid` and add it again at the new tag.
 
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
-They can deliver unreleased changes made after v0.4.0. Choose them when you intend to test development work.
+They can deliver unreleased changes made after v0.5.0. Choose them when you intend to test development work.
 
 | Need | Install | What you get |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ Payday Super tools, when available, to cross-check their own calculations;
 the current primary-source checks in each skill still run. To run the skills without the server, disable it with
 `/mcp` in Claude Code. The `npx skills` and Codex routes do not start it.
 
-The immutable v0.4.0 Skills tag retains its original MCP 0.2.7 plugin pin.
+The immutable v0.5.0 Skills tag retains its MCP 0.6.0 plugin pin, and v0.4.0 its original 0.2.7 pin.
 Installing only its skill files with the tagged command above does not launch
 that server. The development plugin's pin does not change the tagged archive.
 
@@ -94,7 +94,7 @@ without installing anything.
 
 ### Development checkout
 
-v0.4.0 contains 65 skills, and the default `main` branch can be ahead of it.
+v0.5.0 contains 76 skills, and the default `main` branch can be ahead of it.
 To try `main` in a separate project, clone it and install the local checkout:
 
 ```bash
@@ -139,8 +139,8 @@ Or copy individual skill folders into `<project>/.claude/skills/`. The skills cr
 
 ### Versioning
 
-The tagged `v0.4.0` release contains and tests all 65 skills as a set.
-`v0.3.0` contained 63, `v0.2.1` and `v0.2.0` 19, and the earlier `v0.1.5` release the
+The tagged `v0.5.0` release contains and tests all 76 skills as a set.
+`v0.3.1` to `v0.4.0` contained 65, `v0.3.0` 63, `v0.2.1` and `v0.2.0` 19, and the earlier `v0.1.5` release the
 original 9 practice skills. Installing
 a subset by hand can break skills that call their siblings:
 
@@ -151,7 +151,7 @@ a subset by hand can break skills that call their siblings:
   reference, and the costing, claim, retention and WIP skills cross-reference
   each other
 
-The [recommended installation](#tagged-65-workflow-release) pins v0.4.0.
+The [recommended installation](#tagged-76-workflow-release) pins v0.5.0.
 The [development options](#development-installations) can be ahead of that tag.
 Install the full tagged pack so sibling references stay consistent. The
 9-skill `v0.1.5` pack remains available from its tag for anyone who cites
