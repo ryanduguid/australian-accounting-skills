@@ -4,7 +4,7 @@ import importlib.util
 import json
 import os
 import shutil
-import subprocess
+import subprocess  # nosec B404: the tests run git and the checker with fixed argument lists
 import sys
 import tempfile
 import unittest
@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 NEEDS = "    needs: [lint, verify, native, secrets, shared-conformance, coverage]\n"
 SPEC = importlib.util.spec_from_file_location("check_gates", ROOT / ".github/ci/check_gates.py")
-assert SPEC is not None and SPEC.loader is not None
+assert SPEC is not None and SPEC.loader is not None  # nosec B101: import guard for the module under test
 checker = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(checker)
 
@@ -41,12 +41,12 @@ class GateReaderTests(unittest.TestCase):
 
     def test_path_listing_preserves_linebreaks_and_rejects_invalid_utf8(self):
         paths = [".github/workflows/ci\r.yml", ".github/workflows/ci\n.yml"]
-        completed = subprocess.CompletedProcess([], 0, "\0".join(paths).encode("utf-8") + b"\0")
+        completed = subprocess.CompletedProcess([], 0, "\0".join(paths).encode("utf-8") + b"\0")  # nosemgrep: a stub result, nothing runs
         with patch.object(checker.subprocess, "run", return_value=completed) as run:
             self.assertEqual(checker.base_workflow_paths(), paths + [""])
             self.assertNotIn("encoding", run.call_args.kwargs)
             self.assertNotIn("text", run.call_args.kwargs)
-        with patch.object(checker.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, b"\xff\0")):
+        with patch.object(checker.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, b"\xff\0")):  # nosemgrep: a stub result, nothing runs
             with self.assertRaises(UnicodeDecodeError):
                 checker.base_workflow_paths()
 
@@ -207,7 +207,7 @@ class GateCliTests(unittest.TestCase):
 
     def setUp(self):
         git_executable = shutil.which("git")
-        assert git_executable is not None, "Git is required for the gate CLI regression"
+        assert git_executable is not None, "Git is required for the gate CLI regression"  # nosec B101: test precondition
         temporary = tempfile.TemporaryDirectory(prefix="gate-predecessor-")
         self.addCleanup(temporary.cleanup)
         outer = Path(temporary.name).resolve()
@@ -229,7 +229,7 @@ class GateCliTests(unittest.TestCase):
         self.git_command("config", "core.quotePath", "true")
 
     def git_command(self, *args, raw=False):
-        return subprocess.run([*self.git_prefix, *args], cwd=self.repo, env=self.env,
+        return subprocess.run([*self.git_prefix, *args], cwd=self.repo, env=self.env,  # nosec B603 # nosemgrep: fixed git argument list
                               capture_output=True, text=not raw,
                               encoding=None if raw else "utf-8", check=True, timeout=30)
 
@@ -267,7 +267,7 @@ class GateCliTests(unittest.TestCase):
                 source = (ROOT / ".github/workflows" / filename).read_text(encoding="utf-8")
                 self.assertIn(f"    needs: [{', '.join(needs)}]\n", source)
                 self.assertIn(f".github/ci/check_gates.py .github/workflows/{filename} {gate}", source)
-                result = subprocess.run([
+                result = subprocess.run([  # nosec B603 # nosemgrep: fixed checker argument list
                     sys.executable, "-I", str(ROOT / ".github/ci/check_gates.py"),
                     f".github/workflows/{filename}", gate, *flags,
                 ], cwd=self.repo, env=self.env | {
@@ -320,7 +320,7 @@ class GateCliTests(unittest.TestCase):
             paths = self.git_command("ls-tree", "-r", "--name-only", "-z", "HEAD^1", "--", ".github/workflows/", raw=True).stdout.decode("utf-8").split("\0")
             self.assertIn(".github/workflows/ci\r.yml", paths)
             self.assertIn(".github/workflows/ci\n.yml", paths)
-        return subprocess.run([
+        return subprocess.run([  # nosec B603 # nosemgrep: fixed checker argument list
             sys.executable, "-I", str(ROOT / ".github/ci/check_gates.py"),
             f".github/workflows/{filename}", "replacement",
             "--exempt", "codecov", "--exempt", "fuzzing",
