@@ -625,6 +625,7 @@ def refresh(
     today: str = "",
 ) -> Report:
     """Sweep the index once, fetching each distinct URL a single time."""
+    # Present day, present time: one date for the whole sweep, so every record agrees.
     stamp = today or date.today().isoformat()
     report = Report()
     seen: dict[str, Fetched] = {}
