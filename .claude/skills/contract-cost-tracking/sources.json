@@ -5,7 +5,7 @@
     {
       "title": "AASB 15 Revenue from Contracts with Customers",
       "url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "reverify_by": "2027-08-28",
       "fact": "Contract combination, directly related costs and cost-based progress tests come from AASB 15; the operative compilation must be confirmed for the period.",
       "volatile": true,
@@ -22,13 +22,13 @@
         "content_hash_covers": "html",
         "content_url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
         "source_last_modified": "2026-10-27",
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-29"
       }
     },
     {
       "title": "AASB 137 Provisions, Contingent Liabilities and Contingent Assets",
       "url": "https://standards.aasb.gov.au/aasb-137-dec-2022",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "reverify_by": "2027-08-28",
       "fact": "Onerous-contract recognition and measurement sit in AASB 137 rather than AASB 15; confirm the current compilation before relying on paragraph numbers.",
       "volatile": true,
@@ -45,7 +45,7 @@
         "content_hash_covers": "html",
         "content_url": "https://standards.aasb.gov.au/aasb-137-dec-2022",
         "source_last_modified": "2026-10-27",
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-29"
       }
     }
   ]

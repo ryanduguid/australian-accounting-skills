@@ -50,7 +50,7 @@
     {
       "title": "Determining eligible wages, issued 21 June 2024",
       "url": "https://coallsl.com.au/guidance-notes/eligible-wages",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "reverify_by": "2027-06-30",
       "fact": "Non-casual Formula B includes overtime, penalties and non-reimbursement allowances before applying 75%. Category-specific salary and casual methods and insurer-payment distinctions must be preserved; the casual method changed on 1 January 2024.",
       "volatile": true,
@@ -68,7 +68,7 @@
         "content_hash_covers": "html",
         "content_url": "https://coallsl.com.au/guidance-notes/eligible-wages",
         "source_last_modified": "",
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-29"
       }
     },
     {

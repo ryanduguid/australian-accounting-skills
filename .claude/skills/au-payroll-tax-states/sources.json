@@ -84,7 +84,7 @@
     {
       "title": "RevenueSA: Payroll tax rates and thresholds",
       "url": "https://revenuesa.sa.gov.au/payrolltax/rates-and-thresholds",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "reverify_by": "2027-06-30",
       "fact": "Read 28 October 2026: From 1 January 2019, by annual Australia-wide taxable payroll: nil up to $1.5 million; a variable rate from 0% to 4.95% above $1.5 million up to $1.7 million; 4.95% above $1.7 million. Registration once Australia-wide wages exceed $1,500,000 a year ($125,000 a month). Maximum deduction $600,000 a year.",
       "volatile": true,
