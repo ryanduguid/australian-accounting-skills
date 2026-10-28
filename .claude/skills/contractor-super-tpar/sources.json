@@ -20,24 +20,24 @@
     {
       "title": "Taxation Administration Act 1953",
       "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
-      "checked_at": "2026-10-14",
+      "checked_at": "2026-10-28",
       "reverify_by": "2027-08-15",
-      "fact": "TPAR and no-ABN reporting pathways, periods and authorities must be kept distinct and rechecked against the current compilation.",
+      "fact": "TPAR and no-ABN reporting pathways, periods and authorities must be kept distinct and rechecked against the current compilation. Read 28 October 2026 in compilation C2026C00468 (compilation 227, in force from 1 October 2026): its amending Acts changed s 396-55 table items 3 and 15 only to use the defined term real property, and did not amend table items 11 to 14, s 12-190 or Division 405.",
       "volatile": true,
       "final_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
       "http_status": 200,
-      "fetched_at": "2026-10-14",
-      "content_hash": "eacda1b07ba700f8b20c770e2c72e99ce1a2a85188ac4286c56c8f040771a866",
+      "fetched_at": "2026-10-28",
+      "content_hash": "71d4910cabf8b9b2aae478eb08f2014ec12fbcd20a78df3009ea5d76dab785ca",
       "source_last_modified": "",
       "content_hash_covers": "html",
       "content_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
-      "review_required_since": "2026-10-14",
+      "review_required_since": "2026-10-28",
       "reviewed_content": {
-        "content_hash": "eacda1b07ba700f8b20c770e2c72e99ce1a2a85188ac4286c56c8f040771a866",
+        "content_hash": "71d4910cabf8b9b2aae478eb08f2014ec12fbcd20a78df3009ea5d76dab785ca",
         "content_hash_covers": "html",
         "content_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
         "source_last_modified": "",
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-28"
       }
     }
   ]

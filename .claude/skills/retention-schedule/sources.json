@@ -48,17 +48,25 @@
     {
       "title": "AASB 15, December 2022 compilation, paragraphs 60 to 63",
       "url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
-      "checked_at": "2026-09-30",
+      "checked_at": "2026-10-28",
       "reverify_by": "2027-09-14",
       "fact": "For reporting periods beginning on or after 1 January 2023 but before 1 July 2026, paragraph 62(c) requires both a non-financing reason and proportionality. Paragraphs 60 and 61 govern financing assessment; paragraph 63 has a separate one-year practical expedient. Later periods were not verified.",
       "volatile": true,
       "final_url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
+      "fetched_at": "2026-10-28",
       "content_hash": "192f073051d7624ba483499761ddaf6ce11ef07c99039ced41a51533af06f73c",
-      "source_last_modified": "",
+      "source_last_modified": "2026-10-27",
       "content_hash_covers": "html",
-      "content_url": "https://standards.aasb.gov.au/aasb-15-dec-2022"
+      "content_url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
+      "review_required_since": "2026-10-28",
+      "reviewed_content": {
+        "content_hash": "192f073051d7624ba483499761ddaf6ce11ef07c99039ced41a51533af06f73c",
+        "content_hash_covers": "html",
+        "content_url": "https://standards.aasb.gov.au/aasb-15-dec-2022",
+        "source_last_modified": "2026-10-27",
+        "checked_at": "2026-10-28"
+      }
     }
   ]
 }

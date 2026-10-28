@@ -50,17 +50,26 @@
     {
       "title": "Determining eligible wages, issued 21 June 2024",
       "url": "https://coallsl.com.au/guidance-notes/eligible-wages",
-      "checked_at": "2026-09-30",
+      "checked_at": "2026-10-28",
       "reverify_by": "2027-06-30",
       "fact": "Non-casual Formula B includes overtime, penalties and non-reimbursement allowances before applying 75%. Category-specific salary and casual methods and insurer-payment distinctions must be preserved; the casual method changed on 1 January 2024.",
       "volatile": true,
+      "limitations": "The 27 October 2026 sweep reported a changed page digest. The 28 October 2026 reading found the guidance note's issue date (21 June 2024), effective date (3 July 2024), Formulas A and B, casual methods and insurer-payment text as this fact records. No earlier copy was available to locate the change.",
       "final_url": "https://coallsl.com.au/guidance-notes/eligible-wages",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
-      "content_hash": "3a83f708ed35836c9941abcca1375830f025b15f158bfe9f04834234c35a3149",
+      "fetched_at": "2026-10-28",
+      "content_hash": "06902dc53d51d48e1ecb400b97029af0547a0b3cf2e74caff62897be4ff8f653",
       "source_last_modified": "",
       "content_hash_covers": "html",
-      "content_url": "https://coallsl.com.au/guidance-notes/eligible-wages"
+      "content_url": "https://coallsl.com.au/guidance-notes/eligible-wages",
+      "review_required_since": "2026-10-28",
+      "reviewed_content": {
+        "content_hash": "06902dc53d51d48e1ecb400b97029af0547a0b3cf2e74caff62897be4ff8f653",
+        "content_hash_covers": "html",
+        "content_url": "https://coallsl.com.au/guidance-notes/eligible-wages",
+        "source_last_modified": "",
+        "checked_at": "2026-10-28"
+      }
     },
     {
       "title": "Coal LSL Levy Advice quick guide, pages 5, 6, 8 and 9",

@@ -16,7 +16,7 @@
       "sources": {
         "indexed": 6,
         "exempt": false,
-        "reviewed": "2026-09-26",
+        "reviewed": "2026-10-14",
         "fetched": "2026-09-26",
         "unreachable": 0,
         "moved_since_review": []
@@ -352,8 +352,8 @@
       "sources": {
         "indexed": 1,
         "exempt": false,
-        "reviewed": "2026-09-30",
-        "fetched": "2026-09-30",
+        "reviewed": "2026-10-28",
+        "fetched": "2026-10-28",
         "unreachable": 0,
         "moved_since_review": []
       },
@@ -1311,8 +1311,8 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-30",
-        "fetched": "2026-09-30",
+        "reviewed": "2026-10-28",
+        "fetched": "2026-10-28",
         "unreachable": 0,
         "moved_since_review": []
       },
@@ -1532,8 +1532,8 @@
       "sources": {
         "indexed": 2,
         "exempt": false,
-        "reviewed": "2026-09-30",
-        "fetched": "2026-09-30",
+        "reviewed": "2026-10-28",
+        "fetched": "2026-10-28",
         "unreachable": 0,
         "moved_since_review": []
       },
