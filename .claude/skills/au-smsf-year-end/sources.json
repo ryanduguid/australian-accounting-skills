@@ -34,7 +34,7 @@
     {
       "title": "Income Tax Assessment Act 1997",
       "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "reverify_by": "2027-09-19",
       "fact": "The legislation behind the two concessions the workflow reviews: ITAA 1997 s 291-20(3)-(7) addresses unused concessional contribution amounts, and s 292-85(2)-(7) addresses the non-concessional cap and bring-forward rules. On 28 October 2026 the Register served compilation C2026C00471, compilation 268, in force from 1 October 2026 and registered 20 October 2026; its amending Acts (Nos 71 and 86 of 2026) do not amend s 291-20 or s 292-85. No cap amount, balance threshold or eligibility conclusion is adopted.",
       "verification_status": "indexed-source-discovery-only",
@@ -53,7 +53,7 @@
         "content_hash_covers": "html",
         "content_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
         "source_last_modified": "",
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-29"
       }
     },
     {

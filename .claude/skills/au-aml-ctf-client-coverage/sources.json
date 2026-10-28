@@ -4,7 +4,7 @@
     {
       "title": "AUSTRAC: Accountants",
       "url": "https://www.austrac.gov.au/industry-and-business/your-industry/accountants",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "fact": "Read 28 October 2026. AUSTRAC's page for accountants links a checker for whether a business is regulated, the professional designated services, the accountant program starter kit, enrolment and obligations guidance. No legal rule is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Landing page only. Open the guidance for the specific obligation at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
@@ -16,13 +16,13 @@
       "source_last_modified": "",
       "manual_review": {
         "cadence": "monthly",
-        "next_review": "2026-11-28"
+        "next_review": "2026-11-29"
       }
     },
     {
       "title": "AUSTRAC: About the AML/CTF reforms",
       "url": "https://www.austrac.gov.au/industry-and-business/about-amlctf-reforms/about-reforms",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "fact": "Read 28 October 2026 (page last updated 25 September 2026). Businesses providing certain designated services typically provided by accountants are regulated by AUSTRAC from 1 July 2026. The amending Act passed Parliament on 29 November 2024, and changes to the tipping-off offence started on 31 March 2025.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Summary guidance, not law. Confirm the designated services and obligations in the Act and Rules at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
@@ -34,13 +34,13 @@
       "source_last_modified": "",
       "manual_review": {
         "cadence": "monthly",
-        "next_review": "2026-11-28"
+        "next_review": "2026-11-29"
       }
     },
     {
       "title": "AUSTRAC: Customer due diligence",
       "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "fact": "Read 28 October 2026. Index of AUSTRAC's customer due diligence guidance: initial and ongoing due diligence, customer risk ratings, reliance on third parties, enhanced due diligence, politically exposed persons, targeted financial sanctions, source of funds and wealth, and transitioning existing customers.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Index page only. Open the page for the obligation in question at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
@@ -52,13 +52,13 @@
       "source_last_modified": "",
       "manual_review": {
         "cadence": "monthly",
-        "next_review": "2026-11-28"
+        "next_review": "2026-11-29"
       }
     },
     {
       "title": "AUSTRAC: Reviewing and updating customers' ML/TF risk and KYC information",
       "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/ongoing-customer-due-diligence/reviewing-and-updating-customers-mltf-risk-and-kyc-information",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "fact": "Read 28 October 2026 (page last updated 20 October 2026). Refers to ss 26F and 30 of the Act and s 5-2 of the Rules. In a business relationship, the reporting entity must review and, where appropriate, update its assessment of a customer's ML/TF risk after specified changes, including to the customer type, beneficial owners, designated services, delivery channels and countries, and must review KYC information at a frequency appropriate to that risk. The entity's policies set the frequency and the triggers.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Guidance, not law. Confirm the provisions and the firm's own policies at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser. AUSTRAC updated the page on 20 October 2026; no copy of the earlier text was available, so the 28 October 2026 reading was checked against this fact only.",
@@ -70,13 +70,13 @@
       "source_last_modified": "",
       "manual_review": {
         "cadence": "monthly",
-        "next_review": "2026-11-28"
+        "next_review": "2026-11-29"
       }
     },
     {
       "title": "AUSTRAC: Transitioning existing customers",
       "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/transitioning-existing-customers",
-      "checked_at": "2026-10-28",
+      "checked_at": "2026-10-29",
       "fact": "Read 28 October 2026 (page last updated 1 July 2026). A customer is a pre-commencement customer if the business is providing them with a designated service on 1 July 2026, or has a business relationship with them that involves a designated service and provided them with a designated service before that date. Designated services can continue without initial customer due diligence unless a suspicious matter report obligation arises, or a significant change in the nature and purpose of the business relationship results in the customer's ML/TF risk being medium or high; ongoing customer due diligence obligations still apply.",
       "verification_status": "indexed-source-discovery-only",
       "limitations": "Guidance, not law. Confirm the transitional provisions in the Act and Rules at use time. The automated refresh could not retrieve the page on 26 September 2026 (read timed out); it opened normally in a browser.",
@@ -88,7 +88,7 @@
       "source_last_modified": "",
       "manual_review": {
         "cadence": "monthly",
-        "next_review": "2026-11-28"
+        "next_review": "2026-11-29"
       }
     },
     {
