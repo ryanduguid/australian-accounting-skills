@@ -13,7 +13,7 @@ fancy-regex = "=0.19.2"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "=1.0.154", features = ["preserve_order"] }
 sha2 = "=0.11.1"
-ureq = { version = "=3.4.2", default-features = false, features = ["rustls", "platform-verifier"] }
+ureq = { version = "=3.5.0", default-features = false, features = ["rustls", "platform-verifier"] }
 unicode-normalization = "=0.1.24"
 yaml-rust2 = { version = "=0.13.0", default-features = false }
 
