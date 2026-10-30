@@ -33,6 +33,20 @@ class ProofOfIdentityStep(unittest.TestCase):
             self.assertIn(route, self.step)
         self.assertIn("is for the authorised practitioner", self.step)
 
+    def test_employer_route_needs_written_confirmation_and_escalation(self) -> None:
+        self.assertIn("employer client instructing the practice for its employees", self.step)
+        self.assertIn("written confirmation", self.step)
+        self.assertIn("at least equal to this guidance", self.step)
+        self.assertIn("escalated before any lodgement", self.step)
+
+    def test_records_expected_follow_the_route(self) -> None:
+        self.assertIn("where documents were sighted", self.step)
+        self.assertIn("no newly sighted documents are needed", self.step)
+
+    def test_transferred_records_flag_code_item_6(self) -> None:
+        self.assertIn("client consent or a legal duty", self.step)
+        self.assertIn("Code item 6", self.step)
+
     def test_no_document_collection_or_retention(self) -> None:
         self.assertIn("Do not sight, collect or assess identity documents here", self.step)
         self.assertIn("neither requires nor recommends keeping the documents", self.step)
