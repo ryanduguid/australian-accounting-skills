@@ -73,6 +73,21 @@
       }
     },
     {
+      "title": "TPB(GS) 42/2022 Proof of identity requirements for client verification",
+      "url": "https://www.tpb.gov.au/tpb-gs-42-2022-proof-identity-requirements-client-verification",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 30 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.tpb.gov.au/tpb-gs-42-2022-proof-identity-requirements-client-verification",
+      "http_status": 200,
+      "fetched_at": "2026-10-30",
+      "review_required_since": "2026-10-30",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
       "title": "Tax Agent Services (Code of Professional Conduct) Determination 2024",
       "url": "https://www.legislation.gov.au/F2024L00849/latest",
       "checked_at": "2026-10-14",
