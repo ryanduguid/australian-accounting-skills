@@ -11,18 +11,18 @@ Ryan Duguid is not a registered tax agent or BAS agent. Project support is limit
 
 <div align="center">
 
-[![verify](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/verify.yml?branch=main&label=verify&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
-[![Codecov](https://img.shields.io/codecov/c/github/ryanduguid/australian-accounting-skills?label=coverage&labelColor=000000&style=flat)](https://codecov.io/gh/ryanduguid/australian-accounting-skills)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/codeql.yml?branch=main&label=CodeQL&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
-[![Snyk](https://img.shields.io/github/actions/workflow/status/ryanduguid/australian-accounting-skills/snyk.yml?branch=main&label=Snyk&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
-[![SonarCloud](https://img.shields.io/sonar/quality_gate/ryanduguid_australian-accounting-skills?server=https%3A%2F%2Fsonarcloud.io&label=SonarCloud&labelColor=000000&style=flat)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
-[![Codacy code quality](https://img.shields.io/codacy/grade/b46694168d304886be1287d54cf33923?label=Codacy&labelColor=000000&style=flat)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)<br>
+[![verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
+[![Codecov](https://codecov.io/gh/ryanduguid/australian-accounting-skills/graph/badge.svg)](https://codecov.io/gh/ryanduguid/australian-accounting-skills)
+[![CodeQL](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
+[![Snyk](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=ryanduguid_australian-accounting-skills&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
+[![Codacy code quality](https://app.codacy.com/project/badge/Grade/b46694168d304886be1287d54cf33923)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)<br>
 [![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/ryanduguid/australian-accounting-skills?label=Scorecard&labelColor=000000&style=flat)](https://scorecard.dev/viewer/?uri=github.com/ryanduguid/australian-accounting-skills)
-[![OpenSSF Best Practices](https://img.shields.io/cii/level/15423?label=Best%20Practices&labelColor=000000&style=flat)](https://www.bestpractices.dev/projects/15423)
-[![SLSA 3](https://img.shields.io/badge/SLSA-level%203-990024?labelColor=000000&style=flat&color=990024)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-scanned-990024?labelColor=000000&style=flat&logo=virustotal&logoColor=FFD32A&color=990024)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15423/badge)](https://www.bestpractices.dev/projects/15423)
+[![SLSA 3](.github/assets/badges/slsa.svg)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
+[![VirusTotal](.github/assets/badges/virustotal.svg)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
 [![version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=66023C&labelColor=000000&style=flat)](.claude-plugin/plugin.json)
-[![licence: FSL-1.1-ALv2](https://img.shields.io/badge/licence-FSL--1.1--ALv2-66023C?labelColor=000000&style=flat&color=66023C)](LICENSE)
+[![licence: FSL-1.1-ALv2](.github/assets/badges/licence.svg)](LICENSE)
 
 </div>
 
