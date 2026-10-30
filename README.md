@@ -17,7 +17,7 @@ Ryan Duguid is not a registered tax agent or BAS agent. Project support is limit
 [![Snyk](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=ryanduguid_australian-accounting-skills&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
 [![Codacy code quality](https://app.codacy.com/project/badge/Grade/b46694168d304886be1287d54cf33923)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)<br>
-[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/ryanduguid/australian-accounting-skills?label=Scorecard&labelColor=000000&style=flat)](https://scorecard.dev/viewer/?uri=github.com/ryanduguid/australian-accounting-skills)
+[![OpenSSF Scorecard](https://raw.githubusercontent.com/ryanduguid/.github/badges/ryanduguid/australian-accounting-skills.svg)](https://scorecard.dev/viewer/?uri=github.com/ryanduguid/australian-accounting-skills)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15423/badge)](https://www.bestpractices.dev/projects/15423)
 [![SLSA 3](.github/assets/badges/slsa.svg)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
 [![VirusTotal](.github/assets/badges/virustotal.svg)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
