@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 107 cards in `cases/` test workflow quality, provenance and restraint.
+The 112 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.

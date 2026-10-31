@@ -47,6 +47,22 @@ detail occurrence has a review locator, and relationships and reconciliation
 gaps are explicit. If that condition fails, label the review incomplete. Continue
 supported work on identified rows without claiming complete coverage.
 
+## Screen for leads
+
+Run these mechanical screens over the accounted-for population before row review.
+A hit is a lead for a review unit, never a finding, a tax code or a proposed
+adjustment. Report each screen as run, with its population and hit count, or as
+`not run` with the missing field. A clean screen does not clear treatment.
+
+| Screen | Mechanical test | What a hit does not show |
+|---|---|---|
+| Account class | GST recorded on a balance-sheet account, or on an account the firm's chart marks as carrying no credit | The account name does not decide the supply; asset acquisitions can carry credits. |
+| Rate times net | Recorded GST differs from a supplied or verified rate times net by more than the verified rounding rule | Mixed supplies, partial credits and special treatments legitimately differ. |
+| Supplier code drift | One supplier carries more than one tax code within the period, or against the supplied prior periods | Suppliers can make different supplies. Report the periods, accounts and codes. |
+| Missing document | A credit is claimed above the verified tax-invoice threshold with no attachment recorded in the export | Not attached in the ledger is not the same as not held. Read the threshold and its exceptions at source. |
+| Supplier ABN status | A credit is claimed from a supplier whose ABN or GST registration is absent, cancelled or unconfirmed on [ABN Lookup](https://abr.business.gov.au/) for the invoice date | A lookup shows the register, not the supply. A current status does not prove the status on an earlier date. Keep the look-up date, and look up business suppliers only. |
+| Automatic matching | A line reconciled automatically or through a bank rule falls in a class that needs a person's eye: related-entity transfer, part payment, suspense or clearing account, a subscription's GST coding, or a document-capture date in another period | Automatic matching is not an error, and how often these classes go wrong is not established. If the export has no reconciliation-source field, report `not run`. |
+
 ## Assess each review unit
 
 Keep the recorded code and GST as observations. Determine these separately:
@@ -130,6 +146,7 @@ provenance at use time. Retrieval alone cannot supply a human review date.
 - [GST Act](https://www.legislation.gov.au/C2004A00446/latest/text): start with
   section 9-5 and Divisions 11, 29, 38 and 40; follow applicable special provisions.
 - [ATO: when you can claim a GST credit](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/claiming-gst-credits/when-you-can-claim-a-gst-credit).
+- [ABN Lookup](https://abr.business.gov.au/): public register status and history, not a GST conclusion.
 - [GSTR 2002/2](https://www.ato.gov.au/law/view/document?DocID=GST/GSTR20022/NAT/ATO/00001): financial supplies and related services; inspect the actual service and applicable paragraphs.
 - [GSTD 2000/10](https://www.ato.gov.au/law/view/document?DocID=GSD/GSTD200010/NAT/ATO/00001): insurance component example; verify its scope and applicable version.
 - [Xero: how GST works](https://central.xero.com/0/article/How-GST-works-in-Xero): product reporting and tax settings, not legal authority for treatment.

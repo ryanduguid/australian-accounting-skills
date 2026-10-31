@@ -3,12 +3,12 @@
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 76,
-    "sources_indexed": 212,
+    "sources_indexed": 214,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 1,
-    "skills_with_behavioural_gate": 17,
-    "skills_with_only_the_seeded_case": 33
+    "skills_with_behavioural_gate": 18,
+    "skills_with_only_the_seeded_case": 32
   },
   "skills": [
     {
@@ -717,8 +717,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
+          "au-payroll-review-master-data-screen",
           "au-payroll-review-missing-evidence",
           "au-payroll-review-pay-item-settings",
           "au-payroll-review-supported-tie-out"
@@ -726,7 +727,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_plugin_evals.py"
+        ],
         "inventory": []
       }
     },
@@ -1163,7 +1166,7 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 7,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -1171,11 +1174,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-trust-distributions-ftdt-screen",
           "au-trust-distributions-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -1237,13 +1241,15 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 7,
+        "cases": 9,
         "case_ids": [
           "bas-export-manifest-rounding",
           "bas-g10-g11",
           "bas-gst-credit-and-attribution",
           "bas-gst-fees-and-evidence",
           "bas-gst-missing-and-zero",
+          "bas-preparation-gst-screening-leads",
+          "bas-preparation-lodged-figure-drift",
           "bas-stp-w3-w4",
           "xero-export-duplicate-and-missing"
         ],
@@ -1251,6 +1257,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_plugin_evals.py",
           "test_skill_metadata.py",
           "test_validation_pack.py"
         ],
@@ -1484,9 +1491,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 7,
+        "cases": 8,
         "case_ids": [
           "debtor-summary-review",
+          "month-end-close-prior-points-recurring-journals",
           "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
@@ -1638,8 +1646,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
+          "au-payroll-review-master-data-screen",
           "cashflow-super-regime-transition",
           "fbt-carparking-missing-declaration",
           "stp-current-vs-overdue-sg"

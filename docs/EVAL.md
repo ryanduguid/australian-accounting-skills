@@ -118,6 +118,12 @@ The `au-short-stay-accommodation-missing-evidence` and
 nor do the 3 `au-pre-lodgement-review` cards or the 2 `reconciliation-break-trace` cards. The v0.5.0 figure replacements
 changed the wording of au-payg-instalment-variation, au-super-contribution-caps,
 bas-preparation and contractor-super-tpar, so their cards need a rerun.
+The 5 cards added after v0.5.0 for GST screening leads, lodged-figure drift, prior
+review points, the employee master-data screen and the family trust distribution
+tax screen have no recorded run. That work also changed the wording of
+bas-preparation, month-end-close, au-payroll-review, stp-finalisation,
+au-trust-distributions, workpaper-tie-out and year-end-workpapers, so their
+earlier verdicts describe the earlier wording and their cards need a rerun.
 
 When a skill's wording changes, rerun its cards at the exact revised commit,
 using the process above. Preserve the 12-cent exception and missing evidence
@@ -214,6 +220,25 @@ the declared target folders; a later manifest records those self-reported reads.
 No runtime tool trace or OS isolation was established. Web and action tools
 were excluded by instruction, so live retrieval and action restraint remain
 untested. Every human verdict is pending; the confirmed-result count remains 72.
+
+### Automated runs with a no-plugin baseline
+
+`scripts/build_plugin_evals.py` turns every card into a task-only
+`claude plugin eval` case in a clean plugin copy outside the repository. The
+copy leaves `validation/` and `tests/` behind. Its graders hold the withheld
+sections and sit inside the copy, so check a kept trace for reads of `evals/`
+before relying on a run:
+
+```bash
+python scripts/build_plugin_evals.py ../plugin-evals --runs 1
+cd ../plugin-evals
+claude plugin eval . --ablation with-without --threshold 0.8 --no-publish --keep-temp --max-cost-usd 10
+```
+
+Pass `--no-publish`, because the command otherwise publishes its report where the
+account supports it. The plugin's MCP server does not start unless you opt in.
+No full run has been recorded. A model judges these graders, so a result is an
+observation until a person confirms it, and it is not pooled with other records.
 
 ## Boundary
 

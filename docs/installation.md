@@ -27,6 +27,27 @@ That plugin carries the v0.5.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
 launched with `uvx`. To move to a later release, remove the marketplace with
 `/plugin marketplace remove ryanduguid` and add it again at the new tag.
 
+### Claude.ai or the Claude desktop app, without a terminal
+
+For one or a few workflows, no developer tools are needed. These steps follow
+Anthropic's [Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
+article, read on 31 October 2026. Claude Code remains this repository's tested
+runtime; this route has not been separately tested, and the menus can change.
+
+1. Download the source ZIP from the [v0.5.0 release](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.5.0) and extract it.
+2. Open `.claude/skills` in the extracted folder. Files and folders starting with
+   a dot can be hidden, so show hidden items if you cannot see it.
+3. Make a ZIP of one skill's folder, such as `bas-preparation`. Keep the folder's
+   name unchanged; it must match the skill's name.
+4. In Claude, confirm that code execution and file creation is on, then go to
+   **Customize > Skills**, choose **+**, then **+ Create skill**, then **Upload a skill**.
+5. Upload the ZIP and check that the skill appears in your list and is on.
+
+Uploaded skills carry no MCP server, so a skill's optional calculator cross-check
+is not available. Skills that call on another skill work best when that skill is
+uploaded too. Client data rules still apply: check your firm's approval before
+putting client information into any cloud service.
+
 ### Development installations
 
 The options below resolve the default branch or installed repository revision.
