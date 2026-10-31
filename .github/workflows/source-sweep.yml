@@ -79,7 +79,7 @@ jobs:
             gh issue edit "$existing" --body-file sweep.md
             echo "Updated issue #$existing"
           else
-            gh issue create --title "$TITLE" --body-file sweep.md
+            gh issue create --title "$TITLE" --body-file sweep.md --label monitoring
           fi
 
       - name: Close the issue when nothing here needs an edit

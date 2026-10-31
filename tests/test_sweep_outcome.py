@@ -318,5 +318,15 @@ class ConfinementTests(unittest.TestCase):
             self.assertEqual(outcome.name, "clean")
 
 
+class WorkflowTests(unittest.TestCase):
+    def test_a_reissued_issue_keeps_the_monitoring_label(self) -> None:
+        """Clean runs close the issue, so the next finding creates a new one."""
+        workflow = (REPOSITORY / ".github/workflows/source-sweep.yml").read_text(encoding="utf-8")
+        creates = [line for line in workflow.splitlines() if "gh issue create" in line]
+        self.assertTrue(creates)
+        for line in creates:
+            self.assertIn("--label monitoring", line)
+
+
 if __name__ == "__main__":
     unittest.main()
