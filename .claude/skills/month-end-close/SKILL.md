@@ -27,7 +27,7 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
 
 ## Workflow
 
-1. **Bank.** Every bank account reconciled to statement. Agree the ledger balance to the statement's closing balance at month end as its own check, because a reconciled status does not prove it. List unmatched payments and receipts. Age unreconciled items; anything older than the current month gets named, explained, or cleared. Review lines reconciled automatically or through a bank rule for classes that need a person's eye: related-entity transfers, part payments, suspense or clearing accounts and document-capture dates in another period.
+1. **Bank.** Every bank account reconciled to statement. Bridge the statement's closing balance at month end to the ledger balance through identified timing items, such as unpresented payments and deposits in transit, as its own check, because a reconciled status does not prove it. Investigate any residual. List unmatched payments and receipts. Age unreconciled items; anything older than the current month gets named, explained, or cleared. Review lines reconciled automatically or through a bank rule for classes that need a person's eye: related-entity transfers, part payments, suspense or clearing accounts and document-capture dates in another period.
 2. **Control accounts.** Reconcile each to its source, to the cent:
    - AR control = aged receivables total
    - AP control = aged payables total
@@ -66,7 +66,7 @@ Primary sources (checked 20 August 2026):
 - No control account difference left unexplained (an immaterial, *explained* difference is acceptable; an unexplained one is not)
 - Every supplier created or bank detail changed in the month has independent confirmation evidence, or is an open exception with that supplier's next payment waiting for an authorised human
 - Every prior review point is closed by evidence or carried with an owner, and the correction log is updated
-- Ledger bank balance agrees to the statement's closing balance; stale credits, unmatched items and recurring-journal differences are listed or recorded as none on the evidence supplied
+- Statement closing balance bridges to the ledger bank balance through identified timing items, with any residual named as an exception; stale credits, unmatched items and recurring-journal differences are listed or recorded as none on the evidence supplied
 - Post-journal re-exports agree; the authorised-human period-lock action is recorded as pending or complete
 - Close pack index: checklist, recs, schedules, variance commentary
 - Every open exception has an owner, status and source-period context

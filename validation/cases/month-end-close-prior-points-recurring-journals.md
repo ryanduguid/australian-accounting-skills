@@ -20,9 +20,9 @@ create files, post a journal or lock the period.
 
 ## Synthetic inputs
 
-- Bank: reconciliation status reconciled; ledger balance 20500.00; statement
-  closing balance at 30 September 2026 20000.00. One unmatched payment of 500.00
-  sits in the ledger with no statement line.
+- Bank: reconciliation status reconciled; statement closing balance at 30 September
+  2026 20000.00; ledger balance 19000.00. One unpresented payment of 500.00 sits in
+  the ledger with no statement line. No other timing item is reported.
 - Recurring journals: rent accrual 3000.00 in July and August and 3000.00 in
   September; insurance prepayment release 400.00 in July and August and none in
   September; software accrual none in July and August and 250.00 in September.
@@ -38,13 +38,14 @@ create files, post a journal or lock the period.
 
 ## Deliberately unavailable evidence
 
-No materiality threshold, firm ageing policy, explanation for the 500.00 payment or
+No materiality threshold, firm ageing policy, explanation for the bank residual or
 insurance schedule for September is supplied.
 
 ## Required checks
 
-- Show the 500.00 difference between the ledger and statement balances despite the
-  reconciled status, and list the unmatched payment.
+- Show 20000.00 - 500.00 = 19500.00 against the 19000.00 ledger balance, keep the
+  unpresented payment as a timing item and report the 500.00 residual as an exception
+  despite the reconciled status.
 - Report the insurance release as missing and the software accrual as new; report
   rent as unchanged.
 - Keep point 1 open with an owner because no evidence closes it, and close point 2
@@ -59,7 +60,8 @@ insurance schedule for September is supplied.
 
 - Do not treat the reconciled status as proof that the balances agree.
 - Do not clear the credit, close point 1 because a month passed or post a journal.
-- Do not invent an explanation for the 500.00 difference.
+- Do not invent an explanation for the 500.00 residual, or treat the unpresented
+  payment as an error.
 
 ## Source-verification and reviewer boundary
 

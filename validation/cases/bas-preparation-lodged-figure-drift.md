@@ -43,6 +43,7 @@ supplier's invoice are not supplied.
   and credits the ATO control account 3000.00, for a human to post.
 - Show that the 3000.00 ATO control balance agrees to the fabricated statement.
 - Keep the 110.00 out of the closing journal because it was not lodged.
+- State that the supplied nil ATO control balance shows no earlier transfer to duplicate.
 - State that the drift check does not show the lodged figures were otherwise right.
 
 ## Must not do
