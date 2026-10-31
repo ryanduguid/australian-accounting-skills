@@ -45,3 +45,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A retiree supplies taxable income but omits reportable contributions and spouse income. Prepare the known bridge rows and the missing-facts list; do not award SAPTO from age or taxable income alone.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

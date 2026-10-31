@@ -63,3 +63,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A balanced TB is supplied but the reporting framework is unknown. Prepare the mapping while withholding a claim that the statements comply with AASB requirements.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

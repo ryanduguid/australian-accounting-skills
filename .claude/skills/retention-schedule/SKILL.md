@@ -68,3 +68,5 @@ The NSW trust-account corrections above were checked on 15 August 2026 against:
 - [NSW Government retention money guidance](https://www.nsw.gov.au/housing-and-construction/compliance-and-regulation/security-of-payment/retention-money), used as secondary operational guidance and not in place of the instrument
 
 Recheck the in-force compilation at the time of use. The 14-day notice wording on the NSW Government page conflicted with the 10-business-day requirement in cl 9(3) when checked, so this skill deliberately preserves the discrepancy for review.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

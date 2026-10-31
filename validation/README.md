@@ -5,6 +5,10 @@ They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
 
+Copyright 2026 Ryan Duguid; [LICENSE](../LICENSE) and [NOTICE](../NOTICE) cover
+the cards. They carry no per-file line because `rubric_sha256` records each
+card's exact bytes.
+
 The cards do not make a current rate, threshold, deadline or legal position
 fixture truth. When a scenario needs a mutable fact, a passing response either
 verifies a current authoritative source or records the fact as unverified and

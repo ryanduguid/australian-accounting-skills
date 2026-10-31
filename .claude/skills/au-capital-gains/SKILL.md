@@ -55,3 +55,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 Disposal proceeds are known but acquisition records are missing. Report an unresolved cost base rather than treating all proceeds as a capital gain.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

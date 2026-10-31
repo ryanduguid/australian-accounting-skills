@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Adverse tests for the fabricated validation-pack trust boundary."""
 
 from __future__ import annotations

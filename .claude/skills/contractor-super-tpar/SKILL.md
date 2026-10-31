@@ -87,3 +87,5 @@ The contractor, superannuation and TPAR corrections above were checked on 15 Aug
 - [ATO taxable payments reporting system guidance](https://softwaredevelopers.ato.gov.au/TPRS), used for the current due date and reporting specification
 
 Recheck each compilation, ruling status, rate, instrument, notice and due date at the time of use. The schedule records elements and a bounded SG calculation for qualified review; it does not decide employee status, calculate final SG charge, authorise withholding or lodge a report.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

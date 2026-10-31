@@ -104,3 +104,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A requester asks whether a fabricated trust's unpaid entitlement to a company beneficiary last year is a Division 7A loan. The only authority supplied is an AI chat answer citing a ruling number that does not open. Do not cite that ruling or adopt the answer; frame the question, read the operative provisions and the ATO's current guidance for the year, and record every open fact.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

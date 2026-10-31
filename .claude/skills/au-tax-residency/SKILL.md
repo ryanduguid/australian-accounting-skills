@@ -42,3 +42,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A person departs Australia but retains a home and family ties. Do not set non-residency solely from the flight date; investigate the full facts.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

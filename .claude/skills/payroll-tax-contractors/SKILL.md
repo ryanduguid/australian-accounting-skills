@@ -54,3 +54,5 @@ Test each subcontractor engagement against the NSW relevant contract provisions 
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep contractor listings and generated output outside every version-control checkout, not merely ignored by one.
 - This skill does not decide common law employee versus contractor status, and does not conclude that a Chief Commissioner discretion (s 32(2)(b)(iv), a s 79 group exclusion, or a higher non-labour deduction) will be granted. It documents the position and the evidence, and escalates the application to the registered agent.
 - Do not lodge, register, or correspond with Revenue NSW. This is workflow support, not tax advice.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

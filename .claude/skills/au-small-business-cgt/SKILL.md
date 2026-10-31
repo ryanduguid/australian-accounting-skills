@@ -44,3 +44,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 Business turnover is supplied but connected entities and asset use are unknown. Leave basic eligibility unresolved and do not apply a concession.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

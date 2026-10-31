@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Regression gates for the financial-modelling skill and its validation card."""
 
 from __future__ import annotations

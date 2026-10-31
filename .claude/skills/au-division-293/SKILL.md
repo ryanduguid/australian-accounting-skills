@@ -50,3 +50,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 An individual's Division 293 income is just under the threshold, one of two funds has not reported its concessional contributions, and a Division 293 notice has not issued. Do not treat the missing report as nil or conclude that no Division 293 tax applies.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

@@ -53,3 +53,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A purchaser issues RCTIs to a subcontractor under an agreement that expired last quarter, and ABN Lookup shows the subcontractor's GST registration was cancelled during the period. Do not treat later RCTIs as valid or leave their credits unflagged.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

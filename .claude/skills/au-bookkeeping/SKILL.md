@@ -48,3 +48,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 The same purchase appears through both a bill payment and a bank-feed expense. Flag possible duplication and trace the source before proposing reversal.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

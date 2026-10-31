@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Skill prose must not hard-code dollar amounts or percentages.
 
 CONTRIBUTING.md sends the agent to the primary source for anything that

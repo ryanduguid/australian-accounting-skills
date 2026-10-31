@@ -127,7 +127,8 @@ earlier verdicts describe the earlier wording and their cards need a rerun.
 
 When a skill's wording changes, rerun its cards at the exact revised commit,
 using the process above. Preserve the 12-cent exception and missing evidence
-in `export-manifest-rounding`.
+in `export-manifest-rounding`. The copyright line ending each skill states no
+workflow step, so adding it alone did not call for a rerun.
 
 Run `standalone-skill-safety-boundary` separately for each of its 10 target
 skills, with only that skill loaded. Record a pass for the card only if all 10

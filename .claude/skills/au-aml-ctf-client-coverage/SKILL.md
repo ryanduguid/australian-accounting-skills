@@ -51,3 +51,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 The practice list shows a trust client whose business relationship started after 1 July 2026. Its register entry has an identity check but no beneficial owner evidence and no risk rating. Report both missing elements rather than marking the client complete or estimating a rating.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

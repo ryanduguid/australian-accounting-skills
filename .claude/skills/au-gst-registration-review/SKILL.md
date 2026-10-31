@@ -44,3 +44,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A purchase is coded with GST but no creditable-purpose evidence is supplied. Keep the credit unverified pending the transaction evidence.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

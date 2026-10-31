@@ -96,6 +96,8 @@ Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accoun
 
 Licensed under the Functional Source License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2). You may use, modify and redistribute it for any purpose except a Competing Use as defined in LICENSE (making it available to others in a competing commercial product or service), and each version becomes available under Apache-2.0 two years after it is made available. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Keep the copyright notices if you redistribute this work or build on it.
 
+Created by Ryan Duguid. Copies, modifications and derivatives must keep the copyright notices in the skills and source files. Credit reuse as: Based on [australian-accounting-skills](https://github.com/ryanduguid/australian-accounting-skills) by Ryan Duguid. See [NOTICE](NOTICE).
+
 </details>
 
 ---

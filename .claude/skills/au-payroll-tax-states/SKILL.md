@@ -54,3 +54,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A group pays wages in three states, is registered in one, and the ownership link between two companies that decides grouping is undocumented. Do not conclude registration is not required elsewhere or claim a full threshold in each state.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

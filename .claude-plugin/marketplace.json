@@ -9,7 +9,8 @@
       "name": "australian-accounting-skills",
       "description": "Australian accounting and tax preparation workflows with source checks and human review.",
       "author": {
-        "name": "Ryan Duguid"
+        "name": "Ryan Duguid",
+        "url": "https://github.com/ryanduguid"
       },
       "category": "productivity",
       "tags": [

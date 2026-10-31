@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Re-fetch every indexed primary source and report which ones moved.
 
 The sources index records where a workflow's primary-source material lives. It

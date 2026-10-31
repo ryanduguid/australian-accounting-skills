@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Source sweep paths the scenario tests in test_source_refresh.py do not reach."""
 
 from __future__ import annotations

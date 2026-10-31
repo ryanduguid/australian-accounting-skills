@@ -42,3 +42,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A foreign resident's former home is sold with no exemption analysis. Do not apply the ordinary main-residence exemption from occupancy history alone.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

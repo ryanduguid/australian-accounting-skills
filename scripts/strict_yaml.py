@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Shared strict YAML loading for the validator and the test suite."""
 
 from __future__ import annotations

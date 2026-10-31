@@ -75,3 +75,5 @@ scope, without requesting real client records.
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output outside every version-control checkout, not merely ignored by one.
 - This is not tax advice. See [DISCLAIMER.md](https://github.com/ryanduguid/australian-accounting-skills/blob/main/DISCLAIMER.md) in the repository root.
 - Indexed ATO provenance is in `sources.json` next to this file. The transaction reference also contains discovery links that have no recorded human acceptance; verify the applicable primary text and record provenance for each finding at use time. Re-verify each URL; a checked-at date is not a live confirmation. A record carrying `reverify_by` expires after that date: do not use it even as a cross-check, and mark dependent results `UNVERIFIED` until the live source has been read. Preserve source-index human review dates; machine retrieval cannot renew them.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

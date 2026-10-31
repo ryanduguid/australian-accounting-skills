@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """The evidence matrix must describe the tree, not the author's memory of it.
 
 `coverage.json` says what backs each skill: how many primary sources it

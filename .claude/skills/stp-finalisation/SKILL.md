@@ -62,3 +62,5 @@ Primary sources (checked 20 August 2026):
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output outside every version-control checkout, not merely ignored by one.
 - Not tax, legal or assurance advice. Outputs are preparation aids for review by a qualified professional. See [DISCLAIMER.md](https://github.com/ryanduguid/australian-accounting-skills/blob/main/DISCLAIMER.md) in the repository root.
 - Provenance for the mutable ATO and Treasury facts this skill currently relies on is in `sources.json` next to this file. Re-verify each URL at use time; a checked-at date is not a live confirmation. A record in it that carries a `reverify_by` date expires after that date: do not use it even as a cross-check, and mark results that depend on it `UNVERIFIED` until the live source has been read.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

@@ -1,10 +1,14 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 from __future__ import annotations
 
+import contextlib
+import io
 import re
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import yaml
 
@@ -51,6 +55,22 @@ class PluginEvalTests(unittest.TestCase):
         card = "---\nid: x\nsynthetic: true\ntarget_skills:\n  - bas-preparation\n---\n\n# X\n\n## Task\n\nDo it.\n"
         with self.assertRaisesRegex(ValueError, "missing section"):
             evals.build_case(card, "x", 1, 12)
+
+    def test_a_card_with_a_repeated_section_is_refused(self) -> None:
+        card = "---\nid: x\nsynthetic: true\ntarget_skills:\n  - bas-preparation\n---\n\n# X\n\n## Task\n\nA.\n\n## Task\n\nB.\n"
+        with self.assertRaisesRegex(ValueError, "duplicate section: Task"):
+            evals.build_case(card, "x", 1, 12)
+
+    def test_main_builds_the_copy_and_reports_the_case_count(self) -> None:
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "plugin"
+            output = io.StringIO()
+            with mock.patch.object(sys, "argv", ["build_plugin_evals.py", str(target), "--runs", "2"]):
+                with contextlib.redirect_stdout(output):
+                    evals.main()
+            cases = list((target / "evals").glob("*/prompt.md"))
+            self.assertIn(f"built {len(cases)} cases", output.getvalue())
+            self.assertIn("runs: 2", cases[0].read_text(encoding="utf-8"))
 
     def test_build_refuses_the_repository_and_an_existing_destination(self) -> None:
         with self.assertRaisesRegex(ValueError, "outside the repository"):

@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Unit paths of the validation checker that the fixture-repository tests do not reach."""
 
 from __future__ import annotations

@@ -56,3 +56,5 @@ The other skills in this pack assume clean, period-locked inputs. This skill is 
 - Thresholds, rates and due dates are never stated here. Where a downstream test needs one, the owning sibling skill verifies it at its primary source.
 - Ledger and report behaviour is not assumed from any named product. Confirm layout, sign convention and available columns in the actual file before relying on them.
 - API and direct database extraction are out of scope; this skill covers the export-file path that works for any practice.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

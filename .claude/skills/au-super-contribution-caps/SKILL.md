@@ -50,3 +50,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A client made concessional contributions above the general cap and wants to use carry-forward, but the total super balance at 30 June of the previous year is not evidenced and there is no evidence that one personal contribution will be claimed as a deduction. Do not apply carry-forward or treat the personal contribution as concessional.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

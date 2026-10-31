@@ -70,3 +70,5 @@ The NSW coverage corrections above were checked on 15 August 2026 against:
 - [*Cadia Holdings Pty Ltd v Downer EDI Mining Pty Ltd* [2020] NSWSC 1588, official NSW Case Law judgment](https://www.caselaw.nsw.gov.au/decision/175b4bf54ee486b38a0338e5), especially [7]-[8], [101]-[112] and [147]-[150]
 
 Recheck the in-force version and any later appellate treatment at the time of use. These sources support issue spotting and source citation; they do not authorise an autonomous coverage conclusion.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.

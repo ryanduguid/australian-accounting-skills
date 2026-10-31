@@ -71,3 +71,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A prospective client asks for company tax returns and a trust setup and names its previous accountant without saying whether the practice may contact them. The practice's policy is supplied, the conflicts register shows no match, and the practice's assessment marks trust setup as a designated service. Record the customer due diligence status for the trust work as not supplied and route it and its timing to the compliance officer, list the missing permission to contact the previous accountant as an exception, record the proof of identity status for the tax work as `UNVERIFIED` because no record was supplied, and leave the decision block blank.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
