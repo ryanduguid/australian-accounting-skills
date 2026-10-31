@@ -70,4 +70,4 @@ Pre-fill contains salary only, while bank interest is evidenced elsewhere. Add a
 
 A supplied no-interest answer conflicts with an extracted bank statement amount. Keep the conflict open and the extraction provisional. An explicit zero withholding amount stays zero, while a missing withholding amount stays unknown. An income total that agrees to the statements still needs an independently verified return destination.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

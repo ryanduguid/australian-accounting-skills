@@ -45,4 +45,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 Two payers supply arrears for overlapping earlier years; one allocation is missing. Aggregate the supported year rows without duplication and retain the unknown portion separately. Do not amend earlier returns merely to reallocate the receipts.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

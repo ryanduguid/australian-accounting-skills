@@ -14,6 +14,8 @@ licences they were released with.
 
 Redistribution under FSL-1.1-ALv2 requires including its terms or a link to
 them and keeping the copyright notices supplied with the software.
+Redistribution under another applicable licence follows that licence's
+conditions.
 
 Copying and reuse: versions under FSL-1.1-ALv2 are not open source. LICENSE does
 not permit a Competing Use, which it defines as making the software available to
@@ -23,16 +25,16 @@ substantially similar functionality. That covers the skill text, validation card
 and tests, whether a person copies them directly or through an AI agent or coding
 tool. A Competing Use needs the copyright holder's written permission. Earlier
 versions remain under the licences they were released with.
-Redistribution under another applicable licence follows that licence's
-conditions.
 
 This product includes work by Ryan Duguid
 (https://github.com/ryanduguid/australian-accounting-skills).
 
 Attribution: LICENSE applies to all copies, modifications and derivatives, and
 redistributing any of them must keep the copyright notices provided in or with the
-software. Those include this NOTICE, the notice ending each skill, reference and
-rule, and the header of each script and test. Keep them, and credit reuse as:
+software. Those include the copyright line above, the notice ending each skill,
+reference and rule, and the header of each script and test. Separately from that
+licence condition, the author asks that reuse be credited as follows. Neither
+belongs in client deliverables prepared with the skills:
 
   Based on australian-accounting-skills by Ryan Duguid
   (https://github.com/ryanduguid/australian-accounting-skills).

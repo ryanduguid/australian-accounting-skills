@@ -45,4 +45,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A broker reports a sale after vesting, but the grant agreement and restriction-release date are missing. Record the sale and quantities; leave the ESS taxing point and resulting tax basis unresolved.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

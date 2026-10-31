@@ -58,4 +58,4 @@ Per contract at the step 1 unit of account, in the form `wip-over-under-billing`
 - The AASB 15 paragraph numbers cited here come from the compilation current when this skill was written. Confirm the compilation operative for the period being costed at standards.aasb.gov.au before relying on a paragraph reference, because compilations are remade and renumbered.
 - Tax does not follow the contract accounting, and the ATO position on long-term construction contracts must be confirmed at ato.gov.au rather than assumed. This is workflow support, not tax advice.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

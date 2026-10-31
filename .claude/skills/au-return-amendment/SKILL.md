@@ -43,4 +43,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An assessment date is supplied but the original notice and taxpayer circumstances are absent. Preserve the proposed changes and mark the amendment deadline unverified.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

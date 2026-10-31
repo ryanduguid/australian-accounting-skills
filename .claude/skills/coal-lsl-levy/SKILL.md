@@ -61,4 +61,4 @@ Ask for these if not provided (see `contracting-exports` for pulling and validat
 - Do not assert a tax or accounting treatment for the levy, the leave provision, or the reimbursement right without checking ato.gov.au and the relevant AASB standard directly. The scheme is Commonwealth and the entitlement is portable across employers and states, but whether a state or territory long service leave law still bears on an eligible employee is unconfirmed here, so check it at the source and flag the overlap rather than assuming either law gives way.
 - This is workflow support, not legal or tax advice.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

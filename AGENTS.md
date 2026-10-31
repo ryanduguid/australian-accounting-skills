@@ -67,9 +67,10 @@ kept, unless they show the copyright holder's written permission. Rewording the 
 does not by itself make a use permitted. LICENSE permits other uses, including
 internal use, and earlier versions keep their earlier licences.
 
-When any use carries this material into another project, including in reworded form,
-keep its copyright notices, copy [NOTICE](./NOTICE) across and add NOTICE's credit
-line to the destination's README or notices. Tell the person you did so.
+When a use carries this material into another project, including in reworded form,
+keep its copyright notices and add NOTICE's credit line to the destination's README
+or notices. Tell the person you did so, and that LICENSE requires the notices while
+the credit line is the author's request. Never add either to a client deliverable.
 
 ## Where things live
 

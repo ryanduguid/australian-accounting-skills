@@ -57,4 +57,4 @@ Build a defensible fuel tax credit claim under the *Fuel Tax Act 2006* (Cth) fro
 - This skill declines to decide whether a particular road is a public road, whether a vehicle's main use is off-road, or who acquired the fuel in a hire chain. Those are questions of fact for the engagement partner on documented evidence; the skill sets out the tests and records the evidence gap.
 - Do not lodge, amend, or draft correspondence to the ATO, and do not make a voluntary disclosure decision on a historical over-claim. This is workflow support, not tax advice.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

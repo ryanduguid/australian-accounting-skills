@@ -98,4 +98,4 @@ python -m pip install "git+https://github.com/ryanduguid/australian-accounting.g
 Verify the installed revision before relying on it. An installation or arithmetic
 check does not approve a recognition or other professional judgement.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

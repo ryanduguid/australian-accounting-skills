@@ -61,4 +61,4 @@ Build a per-machine owning-and-operating rate and a defensible treatment note fo
 - Name the jurisdiction for every state-based conclusion. Payroll tax rules, rates and rulings differ by state even where the relevant contract provisions are harmonised.
 - This is workflow and modelling support, not tax advice.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

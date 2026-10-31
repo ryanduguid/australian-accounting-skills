@@ -58,4 +58,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A host supplies net platform payouts only and blocked the whole property for family over the summer school holidays. Rebuild gross income from the booking detail, carry the fees as a separate deduction and keep the holiday home question open for the reviewer.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

@@ -48,4 +48,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A sole trader wants to vary instalments to nil in the third quarter after a slow half-year, but has no management accounts after December and no forecast for the fourth quarter. Do not compute a varied amount or conclude the shortfall test is met.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

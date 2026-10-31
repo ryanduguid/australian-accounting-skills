@@ -10,7 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROSE_NOTICE = (
     "Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, "
-    "FSL-1.1-ALv2. Copies and adaptations must keep this notice.\n"
+    "FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. "
+    "It does not belong in client work.\n"
 )
 CODE_NOTICE = "# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2\n"
 CREDIT_LINE = "Based on australian-accounting-skills by Ryan Duguid"

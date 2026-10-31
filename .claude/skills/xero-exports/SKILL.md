@@ -146,4 +146,4 @@ coverage changes, so re-verify at developer.xero.com before relying on it.
 - Export retrieval and validation do not provide an audit or assurance conclusion. An authorised human decides whether evidence is sufficient.
 - Not tax, legal or assurance advice. Outputs are preparation aids for review by a qualified professional.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

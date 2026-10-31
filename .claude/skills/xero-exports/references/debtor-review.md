@@ -105,4 +105,4 @@ Keep real exports and outputs in the firm's approved location outside every
 version-control checkout. Not tax, legal or assurance advice. An authorised
 human resolves the evidence and decides what action to take.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

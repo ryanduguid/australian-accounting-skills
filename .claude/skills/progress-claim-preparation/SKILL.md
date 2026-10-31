@@ -71,4 +71,4 @@ The NSW coverage corrections above were checked on 15 August 2026 against:
 
 Recheck the in-force version and any later appellate treatment at the time of use. These sources support issue spotting and source citation; they do not authorise an autonomous coverage conclusion.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

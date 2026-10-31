@@ -48,4 +48,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An employee claims the logbook method from a 9-week logbook kept three years ago, before changing jobs, and has fuel receipts for only half the year. Do not accept the logbook percentage or estimate the missing fuel without the ATO's permitted basis.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

@@ -156,4 +156,4 @@ was not run and obtain current primary authority through the authorised retrieva
 route. For broader export details use `xero-exports` when installed; the essential
 population and evidence controls above still apply when it is unavailable.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations must keep this notice.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
