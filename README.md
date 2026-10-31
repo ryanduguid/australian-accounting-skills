@@ -14,7 +14,6 @@ Ryan Duguid is not a registered tax agent or BAS agent. Project support is limit
 [![verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
 [![Codecov](https://codecov.io/gh/ryanduguid/australian-accounting-skills/graph/badge.svg)](https://codecov.io/gh/ryanduguid/australian-accounting-skills)
 [![CodeQL](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/codeql.yml)
-[![Snyk](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/snyk.yml)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=ryanduguid_australian-accounting-skills&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ryanduguid_australian-accounting-skills)
 [![Codacy code quality](https://app.codacy.com/project/badge/Grade/b46694168d304886be1287d54cf33923)](https://app.codacy.com/gh/ryanduguid/australian-accounting-skills/dashboard)<br>
 [![OpenSSF Scorecard](https://raw.githubusercontent.com/ryanduguid/.github/badges/ryanduguid/australian-accounting-skills.svg)](https://scorecard.dev/viewer/?uri=github.com/ryanduguid/australian-accounting-skills)
