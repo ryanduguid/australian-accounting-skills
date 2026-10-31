@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Verify that the documented Skills CLI consumer discovers every skill."""
 
 from __future__ import annotations

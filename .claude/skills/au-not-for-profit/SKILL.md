@@ -48,3 +48,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A group calls itself a charity but supplies no endorsement or governing document. Do not treat it as income-tax exempt or entitled to deductible gifts.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

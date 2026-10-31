@@ -54,3 +54,5 @@ Open the relevant current or historical version for the work's actual period. Th
 Only extras cover is evidenced and spouse income is absent. Do not infer surcharge exemption or a nil surcharge.
 
 Two insurer statement lines have different benefit codes and one has a zero rebate. Preserve both lines and the zero, and resolve their period and code questions separately. A statement that cover was absent only before March does not establish a full year without cover.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

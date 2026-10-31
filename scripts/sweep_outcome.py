@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Decide what a source sweep run actually established.
 
 `source_refresh.py --check --report sweep.md` exits 0 when every actionable

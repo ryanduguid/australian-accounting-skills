@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Capture and compare bounded passages from one indexed public source."""
 from __future__ import annotations
 

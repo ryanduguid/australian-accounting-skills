@@ -86,3 +86,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A farm withholds at the registered rate from a worker on a 417 visa but cannot show when it registered as an employer of working holiday makers. The worker, a national of an eligible NDA country, says they became an Australian resident after signing a lease. Do not treat the withholding as correct, and do not apply resident rates in the return, until the registration evidence and the residency facts are resolved.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

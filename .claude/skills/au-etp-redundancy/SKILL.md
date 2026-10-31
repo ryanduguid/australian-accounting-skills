@@ -50,3 +50,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 An employer labels a termination payment as a genuine redundancy, but the position was refilled a month later and the employee's service start date is disputed. Do not apply the tax-free limit or accept the payroll withholding as correct.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

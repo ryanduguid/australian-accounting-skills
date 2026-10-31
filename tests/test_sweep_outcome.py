@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """What the sweep workflow may conclude from an exit status and a report.
 
 Every case here is one where the old workflow would have reported a healthy run,

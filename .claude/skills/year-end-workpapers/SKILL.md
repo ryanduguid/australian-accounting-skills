@@ -7,7 +7,7 @@ description: "Use when building a review-ready annual workpaper pack from a tria
 
 Turn a year-end trial balance into an indexed, review-ready workpaper pack. The reviewer should never have to ask 'where's the support for this?'
 
-If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) expects, run `review-ready gate --profile year_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off. Then run `workpaper-tie-out`.
+If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/review-ready-gate) expects and the operator has already installed the `review-ready` tool, run `review-ready gate --profile year_end` before handing it to a reviewer. A `NOT_READY` or `BLOCKED` pack goes back to the preparer. `READY` is not sign-off. Then run `workpaper-tie-out`.
 
 ## Inputs needed
 
@@ -43,3 +43,5 @@ Bind each claimed completed stage to the supporting artefact and its source vers
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs and any identifier the task does not need; keep exports and generated output outside every version-control checkout, not merely ignored by one.
 - Run `workpaper-tie-out` as the verification pass after drafting statements.
 - Not tax, legal or assurance advice. Outputs are preparation aids for review by a qualified professional.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

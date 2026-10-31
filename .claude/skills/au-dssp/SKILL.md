@@ -45,3 +45,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A registry statement combines DRP purchases and a DSSP allotment while one original parcel lacks acquisition records. Reconcile the known share count, separate the plans and leave the unsupported parcel basis open.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

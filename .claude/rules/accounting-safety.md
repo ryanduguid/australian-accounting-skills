@@ -83,3 +83,5 @@ individual skill remains the detailed procedure.
     secret or token in the process environment before the session. Never read
     `.env` or any other credential file, never print a secret value or pass one
     on a command line, and never ask for one in chat.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

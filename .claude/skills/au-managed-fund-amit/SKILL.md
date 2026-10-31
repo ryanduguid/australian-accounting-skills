@@ -44,3 +44,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 An AMMA statement attributes income different from cash paid and shows a cost-base decrease exceeding a parcel's known balance. Preserve both differences and escalate the possible CGT event; do not substitute cash for attributed income.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

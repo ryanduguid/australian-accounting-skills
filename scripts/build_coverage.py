@@ -1,3 +1,4 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Derive the evidence matrix that says what backs each skill.
 
 `docs/skill-catalogue.md` says what each skill is for. Nothing said what

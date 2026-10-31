@@ -44,3 +44,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A sole trader supplies ordinary business profit, unreviewed contractor income and deferred business losses but no whole-return calculation. Reconcile the supplied components and hold both eligibility-dependent income and the final offset open.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

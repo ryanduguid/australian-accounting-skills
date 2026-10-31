@@ -55,3 +55,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A company lodged three activity statements late, one due before 1 July 2026 and two after, and its PAYG withholding records for those months are missing. Do not apply one penalty unit value to all three or assume the base multiplier.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

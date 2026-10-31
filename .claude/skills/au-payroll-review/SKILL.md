@@ -7,7 +7,7 @@ description: "Use when checking an Australian pay run's inputs, gross-to-net rec
 
 ## Inputs
 
-Pay period and payday, employment arrangements and jurisdiction, award/agreement and classifications, approved time/leave records, pay rates and variations, payroll register, deductions/withholding settings, super inputs, the payroll system's pay-item settings (each earnings, allowance, leave and deduction item with its super treatment, STP payment type and withholding setting) and the items added or changed since the last review, opening/closing liability balances and evidence of liability payments or adjustments. Use a payment-summary total for reconciliation; bank account details are unnecessary.
+Pay period and payday, employment arrangements and jurisdiction, award/agreement and classifications, approved time/leave records, pay rates and variations, payroll register, deductions/withholding settings, super inputs, the payroll system's pay-item settings (each earnings, allowance, leave and deduction item with its super treatment, STP payment type and withholding setting) and the items added or changed since the last review, opening/closing liability balances and evidence of liability payments or adjustments. For the master-data screen, flags generated inside the payroll environment: TFN declaration recorded (yes or no, never the TFN), employment basis, start and termination dates, cessation reason, and whether a bank account is shared between employees (a flag, never the account). Use a payment-summary total for reconciliation; bank account details are unnecessary.
 
 ## Workflow
 
@@ -19,11 +19,13 @@ Pay period and payday, employment arrangements and jurisdiction, award/agreement
 
 4. Review the pay-item settings for every item the run uses, each period and whenever an item is added or changed. Compare each item's super treatment (including whether it counts as qualifying earnings for paydays from 1 July 2026), STP payment type and withholding setting with current ATO guidance for the payday, such as [what payments are qualifying earnings](https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday/what-payments-are-qualifying-earnings). A wrong setting repeats in every run that uses the item, so list each mismatch, or each change without an approval record, as an exception with the pay runs it affected. Do not change payroll settings.
 
+4a. **Employee master-data screen.** List as leads, each for the authorised payroll officer to resolve: no TFN declaration recorded for an employee being paid; a terminated employee with no cessation reason; a payment dated after termination; leave accruing or paid to an employee recorded as casual; and a bank account shared between employees. A hit does not establish an error, because shared accounts and post-termination payments can be legitimate, and a clean screen does not validate the file. Verify the consequence of a missing declaration at the ATO for the payday rather than stating a rate from memory. Report `not run` where a flag is not supplied. Do not ask for TFNs or bank account numbers, and do not change master data.
+
 5. Verify current withholding, super and reporting requirements for the payday. Prepare exceptions for the authorised payroll officer; use the existing STP workflow for year-end reporting where installed.
 
 ## Hand-off and checks
 
-A pay-run exception list, a pay-item settings review listing each mismatch with the runs it affected, a gross-to-net tie-out and a liability roll-forward. An authorised payroll officer approves, pays, reports and changes payroll settings.
+A pay-run exception list, a pay-item settings review listing each mismatch with the runs it affected, a master-data screen result, a gross-to-net tie-out and a liability roll-forward. An authorised payroll officer approves, pays, reports and changes payroll settings.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
@@ -45,3 +47,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 A pay run balances but overtime classification is unsupported. Keep the rate/classification exception open instead of treating arithmetic agreement as pay compliance.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

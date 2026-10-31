@@ -56,3 +56,5 @@ Open the relevant current or historical version for the work's actual period. Th
 ## Fabricated acceptance example
 
 An SMSF member's TSB at 30 June 2027 is above the large threshold, the SMSF has not calculated its Division 296 fund earnings, and a second APRA fund has not reported earnings. Do not estimate the earnings or apply a start-of-year balance to 2026-27.
+
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.

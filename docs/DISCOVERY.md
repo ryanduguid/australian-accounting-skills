@@ -15,9 +15,13 @@ profile **Customize your pins** dialog.
 skills.sh has no public submit API. `npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills`
 resolves the default branch, with the CLI version this repository verifies. The v0.5.0 release contains 76
 skills, and the default branch can be ahead of it. Keep About copy evergreen. Document versioned counts in the README and
-installation guide. Verify the installed revision before advertising its count. Do not claim a skills.sh directory page until
-that host serves one for this repository. The index is install telemetry, not a
-form.
+installation guide. Verify the installed revision before advertising its count. skills.sh serves a [page for this repository](https://skills.sh/ryanduguid/australian-accounting-skills).
+On 31 October 2026 it showed 67 skills and 159 installs, behind the 76 released, so do not
+quote its count as the inventory. The index is install telemetry, not a form. Its Snyk audit
+lists W011 and W012 against some skills: W011 reflects that skills read third-party exports,
+and W012 cites a remote command, which the skills do not run; they name the optional
+`review-ready` tool only where the operator has already installed it. Recheck the audit after
+the host re-indexes rather than claiming it is clear.
 
 ## Keyword map
 
