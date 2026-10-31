@@ -42,6 +42,7 @@ rule are not supplied.
 ## Required checks
 
 - Report rows 2 and 3 as a supplier code drift lead for Synthetic Supplier P.
+  Row 3 may also appear as a rate times net lead: 0.00 recorded against 10.00.
 - Report row 4 as an account class lead on a balance-sheet account, noting that
   it is not an error on these facts.
 - Report row 5 as a rate times net lead: 10% of 100.00 is 10.00 against 15.00
