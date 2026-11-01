@@ -346,15 +346,18 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("It is a draft: check whether a final determination has issued", text)
         self.assertIn("DocID=DSD/SGD2026D1/NAT/ATO/00001", text)
         self.assertIn("dated 2 September 2026", text)
+        self.assertIn("a reasonably accurate estimate of market value", text)
 
     def test_div7a_flags_upes_on_loan_terms_and_prior_deemed_dividends(self) -> None:
         text = skill_text("div7a-compliance")
 
         self.assertIn("made subject to complying loan terms", text)
-        self.assertIn("does not reinstate it as a mere UPE ([34], [38])", text)
+        self.assertIn("does not reinstate a satisfied or converted entitlement as a mere UPE ([34], [38])", text)
+        self.assertIn("gives rise to a loan within s 109D(3) is treated as one", text)
         self.assertIn("seek an amendment within the amendment period or object outside it", text)
         self.assertIn("([40]-[42])", text)
         self.assertIn("do not decide whether to request an amendment or object", text)
+        self.assertIn("trustee resolutions, accounting records and later dealings with the entitlement", text)
 
 
 if __name__ == "__main__":
