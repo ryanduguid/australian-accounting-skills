@@ -81,6 +81,7 @@ Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, t
 ## Reference
 
 - [Install, uninstall and versioning](docs/installation.md)
+- [Verify a downloaded release](https://github.com/ryanduguid/release-policy/blob/main/docs/verify-a-release.md): checksum and SLSA provenance
 - [First run and BAS walkthrough](docs/bas-walkthrough.md)
 - [Seventy-six skills and their supporting files](docs/skill-catalogue.md)
 - [Related command-line tools](docs/integrations.md)
