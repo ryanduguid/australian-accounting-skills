@@ -84,6 +84,18 @@ The immutable v0.5.0 Skills tag retains its MCP 0.6.0 plugin pin, and v0.4.0 its
 Installing only its skill files with the tagged command above does not launch
 that server. The development plugin's pin does not change the tagged archive.
 
+Claude Code lists each skill's name and description in the context and keeps that
+listing within a budget of 1% of the model's context window by default; past it,
+the least-used skills lose their descriptions and are chosen less often. On
+1 November 2026 `/context` in a fresh session (Claude Code 2.1.312, a 1 million
+token window, no other plugins or user skills) put this plugin's 76-skill listing
+at 8.5k tokens, 0.9% of the window, so it fits with little room. A smaller window,
+or other plugins and skills sharing the listing, can push it over. To check, run
+`/context` and compare the Skills row with your window. To reserve more, set
+`skillListingBudgetFraction` in your Claude Code settings, for example
+`"skillListingBudgetFraction": 0.02` for 2%; at 0.005 the same listing was cut to
+5k tokens.
+
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
 If the Hardhat Ledger plugin is installed, uninstall or disable

@@ -117,6 +117,7 @@ def expected_validation(case_names: set[str]) -> set[str]:
     return {
         "validation/README.md",
         "validation/results.schema.json",
+        "validation/routing-cases.yaml",
         *(f"validation/cases/{name}" for name in case_names),
     }
 

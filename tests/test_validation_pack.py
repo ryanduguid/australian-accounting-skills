@@ -108,6 +108,7 @@ def build_fixture(root: Path, cards: int = 6) -> None:
 
     identifiers = sorted(path.stem for path in chosen)
     write(root / "validation" / "README.md", "# Fixture validation pack\n")
+    write(root / "validation" / "routing-cases.yaml", "[]\n")
     schema = json.loads(validator.read_utf8(REPOSITORY / "validation" / "results.schema.json"))
     schema["properties"]["results"]["propertyNames"]["enum"] = identifiers
     write(

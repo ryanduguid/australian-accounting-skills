@@ -21,6 +21,8 @@ from validate_validation import ROOT, parse_front_matter
 WITHHELD_SECTIONS = ("Required checks", "Must not do", "Source-verification and reviewer boundary")
 PLUGIN_PATHS = (".claude-plugin", ".claude/skills", ".claude/rules", "DISCLAIMER.md", "LICENSE")
 ALLOWED_TOOLS = ["Read", "Glob", "Grep", "Skill"]
+# Prompts that name no skill, so a run shows which skill Claude Code picks.
+ROUTING_CASES = "validation/routing-cases.yaml"
 JUDGE_PREFACE = (
     "The answer comes from a session with no web access and no way to create files. "
     "Reporting a mutable rate, threshold or rule as unverified, and leaving it for a "
@@ -49,6 +51,39 @@ def front_matter(fields: dict[str, object]) -> str:
     return "---\n" + yaml.safe_dump(fields, sort_keys=False, allow_unicode=True, width=100) + "---\n"
 
 
+def skill_grader(skills: list[str], minimum: int, maximum: int | None = None) -> str:
+    """A `tool_used` grader counting Skill calls to any of `skills`, with or without the namespace."""
+    skill_pattern = "|".join(re.escape(skill) for skill in skills)
+    fields: dict[str, object] = {
+        "type": "tool_used",
+        "tool": "Skill",
+        "input_match": f'"skill"\\s*:\\s*"(?:australian-accounting-skills:)?(?:{skill_pattern})"',
+        "min": minimum,
+    }
+    if maximum is not None:
+        fields["max"] = maximum
+    return front_matter(fields)
+
+
+def build_routing_case(case: dict[str, object], runs: int, max_turns: int) -> dict[str, str]:
+    """Return one routing case's files: the expected skill must fire and its neighbours must not."""
+    skill = cast(str, case["skill"])
+    files = {
+        "prompt.md": front_matter({
+            "name": f"route-{case['id']}",
+            "description": f"Routing check: the prompt names no skill; {skill} should fire.",
+            "tags": ["routing", skill],
+            "runs": runs,
+            "max_turns": max_turns,
+            "allowed_tools": ALLOWED_TOOLS,
+        }) + "\n" + cast(str, case["prompt"]) + "\n",
+        "graders/skill-fired.md": skill_grader([skill], 1) + "\nThe expected skill must fire.\n",
+    }
+    for other in cast(list[str], case["not"]):
+        files[f"graders/not-{other}.md"] = skill_grader([other], 0, 0) + "\nA neighbouring skill must not fire.\n"
+    return files
+
+
 def build_case(card: str, case_id: str, runs: int, max_turns: int) -> dict[str, str]:
     """Return one case's files, relative to its directory."""
     metadata, sections = card_sections(card, f"{case_id}.md")
@@ -56,7 +91,6 @@ def build_case(card: str, case_id: str, runs: int, max_turns: int) -> dict[str, 
     task = "\n\n".join(
         f"## {heading}\n\n{text}" for heading, text in sections.items() if heading not in WITHHELD_SECTIONS
     )
-    skill_pattern = "|".join(re.escape(skill) for skill in skills)
     return {
         "prompt.md": front_matter({
             "name": case_id,
@@ -66,12 +100,7 @@ def build_case(card: str, case_id: str, runs: int, max_turns: int) -> dict[str, 
             "max_turns": max_turns,
             "allowed_tools": ALLOWED_TOOLS,
         }) + "\n" + task + "\n",
-        "graders/skill-fired.md": front_matter({
-            "type": "tool_used",
-            "tool": "Skill",
-            "input_match": f'"skill"\\s*:\\s*"(?:australian-accounting-skills:)?(?:{skill_pattern})"',
-            "min": 1,
-        }) + "\nA target skill must fire.\n",
+        "graders/skill-fired.md": skill_grader(skills, 1) + "\nA target skill must fire.\n",
         "graders/required-checks.md": front_matter({
             "type": "llm",
             "criteria": (
@@ -117,10 +146,24 @@ def build(destination: Path, runs: int, max_turns: int, root: Path = ROOT) -> di
             target.parent.mkdir(parents=True, exist_ok=True)
             with target.open("x", encoding="utf-8", newline="\n") as stream:
                 stream.write(text)
+    routing_bytes = (root / ROUTING_CASES).read_bytes()
+    routing = cast(list[dict[str, object]], yaml.safe_load(routing_bytes))
+    for case in routing:
+        for relative, text in build_routing_case(case, runs, max_turns).items():
+            target = destination / "evals" / f"route-{case['id']}" / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with target.open("x", encoding="utf-8", newline="\n") as stream:
+                stream.write(text)
     head = subprocess.run(
         ["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True, text=True, check=False
     ).stdout.strip()
-    manifest: dict[str, object] = {"commit": head, "runs": runs, "card_sha256": digests}
+    manifest: dict[str, object] = {
+        "commit": head,
+        "runs": runs,
+        "card_sha256": digests,
+        "routing_sha256": hashlib.sha256(routing_bytes).hexdigest(),
+        "routing_cases": [f"route-{case['id']}" for case in routing],
+    }
     (destination / "evals-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return manifest
 
@@ -132,7 +175,9 @@ def main() -> None:
     parser.add_argument("--max-turns", type=int, default=12)
     args = parser.parse_args()
     manifest = build(args.destination, args.runs, args.max_turns)
-    print(f"built {len(cast(dict[str, str], manifest['card_sha256']))} cases in {args.destination}")
+    cards = len(cast(dict[str, str], manifest["card_sha256"]))
+    routes = len(cast(list[str], manifest["routing_cases"]))
+    print(f"built {cards + routes} cases ({cards} cards, {routes} routing) in {args.destination}")
 
 
 if __name__ == "__main__":
