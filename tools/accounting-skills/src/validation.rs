@@ -321,10 +321,14 @@ pub fn discover_case_names(root: &Path) -> Result<Names> {
         .collect()
 }
 pub fn expected_validation(cases: &Names) -> Names {
-    names(&["validation/README.md", "validation/results.schema.json"])
-        .into_iter()
-        .chain(cases.iter().map(|name| format!("validation/cases/{name}")))
-        .collect()
+    names(&[
+        "validation/README.md",
+        "validation/results.schema.json",
+        "validation/routing-cases.yaml",
+    ])
+    .into_iter()
+    .chain(cases.iter().map(|name| format!("validation/cases/{name}")))
+    .collect()
 }
 pub fn case_ids(cases: &Names) -> Names {
     cases
