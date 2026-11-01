@@ -327,6 +327,35 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
+    def test_aml_coverage_routes_firm_address_matches_to_the_compliance_officer(self) -> None:
+        text = skill_text("au-aml-ctf-client-coverage")
+
+        self.assertIn("each client's recorded registered office and principal place of business addresses", text)
+        self.assertIn("the firm's own street addresses", text)
+        self.assertIn("fill a firm address field for every client", text)
+        self.assertIn("as an item 9 designated service", text)
+        self.assertIn("Route every `yes` and `UNVERIFIED` to the AML/CTF compliance officer", text)
+        self.assertIn("even where the firm's assessment lists no address service", text)
+        self.assertIn("using a firm address", text)
+
+    def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
+        text = skill_text("contractor-super-tpar")
+
+        self.assertIn("SGD 2026/D1 gives the ATO's preliminary view of s 10A(1)(d)", text)
+        self.assertIn("reasonable market value of the labour", text)
+        self.assertIn("It is a draft: check whether a final determination has issued", text)
+        self.assertIn("DocID=DSD/SGD2026D1/NAT/ATO/00001", text)
+        self.assertIn("dated 2 September 2026", text)
+
+    def test_div7a_flags_upes_on_loan_terms_and_prior_deemed_dividends(self) -> None:
+        text = skill_text("div7a-compliance")
+
+        self.assertIn("made subject to complying loan terms", text)
+        self.assertIn("does not reinstate it as a mere UPE ([34], [38])", text)
+        self.assertIn("seek an amendment within the amendment period or object outside it", text)
+        self.assertIn("([40]-[42])", text)
+        self.assertIn("do not decide whether to request an amendment or object", text)
+
 
 if __name__ == "__main__":
     unittest.main()
