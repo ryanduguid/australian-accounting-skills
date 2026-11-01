@@ -51,6 +51,29 @@ class PluginEvalTests(unittest.TestCase):
         self.assertTrue(re.search(pattern, '{"skill": "au-payroll-review"}'))
         self.assertFalse(re.search(pattern, '{"skill": "bas-preparation"}'))
 
+    def test_routing_cases_name_real_skills_and_never_the_expected_one(self) -> None:
+        cases = yaml.safe_load((ROOT / evals.ROUTING_CASES).read_text(encoding="utf-8"))
+        names = {path.name for path in (ROOT / ".claude/skills").iterdir() if path.is_dir()}
+        self.assertGreaterEqual(len(cases), 20)
+        self.assertEqual(len(cases), len({case["id"] for case in cases}))
+        for case in cases:
+            with self.subTest(case=case["id"]):
+                self.assertLessEqual({case["skill"], *case["not"]}, names)
+                self.assertNotIn(case["skill"], case["not"])
+                self.assertFalse([name for name in names if name in case["prompt"]])
+
+    def test_a_routing_case_grades_the_expected_skill_and_its_neighbours(self) -> None:
+        case = {"id": "x", "skill": "bas-preparation", "not": ["au-payroll-review"], "prompt": "Reconcile 1A."}
+        files = evals.build_routing_case(case, 1, 4)
+        self.assertIn("Reconcile 1A.", files["prompt.md"])
+        fired = yaml.safe_load(files["graders/skill-fired.md"].split("---\n")[1])
+        self.assertEqual((fired["min"], fired.get("max")), (1, None))
+        self.assertTrue(re.search(fired["input_match"], '{"skill": "australian-accounting-skills:bas-preparation"}'))
+        self.assertFalse(re.search(fired["input_match"], '{"skill": "au-payroll-review"}'))
+        other = yaml.safe_load(files["graders/not-au-payroll-review.md"].split("---\n")[1])
+        self.assertEqual((other["min"], other["max"]), (0, 0))
+        self.assertTrue(re.search(other["input_match"], '{"skill": "au-payroll-review"}'))
+
     def test_a_card_without_withheld_sections_is_refused(self) -> None:
         card = "---\nid: x\nsynthetic: true\ntarget_skills:\n  - bas-preparation\n---\n\n# X\n\n## Task\n\nDo it.\n"
         with self.assertRaisesRegex(ValueError, "missing section"):
@@ -88,7 +111,8 @@ class PluginEvalTests(unittest.TestCase):
             self.assertTrue((target / ".claude-plugin/plugin.json").is_file())
             self.assertTrue((target / ".claude/skills/bas-preparation/SKILL.md").is_file())
             cases = sorted(path.parent.name for path in (target / "evals").glob("*/prompt.md"))
-            self.assertEqual(cases, sorted(manifest["card_sha256"]))  # type: ignore[arg-type]
+            expected = [*manifest["card_sha256"], *manifest["routing_cases"]]  # type: ignore[misc]
+            self.assertEqual(cases, sorted(expected))
 
 
 if __name__ == "__main__":

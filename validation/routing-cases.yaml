@@ -1,0 +1,84 @@
+# Routing checks for `scripts/build_plugin_evals.py`: each prompt names no skill, so
+# a run shows whether Claude Code picks `skill` from the listing and avoids the
+# neighbouring skills in `not`. All facts are synthetic. Graders check only which
+# skill fired, never the answer.
+- id: payroll-tax-multistate-threshold
+  skill: au-payroll-tax-states
+  not: [payroll-tax-contractors]
+  prompt: Our group employs staff in New South Wales and Victoria and pays about $2.1 million of Australian wages a year. Which states do we register in for payroll tax, and how is the tax-free threshold shared between them?
+- id: payroll-tax-grouping
+  skill: au-payroll-tax-states
+  not: [au-business-formation]
+  prompt: Two of our client's companies share a director and move staff between them. Are they grouped for payroll tax in Queensland and Western Australia, and what does grouping change?
+- id: payroll-tax-labour-only-subcontractor
+  skill: payroll-tax-contractors
+  not: [au-payroll-tax-states]
+  prompt: We pay a carpentry subcontractor in Sydney about $180,000 a year for labour only. Is that deemed wages for payroll tax, and could an exemption apply?
+- id: payroll-tax-on-hire-chain
+  skill: payroll-tax-contractors
+  not: [au-payroll-review]
+  prompt: A labour hire firm places workers on our Parramatta site through a second agency. Who is liable for New South Wales payroll tax on those wages?
+- id: subcontractor-sg-and-tpar
+  skill: contractor-super-tpar
+  not: [payroll-tax-contractors]
+  prompt: Our building company pays 12 individual subcontractors with ABNs. Check whether any of them count as employees for super guarantee and whether we must lodge a taxable payments annual report.
+- id: pay-run-before-approval
+  skill: au-payroll-review
+  not: [stp-finalisation]
+  prompt: Before I approve this fortnight's pay run for 14 employees, check the gross-to-net figures, the PAYG withholding and the super for anything that looks wrong.
+- id: stp-year-end
+  skill: stp-finalisation
+  not: [au-payroll-review]
+  prompt: It is July 2026. Reconcile our payroll register to the general ledger and to the STP-filed totals so we can make the 2025-26 finalisation declaration.
+- id: gst-control-account-to-labels
+  skill: bas-preparation
+  not: [au-gst-registration-review]
+  prompt: For the March 2026 quarter, tie our Xero GST control account to labels 1A and 1B and explain the $412 difference before we lodge.
+- id: gst-registration-threshold
+  skill: au-gst-registration-review
+  not: [bas-preparation]
+  prompt: My consulting turnover will reach about $82,000 this year. Do I have to register for GST, and how should I treat the overseas software subscriptions I pay for?
+- id: gst-townhouse-development
+  skill: au-gst-property
+  not: [bas-preparation]
+  prompt: We are buying a vacant block to build 4 townhouses for sale. What GST evidence should we keep for the purchase and the sales, including whether the margin scheme is available?
+- id: gst-missing-credits-audit
+  skill: bas-preparation
+  not: [au-bookkeeping]
+  prompt: Go through this quarter's Xero transactions and find any GST credits claimed on bank fees, insurance or other purchases that carry no GST, before the activity statement goes in.
+- id: gst-going-concern-sale
+  skill: au-gst-property
+  not: [au-capital-gains]
+  prompt: A client sold a tenanted commercial building. Is the sale a GST-free supply of a going concern, and what documents show that it qualifies?
+- id: fuel-tax-credit-earthmoving
+  skill: fuel-tax-credits
+  not: [bas-preparation]
+  prompt: Our earthmoving business runs 3 excavators on site and 2 trucks that also travel on public roads. Prepare the fuel tax credit figures for this quarter's activity statement.
+- id: cgt-share-parcels-register
+  skill: au-capital-gains
+  not: [au-small-business-cgt]
+  prompt: Prepare a CGT event register for a client who sold 3 parcels of listed shares and an investment unit during 2025-26, with the cost base evidence for each.
+- id: cgt-capital-loss-reconciliation
+  skill: au-capital-gains
+  not: [au-crypto-tax]
+  prompt: Reconcile a client's carried-forward capital losses against this year's capital gains and show which losses are used and which carry forward.
+- id: cgt-business-sale-concessions
+  skill: au-small-business-cgt
+  not: [au-capital-gains]
+  prompt: A client is selling their plumbing business for $1.4 million after 17 years. Can they use the 15-year exemption or the retirement exemption, and what evidence do we need?
+- id: cgt-net-asset-value-test
+  skill: au-small-business-cgt
+  not: [au-financial-statements]
+  prompt: Our client company and its related entities have about $5.8 million of net assets. Check the $6 million maximum net asset value test before the share sale goes ahead.
+- id: cgt-foreign-resident-apartment
+  skill: au-nonresident-cgt
+  not: [au-capital-gains]
+  prompt: A client who lives in the United Kingdom is selling an apartment in Brisbane. What capital gains tax and foreign resident withholding apply to the sale?
+- id: cgt-crypto-exchange-export
+  skill: au-crypto-tax
+  not: [au-capital-gains]
+  prompt: Here is a summary of a client's exchange export for 2025-26, which shows 14 coin-to-coin swaps, monthly staking rewards and 3 transfers between their own wallets. Work out which events are disposals.
+- id: cgt-rsu-vest-and-sale
+  skill: au-employee-share-schemes
+  not: [au-capital-gains]
+  prompt: My employer's RSUs vested in October 2025 and I sold half of them in March 2026. Prepare the workpaper for my tax return.
