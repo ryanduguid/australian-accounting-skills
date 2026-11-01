@@ -39,6 +39,21 @@
         "source_last_modified": "",
         "checked_at": "2026-10-29"
       }
+    },
+    {
+      "title": "SGD 2026/D1 Superannuation guarantee: working out the payments in respect of a person's labour under a contract referred to in subsection 12(3) of the Superannuation Guarantee (Administration) Act 1992 (draft)",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 1 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-01",
+      "review_required_since": "2026-11-01",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

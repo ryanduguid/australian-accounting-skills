@@ -113,6 +113,21 @@
         "source_last_modified": "",
         "checked_at": "2026-10-14"
       }
+    },
+    {
+      "title": "AUSTRAC: Professional designated services",
+      "url": "https://www.austrac.gov.au/new-austrac/designated-services-newly-regulated-entities/professional-designated-services",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 1 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.austrac.gov.au/new-austrac/designated-services-newly-regulated-entities/professional-designated-services",
+      "http_status": 200,
+      "fetched_at": "2026-11-01",
+      "review_required_since": "2026-11-01",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

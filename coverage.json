@@ -3,18 +3,18 @@
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 76,
-    "sources_indexed": 214,
+    "sources_indexed": 216,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 1,
-    "skills_with_behavioural_gate": 18,
+    "skills_with_behavioural_gate": 20,
     "skills_with_only_the_seeded_case": 32
   },
   "skills": [
     {
       "skill": "au-aml-ctf-client-coverage",
       "sources": {
-        "indexed": 6,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-26",
@@ -29,7 +29,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1364,7 +1366,7 @@
     {
       "skill": "contractor-super-tpar",
       "sources": {
-        "indexed": 2,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-30",
@@ -1404,7 +1406,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
