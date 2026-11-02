@@ -53,7 +53,11 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 
 ## Validation record
 
-Human-confirmed model verdicts cover 72 of the 112 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. The other 40 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, three transaction-GST cases, two short-stay accommodation cases, three pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a formula-change case, two reconciliation break-trace cases, GST screening leads, lodged-figure drift, a close with prior review points, an employee master-data screen, a family trust distribution tax screen and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 76 skills, and [coverage.json](coverage.json) gives the state of each skill.
+Human-confirmed model verdicts cover 72 of the 112 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode.
+
+The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools.
+
+The other 40 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, 3 transaction-GST cases, 2 short-stay accommodation cases, 3 pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a formula-change case, 2 reconciliation break-trace cases, GST screening leads, lodged-figure drift, a close with prior review points, an employee master-data screen, a family trust distribution tax screen and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 76 skills, and [coverage.json](coverage.json) gives the state of each skill.
 
 ## Corrections to v0.2.1
 
@@ -76,14 +80,14 @@ The development installation resolves the default branch, which can carry change
 
 [CITATION.cff](CITATION.cff) identifies the published v0.5.0 release and its 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
-Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original nine-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.5.0 pack.
+Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.5.0 pack.
 
 ## Reference
 
 - [Install, uninstall and versioning](docs/installation.md)
 - [Verify a downloaded release](https://github.com/ryanduguid/release-policy/blob/main/docs/verify-a-release.md): checksum and SLSA provenance
 - [First run and BAS walkthrough](docs/bas-walkthrough.md)
-- [Seventy-six skills and their supporting files](docs/skill-catalogue.md)
+- [All 76 skills and their supporting files](docs/skill-catalogue.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)
