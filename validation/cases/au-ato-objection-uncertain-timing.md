@@ -26,7 +26,7 @@ The original notice of assessment, any evidence of when the amended notice was g
 ## Required checks
 
 - Identify the objection right through section 175A of the *Income Tax Assessment Act 1936* and Part IVC, and record that an objection against the amended assessment can only address the alterations and related matters.
-- Build the notice chronology, show the period end under the issue date and under any other date the evidence supports, and keep the timing `UNVERIFIED` until the amendment-period category and service date are established.
+- Build the notice chronology, lay out the period-end working from the issue date and from any other date the evidence supports, leaving the period length and end blank until the period is verified, and keep the timing `UNVERIFIED` until the amendment-period category and service date are established.
 - Draft a written extension request that states the circumstances and reasons for any delay, map the supplied facts to the PS LA 2003/7 factors and list the evidence each factor still needs.
 - Mark the interest ground `UNSUPPORTED` and list the documents needed to support it.
 - Record that the objection does not of itself defer payment of the 2400.00 and route interest and payment arrangements to `au-ato-penalties-interest`.
