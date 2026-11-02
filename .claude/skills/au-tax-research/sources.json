@@ -132,27 +132,36 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved on 27 October 2026. Printed pages 19 and 32 identify guidance products and factsheets. This retrospective report is a discovery aid, not authority for the law operative for the work. Human source acceptance remains pending.",
       "final_url": "https://www.tpb.gov.au/sites/default/files/2026-10/TPB%20annual%20report%20202526_digital_0.pdf",
-      "http_status": 200,
-      "fetched_at": "2026-10-27",
+      "http_status": 0,
+      "fetched_at": "2026-11-02",
       "review_required_since": "2026-10-27",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Guidance on tax and superannuation measures | Australian Taxation Office",
       "url": "https://www.ato.gov.au/about-ato/new-legislation/guidance-on-tax-and-superannuation-measures",
-      "checked_at": "",
-      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
-      "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/about-ato/new-legislation/guidance-on-tax-and-superannuation-measures",
       "http_status": 200,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "content_hash": "04be5c6addd5ca3c55e0bcfe235ba2481a8db84ff3bc63d9866e402cdf0ed48e",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-04-01",
+      "content_url": "https://www.ato.gov.au/about-ato/new-legislation/guidance-on-tax-and-superannuation-measures",
+      "reviewed_content": {
+        "content_hash": "04be5c6addd5ca3c55e0bcfe235ba2481a8db84ff3bc63d9866e402cdf0ed48e",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/about-ato/new-legislation/guidance-on-tax-and-superannuation-measures",
+        "source_last_modified": "2025-04-01",
+        "checked_at": "2026-11-02"
+      }
     },
     {
       "title": "Bills and Legislation - Parliament of Australia",
@@ -162,12 +171,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.aph.gov.au/Parliamentary_Business/Bills_Legislation",
-      "http_status": 200,
+      "http_status": 403,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
