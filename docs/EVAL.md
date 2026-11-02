@@ -245,8 +245,8 @@ observation until a person confirms it, and it is not pooled with other records.
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
 the 37 synthetic prompts in `validation/routing-cases.yaml`, covering the
-payroll tax, GST and CGT clusters and the skills added on 2 November 2026. No
-prompt names a skill. Each case has only
+payroll tax, GST and CGT clusters and one case for each of the 17 skills added
+in #318. No prompt names a skill. Each case has only
 `tool_used` graders: the expected skill must fire, and each neighbouring skill
 listed under `not` must not. To run just these:
 
@@ -258,7 +258,7 @@ On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4
 turns, MCP server not started) all 20 chose the expected skill and none of the
 listed neighbours, at a reported US$3.43. On 2 November 2026 (Claude Code
 2.1.316, default model, 1 run per case, up to 12 turns, MCP server not
-started) all 37, including the 17 for the skills added that day, did the same,
+started) all 37, including the 17 for the skills added in #318, did the same,
 at a reported US$6.11. One run per case is a small sample, and the result shows
 routing only, not the quality of the answer.
 
