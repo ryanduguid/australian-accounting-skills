@@ -10,19 +10,11 @@
       "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/specific-rules-for-some-trusts/managed-investment-trusts/managed-investment-trusts-overview/attribution-managed-investment-trusts/attribution-method-for-managed-investment-trusts/attributing-amounts-to-members",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "2025-10-02",
-      "pending_review": {
-        "content_hash": "72e1ddd202528a349356d48f718448435c1a9e1c96a5d2048a2f77767c2f92b7",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/specific-rules-for-some-trusts/managed-investment-trusts/managed-investment-trusts-overview/attribution-managed-investment-trusts/attribution-method-for-managed-investment-trusts/attributing-amounts-to-members",
-        "observed_at": "2026-11-02",
-        "source_last_modified": "2025-10-02"
-      },
-      "content_url": ""
+      "source_last_modified": ""
     }
   ]
 }

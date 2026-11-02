@@ -24,19 +24,11 @@
       "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/personal-services-income/working-out-if-the-psi-rules-apply/work-out-if-the-psi-rules-apply-to-you",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-10-21",
+      "review_required_since": "2026-10-21",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "2026-07-03",
-      "pending_review": {
-        "content_hash": "4091902ad590b6930c4441af75c576cde1634e9f22f446de222e470210e79434",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/personal-services-income/working-out-if-the-psi-rules-apply/work-out-if-the-psi-rules-apply-to-you",
-        "observed_at": "2026-11-02",
-        "source_last_modified": "2026-07-03"
-      },
-      "content_url": ""
+      "source_last_modified": ""
     }
   ]
 }

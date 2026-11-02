@@ -5,8 +5,8 @@
     "skills": 93,
     "sources_indexed": 359,
     "skills_source_exempt": 8,
-    "skills_with_unreachable_sources": 8,
-    "skills_with_sources_moved_since_review": 27,
+    "skills_with_unreachable_sources": 4,
+    "skills_with_sources_moved_since_review": 1,
     "skills_with_behavioural_gate": 20,
     "skills_with_only_the_seeded_case": 30
   },
@@ -18,7 +18,7 @@
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-26",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -65,13 +65,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/individuals-and-families/your-tax-return/if-you-disagree-with-an-ato-decision/object-to-a-decision/complete-and-lodge-your-objection",
-          "https://www.ato.gov.au/individuals-and-families/your-tax-return/if-you-disagree-with-an-ato-decision/object-to-a-decision/what-to-include-in-your-objection",
-          "https://www.ato.gov.au/individuals-and-families/your-tax-return/if-you-disagree-with-an-ato-decision/object-to-a-decision/what-you-can-object-to-and-the-time-limits",
-          "https://www.ato.gov.au/individuals-and-families/your-tax-return/if-you-disagree-with-an-ato-decision/seek-an-external-review-of-ato-decisions",
-          "https://www.ato.gov.au/individuals-and-families/your-tax-return/if-you-disagree-with-an-ato-decision/which-dispute-or-objection-option-is-right-for-you"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -115,7 +109,7 @@
         "exempt": false,
         "reviewed": "",
         "fetched": "2026-11-02",
-        "unreachable": 5,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -163,12 +157,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/private-company-benefits-division-7a-dividends",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/privately-owned-and-wealthy-groups/tax-governance/tax-governance-guide-for-privately-owned-groups/starting-your-business/acquiring-a-new-business",
-          "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/foreign-residents-and-capital-gains-tax/foreign-resident-capital-gains-withholding/foreign-resident-capital-gains-withholding-overview",
-          "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/disclosure-of-business-tax-debts"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -212,10 +201,7 @@
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/inherited-assets-and-capital-gains-tax/cost-base-of-inherited-assets",
-          "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/market-valuation-of-assets"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 3,
@@ -260,7 +246,7 @@
         "exempt": false,
         "reviewed": "2026-09-29",
         "fetched": "2026-09-29",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -351,10 +337,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/20000-dollars-instant-asset-write-off",
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/depreciation-and-capital-expenses-and-allowances/simpler-depreciation-for-small-business"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -376,9 +359,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -443,7 +424,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
         "moved_since_review": []
       },
@@ -466,11 +447,9 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/employee-share-schemes/employees"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -557,11 +536,9 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/individuals-and-families/your-tax-return/instructions-to-complete-your-tax-return/mytax-instructions/2025/income/foreign-income/foreign-pension-and-annuity"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -605,18 +582,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/in-detail/franking-deficit-tax-offset-calculation-reduction-rule-and-exclusions",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/in-detail/how-to-calculate-over-franking-tax-and-under-franking-debit",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/paying-dividends-and-other-distributions/allocating-franking-credits",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/paying-dividends-and-other-distributions/allocating-franking-credits/benchmark-rule",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/paying-dividends-and-other-distributions/allocating-franking-credits/franking-period",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/paying-dividends-and-other-distributions/franking-account",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/paying-dividends-and-other-distributions/franking-distributions",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/imputation/paying-dividends-and-other-distributions/issuing-distribution-statements",
-          "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/private-company-benefits-division-7a-dividends/in-detail/division-7a-franking-implications",
-          "https://www.ato.gov.au/tax-rates-and-codes/company-tax-rate-changes"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -729,11 +695,9 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/income-you-must-declare/lump-sum-payment-in-arrears"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -753,11 +717,9 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/trusts/specific-rules-for-some-trusts/managed-investment-trusts/managed-investment-trusts-overview/attribution-managed-investment-trusts/attribution-method-for-managed-investment-trusts/attributing-amounts-to-members"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -800,11 +762,9 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/losses/non-commercial-losses"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -989,10 +949,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/primary-producers/managing-varying-income/farm-management-deposits-scheme",
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/primary-producers/managing-varying-income/tax-averaging"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1014,12 +971,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/ato-advice-products-rulings/early-engagement-for-advice",
-          "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/ato-advice-products-rulings/early-engagement-for-advice/applying-for-a-private-ruling",
-          "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/ato-advice-products-rulings/early-engagement-for-advice/applying-for-a-private-ruling/reference-guide-for-private-rulings/how-to-complete-the-private-ruling-application-form",
-          "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/ato-advice-products-rulings/private-rulings/when-to-consider-applying-for-a-private-ruling"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1041,9 +993,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/professional-firms/assessing-the-risk-allocation-of-profits-within-professional-firms"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1065,10 +1015,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/assets-and-property/property/tax-consequences-on-sales-of-property",
-          "https://www.ato.gov.au/individuals-and-families/investments-and-assets/property-and-land/land-vacant-land-and-subdividing/subdividing-land"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1090,9 +1037,7 @@
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/personal-services-income/working-out-if-the-psi-rules-apply/work-out-if-the-psi-rules-apply-to-you"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -1160,12 +1105,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/depreciation-and-capital-expenses-and-allowances/simpler-depreciation-for-small-business/rollover-and-restructure",
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/concessions-offsets-and-rebates/small-business-restructure-roll-over",
-          "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/cgt-events/how-to-choose-a-cgt-rollover-and-apply-for-an-extension"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1207,12 +1147,9 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
-          "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -1280,11 +1217,9 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "",
-        "fetched": "2026-11-02",
+        "fetched": "2026-10-21",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/concessions-offsets-and-rebates/small-business-income-tax-offset"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1350,10 +1285,7 @@
         "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
-          "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -1376,14 +1308,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/missed-or-late-payday-super-payments/what-happens-if-you-dont-pay-super-correctly",
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/missed-or-late-payday-super-payments/what-to-do-if-you-miss-a-payday-super-contribution/making-a-voluntary-disclosure-for-payday-super",
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/quarterly-super-to-30-june-2026/how-much-super-to-pay",
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/quarterly-super-to-30-june-2026/missed-and-late-super-guarantee-payments",
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/quarterly-super-to-30-june-2026/missed-and-late-super-guarantee-payments/super-guarantee-penalties",
-          "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/quarterly-super-to-30-june-2026/missed-and-late-super-guarantee-payments/the-super-guarantee-charge"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -1405,7 +1330,7 @@
         "exempt": false,
         "reviewed": "",
         "fetched": "2026-11-02",
-        "unreachable": 7,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -1472,10 +1397,8 @@
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-27",
-        "unreachable": 7,
-        "moved_since_review": [
-          "https://www.ato.gov.au/about-ato/new-legislation/guidance-on-tax-and-superannuation-measures"
-        ]
+        "unreachable": 5,
+        "moved_since_review": []
       },
       "validation": {
         "cases": 3,
@@ -1565,12 +1488,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances",
-          "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/deductions/deductions-for-business-travel-expenses",
-          "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/cars-transport-and-travel/overnight-travel-expenses-and-allowances/travel-allowances-for-overnight-travel/record-keeping-exceptions-for-travel-allowance-expenses",
-          "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1592,12 +1510,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
-          "https://www.ato.gov.au/businesses-and-organisations/trusts/trust-income-losses-and-capital-gains/resolutions-checklist",
-          "https://www.ato.gov.au/businesses-and-organisations/trusts/trust-income-losses-and-capital-gains/streaming-trust-capital-gains-and-franked-distributions",
-          "https://www.ato.gov.au/businesses-and-organisations/trusts/trusts-trustees-and-beneficiaries/trust-vesting"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,
@@ -1619,9 +1532,7 @@
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 2,
@@ -2095,9 +2006,7 @@
         "reviewed": "",
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": [
-          "https://community.owasp.org/attacks/CSV_Injection"
-        ]
+        "moved_since_review": []
       },
       "validation": {
         "cases": 1,

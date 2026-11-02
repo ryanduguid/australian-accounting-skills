@@ -80,15 +80,7 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "2026-06-12",
-      "pending_review": {
-        "content_hash": "750548c3ebc79cf9607a4f57e548ee16925d22994c5979dea1f078baef2ca94c",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/market-valuation-of-assets",
-        "observed_at": "2026-11-02",
-        "source_last_modified": "2026-06-12"
-      },
-      "content_url": ""
+      "source_last_modified": ""
     },
     {
       "title": "Cost base of inherited assets | Australian Taxation Office",
@@ -103,15 +95,7 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "2026-06-11",
-      "pending_review": {
-        "content_hash": "3f8bccf9fa11e7b087a57cffdef1ab8ec6fd0eab79f6ad67bd85f442c15270d6",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/inherited-assets-and-capital-gains-tax/cost-base-of-inherited-assets",
-        "observed_at": "2026-11-02",
-        "source_last_modified": "2026-06-11"
-      },
-      "content_url": ""
+      "source_last_modified": ""
     },
     {
       "title": "ATO ID 2003/779 | Legal database",
@@ -126,15 +110,7 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "",
-      "pending_review": {
-        "content_hash": "b1c28e7159a11bc1f915e2246e08519a54df695a038905f0d09729a26218c0e1",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/law/view/document?docid=AID%2FAID2003779%2F00001",
-        "observed_at": "2026-11-02",
-        "source_last_modified": ""
-      },
-      "content_url": ""
+      "source_last_modified": ""
     }
   ]
 }

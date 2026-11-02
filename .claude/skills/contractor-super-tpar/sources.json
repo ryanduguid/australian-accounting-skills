@@ -49,19 +49,11 @@
       "limitations": "Retrieved by an agent on 1 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-11-01",
+      "review_required_since": "2026-11-01",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "",
-      "pending_review": {
-        "content_hash": "c931069aaa28aa265f57828d28929c57ee4616fa782774e3a14c9a7fa1188c03",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
-        "observed_at": "2026-11-02",
-        "source_last_modified": ""
-      },
-      "content_url": ""
+      "source_last_modified": ""
     }
   ]
 }

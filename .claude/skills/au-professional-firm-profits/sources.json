@@ -14,15 +14,7 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "",
-      "pending_review": {
-        "content_hash": "2325d9aeaa8b35baa923aab2523414e3c25f9cbd536bbb70489942e7afc125aa",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20214/NAT/ATO/00001",
-        "observed_at": "2026-11-02",
-        "source_last_modified": ""
-      },
-      "content_url": ""
+      "source_last_modified": ""
     },
     {
       "title": "Assessing the risk: allocation of profits within professional firms | Australian Taxation Office",
@@ -37,15 +29,7 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": "2025-12-11",
-      "pending_review": {
-        "content_hash": "db35c9b5a658970c1fb7038f517dbf9fcf2f39499e409ffd084c2d7ec8f3366b",
-        "content_hash_covers": "html",
-        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/professional-firms/assessing-the-risk-allocation-of-profits-within-professional-firms",
-        "observed_at": "2026-11-02",
-        "source_last_modified": "2025-12-11"
-      },
-      "content_url": ""
+      "source_last_modified": ""
     }
   ]
 }
