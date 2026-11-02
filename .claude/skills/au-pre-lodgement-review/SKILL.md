@@ -1,6 +1,6 @@
 ---
 name: au-pre-lodgement-review
-description: "Use when preparing a pre-lodgement review list for a draft Australian income tax return: missing records, claims out of line with income or occupation, income completeness and published ATO focus areas, with every check marked performed, not performed or not applicable."
+description: "Use when preparing a pre-lodgement review list for a draft income tax return: missing records, out-of-line claims, income completeness and ATO focus areas."
 ---
 
 # Pre-lodgement review list

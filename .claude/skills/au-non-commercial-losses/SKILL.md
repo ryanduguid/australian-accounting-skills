@@ -1,6 +1,6 @@
 ---
 name: au-non-commercial-losses
-description: "Use when preparing Australian Division 35 non-commercial business-loss tests, deferral and activity-by-activity loss roll-forwards for individuals or individual partners."
+description: "Use when preparing Division 35 non-commercial business-loss tests, deferral and activity-by-activity loss roll-forwards for individuals or partners."
 ---
 
 # Non-commercial business-loss workpapers
@@ -23,7 +23,7 @@ Income year, entity and individual-partner interests, activity descriptions and 
 
 ## Hand-off and checks
 
-An activity/owner test matrix, income-requirement bridge, evidence list and deferred-loss roll-forward. Distinguish losses currently deductible against other income from deferred losses and unresolved treatment; do not offset a loss merely because the business has an ABN.
+An activity/owner test matrix, income-requirement bridge, evidence list and deferred-loss roll-forward. Distinguish losses currently deductible against other income from deferred losses and unresolved treatment; do not offset a loss merely because the business has an ABN. For a primary production activity, prepare the business and income-split evidence with `au-primary-production`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

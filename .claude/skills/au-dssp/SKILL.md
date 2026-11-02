@@ -1,6 +1,6 @@
 ---
 name: au-dssp
-description: "Use when reviewing Australian Dividend Substitution Share Plan (DSSP), dividend reinvestment (DRP) or bonus-share transactions and preparing share-parcel tax records."
+description: "Use when reviewing Dividend Substitution Share Plan (DSSP), dividend reinvestment (DRP) or bonus-share transactions and preparing share-parcel tax records."
 ---
 
 # DSSP, DRP and bonus-share parcel workpapers

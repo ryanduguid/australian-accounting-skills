@@ -1,6 +1,6 @@
 ---
 name: cashflow-forecast-13week
-description: "Use when building or updating a rolling 13-week cashflow forecast for an Australian SME: receipts from debtor history, payments from creditors and payroll cycles, ATO obligation timing (BAS, PAYG, super), and weekly actual-vs-forecast variance."
+description: "Use when building or updating a rolling 13-week cashflow forecast for an Australian SME from debtors, creditors, payroll and ATO timing, with weekly variance."
 ---
 
 # 13-week cashflow forecast

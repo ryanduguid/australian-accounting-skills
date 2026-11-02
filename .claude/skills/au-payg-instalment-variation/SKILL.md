@@ -1,6 +1,6 @@
 ---
 name: au-payg-instalment-variation
-description: "Use when preparing or reviewing a PAYG instalment variation for an Australian taxpayer, including the estimate of instalment income and tax, the varied amount or rate, credits claimed and the general interest charge shortfall test."
+description: "Use when preparing or reviewing a PAYG instalment variation: estimated instalment income and tax, the varied amount or rate, credits and the GIC shortfall test."
 ---
 
 # PAYG instalment variation workpapers

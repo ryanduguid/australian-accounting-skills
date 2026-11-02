@@ -25,7 +25,7 @@ Business activities, ledger and bank records, sales and expenses, stock and fixe
 
 ## Hand-off and checks
 
-Route a proposed Division 35 loss use or deferral to `au-non-commercial-losses` and a small business income tax offset to `au-small-business-income-offset`. Carry their supported results back separately; an ABN, accounting loss or unreviewed PSI amount cannot establish either outcome. Missing companion workflows or evidence leave the dependent tax result unverified.
+Route a proposed Division 35 loss use or deferral to `au-non-commercial-losses` and a small business income tax offset to `au-small-business-income-offset`. Carry their supported results back separately; an ABN, accounting loss or unreviewed PSI amount cannot establish either outcome. Missing companion workflows or evidence leave the dependent tax result unverified. Build the tax depreciation schedule with `au-depreciation-schedule` and travel claims with `au-travel-expenses`.
 
 A business profit-to-tax bridge, private-use schedule and return mapping with unresolved eligibility items. Drawings are not substituted for profit.
 

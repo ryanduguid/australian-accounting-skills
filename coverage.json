@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 76,
-    "sources_indexed": 216,
+    "skills": 93,
+    "sources_indexed": 359,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 4,
     "skills_with_sources_moved_since_review": 1,
     "skills_with_behavioural_gate": 20,
-    "skills_with_only_the_seeded_case": 32
+    "skills_with_only_the_seeded_case": 30
   },
   "skills": [
     {
@@ -36,6 +36,50 @@
       }
     },
     {
+      "skill": "au-asic-company-changes",
+      "sources": {
+        "indexed": 10,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-asic-company-changes-sole-director-exit"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-ato-objection",
+      "sources": {
+        "indexed": 7,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-ato-objection-uncertain-timing"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-ato-penalties-interest",
       "sources": {
         "indexed": 6,
@@ -50,6 +94,28 @@
         "case_ids": [
           "au-ato-penalties-interest-deductibility-split",
           "au-ato-penalties-interest-missing-evidence"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-award-underpayment-review",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-award-underpayment-review-missing-rate-table"
         ],
         "only_seeded_case": false
       },
@@ -84,6 +150,28 @@
       }
     },
     {
+      "skill": "au-business-acquisition-review",
+      "sources": {
+        "indexed": 5,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-business-acquisition-review-share-sale-gaps"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-business-formation",
       "sources": {
         "indexed": 1,
@@ -108,7 +196,7 @@
     {
       "skill": "au-capital-gains",
       "sources": {
-        "indexed": 4,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -116,9 +204,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-capital-gains-contract-straddles-reform",
+          "au-capital-gains-inherited-pre-cgt-valuation",
           "au-capital-gains-missing-evidence"
         ],
         "only_seeded_case": false
@@ -234,6 +323,50 @@
           "au-deceased-estates-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-depreciation-schedule",
+      "sources": {
+        "indexed": 11,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-depreciation-schedule-register-roll-forward"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-director-penalty-review",
+      "sources": {
+        "indexed": 3,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-director-penalty-review-estimate-and-resignation"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -441,6 +574,28 @@
       }
     },
     {
+      "skill": "au-franking-account",
+      "sources": {
+        "indexed": 15,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-franking-account-ledger-rebuild"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-gst-property",
       "sources": {
         "indexed": 2,
@@ -496,10 +651,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
           "au-individual-return-missing-evidence",
           "au-individual-return-occupation-guide",
+          "au-individual-return-records-request",
           "receipt-schedule-conflicts"
         ],
         "only_seeded_case": false
@@ -512,7 +668,7 @@
     {
       "skill": "au-land-tax",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-30",
@@ -520,11 +676,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-land-tax-missing-evidence"
+          "au-land-tax-missing-evidence",
+          "au-land-tax-windfall-gains-deferral"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -784,6 +941,94 @@
       }
     },
     {
+      "skill": "au-primary-production",
+      "sources": {
+        "indexed": 13,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-primary-production-early-fmd-withdrawal"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-private-ruling-application",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-private-ruling-application-omitted-loan"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-professional-firm-profits",
+      "sources": {
+        "indexed": 2,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-professional-firm-profits-trust-heavy-allocation"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-property-development-income",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-property-development-income-three-lot-subdivision"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-psi-review",
       "sources": {
         "indexed": 2,
@@ -843,6 +1088,28 @@
         "case_ids": [
           "au-rental-property-agent-balance-bridge",
           "au-rental-property-missing-evidence"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-restructure-rollovers",
+      "sources": {
+        "indexed": 12,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-restructure-rollovers-sole-trader-incorporation"
         ],
         "only_seeded_case": false
       },
@@ -1012,7 +1279,7 @@
     {
       "skill": "au-super-contribution-caps",
       "sources": {
-        "indexed": 2,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-24",
@@ -1020,11 +1287,56 @@
         "moved_since_review": []
       },
       "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-super-contribution-caps-missing-evidence",
+          "au-super-contribution-caps-salary-sacrifice-headroom"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-super-guarantee-charge",
+      "sources": {
+        "indexed": 8,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
         "cases": 1,
         "case_ids": [
-          "au-super-contribution-caps-missing-evidence"
+          "au-super-guarantee-charge-remitted-not-received"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-tax-agent-obligations",
+      "sources": {
+        "indexed": 9,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-tax-agent-obligations-pi-and-statement"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -1079,7 +1391,7 @@
     {
       "skill": "au-tax-research",
       "sources": {
-        "indexed": 9,
+        "indexed": 11,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-27",
@@ -1087,8 +1399,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
+          "au-tax-research-announced-measure",
           "au-tax-research-missing-evidence",
           "au-tax-research-template-output"
         ],
@@ -1159,6 +1472,50 @@
           "au-transfer-pricing-missing-evidence"
         ],
         "only_seeded_case": true
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-travel-expenses",
+      "sources": {
+        "indexed": 9,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-travel-expenses-mixed-overseas-trip"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-trust-deed-review",
+      "sources": {
+        "indexed": 8,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-trust-deed-review-unexecuted-variation"
+        ],
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],
@@ -1636,6 +1993,28 @@
         "behavioural": [
           "test_legal_source_gates.py"
         ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "statement-to-csv",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-02",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "statement-to-csv-overlap-and-formula"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [],
         "inventory": []
       }
     },

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 112 cards in `cases/` test workflow quality, provenance and restraint.
+The 134 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -154,8 +154,30 @@ law claim, unverified source or guess.
 | [Complete asymmetric rebate-income bridges](cases/au-sapto-complete-asymmetric-bridge.md) | au-sapto |
 | [Complete mixed-date parcel and DRP reconciliation](cases/au-dssp-supported-parcel-bridge.md) | au-dssp |
 | [Complete AMMA and reinvestment parcel bridge](cases/au-managed-fund-amit-complete-reinvestment.md) | au-managed-fund-amit |
+| [Sole director resigns before a replacement is validly appointed](cases/au-asic-company-changes-sole-director-exit.md) | au-asic-company-changes |
+| [Objection to an old amended assessment with an unsupported receipt date](cases/au-ato-objection-uncertain-timing.md) | au-ato-objection |
+| [Casual back pay with a misclassification and a missing rate table](cases/au-award-underpayment-review-missing-rate-table.md) | au-award-underpayment-review |
+| [Share sale with no loan register and an unsupported rent add-back](cases/au-business-acquisition-review-share-sale-gaps.md) | au-business-acquisition-review |
+| [Inherited pre-CGT land with only an agent's appraisal](cases/au-capital-gains-inherited-pre-cgt-valuation.md) | au-capital-gains |
+| [Register roll-forward with a disposed asset, a double-counted pooled asset and a missing start time](cases/au-depreciation-schedule-register-roll-forward.md) | au-depreciation-schedule |
+| [Director penalty notice after a resignation and an ATO estimate](cases/au-director-penalty-review-estimate-and-resignation.md) | au-director-penalty-review |
+| [Rebuild a franking ledger that disagrees with payments and test a proposed dividend](cases/au-franking-account-ledger-rebuild.md) | au-franking-account |
+| [Year-end records request built from the prior year](cases/au-individual-return-records-request.md) | au-individual-return |
+| [Rezoned Victorian land with a deferred windfall gains tax and a lot sale](cases/au-land-tax-windfall-gains-deferral.md) | au-land-tax |
+| [Early farm management deposit withdrawal with unvalued natural increase](cases/au-primary-production-early-fmd-withdrawal.md) | au-primary-production |
+| [Draft ruling application that omits a related-party loan](cases/au-private-ruling-application-omitted-loan.md) | au-private-ruling-application |
+| [Practitioner's trust receives most of the firm profit without a remuneration benchmark](cases/au-professional-firm-profits-trust-heavy-allocation.md) | au-professional-firm-profits |
+| [Family home block subdivided into 3 lots with conflicting statements of intention](cases/au-property-development-income-three-lot-subdivision.md) | au-property-development-income |
+| [Sole trader incorporation with a missing valuation and bare size evidence](cases/au-restructure-rollovers-sole-trader-incorporation.md) | au-restructure-rollovers |
+| [Salary sacrifice headroom with a late June contribution](cases/au-super-contribution-caps-salary-sacrifice-headroom.md) | au-super-contribution-caps |
+| [Short-paid quarter and paydays remitted but not shown as received](cases/au-super-guarantee-charge-remitted-not-received.md) | au-super-guarantee-charge |
+| [Missing insurance renewal and a possible false statement in a file review](cases/au-tax-agent-obligations-pi-and-statement.md) | au-tax-agent-obligations |
+| [Client email mixing a Budget measure with routine questions](cases/au-tax-research-announced-measure.md) | au-tax-research |
+| [Mixed work and holiday overseas trip with an allowance and no diary](cases/au-travel-expenses-mixed-overseas-trip.md) | au-travel-expenses |
+| [Abstract a deed whose second variation lacks execution evidence](cases/au-trust-deed-review-unexecuted-variation.md) | au-trust-deed-review |
+| [Overlapping statements with a broken page and a formula-like payee](cases/statement-to-csv-overlap-and-formula.md) | statement-to-csv |
 
-Together the cards cover all 76 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 93 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -168,7 +190,8 @@ v0.5.0, have no recorded run. See
 [results](results/).
 
 The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no
-recorded model run. Structural checks do not establish behavioural passes.
+recorded model run, and nor do the 22 cards added on 2 November for the 17 new skills and the
+extended capital gains, contribution caps, research, return and land tax workflows. Structural checks do not establish behavioural passes.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

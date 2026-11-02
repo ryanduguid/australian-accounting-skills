@@ -1,6 +1,6 @@
 ---
 name: wip-over-under-billing
-description: "Use when preparing or reviewing a construction work-in-progress schedule under AASB 15: measuring progress by input or output method, cost to complete, contract assets and contract liabilities, variations and claims as constrained variable consideration, and tying the schedule to revenue and the general ledger."
+description: "Use when preparing or reviewing a construction WIP schedule under AASB 15: progress measure, cost to complete, contract assets and liabilities, variations."
 ---
 
 # WIP over/under billing

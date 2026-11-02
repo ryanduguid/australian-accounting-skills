@@ -21,7 +21,7 @@ Contract and variations, property use/history, vendor and purchaser capacity, en
 
 ## Hand-off and checks
 
-A property fact matrix, classification questions and settlement-to-BAS bridge. A conveyancer or tax reviewer decides legal treatment and conducts settlement or reporting.
+A property fact matrix, classification questions and settlement-to-BAS bridge. A conveyancer or tax reviewer decides legal treatment and conducts settlement or reporting. Route whether a subdivision or development profit is revenue or capital to `au-property-development-income`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

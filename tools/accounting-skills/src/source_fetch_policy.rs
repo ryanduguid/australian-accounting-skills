@@ -45,6 +45,10 @@ pub const APPROVED_HOSTS: &[&str] = &[
     "www.fedcourt.gov.au",
     "www.art.gov.au",
     "docs.peppol.eu",
+    "www.aph.gov.au",
+    "community.owasp.org",
+    "central.xero.com",
+    "www.myob.com",
 ];
 const MALFORMED: &str = "Malformed URL or port.";
 const UNSUPPORTED: &str = "Unsupported destination; an exact reviewed HTTPS host is required.";

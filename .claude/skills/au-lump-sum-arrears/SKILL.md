@@ -1,6 +1,6 @@
 ---
 name: au-lump-sum-arrears
-description: "Use when preparing Australian lump sum payments in arrears (LSPIA), prior-year allocation evidence and separate income-tax-offset, Medicare-levy and surcharge workpapers."
+description: "Use when preparing lump sum payments in arrears (LSPIA) workpapers: prior-year allocation evidence and separate offset, Medicare levy and surcharge checks."
 ---
 
 # Lump sum payments in arrears workpapers

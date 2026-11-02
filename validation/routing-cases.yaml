@@ -82,3 +82,71 @@
   skill: au-employee-share-schemes
   not: [au-capital-gains]
   prompt: My employer's RSUs vested in October 2025 and I sold half of them in March 2026. Prepare the workpaper for my tax return.
+- id: franking-account-rebuild
+  skill: au-franking-account
+  not: [au-company-tax, div7a-compliance]
+  prompt: Our client's franking account in the ledger does not agree with its tax payments, and the directors want to pay a fully franked dividend next month. Rebuild the account and check the proposed distribution.
+- id: trust-deed-abstract
+  skill: au-trust-deed-review
+  not: [au-trust-distributions]
+  prompt: Before we draft this year's distribution minutes, go through the family trust's deed and its 2 variations and set out who the appointor is, which beneficiaries can receive income and whether capital gains can be streamed.
+- id: restructure-to-company
+  skill: au-restructure-rollovers
+  not: [au-small-business-cgt, au-business-formation]
+  prompt: A sole trader wants to move the business assets into a new company owned by the same person. What evidence do we need to check whether a CGT rollover is available for the transfer?
+- id: professional-practice-profit-allocation
+  skill: au-professional-firm-profits
+  not: [au-psi-review, au-partnership-tax]
+  prompt: An accounting partner takes a small salary and most of the practice profit goes to her family trust. Check the arrangement against the ATO's guidance on allocating profits from professional firms.
+- id: objection-amended-assessment
+  skill: au-ato-objection
+  not: [au-return-amendment, au-ato-penalties-interest]
+  prompt: The ATO issued an amended assessment disallowing a client's rental deductions and we disagree. Prepare a formal objection, including whether we are still within time.
+- id: private-ruling-request
+  skill: au-private-ruling-application
+  not: [au-tax-research]
+  prompt: The client wants certainty from the ATO before selling shares in a family company to a related trust. Prepare the application asking the Commissioner to rule on the arrangement.
+- id: tax-agent-code-self-review
+  skill: au-tax-agent-obligations
+  not: [au-client-acceptance, au-aml-ctf-client-coverage]
+  prompt: As the practice's supervising registered tax agent I need to check our own compliance with the Code of Professional Conduct, Tax Practitioners Board notifications and breach reporting.
+- id: asic-director-resignation
+  skill: au-asic-company-changes
+  not: [au-business-formation]
+  prompt: The sole director of a client's proprietary company is resigning and his daughter is taking over. What ASIC notifications, forms and board resolutions are needed?
+- id: work-travel-claim
+  skill: au-travel-expenses
+  not: [au-car-expenses, au-individual-return]
+  prompt: An employee flew to Perth for 3 weeks of training, stayed in a hotel and received a meal allowance, then added a week of holiday. Work out what travel costs he can claim.
+- id: fixed-asset-tax-schedule
+  skill: au-depreciation-schedule
+  not: [plant-and-equipment-costing, month-end-close]
+  prompt: Prepare the tax depreciation schedule from this fixed asset register, including the small business pool and the 3 assets sold during the year, and reconcile it to accounting depreciation.
+- id: subdivision-revenue-or-capital
+  skill: au-property-development-income
+  not: [au-gst-property, au-capital-gains]
+  prompt: Clients subdivided the block their home sits on into 3 lots, sold 2 and kept the house. Is the profit on revenue or capital account?
+- id: farm-deposits-and-averaging
+  skill: au-primary-production
+  not: [au-non-commercial-losses]
+  prompt: A grain farmer withdrew a farm management deposit early after a dry year and asks how income averaging and his cattle numbers affect this year's return.
+- id: late-super-statement
+  skill: au-super-guarantee-charge
+  not: [stp-finalisation, contractor-super-tpar]
+  prompt: Our client paid its staff super late for the March 2026 quarter and missed some employees entirely. Prepare what we need to lodge the statement for the shortfall.
+- id: award-back-pay
+  skill: au-award-underpayment-review
+  not: [au-payroll-review]
+  prompt: A cafe client thinks it has been paying its weekend staff below the hospitality award for 2 years. Work out the back pay owed to each employee.
+- id: pdf-statement-import
+  skill: statement-to-csv
+  not: [au-bookkeeping, xero-exports]
+  prompt: Here are 6 months of bank statement PDFs for a client. Turn them into a file I can import into Xero and check the balances agree.
+- id: buying-a-business-review
+  skill: au-business-acquisition-review
+  not: [au-gst-property, div7a-compliance]
+  prompt: Our client is buying all the shares in a plumbing company. Prepare the financial and tax due diligence and a list of the risks we find.
+- id: director-penalty-notice
+  skill: au-director-penalty-review
+  not: [au-ato-penalties-interest, au-super-guarantee-charge]
+  prompt: Both directors of a struggling company have received director penalty notices for unpaid PAYG withholding and GST. Work out what each notice covers and what evidence they need.

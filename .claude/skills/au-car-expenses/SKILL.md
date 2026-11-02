@@ -1,6 +1,6 @@
 ---
 name: au-car-expenses
-description: "Use when preparing an Australian employee's work-related car expense claim under the cents per kilometre or logbook method, including the choice between them and the 2026-27 standard deduction comparison."
+description: "Use when preparing an employee's work-related car expense claim by cents per kilometre or logbook, including the 2026-27 standard deduction comparison."
 ---
 
 # Work-related car expense workpapers
@@ -23,7 +23,7 @@ Income year, car ownership or lease details, a record of work-related kilometres
 
 ## Hand-off and checks
 
-A trip classification note, a kilometres or logbook summary with the work-use percentage, an expense schedule tied to receipts, the decline in value calculation, a method comparison and, from 2026-27, the standard deduction comparison. Method choice and any disputed trip category are reviewer decisions.
+A trip classification note, a kilometres or logbook summary with the work-use percentage, an expense schedule tied to receipts, the decline in value calculation, a method comparison and, from 2026-27, the standard deduction comparison. Method choice and any disputed trip category are reviewer decisions. Route travel costs other than this car (airfares, accommodation, meals and allowances) to `au-travel-expenses`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

@@ -23,7 +23,7 @@ Partnership agreement and changes, partner and residency details limited to the 
 
 ## Hand-off and checks
 
-A partnership reconciliation, allocation schedule and partner account roll-forwards. Allocated amounts sum to the supported partnership totals without using drawings as the allocation rule.
+A partnership reconciliation, allocation schedule and partner account roll-forwards. Allocated amounts sum to the supported partnership totals without using drawings as the allocation rule. For a professional practitioner whose share flows to associated entities, route the allocation review to `au-professional-firm-profits`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

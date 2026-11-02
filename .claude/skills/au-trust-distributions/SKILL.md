@@ -11,7 +11,7 @@ Trust deed and amendments, trustee resolutions with execution evidence, accounts
 
 ## Workflow
 
-1. Compare proposed beneficiaries, powers and timing with the deed and verified law. A missing or late resolution remains an open legal question; never backdate or fabricate execution.
+1. Compare proposed beneficiaries, powers and timing with the deed and verified law. A missing or late resolution remains an open legal question; never backdate or fabricate execution. Where `au-trust-deed-review` is installed, use its deed abstract and resolution-readiness checklist as the deed evidence for this step.
 
 2. Keep trust-law income, accounting profit, taxable net income and cash paid in separate schedules with a documented bridge.
 

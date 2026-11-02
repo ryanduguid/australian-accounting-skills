@@ -92,3 +92,10 @@ the Apache-2.0-licensed anthropics/financial-services, commit
 574ed3624aeb, read on 20 October 2026. The reconciliation-break-trace
 workflow and its cards are independently written for Australian practice
 ledgers; no upstream skill text, prompts, schemas or code were copied.
+
+The topics of 16 skills added on 2 November 2026, and of 5 extensions, were
+identified by comparing the public skill list at
+https://nagaris.com/ask-nagaris-skills, read that day. The page publishes only
+skill names and one-line descriptions; no Nagaris text was copied. The new
+workflows and cards are independently written from Australian primary
+sources. The comparison is recorded in docs/nagaris-comparison.md.

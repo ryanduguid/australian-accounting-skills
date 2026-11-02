@@ -11,7 +11,7 @@ Period, entity structure and chart of accounts, source-document register, ledger
 
 ## Workflow
 
-1. Reconcile source and ledger coverage by account and date. Identify gaps, duplicates and cut-off differences before proposing coding changes.
+1. Reconcile source and ledger coverage by account and date. Identify gaps, duplicates and cut-off differences before proposing coding changes. Where transactions exist only as PDF statements or a pasted list, build the import file with `statement-to-csv` first.
 
    For ledger exports or connector reads, record the selected business or company-file identifier, product and version where available, period, cash/accrual basis, filters and retrieval date. Match that identity to the engagement before each retrieval; never let a connector silently select the first business or reuse a prior business selection. Keep different businesses' records separate. If the response's identity or scope cannot be reconciled, leave the affected reconciliation unverified and use an identified export where available. Do not request credentials in chat or treat access permission as approval to post changes.
 

@@ -1,6 +1,6 @@
 ---
 name: au-payroll-tax-states
-description: "Use when checking an Australian employer's payroll tax registration, threshold, deduction and rate across the states and territories where it pays wages, including grouping and interstate apportionment."
+description: "Use when checking an employer's payroll tax registration, threshold, deductions and rate across states and territories, with grouping and apportionment."
 ---
 
 # Multi-state payroll tax workpapers

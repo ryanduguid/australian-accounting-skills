@@ -17,7 +17,7 @@ Original and amended assessments, issue and service evidence, original return an
 
 3. Compare each proposed change with the lodged position. Show original amount, proposed amount, difference, evidence and reason; trace consequential effects to related schedules.
 
-4. If timing is uncertain or the ordinary period appears closed, flag the objection, extension or other review pathway for the registered agent. Do not label the request valid or out of time without the controlling facts.
+4. If timing is uncertain or the ordinary period appears closed, flag the objection, extension or other review pathway for the registered agent. Do not label the request valid or out of time without the controlling facts. Route an objection to `au-ato-objection`.
 
 ## Hand-off and checks
 

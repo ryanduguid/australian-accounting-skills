@@ -1,6 +1,6 @@
 ---
 name: au-division-293
-description: "Use when preparing or checking a Division 293 tax estimate or notice for an Australian individual whose income and concessional super contributions may exceed the Division 293 threshold."
+description: "Use when preparing or checking a Division 293 tax estimate or notice for an individual whose income and concessional contributions may exceed the threshold."
 ---
 
 # Division 293 tax workpapers

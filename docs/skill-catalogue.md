@@ -87,6 +87,32 @@ topics reuse existing skills and which have original new workflows.
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | Seniors and pensioners tax offset workpapers |
 | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | Small business income tax offset workpapers |
 
+## Additions from the 2 November 2026 comparison
+
+The [Ask Nagaris comparison](nagaris-comparison.md) records which public skill
+topics these cover; `au-director-penalty-review` comes from this repository's
+own gap list.
+
+| Skill | Use it for |
+| --- | --- |
+| [`au-ato-objection`](../.claude/skills/au-ato-objection/SKILL.md) | ATO objection preparation: the decision objected to, time limits, grounds and evidence for the registered agent |
+| [`au-asic-company-changes`](../.claude/skills/au-asic-company-changes/SKILL.md) | ASIC company changes and annual review: change evidence, resolution readiness and the form and deadline to verify |
+| [`au-award-underpayment-review`](../.claude/skills/au-award-underpayment-review/SKILL.md) | Award underpayment and back pay review: classification, rates by period, the shortfall schedule and related super |
+| [`au-business-acquisition-review`](../.claude/skills/au-business-acquisition-review/SKILL.md) | Buy-side due diligence on a business: financial, tax, employee and contract evidence lists and open findings |
+| [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | Fixed asset register and tax depreciation schedule: additions, disposals, methods, pools and the ledger tie-out |
+| [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) | Director penalty evidence: unpaid PAYG withholding, GST or SGC, notice timing, lockdown and defence evidence |
+| [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | Franking account rebuild, franked distribution statements, franking deficit tax and benchmark evidence |
+| [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | Primary production workpapers: business status, income averaging, farm management deposits and livestock |
+| [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | Private ruling application preparation: one question per ruling, the facts, the arrangement and the evidence |
+| [`au-professional-firm-profits`](../.claude/skills/au-professional-firm-profits/SKILL.md) | Professional firm profit allocation evidence under the ATO's PCG 2021/4 risk framework |
+| [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md) | Property development: revenue or capital evidence, profit-making intention and the trading stock and GST routes |
+| [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | Restructure rollover evidence: Division 122, 615 and other rollover conditions, elections and cost base carry-over |
+| [`au-super-guarantee-charge`](../.claude/skills/au-super-guarantee-charge/SKILL.md) | Super guarantee charge shortfall register for quarters or Payday Super paydays, with the disclosure evidence |
+| [`au-tax-agent-obligations`](../.claude/skills/au-tax-agent-obligations/SKILL.md) | A registered agent's self-review against the Code of Professional Conduct and registration obligations |
+| [`au-travel-expenses`](../.claude/skills/au-travel-expenses/SKILL.md) | Work-related travel expense workpapers: travel purpose, accommodation, meals, allowances and travel records |
+| [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md) | Trust deed abstract and resolution readiness: powers, beneficiaries, income definition, variations and vesting |
+| [`statement-to-csv`](../.claude/skills/statement-to-csv/SKILL.md) | Bank, card or pasted statement to an import CSV, with balance continuity checks and row-level exceptions |
+
 Also included:
 
 - [`templates/firm-CLAUDE.md.example`](../templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.

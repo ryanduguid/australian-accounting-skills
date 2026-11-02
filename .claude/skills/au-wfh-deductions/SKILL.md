@@ -1,6 +1,6 @@
 ---
 name: au-wfh-deductions
-description: "Use when preparing an Australian individual's working from home deduction workpaper under the fixed rate or actual cost method, including the 2026-27 standard deduction comparison."
+description: "Use when preparing an individual's working from home deduction under the fixed rate or actual cost method, with the 2026-27 standard deduction comparison."
 ---
 
 # Working from home deduction workpapers

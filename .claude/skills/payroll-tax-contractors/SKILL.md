@@ -1,6 +1,6 @@
 ---
 name: payroll-tax-contractors
-description: "Use when testing subcontractor payments for NSW payroll tax: whether a payment is deemed wages under a relevant contract, which section 32(2) exemption applies, labour hire and on-hire chains, contracts that include plant, and the effect of grouping on the threshold."
+description: "Use when testing subcontractor payments for NSW payroll tax: relevant contract deemed wages, section 32(2) exemptions, labour hire chains, plant and grouping."
 ---
 
 # Payroll tax contractors

@@ -1,6 +1,6 @@
 ---
 name: au-working-holiday-makers
-description: "Use when checking an Australian employer's withholding, STP reporting and super for a working holiday maker (a holder of a visa listed in section 3A of the Income Tax Rates Act 1986, chiefly subclasses 417 and 462), or when preparing the working holiday maker part of that person's tax return, treaty position or departure."
+description: "Use when checking an employer's withholding, STP and super for a working holiday maker (subclass 417 or 462), or preparing that person's return or departure."
 ---
 
 # Working holiday maker workpapers

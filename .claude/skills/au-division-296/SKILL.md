@@ -1,6 +1,6 @@
 ---
 name: au-division-296
-description: "Use when preparing or checking a Division 296 tax estimate for an Australian individual whose total superannuation balance may exceed the large or very large superannuation balance threshold."
+description: "Use when preparing or checking a Division 296 tax estimate for an individual whose total super balance may exceed the large or very large balance threshold."
 ---
 
 # Division 296 tax workpapers

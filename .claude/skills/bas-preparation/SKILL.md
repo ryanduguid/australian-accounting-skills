@@ -1,6 +1,6 @@
 ---
 name: bas-preparation
-description: "Use when preparing, reviewing, or reconciling an Australian BAS or IAS, or auditing transaction GST coding in a Xero Activity Statement: identifying missing GST and improper credits, mapping BAS labels, tying out GST control accounts, or investigating a GST variance before lodgement."
+description: "Use when preparing, reviewing or reconciling a BAS or IAS: Xero transaction GST coding, missing GST, improper credits, label mapping and GST control tie-outs."
 ---
 
 # BAS preparation
