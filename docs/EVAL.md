@@ -252,7 +252,7 @@ figures or lines their inputs did not supply, and to answer lapses a skill did
 not guard against. Ten skills and 5 cards were corrected. The 10 cases
 [ran again](../validation/results/2026-11-02-nagaris-rerun-observed.json) at
 41a8d10 (US$4.68), and 7 passed the judges. After further corrections, the
-other 3 and the reworded franking card
+other 3 and the franking case, whose skill was reworded,
 [ran a third time](../validation/results/2026-11-02-nagaris-rerun2-observed.json)
 at bb242fd (US$2.19), and all 4 passed. With the
 [first observations](../validation/results/2026-11-02-nagaris-task-only-observed.json),

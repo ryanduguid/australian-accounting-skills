@@ -29,7 +29,7 @@ Only the supplied facts are available. The missing records remain missing. The a
 - Record a balancing adjustment event for A, comparing the 3000.00 termination value with the adjustable value just before the sale; keep the part-year decline in value and the resulting adjustment conditional until the method is confirmed, then remove A from the closing register.
 - Keep B in the low-value pool only, remove its individual claim and roll the pool forward without stating any pool rate from memory.
 - Leave C's decline in value blank and `UNVERIFIED`; the invoice date does not establish the start time.
-- Lay out the reconciliation of the corrected tax values to the accounting register, leaving the accounting values blank until that register is supplied, and list the known differences: A's disposal, B's pooling and C's start time.
+- Lay out the reconciliation of the corrected tax values to the accounting register, leaving the accounting values blank until that register is supplied, and list A's disposal, B's pooling and C's start time as potential differences to explain.
 - Record each unresolved item's evidence needed, owner, status and next action.
 
 ## Must not do
