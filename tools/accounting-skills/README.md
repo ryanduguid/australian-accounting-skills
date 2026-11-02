@@ -94,7 +94,7 @@ filenames are refused. Unicode equivalence is sampled, not exhaustive.
 accounting-skills sweep-outcome --status 0 --report sweep.md --started 2026-09-20T19:00:05Z
 ```
 
-This command preserves the report's seven required counts, duplicate refusal,
+This command preserves the report's 7 required counts, duplicate refusal,
 minute-level freshness, status agreement and distinction between actionable and
 unchecked sources. Counts use nonnegative decimal arithmetic rather than a fixed
 integer width, with Python's default 4,300-digit conversion ceiling. The outcome
@@ -276,7 +276,7 @@ Available snapshots require a lowercase 64-digit hexadecimal source digest.
 Unknown standard JSON fields are preserved within serde_json's documented limits.
 
 Comparison follows Python 3.14.8 difflib, including its repeated-line heuristic,
-two context lines and Unicode line separators. It examines at most 400 lines from
+2 context lines and Unicode line separators. It examines at most 400 lines from
 each text and returns at most 60 diff lines of 240 Unicode characters, marking
 every truncation cause. Source digest or final URL changes still report a
 difference when the bounded text matches. A person must assess any implication.
@@ -303,7 +303,7 @@ indexed source is requested. Original scripts, consumers and CI remain in use.
 accounting-skills prepare-trial case-id /outside/checkout/new-trial --root /path/to/checkout --model model-name --runtime runtime-name
 ```
 
-This command freezes the four task sections into `input.md`, preserves the raw
+This command freezes the 4 task sections into `input.md`, preserves the raw
 card as `rubric.md` and records their SHA-256 digests and the target skill file
 digests in `context.json`. The packet preserves Python's section order, path
 component ordering, ASCII JSON escaping and LF bytes on both platforms. Model

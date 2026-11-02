@@ -3,7 +3,7 @@ sensitive-content scan in `scripts/validate_validation.py`. It checks that the
 parser returns the exact card fields or refuses with `ValidationError`, that an
 accepted card's `id` matches its file name, and that every safety pattern
 finishes on arbitrary input. Unexpected exceptions and failed invariants fail
-the run. The seed corpus holds five validation cards, renamed to `fuzz-card`,
+the run. The seed corpus holds 5 validation cards, renamed to `fuzz-card`,
 and a few malformed cards.
 
 On Linux with Python 3.14, run:

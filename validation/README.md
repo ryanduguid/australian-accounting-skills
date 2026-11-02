@@ -161,7 +161,7 @@ checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
 current. The `au-client-acceptance-missing-evidence` and
 `au-working-holiday-makers-missing-evidence` cards, added afterwards for
-v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The two
+v0.3.1, were run on 1 and 4 October and confirmed on 4 October. The 2
 short-stay accommodation cards, the 3 pre-lodgement review cards, the CGT
 contract-timing card and the 2 reconciliation break-trace cards, added for
 v0.5.0, have no recorded run. See
@@ -171,7 +171,7 @@ The business-selection, firm-template, rental bridge and formula-change cards ad
 recorded model run. Structural checks do not establish behavioural passes.
 
 Three further cards check whether the model completes supported bank,
-trial-balance and payroll arithmetic while keeping professional decisions
+trial-balance and payroll arithmetic whilst keeping professional decisions
 pending. Their supplied evidence is sufficient for the bounded arithmetic,
 not for a tax or compliance conclusion. They complement the missing-evidence
 cases.
@@ -232,7 +232,7 @@ contain `pass` or `fail`, for exactly its provenance cases. Legacy records
 remain unchanged and have no inferred input mode. See the [recording
 procedure](../docs/EVAL.md#record) for the fields and evidence requirements.
 
-The four source, receipt, revision and completion cards added on 6 October
+The 4 source, receipt, revision and completion cards added on 6 October
 2026 are prepared scenarios. No model run or human-confirmed verdict is
 recorded for them.
 
