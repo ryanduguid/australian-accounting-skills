@@ -98,7 +98,7 @@ Skills specify the workflow and require current primary authority for mutable ra
 
 Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accountants ANZ.
 
-Licensed under the Functional Source License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2). You may use, modify and redistribute it for any purpose except a Competing Use as defined in LICENSE (making it available to others in a competing commercial product or service), and each version becomes available under Apache-2.0 two years after it is made available. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Keep the copyright notices if you redistribute this work or build on it.
+Licensed under the Functional Source License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2). You may use, modify and redistribute it for any purpose except a Competing Use as defined in LICENSE (making it available to others in a competing commercial product or service), and each version becomes available under Apache-2.0 2 years after it is made available. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Keep the copyright notices if you redistribute this work or build on it.
 
 Created by Ryan Duguid. Redistributed copies, modifications and derivatives must keep the copyright notices in the skills and source files. Please also credit reuse as: Based on [australian-accounting-skills](https://github.com/ryanduguid/australian-accounting-skills) by Ryan Duguid. Neither belongs in client deliverables. See [NOTICE](NOTICE).
 
