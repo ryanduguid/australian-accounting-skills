@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "8393bd77b24a803749bcb705e459033b6b8aad18",
+  "runner": "Claude Code plugin eval observation run; LLM-judge proposals retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-ato-objection-uncertain-timing": {
+      "input_sha256": "b434bc479c21087afe4fa952b3e54ff8801711d245097d1a734abf23d23898aa",
+      "context_sha256": "cbff5339959016b32bbdb1d40668e144d5fdc4c80efe8b440ae733b37456593a",
+      "rubric_sha256": "aa671daa0b98d3ad38356317b9b095b3e96666fb1f46919516b0d0454ea969de",
+      "output_sha256": "926a9d9146d213b70ff8cd1bcdb0f51f0e0d14a2c157a1adff2583bd5b4120dd"
+    }
+  }
+}

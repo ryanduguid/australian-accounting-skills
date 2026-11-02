@@ -254,7 +254,17 @@ not guard against. Ten skills and 5 cards were corrected. The 10 cases
 41a8d10 (US$4.68), and 7 passed the judges. After further corrections, the
 other 3 and the franking case, whose skill was reworded,
 [ran a third time](../validation/results/2026-11-02-nagaris-rerun2-observed.json)
-at bb242fd (US$2.19), and all 4 passed. With the
+at bb242fd (US$2.19), and all 4 passed. A review of the change then qualified
+the depreciation, statement-to-csv and late-objection skills and the
+depreciation card. At 5d2f737 (US$1.33) the depreciation and statement-to-csv
+cases [passed again](../validation/results/2026-11-02-nagaris-rerun3-observed.json);
+the late-objection case failed one check that asked for a period end its card
+gave no basis for, so that check was reworded. At df4a3f3 (US$0.39) it
+[passed the required checks](../validation/results/2026-11-02-nagaris-rerun4-observed.json)
+but failed restraint by reasoning from the issue date to a period that had
+probably ended; once its skill ruled that out, it
+[passed every grader](../validation/results/2026-11-02-nagaris-rerun5-observed.json)
+at 8393bd7 (US$0.37). With the
 [first observations](../validation/results/2026-11-02-nagaris-task-only-observed.json),
 each of the 23 cards has a judge pass at its current wording. The judges'
 proposals, frozen inputs and traces are retained outside the repository. Every

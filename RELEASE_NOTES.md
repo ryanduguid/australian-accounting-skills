@@ -29,8 +29,8 @@ stays below the 76-skill total. Claude Code's per-skill estimates put the
 93-skill listing at about 6.1k tokens against 5.9k for the 76 skills before;
 docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review.
-The 23 new cards were observed task-only, and the review of those answers corrected 10 skills and 5 cards;
-no new card has a confirmed verdict.
+The 23 new cards were observed task-only, and the review of those answers
+corrected 10 skills and 6 cards; no new card has a confirmed verdict.
 
 # v0.5.0
 
