@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "41a8d101ded7ff5d8da4e1419585f7b108584c42",
+  "runner": "Claude Code plugin eval observation run; LLM-judge proposals retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-ato-objection-uncertain-timing": {
+      "input_sha256": "b434bc479c21087afe4fa952b3e54ff8801711d245097d1a734abf23d23898aa",
+      "context_sha256": "52993b34c607986c9abc4d486df77ab973403c09e6215b99002ca30411b3a978",
+      "rubric_sha256": "bb74970ac142b5d9626323a2194bd6104500c6cb38bd57a7a59770b5266fe680",
+      "output_sha256": "7483c0f6defecf7aa1ed5c6c90de38c6ad6f4816e21a4e4a88b02bc2e5c51a8d"
+    },
+    "au-award-underpayment-review-missing-rate-table": {
+      "input_sha256": "3254626fad816eebd8b6a573d541e16727fd96a8c2617b1c05a8b40288c91c4f",
+      "context_sha256": "195cefdfb194e5519da3c0748d8b81a916e01e5f7b0865c06db4517a3005a746",
+      "rubric_sha256": "4d2dc8a10d8d67d8c3bfe6e674a14e4da5dc8e8060df048b493d15658e0f83d6",
+      "output_sha256": "2648834d37ab16846cd26f0ddf0a28dae6f6f2230002974e264211dafc1caa1b"
+    },
+    "au-depreciation-schedule-register-roll-forward": {
+      "input_sha256": "f958f00c4304e6d1c6e74547c0ca18b6527a258d23aea978d1317533e0768099",
+      "context_sha256": "d5feb2ef2ed85ed69ec0e75ec338231094bb0b5d9daa7bc82adcccb6d4b6514f",
+      "rubric_sha256": "5e4cc802330a8ce33a2496add4c9cbbf300a339e67981d13e2c251a42355becc",
+      "output_sha256": "d0dc47212585117b21eb813a9e6eacf567a5ea9611865c97b835a627345f022a"
+    },
+    "au-franking-account-ledger-rebuild": {
+      "input_sha256": "44529460c25c6deb3d77939c66be27b04adbb892e07915c08c1ede422e1b366c",
+      "context_sha256": "660042936f1237d99649ffd725c7effc0184aea788e84ddfffdfe77aad04c4d4",
+      "rubric_sha256": "2b4e18681f43ec3298c32023c52ccc2f199ef5734f08febd417be44c589e299c",
+      "output_sha256": "9d9bdb98d8a5eaedbb3b732425d7ce282f3bef426be5e8468dcc42682f8cb3a6"
+    },
+    "au-private-ruling-application-omitted-loan": {
+      "input_sha256": "6d11e2ec95bd4ccefd64fd4a137cda8e63db7267aea5009ed21a1a2b310acc5c",
+      "context_sha256": "a0b2ea3fe275a34967afd5b90181bdf96ed9bfbe77fb063425f5d2e84df06fa2",
+      "rubric_sha256": "f03377cdafc4fb498c170d9007d39f3a8fbd686a6fed1f282169390d8c6dde3e",
+      "output_sha256": "62cf0da2848bb98bc4a35a0f9ac150b26a49f9a601e079db28d683bea77e644a"
+    },
+    "au-property-development-income-three-lot-subdivision": {
+      "input_sha256": "645aba6725a4395180652e2f29cee7fad9f92898eea7610380dcb0d47765b0d9",
+      "context_sha256": "490b9b7c6a779d0c7ad9299fee59f83c1a840b04605dba43d76b2fbe372f69f8",
+      "rubric_sha256": "b0eb2cea62c21ec162b20e5cbe6d0d68a02980bb3f1e39d789867dd8e0224595",
+      "output_sha256": "738965d3345b25d61f6a70c5368d1050ee32b9aaa94da358d7de2c346f76af5a"
+    },
+    "au-tax-agent-obligations-pi-and-statement": {
+      "input_sha256": "ec2b8becc9e7cf82f12f5be26037e60b767d5d6af0622c080ca5cced6550a7c5",
+      "context_sha256": "6e1f0ef86be771d718cac16b9d18cf0baee099e3590fffc2d1a8a78c582e6b85",
+      "rubric_sha256": "64f8d22536177dfdfa6d6626c909bef5484fc6171a3805a5b0808585e1992ccc",
+      "output_sha256": "b2253c8ef9ed27b584c8216df12315f099113df93d3209f5cfb7144cf0ec4aff"
+    },
+    "au-travel-expenses-mixed-overseas-trip": {
+      "input_sha256": "0bae92a3d5b8e38fdc484e46875fa08e868a3a3e8f42def4ec4821df43a27b9c",
+      "context_sha256": "b7174f617c9b7172fb77f578f9b893ab60026f9f473924c776c2c44ee2b7a20b",
+      "rubric_sha256": "ab05dd9bfba3d86e01167eefece47837f9ede9fbf4f78dceb8fb1534e07e8b28",
+      "output_sha256": "7cea2e43bc699602a4a4624f7665a51de283263359b8c4f7e45f68209dc6a966"
+    },
+    "au-trust-deed-review-unexecuted-variation": {
+      "input_sha256": "cde6a20a075e76c429564cc4134c790e6d86bb3b35edb0cdd5cdc2e4f8b2a09c",
+      "context_sha256": "cc2093eac2ea543eab7adb3b2c5ce42ebf86e35cd91b14ee648696fecd2cc682",
+      "rubric_sha256": "483907120cdde8361ee28859fa3a86f98099f4c74560107736af1682137da862",
+      "output_sha256": "906cd6c5616774cc03af548c991b893f45402125ddf3e0c5e1081db8276f3705"
+    },
+    "statement-to-csv-overlap-and-formula": {
+      "input_sha256": "d87df996a57f0df5e47d7bd10bff9eda3da85a7eb1c275f41f25ae238fd329f6",
+      "context_sha256": "6c40164ed64ddc3a7c4531ff70dc02eb3f10545187fd7c69566978ade773a401",
+      "rubric_sha256": "c187aa3d17ea829f4777b14745b501606a8743ede20eadc74de473dfc45e3d57",
+      "output_sha256": "83aa81bbb3e301474881054a08a64eea82bc7d22abd62b87196f350c997b3806"
+    }
+  }
+}
