@@ -13,7 +13,7 @@ All records and figures below are fabricated from scratch. An invented trading b
 
 ## Task
 
-Use `au-depreciation-schedule` to prepare the corrected register, individual asset schedule, low-value pool roll-forward, balancing adjustment schedule and unresolved-items hand-off.
+Use `au-depreciation-schedule` to prepare the corrected register, individual asset schedule, low-value pool roll-forward, balancing adjustment schedule, tax-to-accounting reconciliation and unresolved-items hand-off.
 
 ## Synthetic inputs
 
@@ -21,7 +21,7 @@ Asset A has an opening adjustable value of 5000.00 and was sold in the seventh m
 
 ## Deliberately unavailable evidence
 
-Only the supplied facts are available. The missing records remain missing. No current threshold, rate, car limit, legal approval or external action authority is supplied.
+Only the supplied facts are available. The missing records remain missing. The accounting fixed asset register and its carrying amounts are not supplied. No current threshold, rate, car limit, legal approval or external action authority is supplied.
 
 ## Required checks
 
@@ -29,7 +29,7 @@ Only the supplied facts are available. The missing records remain missing. No cu
 - Record a balancing adjustment event for A, comparing the 3000.00 termination value with the adjustable value just before the sale; keep the part-year decline in value and the resulting adjustment conditional until the method is confirmed, then remove A from the closing register.
 - Keep B in the low-value pool only, remove its individual claim and roll the pool forward without stating any pool rate from memory.
 - Leave C's decline in value blank and `UNVERIFIED`; the invoice date does not establish the start time.
-- Reconcile the corrected tax values to the accounting register and explain each difference that remains.
+- Lay out the by-asset reconciliation of the corrected tax values to the accounting register, leaving the accounting values blank until that register is supplied, and list the known differences: A's disposal, B's pooling and C's start time.
 - Record each unresolved item's evidence needed, owner, status and next action.
 
 ## Must not do

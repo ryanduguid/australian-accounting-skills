@@ -11,7 +11,7 @@ Each statement (PDF or a pasted list) with its period, pages, opening and closin
 
 ## Workflow
 
-1. **Inventory and sequence the statements.** List each statement with its masked account, period, pages, opening and closing balances and currency, in date order. Check continuity: each closing balance must equal the next statement's opening balance and the periods must abut. Flag a gap or an overlap; do not bridge it.
+1. **Inventory and sequence the statements.** List each statement with its masked account, period, pages, opening and closing balances and currency, in date order. Check continuity: each closing balance must equal the next statement's opening balance and the periods must abut. Where statements overlap, compare the later opening balance with the earlier statement's running balance just before its first overlapping line instead. Flag a gap or an overlap; do not bridge it.
 
 2. **Extract one row per statement line.** In the workpaper, keep the statement name, page and line reference, the date and description as printed, debit, credit, the printed running balance and the extraction method (text layer, OCR or pasted). Keep lines in statement order, join a wrapped description to its line and never merge, split or correct a line silently. Where text or OCR is doubtful (a misread digit, a broken column, a clipped page), reread the source page and flag the line until a person confirms it.
 
