@@ -242,6 +242,25 @@ account supports it. The plugin's MCP server does not start unless you opt in.
 No full run has been recorded. A model judges these graders, so a result is an
 observation until a person confirms it, and it is not pooled with other records.
 
+On 2 November 2026 the 23 cards added in #318 ran this way at 0d9dfe9
+(Claude Code 2.1.316, claude-opus-5-5, 1 run per case, up to 12 turns, Read,
+Glob, Grep and Skill only, MCP server not started, no baseline arm, Opus
+judges), at a reported US$10.62. Every answer fired a target skill and passed
+the restraint grader; the judges failed the required checks for 10. Reading
+those answers traced the failures to skill wording, to cards that asked for
+figures or lines their inputs did not supply, and to answer lapses a skill did
+not guard against. Ten skills and 5 cards were corrected. The 10 cases
+[ran again](../validation/results/2026-11-02-nagaris-rerun-observed.json) at
+41a8d10 (US$4.68), and 7 passed the judges. After further corrections, the
+other 3 and the reworded franking card
+[ran a third time](../validation/results/2026-11-02-nagaris-rerun2-observed.json)
+at bb242fd (US$2.19), and all 4 passed. With the
+[first observations](../validation/results/2026-11-02-nagaris-task-only-observed.json),
+each of the 23 cards has a judge pass at its current wording. The judges'
+proposals, frozen inputs and traces are retained outside the repository. Every
+record is observed; no human verdict is recorded, so the confirmed-card count
+is unchanged.
+
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
 the 37 synthetic prompts in `validation/routing-cases.yaml`, covering the

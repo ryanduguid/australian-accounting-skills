@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "bb242fdacb3c6d59f127ac984fe41a1443f02f59",
+  "runner": "Claude Code plugin eval observation run; LLM-judge proposals retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-depreciation-schedule-register-roll-forward": {
+      "input_sha256": "f958f00c4304e6d1c6e74547c0ca18b6527a258d23aea978d1317533e0768099",
+      "context_sha256": "c9ec0ad70b9a2283bf3efac4e76d9d64a8a94e2c496be345a13ae5b83d2020c3",
+      "rubric_sha256": "d10229b19ced912e1ae9f20f00e54498a7d993007e6e7b55155db078bc779044",
+      "output_sha256": "5ec9054bcf22f47b5c21d8668859ba4f8700ad09b6eb9189a4f9f10a561ceb0c"
+    },
+    "au-franking-account-ledger-rebuild": {
+      "input_sha256": "44529460c25c6deb3d77939c66be27b04adbb892e07915c08c1ede422e1b366c",
+      "context_sha256": "ece7f9d99828702a660f2581989c44ac58a68b2c616256bce7b091ea3362048c",
+      "rubric_sha256": "2b4e18681f43ec3298c32023c52ccc2f199ef5734f08febd417be44c589e299c",
+      "output_sha256": "1221483aef4d1931c6a2cb311064df05c76ca80d72b0ea55100d16185743e67f"
+    },
+    "au-travel-expenses-mixed-overseas-trip": {
+      "input_sha256": "0bae92a3d5b8e38fdc484e46875fa08e868a3a3e8f42def4ec4821df43a27b9c",
+      "context_sha256": "d09e87a2c34f5639e705256f2c5881e993f5d0f84a6176631cc3adcb991e2e7e",
+      "rubric_sha256": "ab05dd9bfba3d86e01167eefece47837f9ede9fbf4f78dceb8fb1534e07e8b28",
+      "output_sha256": "2e2766f4be2f332c89fe33fed1230f714a122cbe1fc03da83c046593d8147de2"
+    },
+    "statement-to-csv-overlap-and-formula": {
+      "input_sha256": "d87df996a57f0df5e47d7bd10bff9eda3da85a7eb1c275f41f25ae238fd329f6",
+      "context_sha256": "5322e27c048ef4e521a37fa41c8ee72d7596f7519afa1d19323aad6b56baa48a",
+      "rubric_sha256": "d81855fa64186fff5cb8a41376dea149597070d31bedb3e7ff6781499c481310",
+      "output_sha256": "9b88ce502f5ccdcffa8c02ee568a148c1e17de2b2d9d2b4d3f395a5326845389"
+    }
+  }
+}
