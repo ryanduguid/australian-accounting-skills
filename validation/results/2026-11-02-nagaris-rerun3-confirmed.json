@@ -1,0 +1,27 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "5d2f737d2b472990cb2aa8893c447d1e05ec3418",
+  "runner": "Ryan Duguid",
+  "input_mode": "task-only",
+  "status": "confirmed",
+  "results": {
+    "au-depreciation-schedule-register-roll-forward": "pass",
+    "statement-to-csv-overlap-and-formula": "pass"
+  },
+  "provenance": {
+    "au-depreciation-schedule-register-roll-forward": {
+      "input_sha256": "f958f00c4304e6d1c6e74547c0ca18b6527a258d23aea978d1317533e0768099",
+      "context_sha256": "7d001b7f544eec2cfedf670f3ae6c80dd86ce561a9d15d6ec59f90eea8bf4918",
+      "rubric_sha256": "5204140e539fbd3f3c0207935f1fa35febcab3dd6f29705ff6afffed8d08b7a3",
+      "output_sha256": "db44dad52a4b45d6b40de3c716e83dcb3865be4f8f599c697c903f049950abf3"
+    },
+    "statement-to-csv-overlap-and-formula": {
+      "input_sha256": "d87df996a57f0df5e47d7bd10bff9eda3da85a7eb1c275f41f25ae238fd329f6",
+      "context_sha256": "c92330e8749db3bd91f34f6da2c90ff0648603ecb052e4fc9cfde1d39799d586",
+      "rubric_sha256": "d81855fa64186fff5cb8a41376dea149597070d31bedb3e7ff6781499c481310",
+      "output_sha256": "597cb3bb349b848edc32c217b773c9f06fc9dbf29673cb4a009b1e6eefe6f85c"
+    }
+  }
+}

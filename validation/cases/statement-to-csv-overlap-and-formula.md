@@ -17,7 +17,7 @@ Use `statement-to-csv` to prepare the import CSV, the line workpaper and the exc
 
 ## Synthetic inputs
 
-Statement S1 covers days 1 to 31 of month M1: opening balance 5000.00, closing balance 4200.00, 40 lines over 2 pages; its balance after the last line on day 28 is 4350.00. Statement S2 covers day 29 of M1 to day 28 of M2: opening balance 4350.00, 3 pages, and its first 3 lines repeat S1's lines for days 29 to 31. On S2 page 2 the brought-forward balance is 3900.00, credits total 500.00, debits total 700.00 and the printed carried-forward balance is 3750.00. One S2 payee description reads '=SUM(A1) Traders'. The target is Xero.
+Statement S1 covers days 1 to 31 of month M1: opening balance 5000.00, closing balance 4200.00, 40 lines over 2 pages; its running balance at the end of day 28, before its lines for days 29 to 31, is 4350.00. Statement S2 covers day 29 of M1 to day 28 of M2: opening balance 4350.00, 3 pages, and its first 3 lines repeat S1's lines for days 29 to 31. On S2 page 2 the brought-forward balance is 3900.00, credits total 500.00, debits total 700.00 and the printed carried-forward balance is 3750.00. One S2 payee description reads '=SUM(A1) Traders'. The target is Xero.
 
 ## Deliberately unavailable evidence
 
@@ -25,7 +25,7 @@ Only the supplied facts are available. No corrected statement, bank confirmation
 
 ## Required checks
 
-- Tie each page and each statement, find the first S2 page 2 line where the running balance breaks and leave the 50.00 difference open as an exception.
+- Tie each page and each statement as far as the supplied balances and totals allow, leave the 50.00 S2 page 2 difference open as an exception and require the first page 2 line where the running balance breaks to be found and reread.
 - Identify the 3 overlapping lines, keep each from one statement only and record which copy was excluded and why.
 - Check continuity between S1's balance at the start of the overlap and S2's opening balance.
 - Neutralise the leading '=' in the payee field, keep the original text in the workpaper and leave every amount, including negatives, as a plain value.

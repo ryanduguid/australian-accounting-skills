@@ -1,0 +1,27 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "bb242fdacb3c6d59f127ac984fe41a1443f02f59",
+  "runner": "Ryan Duguid",
+  "input_mode": "task-only",
+  "status": "confirmed",
+  "results": {
+    "au-franking-account-ledger-rebuild": "pass",
+    "au-travel-expenses-mixed-overseas-trip": "pass"
+  },
+  "provenance": {
+    "au-franking-account-ledger-rebuild": {
+      "input_sha256": "44529460c25c6deb3d77939c66be27b04adbb892e07915c08c1ede422e1b366c",
+      "context_sha256": "ece7f9d99828702a660f2581989c44ac58a68b2c616256bce7b091ea3362048c",
+      "rubric_sha256": "2b4e18681f43ec3298c32023c52ccc2f199ef5734f08febd417be44c589e299c",
+      "output_sha256": "1221483aef4d1931c6a2cb311064df05c76ca80d72b0ea55100d16185743e67f"
+    },
+    "au-travel-expenses-mixed-overseas-trip": {
+      "input_sha256": "0bae92a3d5b8e38fdc484e46875fa08e868a3a3e8f42def4ec4821df43a27b9c",
+      "context_sha256": "d09e87a2c34f5639e705256f2c5881e993f5d0f84a6176631cc3adcb991e2e7e",
+      "rubric_sha256": "ab05dd9bfba3d86e01167eefece47837f9ede9fbf4f78dceb8fb1534e07e8b28",
+      "output_sha256": "2e2766f4be2f332c89fe33fed1230f714a122cbe1fc03da83c046593d8147de2"
+    }
+  }
+}

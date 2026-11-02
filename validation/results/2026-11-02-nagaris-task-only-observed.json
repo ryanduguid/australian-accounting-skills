@@ -1,0 +1,150 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "0d9dfe9cef621d7120e223107040a5d4ba073665",
+  "runner": "Claude Code plugin eval observation run; LLM-judge proposals retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-asic-company-changes-sole-director-exit": {
+      "input_sha256": "a9f7a41b64435ceaded0fbb4e91f04dcfee15dabf195857754c62808a0e7cef1",
+      "context_sha256": "a602b22e1ae145effbaa6e3a9302be283c5816088c5f9e6310c4cb56b2dee2c2",
+      "rubric_sha256": "900ea8fb8427ecc8633bd003eb9d57a8dd7fc9e32233dc1c13c42b0650a85250",
+      "output_sha256": "a8e3220af9fcf5e734eb4beb87ea5853b733185e36b3a926c415136108c16fd2"
+    },
+    "au-ato-objection-uncertain-timing": {
+      "input_sha256": "b434bc479c21087afe4fa952b3e54ff8801711d245097d1a734abf23d23898aa",
+      "context_sha256": "52093fd7f86e74796799450f47d4bec929a02e36e79e9f8c2c313facb91e405b",
+      "rubric_sha256": "bb74970ac142b5d9626323a2194bd6104500c6cb38bd57a7a59770b5266fe680",
+      "output_sha256": "03d4477ee013895a961495e87ca8825b622024156aa3a1b186b5729d2d431e01"
+    },
+    "au-award-underpayment-review-missing-rate-table": {
+      "input_sha256": "c252c6def327d16774b858063ac76d0e038887da1a5e052235fba004f9d5ccb7",
+      "context_sha256": "3292be797887cc0fee4394e509af745704f07f9f0d996f6e7c42b94792778640",
+      "rubric_sha256": "a763daf9e5689f6fcbede7e336d70625dcd14708d0b2e2729dd760bf8cde7ae2",
+      "output_sha256": "8702f7d5eb1bddb92f4bcaf82588235fd2c600d5fadaa7732f2cdbca524498ee"
+    },
+    "au-business-acquisition-review-share-sale-gaps": {
+      "input_sha256": "3129c7170ffb9c1c4ded2ae872aead10eda5ea64f674f79726651430fac905ee",
+      "context_sha256": "ffadb0128ed89d76a7c6491f8c8b1c9eb2dd41e01d0488d88d47022f58795b41",
+      "rubric_sha256": "e3c23ca41ec245626b64d7c866bbf6a84b0c185aef53c763633b14a05a382065",
+      "output_sha256": "2a7737d5d7089b2739b288a5a987a78f9bcdee9b4b41d0f0df19251db335569f"
+    },
+    "au-capital-gains-inherited-pre-cgt-valuation": {
+      "input_sha256": "199719cd1ab29b6de72da397f35a786bf18d2f17e326ce5fd556d639984f99ce",
+      "context_sha256": "7a1ebb028d23d04fb3464a6b5567c64bc9a2016f1ac7ee468412cac617c1b362",
+      "rubric_sha256": "296f9bd2df8fa215f1c7bb059281605d746cecab537b602c36afc4c758cba886",
+      "output_sha256": "941e1ea3508b1c434d27961c7f24c55ba03732dc35345a00c21025cc212b8d32"
+    },
+    "au-depreciation-schedule-register-roll-forward": {
+      "input_sha256": "b57e8932fbe619f1666e76d1747a73a4fb120246b0258a27ab93a7ca54a92259",
+      "context_sha256": "77a25bc8f6fc2bd1312d13415583a88dfc05f2ff936ed39ca7b4f7e19a8dd5e4",
+      "rubric_sha256": "5c4f68a7837bdafd69da9bea9c7ef7681ab531900197607d2de19f601c944efb",
+      "output_sha256": "d4760fb4096b2037b254cc2dba3bab99c6cea212756f88da0f92173126bd4a72"
+    },
+    "au-director-penalty-review-estimate-and-resignation": {
+      "input_sha256": "176f5714a8cd5fc0ada7b59dc9f7f40fe49668f24d7f82585f837e11c4a16f19",
+      "context_sha256": "43eb51030a952079c7b95139c88b96c2b072a20881f36403a81332d39e9cd5f7",
+      "rubric_sha256": "3c9ac97ce564b151f4b7f855a241aacfc595e158cf9c87f38e3af6d3c5c49b24",
+      "output_sha256": "e071174e2ffada94d354e6b9209565317a8ee7e8730f1079babdf059396c2258"
+    },
+    "au-director-penalty-review-understated-disclosure": {
+      "input_sha256": "6d9e329c01f91dd7dff484bf460581f28d0982f69b7070b24b142c62f55da414",
+      "context_sha256": "d21d349a6ac149237874cd68efa6b59382696f3f5bae89edec458a53f86f399b",
+      "rubric_sha256": "df0c8a99ea35e75540b2e12ade095e2432665c6431ee063793d358624ab436c0",
+      "output_sha256": "6c218b693f1b51942895b4af1fd638d12e5f0a04056a69e55bddc0a7c9127c4b"
+    },
+    "au-franking-account-ledger-rebuild": {
+      "input_sha256": "44529460c25c6deb3d77939c66be27b04adbb892e07915c08c1ede422e1b366c",
+      "context_sha256": "c5d4ee9b03e78c13220988ad3c6e11e386ce5146aae89fa658fae6df53b82c19",
+      "rubric_sha256": "2b4e18681f43ec3298c32023c52ccc2f199ef5734f08febd417be44c589e299c",
+      "output_sha256": "5a8da746a521edaba37391d31dcb4a2b3fd686ee6adf48136b794d729509f851"
+    },
+    "au-individual-return-records-request": {
+      "input_sha256": "6c25f59f509a61888b23d7516a3fbf71987636ce02f9532b65abb2c1269cc6bb",
+      "context_sha256": "16ba2e548c39b0d3caf5745b2930a767228c842af9e4994c63af6f69e8821059",
+      "rubric_sha256": "64073fbe24400141b9053b51bdb976b99775037aa86f00a8c46e4bc9c353f73e",
+      "output_sha256": "675da6e25cc054f5cd5135feeaa5105c570bd23871710c2378df29f1ce07305e"
+    },
+    "au-land-tax-windfall-gains-deferral": {
+      "input_sha256": "eeb55ee495352f85c8d233402e61336dd2d35b51a46d2e098aefa4b38bd14b8e",
+      "context_sha256": "1790b48b524a0ab981c40347e92f4d72287922a93140f177720706a26e0f20d7",
+      "rubric_sha256": "bd0e202b551d3ed3fb4864ab47bdda7e8a36fdd2556d4c8cedd001571bf88406",
+      "output_sha256": "3fb648e16e9e14595b06fc66a91713e12745b43a35adc49ecbe51ca49a273285"
+    },
+    "au-primary-production-early-fmd-withdrawal": {
+      "input_sha256": "b3d0c318bc12cf259bb1021f9934a52927827d8eacb5681cb9b618b73e099bf2",
+      "context_sha256": "4c0eed55327e2643d9205ae225e96f700db7b4e76475eed83ce6cdc5efa9f11f",
+      "rubric_sha256": "55584a634673a98429e81734cd131e77f55885e66d0a4274dc6c7fb08f9b7f4b",
+      "output_sha256": "ad4fb34ccbb5a5d75a8d727d0dea6d38513e35ed10178a643fbd82982ab82adf"
+    },
+    "au-private-ruling-application-omitted-loan": {
+      "input_sha256": "6d11e2ec95bd4ccefd64fd4a137cda8e63db7267aea5009ed21a1a2b310acc5c",
+      "context_sha256": "a6ba96e5ed4190f0bed3efef86e916a5b9d27e81a8911f00995fd42cb2f8b06a",
+      "rubric_sha256": "f03377cdafc4fb498c170d9007d39f3a8fbd686a6fed1f282169390d8c6dde3e",
+      "output_sha256": "7dc9375f2a83771fc62a4a7d544ab5e05dec2525e10235558590654f114bd2e2"
+    },
+    "au-professional-firm-profits-trust-heavy-allocation": {
+      "input_sha256": "7a22501805d7d42b0975d097dfb94542c880bac563128f9041fc860c3d3f73e8",
+      "context_sha256": "7416f3028ac30754821f2138dbafa9c669ef6e3287cbb1079bd05adb21142957",
+      "rubric_sha256": "a809f3f0aa508b98ddb294c30e9e861cf8133cc83d19215039247f6916fe2114",
+      "output_sha256": "25f921f7b3e6e58507d9d9abe7abc7a43870edb32ac16646354bc1c8b1b67b3e"
+    },
+    "au-property-development-income-three-lot-subdivision": {
+      "input_sha256": "645aba6725a4395180652e2f29cee7fad9f92898eea7610380dcb0d47765b0d9",
+      "context_sha256": "1939cf11b762587cdd8d8f26a9915d1006ab2ddacb174d94c968970e0d6d4333",
+      "rubric_sha256": "a62043e0a9edbb732a67bcf874f0416f92b4175488b1e263e07457737bd923f3",
+      "output_sha256": "66d1c7015c3f175ae462b6edc0cf3946c487784de7ecad3d1c1647997a4a5e1b"
+    },
+    "au-restructure-rollovers-sole-trader-incorporation": {
+      "input_sha256": "afd38370606f0a36e5a232c275479b4b92088de8a14cace7a010d50362afc91c",
+      "context_sha256": "ab2f9eb71f71273d0ae976768accad0d8f31d3bcdff7059f6fd795267c357bc9",
+      "rubric_sha256": "226105fcdd51f9f70bd915e7ec58327f9535ed6291bbc072d8841f2c082ecaa7",
+      "output_sha256": "32975c8353c6d057f6aef131fe438e653f81ff1887379d5441309eb21a2c95b6"
+    },
+    "au-super-contribution-caps-salary-sacrifice-headroom": {
+      "input_sha256": "7d050d0eaddab3cbb1dd5ab84e0a0771f04c68e5acd65010029cd624a8a6746e",
+      "context_sha256": "624f42c3537c352567a2de68cf3c1c89b90eab486984e52fd041271d630e0f63",
+      "rubric_sha256": "ac8e703e7d5756de32b85c5e02218acdb2833468bb64258a9674712034e19969",
+      "output_sha256": "2c11e02924472c89b002338a11368b890c74c1b9ff07adddbb16dae416e3f68b"
+    },
+    "au-super-guarantee-charge-remitted-not-received": {
+      "input_sha256": "84430c4d4ee3a4a7cacd6fe9dd1fb629bcdea2d591a305c11ac072af0ac77c05",
+      "context_sha256": "be656cee92bcdcfd120489855579e58d56201912ca6fb2aac16bfc378a48cd98",
+      "rubric_sha256": "6b47ff88e3111296abe271f3edc26c3b318543569f134daf1c4a447488ec0e4d",
+      "output_sha256": "b05e7e08faa5c8d5b6239a14e52cf052218213d7347df978110c89e559b042c8"
+    },
+    "au-tax-agent-obligations-pi-and-statement": {
+      "input_sha256": "ec2b8becc9e7cf82f12f5be26037e60b767d5d6af0622c080ca5cced6550a7c5",
+      "context_sha256": "ac6bf2aca322323e7aca72e7ac9c9466fede16b9fa6c1429cbc238c74793dc13",
+      "rubric_sha256": "64f8d22536177dfdfa6d6626c909bef5484fc6171a3805a5b0808585e1992ccc",
+      "output_sha256": "b72519cc593861bff3de6897775f3c2b9879e7b80c1dec91e9e1761cca141800"
+    },
+    "au-tax-research-announced-measure": {
+      "input_sha256": "0fc720059ad2befb6dc1a30b731559a90e35d7f7112c4bf85e84ccffa5079f3c",
+      "context_sha256": "0ecd22e0ce2ede7704c417aef4ea89fb126d6c5aa3e57d1617c959200f25ebca",
+      "rubric_sha256": "8076cd684c27ada048943578b2a3bb1e55a194d6161077d169a2aa28ca7df2db",
+      "output_sha256": "fd8e41ee4953bf79d23f58cd2e1f549e96403b9f50b95c713463eaa3d83c4e7f"
+    },
+    "au-travel-expenses-mixed-overseas-trip": {
+      "input_sha256": "34667ec58c97ef9694e978dcb425332bffd0213c5db93553c1b8e3461145fe3f",
+      "context_sha256": "5f3a4628d53c85fd99309ef4520e30ed2936996f1ed788e8d7fc005d10766f3e",
+      "rubric_sha256": "d81d1adc115c832372e244fb442955a1136bbf8252f793d541d8377d4d40b913",
+      "output_sha256": "07c42dd22071213c1baecaa284107d5aade6079f24d41b8eb537633052f67f5f"
+    },
+    "au-trust-deed-review-unexecuted-variation": {
+      "input_sha256": "cde6a20a075e76c429564cc4134c790e6d86bb3b35edb0cdd5cdc2e4f8b2a09c",
+      "context_sha256": "864372496169693cff0fcd17c576e6201dadfda0e8538f50cd7ac8bc4c40e506",
+      "rubric_sha256": "483907120cdde8361ee28859fa3a86f98099f4c74560107736af1682137da862",
+      "output_sha256": "f5a7d8e11a9ed87291e4356d029c1194bef7d1e8623d60aeafb9870376f0ce17"
+    },
+    "statement-to-csv-overlap-and-formula": {
+      "input_sha256": "6f8728eaf80915e3b9256f546ce45fc3b37c8edb2e2b30ea7385c1af03f04db2",
+      "context_sha256": "67c4e45db5551df8e50d0488990cb0c69e8c47286e176ba138b32138e0e6df85",
+      "rubric_sha256": "857b7af363ec8795abea155c86f95104d8607459bcc4a12d0c93d359e0d8f33a",
+      "output_sha256": "56f98680f1528224b86c5336626891107154eda0ccf60a5223b77bf8aac3a05b"
+    }
+  }
+}

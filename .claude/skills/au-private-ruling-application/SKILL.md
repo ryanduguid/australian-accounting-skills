@@ -17,7 +17,7 @@ The arrangement as the applicant describes it, with each step, date, amount and 
 
 3. Map the related entities. For each, record the relationship, its role in the scheme and whether it is also a taxpayer the ruling should cover. A ruling for a trustee about the trust's affairs also applies to the beneficiaries unless it is an indirect tax or excise ruling, and to a replacement trustee (section 359-30).
 
-4. Frame the questions. Write one issue per question, structured for a yes or no answer and, as the ATO asks of tax professionals, naming the specific provision. Test each question for a premise that assumes the answer or a fact in dispute, such as a question that treats a payment as capital when its character is the issue. Rewrite it as a neutral question or add a preliminary question, and tie each question to the facts and provisions it depends on.
+4. Frame the questions. Write one issue per question, structured for a yes or no answer and, as the ATO asks of tax professionals, naming the specific provision once it is verified against the primary source; until then leave the provision blank and mark it missing in the requirements checklist. Test each question for a premise that assumes the answer or a fact in dispute, such as a question that treats a payment as capital when its character is the issue. Rewrite it as a neutral question or add a preliminary question, and tie each question to the facts and provisions it depends on.
 
 5. Draft the contentions. For each question give the proposed answer, the provisions, the authorities with pinpoints and how they apply to the stated facts, and record any contrary view. Route the research and citation checks to `au-tax-research`.
 

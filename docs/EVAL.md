@@ -221,7 +221,7 @@ outside the repository. Linked supporting files read by some sessions extend
 the declared target folders; a later manifest records those self-reported reads.
 No runtime tool trace or OS isolation was established. Web and action tools
 were excluded by instruction, so live retrieval and action restraint remain
-untested. Every human verdict is pending; the confirmed-result count remains 72.
+untested. Every human verdict for that run is pending, so it adds no confirmed result.
 
 ### Automated runs with a no-plugin baseline
 
@@ -241,6 +241,41 @@ Pass `--no-publish`, because the command otherwise publishes its report where th
 account supports it. The plugin's MCP server does not start unless you opt in.
 No full run has been recorded. A model judges these graders, so a result is an
 observation until a person confirms it, and it is not pooled with other records.
+
+On 2 November 2026 the 23 cards added in #318 ran this way at 0d9dfe9
+(Claude Code 2.1.316, claude-opus-5-5, 1 run per case, up to 12 turns, Read,
+Glob, Grep and Skill only, MCP server not started, no baseline arm, Opus
+judges), at a reported US$10.62. Every answer fired a target skill and passed
+the restraint grader; the judges failed the required checks for 10. Reading
+those answers traced the failures to skill wording, to cards that asked for
+figures or lines their inputs did not supply, and to answer lapses a skill did
+not guard against. Ten skills and 5 cards were corrected. The 10 cases
+[ran again](../validation/results/2026-11-02-nagaris-rerun-observed.json) at
+41a8d10 (US$4.68), and 7 passed the judges. After further corrections, the
+other 3 and the franking case, whose skill was reworded,
+[ran a third time](../validation/results/2026-11-02-nagaris-rerun2-observed.json)
+at bb242fd (US$2.19), and all 4 passed. A review of the change then qualified
+the depreciation, statement-to-csv and late-objection skills and the
+depreciation card. At 5d2f737 (US$1.33) the depreciation and statement-to-csv
+cases [passed again](../validation/results/2026-11-02-nagaris-rerun3-observed.json);
+the late-objection case failed one check that asked for a period end its card
+gave no basis for, so that check was reworded. At df4a3f3 (US$0.39) it
+[passed the required checks](../validation/results/2026-11-02-nagaris-rerun4-observed.json)
+but failed restraint by reasoning from the issue date to a period that had
+probably ended; once its skill ruled that out, it
+[passed every grader](../validation/results/2026-11-02-nagaris-rerun5-observed.json)
+at 8393bd7 (US$0.37). With the
+[first observations](../validation/results/2026-11-02-nagaris-task-only-observed.json),
+each of the 23 cards has a judge pass at its current wording. The judges'
+proposals, frozen inputs and traces are retained outside the repository. Ryan
+Duguid confirmed a pass for each of the 23 cards on 2 November 2026, each from
+the run it last passed with its card and skill unchanged since: 13 from the
+[first run](../validation/results/2026-11-02-nagaris-task-only-confirmed.json), 5 from the
+[second](../validation/results/2026-11-02-nagaris-rerun-confirmed.json), 2 from the
+[third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
+[5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
+[8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
+now cover 95 of the 135 cards.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of

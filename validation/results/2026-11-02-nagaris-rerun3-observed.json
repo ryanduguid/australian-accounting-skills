@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "5d2f737d2b472990cb2aa8893c447d1e05ec3418",
+  "runner": "Claude Code plugin eval observation run; LLM-judge proposals retained separately; human verdicts pending",
+  "input_mode": "task-only",
+  "status": "observed",
+  "results": {},
+  "provenance": {
+    "au-ato-objection-uncertain-timing": {
+      "input_sha256": "b434bc479c21087afe4fa952b3e54ff8801711d245097d1a734abf23d23898aa",
+      "context_sha256": "59bde00a85bfea313def4994a987fe3bda4dab71326b9b86a73c3b8f7b70e03d",
+      "rubric_sha256": "bb74970ac142b5d9626323a2194bd6104500c6cb38bd57a7a59770b5266fe680",
+      "output_sha256": "ecd93b0c8205dab57287851f4e6fbadcde7fb8c25669b1545ef18d4720db901b"
+    },
+    "au-depreciation-schedule-register-roll-forward": {
+      "input_sha256": "f958f00c4304e6d1c6e74547c0ca18b6527a258d23aea978d1317533e0768099",
+      "context_sha256": "7d001b7f544eec2cfedf670f3ae6c80dd86ce561a9d15d6ec59f90eea8bf4918",
+      "rubric_sha256": "5204140e539fbd3f3c0207935f1fa35febcab3dd6f29705ff6afffed8d08b7a3",
+      "output_sha256": "db44dad52a4b45d6b40de3c716e83dcb3865be4f8f599c697c903f049950abf3"
+    },
+    "statement-to-csv-overlap-and-formula": {
+      "input_sha256": "d87df996a57f0df5e47d7bd10bff9eda3da85a7eb1c275f41f25ae238fd329f6",
+      "context_sha256": "c92330e8749db3bd91f34f6da2c90ff0648603ecb052e4fc9cfde1d39799d586",
+      "rubric_sha256": "d81855fa64186fff5cb8a41376dea149597070d31bedb3e7ff6781499c481310",
+      "output_sha256": "597cb3bb349b848edc32c217b773c9f06fc9dbf29673cb4a009b1e6eefe6f85c"
+    }
+  }
+}

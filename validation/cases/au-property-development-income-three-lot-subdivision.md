@@ -29,7 +29,7 @@ Only the supplied facts are available. The missing records remain missing. No va
 - Prepare the factors matrix separately for Lot 2 and Lot 3, recording evidence pointing to capital and to revenue for each factor, without a conclusion.
 - Keep mere realisation, a profit-making undertaking and a business of property development open for each sold lot, with conditional workpapers for each.
 - Identify any point where intention may have changed and request a valuation at that date rather than estimating one.
-- Show combined sale proceeds of 850000.00 and the Lot 3 build cost of 300000.00 as supplied figures only, with the land cost split across lots left to `au-capital-gains`.
+- Show the sale proceeds of 400000.00 for Lot 2 and 450000.00 for Lot 3 (850000.00 combined) and the Lot 3 build cost of 300000.00 as supplied figures only, with the land cost split across lots left to `au-capital-gains`.
 - Route the home exemption question to `au-capital-gains`, noting the ATO guidance that land sold separately from the home is subject to CGT, and route GST to `au-gst-property`.
 - Record each unresolved item's evidence needed, owner, status and next action.
 

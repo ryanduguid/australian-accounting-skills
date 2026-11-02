@@ -21,7 +21,7 @@ Return airfare 2400.00 paid by the employee. Hotel invoice 3600.00 for 12 nights
 
 ## Deliberately unavailable evidence
 
-Only the supplied facts are available. The missing records remain missing. No current reasonable amount, cost group, night count, retention period, legal approval or external action authority is supplied.
+Only the supplied facts are available. The missing records remain missing. No current reasonable amount, cost group, travel-record night threshold, retention period, legal approval or external action authority is supplied.
 
 ## Required checks
 
