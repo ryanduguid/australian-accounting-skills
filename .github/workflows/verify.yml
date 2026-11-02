@@ -42,6 +42,33 @@ jobs:
       - name: Pyright
         run: python -m pyright
 
+      # Each release asset is checked against the digest recorded at pin time
+      # (koalaman publishes no checksums file). actionlint finds ShellCheck on
+      # the path and runs it over the workflows' run: scripts.
+      - name: Install the pinned shell and workflow linters
+        env:
+          ACTIONLINT_VERSION: "1.7.12"
+          ACTIONLINT_SHA256: "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+          SHELLCHECK_VERSION: "0.11.0"
+          SHELLCHECK_SHA256: "8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198"
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/linters"
+          cd "$RUNNER_TEMP/linters"
+          curl --proto '=https' --proto-redir '=https' -sSLO "https://github.com/koalaman/shellcheck/releases/download/v${SHELLCHECK_VERSION}/shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz"
+          echo "${SHELLCHECK_SHA256}  shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz" | sha256sum --check
+          tar -xJf "shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz" --strip-components=1 "shellcheck-v${SHELLCHECK_VERSION}/shellcheck"
+          curl --proto '=https' --proto-redir '=https' -sSLO "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          echo "${ACTIONLINT_SHA256}  actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz" | sha256sum --check
+          tar -xzf "actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz" actionlint
+          echo "$PWD" >> "$GITHUB_PATH"
+
+      - name: ShellCheck
+        run: shellcheck -x scripts/*.sh
+
+      - name: actionlint
+        run: actionlint
+
   verify:
     needs: lint
     timeout-minutes: 15
@@ -115,6 +142,13 @@ jobs:
       - name: Install the pinned Rust toolchain
         # rustup reads the version from rust-toolchain.toml in this directory.
         run: rustup toolchain install
+
+      - name: Restore the dependency build cache
+        uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: tools/accounting-skills
+          # Pull requests read main's cache and never write their own.
+          save-if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Rustfmt
         run: cargo fmt --check
@@ -259,8 +293,9 @@ jobs:
   fuzzing:
     name: fuzz the validation card parser
     # A 60-second random exploration is not a repeatable merge gate, so it
-    # runs after merge, weekly and on demand rather than on pull requests.
-    if: github.event_name != 'pull_request'
+    # runs weekly and on demand rather than on pull requests or pushes.
+    # verify-gates exempts this job, so a skipped run leaves main green.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:

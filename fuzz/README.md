@@ -13,7 +13,7 @@ python -m pip install --require-hashes --only-binary :all: -r requirements-fuzz.
 python -m fuzz.validation_cards fuzz/corpus -max_total_time=60 -max_len=4096 -timeout=2 -rss_limit_mb=1024
 ```
 
-CI runs the target after main pushes, weekly and on demand, with read-only
+CI runs the target weekly and on demand, with read-only
 repository access and a 5-minute timeout. The unittest suite replays the
 checked-in corpus on every supported platform. Atheris does not support
 Windows, so coverage-guided fuzzing runs on Linux. A successful run is bounded

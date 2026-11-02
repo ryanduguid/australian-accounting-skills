@@ -20,6 +20,8 @@ CONTRIBUTOR_GUIDES = ("AGENTS.md", "CONTRIBUTING.md")
 GATE_HOOKS = {
     "python -m ruff check .": "ruff-check",
     "python -m pyright": "pyright",
+    "shellcheck -x scripts/*.sh": "shellcheck",
+    "actionlint": "actionlint",
     "python -m unittest discover -s tests -v": "unittest",
     "python scripts/validate_validation.py": "validation-pack",
     "python tests/verify_skills_cli.py": "skills-cli-discovery",
@@ -71,7 +73,7 @@ class ContributorCheckTests(unittest.TestCase):
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
         self.assertIn("python -m pyright", gates)
-        self.assertEqual(len(gates), 6)
+        self.assertEqual(len(gates), 8)
         for gate in gates:
             with self.subTest(gate=gate):
                 self.assertNotIn("pip install", gate)
