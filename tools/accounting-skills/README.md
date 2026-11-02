@@ -1,6 +1,6 @@
 # Native accounting skill tooling
 
-This crate ports the repository tooling in `scripts/` to Rust. It needs no
+This crate ports the Python scripts in `scripts/` listed below to Rust. It needs no
 Python runtime and does not assess whether a source or accounting conclusion
 is correct. The Python scripts remain the authoritative commands for CI, the
 source sweep and contributors; the native commands are candidates beside them.
@@ -19,7 +19,7 @@ source sweep and contributors; the native commands are candidates beside them.
 `strict_yaml.py` has no other script caller. Its remaining callers are the
 Python skill-metadata and entry-point tests, which stay with the Python suite.
 The native card reader is stricter than the shared factory: it also refuses
-anchors and tags.
+anchors and tags. `build_plugin_evals.py` has no native command.
 
 ## Build and checks
 
@@ -194,9 +194,10 @@ require verification of each exact fact and effective period.
 ureq supplies synchronous HTTPS with platform certificate verification. Proxies,
 automatic redirects and decompression are disabled. Each redirect passes URL,
 host-edge, loop, ceiling and public DNS checks before opening. Responses close on
-success, policy refusal, HTTP refusal and read failure. Transport faults retry
-up to 3 times, with 6 seconds between attempts. There is a 30-second transport
-deadline per hop and a 1-second courtesy spacing between distinct sources.
+success, policy refusal, HTTP refusal and read failure. A fetch makes at most 3
+attempts, retrying only transport faults, with 6 seconds between attempts.
+There is a 30-second transport deadline per hop and a 1-second courtesy
+spacing between distinct sources.
 DNS checks preserve the original re-resolution gap and do not pin connections.
 The actual HTTP parser is exercised through a fabricated byte channel, including
 request headers, redirect and error responses, transfer chunks and compressed

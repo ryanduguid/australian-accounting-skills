@@ -7,8 +7,6 @@
   </picture>
 </p>
 
-Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation, or lodgement.
-
 <div align="center">
 
 [![verify](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/ryanduguid/australian-accounting-skills/actions/workflows/verify.yml)
@@ -25,6 +23,8 @@ Ryan Duguid is not a registered tax agent or BAS agent. Project support is limit
 
 </div>
 
+Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation or lodgement.
+
 Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges. These skills do not provide tax advice or replace professional judgement.
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
@@ -38,6 +38,8 @@ npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-cod
 
 That copies the 76 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. For the Claude Code plugin at the same release, add the marketplace at its tag with `/plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0`, then run `/plugin install australian-accounting-skills@ryanduguid`. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The validation record under the fold gives the model runs and their limits.
 
+Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
+
 An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
 Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the complete example.
@@ -47,6 +49,8 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 **Human decision:** Resolve the coding exceptions and confirm the reporting basis and evidence before signing off.
 
 ![Synthetic BAS workpaper showing a $3,190 GST tie-out and blank reviewer sign-off](assets/readme/bas-workpaper-synthetic.svg)
+
+Skills specify the workflow and require current primary authority for mutable rates, thresholds, labels and due dates. Keep real client files in the firm's approved environment, outside this repository.
 
 <details>
 <summary>Installation, validation record, corrections, skill catalogue and boundaries</summary>
@@ -67,16 +71,14 @@ v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-cre
 
 ### Development installation
 
-The marketplace added without a tag installs the default branch, which can be ahead of v0.5.0. It is not a published release.
+The marketplace added without a tag resolves the default branch, which can be ahead of v0.5.0. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
-
-The development installation resolves the default branch, which prepares v0.5.1 with 93 workflows. It is not a published release. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The default branch prepares v0.5.1 with 93 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) identifies the published v0.5.0 release and its 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
@@ -94,15 +96,15 @@ Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, t
 - [Supplier information for a firm's AI register](docs/ai-register-entry.md)
 - [Discovery and GitHub About copy](docs/DISCOVERY.md)
 
-Skills specify the workflow and require current primary authority for mutable rates, thresholds, labels and due dates. Keep real client files in the firm's approved environment, outside this repository.
+</details>
+
+## Licence
 
 Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accountants ANZ.
 
 Licensed under the Functional Source License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2). You may use, modify and redistribute it for any purpose except a Competing Use as defined in LICENSE (making it available to others in a competing commercial product or service), and each version becomes available under Apache-2.0 2 years after it is made available. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Keep the copyright notices if you redistribute this work or build on it.
 
 Created by Ryan Duguid. Redistributed copies, modifications and derivatives must keep the copyright notices in the skills and source files. Please also credit reuse as: Based on [australian-accounting-skills](https://github.com/ryanduguid/australian-accounting-skills) by Ryan Duguid. Neither belongs in client deliverables. See [NOTICE](NOTICE).
-
-</details>
 
 ---
 
