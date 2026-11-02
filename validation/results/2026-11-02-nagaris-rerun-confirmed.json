@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "model": "claude-opus-5-5",
+  "run_date": "2026-11-02",
+  "skills_version": "41a8d101ded7ff5d8da4e1419585f7b108584c42",
+  "runner": "Ryan Duguid",
+  "input_mode": "task-only",
+  "status": "confirmed",
+  "results": {
+    "au-award-underpayment-review-missing-rate-table": "pass",
+    "au-private-ruling-application-omitted-loan": "pass",
+    "au-property-development-income-three-lot-subdivision": "pass",
+    "au-tax-agent-obligations-pi-and-statement": "pass",
+    "au-trust-deed-review-unexecuted-variation": "pass"
+  },
+  "provenance": {
+    "au-award-underpayment-review-missing-rate-table": {
+      "input_sha256": "3254626fad816eebd8b6a573d541e16727fd96a8c2617b1c05a8b40288c91c4f",
+      "context_sha256": "195cefdfb194e5519da3c0748d8b81a916e01e5f7b0865c06db4517a3005a746",
+      "rubric_sha256": "4d2dc8a10d8d67d8c3bfe6e674a14e4da5dc8e8060df048b493d15658e0f83d6",
+      "output_sha256": "2648834d37ab16846cd26f0ddf0a28dae6f6f2230002974e264211dafc1caa1b"
+    },
+    "au-private-ruling-application-omitted-loan": {
+      "input_sha256": "6d11e2ec95bd4ccefd64fd4a137cda8e63db7267aea5009ed21a1a2b310acc5c",
+      "context_sha256": "a0b2ea3fe275a34967afd5b90181bdf96ed9bfbe77fb063425f5d2e84df06fa2",
+      "rubric_sha256": "f03377cdafc4fb498c170d9007d39f3a8fbd686a6fed1f282169390d8c6dde3e",
+      "output_sha256": "62cf0da2848bb98bc4a35a0f9ac150b26a49f9a601e079db28d683bea77e644a"
+    },
+    "au-property-development-income-three-lot-subdivision": {
+      "input_sha256": "645aba6725a4395180652e2f29cee7fad9f92898eea7610380dcb0d47765b0d9",
+      "context_sha256": "490b9b7c6a779d0c7ad9299fee59f83c1a840b04605dba43d76b2fbe372f69f8",
+      "rubric_sha256": "b0eb2cea62c21ec162b20e5cbe6d0d68a02980bb3f1e39d789867dd8e0224595",
+      "output_sha256": "738965d3345b25d61f6a70c5368d1050ee32b9aaa94da358d7de2c346f76af5a"
+    },
+    "au-tax-agent-obligations-pi-and-statement": {
+      "input_sha256": "ec2b8becc9e7cf82f12f5be26037e60b767d5d6af0622c080ca5cced6550a7c5",
+      "context_sha256": "6e1f0ef86be771d718cac16b9d18cf0baee099e3590fffc2d1a8a78c582e6b85",
+      "rubric_sha256": "64f8d22536177dfdfa6d6626c909bef5484fc6171a3805a5b0808585e1992ccc",
+      "output_sha256": "b2253c8ef9ed27b584c8216df12315f099113df93d3209f5cfb7144cf0ec4aff"
+    },
+    "au-trust-deed-review-unexecuted-variation": {
+      "input_sha256": "cde6a20a075e76c429564cc4134c790e6d86bb3b35edb0cdd5cdc2e4f8b2a09c",
+      "context_sha256": "cc2093eac2ea543eab7adb3b2c5ce42ebf86e35cd91b14ee648696fecd2cc682",
+      "rubric_sha256": "483907120cdde8361ee28859fa3a86f98099f4c74560107736af1682137da862",
+      "output_sha256": "906cd6c5616774cc03af548c991b893f45402125ddf3e0c5e1081db8276f3705"
+    }
+  }
+}

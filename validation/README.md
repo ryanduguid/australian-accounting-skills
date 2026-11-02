@@ -197,7 +197,7 @@ v0.5.0, have no recorded whole-card run. See
 
 The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no
 recorded whole-card run, and nor do the 23 cards added on 2 November for the 17 new skills and the
-extended capital gains, contribution caps, research, return and land tax workflows. Structural checks do not establish behavioural passes.
+extended capital gains, contribution caps, research, return and land tax workflows. Task-only runs observed those 23 cards on 2 November, and Ryan Duguid confirmed a pass for each that day ([results](results/)). Structural checks do not establish behavioural passes.
 
 The 17 October task-only observations in [results](results/) cover 29 cards,
 including the v0.5.0 and 15 October cards above other than the 2

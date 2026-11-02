@@ -221,7 +221,7 @@ outside the repository. Linked supporting files read by some sessions extend
 the declared target folders; a later manifest records those self-reported reads.
 No runtime tool trace or OS isolation was established. Web and action tools
 were excluded by instruction, so live retrieval and action restraint remain
-untested. Every human verdict is pending; the confirmed-result count remains 72.
+untested. Every human verdict for that run is pending, so it adds no confirmed result.
 
 ### Automated runs with a no-plugin baseline
 
@@ -267,9 +267,15 @@ probably ended; once its skill ruled that out, it
 at 8393bd7 (US$0.37). With the
 [first observations](../validation/results/2026-11-02-nagaris-task-only-observed.json),
 each of the 23 cards has a judge pass at its current wording. The judges'
-proposals, frozen inputs and traces are retained outside the repository. Every
-record is observed; no human verdict is recorded, so the confirmed-card count
-is unchanged.
+proposals, frozen inputs and traces are retained outside the repository. Ryan
+Duguid confirmed a pass for each of the 23 cards on 2 November 2026, each from
+the run it last passed with its card and skill unchanged since: 13 from the
+[first run](../validation/results/2026-11-02-nagaris-task-only-confirmed.json), 5 from the
+[second](../validation/results/2026-11-02-nagaris-rerun-confirmed.json), 2 from the
+[third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
+[5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
+[8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
+now cover 95 of the 135 cards.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
