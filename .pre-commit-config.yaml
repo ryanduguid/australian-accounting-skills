@@ -5,8 +5,8 @@
 # lists must not drift: tests/test_contributor_checks.py fails when a gate
 # exists in one place and not the other.
 #
-# Ruff and Pyright are pinned to the versions verify.yml installs, so a hook that
-# passes here cannot fail there on a version difference.
+# Ruff, Pyright, ShellCheck and actionlint are pinned to the versions verify.yml
+# installs, so a hook that passes here cannot fail there on a version difference.
 #
 #   pip install pre-commit && pre-commit install
 #   pre-commit run --all-files
@@ -31,6 +31,17 @@ repos:
     rev: v8.30.1
     hooks:
       - id: gitleaks
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        args: ["-x"]
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
 
   - repo: local
     hooks:

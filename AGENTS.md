@@ -104,6 +104,8 @@ it.
 python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
 python -m ruff check .
 python -m pyright
+shellcheck -x scripts/*.sh
+actionlint
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
@@ -111,9 +113,10 @@ python scripts/build_coverage.py --check
 git diff --check
 ```
 
-The 6 Python checks are the gates `.github/workflows/verify.yml` runs. Ruff
-and Pyright run in its `lint` job, then the 4 verification checks run on Python 3.14
-and 3.15. A third job scans the full history with gitleaks against
+The 6 Python checks, ShellCheck and actionlint are the gates
+`.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
+actionlint 1.7.12 run in its `lint` job, then the 4 verification checks run on
+Python 3.14 and 3.15. A third job scans the full history with gitleaks against
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
 
