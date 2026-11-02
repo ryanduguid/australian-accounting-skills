@@ -50,7 +50,7 @@
       "final_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
       "http_status": 200,
       "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "review_required_since": "2026-11-01",
       "content_hash": "c931069aaa28aa265f57828d28929c57ee4616fa782774e3a14c9a7fa1188c03",
       "content_hash_covers": "html",
       "source_last_modified": "",
