@@ -116,6 +116,13 @@ jobs:
         # rustup reads the version from rust-toolchain.toml in this directory.
         run: rustup toolchain install
 
+      - name: Restore the dependency build cache
+        uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: tools/accounting-skills
+          # Pull requests read main's cache and never write their own.
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
       - name: Rustfmt
         run: cargo fmt --check
 
@@ -259,8 +266,9 @@ jobs:
   fuzzing:
     name: fuzz the validation card parser
     # A 60-second random exploration is not a repeatable merge gate, so it
-    # runs after merge, weekly and on demand rather than on pull requests.
-    if: github.event_name != 'pull_request'
+    # runs weekly and on demand rather than on pull requests or pushes.
+    # verify-gates exempts this job, so a skipped run leaves main green.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
