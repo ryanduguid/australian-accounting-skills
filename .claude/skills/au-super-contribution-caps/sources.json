@@ -34,32 +34,48 @@
     {
       "title": "How to set up salary sacrifice for super | Australian Taxation Office",
       "url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
-      "checked_at": "",
-      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
-      "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
       "http_status": 200,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "content_hash": "e05006a2cfce34ae6426e9445588cfc358647feba7c35011176afe0351a5b5c8",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-12-16",
+      "content_url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
+      "reviewed_content": {
+        "content_hash": "e05006a2cfce34ae6426e9445588cfc358647feba7c35011176afe0351a5b5c8",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
+        "source_last_modified": "2025-12-16",
+        "checked_at": "2026-11-02"
+      }
     },
     {
       "title": "Salary sacrificing for employees | Australian Taxation Office",
       "url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees",
-      "checked_at": "",
-      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
-      "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees",
       "http_status": 200,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "content_hash": "f1fa5d45b3ad8c877ca45fdd8351a0e6a6c8883ae5e96d6210ddd9c0629e36d8",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-08-11",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees",
+      "reviewed_content": {
+        "content_hash": "f1fa5d45b3ad8c877ca45fdd8351a0e6a6c8883ae5e96d6210ddd9c0629e36d8",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees",
+        "source_last_modified": "2026-08-11",
+        "checked_at": "2026-11-02"
+      }
     }
   ]
 }
