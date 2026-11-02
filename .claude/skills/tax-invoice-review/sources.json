@@ -33,25 +33,25 @@
     {
       "title": "Peppol Authority: PINT A-NZ Billing release notes",
       "url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
-      "checked_at": "",
-      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
-      "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Indexed by an agent on 26 October 2026 because the ATO tax invoice page names the A-NZ Peppol specification without a version. Until a person accepts the pending baseline, the weekly sweep reports this record as baseline-required; after acceptance, later sweeps report a change to the release notes. Specification release notes, not law: the ATO page governs which eInvoices are treated as tax invoices. Human source approval remains pending. Read the current release and its jurisdiction rules at use time.",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Indexed by an agent on 26 October 2026 because the ATO tax invoice page names the A-NZ Peppol specification without a version. Until a person accepts the pending baseline, the weekly sweep reports this record as baseline-required; after acceptance, later sweeps report a change to the release notes. Specification release notes, not law: the ATO page governs which eInvoices are treated as tax invoices. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Read the current release and its jurisdiction rules at use time.",
       "final_url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
       "http_status": 200,
-      "fetched_at": "2026-10-26",
+      "fetched_at": "2026-11-02",
       "review_required_since": "2026-10-26",
-      "content_hash": "",
-      "content_hash_covers": "",
+      "content_hash": "fd7ca3f09988c3617196e438c6d59a950d968dc0567eab80500cd0674e62ecf1",
+      "content_hash_covers": "html",
       "source_last_modified": "2026-09-07",
-      "pending_review": {
+      "content_url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
+      "reviewed_content": {
         "content_hash": "fd7ca3f09988c3617196e438c6d59a950d968dc0567eab80500cd0674e62ecf1",
         "content_hash_covers": "html",
         "content_url": "https://docs.peppol.eu/poac/aunz/pint-aunz/release-notes/",
-        "observed_at": "2026-10-26",
-        "source_last_modified": "2026-09-07"
-      },
-      "content_url": ""
+        "source_last_modified": "2026-09-07",
+        "checked_at": "2026-11-02"
+      }
     }
   ]
 }
