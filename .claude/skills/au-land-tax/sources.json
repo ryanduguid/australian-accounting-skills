@@ -19,32 +19,48 @@
     {
       "title": "Understanding windfall gains tax | State Revenue Office",
       "url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
-      "checked_at": "",
-      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
-      "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
       "http_status": 200,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "content_hash": "d077a1cf554b0d99db0d07afef71d8b38f3fd472ec0a4b51f206203326e1ad94",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
+      "reviewed_content": {
+        "content_hash": "d077a1cf554b0d99db0d07afef71d8b38f3fd472ec0a4b51f206203326e1ad94",
+        "content_hash_covers": "html",
+        "content_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
     },
     {
       "title": "Defer a windfall gains tax liability | State Revenue Office",
       "url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
-      "checked_at": "",
-      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
-      "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
       "http_status": 200,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
-      "content_hash": "",
-      "content_hash_covers": "",
-      "source_last_modified": ""
+      "content_hash": "adf3ada69977e9d0a4f649c7debedf083f318daaf3566d07771820f1d66f4f49",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
+      "reviewed_content": {
+        "content_hash": "adf3ada69977e9d0a4f649c7debedf083f318daaf3566d07771820f1d66f4f49",
+        "content_hash_covers": "html",
+        "content_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
     }
   ]
 }
