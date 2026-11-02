@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "1e52bc3ae134ec3901337ddfffbebdff1da02a5e77f183ca2fc15e9352fbad3c",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=SAV/DEPRECIATING/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Simpler depreciation rules for small business | Australian Taxation Office",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-08-28",
+      "pending_review": {
+        "content_hash": "953bb4f3f96092f306d7e4a65970d03d38f61f82f1a60d43f31f20919529a061",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/depreciation-and-capital-expenses-and-allowances/simpler-depreciation-for-small-business",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-08-28"
+      },
+      "content_url": ""
     },
     {
       "title": "$20,000 Instant Asset Write-off | Australian Taxation Office",
@@ -44,7 +60,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-08-27",
+      "pending_review": {
+        "content_hash": "4aa733311d2af78b7d16eed19223a1ea6b89e1c7054c24d986f87cb294b2db62",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/20000-dollars-instant-asset-write-off",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-08-27"
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-60, when a depreciating asset starts to decline in value",
@@ -59,7 +83,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "94374fe55f27a492660e1a7ef23b6d1f749cd7e066b31fa9312fd8d4fed40207",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-60",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-95, choice of determining effective life",
@@ -74,7 +106,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "11a3214d18cf6470b1cc40141c4dfd0fa89c0ee170d233bf5d388363af2ba476",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-95",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-105, self-assessing effective life",
@@ -89,7 +129,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "a897639a3e6095f8dabff846da7262d3295dbe77a18c5ca6d048116388736c1f",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-105",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-230, adjustment: car limit",
@@ -104,7 +152,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "5f844e75341dbc472ee0797af1af3b4503ca87b188cc3ff6a7df8842400fa292",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-230",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-285, balancing adjustments",
@@ -119,7 +175,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "ff21bb65c6fc2c30053239324d4bd1baaa2d6a67f435b755312651ab24bfed46",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-285",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-425, allocating assets to a low-value pool",
@@ -134,7 +198,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "6cfa6da121d17b4ce12f2ffd3e10549d097d74d9f7d0a1ef1f69372659d6bd24",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-425",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 328-175, calculations for depreciating assets",
@@ -149,7 +221,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "7ffe50572a73002a22cb3b6fa49de5ec184499b5928b2312df1e250442afec2e",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/328-175",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 43-10, deductions for capital works",
@@ -164,7 +244,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "705617c50ef6a6fef3492885c4994ce7afae589580e1b01607bc70d3c428d127",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/43-10",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

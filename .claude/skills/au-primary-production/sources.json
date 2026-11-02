@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "4e83904e831c8eced909deff218ed0dcc056046c422d1ad9407bc2a7840b966f",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=SAV/PP",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "TR 97/11 | Legal database",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "2afc2d977bb4e8c5a9636ef1b3d72b1985c130015726ca4c3b47301e723c5ce2",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR9711/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Farm management deposits scheme | Australian Taxation Office",
@@ -44,7 +60,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2025-12-16",
+      "pending_review": {
+        "content_hash": "93a6c8506baa4a02f01399c66cc61776442e39ba59c488273945f1e5a95695c4",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/primary-producers/managing-varying-income/farm-management-deposits-scheme",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2025-12-16"
+      },
+      "content_url": ""
     },
     {
       "title": "Income averaging | Australian Taxation Office",
@@ -59,7 +83,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-03-23",
+      "pending_review": {
+        "content_hash": "c8ced07ed1c83138a65f8e5b5f07c0422d7906ab49398c506b39738a62fee2a8",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/primary-producers/managing-varying-income/tax-averaging",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-03-23"
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 392-10, individuals who carry on a primary production business",
@@ -74,7 +106,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "fa4b8f314b7a013b718aaa6dd7357b6f356afab36e491d9f7dc47cdd4a6102cc",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/392-10",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 393-10, assessability on repayment of deposit",
@@ -89,7 +129,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "70b72c080335b8c9fd1a4b67ed93b55670fcd5d257ad30a9654fb5db6c0157d3",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/393-10",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 393-40, repayment of deposit within first 12 months",
@@ -104,7 +152,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "089d61647ac390c3f13977adf9d43afbd2a7b7a1b67a3e7bccdbd3aea83c45dd",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/393-40",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 70-55, working out the cost of natural increase of live stock",
@@ -119,7 +175,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "4d14c90b62704c1fa5a2beb582f29b9048613e328f1513f67c9bd9289869acc1",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/70-55",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 385-100, cases where you can make an election",
@@ -134,7 +198,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "edbb72b4003adcf53078efaf7f4229050851603011d47ad6ebe9d9f0a4107b81",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/385-100",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 385-110, alternative election to defer tax profit and reduce cost of replacement live stock",
@@ -149,7 +221,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "81165e81d67f074b62796c01ba31f57ee6de6fa779422c14a2231c2bf6bfc2f1",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/385-110",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-520, meaning of water facility, horticultural plant, fodder storage asset and fencing asset",
@@ -164,7 +244,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "e2ebbb2337a56d375caa924516a657f798b19a52bce0db6facca46a36daaa0d1",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-520",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 40-630, landcare operations",
@@ -179,7 +267,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "564d7eb6f0d2a96a0c1ce9c58da732c260230d1e8f4e466b720b3d884bec1c91",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-630",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ITAA 1997 s 328-175, calculations for depreciating assets",
@@ -194,7 +290,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "7ffe50572a73002a22cb3b6fa49de5ec184499b5928b2312df1e250442afec2e",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19970038/328-175",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

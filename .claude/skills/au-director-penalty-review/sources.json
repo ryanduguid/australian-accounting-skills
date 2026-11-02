@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-10-13",
+      "pending_review": {
+        "content_hash": "dced99b96fd0caa5378750130e9e380428efe9baa0df31208837a8b6dc8d0510",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-10-13"
+      },
+      "content_url": ""
     },
     {
       "title": "PS LA 2011/18 | Legal database",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "8095366399d4252b9ea432e0cebb174453ef998d89a94754b42589271aad6a98",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Treasury Laws Amendment (Payday Superannuation) Act 2025, as made",
@@ -44,7 +60,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "35db9d1c12699f672be0ac157a6241f6e06efd7cef4adb5e55bbf8a6a5b2f7cd",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

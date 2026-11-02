@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "eef9df3a4b579879a3b9ea7bc25fb7030ecc0c872a25ae5ea45fb1015458fd63",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/C2009A00013/latest/text",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Tax Agent Services (Code of Professional Conduct) Determination 2024",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "6dc0d46c7c94584790c3603957328e3f979c6a270d88312e6b3ab008d8642e8a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/F2024L00849/latest/text",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "TPB: Code of Professional Conduct",
@@ -39,12 +55,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/code-professional-conduct",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "TPB: Breach reporting",
@@ -54,12 +71,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/breach-reporting",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "TPB(GS) 48/2024 Breach reporting under the Tax Agent Services Act 2009",
@@ -69,12 +87,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/tpb-gs-48-2024-breach-reporting-under-tax-agent-services-act-2009",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "TPB: Change of registration details or circumstances",
@@ -84,12 +103,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/change-registration-details-or-circumstances",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "TPB: Professional indemnity insurance",
@@ -99,12 +119,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/pii",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "TPB(GS) 37/2021 Continuing professional education requirements for tax and BAS agents",
@@ -114,12 +135,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/tpb-gs-37-2021-cpe-requirements-tax-and-bas-agents",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "TPB(GS) 24/2014 Managing conflicts of interest",
@@ -129,12 +151,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/tpb-gs-24-2014-managing-conflicts-interest",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

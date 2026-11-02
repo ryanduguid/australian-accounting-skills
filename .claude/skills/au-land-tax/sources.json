@@ -29,7 +29,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "d077a1cf554b0d99db0d07afef71d8b38f3fd472ec0a4b51f206203326e1ad94",
+        "content_hash_covers": "html",
+        "content_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Defer a windfall gains tax liability | State Revenue Office",
@@ -44,7 +52,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "adf3ada69977e9d0a4f649c7debedf083f318daaf3566d07771820f1d66f4f49",
+        "content_hash_covers": "html",
+        "content_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

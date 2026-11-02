@@ -9,12 +9,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.fairwork.gov.au/workplace-problems/common-workplace-problems/i-think-ive-underpaid-my-employee",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Award classifications - Fair Work Ombudsman",
@@ -24,12 +25,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.fairwork.gov.au/employment-conditions/awards/award-classifications",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Pay guides - Fair Work Ombudsman",
@@ -39,12 +41,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.fairwork.gov.au/pay-and-wages/minimum-wages/pay-guides",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Criminalising wage underpayments and other issues - Fair Work Ombudsman",
@@ -54,12 +57,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.fairwork.gov.au/about-us/workplace-laws/legislation-changes/closing-loopholes/criminalising-wage-underpayments-and-other-issues",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Criminal prosecution - Fair Work Ombudsman",
@@ -69,12 +73,13 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.fairwork.gov.au/about-us/compliance-and-enforcement/criminal-prosecution",
-      "http_status": 200,
+      "http_status": 0,
       "fetched_at": "2026-11-02",
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Fair Work Act 2009 - Federal Register of Legislation",
@@ -89,7 +94,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "c52be4af3854d01866740bb843eca045c1281b2494a8611460aaf633e84848cf",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/C2009A00028/latest/text",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

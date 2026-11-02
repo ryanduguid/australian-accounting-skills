@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-10-31",
+      "pending_review": {
+        "content_hash": "8eaec14ab8c5d72a76a0e6f94bdb886648a8f93eaadebe40d4a98815e60f46a4",
+        "content_hash_covers": "html",
+        "content_url": "https://community.owasp.org/attacks/CSV_Injection",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-10-31"
+      },
+      "content_url": ""
     },
     {
       "title": "Import a bank statement in CSV format",
@@ -29,7 +37,8 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "About manually importing bank statements",
@@ -44,7 +53,8 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "content_url": ""
     },
     {
       "title": "Import bank and credit card statements",
@@ -59,7 +69,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "c9d6cc724e6e9db24a60400510d2cff302ba85fd2df42136496158de4e431b53",
+        "content_hash_covers": "html",
+        "content_url": "https://www.myob.com/au/support/myob-business/banking/bank-statements/import-bank-and-credit-card-statements",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "a450f47050712890d17ffb4abdc1bbcbc02c748fe2f1bfbc0d169b00fd2999d8",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/C2004A00818/latest/text",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Add or remove a company officeholder",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "aa88390fe12d891b3f7094b25b5b83a88075741a08e44bc85c45543d2753932e",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-officeholder-rules-and-changes/add-or-remove-a-company-officeholder",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Director identification numbers (director IDs)",
@@ -44,7 +60,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "6a7318331b07217eeeb1b5d21de5750a997e52c136b9c82effbcb6da55f9ad8c",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-officeholder-rules-and-changes/director-identification-numbers-director-ids",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Change a company address",
@@ -59,7 +83,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "6056a94930042fc403331d9c3b1e3afecb956a30f325b07d029755a6af1a6919",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/changes-to-company-details/change-a-company-address",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Company share issues",
@@ -74,7 +106,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "10b96f666dcb54844f0babd701c22e7b7846073c337834c85a3587e642724d27",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/company-share-issues",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Transfer of shares or change to beneficial ownership status",
@@ -89,7 +129,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "d977e7ed539b0ad617cda31b5e51c1a2fc7de79c16342326e5ab37c041e3d186",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/transfer-of-shares-or-change-to-beneficial-ownership-status",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Members register requirements and changes",
@@ -104,7 +152,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "a9fdfdc140e73af8a3c2f95b9bfe907703bc5d8d077c31ea97c016862b989714",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/members-register-requirements-and-changes",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Company annual review",
@@ -119,7 +175,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "811ccb565e38e133c384bdfb74494b75412602c70c9a90f628906d53d7d2c92d",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-annual-review",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Fees for commonly lodged documents (INFO 30)",
@@ -134,7 +198,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "754bb8b2c29a65d509dca21ba343596dd3fdea269d57d9cccbc104460d317e64",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/forms-and-fees/all-fees/fees-for-commonly-lodged-documents",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "ASIC: Late fees",
@@ -149,7 +221,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "4acb967fcad558cce9ea3304bc3f452965c392f2e9a9b9156f8997f104fbd928",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/for-business-and-companies/forms-and-fees/late-fees",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     }
   ]
 }

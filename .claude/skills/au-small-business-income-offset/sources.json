@@ -10,11 +10,19 @@
       "limitations": "Retrieved by an agent on 21 October 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/concessions-offsets-and-rebates/small-business-income-tax-offset",
       "http_status": 200,
-      "fetched_at": "2026-10-21",
-      "review_required_since": "2026-10-21",
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-08-03",
+      "pending_review": {
+        "content_hash": "8b044a01c5e4e669cfb74a64ddb159bd2dbfb81b8d6d8144a22002a0b1540fce",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/concessions-offsets-and-rebates/small-business-income-tax-offset",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-08-03"
+      },
+      "content_url": ""
     }
   ]
 }

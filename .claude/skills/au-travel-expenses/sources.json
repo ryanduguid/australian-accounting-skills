@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "4e3ce221933add84a7bdc45bd58c7cf2bf57e4275f50cf7ec84b736eae052679",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR20211/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "TR 2021/4 | Legal database",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "17b48cee41fdfe8983fc9942d3d761dbdbf9e134c13c2d259877f0c9a7307db1",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR20214/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "TD 2026/4 | Legal database",
@@ -44,7 +60,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "345008775d5fbcbc25ed0acb92eb94838c3f634a695750a7f0861a4933ad1636",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXD/TD20264/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "TR 2024/3 | Legal database",
@@ -59,7 +83,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "d6f892d3972d0932a0873f81a6f640b87b10ed650fd0a1494489b5f13d7e98be",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR20243/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Commissioner of Taxation v Hall [2026] FCAFC 43 (Published 17 June 2026)",
@@ -74,7 +106,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "5c93bfa3066b8b4bf45652fc7cc6ffc6241f47fb8be15108982e0f5622410753",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=LIT/ICD/vid779of2025-final/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Record keeping exceptions for travel allowance expenses | Australian Taxation Office",
@@ -89,7 +129,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-08-12",
+      "pending_review": {
+        "content_hash": "6eb1f6cc993f1dd7324742d303350b066f035a1afa4bd51599324bd8da12eda8",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/cars-transport-and-travel/overnight-travel-expenses-and-allowances/travel-allowances-for-overnight-travel/record-keeping-exceptions-for-travel-allowance-expenses",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-08-12"
+      },
+      "content_url": ""
     },
     {
       "title": "Deductions for business travel expenses | Australian Taxation Office",
@@ -104,7 +152,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-05-27",
+      "pending_review": {
+        "content_hash": "f81f33282cad9ddd250cd5d058edd03dd3e1d76df0eb441990cca5ed831af271",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/deductions/deductions-for-business-travel-expenses",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-05-27"
+      },
+      "content_url": ""
     },
     {
       "title": "Travel allowances | Australian Taxation Office",
@@ -119,7 +175,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2025-10-02",
+      "pending_review": {
+        "content_hash": "eac83439dbee7d37caea3779fdc5875d883353fc626f23559dd4f722ccfcf606",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2025-10-02"
+      },
+      "content_url": ""
     },
     {
       "title": "Standard deduction for work-related expenses | Australian Taxation Office",
@@ -134,7 +198,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-11-02",
+      "pending_review": {
+        "content_hash": "2ea673d8ee05ade8558aa4a57ac724162a2f51ae98838ebbde792d49e8d38e67",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-11-02"
+      },
+      "content_url": ""
     }
   ]
 }

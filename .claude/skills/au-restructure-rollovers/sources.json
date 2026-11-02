@@ -14,7 +14,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2025-12-16",
+      "pending_review": {
+        "content_hash": "8d3c67431e1a2b7fdf2d7aea1877ad98eed7482cd84260f13ebb0321f740bafb",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/concessions-offsets-and-rebates/small-business-restructure-roll-over",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2025-12-16"
+      },
+      "content_url": ""
     },
     {
       "title": "LCR 2016/3 | Legal database",
@@ -29,7 +37,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "17cd1e6575eb13198d14e56200d68462f7e72663eba1ed04ad18e7126714698a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/LCR20163/NAT/ATO/00001",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 328-430",
@@ -44,7 +60,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "5927060382c85fec8bafc52af269269305ab32be48bb6c94f34ae3e79a651333",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/328-430",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 122-15",
@@ -59,7 +83,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "6d14f9121cc57907c3f1b028680c571815510d785c57ed171b5c8187d0dd0737",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/122-15",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 122-20",
@@ -74,7 +106,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "6c962c814f9d75c5d1005cc1ccb11b1e71506a797cdcc2978bf63daf7fd9e4d8",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/122-20",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 122-25",
@@ -89,7 +129,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "eb7b56ffc29d31776707dff28d4f069e2573b3f2d8d24476de586ffb069790bc",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/122-25",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 122-125",
@@ -104,7 +152,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "2fe9667eb1f5d3b078625311a5499a756b801bcf71001750a705e1e7cfddea08",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/122-125",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 615-5",
@@ -119,7 +175,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "b1d73ec5c446920dcf057e38ab8a802f417780479d08ec30c9f83611364487de",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/615-5",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Legal database - View: Principal legislation: SECTION 615-20",
@@ -134,7 +198,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "pending_review": {
+        "content_hash": "5c0e815d840ed352bbac1eaf3e94540f5c316b03ca9836ed01d45b7ecf0de1a9",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=PAC/19970038/615-20",
+        "observed_at": "2026-11-02",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "Rollover and restructure | Australian Taxation Office",
@@ -149,7 +221,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2025-10-02",
+      "pending_review": {
+        "content_hash": "6a13ea655195f72180226e064839c0655e29e3692ac2a1887b04b37423b858b5",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/depreciation-and-capital-expenses-and-allowances/simpler-depreciation-for-small-business/rollover-and-restructure",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2025-10-02"
+      },
+      "content_url": ""
     },
     {
       "title": "How to choose a CGT rollover and apply for an extension | Australian Taxation Office",
@@ -164,7 +244,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-06-11",
+      "pending_review": {
+        "content_hash": "86cefacf8a949baf20f7544e5d6d8107e4f5c7d90ceb5519ebeeffe4bed9ed9d",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/cgt-events/how-to-choose-a-cgt-rollover-and-apply-for-an-extension",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-06-11"
+      },
+      "content_url": ""
     },
     {
       "title": "Tax reform, introducing a minimum tax on discretionary trusts | Australian Taxation Office",
@@ -179,7 +267,15 @@
       "review_required_since": "2026-11-02",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-09-03",
+      "pending_review": {
+        "content_hash": "ad20d47f139d3924af4851302aebc82bdb52c7e795df232c9337389fdfd6b2ce",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
+        "observed_at": "2026-11-02",
+        "source_last_modified": "2026-09-03"
+      },
+      "content_url": ""
     }
   ]
 }
