@@ -14,7 +14,7 @@ python -m fuzz.validation_cards fuzz/corpus -max_total_time=60 -max_len=4096 -ti
 ```
 
 CI runs the target after main pushes, weekly and on demand, with read-only
-repository access and a five-minute timeout. The unittest suite replays the
+repository access and a 5-minute timeout. The unittest suite replays the
 checked-in corpus on every supported platform. Atheris does not support
 Windows, so coverage-guided fuzzing runs on Linux. A successful run is bounded
 evidence, not proof that every input is handled.
