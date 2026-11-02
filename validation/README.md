@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 134 cards in `cases/` test workflow quality, provenance and restraint.
+The 135 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -161,6 +161,7 @@ law claim, unverified source or guess.
 | [Inherited pre-CGT land with only an agent's appraisal](cases/au-capital-gains-inherited-pre-cgt-valuation.md) | au-capital-gains |
 | [Register roll-forward with a disposed asset, a double-counted pooled asset and a missing start time](cases/au-depreciation-schedule-register-roll-forward.md) | au-depreciation-schedule |
 | [Director penalty notice after a resignation and an ATO estimate](cases/au-director-penalty-review-estimate-and-resignation.md) | au-director-penalty-review |
+| [Payday Super disclosure lodged on time but understated](cases/au-director-penalty-review-understated-disclosure.md) | au-director-penalty-review, au-super-guarantee-charge |
 | [Rebuild a franking ledger that disagrees with payments and test a proposed dividend](cases/au-franking-account-ledger-rebuild.md) | au-franking-account |
 | [Year-end records request built from the prior year](cases/au-individual-return-records-request.md) | au-individual-return |
 | [Rezoned Victorian land with a deferred windfall gains tax and a lot sale](cases/au-land-tax-windfall-gains-deferral.md) | au-land-tax |
@@ -190,7 +191,7 @@ v0.5.0, have no recorded run. See
 [results](results/).
 
 The business-selection, firm-template, rental bridge and formula-change cards added on 15 October have no
-recorded model run, and nor do the 22 cards added on 2 November for the 17 new skills and the
+recorded model run, and nor do the 23 cards added on 2 November for the 17 new skills and the
 extended capital gains, contribution caps, research, return and land tax workflows. Structural checks do not establish behavioural passes.
 
 Three further cards check whether the model completes supported bank,

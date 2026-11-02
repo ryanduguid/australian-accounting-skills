@@ -362,9 +362,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-director-penalty-review-estimate-and-resignation"
+          "au-director-penalty-review-estimate-and-resignation",
+          "au-director-penalty-review-understated-disclosure"
         ],
         "only_seeded_case": false
       },
@@ -1310,8 +1311,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-director-penalty-review-understated-disclosure",
           "au-super-guarantee-charge-remitted-not-received"
         ],
         "only_seeded_case": false

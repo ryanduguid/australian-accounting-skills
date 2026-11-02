@@ -1,7 +1,7 @@
 # v0.5.1 (unreleased)
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
-pack from 112 to 134 cards. Sixteen cover in-scope topics from a comparison
+pack from 112 to 135 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
 docs/nagaris-comparison.md; only the topic names were used.
 
@@ -24,9 +24,10 @@ and the status of announced measures), au-individual-return (records
 requests tied to the prior year) and au-land-tax (Victorian windfall gains
 tax). Existing skills now route to the new ones where their work meets.
 
-Skill descriptions are capped at 160 characters, keeping the total listing
-text at or below the 76-skill total so Claude Code's skill listing budget is
-not exceeded by the larger inventory. Seventeen routing cases are added.
+Skill descriptions are capped at 160 characters, so their combined length
+stays below the 76-skill total. Claude Code's per-skill estimates put the
+93-skill listing at about 6.1k tokens against 5.9k for the 76 skills before;
+docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review,
 and no new card has a model verdict.
 
