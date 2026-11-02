@@ -25,7 +25,7 @@ Only the supplied facts are available. No corrected statement, bank confirmation
 
 ## Required checks
 
-- Tie each page and each statement, find the first S2 page 2 line where the running balance breaks and leave the 50.00 difference open as an exception.
+- Tie each page and each statement as far as the supplied balances and totals allow, leave the 50.00 S2 page 2 difference open as an exception and require the first page 2 line where the running balance breaks to be found and reread.
 - Identify the 3 overlapping lines, keep each from one statement only and record which copy was excluded and why.
 - Check continuity between S1's balance at the start of the overlap and S2's opening balance.
 - Neutralise the leading '=' in the payee field, keep the original text in the workpaper and leave every amount, including negatives, as a plain value.
