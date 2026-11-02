@@ -1,6 +1,6 @@
 ---
 name: au-psi-review
-description: "Use when screening Australian personal services income (PSI), personal services business (PSB) tests or determinations, and preparing attribution and deduction evidence."
+description: "Use when screening personal services income (PSI), personal services business (PSB) tests or determinations, and preparing attribution and deduction evidence."
 ---
 
 # Personal services income review pack
@@ -23,7 +23,7 @@ Income year, contracts and variations, services and goods supplied, reconciled i
 
 ## Hand-off and checks
 
-A person-by-income matrix, test evidence and unresolved attribution questions. Contract interpretation and final PSI/PSB conclusions remain qualified-review decisions.
+A person-by-income matrix, test evidence and unresolved attribution questions. Contract interpretation and final PSI/PSB conclusions remain qualified-review decisions. Where the income is professional firm income outside the PSI rules, route the profit allocation question to `au-professional-firm-profits`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

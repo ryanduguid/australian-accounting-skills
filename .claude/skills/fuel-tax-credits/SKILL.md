@@ -1,6 +1,6 @@
 ---
 name: fuel-tax-credits
-description: "Use when preparing or reviewing an Australian fuel tax credit claim for a plant-operating business: eligibility and registration, the public-road against off-road against auxiliary split, the road user charge and the incidental-travel carve-out, apportionment method and evidence, adjustments against error corrections, and the BAS labels that carry it."
+description: "Use when preparing or reviewing a fuel tax credit claim for a plant-operating business: eligibility, on-road and off-road split, apportionment and BAS labels."
 ---
 
 # Fuel tax credits

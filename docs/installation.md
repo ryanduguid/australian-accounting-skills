@@ -89,7 +89,11 @@ listing within a budget of 1% of the model's context window by default; past it,
 the least-used skills lose their descriptions and are chosen less often. On
 1 November 2026 `/context` in a fresh session (Claude Code 2.1.312, a 1 million
 token window, no other plugins or user skills) put this plugin's 76-skill listing
-at 8.5k tokens, 0.9% of the window, so it fits with little room. A smaller window,
+at 8.5k tokens, 0.9% of the window, so it fits with little room. Skill
+descriptions are now capped at 160 characters: on 2 November 2026 Claude Code
+2.1.316's per-skill rows for this plugin summed to about 6.1k tokens for 93
+skills against 5.9k for the earlier 76 in an otherwise identical session. Those
+sums leave out the session's other skills, which the Skills row includes. A smaller window,
 or other plugins and skills sharing the listing, can push it over. To check, run
 `/context` and compare the Skills row with your window. To reserve more, set
 `skillListingBudgetFraction` in your Claude Code settings, for example

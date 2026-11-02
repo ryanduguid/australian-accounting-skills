@@ -32,7 +32,7 @@ Legal ownership shares, rental agent and bank statements, lease and availability
 
 ## Hand-off and checks
 
-A property-by-property income/expense schedule, loan-use bridge and owner allocation. Proposed deductions trace to evidence and verified treatment.
+A property-by-property income/expense schedule, loan-use bridge and owner allocation. Proposed deductions trace to evidence and verified treatment. Prepare decline in value and capital works schedules with `au-depreciation-schedule`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

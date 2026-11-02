@@ -1,6 +1,6 @@
 ---
 name: au-etp-redundancy
-description: "Use when preparing or checking the tax treatment and PAYG withholding of an Australian termination payment, including the genuine redundancy tax-free limit, the ETP cap and the whole-of-income cap."
+description: "Use when checking the tax and PAYG withholding of a termination payment, including the genuine redundancy limit, the ETP cap and the whole-of-income cap."
 ---
 
 # Termination payment and redundancy workpapers

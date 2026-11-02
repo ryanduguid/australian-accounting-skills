@@ -1,0 +1,50 @@
+{
+  "skill": "au-director-penalty-review",
+  "sources": [
+    {
+      "title": "Director penalties | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "PS LA 2011/18 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Treasury Laws Amendment (Payday Superannuation) Act 2025, as made",
+      "url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

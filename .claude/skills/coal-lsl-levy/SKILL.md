@@ -1,6 +1,6 @@
 ---
 name: coal-lsl-levy
-description: "Use when an employer has workers on or about a black coal mine site and must handle Coal LSL: testing which employees are eligible, building eligible wages, preparing the monthly levy return and payment hand-off, claiming reimbursement for long service leave paid, and reconciling the levy to payroll."
+description: "Use when an employer has black coal mining workers: Coal LSL eligibility, eligible wages, the monthly levy return, leave reimbursement and payroll tie-out."
 ---
 
 # Coal LSL levy

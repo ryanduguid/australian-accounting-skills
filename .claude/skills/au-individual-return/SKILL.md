@@ -17,9 +17,9 @@ For an AI-extracted amount, date or code, show the document and page or row, the
 
 ## Workflow
 
-1. Create a completeness checklist from prior-year sources, current activity and supplied records. Treat pre-fill as a comparison source rather than evidence that every income item is present.
+1. Create a completeness checklist from prior-year sources, current activity and supplied records. Treat pre-fill as a comparison source rather than evidence that every income item is present. When the checklist becomes a records request to the client, list each expected document with the prior-year item or current activity it follows from, mark items expected in pre-fill separately and ask about new events (a property bought or sold, a share or crypto disposal, a move overseas, a new job or business) rather than assuming last year's pattern. The firm sends the request.
 
-2. Reconcile income by source, including withholding and non-cash components. Route rental, CGT, business and foreign amounts to their detailed workpapers where needed.
+2. Reconcile income by source, including withholding and non-cash components. Route rental, CGT, business and foreign amounts to their detailed workpapers where needed. Route travel claims to `au-travel-expenses`, depreciating asset claims to `au-depreciation-schedule` and primary production to `au-primary-production`.
 
    Keep one row per payer or statement, including gross income, withholding, allowances, reportable fringe benefits, reportable employer super contributions and supplied lump-sum components. Preserve each statement's finalisation status and reconcile the rows to any supplied aggregate totals. Keep bank interest, dividend and franking components, managed-fund/ETF/AMIT components, partnership shares and other trust-beneficiary statements separately identifiable; their statement totals are not interchangeable.
 

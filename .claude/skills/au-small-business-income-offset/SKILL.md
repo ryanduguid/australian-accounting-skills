@@ -1,6 +1,6 @@
 ---
 name: au-small-business-income-offset
-description: "Use when preparing Australian small business income tax offset (SBITO or unincorporated small business tax discount) eligibility and net-small-business-income workpapers."
+description: "Use when preparing small business income tax offset (SBITO or unincorporated small business tax discount) eligibility and net small business income."
 ---
 
 # Small business income tax offset workpapers

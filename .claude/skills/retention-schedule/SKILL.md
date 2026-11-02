@@ -1,6 +1,6 @@
 ---
 name: retention-schedule
-description: "Use when tracking retention withheld or held across construction contracts: caps, defects liability periods, 2-tranche release, NSW and Queensland trust account obligations, and the tie-out to the retention asset and liability in the ledger."
+description: "Use when tracking construction retentions: caps, defects liability periods, release tranches, NSW and Queensland trust account rules and the ledger tie-out."
 ---
 
 # Retention schedule

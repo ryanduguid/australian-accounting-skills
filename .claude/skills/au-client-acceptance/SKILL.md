@@ -1,6 +1,6 @@
 ---
 name: au-client-acceptance
-description: "Use when preparing an Australian accounting practice's acceptance or continuance review and engagement terms for a new client, a new service or a changed engagement, for an authorised practitioner to decide."
+description: "Use when preparing an Australian practice's acceptance or continuance review and engagement terms for a new client, new service or changed engagement."
 ---
 
 # Client acceptance and engagement terms review
@@ -39,7 +39,7 @@ description: "Use when preparing an Australian accounting practice's acceptance 
 
 7. For tax agent or BAS agent services, confirm the practice's information to current and prospective clients under section 45 of the TPB Code Determination is ready to give. It covers the TPB register and how to search it, how to complain, the practitioner's and client's rights and obligations, any prescribed event in paragraph 45(1)(d) that occurred within the last five years and whether the practitioner's registration is subject to conditions (paragraph 45(1)(e)), as TPB(GS) 54/2024 explains. Under the Determination as amended from 1 October 2026, also record whether the registration is currently suspended. Record the dates relevant to the applicable section 45 trigger and when the information was given, if at all, so the authorised practitioner can check the timing the Determination sets. Record what the practice says about these matters. Whether an event, condition or suspension must be disclosed, and how and when, is for the authorised practitioner. Check the Determination as in force at use time, including the amendments that apply from 1 October 2026.
 
-8. Prepare the acceptance pack with the service list, the policy test with evidence, the conflicts, independence and change-of-accountant record, the proof of identity status, the AML/CTF routing status, the engagement terms checklist, the TPB information status, an exceptions list with owner, status and next action, and a blank decision block for the authorised practitioner.
+8. Prepare the acceptance pack with the service list, the policy test with evidence, the conflicts, independence and change-of-accountant record, the proof of identity status, the AML/CTF routing status, the engagement terms checklist, the TPB information status, an exceptions list with owner, status and next action, and a blank decision block for the authorised practitioner. The practice's own registration, Code, insurance and breach-reporting obligations belong in `au-tax-agent-obligations`.
 
 ## Hand-off and checks
 

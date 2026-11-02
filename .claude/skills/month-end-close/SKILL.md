@@ -1,6 +1,6 @@
 ---
 name: month-end-close
-description: Use when running or reviewing a month-end close (bank reconciliations, control account reconciliations, accruals and prepayments, depreciation, and P&L variance review) for an Australian SME or client entity.
+description: "Use when running or reviewing a month-end close for an Australian SME: bank and control reconciliations, accruals, prepayments, depreciation and variance."
 ---
 
 # Month-end close

@@ -1,6 +1,6 @@
 ---
 name: reconciliation-break-trace
-description: "Use when a bank, control account or subledger reconciliation does not agree: tracing each break from the reconciliation row back to the originating ledger entry and source record, stating the cause in one sentence and listing the evidence, owner and next action for review."
+description: "Use when a bank, control account or subledger reconciliation does not agree: trace each break to its ledger entry and source, its cause, evidence and owner."
 ---
 
 # Reconciliation break trace

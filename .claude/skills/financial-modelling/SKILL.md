@@ -1,6 +1,6 @@
 ---
 name: financial-modelling
-description: "Use when building or reviewing a financial model workbook for an Australian entity: driver assumptions, live formulas, check rows and scenarios tied back to the client's own records."
+description: "Use when building or reviewing a financial model workbook for an Australian entity: driver assumptions, live formulas, check rows and scenarios tied to records."
 ---
 
 # Financial model workbook

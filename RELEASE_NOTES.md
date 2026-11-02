@@ -1,3 +1,36 @@
+# v0.5.1 (unreleased)
+
+Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
+pack from 112 to 135 cards. Sixteen cover in-scope topics from a comparison
+with the public Ask Nagaris skill list, recorded in
+docs/nagaris-comparison.md; only the topic names were used.
+
+- Tax workpapers: au-franking-account, au-trust-deed-review,
+  au-restructure-rollovers, au-professional-firm-profits,
+  au-travel-expenses, au-depreciation-schedule,
+  au-property-development-income and au-primary-production.
+- ATO and practice compliance: au-ato-objection,
+  au-private-ruling-application, au-tax-agent-obligations,
+  au-asic-company-changes and au-director-penalty-review, which comes from
+  this repository's own gap list.
+- Payroll, data and transactions: au-super-guarantee-charge (quarters and
+  Payday Super QE days in separate registers), au-award-underpayment-review,
+  statement-to-csv and au-business-acquisition-review.
+
+Five skills are extended: au-capital-gains (pre-CGT and inherited-asset
+evidence, and market valuations at a past date), au-super-contribution-caps
+(proposed salary sacrifice headroom), au-tax-research (multi-issue requests
+and the status of announced measures), au-individual-return (records
+requests tied to the prior year) and au-land-tax (Victorian windfall gains
+tax). Existing skills now route to the new ones where their work meets.
+
+Skill descriptions are capped at 160 characters, so their combined length
+stays below the 76-skill total. Claude Code's per-skill estimates put the
+93-skill listing at about 6.1k tokens against 5.9k for the 76 skills before;
+docs/installation.md records the measurement. Seventeen routing cases are added.
+Every new source record is discovery-only and awaits human source review,
+and no new card has a model verdict.
+
 # v0.5.0
 
 The pack moves from Apache-2.0 to the Functional Source License,

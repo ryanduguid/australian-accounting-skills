@@ -11,7 +11,7 @@ Pay period and payday, employment arrangements and jurisdiction, award/agreement
 
 ## Workflow
 
-1. Confirm the employment instrument, classification and applicable period with authoritative guidance. Missing coverage or rate evidence prevents a final pay calculation.
+1. Confirm the employment instrument, classification and applicable period with authoritative guidance. Missing coverage or rate evidence prevents a final pay calculation. Route a review of past pay periods for underpayment and back pay to `au-award-underpayment-review`.
 
 2. Reconcile hours, leave, allowances and deductions to approved inputs and employment terms. Keep private leave information within the authorised payroll environment.
 

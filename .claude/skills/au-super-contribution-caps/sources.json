@@ -30,6 +30,36 @@
       "content_hash": "f81b8fff274e5f1683fd7afe71378f0429a7246fda273420bcdd970f1858e8c6",
       "content_hash_covers": "html",
       "source_last_modified": "2026-05-22"
+    },
+    {
+      "title": "How to set up salary sacrifice for super | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/how-to-set-up-salary-sacrifice-for-super",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Salary sacrificing for employees | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/jobs-and-employment-types/working-as-an-employee/salary-sacrificing-for-employees",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

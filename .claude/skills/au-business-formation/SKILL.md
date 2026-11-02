@@ -17,7 +17,7 @@ Business activity and jurisdiction, adviser-approved structure, ownership and of
 
 3. Prepare a completeness checklist for consents, eligibility and supporting documents. Record director-identification completion status when relevant without requesting or retaining identity documents.
 
-4. Prepare a commencement checklist covering records, accounting setup and ongoing obligations, with verified dates. Leave applications, identity checks, declarations and purchases to the authorised person.
+4. Prepare a commencement checklist covering records, accounting setup and ongoing obligations, with verified dates. Leave applications, identity checks, declarations and purchases to the authorised person. Route later officeholder, address, share and annual review changes to `au-asic-company-changes`.
 
 ## Hand-off and checks
 

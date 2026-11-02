@@ -15,6 +15,36 @@
       "source_last_modified": "2026-09-29",
       "content_hash_covers": "html",
       "content_url": "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/land-tax/your-assessment-notice/understand-your-assessment-notice"
+    },
+    {
+      "title": "Understanding windfall gains tax | State Revenue Office",
+      "url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/understanding-windfall-gains-tax",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Defer a windfall gains tax liability | State Revenue Office",
+      "url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 2 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.sro.vic.gov.au/owning-property/windfall-gains-tax/defer-or-pay-windfall-gains-tax/defer-windfall-gains-tax-liability",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

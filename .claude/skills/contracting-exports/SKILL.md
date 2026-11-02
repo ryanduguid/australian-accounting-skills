@@ -1,6 +1,6 @@
 ---
 name: contracting-exports
-description: "Use when pulling, specifying, or validating the source exports the contracting pack runs on: job or tracking-dimension P&L, contract and claim registers, plant registers and hire dockets, payroll by employee and by job, and subcontractor payment listings, including file conventions, completeness checks and CSV parsing traps. Reference skill for the other skills in this pack."
+description: "Use when pulling or validating the contracting skills' exports: job P&L, contract and claim registers, plant hire dockets, payroll by job and subcontractors."
 ---
 
 # Contracting exports

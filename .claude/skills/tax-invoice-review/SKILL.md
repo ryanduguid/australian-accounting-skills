@@ -1,6 +1,6 @@
 ---
 name: tax-invoice-review
-description: "Use when checking Australian tax invoices, recipient-created tax invoices (RCTIs) or Peppol eInvoices before GST credits are claimed or supplier invoices are issued."
+description: "Use when checking tax invoices, recipient-created tax invoices (RCTIs) or Peppol eInvoices before GST credits are claimed or supplier invoices are issued."
 ---
 
 # Tax invoice, RCTI and eInvoice review

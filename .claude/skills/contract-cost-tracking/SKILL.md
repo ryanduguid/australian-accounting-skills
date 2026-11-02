@@ -1,6 +1,6 @@
 ---
 name: contract-cost-tracking
-description: "Use when job costing a construction or contracting job: committed against actual cost, labour, plant, subcontract and materials allocation, margin by contract, variance to budget, and the cost-to-date and cost-to-complete figures the WIP calculation consumes."
+description: "Use when job costing a construction or contracting job: committed and actual cost, labour, plant, subcontract and materials, margin and cost to complete."
 ---
 
 # Contract cost tracking

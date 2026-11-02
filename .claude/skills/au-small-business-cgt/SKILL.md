@@ -21,7 +21,7 @@ Asset/event details and ownership history, business-use periods, group/affiliate
 
 ## Hand-off and checks
 
-A concession-by-condition matrix and conditional calculation schedules. The adviser decides elections, eligibility and any restructuring or retirement strategy.
+A concession-by-condition matrix and conditional calculation schedules. The adviser decides elections, eligibility and any restructuring or retirement strategy. Route a proposed restructure rollover to `au-restructure-rollovers`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

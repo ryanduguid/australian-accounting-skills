@@ -1,6 +1,6 @@
 ---
 name: au-short-stay-accommodation
-description: "Use when preparing Australian short-stay letting workpapers for an individual host: platform income to gross, night-by-night use, holiday home evidence, the GST residential premises screen and state levy checks."
+description: "Use when preparing short-stay letting workpapers for an individual host: platform income, night-by-night use, holiday home evidence, GST and state levies."
 ---
 
 # Short-stay accommodation workpapers

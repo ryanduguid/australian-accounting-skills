@@ -1,6 +1,6 @@
 ---
 name: au-aml-ctf-client-coverage
-description: "Use when reconciling an Australian accounting practice's client list with its AML/CTF customer due diligence records to find clients with missing, incomplete or overdue checks."
+description: "Use when reconciling an Australian practice's client list with its AML/CTF customer due diligence records to find missing, incomplete or overdue checks."
 ---
 
 # AML/CTF client coverage review

@@ -1,6 +1,6 @@
 ---
 name: xero-exports
-description: Use when working with Xero report exports (trial balance, account transactions, aged receivables/payables, activity statement and GST reconciliation, payroll summaries), including parsing quirks, completeness checks, file conventions and debtor review preparation. Reference skill for the other skills in this pack.
+description: "Use when working with Xero report exports (trial balance, transactions, aged balances, activity statement, payroll): parsing, completeness and debtor review."
 ---
 
 # Working with Xero exports
