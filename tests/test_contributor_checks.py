@@ -25,8 +25,13 @@ GATE_HOOKS = {
     "python -m unittest discover -s tests -v": "unittest",
     "python scripts/validate_validation.py": "validation-pack",
     "python tests/verify_skills_cli.py": "skills-cli-discovery",
-    "python scripts/build_coverage.py --check": "coverage-matrix",
 }
+# The coverage matrix check is native, so CI runs it in the native job, which
+# the gate map does not read.
+COVERAGE_CHECK = (
+    "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check"
+)
+NATIVE_COVERAGE_CHECK = 'accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check'
 
 
 GATE_JOBS = ("lint", "verify")
@@ -73,7 +78,7 @@ class ContributorCheckTests(unittest.TestCase):
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
         self.assertIn("python -m pyright", gates)
-        self.assertEqual(len(gates), 8)
+        self.assertEqual(len(gates), 7)
         for gate in gates:
             with self.subTest(gate=gate):
                 self.assertNotIn("pip install", gate)
@@ -118,6 +123,22 @@ class ContributorCheckTests(unittest.TestCase):
                     hook_ids,
                     f"{gate!r} maps to pre-commit hook {hook!r}, which is not configured",
                 )
+
+    def test_the_coverage_matrix_check_runs_in_ci_locally_and_in_every_guide(self) -> None:
+        """The native job is outside the gate map, so this pairs its check by hand."""
+        workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
+        native = [
+            " ".join(step["run"].split())
+            for step in workflow["jobs"]["native"]["steps"]
+            if "run" in step
+        ]
+        self.assertTrue(any(NATIVE_COVERAGE_CHECK in command for command in native))
+        config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
+        hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
+        self.assertEqual(hooks["coverage-matrix"]["entry"], COVERAGE_CHECK)
+        for guide in CONTRIBUTOR_GUIDES:
+            with self.subTest(guide=guide):
+                self.assertIn(COVERAGE_CHECK, (REPOSITORY / guide).read_text(encoding="utf-8"))
 
     def test_the_gate_map_describes_gates_that_still_exist(self) -> None:
         """A mapping left behind after a gate is removed is a false assurance."""

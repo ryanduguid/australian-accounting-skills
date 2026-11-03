@@ -33,7 +33,7 @@ TaxMate's [individual-return workflow](https://github.com/nijanthan-dev/taxmate-
 | TaxMate pattern | Decision |
 | --- | --- |
 | Source retrieval dates, content digests and change reports | Already owned by `scripts/source_refresh.py` in this repository and the compilation-currency checks in `llm-tax-guardrails`. Retain the distinction between retrieval and human review. |
-| Capability/source/test coverage | Already derived by `scripts/build_coverage.py` and checked against `coverage.json`. TaxMate's runtime coverage manifest does not justify a second matrix here. |
+| Capability/source/test coverage | Already derived by the native `build-coverage` command in `tools/accounting-skills/` and checked against `coverage.json`. TaxMate's runtime coverage manifest does not justify a second matrix here. |
 | Pre-commit checks matching CI | Already enforced here by `.pre-commit-config.yaml` and contributor-check tests. |
 | Secret and client-identifier scanning | Already configured here and in `llm-tax-guardrails` with gitleaks. |
 | Calculators and financial CSV classification | Keep the maintained engines in `australian-accounting` and the existing Ozzit functions. TaxMate's rates, period limits and transaction heuristics are not an interchangeable calculation contract. |

@@ -178,7 +178,7 @@ Prepare a frozen packet outside the checkout with the existing card and exact
 skill-file digests:
 
 ```bash
-python scripts/prepare_trial.py month-end-mismatched-period ../trial-month-end --model unselected --runtime unselected
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- prepare-trial month-end-mismatched-period ../trial-month-end --model unselected --runtime unselected
 ```
 
 The new directory contains `input.md`, `context.json` and the withheld
@@ -225,14 +225,14 @@ untested. Every human verdict for that run is pending, so it adds no confirmed r
 
 ### Automated runs with a no-plugin baseline
 
-`scripts/build_plugin_evals.py` turns every card into a task-only
-`claude plugin eval` case in a clean plugin copy outside the repository. The
-copy leaves `validation/` and `tests/` behind. Its graders hold the withheld
+`accounting-skills build-plugin-evals` (in `tools/accounting-skills/`) turns
+every card into a task-only `claude plugin eval` case in a clean plugin copy
+outside the repository. The copy leaves `validation/` and `tests/` behind. Its graders hold the withheld
 sections and sit inside the copy, so check a kept trace for reads of `evals/`
 before relying on a run:
 
 ```bash
-python scripts/build_plugin_evals.py ../plugin-evals --runs 1
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-plugin-evals ../plugin-evals --runs 1
 cd ../plugin-evals
 claude plugin eval . --ablation with-without --threshold 0.8 --no-publish --keep-temp --max-cost-usd 10
 ```

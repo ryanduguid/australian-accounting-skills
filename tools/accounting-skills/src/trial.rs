@@ -22,28 +22,35 @@ pub fn digest(bytes: &[u8]) -> String {
     source_content::sha256(bytes)
 }
 
-pub fn task_input(card: &[u8], name: &str) -> Result<(Vec<u8>, Vec<String>)> {
+/// A card body's `## ` sections in card order, each stripped. A repeated
+/// heading is refused rather than letting one copy hide the other.
+pub(crate) fn card_sections(body: &str) -> Result<Vec<(&str, &str)>> {
     static HEADING: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"(?m)^## ([^\r\n]+)\r?$").unwrap());
-    let (metadata, body) = validation::parse_front_matter(std::str::from_utf8(card)?, name)?;
     let matches = HEADING
-        .captures_iter(&body)
+        .captures_iter(body)
         .collect::<std::result::Result<Vec<_>, _>>()?;
-    let mut sections = BTreeMap::new();
+    let mut sections: Vec<(&str, &str)> = Vec::new();
     for (i, cap) in matches.iter().enumerate() {
         let heading = cap.get(1).unwrap().as_str();
-        if sections.contains_key(heading) {
+        if sections.iter().any(|(seen, _)| *seen == heading) {
             return Err(format!("duplicate section: {heading}").into());
         }
         let end = matches
             .get(i + 1)
             .map(|next| next.get(0).unwrap().start())
             .unwrap_or(body.len());
-        sections.insert(
+        sections.push((
             heading,
             body[cap.get(0).unwrap().end()..end].trim_matches(source_content::space),
-        );
+        ));
     }
+    Ok(sections)
+}
+
+pub fn task_input(card: &[u8], name: &str) -> Result<(Vec<u8>, Vec<String>)> {
+    let (metadata, body) = validation::parse_front_matter(std::str::from_utf8(card)?, name)?;
+    let sections: BTreeMap<_, _> = card_sections(&body)?.into_iter().collect();
     let mut missing: Vec<_> = TASK_SECTIONS
         .iter()
         .filter(|heading| !sections.contains_key(**heading))
@@ -89,7 +96,7 @@ pub fn credential_name(name: &str) -> bool {
     matches!(suffix, "pem" | "key" | "token" | "tokens")
 }
 
-fn checked_components(
+pub(crate) fn checked_components(
     path: &Path,
     root: &Path,
     check_link: &mut impl FnMut(&Path) -> Result<bool>,

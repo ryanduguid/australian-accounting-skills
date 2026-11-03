@@ -102,13 +102,12 @@ jobs:
       - name: Verify Skills CLI discovery
         run: python tests/verify_skills_cli.py
 
-      - name: Verify coverage matrix
-        run: python scripts/build_coverage.py --check
-
-  # The native Rust port of scripts/ in tools/accounting-skills. The Python
-  # scripts stay authoritative; this job keeps the port building, checks this
-  # tree with it and replays the original tests and fabricated comparisons
-  # against it. No indexed source is fetched.
+  # The native Rust tooling in tools/accounting-skills. Its build-coverage,
+  # sweep-outcome, prepare-trial and build-plugin-evals commands are the only
+  # implementations, and this job's build-coverage --check is the coverage
+  # matrix gate. For the scripts still in scripts/ it is a candidate port, so
+  # the job replays their original tests and fabricated comparisons against it.
+  # No indexed source is fetched.
   native:
     name: native
     timeout-minutes: 30
@@ -171,11 +170,11 @@ jobs:
         if: matrix.os != 'ubuntu-latest'
         run: cargo test --locked --all-targets
 
-      # The floor is the measured line coverage, rounded down (69.59% on
-      # 3 November 2026). Raise it with the tests, never lower it to pass.
+      # The floor is the measured line coverage, rounded down (73.23% on
+      # 4 November 2026). Raise it with the tests, never lower it to pass.
       - name: Rust tests with line coverage
         if: matrix.os == 'ubuntu-latest'
-        run: cargo llvm-cov --locked --all-targets --fail-under-lines 69
+        run: cargo llvm-cov --locked --all-targets --fail-under-lines 73
 
       - name: Build
         run: |
@@ -196,8 +195,7 @@ jobs:
           binary="target/debug/accounting-skills$exe"
           probes=target/debug/examples
           mkdir -p "$RECORDS"
-          python -I tests/parity.py --root "$GITHUB_WORKSPACE" --binary "$binary" --record "$RECORDS/coverage.json"
-          for slice in sweep validation source_refresh source_passages trial; do
+          for slice in validation source_refresh source_passages; do
             python -I "tests/${slice}_parity.py" --root "$GITHUB_WORKSPACE" --binary "$binary" \
               --probe "$probes/${slice}_probe$exe" --record "$RECORDS/$slice.json"
           done

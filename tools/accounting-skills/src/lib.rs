@@ -1,5 +1,6 @@
-//! Coverage inventory derived from the same tree as scripts/build_coverage.py.
+//! The coverage matrix in coverage.json, derived from the skills, validation cards and tests.
 mod passage_diff;
+pub mod plugin_evals;
 mod source_codec_rules;
 mod source_content;
 mod source_date_rules;
@@ -29,7 +30,7 @@ use std::{
 };
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-const NOTE: &str = "Derived from the tree by scripts/build_coverage.py. Do not edit by hand. tests/test_coverage_matrix.py rebuilds this file and fails on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.";
+const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.";
 
 #[derive(Serialize)]
 pub struct Sources {

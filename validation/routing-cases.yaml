@@ -1,4 +1,4 @@
-# Routing checks for `scripts/build_plugin_evals.py`: each prompt names no skill, so
+# Routing checks for `accounting-skills build-plugin-evals`: each prompt names no skill, so
 # a run shows whether Claude Code picks `skill` from the listing and avoids the
 # neighbouring skills in `not`. All facts are synthetic. Graders check only which
 # skill fired, never the answer.

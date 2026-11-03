@@ -33,6 +33,12 @@ The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
 23 on 2 November, so confirmed verdicts cover 95 of the 135 cards.
 
+The coverage matrix builder, the source sweep's outcome check, task-only trial
+preparation and the plugin eval builder now run only as native commands in
+`tools/accounting-skills/`; their Python scripts are retired. The source sweep
+files its issue from a separate job that runs no repository code. None of this
+is part of the installed skills.
+
 # v0.5.0
 
 The pack moves from Apache-2.0 to the Functional Source License,

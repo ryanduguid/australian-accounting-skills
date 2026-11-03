@@ -20,8 +20,9 @@ These skills describe how an agent should work through an Australian accounting 
 
 ## Local verification
 
-Python 3.14 or newer. Install the pinned test dependency, Pyright and Ruff first,
-and put ShellCheck 0.11.0 and actionlint 1.7.12 on the path:
+Python 3.14 or newer, and Rust 1.99 or newer for the coverage check. Install
+the pinned test dependency, Pyright and Ruff first, and put ShellCheck 0.11.0
+and actionlint 1.7.12 on the path:
 
 ```bash
 python -m pip install --require-hashes --requirement requirements-test.txt --requirement requirements-lint.txt
@@ -32,18 +33,19 @@ actionlint
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
-python scripts/build_coverage.py --check
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
 ```
 
 Those 8 checks are the gates `.github/workflows/verify.yml` runs. Ruff,
-Pyright, ShellCheck and actionlint run in its `lint` job, then the 4
-verification checks run on Python 3.14 and 3.15.
+Pyright, ShellCheck and actionlint run in its `lint` job, then 3 verification
+checks run on Python 3.14 and 3.15, and the coverage check runs in its
+`native` job.
 `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
-A `native` job builds and tests the Rust port in `tools/accounting-skills/`
-and compares it with the scripts. It runs in CI only, with no pre-commit hook;
-its README lists the local commands.
+That job builds and tests the Rust tooling in `tools/accounting-skills/` and
+compares it with the scripts it ports. Apart from the coverage check, it runs
+in CI only, with no pre-commit hook; its README lists the local commands.
 
 `pip install pre-commit && pre-commit install` runs all of it before the commit
 lands. `.pre-commit-config.yaml` pins Ruff, Pyright, ShellCheck and actionlint

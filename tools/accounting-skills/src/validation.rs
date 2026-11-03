@@ -100,6 +100,9 @@ fn string(value: &Value) -> &str {
 fn matches(regex: &Regex, value: &str) -> bool {
     regex.is_match(value).unwrap_or(false)
 }
+pub(crate) fn is_slug(value: &str) -> bool {
+    matches(&SLUG, value)
+}
 pub use crate::validation_text::{
     normalise as normalise_for_sensitive_scan, read_utf8, sensitive as check_sensitive_content,
 };
