@@ -24,6 +24,7 @@ class SustainabilityReportScopeStep(unittest.TestCase):
         self.assertIn("2 of the 3 corporate size thresholds", self.step)
         self.assertIn("National Greenhouse and Energy Reporting Act 2007", self.step)
         self.assertIn("retail CCIV, the value of assets threshold", self.step)
+        self.assertIn("Both the size and asset tests include any entities it controls", self.step)
 
     def test_an_entity_without_a_chapter_2m_report_needs_none(self) -> None:
         self.assertIn("An entity with no Chapter 2M financial report needs none", self.step)
@@ -34,12 +35,17 @@ class SustainabilityReportScopeStep(unittest.TestCase):
         for start in ("1 January 2025 (Group 1)", "1 July 2026 (Group 2)", "1 July 2027 (Group 3)"):
             self.assertIn(start, self.step)
         self.assertIn("large proprietary company thresholds in section 45A", self.step)
+        self.assertIn(
+            "the proposals are not yet in effect, and the existing thresholds apply", self.step
+        )
         self.assertIn("from RG 280 Section B and the Act at use time", self.step)
 
     def test_the_outcome_is_recorded_not_prepared(self) -> None:
         self.assertIn("the group and the check date, or `UNVERIFIED`", self.step)
         self.assertIn("a separate deliverable that this skill does not prepare", self.step)
-        self.assertIn("and the sustainability report scope record", self.text)
+        self.assertIn(
+            "approves accounting judgements and the sustainability report scope record", self.text
+        )
 
     def test_the_asic_sources_are_cited_and_recorded(self) -> None:
         recorded = {
