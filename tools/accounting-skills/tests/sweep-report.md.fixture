@@ -1,0 +1,33 @@
+# Primary source sweep
+
+Swept 10 records over 10 distinct pages at 2026-09-20 19:00 UTC.
+
+- changed: 1
+- missing (dead link, repoint the record): 1
+- unreadable (a fault in this script): 1
+- blocked (host refuses automation, review by hand): 1
+- unreachable (transport fault, may clear): 1
+- review-due (manual review overdue or reverify_by passed): 1
+- baseline-required (review and record a readable baseline): 1
+- scheduled (reviewed by hand, next review ): 1
+- baseline recorded or reading changed: 1
+- unchanged: 1
+
+A blocked or unreachable source is a fact about the network, not a
+finding about this repository, so it is listed but does not fail a
+--check run. Everything else asks for an edit here.
+
+A digest change means the page's readable text moved. It does not
+mean a rule changed, and it never changes `checked_at`: read the
+source and update the review date by hand if the workflow relies
+on material that moved.
+
+| Outcome | Skill | Source | Reviewed | Upstream | Detail |
+| --- | --- | --- | --- | --- | --- |
+| baseline-required | `example-skill` | [baseline-required 0](https://example.test/baseline-required/0) | 2026-09-08 | not published | detail |
+| blocked | `example-skill` | [blocked 0](https://example.test/blocked/0) | 2026-09-08 | not published | detail |
+| changed | `example-skill` | [changed 0](https://example.test/changed/0) | 2026-09-08 | not published | detail |
+| missing | `example-skill` | [missing 0](https://example.test/missing/0) | 2026-09-08 | not published | detail |
+| review-due | `example-skill` | [review-due 0](https://example.test/review-due/0) | 2026-09-08 | not published | detail |
+| unreachable | `example-skill` | [unreachable 0](https://example.test/unreachable/0) | 2026-09-08 | not published | detail |
+| unreadable | `example-skill` | [unreadable 0](https://example.test/unreadable/0) | 2026-09-08 | not published | detail |

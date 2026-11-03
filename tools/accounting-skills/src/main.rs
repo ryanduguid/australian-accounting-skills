@@ -22,6 +22,9 @@ fn run() -> Result<u8> {
     if command.as_deref() == Some(std::ffi::OsStr::new("validate-validation")) {
         return accounting_skills::validation::cli(args);
     }
+    if command.as_deref() == Some(std::ffi::OsStr::new("build-plugin-evals")) {
+        return accounting_skills::plugin_evals::cli(args);
+    }
     if command.as_deref() == Some(std::ffi::OsStr::new("sweep-outcome")) {
         return accounting_skills::sweep::cli(args);
     }
@@ -58,7 +61,7 @@ fn run() -> Result<u8> {
         if check && current != matrix {
             io::stderr().write_all(
                 platform_text(
-                    "coverage.json is out of date. Run: python scripts/build_coverage.py --write\n",
+                    "coverage.json is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
                 )
                 .as_bytes(),
             )?;

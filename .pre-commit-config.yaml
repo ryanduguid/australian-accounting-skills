@@ -7,6 +7,9 @@
 #
 # Ruff, Pyright, ShellCheck and actionlint are pinned to the versions verify.yml
 # installs, so a hook that passes here cannot fail there on a version difference.
+# The coverage-matrix hook runs the native command in tools/accounting-skills,
+# so it needs Rust 1.99 or later; that directory's rust-toolchain.toml pins the
+# version CI uses.
 #
 #   pip install pre-commit && pre-commit install
 #   pre-commit run --all-files
@@ -71,10 +74,10 @@ repos:
 
       - id: coverage-matrix
         name: coverage.json matches the tree
-        entry: python scripts/build_coverage.py --check
-        language: python
+        entry: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
+        language: system
         pass_filenames: false
-        files: ^(\.claude/skills/|validation/cases/|tests/|scripts/build_coverage\.py|coverage\.json)
+        files: ^(\.claude/skills/|validation/cases/|tests/|tools/accounting-skills/src/|coverage\.json)
 
       - id: whitespace
         name: git diff --cached --check

@@ -15,10 +15,14 @@ name: Source sweep
 # They stay in the body of every report, and the closing comment counts them
 # rather than claiming every source was checked.
 #
-# scripts/sweep_outcome.py is the only thing that turns the exit status into
-# an outcome. It accepts exit 0 or 2 only with a report written during this run
-# whose counts agree with that status; exit 1, any other code, a missing or
-# stale report, or a report that contradicts the status fails the job.
+# `accounting-skills sweep-outcome` (tools/accounting-skills) is the only thing
+# that turns the exit status into an outcome. It accepts exit 0 or 2 only with
+# a report written during this run whose counts agree with that status; exit 1,
+# any other code, a missing or stale report, or a report that contradicts the
+# status fails the job.
+#
+# The sweep job builds that command and reads the web with a read-only token.
+# Only the file job can write issues, and it runs no repository code.
 
 on:
   schedule:
@@ -37,11 +41,14 @@ concurrency:
 jobs:
   sweep:
     name: sweep
-    timeout-minutes: 30
+    # Sweeps in October and November 2026 took up to 23 minutes; the build adds a few.
+    timeout-minutes: 40
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      issues: write
+    outputs:
+      outcome: ${{ steps.sweep.outputs.outcome }}
+      comment: ${{ steps.sweep.outputs.comment }}
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -54,6 +61,13 @@ jobs:
           python-version: "3.15"
           allow-prereleases: true
 
+      - name: Build the outcome command
+        working-directory: tools/accounting-skills
+        # rustup reads the version from rust-toolchain.toml in this directory.
+        run: |
+          rustup toolchain install
+          cargo build --locked --release --bin accounting-skills
+
       - name: Sweep the indexed sources
         id: sweep
         run: |
@@ -63,14 +77,37 @@ jobs:
           python scripts/source_refresh.py --check --report sweep.md
           status=$?
           set -e
-          python scripts/sweep_outcome.py --status "$status" --report sweep.md --started "$started" \
-            >> "$GITHUB_OUTPUT"
+          tools/accounting-skills/target/release/accounting-skills sweep-outcome \
+            --status "$status" --report sweep.md --started "$started" >> "$GITHUB_OUTPUT"
+
+      - name: Publish the report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: source-sweep
+          path: sweep.md
+          if-no-files-found: error
+
+  file:
+    name: file the result
+    needs: sweep
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      TITLE: Primary source sweep
+    steps:
+      - name: Download the report
+        if: needs.sweep.outputs.outcome == 'findings'
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: source-sweep
 
       - name: File the result
-        if: steps.sweep.outputs.outcome == 'findings'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TITLE: Primary source sweep
+        if: needs.sweep.outputs.outcome == 'findings'
         run: |
           existing=$(gh issue list --state open --search "$TITLE in:title" \
             --json number,title \
@@ -83,11 +120,9 @@ jobs:
           fi
 
       - name: Close the issue when nothing here needs an edit
-        if: steps.sweep.outputs.outcome == 'clean'
+        if: needs.sweep.outputs.outcome == 'clean'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TITLE: Primary source sweep
-          COMMENT: ${{ steps.sweep.outputs.comment }}
+          COMMENT: ${{ needs.sweep.outputs.comment }}
         run: |
           existing=$(gh issue list --state open --search "$TITLE in:title" \
             --json number,title \
@@ -95,11 +130,3 @@ jobs:
           if [ -n "$existing" ]; then
             gh issue close "$existing" --comment "$COMMENT"
           fi
-
-      - name: Publish the report
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: source-sweep
-          path: sweep.md
-          if-no-files-found: error

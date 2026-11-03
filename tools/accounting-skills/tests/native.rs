@@ -43,9 +43,60 @@ fn frontmatter_preserves_python_line_boundaries_and_refuses_missing_markers() {
     fs::write(&file, "---\u{85}x\u{2028}---\nbody").unwrap();
     assert_eq!(front_matter(&file).unwrap(), "x");
     fs::write(&file, "---\nmissing end").unwrap();
-    assert!(front_matter(&file).is_err());
+    assert_eq!(
+        front_matter(&file).unwrap_err().to_string(),
+        "card.md: front matter must end with '---'"
+    );
     fs::write(&file, "bad\n---").unwrap();
-    assert!(front_matter(&file).is_err());
+    assert_eq!(
+        front_matter(&file).unwrap_err().to_string(),
+        "card.md: front matter must start with '---'"
+    );
+}
+
+#[test]
+fn check_write_and_print_report_on_the_expected_streams() {
+    let root = tempfile::tempdir().unwrap();
+    let run = |flag: &str| {
+        Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+            .args(["build-coverage", flag])
+            .current_dir(root.path())
+            .output()
+            .unwrap()
+    };
+    let text = |bytes: Vec<u8>| String::from_utf8(bytes).unwrap().replace("\r\n", "\n");
+    let matrix = rendered(root.path()).unwrap();
+    let stale = run("--check");
+    assert_eq!(stale.status.code(), Some(2));
+    assert!(stale.stdout.is_empty());
+    assert_eq!(
+        text(stale.stderr),
+        "coverage.json is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n"
+    );
+    let written = run("--write");
+    assert_eq!(
+        (
+            written.status.code(),
+            text(written.stdout),
+            text(written.stderr)
+        ),
+        (Some(0), "wrote coverage.json\n".to_owned(), String::new())
+    );
+    assert_eq!(
+        fs::read_to_string(root.path().join("coverage.json"))
+            .unwrap()
+            .replace("\r\n", "\n"),
+        matrix
+    );
+    let current = run("--check");
+    assert_eq!(
+        (
+            current.status.code(),
+            text(current.stdout),
+            text(current.stderr)
+        ),
+        (Some(0), matrix, String::new())
+    );
 }
 
 #[test]

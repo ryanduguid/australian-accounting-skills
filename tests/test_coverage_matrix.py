@@ -4,64 +4,51 @@
 `coverage.json` says what backs each skill: how many primary sources it
 indexes, whether any moved since a person last reviewed them, which validation
 cards exercise it, and whether a test asserts its text. A file like that is
-worth nothing if it can drift, so it is generated and these checks rebuild it
-and compare. They also refuse the two ways a matrix quietly becomes a
-decoration: a summary that disagrees with its own rows, and a classification
-that lands every skill in the same bucket.
+worth nothing if it can drift, so `accounting-skills build-coverage` generates
+it, and its `--check` mode, run by the native CI job and the coverage-matrix
+pre-commit hook, rebuilds it and compares. These checks refuse the two ways a
+matrix quietly becomes a decoration: a summary that disagrees with its own
+rows, and a classification that lands every skill in the same bucket.
 """
 
 from __future__ import annotations
 
 import json
 import re
-import sys
 import unittest
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 COVERAGE_FILE = REPOSITORY / "coverage.json"
 
-# `scripts/` is a directory of standalone entry points, not a package, so it is
-# put on the path rather than imported through a parent module. `extraPaths` in
-# pyproject.toml points the type checker at the same directory.
-sys.path.insert(0, str(REPOSITORY / "scripts"))
-
-import build_coverage  # noqa: E402
-
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
-def matrix() -> build_coverage.Matrix:
-    """Read the committed matrix under the shape the builder writes."""
-    return cast(build_coverage.Matrix, json.loads(COVERAGE_FILE.read_text(encoding="utf-8")))
+def matrix() -> dict[str, Any]:
+    return json.loads(COVERAGE_FILE.read_text(encoding="utf-8"))
 
 
-def rows() -> list[build_coverage.SkillRow]:
+def rows() -> list[dict[str, Any]]:
     return matrix()["skills"]
 
 
 class CoverageMatrixTests(unittest.TestCase):
-    def test_committed_matrix_matches_a_rebuild(self) -> None:
-        self.assertEqual(
-            COVERAGE_FILE.read_text(encoding="utf-8"),
-            build_coverage.rendered(build_coverage.build()),
-            "coverage.json is stale. Run: python scripts/build_coverage.py --write",
-        )
-
     def test_every_skill_appears_exactly_once(self) -> None:
         listed = [row["skill"] for row in rows()]
         self.assertEqual(listed, sorted(listed))
         self.assertEqual(len(listed), len(set(listed)))
-        self.assertEqual(set(listed), set(build_coverage.discover_skills()))
+        self.assertEqual(
+            set(listed), {path.parent.name for path in SKILLS_DIRECTORY.glob("*/SKILL.md")}
+        )
 
     def test_totals_agree_with_the_rows_they_summarise(self) -> None:
         """A summary nobody recomputes is the first thing to go wrong."""
         listed = rows()
         totals = matrix()["totals"]
-        expected = build_coverage.Totals(
+        expected = dict(
             skills=len(listed),
             sources_indexed=sum(row["sources"]["indexed"] for row in listed),
             skills_source_exempt=sum(1 for row in listed if row["sources"]["exempt"]),
@@ -77,30 +64,6 @@ class CoverageMatrixTests(unittest.TestCase):
             ),
         )
         self.assertEqual(totals, expected)
-
-    def test_inventory_sweeps_still_sweep(self) -> None:
-        """The inventory list is a claim about those files, so check it holds.
-
-        A test file is excluded from a skill's evidence because it walks the
-        whole directory and names every skill by construction. If one is
-        rewritten to check a handful of skills closely, it becomes real
-        evidence and must leave the list, otherwise the matrix hides it.
-        """
-        skills = build_coverage.discover_skills()
-        for name in build_coverage.INVENTORY_SWEEPS:
-            with self.subTest(test_file=name):
-                path = REPOSITORY / "tests" / name
-                self.assertTrue(path.is_file(), "an inventory sweep must exist to be excluded")
-                text = path.read_text(encoding="utf-8")
-                named = sum(
-                    1 for skill in skills if re.search("[\"']" + re.escape(skill) + "[\"']", text)
-                )
-                self.assertGreaterEqual(
-                    named / len(skills),
-                    build_coverage.INVENTORY_SHARE,
-                    f"{name} names {named} of {len(skills)} skills, so it is no longer an "
-                    "inventory sweep. Remove it from INVENTORY_SWEEPS.",
-                )
 
     def test_behavioural_gates_separate_some_skills_from_others(self) -> None:
         """Guard against a classification that has stopped discriminating.
@@ -124,7 +87,9 @@ class CoverageMatrixTests(unittest.TestCase):
             skill = row["skill"]
             cards = row["validation"]["case_ids"]
             with self.subTest(skill=skill):
-                seeded = build_coverage.SEEDED_CASE.format(skill=skill)
+                # The seeded card; a skill with only this one has nothing
+                # written for its own failure modes.
+                seeded = f"{skill}-missing-evidence"
                 self.assertEqual(row["validation"]["only_seeded_case"], cards == [seeded])
                 self.assertEqual(row["validation"]["cases"], len(cards))
                 self.assertTrue(cards, "every skill needs at least one validation card")

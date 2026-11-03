@@ -83,7 +83,7 @@ the credit line is the author's request. Never add either to a client deliverabl
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |
 | `validation/` | Validation pack the tests exercise |
-| `tools/accounting-skills/` | Native Rust port of `scripts/`; the Python scripts stay authoritative |
+| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, and a candidate port of the other `scripts/` |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip
@@ -109,14 +109,16 @@ actionlint
 python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
-python scripts/build_coverage.py --check
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
 git diff --check
 ```
 
-The 6 Python checks, ShellCheck and actionlint are the gates
-`.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
-actionlint 1.7.12 run in its `lint` job, then the 4 verification checks run on
-Python 3.14 and 3.15. A third job scans the full history with gitleaks against
+The 5 Python checks, ShellCheck, actionlint and the coverage check are the
+gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
+actionlint 1.7.12 run in its `lint` job, then the 3 Python verification checks
+run on Python 3.14 and 3.15. The coverage check needs Rust 1.99 or newer; the
+`native` job runs the same command on Linux and Windows. A third job scans the
+full history with gitleaks against
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
 
@@ -138,8 +140,9 @@ states no fact; the person who accepts the source replaces it. A person also set
 a volatile record's fact may serve as a cross-check. Every volatile record
 requires this date within 400 days after `checked_at`. The sweep reports a record past that date as
 review-due. `.github/workflows/source-sweep.yml` runs the sweep weekly and
-files the result as an issue; `scripts/sweep_outcome.py` is what turns the
-sweep's exit status and report into that outcome, and it fails the run on
+files the result as an issue; `accounting-skills sweep-outcome`, built from
+`tools/accounting-skills/`, is what turns the sweep's exit status and report
+into that outcome, and it fails the run on
 exit 1, any unexpected code, or a missing, stale or contradictory report. `coverage.json` carries the result per skill,
 including any source that published a change after its last review.
 

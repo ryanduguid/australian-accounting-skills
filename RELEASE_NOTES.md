@@ -38,6 +38,12 @@ employer across 2 states, back pay and a reversal processed after 30 June,
 and a part-year employer at the monthly threshold. They have no confirmed
 verdict yet.
 
+The coverage matrix builder, the source sweep's outcome check, task-only trial
+preparation and the plugin eval builder now run only as native commands in
+`tools/accounting-skills/`; their Python scripts are retired. The source sweep
+files its issue from a separate job that runs no repository code. None of this
+is part of the installed skills.
+
 # v0.5.0
 
 The pack moves from Apache-2.0 to the Functional Source License,
