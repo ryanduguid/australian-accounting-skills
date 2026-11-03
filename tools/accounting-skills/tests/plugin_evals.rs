@@ -291,6 +291,29 @@ fn build_refuses_the_repository_an_existing_destination_and_a_malformed_card() {
     assert!(!target.exists());
 }
 
+#[test]
+fn routing_cases_refuse_yaml_aliases_and_duplicate_keys() {
+    let outside = tempfile::tempdir().unwrap();
+    for (routing, refusal) in [
+        (
+            "- id: payroll\n  skill: bas-preparation\n  not: &others [au-payroll-review]\n  prompt: A synthetic prompt.\n- id: other\n  skill: bas-preparation\n  not: *others\n  prompt: Another synthetic prompt.\n",
+            "aliases",
+        ),
+        (
+            "- id: payroll\n  skill: bas-preparation\n  skill: au-payroll-review\n  not: [au-close]\n  prompt: A synthetic prompt.\n",
+            "duplicate",
+        ),
+    ] {
+        let root = tempfile::tempdir().unwrap();
+        fixture(root.path());
+        fs::write(root.path().join("validation/routing-cases.yaml"), routing).unwrap();
+        let target = outside.path().join("plugin");
+        let error = build(&target, 1, 12, root.path()).unwrap_err();
+        assert!(error.to_string().contains(refusal), "{error}");
+        assert!(!target.exists());
+    }
+}
+
 #[cfg(any(unix, windows))]
 #[test]
 fn linked_plugin_files_are_refused() {

@@ -374,7 +374,9 @@ Front matter uses double-quoted YAML scalars and flow lists, which YAML 1.1 and
 Prompt and grader bodies, copied files and the manifest are byte-identical to
 its output. Every case is rendered before anything is written, so a malformed
 card or routing case leaves no partial copy. Routing case ids and skill names
-must be lowercase hyphenated slugs. Links and Windows reparse points among the
-copied files are refused; the Python builder followed them. `--runs` and
-`--max-turns` take positive integers and default to 1 and 12. Success prints
+must be lowercase hyphenated slugs. The routing file is read with the card YAML
+subset, so aliases, anchors, tags and duplicate keys are refused where PyYAML
+accepted them. Links and Windows reparse points among the copied files are
+refused; the Python builder followed them. `--runs` and `--max-turns` take
+integers from 1 to 4,294,967,295 and default to 1 and 12. Success prints
 the case count, usage errors exit 2 and processing failures exit 1.
