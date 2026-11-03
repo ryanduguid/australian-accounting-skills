@@ -1,5 +1,5 @@
 use accounting_skills::trial;
-use serde_json::{Value, json};
+use serde_json::Value;
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -320,13 +320,10 @@ fn the_command_keeps_the_selected_model_and_runtime_and_refuses_bad_use() {
         root.path(),
     );
     assert_eq!(output.status.code(), Some(0), "{output:?}");
-    let context: Value =
-        serde_json::from_slice(&fs::read(destination.join("context.json")).unwrap()).unwrap();
-    assert_eq!(
-        (&context["model"], &context["runtime"]),
-        (&json!("test-model"), &json!("test-runtime"))
-    );
     let saved = fs::read(destination.join("context.json")).unwrap();
+    let context: Value = serde_json::from_slice(&saved).unwrap();
+    assert_eq!(context["model"], "test-model");
+    assert_eq!(context["runtime"], "test-runtime");
     let inside = root.path().join("trial");
     let traversal = outside.path().join("traversal");
     let missing = outside.path().join("missing");

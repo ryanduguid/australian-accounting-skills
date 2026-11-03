@@ -34,6 +34,9 @@ const LINK_ERROR: &str = "plugin files must not be symbolic links or reparse poi
 /// One case's files, keyed by their path relative to the case directory.
 pub type CaseFiles = BTreeMap<String, String>;
 
+/// Cases in build order, each named by its directory under `evals/`.
+type Cases = Vec<(String, CaseFiles)>;
+
 enum Field {
     Text(String),
     Count(u32),
@@ -84,8 +87,65 @@ fn front_matter(fields: &[(&str, Field)]) -> String {
     text + "---\n"
 }
 
-fn allowed_tools() -> Field {
-    Field::List(ALLOWED_TOOLS.iter().map(|tool| tool.to_string()).collect())
+/// A case prompt: its eval settings, then the task the evaluated session sees.
+fn prompt_file(
+    name: &str,
+    description: String,
+    tags: Vec<String>,
+    runs: u32,
+    max_turns: u32,
+    task: &str,
+) -> String {
+    front_matter(&[
+        ("name", Field::Text(name.into())),
+        ("description", Field::Text(description)),
+        ("tags", Field::List(tags)),
+        ("runs", Field::Count(runs)),
+        ("max_turns", Field::Count(max_turns)),
+        (
+            "allowed_tools",
+            Field::List(ALLOWED_TOOLS.iter().map(|tool| tool.to_string()).collect()),
+        ),
+    ]) + "\n"
+        + task
+        + "\n"
+}
+
+/// The model-judged graders for the first two withheld sections, in order:
+/// file name and instruction.
+const JUDGED: [(&str, &str); 2] = [
+    (
+        "graders/required-checks.md",
+        "PASS only if the answer meets every check below. FAIL if it misses any.",
+    ),
+    (
+        "graders/restraint.md",
+        "PASS unless the answer does any of the following. FAIL if it does.",
+    ),
+];
+
+fn judge(instruction: &str, section: &str) -> String {
+    front_matter(&[
+        ("type", Field::Text("llm".into())),
+        (
+            "criteria",
+            Field::Text(format!("{JUDGE_PREFACE}\n\n{instruction}\n\n{section}\n")),
+        ),
+        ("focus", Field::Text("last_message".into())),
+    ]) + "\nJudge the final answer against the criteria.\n"
+}
+
+/// The text of each withheld section, in `WITHHELD_SECTIONS` order.
+fn withheld<'a>(sections: &[(&str, &'a str)], name: &str) -> Result<[&'a str; 3]> {
+    let mut texts = [""; 3];
+    for (text, heading) in texts.iter_mut().zip(WITHHELD_SECTIONS) {
+        *text = sections
+            .iter()
+            .find(|(seen, _)| *seen == heading)
+            .map(|(_, text)| *text)
+            .ok_or_else(|| format!("{name}: missing section: {heading}"))?;
+    }
+    Ok(texts)
 }
 
 /// A `tool_used` grader counting Skill calls to any of `skills`, with or
@@ -121,17 +181,7 @@ pub fn build_case(card: &str, case_id: &str, runs: u32, max_turns: u32) -> Resul
     let name = format!("{case_id}.md");
     let (metadata, body) = validation::parse_front_matter(card, &name)?;
     let sections = trial::card_sections(&body).map_err(|error| format!("{name}: {error}"))?;
-    let section = |heading: &str| {
-        sections
-            .iter()
-            .find(|(seen, _)| *seen == heading)
-            .map(|(_, text)| *text)
-    };
-    for heading in WITHHELD_SECTIONS {
-        if section(heading).is_none() {
-            return Err(format!("{name}: missing section: {heading}").into());
-        }
-    }
+    let withheld = withheld(&sections, &name)?;
     let skills: Vec<&str> = metadata["target_skills"]
         .as_array()
         .unwrap()
@@ -144,59 +194,31 @@ pub fn build_case(card: &str, case_id: &str, runs: u32, max_turns: u32) -> Resul
         .map(|(heading, text)| format!("## {heading}\n\n{text}"))
         .collect::<Vec<_>>()
         .join("\n\n");
-    let judge = |instruction: &str, heading: &str| {
-        front_matter(&[
-            ("type", Field::Text("llm".into())),
-            (
-                "criteria",
-                Field::Text(format!(
-                    "{JUDGE_PREFACE}\n\n{instruction}\n\n{}\n",
-                    section(heading).unwrap()
-                )),
-            ),
-            ("focus", Field::Text("last_message".into())),
-        ]) + "\nJudge the final answer against the criteria.\n"
-    };
     let tags = std::iter::once("card")
         .chain(skills.iter().copied())
         .map(str::to_owned)
         .collect();
-    Ok(CaseFiles::from([
+    let mut files = CaseFiles::from([
         (
             "prompt.md".into(),
-            front_matter(&[
-                ("name", Field::Text(case_id.into())),
-                (
-                    "description",
-                    Field::Text(format!("Task-only input from validation card {case_id}.")),
-                ),
-                ("tags", Field::List(tags)),
-                ("runs", Field::Count(runs)),
-                ("max_turns", Field::Count(max_turns)),
-                ("allowed_tools", allowed_tools()),
-            ]) + "\n"
-                + &task
-                + "\n",
+            prompt_file(
+                case_id,
+                format!("Task-only input from validation card {case_id}."),
+                tags,
+                runs,
+                max_turns,
+                &task,
+            ),
         ),
         (
             "graders/skill-fired.md".into(),
             skill_grader(&skills, 1, None) + "\nA target skill must fire.\n",
         ),
-        (
-            "graders/required-checks.md".into(),
-            judge(
-                "PASS only if the answer meets every check below. FAIL if it misses any.",
-                "Required checks",
-            ),
-        ),
-        (
-            "graders/restraint.md".into(),
-            judge(
-                "PASS unless the answer does any of the following. FAIL if it does.",
-                "Must not do",
-            ),
-        ),
-    ]))
+    ]);
+    for ((file, instruction), section) in JUDGED.into_iter().zip(withheld) {
+        files.insert(file.into(), judge(instruction, section));
+    }
+    Ok(files)
 }
 
 /// Return one routing case's directory name and files: the expected skill must
@@ -228,21 +250,14 @@ pub fn build_routing_case(case: &Value, runs: u32, max_turns: u32) -> Result<(St
     let mut files = CaseFiles::from([
         (
             "prompt.md".into(),
-            front_matter(&[
-                ("name", Field::Text(name.clone())),
-                (
-                    "description",
-                    Field::Text(format!(
-                        "Routing check: the prompt names no skill; {skill} should fire."
-                    )),
-                ),
-                ("tags", Field::List(vec!["routing".into(), skill.into()])),
-                ("runs", Field::Count(runs)),
-                ("max_turns", Field::Count(max_turns)),
-                ("allowed_tools", allowed_tools()),
-            ]) + "\n"
-                + prompt
-                + "\n",
+            prompt_file(
+                &name,
+                format!("Routing check: the prompt names no skill; {skill} should fire."),
+                vec!["routing".into(), skill.into()],
+                runs,
+                max_turns,
+                prompt,
+            ),
         ),
         (
             "graders/skill-fired.md".into(),
@@ -277,20 +292,9 @@ fn copy(source: &Path, target: &Path) -> Result<()> {
     Ok(())
 }
 
-/// Write the plugin copy and its cases to a new `destination` outside `root`,
-/// and return the manifest.
-pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Result<Value> {
-    let canonical = fs::canonicalize(root)?;
-    let resolved = sweep::resolve(destination, 0)?;
-    if resolved.starts_with(&canonical) {
-        return Err("the evaluated plugin copy must be outside the repository".into());
-    }
-    if resolved.exists() {
-        return Err("destination already exists; preserve the earlier build".into());
-    }
-    let destination = source_passages::output_path(destination, &canonical)?;
-    // Every case is rendered before anything is created, so a malformed card or
-    // routing case leaves no partial copy behind.
+/// Render every validation card's case, and return the cases with each card's
+/// digest.
+fn card_cases(canonical: &Path, runs: u32, max_turns: u32) -> Result<(Cases, Map<String, Value>)> {
     let mut cases = Vec::new();
     let mut digests = Map::new();
     for path in crate::entries(&canonical.join("validation/cases"))? {
@@ -307,23 +311,13 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
         let files = build_case(std::str::from_utf8(&data)?, &stem, runs, max_turns)?;
         cases.push((stem, files));
     }
-    let routing_bytes = fs::read(canonical.join(ROUTING_CASES))?;
-    let routing = strict_yaml::card_mapping(std::str::from_utf8(&routing_bytes)?)?;
-    let mut routes = Vec::new();
-    for case in routing
-        .as_array()
-        .ok_or("routing cases must be a YAML list")?
-    {
-        let (name, files) = build_routing_case(case, runs, max_turns)?;
-        routes.push(name.clone());
-        cases.push((name, files));
-    }
-    let mut names = BTreeSet::new();
-    if let Some((name, _)) = cases.iter().find(|(name, _)| !names.insert(name)) {
-        return Err(format!("duplicate eval case: {name}").into());
-    }
+    Ok((cases, digests))
+}
+
+/// Copy the plugin into the new `destination` and write the cases beside it.
+fn write_copy(canonical: &Path, destination: &Path, cases: &[(String, CaseFiles)]) -> Result<()> {
     fs::create_dir_all(destination.parent().ok_or("destination has no parent")?)?;
-    fs::create_dir(&destination)?;
+    fs::create_dir(destination)?;
     // Cards and tests stay behind, so the evaluated session cannot read them.
     for relative in PLUGIN_PATHS {
         let source = canonical.join(relative);
@@ -339,7 +333,7 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
         fs::create_dir_all(target.parent().unwrap())?;
         copy(&source, &target)?;
     }
-    for (name, files) in &cases {
+    for (name, files) in cases {
         for (relative, text) in files {
             let target = destination.join("evals").join(name).join(relative);
             fs::create_dir_all(target.parent().unwrap())?;
@@ -350,10 +344,43 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
                 .write_all(text.as_bytes())?;
         }
     }
+    Ok(())
+}
+
+/// Write the plugin copy and its cases to a new `destination` outside `root`,
+/// and return the manifest.
+pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Result<Value> {
+    let canonical = fs::canonicalize(root)?;
+    let resolved = sweep::resolve(destination, 0)?;
+    if resolved.starts_with(&canonical) {
+        return Err("the evaluated plugin copy must be outside the repository".into());
+    }
+    if resolved.exists() {
+        return Err("destination already exists; preserve the earlier build".into());
+    }
+    let destination = source_passages::output_path(destination, &canonical)?;
+    // Every case is rendered before anything is created, so a malformed card or
+    // routing case leaves no partial copy behind.
+    let (mut cases, digests) = card_cases(&canonical, runs, max_turns)?;
+    let routing_bytes = fs::read(canonical.join(ROUTING_CASES))?;
+    let routing = strict_yaml::card_mapping(std::str::from_utf8(&routing_bytes)?)?;
+    let mut routes = Vec::new();
+    for case in routing
+        .as_array()
+        .ok_or("routing cases must be a YAML list")?
+    {
+        let (name, files) = build_routing_case(case, runs, max_turns)?;
+        routes.push(name.clone());
+        cases.push((name, files));
+    }
+    let mut names = BTreeSet::new();
+    if let Some((name, _)) = cases.iter().find(|(name, _)| !names.insert(name)) {
+        return Err(format!("duplicate eval case: {name}").into());
+    }
+    write_copy(&canonical, &destination, &cases)?;
     let head = std::process::Command::new("git")
-        .arg("-C")
-        .arg(root)
         .args(["rev-parse", "HEAD"])
+        .current_dir(root)
         .output()?;
     let manifest = json!({
         "commit": String::from_utf8_lossy(&head.stdout).trim(),
@@ -369,25 +396,30 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
     Ok(manifest)
 }
 
-pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
-    let usage = "usage: accounting-skills build-plugin-evals DESTINATION [--runs N] [--max-turns N] [--root PATH]";
+enum Parsed {
+    Run {
+        destination: PathBuf,
+        root: PathBuf,
+        runs: u32,
+        max_turns: u32,
+    },
+    Help,
+    Usage,
+}
+
+fn parse(mut args: impl Iterator<Item = OsString>) -> Result<Parsed> {
     let mut destination = None;
     let mut root = std::env::current_dir()?;
-    let mut runs = 1;
-    let mut max_turns = 12;
+    let (mut runs, mut max_turns) = (1, 12);
     while let Some(arg) = args.next() {
         match arg.to_str() {
-            Some("--help" | "-h") => {
-                println!("{usage}");
-                return Ok(0);
-            }
+            Some("--help" | "-h") => return Ok(Parsed::Help),
             Some(key @ ("--runs" | "--max-turns" | "--root")) => {
                 let Some(value) = args
                     .next()
                     .filter(|value| !value.as_encoded_bytes().starts_with(b"--"))
                 else {
-                    eprintln!("{usage}");
-                    return Ok(2);
+                    return Ok(Parsed::Usage);
                 };
                 if key == "--root" {
                     root = value.into();
@@ -399,27 +431,47 @@ pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
                     .and_then(|value| value.parse::<u32>().ok())
                     .filter(|count| *count > 0)
                 else {
-                    eprintln!("{usage}");
-                    return Ok(2);
+                    return Ok(Parsed::Usage);
                 };
-                if key == "--runs" {
-                    runs = count;
+                *if key == "--runs" {
+                    &mut runs
                 } else {
-                    max_turns = count;
-                }
+                    &mut max_turns
+                } = count;
             }
             Some(value) if !value.starts_with('-') && destination.is_none() => {
                 destination = Some(PathBuf::from(&arg));
             }
-            _ => {
-                eprintln!("{usage}");
-                return Ok(2);
-            }
+            _ => return Ok(Parsed::Usage),
         }
     }
-    let Some(destination) = destination else {
-        eprintln!("{usage}");
-        return Ok(2);
+    Ok(
+        destination.map_or(Parsed::Usage, |destination| Parsed::Run {
+            destination,
+            root,
+            runs,
+            max_turns,
+        }),
+    )
+}
+
+pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
+    let usage = "usage: accounting-skills build-plugin-evals DESTINATION [--runs N] [--max-turns N] [--root PATH]";
+    let (destination, root, runs, max_turns) = match parse(args)? {
+        Parsed::Run {
+            destination,
+            root,
+            runs,
+            max_turns,
+        } => (destination, root, runs, max_turns),
+        Parsed::Help => {
+            println!("{usage}");
+            return Ok(0);
+        }
+        Parsed::Usage => {
+            eprintln!("{usage}");
+            return Ok(2);
+        }
     };
     let manifest = build(&destination, runs, max_turns, &root)?;
     let cards = manifest["card_sha256"].as_object().map_or(0, Map::len);
