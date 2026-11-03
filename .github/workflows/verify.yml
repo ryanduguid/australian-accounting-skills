@@ -143,6 +143,17 @@ jobs:
         # rustup reads the version from rust-toolchain.toml in this directory.
         run: rustup toolchain install
 
+      - name: Add llvm-tools for the coverage run
+        if: matrix.os == 'ubuntu-latest'
+        run: rustup component add llvm-tools
+
+      - name: Install the pinned cargo-llvm-cov
+        if: matrix.os == 'ubuntu-latest'
+        uses: taiki-e/install-action@5488ac5a951645ce95062214902ac4b6bc1a1037 # v2.87.32
+        with:
+          tool: cargo-llvm-cov@0.9.1
+          fallback: none
+
       - name: Restore the dependency build cache
         uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
@@ -157,7 +168,14 @@ jobs:
         run: cargo clippy --locked --all-targets -- -D warnings
 
       - name: Rust tests
+        if: matrix.os != 'ubuntu-latest'
         run: cargo test --locked --all-targets
+
+      # The floor is the measured line coverage, rounded down (69.59% on
+      # 3 November 2026). Raise it with the tests, never lower it to pass.
+      - name: Rust tests with line coverage
+        if: matrix.os == 'ubuntu-latest'
+        run: cargo llvm-cov --locked --all-targets --fail-under-lines 69
 
       - name: Build
         run: |
