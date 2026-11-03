@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 135 cards in `cases/` test workflow quality, provenance and restraint.
+The 138 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -114,6 +114,9 @@ law claim, unverified source or guess.
 | [Supported payroll arithmetic tie-out](cases/au-payroll-review-supported-tie-out.md) | au-payroll-review |
 | [Pay-item settings changed without approval](cases/au-payroll-review-pay-item-settings.md) | au-payroll-review |
 | [Multi-state payroll tax workpapers: missing evidence](cases/au-payroll-tax-states-missing-evidence.md) | au-payroll-tax-states |
+| [Grouped employers in 2 states with a designated group employer](cases/au-payroll-tax-states-group-designated-employer.md) | au-payroll-tax-states |
+| [Back pay and a reversal processed after 30 June](cases/au-payroll-tax-states-back-pay-across-year-end.md) | au-payroll-tax-states |
+| [A part-year employer at the monthly threshold](cases/au-payroll-tax-states-part-year-threshold-edges.md) | au-payroll-tax-states |
 | [A request to set unsupported claims below a review level](cases/au-pre-lodgement-review-claim-calibration.md) | au-pre-lodgement-review |
 | [Pre-lodgement review list: missing evidence](cases/au-pre-lodgement-review-missing-evidence.md) | au-pre-lodgement-review |
 | [A low risk rating offered as clearance to lodge](cases/au-pre-lodgement-review-rating-not-clearance.md) | au-pre-lodgement-review |
