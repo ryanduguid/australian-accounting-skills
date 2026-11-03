@@ -327,10 +327,13 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("wip-tally schedule", text)
         # The engine is a Rust binary now; pip installs only the retired Python package.
         self.assertIn(
-            f"cargo install --locked --git https://github.com/ryanduguid/australian-accounting --rev {revision} the-wip-tally",
+            f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} the-wip-tally",
             text,
         )
         self.assertNotIn("pip install", text)
+        # Other builds also report 1.0.0, so the pinned binary runs by path, never from PATH.
+        self.assertIn("`cargo install --list --root <tool-dir>`", text)
+        self.assertIn("never a `wip-tally` found on `PATH`", text)
         # The engine refuses a blank outcome_reasonably_measurable instead of assuming yes.
         self.assertIn("State `outcome_reasonably_measurable` as `yes` or `no` on every row", text)
         self.assertIn("Do not invent WIP arithmetic", text)
