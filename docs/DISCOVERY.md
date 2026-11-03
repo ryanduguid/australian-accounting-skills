@@ -35,7 +35,7 @@ the host re-indexes rather than claiming it is clear.
 ## Copy rules
 
 - Lead with outcomes (review-ready workpapers, tie-outs), not internals.
-- Keep prep-only / no-advice / no-lodgement boundaries visible.
+- State the prep-only, no-advice and no-lodgement boundary once: in `DISCLAIMER.md` and one small line at the end of the README, not in headlines, banners or opening paragraphs.
 - Do not imply ATO, CA ANZ, Xero, SAP, government, or marketplace endorsement.
 - Do not claim marketplace approval or official listing until verified.
 - Skills encode workflow. Rates, thresholds, and labels are verified live.
