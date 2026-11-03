@@ -13,7 +13,7 @@ class ProofOfIdentityStep(unittest.TestCase):
     def setUp(self) -> None:
         self.text = SKILL.read_text(encoding="utf-8")
         start = self.text.index("4. For tax agent or BAS agent services, record the proof of identity")
-        self.step = self.text[start : self.text.index("5. Where the practice's assessment", start)]
+        self.step = self.text[start : self.text.index("5. For tax agent or BAS agent services, record how", start)]
 
     def test_step_comes_before_aml_routing_and_is_independent_of_it(self) -> None:
         self.assertIn("separately from AML/CTF", self.step)
@@ -55,6 +55,36 @@ class ProofOfIdentityStep(unittest.TestCase):
     def test_the_pack_and_sources_carry_the_status(self) -> None:
         self.assertIn("the proof of identity status, the AML/CTF routing status", self.text)
         self.assertIn("tpb-gs-42-2022-proof-identity-requirements-client-verification", self.text)
+
+
+class ClientToAgentLinkingStep(unittest.TestCase):
+    """The ATO linking status is recorded, dated and left to the practice to act on."""
+
+    def setUp(self) -> None:
+        self.text = SKILL.read_text(encoding="utf-8")
+        start = self.text.index("5. For tax agent or BAS agent services, record how the practice is or will be linked")
+        self.step = self.text[start : self.text.index("6. Where the practice's assessment", start)]
+
+    def test_step_is_separate_from_proof_of_identity(self) -> None:
+        self.assertIn("apart from proof of identity", self.step)
+
+    def test_abn_entities_and_individuals_follow_different_routes(self) -> None:
+        self.assertIn("An entity with an ABN, other than a sole trader, nominates its registered agent itself", self.step)
+        self.assertIn("agent-initiated process", self.step)
+        self.assertIn("the client confirms it in the ATO app or Online services for individuals", self.step)
+
+    def test_timeline_is_dated_and_rechecked(self) -> None:
+        self.assertIn("from November 2027 linking will be the only way", self.step)
+        self.assertIn("until then existing authorisation arrangements are unchanged", self.step)
+        self.assertIn("check its current timeline at use time", self.step)
+
+    def test_status_is_recorded_not_acted_on(self) -> None:
+        self.assertIn("not started, pending or confirmed, or `UNVERIFIED`", self.step)
+        self.assertIn("Do not send, confirm or act on a nomination here", self.step)
+
+    def test_the_pack_and_sources_carry_the_status(self) -> None:
+        self.assertIn("the AML/CTF routing status, the ATO linking status", self.text)
+        self.assertIn("client-to-agent-linking-for-individuals-and-sole-traders", self.text)
 
 
 if __name__ == "__main__":

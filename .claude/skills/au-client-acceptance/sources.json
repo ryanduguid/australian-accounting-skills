@@ -127,6 +127,36 @@
         "cadence": "monthly",
         "next_review": "2026-10-29"
       }
+    },
+    {
+      "title": "ATO: Client-to-agent linking for individuals and sole traders",
+      "url": "https://www.ato.gov.au/tax-and-super-professionals/for-tax-professionals/client-to-agent-linking/client-to-agent-linking-for-individuals-and-sole-traders",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/tax-and-super-professionals/for-tax-professionals/client-to-agent-linking/client-to-agent-linking-for-individuals-and-sole-traders",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Agent nomination",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/agent-nomination",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/agent-nomination",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
