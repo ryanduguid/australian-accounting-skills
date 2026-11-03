@@ -69,17 +69,20 @@ class ClientToAgentLinkingStep(unittest.TestCase):
         self.assertIn("apart from proof of identity", self.step)
 
     def test_abn_entities_and_individuals_follow_different_routes(self) -> None:
-        self.assertIn("An entity with an ABN, other than a sole trader, nominates its registered agent itself", self.step)
+        self.assertIn("other than a sole trader, that is required to nominate its registered agent", self.step)
+        self.assertIn("the new process does not change it", self.step)
         self.assertIn("agent-initiated process", self.step)
         self.assertIn("the client confirms it in the ATO app or Online services for individuals", self.step)
+        self.assertIn("assisted and non-digital pathways are being developed", self.step)
 
     def test_timeline_is_dated_and_rechecked(self) -> None:
         self.assertIn("from November 2027 linking will be the only way", self.step)
-        self.assertIn("until then existing authorisation arrangements are unchanged", self.step)
-        self.assertIn("check its current timeline at use time", self.step)
+        self.assertIn("As at 4 November 2026 the ATO says no action is required", self.step)
+        self.assertIn("pilot from March 2027", self.step)
+        self.assertIn("check its current timeline and the pathways available at use time", self.step)
 
     def test_status_is_recorded_not_acted_on(self) -> None:
-        self.assertIn("not started, pending or confirmed, or `UNVERIFIED`", self.step)
+        self.assertIn("not required, not started, pending or confirmed, or `UNVERIFIED`", self.step)
         self.assertIn("Do not send, confirm or act on a nomination here", self.step)
 
     def test_the_pack_and_sources_carry_the_status(self) -> None:
