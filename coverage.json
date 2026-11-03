@@ -8,7 +8,7 @@
     "skills_with_unreachable_sources": 7,
     "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 20,
-    "skills_with_only_the_seeded_case": 30
+    "skills_with_only_the_seeded_case": 29
   },
   "skills": [
     {
@@ -904,11 +904,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 4,
         "case_ids": [
-          "au-payroll-tax-states-missing-evidence"
+          "au-payroll-tax-states-back-pay-across-year-end",
+          "au-payroll-tax-states-group-designated-employer",
+          "au-payroll-tax-states-missing-evidence",
+          "au-payroll-tax-states-part-year-threshold-edges"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [],

@@ -1,6 +1,6 @@
 # Contributing
 
-These skills describe how an agent should work through an Australian accounting task. They encode workflow and tie-out discipline, and they stop where professional judgement starts. Nothing here is tax advice.
+These skills describe how an agent should work through an Australian accounting task. They encode workflow and tie-out discipline, and they stop where professional judgement starts.
 
 ## Data boundary
 
