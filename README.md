@@ -3,7 +3,7 @@
     <source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset=".github/assets/banner-phone-light.svg">
     <source media="(max-width: 600px)" srcset=".github/assets/banner-phone.svg">
     <source media="(prefers-color-scheme: light)" srcset=".github/assets/banner-light.svg">
-    <img src=".github/assets/banner.svg" width="100%" alt="AU Skills. BAS, close and payroll prep. No lodgement or advice. Pixel art of a clipboard checklist beside the AU Skills wordmark in slab-serif block letters.">
+    <img src=".github/assets/banner.svg" width="100%" alt="AU Skills. Review-ready BAS, close and payroll workpapers. Pixel art of a clipboard checklist beside the AU Skills wordmark in slab-serif block letters.">
   </picture>
 </p>
 
