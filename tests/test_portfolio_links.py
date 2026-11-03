@@ -38,7 +38,7 @@ CANONICAL_URLS = (
     "https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/monthly-close-control-plane",
     "https://github.com/ryanduguid/australian-accounting/tree/main/packages/payday-super-checker",
     "https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/xero-trial-balance-export",
-    "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
+    "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
 )
 COMPATIBILITY_IDENTIFIERS = (
     "aus-accounting-mcp",

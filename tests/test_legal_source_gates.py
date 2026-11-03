@@ -321,9 +321,18 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_wip_skill_names_the_wip_tally_engine(self) -> None:
         text = skill_text("wip-over-under-billing")
+        revision = "a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b"
 
-        self.assertIn("https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally", text)
+        self.assertIn(f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/the-wip-tally", text)
         self.assertIn("wip-tally schedule", text)
+        # The engine is a Rust binary now; pip installs only the retired Python package.
+        self.assertIn(
+            f"cargo install --locked --git https://github.com/ryanduguid/australian-accounting --rev {revision} the-wip-tally",
+            text,
+        )
+        self.assertNotIn("pip install", text)
+        # The engine refuses a blank outcome_reasonably_measurable instead of assuming yes.
+        self.assertIn("State `outcome_reasonably_measurable` as `yes` or `no` on every row", text)
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
