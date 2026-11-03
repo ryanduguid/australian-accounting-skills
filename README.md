@@ -25,9 +25,7 @@
 
 </div>
 
-Ryan Duguid is not a registered tax agent or BAS agent. Project support is limited to software issues reproduced with fabricated data. Do not send taxpayer information or request advice, return preparation, tax-treatment confirmation or lodgement.
-
-Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges. These skills do not provide tax advice or replace professional judgement.
+Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges.
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
@@ -107,6 +105,8 @@ Ryan Duguid, accountant in Newcastle NSW, provisional member of Chartered Accoun
 Licensed under the Functional Source License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2). You may use, modify and redistribute it for any purpose except a Competing Use as defined in LICENSE (making it available to others in a competing commercial product or service), and each version becomes available under Apache-2.0 2 years after it is made available. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Keep the copyright notices if you redistribute this work or build on it.
 
 Created by Ryan Duguid. Redistributed copies, modifications and derivatives must keep the copyright notices in the skills and source files. Please also credit reuse as: Based on [australian-accounting-skills](https://github.com/ryanduguid/australian-accounting-skills) by Ryan Duguid. Neither belongs in client deliverables. See [NOTICE](NOTICE).
+
+<sub>Ryan Duguid is not a registered tax agent or BAS agent. These skills are not tax advice and do not replace professional judgement. Support covers software issues reproduced with fabricated data: do not send taxpayer information or request advice, return preparation, tax-treatment confirmation or lodgement. See [DISCLAIMER.md](DISCLAIMER.md).</sub>
 
 ---
 
