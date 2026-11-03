@@ -23,13 +23,13 @@ Use `au-payroll-tax-states` to prepare the June and July wage schedules, the eff
 
 ## Deliberately unavailable evidence
 
-The date the pay rise was agreed is missing, as is any record of whether the employee repaid the bonus or how it was recovered. No current rate, threshold or deadline is supplied. No external action is authorised.
+The date the pay rise was agreed is missing, as are the agreement, award or contract terms and payroll entitlement records that show when each back-pay component became payable, and any record of whether the employee repaid the bonus or how it was recovered. No current rate, threshold or deadline is supplied. No external action is authorised.
 
 ## Required checks
 
 - Tie the July run to the register: 220000.00 + 12000.00 - 3000.00 = 229000.00, with each component shown separately.
-- Record that Revenue NSW assesses payroll tax on wages paid or payable, and that its ruling PTA 039 on section 11(7) of the Payroll Tax Act 2007 places liability in the earlier of the month paid and the month payable. When the back pay became payable depends on the missing agreement date, so keep the allocation `UNVERIFIED`.
-- Show both outcomes without choosing one: the 12000.00 stays in July 2027, in the 2027-28 year, or 2026-27 wages rise by 12000.00 and its annual reconciliation changes with them.
+- Record that Revenue NSW assesses payroll tax on wages paid or payable, and that its ruling PTA 039 on section 11(7) of the Payroll Tax Act 2007 places liability in the earlier of the month paid and the month payable. When each back-pay component became payable depends on that missing entitlement evidence, not the agreement date alone, so keep the allocation `UNVERIFIED`.
+- Show the outcomes without choosing one: the 12000.00 stays in July 2027, in the 2027-28 year; or 2026-27 wages rise by the part that became payable by 30 June 2027, up to 12000.00, and its annual reconciliation changes with them.
 - Keep the 3000.00 reversal separate from July's ordinary wages and from the back pay. Its treatment depends on the recovery evidence and the applicable authority, so keep it `UNVERIFIED`.
 - Record each unresolved item's evidence needed, owner, status and next action, and leave liability figures blank until the rate and threshold are read from the current page with its check date.
 
