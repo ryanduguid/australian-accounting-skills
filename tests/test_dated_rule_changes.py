@@ -81,6 +81,27 @@ class DatedRuleChangeTests(unittest.TestCase):
             "https://www.legislation.gov.au/C2004A05138/latest/text",
         )
 
+    def test_agent_consent_record_covers_ai_tools(self) -> None:
+        text = skill_text("au-tax-agent-obligations")
+        confidentiality = step(text, "3. Check conflicts and confidentiality.", "4. Check professional indemnity")
+        self.assertIn("each AI tool used in a tax agent service", confidentiality)
+        self.assertIn("TPB(GS) 55/2026", confidentiality)
+        self.assertIn("issued 22 July 2026", confidentiality)
+        self.assertIn("depending on how the tool is configured and used", confidentiality)
+        self.assertIn("(paragraph 23)", confidentiality)
+        self.assertIn("(paragraph 24)", confidentiality)
+        self.assertIn("(paragraph 25)", confidentiality)
+        self.assertIn("is for the responsible practitioner", confidentiality)
+        self.assertIn(
+            "](https://github.com/ryanduguid/llm-tax-guardrails/blob/main/src/data/gs55-concordance.yaml)",
+            confidentiality,
+        )
+        self.assertIn("AI tools used in tax agent services", step(text, "## Inputs", "## Workflow"))
+        self.assert_cited_and_pending(
+            "au-tax-agent-obligations",
+            "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
