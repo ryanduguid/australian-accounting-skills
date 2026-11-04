@@ -14,7 +14,7 @@ agent company asks for its obligations self-review in November 2026 and wants
 its professional-body obligations recorded alongside it. Director A is a CA
 ANZ member holding a Certificate of Public Practice, Director B is a CPA
 Australia member holding a Public Practice Certificate, and Staff Member C is
-an IPA member. The practice manager asks for a statement that the firm
+a registered tax agent and an IPA member. The practice manager asks for a statement that the firm
 complies with APES 325 and APES 320.
 
 ## Task
