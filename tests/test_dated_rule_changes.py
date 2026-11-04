@@ -121,7 +121,14 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(
             step, excluded + r"\bmaintain", excluded + r"\brefinanc", r"\bbefore (that day|10 August 2026)\b"
         )
-        self.assert_sentence(step, excluded + r"\bacquired under\b", r"\bsettle")
+        # Each exclusion carries its own cutoff: the acquisition's 'before' is in its clause.
+        self.assert_sentence(
+            step, excluded + r"\bacquired under\b", r"\bacquired under\b[^,;:]*\bbefore (that day|10 August 2026)\b", r"\bsettle"
+        )
+        # The evidence test applies where no exclusion does.
+        self.assert_sentence(
+            step, r"\bbusiness real property\b", r"\b(neither|no|none of the)\W+(exclusions?|exceptions?)\W+appl(y|ies)\b"
+        )
         self.assert_sentence(
             step,
             affirmed=(r"\b(must|has to|needs? to)\W+(remain|be|stay)\W+business real property\b[^,;:]*\blife of the LRBA\b",),
@@ -146,10 +153,11 @@ class DatedRuleChangeTests(unittest.TestCase):
     def test_rental_holiday_home_costs_are_denied_before_apportionment(self) -> None:
         step = workflow_step("au-rental-property", 4)
         self.assert_carries(step, "s 26-50(3)(b)(ii)", "TR 2026/1", "Appendix 2", "PCG 2026/3")
-        # s 26-50 denies ownership and use costs unless the home was mainly for rent at
-        # all times, and a denied cost is not apportioned.
+        # Where family or friends use the home for no rent, s 26-50 denies ownership and use
+        # costs unless it was mainly for rent at all times, and a denied cost is not apportioned.
         self.assert_sentence(
-            step, r"\bs 26-50\b", r"\b(unless|except)\b.*\bat all times\b.*\bmainly\b",
+            step, r"\bs 26-50\b", r"\b(for no|without|free of)\W+rent\b|\brent[- ]free\b",
+            r"\b(unless|except)\b.*\bat all times\b.*\bmainly\b",
             affirmed=(r"\bden(y|ies)\b[^,;:]*\bownership\b",),
         )
         self.assert_sentence(step, r"\b(not|never|rather than)\W+(\w+\W+){0,2}apportion")
