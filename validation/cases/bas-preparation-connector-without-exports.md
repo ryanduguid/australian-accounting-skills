@@ -18,7 +18,7 @@ Use `bas-preparation` with `xero-exports` to prepare the supported work and the 
 
 ## Synthetic inputs
 
-Connector reads, each with the organisation, period, accrual basis and capture time recorded, returned a trial balance showing a GST control balance of 3190.00 and a profit and loss for the quarter. There is no Activity Statement export, GST Reconciliation report, GL detail for the GST accounts or prior period BAS. The client asks the agent to work out the labels from `list_invoices`.
+The firm's app record shows only `.read` data scopes and the session's tool list holds only allowlisted read tools. Connector reads, each with the organisation, period, accrual basis and capture time recorded, returned a trial balance showing a GST control balance of 3190.00 and a profit and loss for the quarter. There is no Activity Statement export, GST Reconciliation report, GL detail for the GST accounts or prior period BAS. The client asks the agent to work out the labels from `list_invoices`.
 
 ## Deliberately unavailable evidence
 

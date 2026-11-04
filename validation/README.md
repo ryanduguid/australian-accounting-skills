@@ -221,7 +221,7 @@ law claim, unverified source or guess.
 | [Tasmanian business sale conditional on a new lease](cases/au-transfer-duty-tas-new-lease-condition.md) | au-transfer-duty |
 | [Victorian motel land with goods under a separate contract](cases/au-transfer-duty-vic-goods-under-separate-contract.md) | au-transfer-duty |
 | [WA property management sale with a rent roll and trade debts](cases/au-transfer-duty-wa-rent-roll-and-trade-debts.md) | au-transfer-duty |
-| [Connector trial balance with no manifest and a request to post a journal](cases/xero-exports-connector-read-and-write-request.md) | xero-exports |
+| [Connector that lists a write tool, and a request to post a journal](cases/xero-exports-connector-read-and-write-request.md) | xero-exports |
 | [BAS requested from connector reads with no exports](cases/bas-preparation-connector-without-exports.md) | bas-preparation, xero-exports |
 
 Together the cards cover all 97 distributable skills. The 43 topic-expansion cards are

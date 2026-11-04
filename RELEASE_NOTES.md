@@ -4,8 +4,8 @@ The 10 cards added next bring the validation pack to 176, with no recorded
 model run for them. The 8 transfer duty cards, one per state and territory,
 exercise each jurisdiction's goods and business-asset rules. The 2 Xero cards
 cover a new read-only connector route in `xero-exports` and `bas-preparation`,
-which records the organisation, period, basis and capture time and refuses
-writes. `au-business-formation` adds ASIC CP 391 as a dated proposal, and
+which stops unless scopes and tools are confirmed read-only, records the
+organisation, period, basis and capture time and refuses writes. `au-business-formation` adds ASIC CP 391 as a dated proposal, and
 `au-tax-research` names the corpus `as_at` check as an optional locator.
 
 Payroll tax source routes now cover all 8 jurisdictions. The contractor

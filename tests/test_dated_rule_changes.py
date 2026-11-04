@@ -1704,6 +1704,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(step, r"\b1 July 2027\b", r"\b1 August 2028\b", r"\bonly if no service address\b")
         self.assert_sentence(step, r"\bMarch 2027\b", r"\bnot necessarily its final position\b")
         self.assert_sentence(step, affirmed=(r"\bRead the current status at ASIC\b",))
+        self.assert_sentence(step, r"`sources\.json`", r"\bawaits human review\b")
         self.assert_sentence(step, r"\bkeep it out of the registration requirements\b")
         self.assert_sentence(step, NOT + r"tell anyone that an address will be published\b", r"\bmust be lodged\b")
         self.assert_cited_and_recorded(
@@ -1730,12 +1731,29 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(route, r"\btools that write\b")
         self.assert_sentence(route, r"\b5 November 2026\b", r"\bnot indexed\b")
         self.assert_sentence(route, r"\bNo authenticated request was tested\b")
+        self.assert_sentence(route, r"\bcannot be completed\b", affirmed=(r"\bcall nothing\b",))
+        self.assert_sentence(route, r"\bmust end in `\.read`", r"\breject a connection\b")
+        self.assert_sentence(route, r"\bmust be on the allowlist\b")
+        self.assert_sentence(route, r"\bStop on any other name\b", r"\beven when the scopes pass\b")
+        self.assert_sentence(route, r"\bvendor page\b", r"\bdoes not confirm either check\b")
+        allowlist = route.partition("Allowlist, from")[2].partition("The open source server")[0]
+        tools = re.findall(r"`(\w+)`", allowlist)
+        self.assertEqual(18, len(set(tools)), tools)
+        self.assertEqual(["get_connected_tenants"], [tool for tool in tools if not tool.startswith("list_")])
+        card = (SKILLS.parents[1] / "validation" / "cases" / "xero-exports-connector-read-and-write-request.md")
+        self.assert_carries(
+            card.read_text(encoding="utf-8"),
+            "Stop before calling any tool on this connection",
+            "including `list_trial_balance`",
+        )
         self.assert_carries(
             route, "organisation", "period or as-at date", "cash or accrual basis", "capture date and time"
         )
         self.assert_sentence(route, r"\bdo not merge reads\b")
         self.assert_sentence(route, r"\bcannot stand in for a UI-only report\b", r"\breconstruction\b")
-        self.assert_sentence(route, r"\bNever call a tool\b", r"`create_`", r"`update_`", r"`authorise_`", r"`void_`")
+        self.assert_sentence(
+            route, r"\bNever call a tool outside the allowlist\b", r"`create_`", r"`update_`", r"`authorise_`", r"`void_`"
+        )
         self.assert_sentence(route, r"\bunposted draft\b")
         bas = " ".join(skill_text("bas-preparation").split())
         self.assert_sentence(bas, r"\bread-only connector route\b", r"\bcapture time\b", r"\brefuses every write\b")
