@@ -45,7 +45,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-division-293`](../.claude/skills/au-division-293/SKILL.md) | Division 293 tax workpapers: income and contribution schedules, the lesser-of calculation and notice reconciliation |
 | [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | Division 296 tax workpapers: TSB reference amount, earnings by fund, threshold proportions and deferred amounts |
 | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | Termination payment workpapers: genuine redundancy tax-free limit, ETP and whole-of-income caps, and withholding |
-| [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md) | Financial statement preparation pack, with a Chapter 2M sustainability report scope check |
+| [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md) | Financial statement preparation pack, with a Chapter 2M sustainability report scope check and an AASB 18 transition check |
 | [`au-foreign-income`](../.claude/skills/au-foreign-income/SKILL.md) | Foreign income and tax-offset workpapers |
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | Foreign currency tax reconciliation |
 | [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | Property GST review pack |
@@ -59,7 +59,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | PAYG instalment variation workpapers: instalment income and tax estimate, varied amount or rate, and the general interest charge shortfall test |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | Pay-run preparation review |
 | [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | Multi-state payroll tax workpapers: registration, apportioned thresholds and deductions, and rates by jurisdiction |
-| [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | Pre-lodgement review list: missing records, claims out of line with income or occupation, income completeness and cited ATO focus areas, with each check marked performed or not performed and no risk rating |
+| [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | Pre-lodgement review list: missing records, claims out of line with income or occupation, omitted or duplicated income and cited ATO focus areas, with each check marked performed or not performed and no risk rating |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | Personal services income review pack |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | R&D Tax Incentive evidence pack |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | Rental property workpapers |

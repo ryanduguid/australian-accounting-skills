@@ -1,7 +1,7 @@
 # v0.5.1 (unreleased)
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
-pack from 112 to 138 cards. Sixteen cover in-scope topics from a comparison
+pack from 112 to 139 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
 docs/nagaris-comparison.md; only the topic names were used.
 
@@ -31,12 +31,25 @@ docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review.
 The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
-23 on 2 November, so confirmed verdicts cover 95 of the 138 cards.
+23 on 2 November, so confirmed verdicts cover 95 of the 139 cards.
 
 Three au-payroll-tax-states cards cover a group with a designated group
 employer across 2 states, back pay and a reversal processed after 30 June,
 and a part-year employer at the monthly threshold. They have no confirmed
 verdict yet.
+
+Five skills gain dated status and evidence checks. au-trust-distributions,
+au-super-contribution-caps and au-rental-property record the stage of the
+Treasury Laws Amendment (Tax Reform No. 3) Bill 2026, which passed the House
+on 29 October 2026 and was not law on 4 November 2026, for the discretionary
+trust minimum tax, transitional relief for June 2026 quarter super
+contributions and the new residential dwelling tests. au-financial-statements
+records whether a period is the comparative period before AASB 18 and the
+AASB 108 disclosure of a standard issued but not yet effective.
+au-pre-lodgement-review lists pre-filled income shown again in a manual
+schedule. A new au-financial-statements card covers a for-profit Tier 1 year
+ending 31 December 2026 and has no confirmed verdict yet. The new source
+records await human review.
 
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in

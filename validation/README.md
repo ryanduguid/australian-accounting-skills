@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 138 cards in `cases/` test workflow quality, provenance and restraint.
+The 139 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -98,6 +98,7 @@ law claim, unverified source or guess.
 | [Termination payment and redundancy workpapers: missing evidence](cases/au-etp-redundancy-missing-evidence.md) | au-etp-redundancy |
 | [Financial statement preparation pack: missing evidence](cases/au-financial-statements-missing-evidence.md) | au-financial-statements |
 | [Supported trial-balance mapping](cases/au-financial-statements-supported-mapping.md) | au-financial-statements |
+| [A for-profit Tier 1 year before AASB 18 applies](cases/au-financial-statements-aasb-18-comparative-year.md) | au-financial-statements |
 | [Foreign income and tax-offset workpapers: missing evidence](cases/au-foreign-income-missing-evidence.md) | au-foreign-income |
 | [Foreign currency tax reconciliation: missing evidence](cases/au-forex-review-missing-evidence.md) | au-forex-review |
 | [Property GST review pack: missing evidence](cases/au-gst-property-missing-evidence.md) | au-gst-property |
