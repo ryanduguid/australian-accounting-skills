@@ -7,7 +7,7 @@
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 10,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 23,
+    "skills_with_behavioural_gate": 24,
     "skills_with_only_the_seeded_case": 28
   },
   "skills": [
@@ -2120,7 +2120,7 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 8,
+        "cases": 9,
         "case_ids": [
           "bas-export-manifest-rounding",
           "debtor-summary-review",
@@ -2129,12 +2129,15 @@
           "financial-modelling-formula-change",
           "post-journal-provenance-tie-out",
           "workpaper-stale-reference",
+          "workpaper-tie-out-both-ways",
           "xero-export-duplicate-and-missing"
         ],
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_workpaper_tie_out.py"
+        ],
         "inventory": []
       }
     },

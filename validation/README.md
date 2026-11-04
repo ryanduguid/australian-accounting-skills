@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 141 cards in `cases/` test workflow quality, provenance and restraint.
+The 142 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -66,6 +66,7 @@ law claim, unverified source or guess.
 | [Debtor summary arithmetic and missing decision evidence](cases/debtor-summary-review.md) | xero-exports, month-end-close, workpaper-tie-out |
 | [Matching balances from different periods](cases/month-end-mismatched-period.md) | month-end-close, xero-exports |
 | [Superseded workpaper references](cases/workpaper-stale-reference.md) | workpaper-tie-out, year-end-workpapers |
+| [A pack that agrees top-down but not from the source up](cases/workpaper-tie-out-both-ways.md) | workpaper-tie-out |
 | [BAS export manifest and rounding bridge](cases/bas-export-manifest-rounding.md) | xero-exports, bas-preparation, workpaper-tie-out |
 | [Progress claim missing reference date](cases/progress-claim-missing-reference-date.md) | progress-claim-preparation |
 | [Retention release missing deed](cases/retention-release-missing-deed.md) | retention-schedule |

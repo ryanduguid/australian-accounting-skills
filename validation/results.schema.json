@@ -178,6 +178,7 @@
           "tax-invoice-review-missing-evidence",
           "wip-cost-to-complete-gap",
           "workpaper-stale-reference",
+          "workpaper-tie-out-both-ways",
           "xero-export-duplicate-and-missing"
         ]
       },
