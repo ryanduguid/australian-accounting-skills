@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 """Skills that meet a 2026 rule change keep its start date, its scope and its source.
 
 Each test reads one numbered workflow step and checks the dates, authorities,
