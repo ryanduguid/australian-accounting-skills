@@ -2,9 +2,9 @@
 
 | Skill | Use it for |
 |---|---|
-| `bas-preparation` | Prepare/review a BAS; transaction GST coding review with evidence, credit entitlement and attribution; label mapping and GST control tie-out |
+| `bas-preparation` | Prepare/review a BAS; transaction GST coding review with evidence, credit entitlement and attribution; import GST coded to cost; label mapping and GST control tie-out |
 | `month-end-close` | Checklist-driven close: bank recs, control accounts, accruals, variance review |
-| `workpaper-tie-out` | Audit-style verification: every statement line traced to workpaper and source |
+| `workpaper-tie-out` | Audit-style verification: every statement line traced to workpaper and source and back, narrative figures recomputed and 'no exceptions' claims tested |
 | `reconciliation-break-trace` | Trace each open reconciliation difference to its source entry, with a one-sentence cause, owner and next action |
 | `fbt-annual-workflow` | FBT year-end: benefit identification, declarations, gross-up, RFBA |
 | `div7a-compliance` | Division 7A loan register, complying-agreement checks, minimum repayments |
@@ -32,7 +32,7 @@ topics reuse existing skills and which have original new workflows.
 
 | Skill | Use it for |
 | --- | --- |
-| [`au-aml-ctf-client-coverage`](../.claude/skills/au-aml-ctf-client-coverage/SKILL.md) | AML/CTF client coverage review: the practice client list reconciled to the customer due diligence register, with missing, incomplete and overdue checks |
+| [`au-aml-ctf-client-coverage`](../.claude/skills/au-aml-ctf-client-coverage/SKILL.md) | AML/CTF client coverage review: the practice client list reconciled to the customer due diligence register, with missing, incomplete and overdue checks and evidence for each beneficial owner |
 | [`au-ato-penalties-interest`](../.claude/skills/au-ato-penalties-interest/SKILL.md) | ATO general interest charge, shortfall interest charge and failure to lodge penalty workpapers, with remission evidence |
 | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | Bookkeeping intake and coding review |
 | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | Business formation preparation checklist |

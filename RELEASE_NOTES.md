@@ -1,7 +1,7 @@
 # v0.5.1 (unreleased)
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
-pack from 112 to 139 cards. Sixteen cover in-scope topics from a comparison
+pack from 112 to 145 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
 docs/nagaris-comparison.md; only the topic names were used.
 
@@ -31,7 +31,7 @@ docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review.
 The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
-23 on 2 November, so confirmed verdicts cover 95 of the 139 cards.
+23 on 2 November, so confirmed verdicts cover 95 of the 145 cards.
 
 Three au-payroll-tax-states cards cover a group with a designated group
 employer across 2 states, back pay and a reversal processed after 30 June,
@@ -50,6 +50,32 @@ au-pre-lodgement-review lists pre-filled income shown again in a manual
 schedule. A new au-financial-statements card covers a for-profit Tier 1 year
 ending 31 December 2026 and has no confirmed verdict yet. The new source
 records await human review.
+
+au-aml-ctf-client-coverage tests beneficial owner evidence owner by owner
+against s 28(2)(d) and (e) of the AML/CTF Act, and records a screening
+vendor's entity-level complete status beside that evidence, never in place
+of it. It first applies any recorded basis under s 6-7, 6-17 or 6-18 of the
+AML/CTF Rules to the owners within that basis's scope, whether or not owners
+are listed, and routes a basis that is incomplete or rests on contradictory
+KYC information to the compliance officer. Three new cards cover a company
+with evidence for 1 of its 3 listed beneficial owners, known owners under a
+recorded Rules exception and a basis resting on contradictory KYC, and have
+no confirmed verdict yet. The new source records await human review.
+
+bas-preparation lists import GST on broker and courier invoices coded to cost
+as possible missed credits and tests who imported the goods and the import
+declaration evidence against the ATO's imported goods guidance and
+GSTR 2003/15. It excludes goods another entity imported on its own account
+and recharges that are not import GST, and for deferred GST reconciles label
+7A and proposes at 1B only the credit the evidence establishes. Two new cards
+cover these cases and have no confirmed verdict yet. The 3 new source records
+await human review, and preflight holds the skill until they are accepted.
+
+workpaper-tie-out now traces both ways, from each source total forward as
+well as from each statement line back, recomputes figures quoted in
+narrative and tests any 'no exceptions' statement against open flags. A new
+card covers a pack that agrees top-down but omits a source total and has no
+confirmed verdict yet.
 
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
