@@ -20,7 +20,7 @@
 | `contract-cost-tracking` | Reconcile job costs, commitments, plant allocations and forecast cost to complete |
 | `plant-and-equipment-costing` | Build reviewable machine-cost and utilisation schedules |
 | `fuel-tax-credits` | Prepare evidence and apportionment for fuel tax credit review |
-| `payroll-tax-contractors` | Test contractor payments against the NSW relevant-contract and employment-agency pathways (NSW only; other jurisdictions need their own Act) |
+| `payroll-tax-contractors` | Test contractor payments with detailed NSW relevant-contract and employment-agency steps, and separate Act and revenue-office routes for the other 7 jurisdictions |
 | `contractor-super-tpar` | Prepare contractor super, TPAR and no-ABN review workpapers |
 | `coal-lsl-levy` | Prepare Coal LSL coverage, levy, reimbursement and payroll tie-outs |
 | `contracting-exports` | Validate the job, claim, plant, payroll and subcontractor exports the contracting skills consume |

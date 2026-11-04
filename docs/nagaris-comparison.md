@@ -53,7 +53,7 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 
 | Topic | Decision | Where or why |
 | --- | --- | --- |
-| Duty, land tax and payroll tax in NSW, Victoria, South Australia and the ACT, and comparisons across states | Covered | `au-transfer-duty`, `au-land-tax`, `au-payroll-tax-states`, `payroll-tax-contractors` (NSW only); each works for a named state or territory |
+| Duty, land tax and payroll tax in NSW, Victoria, South Australia and the ACT, and comparisons across states | Covered | `au-transfer-duty`, `au-land-tax`, `au-payroll-tax-states`, `payroll-tax-contractors`; payroll source routes cover all 8 jurisdictions, with detailed NSW contractor steps and separate routes for other jurisdictions |
 | Victorian windfall gains tax | Extended | `au-land-tax` step 5: the rezoning, the owner then, the values on the notice, exemptions and any deferral |
 
 ### ATO and practice compliance

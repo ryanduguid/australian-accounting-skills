@@ -52,6 +52,15 @@ follows. Neither belongs in client deliverables prepared with the skills:
 
 Provenance
 
+The mid-month transfer, messy-workbook and external-items ideas in 3 payroll
+tax validation cards adapt scenarios S03, S08 and S07 from
+Tim-Claessen/payrolltaxdatasets, commit
+8f7d9bb79578fc2b62c3885c54640695cb4355b7 (CC0-1.0), inspected on 5 November
+2026: https://github.com/Tim-Claessen/payrolltaxdatasets. The cards use newly
+fabricated amounts and no upstream rows, identifiers, rates or generator code.
+The remaining jurisdiction cards are original. Existing grouping, back-pay
+and threshold-edge cards already cover the S04, S06 and S10 topics.
+
 Workflow skills for Australian public-practice and contracting-business
 accounting, written independently, from scratch, in my own time and on my own
 equipment.
