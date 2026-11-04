@@ -89,6 +89,21 @@ applies the Act No. 86 of 2026 tests to CGT events from 1 October 2026, and
 stp-finalisation asks whether the ABN, branch, payroll software or Payroll IDs
 changed during the year. The new source records await human review.
 
+Six more skills meet 2026 rules and drafts. bas-preparation compares any ATO
+PAYG withholding pre-fill with payroll-derived W1 and W2, keeps payroll as
+the source and leaves a difference unclassified unless a current ATO page
+supports its cause. au-deceased-estates tests an inherited dwelling under
+s 118-195 of the ITAA 1997 and marks TD 2026/D1 on the right to occupy as a
+draft. fbt-annual-workflow tests car parking against s 39A(1) of the FBTAA,
+TR 2021/2 and the Full Court's Toowoomba Regional Council decision, which the
+High Court declined to review, and now carries a sources index in place of
+its exemption. au-crypto-tax covers wrapping and airdrops under the drafts
+TD 2026/D2 and TR 2026/D1. au-individual-return compares work-related claims
+with the standard deduction in s 25-130 from 2026-27. au-tax-agent-obligations
+records the Board sanctions in Schedule 1 to Act No. 86 of 2026 and the
+amended section 45 client notices, and names TPB(GS) 49/2024 to 54/2024 for
+the Code sections. The new source records await human review.
+
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep
