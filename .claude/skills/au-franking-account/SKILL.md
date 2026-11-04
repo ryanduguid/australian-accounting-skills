@@ -67,4 +67,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 The ledger closing balance exceeds the rebuilt balance because one instalment payment was allocated to another liability and a refund was never debited, and a proposed dividend would be franked above the period's benchmark. Itemise both differences and show the benchmark breach as a conditional consequence; do not adjust the ledger or choose the franking percentage.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

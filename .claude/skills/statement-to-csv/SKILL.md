@@ -56,4 +56,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 Two monthly statements overlap by a few days, one page's running balance does not tie and a payee description begins with '='. Keep each overlapping line once, leave the break open without a plug and neutralise only the text field.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

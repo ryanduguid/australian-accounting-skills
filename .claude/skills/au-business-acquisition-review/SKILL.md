@@ -57,4 +57,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A buyer is acquiring all the shares in a private company with no Division 7A loan register, and the seller's normalised earnings add back related-party rent without market evidence. Show earnings with and without the add-back, keep the Division 7A exposure unquantified and record both in the risk register for the buyer's advisers.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
