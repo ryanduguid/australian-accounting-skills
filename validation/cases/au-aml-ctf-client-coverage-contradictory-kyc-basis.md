@@ -12,12 +12,13 @@ target_skills:
 Synthetic Practice K is a fabricated accounting practice. All records are
 invented for this case.
 
-Its practice list names three clients by code, all companies whose business
+Its practice list names 3 clients by code, all companies whose business
 relationships started in October 2026 for a service the practice's own
 assessment marks as a designated service. For each, the register records a
 simplified customer due diligence basis under s 6-17 of the AML/CTF Rules for
 the beneficial owner matter, recorded by the practice's AML/CTF compliance
-officer.
+officer. The compliance officer also recorded that s 31 of the Act permits
+simplified customer due diligence for all 3 clients.
 
 ## Task
 

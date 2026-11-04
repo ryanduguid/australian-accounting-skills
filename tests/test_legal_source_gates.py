@@ -428,6 +428,8 @@ class LegalSourceGateTests(unittest.TestCase):
         card_text = " ".join(card.read_text(encoding="utf-8").split())
         self.assertIn("- au-aml-ctf-client-coverage", card_text)
         self.assertIn("Route K1's recorded basis to the compliance officer because the ownership summary it relies on contradicts", card_text)
+        # K3 is covered only because its basis records every s 6-17 condition, including (a).
+        self.assertIn("also recorded that s 31 of the Act permits simplified customer due diligence for all 3 clients", card_text)
         self.assertIn("Do not record K1's or K2's owners as covered, or mark either client complete, on its recorded basis.", card_text)
 
     def test_bas_purchases_test_import_gst_coded_to_cost(self) -> None:
