@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 //! Readable-text interpretation, following Python 3.14 html.parser callbacks.
 use crate::{Result, source_html_rules as rules, validation_text};
 use fancy_regex::Regex;

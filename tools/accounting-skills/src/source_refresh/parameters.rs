@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 //! Content-Type parameter rules from CPython 3.14.8 email.message/utils.
 use crate::{Result, source_codec_rules, source_content as content};
 

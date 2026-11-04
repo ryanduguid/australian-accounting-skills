@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 // Python 3.14.8 / Unicode 16.0 numeric rules; see PYTHON-LICENSE.txt.
 pub const DECIMAL_ZEROES: &[u32] = &[
     48, 1632, 1776, 1984, 2406, 2534, 2662, 2790, 2918, 3046, 3174, 3302, 3430, 3558, 3664, 3792,

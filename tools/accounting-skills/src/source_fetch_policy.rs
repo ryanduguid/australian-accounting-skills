@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 //! Reviewed retrieval policy from scripts/source_fetch_policy.py.
 //! HTTP redirect orchestration and transport remain the caller's responsibility.
 use crate::Result;

@@ -1,6 +1,3 @@
-# Copyright 2026 Ryan Duguid
-# SPDX-License-Identifier: FSL-1.1-ALv2
-
 """Compare every frozen multibyte-state edge with independent CPython decoding."""
 import argparse
 import codecs

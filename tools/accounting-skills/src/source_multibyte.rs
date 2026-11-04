@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 //! Frozen CPython 3.14.8 finite multibyte decoder transducers.
 use crate::{Result, source_multibyte_rules as rules};
 

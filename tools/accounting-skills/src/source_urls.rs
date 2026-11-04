@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 //! urllib.parse-compatible joining for checked HTTPS redirect targets (PSF-2.0).
 #[derive(Default)]
 struct Parts {

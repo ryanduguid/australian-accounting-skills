@@ -1,6 +1,3 @@
-// Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: FSL-1.1-ALv2
-
 // Generated from Python 3.14 Unicode 16, html.entities and the retained validator.
 // HTML entity data: Python Software Foundation; see PYTHON-LICENSE.txt.
 pub const ENTITIES: &[(&str, &str)] = &[

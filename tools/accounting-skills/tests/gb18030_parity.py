@@ -1,6 +1,3 @@
-# Copyright 2026 Ryan Duguid
-# SPDX-License-Identifier: FSL-1.1-ALv2
-
 """Independent one-shot CPython checks of the exact private native decoder."""
 import argparse
 import codecs
