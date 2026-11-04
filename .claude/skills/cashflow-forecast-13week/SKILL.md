@@ -68,6 +68,20 @@ The 13-week grid, a dated assumptions log, and a narrative stating the base and 
 - Any tax set-aside balance is compared with the obligations it covers, and a shortfall is shown rather than netted
 - The base and stress troughs state the assumptions that produce them
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+Available cash opens at 30,000.00 - 5,000.00 = 25,000.00 (reconciled bank less a restricted balance shown separately).
+
+| Week | Working (opening, committed receipts, payments) | Closing |
+| --- | --- | --- |
+| 1 | 25,000.00 + 8,000.00 - 14,000.00 = 19,000.00 | 19,000.00 |
+| 2 | 19,000.00 + 0.00 - 14,000.00 = 5,000.00 | 5,000.00 |
+| 3 | 5,000.00 + 8,000.00 - 14,000.00 = -1,000.00 | -1,000.00 |
+
+Weeks 4 to 13 continue the same way, each opening on the last closing. Week 3 is flagged as the first negative close. A 6,000.00 pipeline receipt supported only by a sales estimate stays outside the forecast and is shown separately as uncommitted. Funding decisions belong to the authorised human.
+
 ## Boundaries
 
 - This is a management tool, not assurance. Label it clearly as a forecast on assumptions.

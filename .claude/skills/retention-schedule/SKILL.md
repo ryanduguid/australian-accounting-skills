@@ -50,6 +50,17 @@ Build a per-contract retention schedule that carries every amount from withholdi
 - Do not lodge, make declarations, communicate with a client or regulator, pay, post journals or lock records; prepare the hand-off for an authorised human.
 - Legal, tax and accounting judgement belongs to the authorised reviewer, partner, lawyer or registered agent.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Roll-forward | Working | Result |
+| --- | --- | --- |
+| Retention held, all contracts | 10,000.00 + 2,000.00 - 3,000.00 = 9,000.00 (opening, retained on this claim, released) | Agrees to the 9,000.00 ledger balance |
+| By contract | 6,000.00 + 3,000.00 = 9,000.00 | Agrees to the roll-forward |
+
+Each release needs its contractual trigger on file. Whether a trust or security control applies stays open until the jurisdiction's rule is verified for each contract, and the release decision belongs to the authorised person.
+
 ## Boundaries
 
 - Never state a retention percentage, cap, trust threshold, penalty, notice period or contract-price threshold from memory. Read caps at the QBCC Act, trust triggers at BIF ch 2, and NSW obligations at the Act and the Regulation in force, recording the source and date checked. QBCC trustee guides are stale on mandatory training and the closing account review, which QBCC reports were removed by the 2024 amendments, so confirm those against the amending Act.

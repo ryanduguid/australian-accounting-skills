@@ -7,7 +7,7 @@
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 42,
+    "skills_with_behavioural_gate": 48,
     "skills_with_only_the_seeded_case": 27
   },
   "skills": [
@@ -197,7 +197,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_worked_examples.py"
+        ],
         "inventory": []
       }
     },
@@ -588,7 +590,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_financial_statements.py"
+          "test_financial_statements.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -826,7 +829,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_worked_examples.py"
+        ],
         "inventory": []
       }
     },
@@ -985,7 +990,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_worked_examples.py"
+        ],
         "inventory": []
       }
     },
@@ -1203,7 +1210,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_tax_reform_no_3_status.py"
+          "test_tax_reform_no_3_status.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -1271,7 +1279,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_worked_examples.py"
+        ],
         "inventory": []
       }
     },
@@ -1813,7 +1823,8 @@
       "gates": {
         "behavioural": [
           "test_payday_super_guidance.py",
-          "test_validation_pack.py"
+          "test_validation_pack.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -1862,7 +1873,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_worked_examples.py"
+        ],
         "inventory": []
       }
     },
@@ -2040,7 +2053,8 @@
       "gates": {
         "behavioural": [
           "test_payday_super_guidance.py",
-          "test_validation_pack.py"
+          "test_validation_pack.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2118,7 +2132,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2143,7 +2158,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_reconciliation_break_trace.py"
+          "test_reconciliation_break_trace.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2168,7 +2184,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2268,7 +2285,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2300,6 +2318,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_worked_examples.py",
           "test_workpaper_tie_out.py"
         ],
         "inventory": []
@@ -2359,7 +2378,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_worked_examples.py"
+        ],
         "inventory": []
       }
     }

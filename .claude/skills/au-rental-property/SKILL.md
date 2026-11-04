@@ -38,6 +38,17 @@ A property-by-property income/expense schedule, loan-use bridge and owner alloca
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Bridge | Working | Result |
+| --- | --- | --- |
+| Agent funds | 800.00 + 6,000.00 - 450.00 - 5,700.00 = 650.00 (opening, gross rent, agent-paid expense, remittances) | Agrees to closing funds |
+| Remittances | 3,000.00 + 2,700.00 = 5,700.00 | Agrees to the owner's bank receipts |
+
+The owner's expense list repeats the 450.00 invoice the agent already paid, so the evidence schedule counts it once, and a separately supported owner-paid 150.00 sits on its own line. Deductibility and tax-period amounts stay unverified for the reviewer.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

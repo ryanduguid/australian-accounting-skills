@@ -52,6 +52,18 @@ Ask for these if not provided:
 - Do not lodge, make declarations, communicate with a client or regulator, pay, post journals or lock records; prepare the hand-off for an authorised human.
 - Legal, tax and accounting judgement belongs to the authorised reviewer, partner, lawyer or registered agent.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Step | Working |
+| --- | --- |
+| Adjusted contract sum | 100,000.00 + 10,000.00 = 110,000.00 (contract sum, approved variations) |
+| This claim | 66,000.00 - 44,000.00 = 22,000.00 (work complete to date, previously claimed) |
+| Net of retention | 22,000.00 - 2,200.00 = 19,800.00, with the retention taken from the contract's own schedule |
+
+A 5,000.00 variation with no written approval stays out of the claim and on the exceptions list. Reference date, GST treatment and any security-of-payment step are confirmed from the contract and the current authority before the authorised person issues the claim.
+
 ## Boundaries
 
 - Never state a number of days, a monetary trust trigger, a threshold, a penalty or a rate from memory. Cite the Act section or regulator page read and the date read; if the source cannot be reached, record the figure as unverified and flag it on the claim workpaper.

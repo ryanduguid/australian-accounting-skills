@@ -292,6 +292,10 @@ The 8 payroll tax jurisdiction cards added on 5 November have no recorded
 model run, nor do the 8 transfer duty jurisdiction cards and 2 Xero connector cards added the same day. Static regression and mutation checks do not establish model
 performance or human acceptance of current law.
 
+The worked examples added to 15 skills on 5 November 2026 postdate every recorded run. Their
+figures differ from the cards they mirror, so an example does not hand a model a card's answer,
+but it does show the shape of a passing result.
+
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
 the 41 synthetic prompts in `validation/routing-cases.yaml`, covering the

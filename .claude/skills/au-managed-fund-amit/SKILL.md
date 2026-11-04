@@ -27,6 +27,21 @@ A statement-component schedule, cash/attribution/reinvestment bridge, version lo
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+The AMMA statement attributes 1,800.00 of income, and a 1,350.00 distribution is wholly reinvested. Its annual adjustment raises the original parcel's cost base by 450.00.
+
+| Check | Working |
+| --- | --- |
+| Attribution to cash | 1,350.00 + 450.00 = 1,800.00 |
+| Units | 1,500 + 150 = 1,650 |
+| Original parcel cost base | 8,000.00 + 450.00 = 8,450.00 |
+| Aggregate cost base | 8,450.00 + 1,350.00 = 9,800.00, with the new parcel kept separate |
+
+The reinvestment is recorded once and the annual adjustment stays apart from it. Each parcel keeps its acquisition date, and return mapping stays flagged for the reviewer.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

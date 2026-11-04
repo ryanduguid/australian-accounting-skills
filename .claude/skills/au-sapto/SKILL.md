@@ -27,6 +27,18 @@ A person-by-person eligibility matrix, rebate-income bridge, period/category rec
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Person | Working (taxable income, reportable super contributions, net investment losses) | Rebate income |
+| --- | --- | --- |
+| A | 28,000.00 + 3,000.00 + 1,500.00 = 32,500.00 | 32,500.00 |
+| B | 14,000.00 + 0.00 + 800.00 = 14,800.00 | 14,800.00 |
+| Combined | 32,500.00 + 14,800.00 = 47,300.00 | 47,300.00 |
+
+Neither person has reportable fringe benefits in this example. Keep each person's bridge; do not split the combined amount equally. Eligibility and the offset stay blank until the year's thresholds are verified from a primary source.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.
