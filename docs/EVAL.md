@@ -275,20 +275,23 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 145 cards. The 4 November 2026 changes to
+now cover 95 of the 149 cards. The 4 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
 au-nonresident-cgt, stp-finalisation, au-deceased-estates, fbt-annual-workflow,
 au-crypto-tax, au-individual-return, au-sole-trader, au-psi-review,
 au-small-business-cgt, au-transfer-duty and xero-exports postdate every
-recorded run, so earlier verdicts on their cards describe the earlier wording.
+recorded run, so earlier verdicts on their cards describe the earlier wording. The 4 cards added on
+4 November 2026 for au-client-departure, au-trust-losses, au-ato-correspondence-triage
+and au-ato-account-reconciliation have no recorded run.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 37 synthetic prompts in `validation/routing-cases.yaml`, covering the
-payroll tax, GST and CGT clusters and one case for each of the 17 skills added
-in #318. No prompt names a skill. Each case has only
+the 41 synthetic prompts in `validation/routing-cases.yaml`, covering the
+payroll tax, GST and CGT clusters, one case for each of the 17 skills added
+in #318 and one for each of the 4 skills added on 4 November 2026. No prompt
+names a skill. Each case has only
 `tool_used` graders: the expected skill must fire, and each neighbouring skill
 listed under `not` must not. To run just these:
 

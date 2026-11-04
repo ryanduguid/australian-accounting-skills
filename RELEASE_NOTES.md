@@ -133,6 +133,20 @@ trail, keeps the 'no GST Audit Report in the AU menu' line, and carries a
 sources index in place of its exemption. The new source records await human
 review.
 
+Four practice skills bring the pack to 97 skills and 149 cards.
+au-client-departure lists a departing client's records by proposed owner,
+drafts the reply to the new accountant under APES 110 Section 320 and Code
+item 6, and records lien questions and ATO client list steps without deciding
+them. au-trust-losses evidences the Schedule 2F tests for a non-fixed trust,
+the income injection test and family trust election records, and leaves each
+deduction to the reviewer. au-ato-correspondence-triage sorts ATO letters and
+notices by type, client match, stated due date and owner, screens for scams
+and sends nothing. au-ato-account-reconciliation recomputes ATO account
+balances, lists amendments processed after balance date for earlier periods as
+reconciling items and pairs offsets. Each has a new card with no recorded run
+and a routing case, and their descriptions keep the combined length below the
+76-skill total. The new source records await human review.
+
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep

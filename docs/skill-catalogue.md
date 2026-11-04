@@ -113,6 +113,17 @@ own gap list.
 | [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md) | Trust deed abstract and resolution readiness: powers, beneficiaries, income definition, variations and vesting |
 | [`statement-to-csv`](../.claude/skills/statement-to-csv/SKILL.md) | Bank, card or pasted statement to an import CSV, with balance continuity checks and row-level exceptions |
 
+## Additions from 4 November 2026
+
+These practice workflows are independently written; `NOTICE` records where each topic came from.
+
+| Skill | Use it for |
+| --- | --- |
+| [`au-ato-account-reconciliation`](../.claude/skills/au-ato-account-reconciliation/SKILL.md) | ATO integrated client and income tax accounts reconciled to the ledger, with items processed after balance date for earlier periods |
+| [`au-ato-correspondence-triage`](../.claude/skills/au-ato-correspondence-triage/SKILL.md) | ATO letters and notices sorted by notice type, client match, stated due date and action owner, with no reply sent |
+| [`au-client-departure`](../.claude/skills/au-client-departure/SKILL.md) | A client leaving the practice: records by owner, the reply to the new accountant, cloud ledger handover, lien questions and ATO client list steps |
+| [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | Trust tax loss workpaper: test period, Schedule 2F tests for a non-fixed trust, income injection and family trust election evidence |
+
 Also included:
 
 - [`templates/firm-CLAUDE.md.example`](../templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.
