@@ -72,6 +72,36 @@
       "content_hash": "632e9c62285a3e4a04edd711e4fb8bf26fae3670129a77158332d447d0970bfb",
       "source_last_modified": "2025-12-16",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "ATO: Changing your payroll solution or employees' Payroll IDs",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/changing-your-payroll-solution-or-employees-payroll-ids",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/changing-your-payroll-solution-or-employees-payroll-ids",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Correcting information reported through STP",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/correcting-information-reported-through-stp",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/correcting-information-reported-through-stp",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

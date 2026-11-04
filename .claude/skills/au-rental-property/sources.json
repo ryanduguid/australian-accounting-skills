@@ -58,6 +58,51 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "Income Tax Assessment Act 1997",
+      "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "TR 2026/1 Income tax: rental property income and deductions for individuals who are not in business",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20261/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20261/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "PCG 2026/3 Application of section 26-50 of the Income Tax Assessment Act 1997 to holiday homes that you also rent out - ATO compliance approach",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20263/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20263/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
