@@ -23,6 +23,21 @@
         "source_last_modified": "",
         "checked_at": "2026-10-14"
       }
+    },
+    {
+      "title": "ASIC CP 391 Access to information on the companies register",
+      "url": "https://www.asic.gov.au/regulatory-resources/find-a-document/consultations/cp-391-access-to-information-on-the-companies-register",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 5 November 2026. A consultation paper records a proposal, not law. Human source approval remains pending. Verify the current status at use time.",
+      "final_url": "https://www.asic.gov.au/regulatory-resources/find-a-document/consultations/cp-391-access-to-information-on-the-companies-register",
+      "http_status": 200,
+      "fetched_at": "2026-11-05",
+      "review_required_since": "2026-11-05",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
