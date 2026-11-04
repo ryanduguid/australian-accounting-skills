@@ -150,3 +150,19 @@
   skill: au-director-penalty-review
   not: [au-ato-penalties-interest, au-super-guarantee-charge]
   prompt: Both directors of a struggling company have received director penalty notices for unpaid PAYG withholding and GST. Work out what each notice covers and what evidence they need.
+- id: client-leaving-records
+  skill: au-client-departure
+  not: [au-client-acceptance, au-tax-agent-obligations]
+  prompt: A client is moving to another accountant, who wants our working papers and the Xero file, but 2 invoices are still unpaid. What do we hand over and what goes in our reply?
+- id: trust-loss-recoupment
+  skill: au-trust-losses
+  not: [au-trust-distributions, au-trust-deed-review]
+  prompt: A discretionary trust wants to use a loss from 3 years ago, but its appointor changed since then and it only made a family trust election last year. Prepare the workpaper for the reviewer.
+- id: ato-letters-triage
+  skill: au-ato-correspondence-triage
+  not: [au-ato-objection, au-ato-penalties-interest]
+  prompt: We have this week's pile of ATO letters and inbox notices for our clients. Sort out what each one is, which client it belongs to, when it is due and who should handle it.
+- id: ato-account-year-end
+  skill: au-ato-account-reconciliation
+  not: [bas-preparation, reconciliation-break-trace]
+  prompt: At year end the ATO's activity statement account and the income tax account don't agree with the ledger, and an amended BAS for March was processed in August. Reconcile them.

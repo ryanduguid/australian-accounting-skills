@@ -42,6 +42,9 @@ KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
     ("contractor-super-tpar/SKILL.md", "10%"): (
         1, "the turnover condition of determination F2019L00864 as read; "
         "test_legal_source_gates.py pins the condition wording"),
+    ("au-trust-losses/SKILL.md", "50%"): (
+        4, "the statutory name and conditions of the stake and pattern of distributions "
+        "tests in Schedule 2F as read in C2026C00454; test_practice_workflows.py pins the wording"),
 }
 
 

@@ -10,7 +10,7 @@ abstract: >-
   and contracting workflows, with source verification, reconciliation
   checks and human review boundaries. This record identifies the published
   v0.5.0 release under FSL-1.1-ALv2. The development branch is ahead of
-  it with ninety-three skills; cite its exact commit when using later
+  it with ninety-seven skills; cite its exact commit when using later
   changes. Earlier releases
   retain their original citation records and licences in their tagged revisions.
 version: 0.5.0

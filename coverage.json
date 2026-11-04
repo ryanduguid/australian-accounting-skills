@@ -2,19 +2,19 @@
   "schema_version": 1,
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
-    "skills": 93,
-    "sources_indexed": 420,
-    "skills_source_exempt": 7,
+    "skills": 97,
+    "sources_indexed": 468,
+    "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 12,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 30,
+    "skills_with_behavioural_gate": 38,
     "skills_with_only_the_seeded_case": 28
   },
   "skills": [
     {
       "skill": "au-aml-ctf-client-coverage",
       "sources": {
-        "indexed": 11,
+        "indexed": 12,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-26",
@@ -33,6 +33,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_legal_source_gates.py"
         ],
         "inventory": []
@@ -57,6 +58,54 @@
       },
       "gates": {
         "behavioural": [],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-ato-account-reconciliation",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-04",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-ato-account-reconciliation-late-amendments"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_practice_workflows.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-ato-correspondence-triage",
+      "sources": {
+        "indexed": 4,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-04",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-ato-correspondence-triage-mixed-batch"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_practice_workflows.py"
+        ],
         "inventory": []
       }
     },
@@ -262,6 +311,30 @@
       "gates": {
         "behavioural": [
           "test_client_acceptance.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-client-departure",
+      "sources": {
+        "indexed": 8,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-04",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-client-departure-records-and-clearance"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_practice_workflows.py"
         ],
         "inventory": []
       }
@@ -933,7 +1006,7 @@
     {
       "skill": "au-pre-lodgement-review",
       "sources": {
-        "indexed": 8,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-10-15",
         "fetched": "2026-10-15",
@@ -951,6 +1024,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_pre_lodgement_review.py"
         ],
         "inventory": []
@@ -1047,7 +1121,7 @@
     {
       "skill": "au-psi-review",
       "sources": {
-        "indexed": 2,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
@@ -1063,7 +1137,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1210,7 +1286,7 @@
     {
       "skill": "au-small-business-cgt",
       "sources": {
-        "indexed": 3,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -1225,7 +1301,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1278,7 +1356,7 @@
     {
       "skill": "au-sole-trader",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
@@ -1293,7 +1371,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1463,7 +1543,7 @@
     {
       "skill": "au-transfer-duty",
       "sources": {
-        "indexed": 1,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-30",
@@ -1478,7 +1558,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1551,7 +1633,7 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 13,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -1570,6 +1652,30 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_tax_reform_no_3_status.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-trust-losses",
+      "sources": {
+        "indexed": 5,
+        "exempt": false,
+        "reviewed": "",
+        "fetched": "2026-11-04",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-trust-losses-late-election"
+        ],
+        "only_seeded_case": false
+      },
+      "gates": {
+        "behavioural": [
+          "test_practice_workflows.py"
         ],
         "inventory": []
       }
@@ -2165,10 +2271,10 @@
     {
       "skill": "xero-exports",
       "sources": {
-        "indexed": 0,
-        "exempt": true,
+        "indexed": 5,
+        "exempt": false,
         "reviewed": "",
-        "fetched": "",
+        "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
       },
@@ -2187,6 +2293,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
           "test_validation_pack.py"
         ],
