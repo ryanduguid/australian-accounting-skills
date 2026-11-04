@@ -14,6 +14,9 @@ TPB obligations. Land tax evidence routes cover all 8 jurisdictions, with the
 Northern Territory position left unverified pending a primary source. The 9
 new cards have no recorded model run. New source records await human review.
 
+Fifteen skills gain a fabricated worked example with no rates, and a test
+recomputes every equation in them.
+
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
 pack from 112 to 145 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in

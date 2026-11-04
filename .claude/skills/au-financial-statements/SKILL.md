@@ -50,6 +50,22 @@ Use the shared corpus in place without copying PDFs or extracted text into this 
 
 Carry this record into the disclosure-evidence checklist and hand-off. Keep earlier citations when a snapshot or PDF selection changes; a replacement requires a new selection record and rechecked dependent items. An unavailable standard or authority stays `UNVERIFIED` without silently substituting another compilation. The corpus is not a complete collection of all pronouncements or other reporting law.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Check | Working |
+| --- | --- |
+| Total debits | 25,000.00 + 5,000.00 + 18,000.00 + 12,000.00 = 60,000.00 (cash, debtors, equipment, expenses) |
+| Total credits | 7,000.00 + 10,000.00 + 28,000.00 + 15,000.00 = 60,000.00 (creditors, loan, opening equity, revenue) |
+| Period result | 15,000.00 - 12,000.00 = 3,000.00 |
+| Assets | 25,000.00 + 5,000.00 + 18,000.00 = 48,000.00 |
+| Liabilities | 7,000.00 + 10,000.00 = 17,000.00 |
+| Closing equity | 28,000.00 + 3,000.00 = 31,000.00 |
+| Balance | 17,000.00 + 31,000.00 = 48,000.00, which agrees to assets |
+
+The mapping is the reviewer's stated assertion, each account is mapped once, and the framework, disclosures and issue stay with the authorised reviewer.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

@@ -29,6 +29,19 @@ A pay-run exception list, a pay-item settings review listing each mismatch with 
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Tie-out | Working | Result |
+| --- | --- | --- |
+| Net pay | 6,000.00 - 900.00 - 150.00 = 4,950.00 (gross, supplied withholding, other deductions) | Agrees to the 4,950.00 payment summary |
+| Withholding liability | 300.00 + 900.00 - 250.00 = 950.00 (opening, addition, evidenced payment) | Agrees |
+| Other deductions | 0.00 + 150.00 - 0.00 = 150.00 | Agrees |
+| Super liability | 500.00 + 720.00 - 300.00 = 920.00, with the addition a supplied input | Agrees |
+
+Arithmetic agreement is all this shows. Withholding and super inputs stay unverified against current rules, with an owner and next review action, and the pay run is not approved here.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

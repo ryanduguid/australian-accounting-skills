@@ -42,6 +42,18 @@ If the folder is a BAS, month-end, or year-end pack using the filenames [Workpap
 
 The tie-out matrix plus the exceptions list. The agreed-scope tie-out is complete only when every row has source/version metadata, both trace directions are done, recalculations (including narrative figures) and rounding bridges are documented, and unresolved matters remain visible for review. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Trace | Working | Result |
+| --- | --- | --- |
+| Statement line to ledger | Trade debtors 18,450.00; post-journal trial balance 18,450.00; pre-journal trial balance 18,000.00 | Agrees to the post-journal version only; the earlier version is superseded |
+| Ledger to detail | 18,442.00 + 8.00 = 18,450.00, with the 8.00 on a rounding bridge | Unsupported: the detail report has no generated time or settings |
+| Narrative figure | 'Debtors rose 2,450.00': 18,450.00 - 16,000.00 = 2,450.00 | Recomputed and agrees |
+
+One exception goes forward, with its expected and found amounts, severity, owner and status: re-export the detail with its settings. 'No exceptions' cannot be claimed until that closes.
+
 ## Boundaries
 
 - Verify against sources provided, and never fabricate a plausible source or assume a number is fine because it looks reasonable.
