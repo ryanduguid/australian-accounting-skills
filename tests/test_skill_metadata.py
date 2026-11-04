@@ -412,14 +412,28 @@ class SkillMetadataTests(unittest.TestCase):
                 self.assertIsInstance(sources, list)
                 self.assertGreaterEqual(len(sources), 1)
                 seen_urls: set[str] = set()
+                accepted = 0
                 for source in sources:
                     self.assertEqual(required, required & source.keys())
                     self.assertTrue(source["title"].strip())
                     self.assertTrue(source["url"].startswith("https://"))
-                    self.assertRegex(source["checked_at"], r"^\d{4}-\d{2}-\d{2}$")
+                    # An explicitly pending record states no fact and no human date, and
+                    # preflight holds the skill until a person accepts it. Every other
+                    # record must carry its human check date.
+                    if source.get("verification_status") == "source-discovery-only-human-review-pending":
+                        self.assertEqual(source["checked_at"], "")
+                        self.assertRegex(source["review_required_since"], r"^\d{4}-\d{2}-\d{2}$")
+                        self.assertEqual(
+                            source["fact"],
+                            "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+                        )
+                    else:
+                        self.assertRegex(source["checked_at"], r"^\d{4}-\d{2}-\d{2}$")
+                        accepted += 1
                     self.assertTrue(source["fact"].strip())
                     self.assertNotIn(source["url"], seen_urls)
                     seen_urls.add(source["url"])
+                self.assertGreaterEqual(accepted, 1, "a seeded skill needs at least one human-reviewed source")
                 skill_text = (SKILLS_DIRECTORY / name / "SKILL.md").read_text(encoding="utf-8")
                 self.assertIn("sources.json", skill_text)
                 self.assertIn("DISCLAIMER.md", skill_text)
