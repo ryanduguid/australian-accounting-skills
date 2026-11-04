@@ -1,7 +1,7 @@
 # v0.5.1 (unreleased)
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
-pack from 112 to 140 cards. Sixteen cover in-scope topics from a comparison
+pack from 112 to 141 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
 docs/nagaris-comparison.md; only the topic names were used.
 
@@ -31,7 +31,7 @@ docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review.
 The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
-23 on 2 November, so confirmed verdicts cover 95 of the 140 cards.
+23 on 2 November, so confirmed verdicts cover 95 of the 141 cards.
 
 Three au-payroll-tax-states cards cover a group with a designated group
 employer across 2 states, back pay and a reversal processed after 30 June,
@@ -57,6 +57,14 @@ vendor's entity-level complete status beside that evidence, never in place
 of it. A new card covers a company with evidence for 1 of its 3 listed
 beneficial owners and has no confirmed verdict yet. The new source records
 await human review.
+
+bas-preparation lists import GST on broker and courier invoices coded to cost
+as possible missed credits, tests who imported the goods and the import
+declaration evidence against the ATO's imported goods guidance and
+GSTR 2003/15, and excludes deferred GST, goods another entity imported and
+recharges that are not import GST. Its 3 import GST sources join the
+transaction reference's discovery links, which await human acceptance. A new
+card covers these cases and has no confirmed verdict yet.
 
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in

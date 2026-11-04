@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 140 cards in `cases/` test workflow quality, provenance and restraint.
+The 141 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -184,6 +184,7 @@ law claim, unverified source or guess.
 | [Overlapping statements with a broken page and a formula-like payee](cases/statement-to-csv-overlap-and-formula.md) | statement-to-csv |
 | [GST screening leads stay leads](cases/bas-preparation-gst-screening-leads.md) | bas-preparation |
 | [Prior-period drift against lodged figures](cases/bas-preparation-lodged-figure-drift.md) | bas-preparation |
+| [Import GST on broker and courier invoices coded to cost](cases/bas-preparation-import-gst-coded-to-cost.md) | bas-preparation |
 | [Prior review points, recurring journals and bank balance](cases/month-end-close-prior-points-recurring-journals.md) | month-end-close |
 | [Employee master-data screen](cases/au-payroll-review-master-data-screen.md) | au-payroll-review, stp-finalisation |
 | [Family trust distribution tax screen](cases/au-trust-distributions-ftdt-screen.md) | au-trust-distributions |

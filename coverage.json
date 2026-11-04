@@ -1613,7 +1613,7 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 9,
+        "cases": 10,
         "case_ids": [
           "bas-export-manifest-rounding",
           "bas-g10-g11",
@@ -1621,6 +1621,7 @@
           "bas-gst-fees-and-evidence",
           "bas-gst-missing-and-zero",
           "bas-preparation-gst-screening-leads",
+          "bas-preparation-import-gst-coded-to-cost",
           "bas-preparation-lodged-figure-drift",
           "bas-stp-w3-w4",
           "xero-export-duplicate-and-missing"
@@ -1629,6 +1630,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_skill_metadata.py",
           "test_validation_pack.py"
         ],

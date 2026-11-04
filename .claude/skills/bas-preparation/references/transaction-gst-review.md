@@ -147,6 +147,11 @@ provenance at use time. Retrieval alone cannot supply a human review date.
   section 9-5 and Divisions 11, 29, 38 and 40; follow applicable special provisions.
 - [ATO: when you can claim a GST credit](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/claiming-gst-credits/when-you-can-claim-a-gst-credit).
 - [ABN Lookup](https://abr.business.gov.au/): public register status and history, not a GST conclusion.
+- [ATO: GST and imported goods](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/rules-for-specific-transactions/international-transactions/gst-and-imported-goods),
+  the [deferred GST scheme](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/rules-for-specific-transactions/international-transactions/deferred-gst)
+  and [GSTR 2003/15](https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001):
+  import GST credits, who imports the goods and import declaration evidence, read
+  4 November 2026 for the parent skill's step 5 import GST test.
 - [GSTR 2002/2](https://www.ato.gov.au/law/view/document?DocID=GST/GSTR20022/NAT/ATO/00001): financial supplies and related services; inspect the actual service and applicable paragraphs.
 - [GSTD 2000/10](https://www.ato.gov.au/law/view/document?DocID=GSD/GSTD200010/NAT/ATO/00001): insurance component example; verify its scope and applicable version.
 - [Xero: how GST works](https://central.xero.com/0/article/How-GST-works-in-Xero): product reporting and tax settings, not legal authority for treatment.

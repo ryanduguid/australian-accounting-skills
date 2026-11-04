@@ -389,6 +389,50 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("  - au-aml-ctf-client-coverage\n", card_text)
         self.assertIn("Do not mark H1 complete on the vendor's status.", card_text)
 
+    def test_bas_purchases_test_import_gst_coded_to_cost(self) -> None:
+        text = " ".join(skill_text("bas-preparation").split())
+        start = text.index("5. **Review coding exceptions.**")
+        step = text[start : text.index("6. **Variance check.**", start)]
+
+        self.assertIn("Then test import GST on broker and courier invoices.", step)
+        self.assertIn("coded to a cost account with no GST credit. Each is a possible missed credit, not a finding.", step)
+        self.assertIn("As read on 4 November 2026, the ATO's [GST and imported goods]", step)
+        self.assertIn("the finalised import declaration (N10, or N30 for goods cleared out of a warehouse)", step)
+        self.assertIn("completes the customs formalities, itself or through a broker or agent (paragraphs 49 and 54)", step)
+        self.assertIn("does not import them (paragraph 56)", step)
+        self.assertIn("the named owner acted as its agent (paragraph 292)", step)
+        self.assertIn("in which the GST on the importation was paid, even where the broker paid it and the entity reimbursed it later", step)
+        self.assertIn("pre-fills at label 7A and which claims the credit at 1B on the same monthly BAS", step)
+        self.assertIn("take no second credit from a broker invoice", step)
+        self.assertIn("goods another entity imported", step)
+        self.assertIn("a supplier's or broker's recharge that is not import GST", step)
+        self.assertIn("Propose no reclassification until the evidence above is supplied", step)
+        self.assertIn("Each broker or courier import GST amount coded to cost is listed", text)
+
+        # bas-preparation's sources.json holds only human-reviewed records, so its
+        # unaccepted links live in the transaction reference's discovery list.
+        reference = (SKILLS / "bas-preparation" / "references" / "transaction-gst-review.md").read_text(
+            encoding="utf-8"
+        )
+        discovery = reference[reference.index("## Primary-source discovery") :]
+        self.assertIn("including the import GST sources step 5 cites", text)
+        international = (
+            "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/"
+            "in-detail/rules-for-specific-transactions/international-transactions/"
+        )
+        for url in (
+            international + "gst-and-imported-goods",
+            international + "deferred-gst",
+            "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001",
+        ):
+            self.assertIn(f"]({url})", step)
+            self.assertIn(f"]({url})", discovery)
+
+        card = (REPOSITORY / "validation" / "cases" / "bas-preparation-import-gst-coded-to-cost.md")
+        card_text = card.read_text(encoding="utf-8")
+        self.assertIn("  - bas-preparation\n", card_text)
+        self.assertIn("Exclude S-1's 80.00 because the supplier, not Entity D, imported the goods", card_text)
+
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
 
