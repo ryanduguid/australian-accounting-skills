@@ -3,12 +3,12 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 97,
-    "sources_indexed": 495,
+    "sources_indexed": 496,
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 40,
-    "skills_with_only_the_seeded_case": 28
+    "skills_with_behavioural_gate": 42,
+    "skills_with_only_the_seeded_case": 27
   },
   "skills": [
     {
@@ -226,7 +226,7 @@
     {
       "skill": "au-business-formation",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-10-14",
@@ -241,7 +241,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1531,7 +1533,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1568,11 +1572,19 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 9,
         "case_ids": [
-          "au-transfer-duty-missing-evidence"
+          "au-transfer-duty-act-goods-with-crown-lease",
+          "au-transfer-duty-missing-evidence",
+          "au-transfer-duty-nsw-business-with-land",
+          "au-transfer-duty-nt-option-before-9-may-2023",
+          "au-transfer-duty-qld-business-assets-and-debts",
+          "au-transfer-duty-sa-fixed-items-and-old-rule",
+          "au-transfer-duty-tas-new-lease-condition",
+          "au-transfer-duty-vic-goods-under-separate-contract",
+          "au-transfer-duty-wa-rent-roll-and-trade-debts"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [
@@ -1752,13 +1764,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 11,
+        "cases": 12,
         "case_ids": [
           "bas-export-manifest-rounding",
           "bas-g10-g11",
           "bas-gst-credit-and-attribution",
           "bas-gst-fees-and-evidence",
           "bas-gst-missing-and-zero",
+          "bas-preparation-connector-without-exports",
           "bas-preparation-deferred-gst-partly-creditable",
           "bas-preparation-gst-screening-leads",
           "bas-preparation-import-gst-coded-to-cost",
@@ -2303,15 +2316,17 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 7,
+        "cases": 9,
         "case_ids": [
           "bas-export-manifest-rounding",
           "bas-gst-fees-and-evidence",
           "bas-gst-missing-and-zero",
+          "bas-preparation-connector-without-exports",
           "debtor-summary-review",
           "month-end-mismatched-period",
           "post-journal-provenance-tie-out",
-          "xero-export-duplicate-and-missing"
+          "xero-export-duplicate-and-missing",
+          "xero-exports-connector-read-and-write-request"
         ],
         "only_seeded_case": false
       },
