@@ -102,6 +102,25 @@ class DatedRuleChangeTests(unittest.TestCase):
             "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct",
         )
 
+    def test_trust_beneficiary_tfns_move_to_the_statement_of_distribution(self) -> None:
+        text = skill_text("au-trust-distributions")
+        components = step(text, "Keep one component schedule per beneficiary statement", "4. Flag reimbursement")
+        self.assertIn("whether a TFN was quoted to the trustee and when", components)
+        self.assertIn("not the TFN itself", components)
+        self.assertIn("quarterly TFN report ceased from 1 July 2026", components)
+        self.assertIn("due by 31 July 2026", components)
+        self.assertIn("statement of distribution", components)
+        self.assertIn("starting with the 2027 lodgment", components)
+        self.assertIn("TFN withholding where a beneficiary has not quoted a TFN is unchanged", components)
+        self.assertIn("beneficiary TFN quote records", step(text, "## Inputs", "## Workflow"))
+        self.assert_cited_and_pending(
+            "au-trust-distributions",
+            "https://www.ato.gov.au/businesses-and-organisations/trusts/trusts-registration-and-reporting-obligations/"
+            "closely-held-trusts/tfn-withholding-for-closely-held-trusts/what-trustees-need-to-do",
+            "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/"
+            "changes-to-beneficiary-tfn-reporting-for-closely-held-trusts",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
