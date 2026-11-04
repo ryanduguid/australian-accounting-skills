@@ -59,4 +59,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A company client moves to a new accountant whilst 2 invoices are unpaid and the practice is the cloud account owner of its ledger file. List each record with its proposed owner, record the lien question with the section 286 and ledger access limits, and leave the transfer, any lien and the reply for the practitioner.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

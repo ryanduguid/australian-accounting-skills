@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 """The 4 practice workflows added on 4 November 2026 keep their key rules.
 
 Each test reads one numbered workflow step and checks the authorities,

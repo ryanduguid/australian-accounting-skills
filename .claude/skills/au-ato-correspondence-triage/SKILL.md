@@ -54,4 +54,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A batch holds a notice of assessment from the Client mail inbox, a paper penalty letter missing from Communication history and a forwarded SMS with a login link. Mark the SMS as a possible scam, the paper letter `UNVERIFIED` rather than a scam, record only printed dates and assign each owner without replying.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

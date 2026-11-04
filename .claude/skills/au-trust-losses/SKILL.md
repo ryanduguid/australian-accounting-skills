@@ -59,4 +59,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A discretionary trust with a loss from an earlier year changed its appointor and later made a family trust election whose specified year begins after the loss year. Record that the election does not cover the whole test period, evidence each test separately and leave the deduction for the reviewer.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

@@ -53,4 +53,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An amended activity statement for a quarter before balance date was processed after it, and the download repeats breakdown lines. Remove and list the duplicates, recompute the balances and list the amendment with both dates and its period as a reconciling item without netting it.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
