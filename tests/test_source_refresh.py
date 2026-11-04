@@ -884,6 +884,61 @@ class PreflightTests(unittest.TestCase):
                     self.assertEqual(code, 2 if mode else 0)
                     self.assertEqual(path.read_text(encoding="utf-8"), "Preflight report" if mode else "Sweep report")
 
+    def test_accepting_reviewed_records_cannot_release_pending_import_gst_sources(self) -> None:
+        """bas-preparation step 5 relies on 3 discovery-only records. Accepting
+        every other record in its shipped index must still leave the skill held."""
+        today = "2026-11-04"
+        index = REPOSITORY / ".claude" / "skills" / "bas-preparation" / "sources.json"
+        shipped = json.loads(index.read_text(encoding="utf-8"))["sources"]
+        pending_status = "source-discovery-only-human-review-pending"
+        international = (
+            "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/"
+            "in-detail/rules-for-specific-transactions/international-transactions/"
+        )
+        pending = [record for record in shipped if record.get("verification_status") == pending_status]
+        self.assertEqual(
+            {record["url"] for record in pending},
+            {
+                international + "gst-and-imported-goods",
+                international + "deferred-gst",
+                "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001",
+            },
+        )
+        accepted: list[dict[str, object]] = []
+        for original in shipped:
+            if original.get("verification_status") == pending_status:
+                continue
+            # The explicit human acceptance docs/source-preflight.md describes.
+            record = {key: value for key, value in original.items()
+                      if key not in (source_refresh.PENDING_FIELD, "verification_status")}
+            binding = {"content_hash": UNCHANGED_DIGEST, "content_hash_covers": source_refresh.HTML_KIND,
+                       "content_url": record["url"], "source_last_modified": ""}
+            record.update(binding, checked_at=today, reverify_by="2027-11-04")
+            if source_refresh.REVIEW_REQUIRED_FIELD in record:
+                record[source_refresh.REVIEWED_FIELD] = {**binding, "checked_at": today}
+            accepted.append(record)
+        self.assertTrue(accepted)
+
+        directory = self.skills / "bas-preparation"
+        directory.mkdir()
+        (directory / "SKILL.md").write_text("# Fixture", encoding="utf-8")
+
+        def run(records: list[dict[str, object]]) -> tuple[str, int]:
+            (directory / "sources.json").write_text(
+                json.dumps({"skill": "bas-preparation", "sources": records}), encoding="utf-8")
+            with mock.patch.object(source_refresh, "fetch",
+                                   side_effect=lambda url, *args, **kwargs: fetched(final_url=url)):
+                return source_refresh.preflight("bas-preparation", skills=self.skills, today=today, spacing=0)
+
+        # Control: the accepted records alone are ready.
+        self.assertEqual(run(accepted)[1], 0)
+        text, code = run([*accepted, *pending])
+        self.assertEqual(code, 2)
+        for record in accepted:
+            self.assertIn(f"- {record['url']}: READY:", text)
+        for record in pending:
+            self.assertIn(f"- {record['url']}: Missing, malformed or future human check date.", text)
+
 
 class LinkedIndexTests(unittest.TestCase):
     def test_linked_files_and_skill_directories_are_rejected_without_reading_or_writing(self) -> None:

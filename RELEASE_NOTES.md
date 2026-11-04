@@ -1,7 +1,7 @@
 # v0.5.1 (unreleased)
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
-pack from 112 to 142 cards. Sixteen cover in-scope topics from a comparison
+pack from 112 to 143 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
 docs/nagaris-comparison.md; only the topic names were used.
 
@@ -31,7 +31,7 @@ docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review.
 The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
-23 on 2 November, so confirmed verdicts cover 95 of the 142 cards.
+23 on 2 November, so confirmed verdicts cover 95 of the 143 cards.
 
 Three au-payroll-tax-states cards cover a group with a designated group
 employer across 2 states, back pay and a reversal processed after 30 June,
@@ -59,12 +59,13 @@ beneficial owners and has no confirmed verdict yet. The new source records
 await human review.
 
 bas-preparation lists import GST on broker and courier invoices coded to cost
-as possible missed credits, tests who imported the goods and the import
+as possible missed credits and tests who imported the goods and the import
 declaration evidence against the ATO's imported goods guidance and
-GSTR 2003/15, and excludes deferred GST, goods another entity imported and
-recharges that are not import GST. Its 3 import GST sources join the
-transaction reference's discovery links, which await human acceptance. A new
-card covers these cases and has no confirmed verdict yet.
+GSTR 2003/15. It excludes goods another entity imported on its own account
+and recharges that are not import GST, and for deferred GST reconciles label
+7A and proposes at 1B only the credit the evidence establishes. Two new cards
+cover these cases and have no confirmed verdict yet. The 3 new source records
+await human review, and preflight holds the skill until they are accepted.
 
 workpaper-tie-out now traces both ways, from each source total forward as
 well as from each statement line back, recomputes figures quoted in

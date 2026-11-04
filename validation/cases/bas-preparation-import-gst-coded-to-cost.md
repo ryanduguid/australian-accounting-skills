@@ -27,15 +27,18 @@ import GST items for the reviewer.
 | Broker B-1 | Customs duty | 120.00 | Freight, no GST | Same declaration |
 | Broker B-1 | Broker fee and its GST | 55.00 | Freight, no GST | Broker's tax invoice |
 | Courier C-1 | Duties and taxes | 40.00 | Freight, no GST | None |
-| Supplier S-1 | Import GST recovery | 80.00 | Freight, no GST | Supplier invoice only; the supplier cleared the goods through customs in its own name |
+| Supplier S-1 | Import GST recovery | 80.00 | Freight, no GST | Supplier invoice only |
 
-Entity D's deferred GST scheme status is not supplied.
+Entity D's deferred GST scheme status is not supplied. The S-1 supplier, an
+Australian distributor, imported the goods as its own trading stock, entered
+them for home consumption in its own name and sold them to Entity D from its
+Australian warehouse after importation. It did not act as Entity D's agent.
 
 ## Deliberately unavailable evidence
 
-No deferred GST approval or refusal, no import declaration for C-1, no agency
-agreement with the S-1 supplier and no confirmation that the goods were
-imported for a creditable purpose are supplied. No current ATO page is
+No deferred GST approval or refusal, no import declaration for C-1, no tax
+invoice for the S-1 supply and no confirmation that the goods were imported
+for a creditable purpose are supplied. No current ATO page is
 supplied.
 
 ## Required checks
@@ -47,9 +50,9 @@ supplied.
 - Establish Entity D's deferred GST scheme status before proposing any credit,
   and record that a scheme participant claims against the pre-filled deferred
   GST amount rather than from a broker invoice.
-- Exclude S-1's 80.00 because the supplier, not Entity D, imported the goods,
-  and record that any credit depends on the supplier's taxable supply and tax
-  invoice.
+- Exclude S-1's 80.00 because the supplier imported the goods on its own
+  account, not as Entity D's agent, and record that any credit depends on the
+  supplier's taxable supply and a tax invoice, which is not supplied.
 - Exclude the 120.00 customs duty as not import GST, and assess the broker fee
   separately on its tax invoice.
 - Cite the ATO's GST and imported goods page, its deferred GST page and

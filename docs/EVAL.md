@@ -275,7 +275,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 142 cards. The 4 November 2026 changes to
+now cover 95 of the 143 cards. The 4 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation and workpaper-tie-out postdate every recorded run, so earlier

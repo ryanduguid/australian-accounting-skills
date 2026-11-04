@@ -402,20 +402,25 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("does not import them (paragraph 56)", step)
         self.assertIn("the named owner acted as its agent (paragraph 292)", step)
         self.assertIn("in which the GST on the importation was paid, even where the broker paid it and the entity reimbursed it later", step)
-        self.assertIn("pre-fills at label 7A and which claims the credit at 1B on the same monthly BAS", step)
-        self.assertIn("take no second credit from a broker invoice", step)
-        self.assertIn("goods another entity imported", step)
+        # Deferred GST is reconciled, never offset in full by default.
+        self.assertIn("whose deferred GST the ATO pre-fills at label 7A of the monthly BAS", step)
+        self.assertIn("Reconcile that amount to the import declarations, and propose at 1B for the same period only the credit the evidence establishes (paragraph 291)", step)
+        self.assertIn("says to claim the full deferred amount where the entity is entitled to a full credit", step)
+        self.assertIn("carries a smaller credit (paragraph 18), and a portion the evidence does not establish stays unresolved", step)
+        self.assertNotIn("test that match instead", step)
+        self.assertIn("Take no second credit from a broker invoice", step)
+        # Another importer is excluded only when it imported on its own account.
+        self.assertIn("goods another entity imported on its own account", step)
+        self.assertIn("sold them to this entity after importation (paragraphs 49, 72 and 73)", step)
+        self.assertIn("Where the named owner may have acted as this entity's agent, do not exclude the item", step)
         self.assertIn("a supplier's or broker's recharge that is not import GST", step)
         self.assertIn("Propose no reclassification until the evidence above is supplied", step)
         self.assertIn("Each broker or courier import GST amount coded to cost is listed", text)
+        self.assertIn("label 7A reconciles to the import declarations and 1B carries only the credit the evidence establishes", text)
 
-        # bas-preparation's sources.json holds only human-reviewed records, so its
-        # unaccepted links live in the transaction reference's discovery list.
-        reference = (SKILLS / "bas-preparation" / "references" / "transaction-gst-review.md").read_text(
-            encoding="utf-8"
-        )
-        discovery = reference[reference.index("## Primary-source discovery") :]
-        self.assertIn("including the import GST sources step 5 cites", text)
+        self.assertIn("Its import GST records, which step 5 cites, are discovery-only and await human review.", text)
+        sources = SKILLS / "bas-preparation" / "sources.json"
+        records = {s["url"]: s for s in json.loads(sources.read_text(encoding="utf-8"))["sources"]}
         international = (
             "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/"
             "in-detail/rules-for-specific-transactions/international-transactions/"
@@ -426,12 +431,19 @@ class LegalSourceGateTests(unittest.TestCase):
             "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001",
         ):
             self.assertIn(f"]({url})", step)
-            self.assertIn(f"]({url})", discovery)
+            self.assertEqual(records[url]["verification_status"], "source-discovery-only-human-review-pending")
+            self.assertEqual(records[url]["checked_at"], "")
 
         card = (REPOSITORY / "validation" / "cases" / "bas-preparation-import-gst-coded-to-cost.md")
         card_text = card.read_text(encoding="utf-8")
         self.assertIn("  - bas-preparation\n", card_text)
-        self.assertIn("Exclude S-1's 80.00 because the supplier, not Entity D, imported the goods", card_text)
+        self.assertIn("It did not act as Entity D's agent.", card_text)
+        self.assertIn("Exclude S-1's 80.00 because the supplier imported the goods on its own", card_text)
+        deferred = (REPOSITORY / "validation" / "cases" / "bas-preparation-deferred-gst-partly-creditable.md")
+        deferred_text = deferred.read_text(encoding="utf-8")
+        self.assertIn("  - bas-preparation\n", deferred_text)
+        self.assertIn("Leave declaration B's credit unresolved", deferred_text)
+        self.assertIn("Do not propose the full 500.00 at 1B because it matches label 7A.", deferred_text)
 
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
