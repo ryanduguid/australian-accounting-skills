@@ -1557,8 +1557,9 @@ class DatedRuleChangeTests(unittest.TestCase):
         )
         self.assert_sentence(
             step, r"\bno land tax authority was found\b", r"`UNVERIFIED`",
-            affirmed=(r"\bask the office before treating the land as untaxed\b",),
+            affirmed=(r"\bprepare an enquiry item for the responsible practitioner\b",),
         )
+        self.assert_sentence(step, r"\bDo not contact the office\b", r"\ban authorised human handles the enquiry\b")
 
         # Victorian windfall gains tax keeps its own step.
         self.assert_sentence(

@@ -26,7 +26,7 @@ Only the supplied facts are available. The year's taxing date, rates and thresho
 ## Required checks
 
 - Route the land to State Revenue Office Tasmania, the Land Tax Act 2000 and the Land Tax Rating Act 2000, and read the taxing date and rates from the State Revenue Office for the assessment year.
-- Record the owners of each property at the taxing date from the title searches.
+- Record each property's supported ownership from dated title and transfer evidence. Mark the brother's ownership at the taxing date `UNVERIFIED` and request historical transfer evidence, because his acquisition date is missing.
 - Record each property's land classification, General Land or Principal Residence Land, with its evidence, and request the home's classification.
 - Treat the foreign investor land tax surcharge on the brother's share as a question, and request his foreign status evidence and purchase date.
 - Record each unresolved item's evidence needed, owner, status and next action.

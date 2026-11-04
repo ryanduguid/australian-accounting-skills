@@ -29,9 +29,11 @@ practitioner.
   revision or review record.
 - Quality management policies dated January 2023 covering each APES 320
   element, and an inspection record for Director A's engagements only.
+- Both directors are engagement partners with completed non-assurance
+  engagements in the review period.
 - One review engagement of a fabricated association's financial report in
   the year, with no ASQM 1 evaluation on file.
-- Director B's insurance schedule shows a lapse from 1 to 14 July 2026 before
+- Director B's insurance schedule shows a lapse from 1 to 14 October 2026 before
   a new policy started; no notice to CPA Australia is on file.
 - Director A's CPD log covers 2 of the 3 years of the current triennium.
 - Staff Member C's CPD log covers 1 July 2024 to 30 June 2026 only.
@@ -39,9 +41,8 @@ practitioner.
 ## Deliberately unavailable evidence
 
 No CA ANZ, CPA Australia or IPA text, required CPD hours, cover level, TPB
-record or legal approval is supplied. Who performed the inspections, when the
-practice became aware of the lapse and Director A's records for the third
-year are unavailable.
+record or legal approval is supplied. Who performed the inspections and
+Director A's records for the third year are unavailable.
 
 ## Required checks
 
@@ -54,9 +55,9 @@ year are unavailable.
   paragraph 4.65 as a gap.
 - Add an ASQM 1 row for the review engagement and record the missing
   evaluation as a gap.
-- Record Director B's lapse, the missing notice under By-Law 9.8(e)(ii) and
-  the missing awareness date, and leave whether notice was due or late to the
-  responsible practitioner.
+- Record Director B's lapse and the missing notice under By-Law 9.8(e)(ii),
+  which measures its period from the event, and leave whether notice was due
+  or late to the responsible practitioner.
 - Record Director A's CPD row and Staff Member C's row as `UNVERIFIED` pending
   the hours from each body's text and the missing records, noting the IPA
   Part-2 period that began on 1 July 2026.
