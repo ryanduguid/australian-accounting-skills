@@ -280,8 +280,9 @@ au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
 au-nonresident-cgt, stp-finalisation, au-deceased-estates, fbt-annual-workflow,
-au-crypto-tax and au-individual-return postdate every recorded run, so
-earlier verdicts on their cards describe the earlier wording.
+au-crypto-tax, au-individual-return, au-sole-trader, au-psi-review and
+au-small-business-cgt postdate every recorded run, so earlier verdicts on
+their cards describe the earlier wording.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of

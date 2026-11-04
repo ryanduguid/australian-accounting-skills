@@ -46,7 +46,7 @@ def section(skill: str, heading: str) -> str:
     return " ".join(raw_section(skill, heading).split())
 
 
-def workflow_step(skill: str, number: int) -> str:
+def workflow_step(skill: str, number: int | str) -> str:
     """Workflow step `number` with its indented continuation paragraphs, up to the next step."""
     workflow = raw_section(skill, "Workflow")
     start = re.search(rf"^{number}\. ", workflow, re.MULTILINE)
@@ -259,6 +259,357 @@ class DatedRuleChangeTests(unittest.TestCase):
             "closely-held-trusts/tfn-withholding-for-closely-held-trusts/what-trustees-need-to-do",
             "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/"
             "changes-to-beneficiary-tfn-reporting-for-closely-held-trusts",
+        )
+
+    def test_trust_family_trust_screen_reads_the_fte_and_iee_report(self) -> None:
+        step = workflow_step("au-trust-distributions", "4a")
+        self.assert_carries(step, "Online services for agents", "Human review pending", "4 November 2026", "20 April 2026")
+        # The report is checked for the trust and for each entity interposed into its family group.
+        self.assert_sentence(
+            step, r"\bFTE\b", r"\bIEE\b", r"\bfor the trust\b", r"\beach entity with an IEE\b",
+            affirmed=(r"\bcheck\b[^,;:]*\breport\b[^,;:]*\bOnline services for agents\b",),
+        )
+        # What the report shows, each field on its own.
+        self.assert_sentence(
+            step, r"\bfor an FTE\b", r"\bincome year specified\b", r"\bcommencement date\b",
+            r"\bspecified individual\b", r"\bdate of birth\b",
+        )
+        self.assert_sentence(
+            step, r"\bdate the ATO received\b", r"\bform type\b", r"\belection, variation or revocation\b",
+            r"\bfor a revocation\b[^;]*\bend year and end date\b",
+        )
+        self.assert_sentence(
+            step, r"\bfor an IEE\b", r"\bincome year specified\b", r"\bfamily trusts' TFNs\b",
+            r"\bincome year and individual specified in the related FTE\b", r"\bdate received\b", r"\bform type\b",
+            r"\bfor a revocation\b[^;]*\bend year\b",
+        )
+        # The ATO gives no view on validity, and the record keeps no TFN or date of birth.
+        self.assert_sentence(step, r"\bno opinion\b", r"\bvalid FTE or IEE\b")
+        self.assert_sentence(
+            step, r"\bform type\b", r"\bincome year\b", r"\bcommencement date\b", r"\bdate received\b",
+            r"\b(not|never)\W+(any\W+)?TFN\b", r"\b(not|never)\W+(any\W+)?(TFN\W+or\W+)?date of birth\b", r"\bown copies\b",
+            affirmed=(r"\brecord each election, variation and revocation\b", r"\bcompare\b"),
+        )
+        # Each mismatch goes to the specialist, in its own clause.
+        self.assert_sentence(
+            step,
+            r"\belection the report shows that the trust's records (do\W+not|don't|lack)\b",
+            r"\bcopy that does\W+" + NOT + r"match\b",
+            r"\bspecified individual other than the one\b",
+            affirmed=(r"\blist\b[^,;:]*\bspecialist review\b",),
+        )
+        self.assert_sentence(
+            step, r"\bfamily trusts page\b", r"\b20 October 2026\b", r"\bindividual other than its own specified individual\b",
+            r"\bnarrows\b", r"\bcommon to both\b", r"\bdifferent specified individuals\b",
+        )
+        self.assert_sentence(step, r"\bcannot be accessed\b", affirmed=(r"\brecord\b[^,;:]*\bnot performed\b",))
+        self.assert_sentence(
+            step, r"\bwhat was lodged\b", NOT + r"(that\W+)?an election is valid\b", r"\bfamily group\b"
+        )
+        self.assert_carries(section("au-trust-distributions", "Inputs"), "interposed entity election report")
+        self.assert_cited_and_recorded(
+            "au-trust-distributions",
+            "https://www.ato.gov.au/tax-and-super-professionals/for-tax-professionals/tax-professionals-newsroom/"
+            "increased-visibility-for-trust-elections",
+            "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
+        )
+
+    def test_sole_trader_screens_business_or_hobby_under_the_draft_as_a_draft(self) -> None:
+        step = workflow_step("au-sole-trader", 0)
+        self.assert_carries(
+            step, "TR 2026/D2", "16 October 2026", "Human review pending", "4 November 2026", "item 4205",
+            "2 November 2026",
+        )
+        # A draft for public comment, not a final ruling; the final is proposed to apply both ways.
+        self.assert_sentence(
+            step, r"\bTR 2026/D2\b", r"\bdraft for public comment\b", r"\bpreliminary view\b", NOT + r"(a\W+)?final ruling\b"
+        )
+        self.assert_sentence(step, r"\bcomments\b.*\b27 November 2026\b")
+        self.assert_sentence(step, r"\bparagraph 108\b", affirmed=(r"\bproposed to apply both before and after\b",))
+        self.assert_sentence(
+            step, r"\bTo be advised\b", r"\bbefore relying\b",
+            affirmed=(r"\bcheck\w*\b[^,;:]*\bfinal\b[^,;:]*\b(has|have)\W+(been\W+)?(issued|published)\b",),
+        )
+        # Every indicator in paragraph 14, each on its own.
+        self.assert_sentence(
+            step,
+            r"\bparagraph 14\b", r"\bsignificant commercial purpose or character\b", r"\bintention to carry on a business\b",
+            r"\bpurpose and prospect of profit\b", r"\bnot a hobby or recreation\b",
+            r"\borganised and carried on in a business-like and systematic manner\b", r"\bsize and scale\b",
+            r"\brepetition and regularity\b",
+            affirmed=(r"\brecord\b[^,;:]*\bevidence\b[^,;:]*\beach indicator\b",),
+        )
+        self.assert_sentence(
+            step, r"\bparagraph 15\b", r"\bin combination\b|\bas a whole\b|\btogether\b",
+            r"\bno (one|single) indicator is (decisive|determinative)\b",
+        )
+        self.assert_sentence(
+            step, r"\bparagraph 23\b", r"\bintend\w*\b[^,;:]*\bnot enough\b", r"\buntil\b[^,;:]*\b(started|commenced|begun)\b"
+        )
+        # The hobby signs in paragraph 50, each on its own.
+        self.assert_sentence(
+            step,
+            r"\bparagraph 50\b", r"\bmore likely\b[^,;:]*\bhobby\b", r"\bpersonal enjoyment\b",
+            r"\bno\W+contract or other obligation\b", r"\battendance\b", r"\bperformance\b", r"\btimeframes\b", r"\boutput\b",
+            r"\b(no|without)\W+(\w+\W+)?steps\b[^,;]*\bprofitable\b", r"\bsmall in scale\b", r"\bnon-commercial\b",
+            r"\bincidental\b",
+        )
+        # Neither a hobby nor a business can still be assessable, so its receipts stay.
+        self.assert_sentence(
+            step,
+            r"\bparagraph 49\b", r"\bneither a hobby nor a business\b", r"\bpassive investment\b",
+            r"\bisolated profit-making undertaking\b",
+            affirmed=(
+                r"\b(can|may)\W+still\W+(produce|be|give rise to|generate)\b[^,;:]*\bassessable\b",
+                r"\bkeep\w*\b[^,;:]*\breceipts\b",
+            ),
+        )
+        self.assert_sentence(
+            step, r"\bprimary production\b", NOT + r"replace\b[^,;:]*\bTR 97/11\b", r"\bparagraph 3\b",
+            affirmed=(r"\broute\b[^,;:]*`au-primary-production`",),
+        )
+        # Doubtful activities, each on its own, go to the reviewer, and later steps stay conditional.
+        self.assert_sentence(
+            step,
+            r"\bmissing\b", r"\bpoints? both ways\b", r"\bcontent creation\b", r"\bparagraphs 194 to 205\b",
+            r"\bside activity beside employment\b", r"\b(began|started) as a hobby\b", r"\brepeated losses\b",
+            affirmed=(r"\broute\b[^,;:]*\breviewer\b", r"\bonly as conditional work\b"),
+        )
+        self.assert_sentence(
+            step, r"\b(do not|never|not to)\W+conclude\b[^,;:]*\bbusiness\b", r"\breviewer's\b|\bfor the reviewer\b"
+        )
+        self.assert_carries(section("au-sole-trader", "Inputs"), "steps taken to make a profit", "regularity")
+        self.assert_carries(section("au-sole-trader", "Hand-off"), "step 0 indicator record")
+        self.assert_cited_and_recorded(
+            "au-sole-trader",
+            "https://www.ato.gov.au/law/view/document?DocID=DTR/TR2026D2/NAT/ATO/00001",
+            "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/advice-under-development-program/"
+            "advice-under-development-income-tax-issues",
+        )
+
+    def test_psi_screens_each_psb_outcome_for_part_iva_under_pcg_2025_5(self) -> None:
+        step = workflow_step("au-psi-review", 5)
+        self.assert_carries(step, "PCG 2025/5", "28 November 2025", "Human review pending", "4 November 2026", "Part IVA")
+        self.assert_sentence(
+            step, r"\bparagraphs 1 and 15\b", r"\bcompany or trust conducting a PSB\b", r"\bindividual's PSI\b",
+            affirmed=(r"\bmore likely to apply compliance resources\b",),
+        )
+        self.assert_sentence(step, r"\bparagraph 14\b", affirmed=(r"\bappl(y|ies)\b[^,;:]*\bboth before and after\b",))
+        # The guideline's exclusions, each in its own clause, and the PSI rules for a wrong self-assessment.
+        self.assert_sentence(
+            step,
+            r"\bparagraph 18\b", NOT + r"apply where\b",
+            r"\bincome is\W+" + NOT + r"(PSI|personal services income)\b",
+            r"\bentity\W+(does\W+|did\W+)?" + NOT + r"derive\b|\bentity\W+doesn't\W+derive\b",
+            r"\b(wrongly|incorrectly)\W+self-assessed\b[^.]*\bPSI rules apply\b",
+        )
+        self.assert_sentence(
+            step, r"\bbusiness structure\b", r"\bPCG 2021/4\b", r"\bparagraph 21\b",
+            affirmed=(r"\broute\b[^,;:]*`au-professional-firm-profits`",),
+        )
+        self.assert_sentence(
+            step, r"\bparagraph 25\b", NOT + r"(entitle|allow|permit)\w*\b[^,;:]*\bdivert or retain\b", r"\btax benefit\b"
+        )
+        # The facts recorded per individual and year, each on its own.
+        self.assert_sentence(
+            step,
+            r"\beach individual and income year\b", r"\bnet PSI the entity derived\b", r"\bassessable income\b",
+            r"\bsalary\b", r"\bdirector's fees\b", r"\bdividends\b", r"\btrust distributions\b", r"\bassociate\b",
+            r"\bservice entity\b", r"\bservices it was for\b", r"\bnet PSI retained\b", r"\brecorded purpose\b",
+            r"\bwhether that purpose was carried out\b",
+            affirmed=(r"\brecord\b",),
+        )
+        self.assert_sentence(
+            step, r"\blow-risk indicators in Table 1\b", r"\bhigher-risk indicators in Table 2\b", r"\bparagraph 40\b",
+            affirmed=(r"\bcompare\b", r"\brecord\b[^,;:]*\bevidence shows\b", r"\bfacts are missing\b"),
+        )
+        self.assert_sentence(
+            step, r"\b(sets|establishes|gives) no 'safe' level\b", r"\bparagraph 41\b", r"\bno safe harbour\b",
+            r"\bparagraph 13\b",
+        )
+        self.assert_sentence(
+            step,
+            r"\bparagraph 11\b", NOT + r"apply compliance resources\b", r"\bgenuine attempt\b",
+            r"\blow-risk arrangement by 30 June 2027\b",
+            affirmed=(r"\brecord\b[^,;:]*\bstep\b[^,;:]*\bdate\b",),
+        )
+        self.assert_sentence(
+            step, r"\bhigher-risk indicator\b", r"\bmissing facts\b", affirmed=(r"\broute\b[^,;:]*\bqualified review\b",)
+        )
+        self.assert_sentence(
+            step, r"\b(do not|never|not to)\W+conclude\b[^,;:]*\blow risk\b", r"\bPart IVA does or does not apply\b"
+        )
+        self.assert_carries(section("au-psi-review", "Inputs"), "retained", "restructure step")
+        self.assert_carries(section("au-psi-review", "Hand-off"), "Part IVA indicator record")
+        self.assert_cited_and_recorded(
+            "au-psi-review", "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20255/NAT/ATO/00001"
+        )
+
+    def test_small_business_cgt_15_year_gain_of_a_trust_does_not_reach_beneficiaries_as_a_capital_gain(self) -> None:
+        step = workflow_step("au-small-business-cgt", 3)
+        self.assert_carries(step, "Human review pending", "4 November 2026", "compilation 268")
+        self.assert_sentence(
+            step, r"\b(s|section) 152-110\(1\)", r"\bs 102-5\(1\), step 1, note 2\b",
+            affirmed=(
+                r"\bdisregards\b[^,;:]*\bgain\b",
+                r"\b(left out|excluded|not counted)\b[^,;:]*\bnet capital gain\b",
+            ),
+        )
+        # A beneficiary's extra gain is measured from what remains of each trust gain after steps 1 to 6.
+        self.assert_sentence(
+            step,
+            r"\bSubdivision 115-C\b", r"\beach capital gain of the trust estate\b", r"\bs 115-215\(3\)\)",
+            r"\bremaining after steps 1 to 6\b", r"\bs 102-5\(1\)", r"\bs 115-225\(1\)\(a\)",
+        )
+        self.assert_sentence(
+            step,
+            r"\bdisregarded under s 152-110\(1\)", r"\bleaves no\b[^,;:]*\bamount\b",
+            NOT + r"(flow|pass|reach)\w*\W+(\w+\W+){0,2}beneficiar\w*\W+as\W+a\W+capital gain\b",
+            r"\bunlike\b[^,;:]*\bSubdivision 152-C\b", r"\bs 115-215\(3\)\(b\) and \(c\)",
+        )
+        # The conclusion is a reading of the provisions, and says so.
+        self.assert_sentence(
+            step,
+            r"\bAct\b", NOT + r"say\w*\W+(this|so)\W+in terms\b", r"\breviewer\b[^.]*\bconfirm\b",
+        )
+        self.assert_sentence(
+            step,
+            r"\b(do not|never|not)\W+(show|report|include)\w*\b[^,;:]*\bbeneficiary statement\b",
+            r"\bcapital gain\b", r"\bdiscount\b", r"\bindexation\b",
+        )
+        self.assert_sentence(
+            step,
+            r"\bneither assessable income nor exempt income\b", r"\bs 152-110\(2\)",
+            r"\bexcept\b[^;]*\bbalancing adjustment event\b", r"\bDivision 40\b", r"\bDivision 328\b", r"\bs 152-110\(3\)",
+        )
+        # Each payment, and each fact s 152-125 turns on, on its own.
+        self.assert_sentence(
+            step,
+            r"\bown line\b", r"\bdate\b", r"\bamount\b", r"\brecipient's position \(not name\)",
+            r"\binterposed entity\b", r"\bCGT concession stakeholder just before the CGT event\b",
+            r"\bparticipation percentage\b",
+            affirmed=(r"\brecord each payment\b",),
+        )
+        self.assert_sentence(
+            step,
+            r"\bonly if\b", r"\bindividual who was a CGT concession stakeholder just before the CGT event\b",
+            r"\bs 152-125\(1\)\(c\)\)\W+and\W+(it is made\W+)?before the later of 2 years after the event\b",
+            r"\b6 months after the latest time\b", r"\blook-through earnout right\b", r"\bs 152-125\(1\)\(b\)",
+            r"\bunless the Commissioner extends\b", r"\bs 152-125\(4\)",
+            r"\bcompany or trust\b", r"\bthe recipient\b", r"\binterposed entity\b",
+        )
+        self.assert_sentence(step, r"\bonly up to the limit in s 152-125\(2\)", r"\bparticipation percentage\b")
+        self.assert_sentence(
+            step, r"\bcompany\b", r"\bwithin that limit\b", NOT + r"(a\W+)?dividend or a frankable distribution\b",
+            r"\bs 152-125\(3\)",
+        )
+        self.assert_sentence(step, r"\bwages\b", NOT + r"(a\W+)?payment relating to the exempt amount\b")
+        self.assert_sentence(
+            step,
+            r"\bafter that time\b", r"\bwho was\W+" + NOT + r"(a\W+)?stakeholder\b", r"\babove the limit\b",
+            NOT + r"conclude\b",
+            affirmed=(r"\blist\b[^,;:]*\bexception\b",),
+        )
+        self.assert_carries(section("au-small-business-cgt", "Inputs"), "exempt amount", "participation percentage")
+        self.assert_carries(section("au-small-business-cgt", "Hand-off"), "payment schedule")
+        self.assert_cited_and_recorded("au-small-business-cgt", "https://www.legislation.gov.au/C2004A05138/latest/text")
+
+    def test_aml_ended_relationships_carry_a_retain_until_date_never_a_deletion_list(self) -> None:
+        step = workflow_step("au-aml-ctf-client-coverage", 1)
+        self.assert_carries(step, "Human review pending", "4 November 2026", "compilation 63", "2 November 2026")
+        self.assert_sentence(
+            step, r"\bno longer engaged\b", r"\bdate the business relationship ended\b", r"\bretain until\b",
+            affirmed=(r"\brecord\b", r"\blabel\b[^,;:]*`retain`"),
+        )
+        # The 7 years run from the end of the relationship, or of an occasional transaction.
+        self.assert_sentence(
+            step,
+            r"\bSection 111\(2\)", r"\bcustomer due diligence\b", r"\buntil the end of the 7[- ]year period\b",
+            r"\bbegins when the business relationship ends\b", r"\bor when it completes an occasional transaction\b",
+            affirmed=(r"\brequires\b[^,;:]*\bretain\b",),
+        )
+        # The date covers only those records; ss 107 and 108 start their own clocks.
+        self.assert_sentence(
+            step,
+            r"\bcovers only\b[^,;:]*\bcustomer due diligence records\b",
+            r"\btransaction records\b[^,;]*\bfrom the day each record is made\b", r"\bs 107\(3\)",
+            r"\bdocuments a customer gives\b[^,;]*\bfrom when they are given\b", r"\bs 108\(2\)",
+            NOT + r"apply the date to them\b",
+        )
+        self.assert_sentence(
+            step, r"\bending on 5 April 2029\b", r"\buntil 4 April 2036\b", affirmed=(r"\b(use|apply|follow) that convention\b",)
+        )
+        self.assert_sentence(
+            step,
+            r"\bengagement end date\b", r"\bonly where\b[^;]*\bdesignated services ended\b",
+            r"\botherwise\b[^.]*`UNVERIFIED`", r"\bcompliance officer\b",
+        )
+        # A retention list, never a deletion list; destruction is the officer's decision.
+        self.assert_sentence(
+            step, r"\bnever a deletion list\b", NOT + r"delete\b", r"\barchive\b", r"\bmark for removal\b"
+        )
+        self.assert_sentence(
+            step,
+            r"\balready past\b", r"\bwhether and how a record is destroyed\b", r"\bfirm's policies\b",
+            affirmed=(
+                r"\blist\b[^,;:]*\bcompliance officer\b",
+                r"\bleave\b[^,;:]*\bdestroyed\b[^,;:]*\b(that officer|compliance officer|authorised person)\b",
+            ),
+        )
+        self.assert_sentence(step, r"\bPrivacy Act 1988\b", r"\bs 119\b", NOT + r"limit any other obligation\b")
+        self.assert_carries(workflow_step("au-aml-ctf-client-coverage", 5), "'retain until' date")
+        self.assert_cited_and_recorded(
+            "au-aml-ctf-client-coverage",
+            "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/"
+            "develop-your-amlctf-programs/record-keeping/record-keeping-overview",
+            "https://www.legislation.gov.au/C2006A00169/latest",
+        )
+
+    def test_pre_lodgement_compares_work_related_claims_with_taxation_statistics_as_a_question(self) -> None:
+        step = workflow_step("au-pre-lodgement-review", 4)
+        self.assert_carries(step, "Human review pending", "4 November 2026", "17 June 2026", "2023-24 income year")
+        self.assert_sentence(
+            step, r"\bwork-related expense claims\b", r"\btaxation statistics\b",
+            affirmed=(r"\b(as a|only as a) reviewer question only\b|\bas a reviewer question\b",),
+        )
+        # What each table holds, each dimension on its own.
+        self.assert_sentence(
+            step,
+            r"\bTable 14A\b", r"\boccupation unit group\b", r"\bsex\b", r"\btaxable income range\b",
+            r"\bnumber of individuals claiming\b", r"\btotal amount claimed\b", r"\beach work-related expense type\b",
+            r"\btotal work-related expenses\b",
+        )
+        self.assert_sentence(
+            step, r"\bTable 18B\b", r"\boccupation sub-major group\b", r"\bsex\b", r"\bdeduction claimed range\b"
+        )
+        # No published average: derive one and record its inputs.
+        self.assert_sentence(
+            step,
+            r"\b(neither|no)\W+table\W+publishes\W+an\W+average\b",
+            r"\bthe table\b", r"\bthe income year\b", r"\bthe occupation code\b", r"\brows summed\b", r"\bderived figure\b",
+            affirmed=(r"\bderive\b", r"\bdivid\w*\b"),
+        )
+        self.assert_sentence(
+            step, r"\bprivacy\b", r"\boccupation is\W+" + NOT + r"recorded\b", r"\bhas no row\b",
+            affirmed=(r"\btreat\b[^,;:]*\bapproximate\b", r"\brecord\b[^,;:]*\bnot performed\b"),
+        )
+        self.assert_sentence(
+            step, r"\bstatistics year can differ\b", affirmed=(r"\bcheck\b[^,;:]*\blater release\b",)
+        )
+        # A question for the reviewer, never a level to claim up to.
+        self.assert_sentence(
+            step, r"\babove the derived figure\b", r"\bsteps 2 and 3\b", affirmed=(r"\blist\b[^,;:]*\bquestion for the reviewer\b",)
+        )
+        self.assert_sentence(
+            step,
+            r"\bnever\W+present\b[^.]*\bclaim up to\b", r"\btarget\b", r"\bevidence that a claim is or is not allowable\b",
+            r"\b(do not|never)\W+raise, lower or set a claim\b",
+        )
+        self.assert_carries(section("au-pre-lodgement-review", "Inputs"), "occupation code")
+        self.assert_cited_and_recorded(
+            "au-pre-lodgement-review",
+            "https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/taxation-statistics/taxation-statistics-2023-24/"
+            "statistics-in-taxation-statistics-2023-24/individuals-statistics-for-taxation-statistics-2023-24",
         )
 
     def test_nonresident_cgt_events_from_1_october_2026_use_the_amended_tests(self) -> None:

@@ -52,6 +52,21 @@
       "content_hash_covers": "html",
       "source_last_modified": "",
       "content_url": "https://www.legislation.gov.au/C2026A00049/asmade/text"
+    },
+    {
+      "title": "Income Tax Assessment Act 1997",
+      "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

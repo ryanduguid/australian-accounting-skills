@@ -104,6 +104,23 @@ records the Board sanctions in Schedule 1 to Act No. 86 of 2026 and the
 amended section 45 client notices, and names TPB(GS) 49/2024 to 54/2024 for
 the Code sections. The new source records await human review.
 
+Six further skills gain dated checks. au-sole-trader adds a business-or-hobby
+step 0 that records the indicators in draft TR 2026/D2, marked as a draft
+open for comment until 27 November 2026, and routes missing or mixed evidence
+to the reviewer. au-psi-review screens each PSB outcome against the low and
+higher risk indicators in PCG 2025/5 and treats no level of PSI diversion as
+safe. au-small-business-cgt keeps a gain a company or trust
+disregards under the 15-year exemption off beneficiary statements and records
+each payment of the exempt amount against s 152-125.
+au-trust-distributions compares the trust's elections with the family trust
+election and interposed entity election report in Online services for agents,
+which gives no opinion on validity. au-aml-ctf-client-coverage gives each
+ended relationship a 'retain until' date under s 111(2) of the AML/CTF Act
+and keeps a retention list, never a deletion list. au-pre-lodgement-review
+sets an individual's work-related expense claims beside a figure derived from
+the ATO's taxation statistics, as a reviewer question only. The new source
+records await human review.
+
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep
