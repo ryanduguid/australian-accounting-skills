@@ -77,6 +77,18 @@ narrative and tests any 'no exceptions' statement against open flags. A new
 card covers a pack that agrees top-down but omits a source total and has no
 confirmed verdict yet.
 
+Six skills meet rules that changed in 2026. au-smsf-year-end checks real
+property under an LRBA entered into from 10 August 2026 against the business
+real property rule in s 67A(2)(c) of the SIS Act, with the exclusions for
+earlier borrowings, refinancing and contracts. au-rental-property screens a
+holiday home under s 26-50 of the ITAA 1997, TR 2026/1 and PCG 2026/3 before
+apportioning. au-tax-agent-obligations extends the Code item 6 consent record
+to AI tools under TPB(GS) 55/2026. au-trust-distributions records beneficiary
+TFN quotes now that the quarterly TFN report has ceased. au-nonresident-cgt
+applies the Act No. 86 of 2026 tests to CGT events from 1 October 2026, and
+stp-finalisation asks whether the ABN, branch, payroll software or Payroll IDs
+changed during the year. The new source records await human review.
+
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep

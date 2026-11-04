@@ -278,8 +278,9 @@ the run it last passed with its card and skill unchanged since: 13 from the
 now cover 95 of the 145 cards. The 4 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
-bas-preparation and workpaper-tie-out postdate every recorded run, so earlier
-verdicts on their cards describe the earlier wording.
+bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
+au-nonresident-cgt and stp-finalisation postdate every recorded run, so
+earlier verdicts on their cards describe the earlier wording.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
