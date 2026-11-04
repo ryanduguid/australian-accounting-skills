@@ -594,6 +594,19 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(
             step, r"\bTable 18B\b", r"\boccupation sub-major group\b", r"\bsex\b", r"\bdeduction claimed range\b"
         )
+        # The return's 6-digit code reaches a table row only through a recorded, verified mapping.
+        self.assert_sentence(
+            step, r"\b6-digit code\b", r"\bTable 14A\b[^.]*\b4-digit unit group\b",
+            r"\bTable 18B\b[^.]*\b2-digit sub-major group\b", r"\bmay apply to more than one occupation\b",
+        )
+        self.assert_sentence(
+            step, r"\bthe client's code\b", r"\bcode list's year\b", r"\btable row\b[^,;:]*\bevidence\b",
+            r"\bexpense type column or deduction label\b",
+            affirmed=(r"\brecord a verified mapping\b",),
+        )
+        self.assert_sentence(
+            step, r"\b(do not|never)\W+take the row from the code's leading digits alone\b", r"\b91 to 99\b"
+        )
         # No published average: derive one and record its inputs.
         self.assert_sentence(
             step,
@@ -603,6 +616,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         )
         self.assert_sentence(
             step, r"\bprivacy\b", r"\boccupation is\W+" + NOT + r"recorded\b", r"\bhas no row\b",
+            r"\blacks a verified mapping\b",
             affirmed=(r"\btreat\b[^,;:]*\bapproximate\b", r"\brecord\b[^,;:]*\bnot performed\b"),
         )
         self.assert_sentence(
@@ -622,6 +636,7 @@ class DatedRuleChangeTests(unittest.TestCase):
             "au-pre-lodgement-review",
             "https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/taxation-statistics/taxation-statistics-2023-24/"
             "statistics-in-taxation-statistics-2023-24/individuals-statistics-for-taxation-statistics-2023-24",
+            "https://www.ato.gov.au/forms-and-instructions/salary-and-wage-occupation-codes",
         )
 
     def test_nonresident_cgt_events_from_1_october_2026_use_the_amended_tests(self) -> None:
@@ -1350,20 +1365,33 @@ class DatedRuleChangeTests(unittest.TestCase):
                 + r"\W+except where that lease has nil or nominal value\b",
             ),
         )
-        # The earlier law still governs a conveyance first executed, or agreed or optioned, before 9 May 2023.
+        # The earlier law still governs a conveyance first executed before 9 May 2023, one replacing
+        # such a conveyance, and one whose property was agreed or optioned before then (s 116(1)).
         self.assert_sentence(
             goods, r"\bs 116 of the Stamp Duty Act 1978\b", r"\b1 July 2025\b", r"\bimmediately before 9 May 2023\b",
-            r"\bfirst executed before that date\b", r"\bagreement or option entered into or granted before it\b",
+            r"\bfirst executed before that date\b",
+            r"\breplacing an earlier conveyance\b[^;]*\bfirst executed before that date\b",
+            r"\bagreement or option to purchase entered into or granted before that date\b",
             affirmed=(r"\bstill apply\b",),
         )
         self.assert_carries(
             excluded, "stock-in-trade", "materials held for manufacture", "goods under manufacture", "livestock",
             "motor vehicles to be registered or transferred",
         )
+        # Intangibles are not dutiable only for a conveyance from 9 May 2023 outside s 116; for one
+        # it covers, the earlier s 4 definition made them dutiable property.
         self.assert_sentence(
-            other, r"\bgoodwill\b", r"\bbusiness names\b", r"\btrademarks\b", r"\bregistered designs\b",
+            other, r"\bfirst executed on or after 9 May 2023\b", r"\bs 116 does\W+" + NOT + r"cover\b",
+            r"\bgoodwill\b", r"\bbusiness names\b", r"\btrademarks\b", r"\bregistered designs\b",
             r"\bcopyright\b", r"\bpatents\b", r"\bis\W+" + NOT + DUTIABLE,
             r"\bcertain statutory licences relating to mining are\W*$",
+        )
+        self.assert_sentence(
+            other, r"\bs 116 covers\b", r"\bs 4 immediately before 9 May 2023\b", r"\bparagraphs \(b\) to \(ga\)",
+            r"\bgoodwill of a business undertaking\b", r"\bbusiness name, trading name or trade mark\b",
+            r"\ba patent, a registered design or a copyright\b",
+            r"\bstatutory licence or permission used in connection with a business undertaking\b",
+            affirmed=(r"\balso (included|covered)\b",),
         )
 
         self.assert_carries(section(skill, "Inputs"), "associated agreements", "location")

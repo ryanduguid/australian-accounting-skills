@@ -4,9 +4,10 @@
 Each test reads one numbered workflow step and checks the authorities,
 conditions, cut-offs and prohibitions it must carry, not its wording, in the
 style of test_dated_rule_changes.py. A prohibition or negative predicate is
-checked within one sentence with its negator before its verb; an exception or
-cut-off is matched inside its own clause; each term of a list the step must
-carry in full is required on its own. The helpers repeat that module's so each
+checked within one sentence with its negator before its verb, and each action
+of a prohibited list is checked on its own as an item of that list; an
+exception or cut-off is matched inside its own clause; each term of a list the
+step must carry in full is required on its own. The helpers repeat that module's so each
 file stands alone under unittest discovery.
 """
 
@@ -26,6 +27,9 @@ ISO_DATE = r"^\d{4}-\d{2}-\d{2}$"
 NEGATED = r"(?:\b(?:not|never|cannot|no(?!\.))|n't)(?:\W+(?:be|been|to|a|an|the|however|also))*\W+$"
 # A required prohibition keeps its negator directly before its verb.
 DO_NOT = r"\b(?:do not|don't|never|must not)\W+"
+# The text before an item of a prohibited list: the negator, then only earlier items of
+# that list, each closed by a comma, 'or' or ', or'.
+IN_PROHIBITED_LIST = DO_NOT + r"(?:[^,.;:]+?(?:,(?:\s+or)?|\s+or)\s+)*$"
 ATO_AGENTS = "https://www.ato.gov.au/tax-and-super-professionals/digital-services/online-services-for-agents"
 TRUST_LOSS = (
     "https://www.ato.gov.au/businesses-and-organisations/trusts/"
@@ -95,6 +99,19 @@ class PracticeWorkflowTests(unittest.TestCase):
                 f"no sentence matches all of {patterns} with {affirmed} affirmed",
             )
 
+    def assert_prohibited(self, text: str, *actions: str) -> None:
+        """Each action is named in `text`, and every mention of it is an item of a list
+        that a prohibition governs, so 'do not post, pay or lodge' forbids all 3, whilst
+        'do not post or lodge; pay' or a later 'pay the debt' permits paying."""
+        for action in actions:
+            with self.subTest(prohibited=action):
+                mentions = [sentence[: match.start()] for sentence in sentences(text)
+                            for match in re.finditer(action, sentence, re.IGNORECASE)]
+                self.assertTrue(mentions, f"{action!r} is not named")
+                for before in mentions:
+                    self.assertTrue(re.search(IN_PROHIBITED_LIST, before, re.IGNORECASE),
+                                    f"{action!r} is not inside a prohibited list after {before!r}")
+
     def assert_routes(self, text: str, count: int) -> None:
         """`text` routes to at least `count` distinct skills, each of which exists. The
         names are not quoted here, so the coverage matrix credits this file only to the
@@ -141,8 +158,8 @@ class PracticeWorkflowTests(unittest.TestCase):
             step, r"\bmust be returned when the engagement ceases\b", r"\bno obligation to prepare reports\b",
             r"\bmay export\b",
         )
-        self.assert_sentence(step, DO_NOT + r"remove a user\b", r"\bchange a subscription\b",
-                             r"\btransfer the account\b")
+        self.assert_prohibited(step, r"\bremove a user\b", r"\bchange a subscription\b",
+                               r"\btransfer the account\b")
 
     def test_client_departure_reply_discloses_only_what_is_permitted(self) -> None:
         step = workflow_step("au-client-departure", 4)
@@ -264,11 +281,23 @@ class PracticeWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bfails only the 50% stake test or the control test\b", r"\bs 267-50\b",
                              affirmed=(r"\bleave the amount for review\b",))
 
-    def test_trust_losses_screen_every_trust_for_income_injection(self) -> None:
+    def test_trust_losses_screen_for_income_injection_unless_excluded(self) -> None:
         step = workflow_step("au-trust-losses", 4)
+        # Division 270 reaches fixed and non-fixed trusts with a deduction; s 270-10(1)(d)
+        # excludes only the excepted trusts in s 272-100(b), (c) and (d), each named.
         self.assert_sentence(
-            step, r"\bincluding a family trust\b",
-            r"\bs 270-10\(1\)\(d\) excludes only an excepted trust under s 272-100\(b\), \(c\) or \(d\)",
+            step, r"\bfixed or non-fixed\b", r"\bdeduction is allowable for the income year \(s 270-10\(1\)\(a\)\)",
+            r"\bexcept an excepted trust under s 272-100\(b\), \(c\) or \(d\) \(s 270-10\(1\)\(d\)\)",
+            affirmed=(r"\bDivision 270 applies to any trust\b",),
+        )
+        self.assert_carries(step, "complying superannuation fund", "complying approved deposit fund",
+                            "pooled superannuation trust", "5th anniversary of the death",
+                            "exempt entities have fixed entitlements")
+        # The other excepted trusts stay inside it.
+        self.assert_sentence(
+            step, r"\bfamily trust \(s 272-100\(a\)\)",
+            r"\bdesignated infrastructure project entity \(s 272-100\(f\)\)",
+            affirmed=(r"\bstill applies to the other 2 kinds of excepted trust\b",),
         )
         # The 3 limbs of the scheme are cumulative.
         self.assert_sentence(
@@ -291,7 +320,7 @@ class PracticeWorkflowTests(unittest.TestCase):
             step, r"\bgenerally in force from the beginning of the specified income year\b",
             r"\bor from a later time if the family control test is not passed for the whole year\b",
         )
-        self.assert_sentence(step, DO_NOT + r"make, vary or revoke an election\b", r"\bor recommend doing so\b")
+        self.assert_prohibited(step, r"\bmake, vary or revoke an election\b", r"\brecommend doing so\b")
         self.assert_sentence(step, affirmed=(r"\btrustee decides\b",))
 
     def test_trust_losses_end_at_the_reviewers_decision(self) -> None:
@@ -319,7 +348,8 @@ class PracticeWorkflowTests(unittest.TestCase):
             r"\bending in 'ato\.gov\.au'",
         )
         self.assert_sentence(step, r"UNVERIFIED: possible scam", DO_NOT + r"open its links\b",
-                             r"\bcall a number it gives\b", affirmed=(r"\broute it to the practitioner\b",))
+                             affirmed=(r"\broute it to the practitioner\b",))
+        self.assert_prohibited(step, r"\bopen its links\b", r"\bcall a number it gives\b")
         self.assert_sentence(step, r"\bAbsence from Communication history alone is not a scam sign\b",
                              r"\bsent only by post\b", r"\bnot viewable there\b")
         self.assert_sentence(step, r"\bunmatched paper letter `?UNVERIFIED")
@@ -342,15 +372,17 @@ class PracticeWorkflowTests(unittest.TestCase):
         step = workflow_step("au-ato-correspondence-triage", 5)
         self.assert_sentence(step, r"\bexactly as printed\b", affirmed=(r"\brecord each date the item states\b",))
         self.assert_sentence(step, r"\bstates no date\b[^.;]*\bleave the due date blank\b", r"\bUNVERIFIED\b",
-                             DO_NOT + r"calculate a due date\b", r"\bor supply one from memory\b")
+                             DO_NOT + r"calculate a due date\b")
+        self.assert_prohibited(step, r"\bcalculate a due date\b", r"\bsupply one from memory\b")
         self.assert_carries(step, "objection time limits", "penalty or interest questions")
         self.assert_routes(step, 2)
 
     def test_triage_assigns_owners_and_sends_nothing(self) -> None:
         step = workflow_step("au-ato-correspondence-triage", 6)
         self.assert_sentence(step, r"\bregister names nobody\b", affirmed=(r"\bunassigned\b",))
-        self.assert_sentence(step, DO_NOT + r"reply to the ATO\b", r"\bcontact the client\b", r"\bpay\b",
-                             r"\blodge\b", r"\bobject\b", r"\bchange a communication preference\b")
+        # Each action is forbidden in its own right, not merely named beside one that is.
+        self.assert_prohibited(step, r"\breply to the ATO\b", r"\bcontact the client\b", r"\bpay\b",
+                               r"\blodge\b", r"\bobject\b", r"\bchange a communication preference\b")
         self.assert_sentence(step, r"\bdraft a reply only when the practitioner asks\b",
                              r"\bonly for their review\b")
 
@@ -421,8 +453,8 @@ class PracticeWorkflowTests(unittest.TestCase):
 
     def test_reconciliation_posts_nothing(self) -> None:
         step = workflow_step("au-ato-account-reconciliation", 6)
-        self.assert_sentence(step, DO_NOT + r"post a journal\b", r"\bpay\b", r"\blodge an amendment\b",
-                             r"\bcontact the ATO\b")
+        self.assert_prohibited(step, r"\bpost a journal\b", r"\bpay\b", r"\blodge an amendment\b",
+                               r"\bcontact the ATO\b")
         self.assert_sentence(step, r"\bHuman review pending\b", r"\b4 November 2026\b")
         self.assert_sentence(step, r"\bcolumn headings were not seen\b")
 
