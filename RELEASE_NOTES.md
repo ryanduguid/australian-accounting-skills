@@ -28,7 +28,10 @@ Skill descriptions are capped at 160 characters, so their combined length
 stays below the 76-skill total. Claude Code's per-skill estimates put the
 93-skill listing at about 6.1k tokens against 5.9k for the 76 skills before;
 docs/installation.md records the measurement. Seventeen routing cases are added.
-Every new source record is discovery-only and awaits human source review.
+Every new source record is discovery-only. On 2 November Ryan Duguid accepted
+the fetched readings of 143 of the 161 discovery-only records the repository
+then held, without recording a current-law fact; the other 18 could not be
+fetched and await human source review.
 The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
 23 on 2 November, so confirmed verdicts cover 95 of the 145 cards.
