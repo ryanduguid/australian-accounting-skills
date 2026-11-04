@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 151 cards in `cases/` test workflow quality, provenance and restraint.
+The 158 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -198,6 +198,13 @@ law claim, unverified source or guess.
 | [Year-end ATO account reconciliation with a late amendment and a doubled download](cases/au-ato-account-reconciliation-late-amendments.md) | au-ato-account-reconciliation |
 | [FBT sweep schedule that drops a line and a reversal pair](cases/fbt-annual-workflow-line-register-tie-out.md) | fbt-annual-workflow |
 | [Professional-body rows for a mixed-membership practice](cases/au-tax-agent-obligations-professional-body-rows.md) | au-tax-agent-obligations |
+| [NSW investor with a sole and a joint land tax notice and a Victorian rental](cases/au-land-tax-nsw-sole-and-joint-notices.md) | au-land-tax |
+| [Victorian home left empty by an owner who moved overseas](cases/au-land-tax-vic-absentee-vacant-home.md) | au-land-tax |
+| [Queensland lot sold after the taxing date with a request to split the tax](cases/au-land-tax-qld-sale-after-taxing-date.md) | au-land-tax |
+| [Perth investment land with a second tax line on the notice](cases/au-land-tax-wa-metropolitan-notice.md) | au-land-tax |
+| [South Australian land held on trust beside the trustee's own land](cases/au-land-tax-sa-trust-assessment.md) | au-land-tax |
+| [Tasmanian home and shack with a co-owner overseas](cases/au-land-tax-tas-shack-and-home.md) | au-land-tax |
+| [Canberra home rented out part-way through a quarter beside a commercial unit](cases/au-land-tax-act-rented-former-home.md) | au-land-tax |
 
 Together the cards cover all 97 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -224,6 +231,8 @@ trust distribution tax screen have no recorded run.
 The 4 cards added on 4 November 2026 for the client departure, trust loss, ATO
 correspondence triage and ATO account reconciliation workflows have no recorded run,
 nor do the FBT line register and professional-body rows cards added the same day.
+The 7 land tax cards added on 4 November 2026, one for each state and territory
+that levies land tax, have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

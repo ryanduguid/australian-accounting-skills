@@ -275,17 +275,18 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 151 cards. The 4 November 2026 changes to
+now cover 95 of the 158 cards. The 4 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
 au-nonresident-cgt, stp-finalisation, au-deceased-estates, fbt-annual-workflow,
 au-crypto-tax, au-individual-return, au-sole-trader, au-psi-review,
-au-small-business-cgt, au-transfer-duty and xero-exports postdate every
+au-small-business-cgt, au-transfer-duty, au-land-tax and xero-exports postdate every
 recorded run, so earlier verdicts on their cards describe the earlier wording. The 4 cards added on
 4 November 2026 for au-client-departure, au-trust-losses, au-ato-correspondence-triage
 and au-ato-account-reconciliation have no recorded run, nor do the 2 cards added the same day
 for the fbt-annual-workflow line register and the au-tax-agent-obligations professional-body rows.
+The 7 land tax cards added that day also have no recorded model run.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
