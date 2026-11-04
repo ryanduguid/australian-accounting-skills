@@ -138,6 +138,24 @@ class DatedRuleChangeTests(unittest.TestCase):
             "https://www.legislation.gov.au/C2004A05138/latest/text",
         )
 
+    def test_stp_finalisation_asks_about_changed_reporting_identifiers(self) -> None:
+        """stp-finalisation's index takes only human-dated records, so the step dates the agent read."""
+        text = skill_text("stp-finalisation")
+        identifiers = step(text, "Before finalising, ask whether the ABN", "3. **Super guarantee.**")
+        self.assertIn("PAYG withholding branch, payroll software or subscription (BMS ID)", identifiers)
+        self.assertIn("**Human review pending:** an agent read", identifiers)
+        self.assertIn("a separate income statement for each combination of ABN, branch, BMS ID and Payroll ID", identifiers)
+        self.assertIn("replacement method", identifiers)
+        self.assertIn("zeroing out", identifiers)
+        self.assertIn("duplicate income statements", identifiers)
+        self.assertIn("starts from zero YTD under the new one", identifiers)
+        self.assertIn("each combination is finalised separately", identifiers)
+        self.assertIn("an action for the authorised person", identifiers)
+        base = "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/"
+        self.assertIn(f"]({base}changing-your-payroll-solution-or-employees-payroll-ids)", identifiers)
+        self.assertIn(f"]({base}correcting-information-reported-through-stp)", identifiers)
+        self.assertIn("payroll software or employee Payroll IDs", step(text, "## Inputs needed", "## Workflow"))
+
 
 if __name__ == "__main__":
     unittest.main()
