@@ -121,6 +121,23 @@ class DatedRuleChangeTests(unittest.TestCase):
             "changes-to-beneficiary-tfn-reporting-for-closely-held-trusts",
         )
 
+    def test_nonresident_cgt_events_from_1_october_2026_use_the_amended_tests(self) -> None:
+        text = skill_text("au-nonresident-cgt")
+        connection = step(text, "2. Test the asset's connection", "3. Prepare a supported")
+        self.assertIn("For a CGT event on or after 1 October 2026", connection)
+        self.assertIn("(Act No. 86 of 2026)", connection)
+        self.assertIn("item 39(2)", connection)
+        self.assertIn("new s 995-1(1) definition", connection)
+        self.assertIn("water entitlements", connection)
+        self.assertIn("at any time in the 365 days before it", connection)
+        self.assertIn("s 855-25(1A)", connection)
+        self.assertIn("For an earlier CGT event, apply Division 855 as it stood at the event", connection)
+        self.assert_cited_and_pending(
+            "au-nonresident-cgt",
+            "https://www.legislation.gov.au/C2026A00086/asmade/text",
+            "https://www.legislation.gov.au/C2004A05138/latest/text",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
