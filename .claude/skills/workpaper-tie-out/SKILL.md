@@ -19,7 +19,7 @@ If the folder is a BAS, month-end, or year-end pack using the filenames [Workpap
 ## Workflow
 
 1. **Build the tie-out matrix.** One row per statement line item: statement amount → workpaper reference → source document/version → source period/settings → status. Missing workpaper, source metadata or source evidence is an exception, not a blank.
-2. **Trace and agree.** Agree each statement amount to its workpaper, and the workpaper to its source export. Exact figures. Note any rounding convention once and apply it consistently.
+2. **Trace and agree both ways.** Agree each statement amount to its workpaper, and the workpaper to its source export. Then work from the other end: trace each figure in each workpaper back to its source figure, and each source export total forward to the workpaper and statement line that uses it. A workpaper figure with no source, or a source total that reaches no workpaper or statement line, is an exception; agreement in one direction does not clear it. Exact figures. Note any rounding convention once and apply it consistently.
 3. **Recalculate.** Re-cast every schedule (columns and cross-adds), recompute derived figures: depreciation from the register's rates and dates, interest from stated terms, movements between opening and closing balances.
 
    Recompute from the underlying records independently of the preparer's result.
@@ -28,13 +28,19 @@ If the folder is a BAS, month-end, or year-end pack using the filenames [Workpap
    Name the cells and affected outputs and reopen checks whose source or formula
    changed. A matching cached value does not establish formula agreement or
    recalculation. Record the coverage and checks not performed.
+
+   Recompute every figure quoted in narrative, such as notes text, a covering
+   memo, review notes or management commentary, including movements,
+   percentages and totals given in words, from the matrix or the source. A
+   narrative figure that does not recompute is an exception even when the
+   schedules agree.
 4. **Check comparatives.** Prior year column agrees to the prior year signed statements, including any reclassifications, and reclassifications get a note.
 5. **Check internal consistency.** P&L profit flows to equity/retained earnings; closing cash on the balance sheet equals the bank rec totals; notes agree to face of statements.
-6. **Write the exceptions list.** Each exception: what was expected, what was found, magnitude, severity (blocks sign-off / needs explanation / trivial), suggested resolution, owner and status. Sort by severity.
+6. **Write the exceptions list.** Each exception: what was expected, what was found, magnitude, severity (blocks sign-off / needs explanation / trivial), suggested resolution, owner and status. Sort by severity. Then test any statement in the pack that there are no exceptions, that everything agrees or that the pack is clear. Compare it with the open flags: this list, unresolved review notes, gate results and open preparer queries. Where any flag is open, record the statement as unsupported and add it to the list; do not edit the statement or close the flag.
 
 ## Output
 
-The tie-out matrix plus the exceptions list. The agreed-scope tie-out is complete only when every row has source/version metadata, recalculations and rounding bridges are documented, and unresolved matters remain visible for review. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
+The tie-out matrix plus the exceptions list. The agreed-scope tie-out is complete only when every row has source/version metadata, both trace directions are done, recalculations (including narrative figures) and rounding bridges are documented, and unresolved matters remain visible for review. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
 ## Boundaries
 

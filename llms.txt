@@ -133,3 +133,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [docs/EVAL.md](docs/EVAL.md): how the fabricated validation pack is run and recorded.
 - [DISCLAIMER.md](DISCLAIMER.md): the professional boundary in full.
 - [AGENTS.md](AGENTS.md): contributor guide and hard boundary.
+
+## Reuse
+
+- [Reusing this code](https://github.com/ryanduguid/australian-accounting-skills/blob/main/AGENTS.md#reusing-this-code): Ryan Duguid's work under FSL-1.1-ALv2; keep its notices and licence; public credit is requested.
