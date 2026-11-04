@@ -55,4 +55,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An amended assessment issued years ago has no evidence of when it was received, and one ground relies on a repayment no document shows. Show the period end under each supported date, keep the timing `UNVERIFIED`, draft the extension request for the agent and flag the ground `UNSUPPORTED`.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

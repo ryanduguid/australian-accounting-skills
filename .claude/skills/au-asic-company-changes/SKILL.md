@@ -58,4 +58,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A sole director and sole shareholder wants to resign and hand over to an incoming director who has no director ID and has not signed a consent. Keep the resignation conditional on a valid appointment, list the missing ID and consent, and draft the record for signing only.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

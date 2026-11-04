@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 """Skills that meet the Tax Reform No. 3 Bill keep it a dated, unenacted proposal."""
 
 from __future__ import annotations

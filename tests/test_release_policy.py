@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 """The release workflow is the closed shared skill policy, not a local copy."""
 
 import unittest

@@ -56,4 +56,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An employer short-paid one quarter before 1 July 2026 and has 2 later paydays with clearing house remittance dates but no fund receipt dates. Keep the regimes in separate registers, leave both paydays' timing `UNKNOWN` and give the registered agent component workings, not a charge.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

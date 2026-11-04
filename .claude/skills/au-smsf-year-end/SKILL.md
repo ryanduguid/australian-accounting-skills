@@ -57,4 +57,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A property valuation is stale and a related-party lease is missing. Preserve both exceptions and leave dependent balances or classifications unverified.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

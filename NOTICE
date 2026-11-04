@@ -1,23 +1,32 @@
 australian-accounting-skills
 Copyright 2026 Ryan Duguid (https://github.com/ryanduguid)
 
-Ryan Duguid's contributions are licensed under the Functional Source
-License, Version 1.1, ALv2 Future License (FSL-1.1-ALv2); see LICENSE.
-Retained third-party material remains under its own licence, as stated below.
+Ryan Duguid's contributions are licensed under the Ryan Duguid Public
+Attribution Licence, Version 1.0: the Functional Source License, Version 1.1,
+ALv2 Future License (FSL-1.1-ALv2) text with a Public Attribution Condition;
+see LICENSE. Retained third-party material remains under its own licence, as
+stated below.
 
-For each version licensed under FSL-1.1-ALv2, an additional licence under the
-Apache License, Version 2.0 becomes effective on the second anniversary of the
-date that version was made available.
+Public attribution applies when you rely on the FSL grant of a version released
+with the condition (from 4 November 2026) to redistribute or make available a
+copy, modification or derivative: name Ryan Duguid and link to this repository
+in its README or main documentation and in any credits screen. Internal use is
+exempt.
 
-Versions made available before this change remain available under the
-licences they were released with.
+For each version, an additional licence under the Apache License, Version 2.0
+becomes effective on the second anniversary of the date that version was made
+available. The condition does not apply to that licence.
 
-Redistribution under FSL-1.1-ALv2 requires including its terms or a link to
+Versions made available before the condition keep the terms they were released
+with.
+
+Redistribution under the FSL grant requires including its terms or a link to
 them and keeping the copyright notices supplied with the software.
 Redistribution under another applicable licence follows that licence's
 conditions.
 
-Copying and reuse: versions under FSL-1.1-ALv2 are not open source. LICENSE does
+Copying and reuse: versions under FSL-1.1-ALv2, with or without the Public
+Attribution Condition, are not open source. LICENSE does
 not permit a Competing Use, which it defines as making the software available to
 others in a commercial product or service that substitutes for the software,
 substitutes for another product or service offered using it, or offers the same or
@@ -32,9 +41,11 @@ This product includes work by Ryan Duguid
 Attribution: LICENSE applies to all copies, modifications and derivatives, and
 redistributing any of them must keep the copyright notices provided in or with the
 software. Those include the copyright line above, the notice ending each skill,
-reference and rule, and the header of each script and test. Separately from that
-licence condition, the author asks that reuse be credited as follows. Neither
-belongs in client deliverables prepared with the skills:
+reference and rule, and the header of each script and test. For versions released
+with the Public Attribution Condition, LICENSE also requires public credit with a
+link to this repository whenever a copy, modification or derivative is made
+available to others; for earlier versions the author asks for it. Credit reuse as
+follows. Neither belongs in client deliverables prepared with the skills:
 
   Based on australian-accounting-skills by Ryan Duguid
   (https://github.com/ryanduguid/australian-accounting-skills).

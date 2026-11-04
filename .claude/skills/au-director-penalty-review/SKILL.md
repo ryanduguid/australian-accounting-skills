@@ -51,4 +51,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A director resigned after a quarter ended and the ATO later issued a GST estimate for that quarter. Keep the estimate separate from reported amounts and leave tenure and remission questions for the director's lawyer.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

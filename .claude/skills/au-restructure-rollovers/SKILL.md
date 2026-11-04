@@ -64,4 +64,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A sole trader proposes moving business assets to a new company for shares. One asset has no market value and the small business entity evidence is a bare statement. Keep both pathways' affected conditions not evidenced and the share value comparison open; do not choose a pathway.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

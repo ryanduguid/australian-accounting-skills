@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Ryan Duguid
-# SPDX-License-Identifier: FSL-1.1-ALv2
+# SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
 # Apply docs/DISCOVERY.md to GitHub About. Requires gh, authenticated to
 # ryanduguid/australian-accounting-skills with repo metadata write access.
