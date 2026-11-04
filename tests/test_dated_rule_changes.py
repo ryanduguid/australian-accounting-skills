@@ -575,7 +575,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         )
         # TD 2026/D2: its scope and exclusions, each in its own clause.
         self.assert_sentence(step, r"\bonly wrapping through a smart contract\b", r"\blocks\b",
-            r"\bmints\b[^,;:]*\b(one for one|on a 1:1 basis)\b", r"\bparagraph 2\b",
+            r"\bmints\b[^,;:]*,?\s*\b(one for one|on a 1:1 basis)\b", r"\bparagraph 2\b",
             affirmed=(r"\b(one for one|on a 1:1 basis)\b",),
         )
         self.assert_sentence(
