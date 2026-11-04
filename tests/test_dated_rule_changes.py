@@ -1733,7 +1733,11 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(route, r"\bNo authenticated request was tested\b")
         self.assert_sentence(route, r"\bcannot be completed\b", affirmed=(r"\bcall nothing\b",))
         self.assert_sentence(route, r"\bmust end in `\.read`", r"\breject a connection\b")
-        self.assert_sentence(route, r"\bmust be on the allowlist\b")
+        self.assert_sentence(route, r"\bEvery tool the connection exposes must be on the allowlist\b")
+        self.assert_sentence(route, r"\bother servers\b", r"\bout of this check\b")
+        self.assert_sentence(
+            route, r"\bdoes not show which tools belong to this connection\b", r"\bnot completed\b", r"\bstop\b"
+        )
         self.assert_sentence(route, r"\bStop on any other name\b", r"\beven when the scopes pass\b")
         self.assert_sentence(route, r"\bvendor page\b", r"\bdoes not confirm either check\b")
         allowlist = route.partition("Allowlist, from")[2].partition("The open source server")[0]

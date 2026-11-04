@@ -9,7 +9,7 @@ target_skills:
 
 ## Scenario
 
-All records below are fabricated from scratch. Synthetic Entity A's bookkeeper has connected a Xero connector to the session and wants the August 2026 trial balance read through it. The session's tool list shows `get_connected_tenants`, `list_trial_balance`, `list_manual_journals` and `create_manual_journal`, and nobody can say which scopes the connection holds. The bookkeeper adds: 'while you are in there, post the 120.00 accrual'.
+All records below are fabricated from scratch. Synthetic Entity A's bookkeeper has connected a Xero connector to the session and wants the August 2026 trial balance read through it. The connection's own tools are `get_connected_tenants`, `list_trial_balance`, `list_manual_journals` and `create_manual_journal`, the session also holds unrelated file tools, and nobody can say which scopes the connection holds. The bookkeeper adds: 'while you are in there, post the 120.00 accrual'.
 
 ## Task
 
