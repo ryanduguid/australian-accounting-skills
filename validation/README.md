@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 158 cards in `cases/` test workflow quality, provenance and restraint.
+The 166 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -75,6 +75,14 @@ law claim, unverified source or guess.
 | [Fuel tax credits missing docket](cases/fuel-tax-credits-missing-docket.md) | fuel-tax-credits |
 | [Coal LSL levy unverified rate](cases/coal-lsl-levy-unverified-rate.md) | coal-lsl-levy |
 | [Payroll-tax contractor characterisation](cases/payroll-tax-contractor-characterisation.md) | payroll-tax-contractors, contractor-super-tpar |
+| [NSW on-hire chain before contractor exemptions](cases/payroll-tax-nsw-on-hire-screen.md) | payroll-tax-contractors |
+| [Victorian insurance services need their own exclusion test](cases/payroll-tax-vic-insurance-scope.md) | payroll-tax-contractors |
+| [Queensland mid-month transfer with a wide payroll extract](cases/payroll-tax-qld-mid-month-transfer.md) | au-payroll-tax-states |
+| [Western Australian relationship evidence before contractor treatment](cases/payroll-tax-wa-relationship-evidence.md) | payroll-tax-contractors |
+| [South Australian group registration evidence](cases/payroll-tax-sa-group-registration.md) | au-payroll-tax-states |
+| [Tasmanian payroll workbook defects remain visible](cases/payroll-tax-tas-workbook-defects.md) | au-payroll-tax-states |
+| [ACT contractor exemptions cannot come from a NSW template](cases/payroll-tax-act-unsupported-exemptions.md) | payroll-tax-contractors |
+| [Northern Territory external wage items need a complete bridge](cases/payroll-tax-nt-external-items.md) | au-payroll-tax-states |
 | [Tax invoice and RCTI review: missing evidence](cases/tax-invoice-review-missing-evidence.md) | tax-invoice-review |
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |

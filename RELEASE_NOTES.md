@@ -1,6 +1,13 @@
 # v0.5.1 (unreleased)
 
-The latest practice and land tax additions bring the validation pack to 158
+Payroll tax source routes now cover all 8 jurisdictions. The contractor
+workflow keeps its detailed NSW steps and routes other jurisdictions to their
+own Acts and guidance, including the WA and ACT differences. New indexed
+sources remain discovery only; the South Australian Act text was unavailable.
+Eight fabricated jurisdiction cards bring the pack to 166, with no recorded
+model run for those cards and 95 confirmed verdicts unchanged.
+
+The preceding practice and land tax additions brought the validation pack to 158
 cards. The FBT workflow reconciles each source line to its register, and the
 tax agent obligations workflow separates optional professional-body rows from
 TPB obligations. Land tax evidence routes cover all 8 jurisdictions, with the

@@ -93,7 +93,9 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertNotIn("fixed order starting with the worker's principal place of residence", text)
 
     def test_nsw_payroll_exemptions_use_the_current_section_32(self) -> None:
-        text = skill_text("payroll-tax-contractors")
+        # These exclusions constrain the NSW workflow, not other jurisdictions'
+        # own statutory lists in the separate routing table.
+        text = skill_text("payroll-tax-contractors").split("## Other states and territories", 1)[0]
         self.assertIn("owner-driver conveyance (s 32(2)(d), PTA 006", text)
         self.assertNotIn("insurance procurement", text)
         self.assertNotIn("door-to-door sale", text)
