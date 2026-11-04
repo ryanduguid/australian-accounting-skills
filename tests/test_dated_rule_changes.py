@@ -59,6 +59,28 @@ class DatedRuleChangeTests(unittest.TestCase):
             "changes-to-limited-recourse-borrowing-arrangements",
         )
 
+    def test_rental_holiday_home_costs_are_denied_before_apportionment(self) -> None:
+        text = skill_text("au-rental-property")
+        screen = step(text, "Before apportioning, screen for a holiday home.", "5. If cashflow")
+        self.assertIn("s 26-50 of the *Income Tax Assessment Act 1997*", screen)
+        self.assertIn("denied rather than apportioned", screen)
+        self.assertIn("at all times in the income year it was used or held for use mainly", screen)
+        self.assertIn("(s 26-50(3)(b)(ii))", screen)
+        self.assertIn("advertising for tenants or cleaning after a guest stay, stay under s 8-1", screen)
+        self.assertIn("definite and sustained change", screen)
+        self.assertIn("s 26-50(4)", screen)
+        self.assertIn("expenses incurred before 1 July 2026", screen)
+        self.assertIn("evidence of avoidance, fraud or evasion", screen)
+        self.assertIn("an amended assessment or private ruling follows the ruling", screen)
+        self.assertIn("PCG 2026/3", screen)
+        self.assertIn("cost base", screen)
+        self.assert_cited_and_pending(
+            "au-rental-property",
+            "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20261/NAT/ATO/00001",
+            "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20263/NAT/ATO/00001",
+            "https://www.legislation.gov.au/C2004A05138/latest/text",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
