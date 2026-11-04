@@ -1,3 +1,6 @@
+# Copyright 2026 Ryan Duguid
+# SPDX-License-Identifier: FSL-1.1-ALv2
+
 """Fuzz the validation card front-matter parser and sensitive-content scan."""
 
 from __future__ import annotations

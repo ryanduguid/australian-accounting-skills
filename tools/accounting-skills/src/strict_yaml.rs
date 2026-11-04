@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! The validation card schema uses YAML syntax with no aliases, anchors or tags.
 use crate::Result;
 use serde_json::{Map, Value};
