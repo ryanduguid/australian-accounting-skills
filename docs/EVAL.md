@@ -277,8 +277,10 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
 now cover 95 of the 139 cards. The 4 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
-au-financial-statements and au-pre-lodgement-review postdate every recorded
-run, so earlier verdicts on their cards describe the earlier wording.
+au-financial-statements, au-pre-lodgement-review, au-smsf-year-end,
+au-tax-agent-obligations, au-nonresident-cgt and stp-finalisation postdate
+every recorded run, so earlier verdicts on their cards describe the earlier
+wording.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
