@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -46,6 +47,26 @@ class PreLodgementReviewTests(unittest.TestCase):
         self.assertIn("Cite only an ato.gov.au page opened at use time", text)
         self.assertIn("Do not repeat a focus list from memory", text)
         self.assertIn("an out-of-range ratio is a question for the reviewer, not a finding", text)
+
+    def test_income_completeness_tests_duplicates_beside_omissions(self) -> None:
+        text = " ".join(skill_text().split())
+        start = text.index("5. Test income completeness.")
+        step = text[start : text.index("6. Map draft items", start)]
+        self.assertIn("as an omitted-income item to resolve", step)
+        self.assertIn("Test for duplicated income beside it", step)
+        self.assertIn("taxable payments annual report (TPAR) or on an income statement", step)
+        self.assertIn("such as personal services income or business income", step)
+        self.assertIn("as a duplicated-income item to resolve", step)
+        self.assertIn("do not delete either entry yourself", step)
+        sources = REPOSITORY / ".claude" / "skills" / SKILL / "sources.json"
+        recorded = {s["url"] for s in json.loads(sources.read_text(encoding="utf-8"))["sources"]}
+        for slug in (
+            "mytax-instructions/2026/income/sole-trader-and-business-income-or-losses-and-"
+            "partnership-distributions/personal-services-income",
+            "new-tpar-pre-fill-for-tax-time-2026",
+        ):
+            self.assertIn(slug, text)
+            self.assertTrue(any(url.endswith(slug) for url in recorded), slug)
 
     def test_cards_hold_the_rating_and_calibration_boundaries(self) -> None:
         rating = card_text("au-pre-lodgement-review-rating-not-clearance")
