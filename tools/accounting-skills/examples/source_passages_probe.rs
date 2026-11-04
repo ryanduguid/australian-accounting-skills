@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Offline qualification seam. Production capture always uses the URL policy
 //! and transport; the probe asks its caller to supply a fabricated response.
 use accounting_skills::{Result, source_passages as p};

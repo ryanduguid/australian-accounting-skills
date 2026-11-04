@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! The coverage matrix in coverage.json, derived from the skills, validation cards and tests.
 mod passage_diff;
 pub mod plugin_evals;

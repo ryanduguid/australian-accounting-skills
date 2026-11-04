@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Freeze task input and a withheld rubric without observing or grading a model.
 use crate::{Result, source_content, source_passages, sweep, validation};
 use fancy_regex::Regex;
