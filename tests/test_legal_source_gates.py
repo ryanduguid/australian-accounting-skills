@@ -366,7 +366,19 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("apply it to the owners within its scope whether or not owners are listed", step)
         self.assertIn("is covered for every beneficial owner (s 6-7(1), (1A) and (1B))", step)
         self.assertIn("covers only an individual who is a beneficial owner solely through that part (s 6-7(1C))", step)
-        self.assertIn("s 6-17 covers the matter once KYC information about it appropriate to the customer's ML/TF risk is collected", step)
+        self.assertIn(
+            "s 6-17 covers the matter only if the customer's ML/TF risk has been identified from KYC information "
+            "reasonably available before it began providing the designated service, KYC information about the matter "
+            "appropriate to that risk has been collected and there are no reasonable grounds to doubt that information's "
+            "adequacy or veracity (s 6-17(a), (c), (d) and (e))",
+            step,
+        )
+        self.assertIn(
+            "Route to the AML/CTF compliance officer any recorded basis that names no decision-maker, does not record "
+            "each condition of the provision it cites or rests on KYC information that the register's own records "
+            "contradict, and carry the owners it would cover as unresolved, not as covered.",
+            step,
+        )
         self.assertIn("s 6-18 covers it where the customer is, or is controlled by,", step)
         self.assertIn("as established; s 6-17 does not.", step)
         self.assertIn(
@@ -412,6 +424,12 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("not as missing elements, although both are listed", card_text)
         self.assertIn("Do not extend J2's recorded basis to owner 2 of 2.", card_text)
 
+        card = (REPOSITORY / "validation" / "cases" / "au-aml-ctf-client-coverage-contradictory-kyc-basis.md")
+        card_text = " ".join(card.read_text(encoding="utf-8").split())
+        self.assertIn("- au-aml-ctf-client-coverage", card_text)
+        self.assertIn("Route K1's recorded basis to the compliance officer because the ownership summary it relies on contradicts", card_text)
+        self.assertIn("Do not record K1's or K2's owners as covered, or mark either client complete, on its recorded basis.", card_text)
+
     def test_bas_purchases_test_import_gst_coded_to_cost(self) -> None:
         text = " ".join(skill_text("bas-preparation").split())
         start = text.index("5. **Review coding exceptions.**")
@@ -441,21 +459,23 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Each broker or courier import GST amount coded to cost is listed", text)
         self.assertIn("label 7A reconciles to the import declarations and 1B carries only the credit the evidence establishes", text)
 
-        self.assertIn("Its import GST records, which step 5 cites, are discovery-only and await human review.", text)
         sources = SKILLS / "bas-preparation" / "sources.json"
         records = {s["url"]: s for s in json.loads(sources.read_text(encoding="utf-8"))["sources"]}
         international = (
             "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/"
             "in-detail/rules-for-specific-transactions/international-transactions/"
         )
-        for url in (
+        imports = (
             international + "gst-and-imported-goods",
             international + "deferred-gst",
             "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001",
-        ):
+        )
+        for url in imports:
             self.assertIn(f"]({url})", step)
-            self.assertEqual(records[url]["verification_status"], "source-discovery-only-human-review-pending")
-            self.assertEqual(records[url]["checked_at"], "")
+            # Pending or reviewed; test_skill_metadata checks the record's form.
+            self.assertIn(url, records)
+        if any(records[url].get("verification_status") == "source-discovery-only-human-review-pending" for url in imports):
+            self.assertIn("Its import GST records, which step 5 cites, are discovery-only and await human review.", text)
 
         card = (REPOSITORY / "validation" / "cases" / "bas-preparation-import-gst-coded-to-cost.md")
         card_text = card.read_text(encoding="utf-8")

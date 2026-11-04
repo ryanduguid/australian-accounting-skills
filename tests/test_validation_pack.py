@@ -93,15 +93,23 @@ def build_fixture(root: Path, cards: int = 6) -> None:
 
     Everything else is generated to match those cards, so the fixture stays
     correct when the pack grows and a mutated copy isolates one rejection.
+    No 2 chosen cards share a target skill, so a skill that gains cards
+    cannot crowd the others out of the fixture.
     """
-    chosen = sorted((REPOSITORY / "validation" / "cases").glob("*.md"))[:cards]
+    chosen: list[Path] = []
     skills: set[str] = set()
-    for source in chosen:
+    for source in sorted((REPOSITORY / "validation" / "cases").glob("*.md")):
+        if len(chosen) == cards:
+            break
         text = validator.read_utf8(source)
         metadata, _ = validator.parse_front_matter(text, source.name)
         targets = metadata["target_skills"]
         assert isinstance(targets, list)
-        skills.update(str(skill) for skill in targets)
+        names = {str(skill) for skill in targets}
+        if names & skills:
+            continue
+        chosen.append(source)
+        skills.update(names)
         write(root / "validation" / "cases" / source.name, text)
     for name in sorted(skills):
         write(root / ".claude" / "skills" / name / "SKILL.md", f"# {name}\n")

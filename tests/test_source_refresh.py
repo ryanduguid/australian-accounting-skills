@@ -885,28 +885,25 @@ class PreflightTests(unittest.TestCase):
                     self.assertEqual(path.read_text(encoding="utf-8"), "Preflight report" if mode else "Sweep report")
 
     def test_accepting_reviewed_records_cannot_release_pending_import_gst_sources(self) -> None:
-        """bas-preparation step 5 relies on 3 discovery-only records. Accepting
-        every other record in its shipped index must still leave the skill held."""
+        """bas-preparation step 5 relies on 3 import GST records. While they are
+        pending, accepting every other record must still leave the skill held."""
         today = "2026-11-04"
         index = REPOSITORY / ".claude" / "skills" / "bas-preparation" / "sources.json"
         shipped = json.loads(index.read_text(encoding="utf-8"))["sources"]
-        pending_status = "source-discovery-only-human-review-pending"
         international = (
             "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/"
             "in-detail/rules-for-specific-transactions/international-transactions/"
         )
-        pending = [record for record in shipped if record.get("verification_status") == pending_status]
-        self.assertEqual(
-            {record["url"] for record in pending},
-            {
-                international + "gst-and-imported-goods",
-                international + "deferred-gst",
-                "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001",
-            },
-        )
+        imports = {
+            international + "gst-and-imported-goods",
+            international + "deferred-gst",
+            "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200315/NAT/ATO/00001",
+        }
+        self.assertLessEqual(imports, {record["url"] for record in shipped})
+
         accepted: list[dict[str, object]] = []
         for original in shipped:
-            if original.get("verification_status") == pending_status:
+            if original["url"] in imports:
                 continue
             # The explicit human acceptance docs/source-preflight.md describes.
             record = {key: value for key, value in original.items()
@@ -918,6 +915,15 @@ class PreflightTests(unittest.TestCase):
                 record[source_refresh.REVIEWED_FIELD] = {**binding, "checked_at": today}
             accepted.append(record)
         self.assertTrue(accepted)
+        # Discovery-only copies built here, so accepting a shipped import record
+        # leaves this gate test meaningful.
+        pending = [
+            {"title": record["title"], "url": record["url"], "checked_at": "",
+             "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+             "verification_status": "source-discovery-only-human-review-pending",
+             "review_required_since": today}
+            for record in shipped if record["url"] in imports
+        ]
 
         directory = self.skills / "bas-preparation"
         directory.mkdir()

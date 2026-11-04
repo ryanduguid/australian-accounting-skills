@@ -39,6 +39,7 @@
       "propertyNames": {
         "enum": [
           "au-aml-ctf-client-coverage-beneficial-owner-evidence",
+          "au-aml-ctf-client-coverage-contradictory-kyc-basis",
           "au-aml-ctf-client-coverage-missing-evidence",
           "au-aml-ctf-client-coverage-recorded-exception-scope",
           "au-asic-company-changes-sole-director-exit",
