@@ -28,31 +28,24 @@
     {
       "title": "TheWIPTally schedule engine",
       "url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
-      "checked_at": "2026-10-14",
+      "checked_at": "2026-11-04",
       "reverify_by": "2027-09-12",
       "fact": "The local schedule engine performs reviewed arithmetic only; it does not decide recognition, enforceability or onerous-contract conclusions.",
       "volatile": true,
       "final_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
       "http_status": 200,
       "fetched_at": "2026-11-04",
-      "content_hash": "123152aaf13b5dcd5c0dd6c03e604522405f60630a14cbd8eb0d22445ac5b570",
+      "content_hash": "cfacda4aeeaf43eb7adc3baf5797b6a3a12f6e4cbab2662a709643df93026a99",
       "source_last_modified": "",
       "content_hash_covers": "html",
-      "content_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
+      "content_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
       "review_required_since": "2026-11-04",
       "reviewed_content": {
-        "content_hash": "123152aaf13b5dcd5c0dd6c03e604522405f60630a14cbd8eb0d22445ac5b570",
-        "content_hash_covers": "html",
-        "content_url": "https://github.com/ryanduguid/australian-accounting/tree/f10086d0c99c77bb3dabd3a0fc08b9e5ab1b939a/packages/the-wip-tally",
-        "source_last_modified": "",
-        "checked_at": "2026-10-14"
-      },
-      "pending_review": {
         "content_hash": "cfacda4aeeaf43eb7adc3baf5797b6a3a12f6e4cbab2662a709643df93026a99",
         "content_hash_covers": "html",
         "content_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
-        "observed_at": "2026-11-04",
-        "source_last_modified": ""
+        "source_last_modified": "",
+        "checked_at": "2026-11-04"
       }
     },
     {
