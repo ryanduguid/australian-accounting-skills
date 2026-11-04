@@ -22,10 +22,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-aml-ctf-client-coverage-beneficial-owner-evidence",
-          "au-aml-ctf-client-coverage-missing-evidence"
+          "au-aml-ctf-client-coverage-missing-evidence",
+          "au-aml-ctf-client-coverage-recorded-exception-scope"
         ],
         "only_seeded_case": false
       },

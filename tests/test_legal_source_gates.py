@@ -359,11 +359,28 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Test beneficial owner evidence owner by owner.", step)
         self.assertIn("In the Act and Rules as read on 4 November 2026", step)
         self.assertIn("(s 28(2)(d) and (e) of the *Anti-Money Laundering and Counter-Terrorism Financing Act 2006*)", step)
-        self.assertIn("record a verification evidence reference and a screening date", step)
+        # A recorded Rules basis is applied, within its scope, before any owner is tested.
+        basis = step.index("First record any basis the register gives, and who recorded it,")
+        per_owner = step.index("For each beneficial owner the register or its recorded ownership and control structure lists")
+        self.assertLess(basis, per_owner)
+        self.assertIn("apply it to the owners within its scope whether or not owners are listed", step)
+        self.assertIn("is covered for every beneficial owner (s 6-7(1), (1A) and (1B))", step)
+        self.assertIn("covers only an individual who is a beneficial owner solely through that part (s 6-7(1C))", step)
+        self.assertIn("s 6-17 covers the matter once KYC information about it appropriate to the customer's ML/TF risk is collected", step)
+        self.assertIn("s 6-18 covers it where the customer is, or is controlled by,", step)
+        self.assertIn("as established; s 6-17 does not.", step)
+        self.assertIn(
+            "record a verification evidence reference unless a recorded basis covers that owner's identity, "
+            "and a screening date unless the register records that s 6-7(2) or s 6-18(2) covers that owner's screening",
+            step,
+        )
         self.assertIn("identified by its position in the register (such as owner 2 of 3), not by name", step)
+        self.assertIn("record each owner a basis covers as covered by it, not as missing", step)
         self.assertIn("at least one piece of KYC information verified for each matter", step)
-        self.assertIn("(s 6-7 of the [*Anti-Money Laundering and Counter-Terrorism Financing Rules 2025*]", step)
-        self.assertIn("With no recorded basis, the beneficial owner evidence is missing; do not decide whether a basis applies.", step)
+        self.assertIn("Where the register lists no beneficial owner and records no basis under s 6-7, s 6-17 or s 6-18", step)
+        self.assertIn("with neither, the beneficial owner evidence is missing", step)
+        self.assertIn("Do not decide whether a basis applies or extend it beyond its recorded scope", step)
+        self.assertNotIn("Where the register lists no beneficial owner, record the basis it gives", step)
         self.assertIn("A screening or verification vendor's entity-level `complete` status is not this evidence", step)
         self.assertIn("Section 111(3) of the Act requires records", step)
         self.assertIn("remains responsible for complying with the Act and Rules", step)
@@ -388,6 +405,12 @@ class LegalSourceGateTests(unittest.TestCase):
         card_text = card.read_text(encoding="utf-8")
         self.assertIn("  - au-aml-ctf-client-coverage\n", card_text)
         self.assertIn("Do not mark H1 complete on the vendor's status.", card_text)
+
+        card = (REPOSITORY / "validation" / "cases" / "au-aml-ctf-client-coverage-recorded-exception-scope.md")
+        card_text = " ".join(card.read_text(encoding="utf-8").split())
+        self.assertIn("- au-aml-ctf-client-coverage", card_text)
+        self.assertIn("not as missing elements, although both are listed", card_text)
+        self.assertIn("Do not extend J2's recorded basis to owner 2 of 2.", card_text)
 
     def test_bas_purchases_test_import_gst_coded_to_cost(self) -> None:
         text = " ".join(skill_text("bas-preparation").split())

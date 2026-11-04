@@ -1,7 +1,7 @@
 # v0.5.1 (unreleased)
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
-pack from 112 to 143 cards. Sixteen cover in-scope topics from a comparison
+pack from 112 to 144 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
 docs/nagaris-comparison.md; only the topic names were used.
 
@@ -31,7 +31,7 @@ docs/installation.md records the measurement. Seventeen routing cases are added.
 Every new source record is discovery-only and awaits human source review.
 The 23 new cards were observed task-only, and the review of those answers
 corrected 10 skills and 6 cards. Ryan Duguid confirmed a pass for each of the
-23 on 2 November, so confirmed verdicts cover 95 of the 143 cards.
+23 on 2 November, so confirmed verdicts cover 95 of the 144 cards.
 
 Three au-payroll-tax-states cards cover a group with a designated group
 employer across 2 states, back pay and a reversal processed after 30 June,
@@ -54,9 +54,12 @@ records await human review.
 au-aml-ctf-client-coverage tests beneficial owner evidence owner by owner
 against s 28(2)(d) and (e) of the AML/CTF Act, and records a screening
 vendor's entity-level complete status beside that evidence, never in place
-of it. A new card covers a company with evidence for 1 of its 3 listed
-beneficial owners and has no confirmed verdict yet. The new source records
-await human review.
+of it. It first applies any recorded basis under s 6-7, 6-17 or 6-18 of the
+AML/CTF Rules to the owners within that basis's scope, whether or not owners
+are listed. Two new cards cover a company with evidence for 1 of its 3
+listed beneficial owners and known owners under a recorded Rules exception,
+and have no confirmed verdict yet. The new source records await human
+review.
 
 bas-preparation lists import GST on broker and courier invoices coded to cost
 as possible missed credits and tests who imported the goods and the import
