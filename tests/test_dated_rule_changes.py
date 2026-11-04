@@ -1,8 +1,9 @@
 # Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
 """Skills that meet a 2026 rule change keep its start date, its scope and its source.
 
-Each test reads one numbered workflow step and checks the dates, authorities,
-exceptions and escalations it must carry, not its wording. A prohibition,
+Each test reads one numbered workflow step, or one table row cell by cell, and
+checks the dates, authorities, exceptions and escalations it must carry, not its
+wording. A prohibition,
 exception, negative predicate or date scope is checked within one sentence with
 its negator before its verb or its side of the date. An affirmative instruction
 is matched from its verb, predicate or subject and fails only when a negator
@@ -27,6 +28,8 @@ ISO_DATE = r"^\d{4}-\d{2}-\d{2}$"
 NEGATED = r"(?:\b(?:not|never|cannot|no(?!\.))|n't)(?:\W+(?:be|been|to|a|an|the|however|also))*\W+$"
 # A required negative predicate keeps its negator before its verb.
 NOT = r"(?:\bnot|\bnever|n't)\W+"
+# 'Dutiable' and its faithful rewordings.
+DUTIABLE = r"(?:dutiable|subject to duty|liable to duty)\b"
 
 
 def skill_text(skill: str) -> str:
@@ -53,6 +56,15 @@ def workflow_step(skill: str, number: int | str) -> str:
     assert start, f"{skill} has no workflow step {number}"
     end = re.compile(r"^\d+[a-z]?\. ", re.MULTILINE).search(workflow, start.end())
     return " ".join(workflow[start.start() : end.start() if end else len(workflow)].split())
+
+
+def table_row(skill: str, heading: str, first_cell: str) -> list[str]:
+    """The other cells of the table row under `## <heading>` whose first cell is `first_cell`."""
+    for line in raw_section(skill, heading).splitlines():
+        cells = [" ".join(cell.split()) for cell in line.strip().strip("|").split("|")]
+        if line.lstrip().startswith("|") and cells[0] == first_cell:
+            return cells[1:]
+    raise AssertionError(f"{skill} has no '{first_cell}' row under '## {heading}'")
 
 
 def sentences(text: str) -> list[str]:
@@ -1167,6 +1179,304 @@ class DatedRuleChangeTests(unittest.TestCase):
             "au-tax-agent-obligations",
             *(f"https://www.tpb.gov.au/tpb-gs-{number}-2024-{slug}" for number, (slug, _) in guidance.items()),
         )
+
+    def test_transfer_duty_lists_dutiable_asset_classes_by_jurisdiction(self) -> None:
+        """Each jurisdiction's row is read cell by cell, so a rule stays with its state and column."""
+        skill = "au-transfer-duty"
+        step = workflow_step(skill, 1)
+        self.assert_sentence(step, r"\bHuman review pending\b", r"\bon 4 November 2026\b", r"\bnot a human review\b")
+        # Every asset class is listed with its location and allocation, each class on its own.
+        self.assert_sentence(
+            step, r"\bassociated agreements?\b", r"\blocation\b", r"\bconsideration or value\b", r"\bland\b",
+            r"\bfixtures\b", r"\bleases\b", r"\bplant and equipment\b", r"\bstock-in-trade\b", r"\blivestock\b",
+            r"\bregistered vehicles\b", r"\bgoodwill\b", r"\bintellectual property\b", r"\bbusiness licences\b",
+            r"\bdebts\b",
+            affirmed=(r"\blist every asset class\b",),
+        )
+        # Each class is tested at the revenue office where the asset is, with its page and read date;
+        # a class the guidance does not settle stays UNVERIFIED and is never taken as non-dutiable.
+        self.assert_sentence(
+            step, r"\brevenue office of the jurisdiction where the asset is located\b", r"\bpage\b", r"\bdate\b",
+            affirmed=(r"\brecord whether\b",),
+        )
+        self.assert_sentence(step, NOT + r"settle\b", NOT + r"non-dutiable\b", affirmed=(r"`UNVERIFIED`",))
+        # Goods that are not dutiable alone can be with land, so the classes are tested together.
+        self.assert_sentence(
+            step, NOT + DUTIABLE + r"\W+on their own\b", r"\bwith land or other dutiable property\b",
+            affirmed=(r"\btest the classes together\b", r"\baggregate\b"),
+        )
+        self.assert_sentence(step, r"\bnt\.gov\.au\b", NOT + r"indexed\b", r"\boutside the reviewed fetch list\b")
+        self.assert_sentence(step, affirmed=(r"\bconfirm each row\b[^.]*\bAct for the transaction date\b",))
+        self.assert_sentence(step, r"\bdecides no liability, value, exemption or concession\b")
+
+        goods, excluded, other = table_row(skill, "Workflow", "New South Wales")
+        self.assert_carries(goods, "Revenue NSW", "4 November 2026")
+        self.assert_sentence(goods, affirmed=(DUTIABLE + r"\W+when\b[^.]*\bincludes other dutiable property\b",))
+        self.assert_sentence(goods, r"\bfixtures\b", r"\binterest in land\b", r"\balways\W+" + DUTIABLE)
+        self.assert_carries(
+            excluded, "stock-in-trade", "materials held for use in manufacture", "goods under manufacture",
+            "primary production land", "livestock", "registered vehicles", "ships or vessels",
+        )
+        self.assert_sentence(
+            other, r"\bgoodwill\b", r"\bintellectual property\b", r"\bstatutory licences\b", r"\bdebtor receivables\b",
+            r"\bare\W+" + NOT + DUTIABLE,
+        )
+
+        goods, excluded, other = table_row(skill, "Workflow", "Victoria")
+        self.assert_carries(goods, "SRO Victoria", "24 August 2026")
+        self.assert_sentence(
+            goods, r"\bdutiable transaction over an estate or interest in land\b",
+            r"\bincluding goods used in connection with a business\b", r"\bs 10\(1\) Duties Act 2000\b",
+            affirmed=(r"\bgoods in Victoria are\W+" + DUTIABLE + r"\W+where\b",),
+        )
+        self.assert_sentence(
+            goods, r"\bDA-054\b", r"\b1 March 2011\b", r"\bunder review\b",
+            r"\bpredates the fixtures provisions of 19 June 2019\b",
+        )
+        self.assert_sentence(goods, affirmed=(r"\bfixtures are always\W+" + DUTIABLE,))
+        self.assert_carries(
+            excluded, "stock-in-trade", "materials held for use in manufacture", "goods under manufacture",
+            "primary production", "livestock", "s 10(1)(d)",
+        )
+        self.assert_sentence(
+            other, r"\bDA-029\b", r"\bDuties Act 2000\b", NOT + r"charge duty separately on the sale of a business\b"
+        )
+        self.assert_sentence(
+            other, r"\bintangible items\b", r"\blicences\b", r"\bunbundled water entitlements\b",
+            r"\bare\W+" + NOT + DUTIABLE + r"\W+as goods\b",
+        )
+
+        goods, excluded, other = table_row(skill, "Workflow", "Queensland")
+        self.assert_carries(goods, "Queensland Revenue Office", "8 January 2025")
+        self.assert_sentence(
+            goods, r"\bonly if\b[^.]*\bincludes another type of dutiable property or is aggregated with\b",
+            affirmed=(r"\bchattel in Queensland is\W+" + DUTIABLE,),
+        )
+        self.assert_carries(excluded, "None listed on the pages read")
+        self.assert_sentence(
+            excluded, r"\bpersonal property in Queensland\b", r"\btrading stock\b", r"\bplant and equipment\b",
+            affirmed=(r"\bitself a business asset\b",),
+        )
+        self.assert_sentence(
+            other, r"\bgoodwill\b", r"\bstatutory business licence\b", r"\bright to use one\b", r"\bbusiness name\b",
+            r"\bfranchise arrangement\b", r"\bdebtor lives in Queensland\b", r"\bsupply right\b",
+            r"\bintellectual property\b", r"\bpersonal property in Queensland\b",
+            affirmed=(r"\bbusiness assets are\W+" + DUTIABLE,),
+        )
+        self.assert_sentence(
+            other, r"\bsolely for a debt, a supply right or intellectual or personal property\b",
+            r"\bwith no other property\b", r"\bmay\W+" + NOT + r"be\W+" + DUTIABLE, r"\bs 37\b", r"\b27 September 2024\b",
+        )
+
+        goods, excluded, other = table_row(skill, "Workflow", "Western Australia")
+        self.assert_carries(goods, "RevenueWA", "2 June 2026")
+        self.assert_sentence(
+            goods,
+            affirmed=(
+                r"\bchattels such as plant and equipment are\W+" + DUTIABLE
+                + r"\W+when transferred with other dutiable property, including business assets\b",
+            ),
+        )
+        self.assert_carries(
+            excluded, "stock-in-trade", "held for use in or under manufacture", "primary production business",
+            "livestock", "vehicle licence duty", "ships or vessels",
+        )
+        self.assert_sentence(excluded, r"\bfixed to land is land, with listed exceptions\b")
+        self.assert_sentence(
+            other, r"\bgoodwill\b", r"\brestraint of trade\b", r"\bbusiness identity\b", r"\bbusiness licence\b",
+            r"\buncompleted supply contract\b", r"\bintellectual property\b", r"\brent rolls\b", r"\bclient lists\b",
+            r"\bbut not a trade debt\b",
+            affirmed=(r"\bWA business assets are\W+" + DUTIABLE,),
+        )
+        self.assert_sentence(
+            other, r"\bintellectual property alone is\W+" + NOT + DUTIABLE,
+            r"\bunless aggregated with another WA business asset or chattel\b",
+        )
+
+        goods, excluded, other = table_row(skill, "Workflow", "South Australia")
+        self.assert_carries(goods, "RevenueSA Information Circular 99", "10 May 2017", "status current")
+        self.assert_sentence(goods, r"^" + NOT + DUTIABLE + r"\W*$")
+        self.assert_sentence(
+            goods, r"\binterests in land such as a lease, fixtures and items fixed to land\b",
+            affirmed=(r"\bonly a conveyance of land is\W+" + DUTIABLE,),
+        )
+        self.assert_sentence(
+            goods, r"\bgoods with a significant connection to transferred land\b",
+            r"\bonly to transactions from 18 June 2015 to 30 June 2016\b",
+        )
+        self.assert_sentence(
+            other, r"\bplant and equipment that is\W+" + NOT + r"fixed\b", r"\bgoodwill\b", r"\bintellectual property\b",
+            r"\breceivables\b", r"\bstatutory leases and licences\b", r"\bare\W+" + NOT + DUTIABLE,
+        )
+
+        goods, excluded, other = table_row(skill, "Workflow", "Tasmania")
+        self.assert_carries(goods, "SRO Tasmania")
+        self.assert_sentence(
+            goods, r"^" + NOT + DUTIABLE + r"\W+by themselves\b",
+            r"\bbut\W+" + DUTIABLE + r"\W+when transferred in an arrangement that includes other dutiable property\b",
+            r"\bfreehold interest in land, a mineral tenement or a lease of the business premises\b",
+            r"\bnew lease the sale is conditional on\b",
+        )
+        self.assert_carries(
+            excluded, "stock in trade", "materials held for use in manufacture", "goods under manufacture",
+            "livestock", "registered motor vehicles", "business assets guideline",
+        )
+        self.assert_sentence(
+            other, r"\bbusiness goodwill \(but not site goodwill\)", r"\bintellectual property\b",
+            r"\bare\W+" + NOT + DUTIABLE,
+        )
+
+        goods, excluded, other = table_row(skill, "Workflow", "Australian Capital Territory")
+        self.assert_carries(goods, "DAA011.3", "18 September 2017", "status current")
+        self.assert_sentence(
+            goods, r"\bincludes a dutiable transaction over other dutiable property, other than intellectual property\b",
+            r"\bCrown lease\b", r"\bcommercial lease with a premium\b",
+            affirmed=(DUTIABLE + r"\W+only if\b",),
+        )
+        self.assert_sentence(goods, r"\bfixtures are\W+" + NOT + r"goods\b", affirmed=(DUTIABLE + r"\W+as land\b",))
+        self.assert_carries(
+            excluded, "stock-in-trade", "materials held for use in manufacture", "goods under manufacture",
+            "primary production land", "livestock", "registered motor vehicle", "ship or vessel",
+        )
+        self.assert_sentence(other, r"^" + NOT + r"addressed\b", r"`UNVERIFIED`")
+
+        goods, excluded, other = table_row(skill, "Workflow", "Northern Territory")
+        self.assert_carries(goods, "Territory Revenue Office")
+        self.assert_sentence(
+            goods,
+            affirmed=(
+                r"\bplant and equipment is\W+" + DUTIABLE + r"\W+only if acquired with other dutiable property\b",
+                r"\bchattels acquired with land or a lease of land are\W+" + DUTIABLE
+                + r"\W+except where that lease has nil or nominal value\b",
+            ),
+        )
+        # The earlier law still governs a conveyance first executed, or agreed or optioned, before 9 May 2023.
+        self.assert_sentence(
+            goods, r"\bs 116 of the Stamp Duty Act 1978\b", r"\b1 July 2025\b", r"\bimmediately before 9 May 2023\b",
+            r"\bfirst executed before that date\b", r"\bagreement or option entered into or granted before it\b",
+            affirmed=(r"\bstill apply\b",),
+        )
+        self.assert_carries(
+            excluded, "stock-in-trade", "materials held for manufacture", "goods under manufacture", "livestock",
+            "motor vehicles to be registered or transferred",
+        )
+        self.assert_sentence(
+            other, r"\bgoodwill\b", r"\bbusiness names\b", r"\btrademarks\b", r"\bregistered designs\b",
+            r"\bcopyright\b", r"\bpatents\b", r"\bis\W+" + NOT + DUTIABLE,
+            r"\bcertain statutory licences relating to mining are\W*$",
+        )
+
+        self.assert_carries(section(skill, "Inputs"), "associated agreements", "location")
+        self.assert_carries(
+            section(skill, "Primary-source starting point"),
+            "New South Wales:", "Victoria:", "Queensland:", "Western Australia:", "South Australia:", "Tasmania:",
+            "Australian Capital Territory:", "Northern Territory:",
+        )
+        self.assert_cited_and_recorded(
+            skill,
+            "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/transfer-duty/understanding-transfer-duty/"
+            "business-purchases",
+            "https://www.sro.vic.gov.au/buying-property/land-transfer-stamp-duty/managing-duty-transactions/"
+            "evidentiary-requirements-manual/transfer-land-and-business-andor-goods",
+            "https://www.sro.vic.gov.au/about-us/laws-legal-cases-and-rulings/public-rulings/transfers-land-and-business",
+            "https://www.sro.vic.gov.au/about-us/laws-legal-cases-and-rulings/public-rulings/"
+            "goods-held-or-used-connection-with-land",
+            "https://qro.qld.gov.au/definition/dutiable-property/",
+            "https://qro.qld.gov.au/duties/investors/business/assessing/",
+            "https://www.wa.gov.au/government/publications/duties-fact-sheet-business-assets",
+            "https://revenuesa.sa.gov.au/tools-and-resources/resources/publications/information-circulars/"
+            "information-circulars/ic_099",
+            "https://www.sro.tas.gov.au/property-transfer-duties/dutiable-transactions/sales-of-business",
+            "https://www.sro.tas.gov.au/Documents/duty-payable-purchase-business-assets-guideline.pdf",
+            "https://www.revenue.act.gov.au/__data/assets/pdf_file/0005/2945597/DAA011.3-dutiable-goods.pdf",
+            "https://treasury.nt.gov.au/dtf/territory-revenue-office/stamp-duty",
+        )
+
+    def test_xero_exports_names_the_gst_pack_the_tax_schedules_and_the_older_bas_trail(self) -> None:
+        skill, heading = "xero-exports", "The core exports"
+        _, gotchas = table_row(skill, heading, "Activity Statement / GST Reconciliation")
+        # The menu caveat stays. On the older BAS the trail is the GST Audit report, generated only
+        # with the activity statement; the legacy .xls note is scoped to the older report.
+        self.assert_sentence(gotchas, r"\b(there is no|no) report (is )?named 'GST Audit Report'[^.;]*\bAU menu\b")
+        self.assert_sentence(
+            gotchas, r"\bolder BAS\b", r"\bGST Audit report\b", r"\bonly when the activity statement is run\b",
+            r"\b(cannot|can ?not|can't)\W+be run by itself\b",
+        )
+        self.assert_sentence(gotchas, r"\bby tax rate\b", r"\bBAS Excluded section\b", r"\bleft off the statement\b")
+        self.assert_sentence(
+            gotchas, affirmed=(r"\bagree each tax rate subtotal\b", r"\brecord\b[^.]*\bwhich BAS the organisation uses\b")
+        )
+        self.assert_sentence(gotchas, r"\bnew Activity Statement\b", r"\bequivalent Transactions tab\b")
+        self.assert_sentence(gotchas, r"`GST Reconciliation`, the older report, exports as legacy `\.xls`")
+
+        satisfies, gotchas = table_row(skill, heading, "GST Reconciliation (New report pack)")
+        self.assert_carries(satisfies, "new BAS", "GST lodged", "last filed amounts")
+        self.assert_sentence(gotchas, r"\bbeta\b", r"\bnew BAS only\b")
+        self.assert_sentence(
+            gotchas, r"`GST collected and GST paid`", r"`GST amount`", r"`GST on imports`", r"`Adjusted by`",
+            r"\b1A or 1B\b", r"`Lodged`", r"`Variance`", affirmed=(r"\bcompares\b",),
+        )
+        self.assert_sentence(
+            gotchas, r"`GST account summary`", r"\bGST account balance\b", r"\blast filed GST amounts\b",
+            r"`Closing balance variance`", affirmed=(r"\bcompares\b",),
+        )
+        self.assert_sentence(gotchas, affirmed=(r"\binvestigate every non-zero variance\b",))
+        self.assert_sentence(
+            gotchas, r"\bwhere the GST account balance is cleared out as part of lodgement\b",
+            r"\bprevious-period variance (can|may) be ignored\b|\b(lets|allows) the previous-period variance (to )?be ignored\b",
+            affirmed=(r"\brecord evidence of that clearing before setting one aside\b",),
+        )
+        self.assert_sentence(
+            gotchas, r"\bdates\b", r"\bbasis\b", r"\bdecimals\b", affirmed=(r"\brecord them per report\b",)
+        )
+        self.assert_sentence(gotchas, r"\bexport format\b", NOT + r"observed\b")
+
+        _, gotchas = table_row(skill, heading, "Fixed Asset Reconciliation / Depreciation Schedule / Disposal Schedule")
+        self.assert_sentence(
+            gotchas, r"`Depreciation Schedule` shows book depreciation only\b",
+            affirmed=(r"\bfor tax values take the `Tax Depreciation Schedule`",),
+        )
+
+        satisfies, gotchas = table_row(skill, heading, "Tax Depreciation Schedule / Tax Disposal Schedule")
+        self.assert_carries(satisfies, "`au-depreciation-schedule`")
+        self.assert_sentence(
+            gotchas, r"\bregistered assets only, excluding pooled assets\b",
+            r"\bpooled assets' tax depreciation is in the `Pool Summary` report\b",
+            r"\btheir tax disposals are in the `Fixed Asset Reconciliation`",
+        )
+        self.assert_sentence(
+            gotchas, r"\bonly fixed assets and changes from the tax reporting start date\b",
+            r"\ban earlier start can give wrong figures\b",
+            affirmed=(r"\brun them from that date or later\b",),
+        )
+        self.assert_sentence(gotchas, r"`Tax Depreciation Schedule`", NOT + r"show pool depreciation\b")
+        self.assert_sentence(gotchas, r"\bexport format\b", NOT + r"observed\b")
+
+        notice = section(skill, heading)
+        self.assert_sentence(
+            notice, r"\bHuman review pending\b", r"\b4 November 2026\b", r"\bnot a human review\b", r"\bno update date\b"
+        )
+        self.assert_sentence(notice, NOT + r"from an inspected export or menu\b")
+        self.assert_sentence(notice, affirmed=(r"\bconfirm each report name, menu label and setting\b",))
+        # The API and parsing sections cover the new reports and scope the .xls note to the older one.
+        api = section(skill, "What the API can and cannot fetch")
+        self.assert_sentence(
+            api, r"\bboth GST reconciliation reports\b", r"\bthe 2 tax schedules\b", r"\bhas no report endpoint\b"
+        )
+        self.assert_sentence(
+            api, r"\b4 November 2026\b", r"\bno endpoint for the GST reconciliation pack or either tax schedule\b"
+        )
+        self.assert_carries(section(skill, "Parsing conventions"), "GST Reconciliation (the older report)")
+        self.assert_carries(section(skill, "Boundaries"), "sources.json", "discovery-only", "plain HTTP")
+        self.assert_cited_and_recorded(
+            skill,
+            "https://central.xero.com/0/article/GST-Reconciliation-new",
+            "https://central.xero.com/0/article/The-GST-Audit-Report-AU",
+            "https://central.xero.com/0/article/Depreciation-Schedule-new-AU",
+            "https://central.xero.com/0/article/Tax-Depreciation-Schedule",
+            "https://central.xero.com/0/article/Tax-Disposal-Schedule",
+        )
+        self.assertFalse((SKILLS / skill / "sources.exempt.json").exists())
 
 
 if __name__ == "__main__":

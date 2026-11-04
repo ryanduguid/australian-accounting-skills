@@ -1,0 +1,80 @@
+{
+  "skill": "xero-exports",
+  "sources": [
+    {
+      "title": "Xero Central: GST Reconciliation (beta)",
+      "url": "https://central.xero.com/0/article/GST-Reconciliation-new",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Read in a browser; a plain HTTP request returned the page shell without the article text, as the 25 September 2026 retrieval checks recorded, so acceptance may need an explicit manual review.",
+      "final_url": "https://central.xero.com/0/article/GST-Reconciliation-new",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Xero Central: The GST Audit report",
+      "url": "https://central.xero.com/0/article/The-GST-Audit-Report-AU",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Read in a browser; a plain HTTP request returned the page shell without the article text, as the 25 September 2026 retrieval checks recorded, so acceptance may need an explicit manual review.",
+      "final_url": "https://central.xero.com/0/article/The-GST-Audit-Report-AU",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Xero Central: Depreciation Schedule",
+      "url": "https://central.xero.com/0/article/Depreciation-Schedule-new-AU",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Read in a browser; a plain HTTP request returned the page shell without the article text, as the 25 September 2026 retrieval checks recorded, so acceptance may need an explicit manual review.",
+      "final_url": "https://central.xero.com/0/article/Depreciation-Schedule-new-AU",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Xero Central: Tax Depreciation Schedule",
+      "url": "https://central.xero.com/0/article/Tax-Depreciation-Schedule",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Read in a browser; a plain HTTP request returned the page shell without the article text, as the 25 September 2026 retrieval checks recorded, so acceptance may need an explicit manual review.",
+      "final_url": "https://central.xero.com/0/article/Tax-Depreciation-Schedule",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Xero Central: Tax Disposal Schedule",
+      "url": "https://central.xero.com/0/article/Tax-Disposal-Schedule",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Read in a browser; a plain HTTP request returned the page shell without the article text, as the 25 September 2026 retrieval checks recorded, so acceptance may need an explicit manual review.",
+      "final_url": "https://central.xero.com/0/article/Tax-Disposal-Schedule",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

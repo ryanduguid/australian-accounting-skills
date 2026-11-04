@@ -121,6 +121,18 @@ sets an individual's work-related expense claims beside a figure derived from
 the ATO's taxation statistics, as a reviewer question only. The new source
 records await human review.
 
+au-transfer-duty lists every asset class in a transaction and records, for
+each state and territory, what its revenue office says about goods
+transferred with land or other dutiable property, excluded goods and other
+business assets such as goodwill. South Australia taxes only land, including
+fixtures; the other 7 can tax goods that go with other dutiable property. The
+NSW-only starting point now names a revenue office for every jurisdiction.
+xero-exports adds the GST Reconciliation (New report pack), the Tax
+Depreciation and Tax Disposal Schedules and the older-BAS GST Audit report
+trail, keeps the 'no GST Audit Report in the AU menu' line, and carries a
+sources index in place of its exemption. The new source records await human
+review.
+
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep
