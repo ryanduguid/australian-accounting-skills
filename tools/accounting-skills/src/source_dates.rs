@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Day extraction follows datetime.fromisoformat and email._parseaddr (PSF-2.0).
 use chrono::{NaiveDate, Weekday};
 use fancy_regex::Regex;

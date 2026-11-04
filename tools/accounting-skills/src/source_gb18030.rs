@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Frozen CPython 3.14.8 GB18030 scalars, with its one-shot error consumption.
 use crate::{Result, source_gb18030_rules::RANGES};
 

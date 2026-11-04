@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 // Generated from CPython 3.14.8 multibyte incremental decoders. See PYTHON-LICENSE.txt.
 pub const LENGTH: usize = 2920686;
 pub const OUTPUT_OFFSETS: usize = 2482628;

@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Bounded equivalent of Python 3.14.8 difflib's default SequenceMatcher and
 //! unified_diff (no junk callback, autojunk enabled, two context lines).
 //! Algorithm derived from CPython Lib/difflib.py, under PYTHON-LICENSE.txt.

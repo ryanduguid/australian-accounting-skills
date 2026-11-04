@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 use accounting_skills::{Result, platform_text, read_text, rendered, replace_file};
 use std::{
     io::{self, Write},

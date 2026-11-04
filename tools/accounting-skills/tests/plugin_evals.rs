@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 use accounting_skills::plugin_evals::{
     CaseFiles, WITHHELD_SECTIONS, build, build_case, build_routing_case,
 };

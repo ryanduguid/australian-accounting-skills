@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 // Generated from exhaustive CPython 3.14.8 GB18030 decoding; see the fixture manifest.
 pub const RANGES: &[(u32, u32, u32)] = &[
     (0, 35, 128),

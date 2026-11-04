@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 // Derived from Python 3.14 html.parser under PYTHON-LICENSE.txt.
 pub const TAGFIND_TOLERANT: &str = "([a-zA-Z][^\\t\\n\\r\\f />]*)(?:[\\t\\n\\r\\f ]|/(?!>))*";
 pub const ATTRFIND_TOLERANT: &str = "(?x)\n  (\n    (?<=['\"\\t\\n\\r\\f /])[^\\t\\n\\r\\f />][^\\t\\n\\r\\f /=>]*  # attribute name\n   )\n  ([\\t\\n\\r\\f ]*=[\\t\\n\\r\\f ]*        # value indicator\n    ('[^']*'                        # LITA-enclosed value\n    |\"[^\"]*\"                        # LIT-enclosed value\n    |(?!['\"])[^>\\t\\n\\r\\f ]*         # bare value\n    )\n   )?\n  (?:[\\t\\n\\r\\f ]|/(?!>))*           # possibly followed by a space\n";

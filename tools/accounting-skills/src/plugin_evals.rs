@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Build a clean plugin copy with task-only `claude plugin eval` cases from the
 //! validation cards and the routing cases.
 use crate::{Result, platform_text, source_passages, strict_yaml, sweep, trial, validation};

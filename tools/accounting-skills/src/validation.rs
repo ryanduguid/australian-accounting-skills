@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Read-only checks for the repository's fabricated regression pack.
 use crate::{Result, strict_yaml, validation_text as text};
 use fancy_regex::Regex;

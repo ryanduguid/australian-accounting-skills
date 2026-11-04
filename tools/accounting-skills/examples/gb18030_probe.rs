@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan Duguid
+// SPDX-License-Identifier: FSL-1.1-ALv2
+
 //! Offline comparison seam compiling the exact private production decoder.
 //! It exposes both modes without adding a public library or CLI interface.
 #[path = "../src/source_gb18030.rs"]
