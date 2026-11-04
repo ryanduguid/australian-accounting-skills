@@ -16,11 +16,27 @@ fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
 
 To install the same release as a Claude Code plugin, add the marketplace at
-its tag:
+its tag, inside a session:
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0
 /plugin install australian-accounting-skills@ryanduguid
+```
+
+Or from a terminal, which delivered the 76 skills on Claude Code 2.1.316 on
+5 November 2026:
+
+```bash
+claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0
+claude plugin install australian-accounting-skills@ryanduguid
+```
+
+For the same release in Codex, which delivered the 76 skills on Codex CLI 0.166.0
+the same day:
+
+```bash
+codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.5.0
+codex plugin add australian-accounting-skills@ryanduguid
 ```
 
 That plugin carries the v0.5.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
@@ -87,18 +103,21 @@ that server. The development plugin's pin does not change the tagged archive.
 Claude Code lists each skill's name and description in the context and keeps that
 listing within a budget of 1% of the model's context window by default; past it,
 the least-used skills lose their descriptions and are chosen less often. On
-1 November 2026 `/context` in a fresh session (Claude Code 2.1.312, a 1 million
-token window, no other plugins or user skills) put this plugin's 76-skill listing
-at 8.5k tokens, 0.9% of the window, so it fits with little room. Skill
-descriptions are now capped at 160 characters: on 2 November 2026 Claude Code
-2.1.316's per-skill rows for this plugin summed to about 6.1k tokens for 93
-skills against 5.9k for the earlier 76 in an otherwise identical session. Those
-sums leave out the session's other skills, which the Skills row includes. A smaller window,
-or other plugins and skills sharing the listing, can push it over. To check, run
+5 November 2026 `/context` in a fresh session (Claude Code 2.1.316, a 1 million
+token window, no other plugins or user skills) put the Skills row at 8.4k tokens,
+0.8% of the window, for this plugin's 97 skills at commit 472112e and 13 built-in
+skills. The plugin's own rows summed to about 6.3k tokens. Skill descriptions are
+capped at 160 characters and total 13,652. skill-tax-cli 0.1.0, a second reading
+with its own estimate, put the same 97 descriptions at about 3.9k tokens and within
+a 10k budget.
+
+That fits a 1 million token window with little room, and not a 200,000 token one:
+1% there is 2k tokens, and skill-tax-cli reported 49 of the 97 descriptions at risk.
+Other plugins and skills sharing the listing can also push it over. To check, run
 `/context` and compare the Skills row with your window. To reserve more, set
 `skillListingBudgetFraction` in your Claude Code settings, for example
-`"skillListingBudgetFraction": 0.02` for 2%; at 0.005 the same listing was cut to
-5k tokens.
+`"skillListingBudgetFraction": 0.02` for 2%. On 1 November 2026 a value of 0.005
+cut the then 76-skill listing to 5k tokens.
 
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
@@ -125,9 +144,16 @@ One command, using the [`skills` CLI](https://github.com/vercel-labs/skills). It
 npx --yes skills@1.5.22 add ryanduguid/australian-accounting-skills
 ```
 
-That installs into the current project (`./.claude/skills/`). Add `-g` to install into
-`~/.claude/skills` instead, `-a claude-code` to target one agent, and `-l` to list the skills
-without installing anything.
+That asks which skills and agents to install, so it needs a terminal, and it installs
+into the current project. It resolves the default branch, not the tagged release. Add
+`-g` to install globally, `-a claude-code` to target one agent, `-l` to list the skills
+without installing anything, and `--skill '*' --yes --copy` to skip the questions.
+
+Skills CLI 1.5.22 puts OpenCode, Gemini CLI and Cursor installs in `./.agents/skills/`.
+On 5 November 2026 `--agent opencode` copied all 76 skills from v0.5.0 and all 97 from
+`main` at 472112e there, and `opencode debug skill` on OpenCode 1.19.5 listed every one.
+That is an install and discovery check on Linux only: no model ran, and the other 2
+agents' copies were not opened in those agents.
 
 ### Development checkout
 

@@ -1,5 +1,7 @@
 # Skills
 
+[When each skill last changed](skill-last-changed.md) is a separate generated table.
+
 | Skill | Use it for |
 |---|---|
 | `bas-preparation` | Prepare/review a BAS; transaction GST coding review with evidence, credit entitlement and attribution; import GST coded to cost; label mapping and GST control tie-out |

@@ -557,6 +557,13 @@ class SkillMetadataTests(unittest.TestCase):
         others = cards - len(judged)
         self.assertIn("The other card" if others == 1 else f"The other {others} cards", readme)
 
+    def test_last_changed_table_lists_every_skill(self) -> None:
+        """A skill missing from the generated table means it was not regenerated."""
+        table = (REPOSITORY / "docs" / "skill-last-changed.md").read_text(encoding="utf-8")
+        listed = re.findall(r"^\| \[`([^`]+)`\]\(.*\) \| \d{4}-\d{2}-\d{2} \|$", table, re.MULTILINE)
+        discovered = sorted(path.parent.name for path in SKILLS_DIRECTORY.glob("*/SKILL.md"))
+        self.assertEqual(listed, discovered)
+
     def test_readme_keeps_the_payroll_tax_jurisdiction_fence(self) -> None:
         """The skills table must not advertise beyond a skill's own scope."""
         readme = (REPOSITORY / "docs" / "skill-catalogue.md").read_text(encoding="utf-8")

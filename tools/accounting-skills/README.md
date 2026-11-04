@@ -13,6 +13,8 @@ are retired:
 | `prepare-trial` | `prepare_trial.py` |
 | `build-plugin-evals` | `build_plugin_evals.py` |
 
+`last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
+
 The others are candidate ports of scripts that remain the authoritative
 commands in `scripts/`:
 

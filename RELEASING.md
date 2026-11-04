@@ -29,6 +29,17 @@ The workflow reruns the repository tests, the fabricated-pack validator and the 
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final 4-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
+## Cadence
+
+A release follows a finished batch of work, not a calendar, and there is no promised
+schedule. The 12 published releases from 11 August to 27 October 2026 came 0 to 22 days
+apart. `main` moves faster than releases, so the README's install commands pin the latest
+published tag and its development section says what `main` adds.
+
+Before tagging, regenerate `docs/skill-last-changed.md` with
+`cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- last-changed --write`
+from a full clone.
+
 ## Protected failed tag
 
 The annotated `v0.1.2` tag peels to `efc8c5b8f0b6bd1dee65eccba953cb1b60a4aaa4` and is protected by the version-tag ruleset. Release run 31832538528 failed at the pre-publication asset-inventory gate before candidate upload, attestation, draft creation or publication. No `v0.1.2` GitHub release exists. Do not move, delete or reuse the tag; `v0.1.3` was its recovery release.

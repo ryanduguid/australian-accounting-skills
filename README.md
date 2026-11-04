@@ -18,29 +18,82 @@
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15423/badge)](https://www.bestpractices.dev/projects/15423)
 [![SLSA 3](.github/assets/badges/slsa.svg)](https://github.com/ryanduguid/australian-accounting-skills/attestations)
 [![VirusTotal](.github/assets/badges/virustotal.svg)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)<br>
-[![version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fryanduguid%2Faustralian-accounting-skills%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=66023C&labelColor=000000&style=flat)](.claude-plugin/plugin.json)
+[![release](https://img.shields.io/github/v/release/ryanduguid/australian-accounting-skills?label=release&color=66023C&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)
 [![licence: Ryan Duguid Public Attribution Licence 1.0](.github/assets/badges/licence.svg)](LICENSE)
 
-[Install](docs/installation.md) · [BAS walkthrough](docs/bas-walkthrough.md) · [Skill catalogue](docs/skill-catalogue.md) · [Validation](validation/README.md) · [Licence](#licence)
+[Install](#install) · [Start here](#start-here) · [First run](#first-run) · [Skill catalogue](docs/skill-catalogue.md) · [Validation](validation/README.md) · [Licence](#licence)
 
 </div>
 
-Synthetic example. Prep-only workflow aids. An authorised human reviews, decides and lodges.
+Agent skills for Australian accounting and tax work: BAS, month-end close, payroll, FBT, Division 7A, trusts, returns and practice compliance. Each skill takes an agent through the workflow, sends it to current primary sources for anything that changes and ends in a review-ready workpaper. An authorised human reviews, decides and lodges.
 
-**Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
+## Install
 
-Start with the 76 workflows in the published release, [v0.5.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.5.0). From a separate project directory, install them from that tag:
+Install the 76 workflows in the published release, [v0.5.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.5.0). Each command below was run on Linux on 5 November 2026.
+
+Claude Code, as a plugin:
+
+```bash
+claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0
+claude plugin install australian-accounting-skills@ryanduguid
+```
+
+Codex, as a plugin:
+
+```bash
+codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.5.0
+codex plugin add australian-accounting-skills@ryanduguid
+```
+
+Any agent that reads `SKILL.md`, from a separate project directory:
 
 ```bash
 git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 76 released skills into the current project's Codex and Claude Code directories. It does not change a global installation. For the Claude Code plugin at the same release, add the marketplace at its tag with `/plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0`, then run `/plugin install australian-accounting-skills@ryanduguid`. The [Codex plugin, the `npx skills` route, manual copying and versioning](docs/installation.md) cover the rest. The validation record under the fold gives the model runs and their limits.
+That copies the 76 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
 
-Claude Code is the tested runtime. Codex packaging and portable skill files are included. That does not establish testing in every agent runtime.
+Claude Code is the tested runtime. Codex packaging and portable skill files are included, and OpenCode has an install and discovery check only. None of this establishes testing in every agent runtime. The validation record under the fold gives the model runs and their limits.
 
-An agent runtime is still required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
+## Start here
+
+Paste one of these into your agent:
+
+```text
+Use bas-preparation to prepare this quarter's BAS workpaper from the reports in this folder and show the GST control-account tie-out.
+```
+
+```text
+Use month-end-close to run the close checklist for last month and list what is still open, with an owner for each item.
+```
+
+```text
+Use au-tax-research to draft a file note on the question below, with each primary source, the version you read and the date you read it.
+```
+
+| Skill | Use it for |
+| --- | --- |
+| `bas-preparation` | BAS or IAS workpaper, GST coding review and label tie-out |
+| `month-end-close` | Checklist-driven close: bank recs, control accounts, accruals and variances |
+| `workpaper-tie-out` | Trace every statement line to its workpaper and source, and back |
+| `xero-exports` | Specify and check the Xero reports the other skills read |
+| `stp-finalisation` | STP year-end: payroll versus GL versus filed totals |
+| `fbt-annual-workflow` | FBT year-end: benefits, declarations, gross-up and RFBA |
+| `div7a-compliance` | Division 7A loan register and minimum repayments |
+| `au-trust-distributions` | Trust distribution review pack |
+| `au-tax-research` | File note with source status and alternative views |
+| `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance and agings |
+
+See [all 97 skills](docs/skill-catalogue.md), which include the 21 added since v0.5.0.
+
+## First run
+
+Synthetic example. Prep-only workflow aids.
+
+**Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
+
+An agent runtime is required. Ask it to prepare the BAS workpaper from the supplied reports and show the GST control-account tie-out.
 
 Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the complete example.
 
@@ -53,7 +106,7 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 Skills specify the workflow and require current primary authority for mutable rates, thresholds, labels and due dates. Keep real client files in the firm's approved environment, outside this repository.
 
 <details>
-<summary>Installation, validation record, corrections, skill catalogue and boundaries</summary>
+<summary>Validation record, corrections, development installation and guides</summary>
 
 ## Validation record
 
@@ -84,16 +137,24 @@ The default branch prepares v0.5.1 with 97 workflows. See the [Australian topic 
 
 Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.5.0 pack.
 
-## Reference
+## Guides
+
+**Get started**
+
+- [First run and BAS walkthrough](docs/bas-walkthrough.md)
+
+**How-to**
 
 - [Install, uninstall and versioning](docs/installation.md)
 - [Verify a downloaded release](https://github.com/ryanduguid/release-policy/blob/main/docs/verify-a-release.md): checksum and SLSA provenance
-- [First run and BAS walkthrough](docs/bas-walkthrough.md)
-- [All 97 skills and their supporting files](docs/skill-catalogue.md)
+- [Supplier information for a firm's AI register](docs/ai-register-entry.md)
+
+**Reference**
+
+- [All 97 skills and their supporting files](docs/skill-catalogue.md) and [when each last changed](docs/skill-last-changed.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
-- [Contributor checks](AGENTS.md) and [professional boundary](DISCLAIMER.md)
-- [Supplier information for a firm's AI register](docs/ai-register-entry.md)
+- [Contributor checks](AGENTS.md), [release process](RELEASING.md) and [professional boundary](DISCLAIMER.md)
 - [Discovery and GitHub About copy](docs/DISCOVERY.md)
 
 </details>
