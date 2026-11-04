@@ -3,11 +3,11 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 93,
-    "sources_indexed": 372,
+    "sources_indexed": 383,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 10,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 23,
+    "skills_with_behavioural_gate": 26,
     "skills_with_only_the_seeded_case": 29
   },
   "skills": [
@@ -784,7 +784,7 @@
     {
       "skill": "au-nonresident-cgt",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
@@ -799,7 +799,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1081,7 +1083,7 @@
     {
       "skill": "au-rental-property",
       "sources": {
-        "indexed": 4,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -1098,6 +1100,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_tax_reform_no_3_status.py"
         ],
         "inventory": []
@@ -1242,7 +1245,7 @@
     {
       "skill": "au-smsf-year-end",
       "sources": {
-        "indexed": 6,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -1257,7 +1260,9 @@
         "only_seeded_case": true
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1334,7 +1339,7 @@
     {
       "skill": "au-tax-agent-obligations",
       "sources": {
-        "indexed": 9,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-11-02",
         "fetched": "2026-11-02",
@@ -1349,7 +1354,9 @@
         "only_seeded_case": false
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_dated_rule_changes.py"
+        ],
         "inventory": []
       }
     },
@@ -1535,7 +1542,7 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 11,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "2026-09-30",
         "fetched": "2026-09-16",
@@ -1552,6 +1559,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_tax_reform_no_3_status.py"
         ],
         "inventory": []
@@ -2051,6 +2059,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_payday_super_guidance.py",
           "test_skill_metadata.py",
           "test_validation_pack.py"
