@@ -1366,12 +1366,15 @@ class DatedRuleChangeTests(unittest.TestCase):
             ),
         )
         # The earlier law still governs a conveyance first executed before 9 May 2023, one replacing
-        # such a conveyance, and one whose property was agreed or optioned before then (s 116(1)).
+        # such a conveyance, one whose property was agreed or optioned before then and one under a put
+        # option granted before then (s 116(1)(a) to (d)).
         self.assert_sentence(
             goods, r"\bs 116 of the Stamp Duty Act 1978\b", r"\b1 July 2025\b", r"\bimmediately before 9 May 2023\b",
             r"\bfirst executed before that date\b",
             r"\breplacing an earlier conveyance\b[^;]*\bfirst executed before that date\b",
             r"\bagreement or option to purchase entered into or granted before that date\b",
+            r"\boption granted before that date to require another person to purchase it\b",
+            r"\(s 116\(1\)\(a\) to \(d\)\)",
             affirmed=(r"\bstill apply\b",),
         )
         self.assert_carries(

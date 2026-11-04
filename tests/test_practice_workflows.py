@@ -302,9 +302,17 @@ class PracticeWorkflowTests(unittest.TestCase):
         # The 3 limbs of the scheme are cumulative.
         self.assert_sentence(
             step,
-            r"\bderived assessable income\b[^.]*\boutsider\b[^.]*\bprovided a benefit\b[^.]*,? and the trustee, a beneficiary or an associate provided a benefit to the outsider\b",
+            r"\bderived assessable income\b[^.]*\boutsider\b[^.]*\bprovided a benefit\b[^.]*,? and the trustee, a beneficiary or an associate directly or indirectly provided a benefit to the outsider or to an associate of the outsider\b",
+            r"\bother than an associate covered by s 270-25\(1\)\(a\) to \(f\)",
         )
-        self.assert_sentence(step, r"\bs 270-25\(1\)", affirmed=(r"\bnarrows who is an outsider\b",))
+        # Who is not an outsider is settled paragraph by paragraph, not by family group membership.
+        self.assert_sentence(step, r"\bs 270-25\(1\)", r"\bindividual specified in the family trust election\b",
+                             r"\binterposed entity election\b", r"\bare not outsiders\b",
+                             affirmed=(r"\bnarrows who is an outsider\b",))
+        self.assert_sentence(step, r"\bs 270-25\(2\)",
+                             affirmed=(r"\bexcludes only the trustee and a person with a fixed entitlement\b",))
+        self.assert_sentence(step, r"\brecord the paragraph of s 270-25 that excludes it\b",
+                             r"\ba place in the family group alone does not settle it\b")
         self.assert_sentence(step, r"\bwholly or partly, but not merely incidentally\b",
                              affirmed=(r"\bis for the reviewer\b",))
 
