@@ -18,16 +18,24 @@
     {
       "title": "ATO: Tax reform, introducing a minimum tax on discretionary trusts",
       "url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
-      "checked_at": "2026-10-14",
-      "fact": "Read 26 September 2026 (page last updated 3 September 2026). States the measure is not yet law: a 30% minimum tax on discretionary trusts from 1 July 2028 at the trustee level, with a non-refundable credit for non-corporate presently entitled beneficiaries, and a 3-year restructure rollover available from 1 July 2027. Treasury consulted on exposure draft legislation from 3 to 18 September 2026.",
-      "verification_status": "indexed-source-discovery-only",
-      "limitations": "Announced measure, not law when read. Check its current status before relying on it.",
+      "checked_at": "2026-11-04",
+      "fact": "Read 4 November 2026 (page last updated 3 November 2026). States the measure is not yet law: a 30% minimum tax on discretionary trusts from 1 July 2028 at the trustee level, with a non-refundable credit for non-corporate presently entitled beneficiaries, a 3-year restructure rollover available from 1 July 2027, and an announced alternative for trusts in existence at 1 July 2028 to elect into a regime of fixed distributions to pre-nominated beneficiaries instead. It links the Treasury Laws Amendment (Tax Reform No. 3) Bill 2026 and the Income Tax Rates Amendment (Minimum Tax on Discretionary Trusts) Bill 2026.",
+      "limitations": "Not law when read; the Bills were before Parliament. Check their current stage before relying on the measure.",
       "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
       "http_status": 200,
-      "fetched_at": "2026-09-26",
-      "content_hash": "ad20d47f139d3924af4851302aebc82bdb52c7e795df232c9337389fdfd6b2ce",
+      "fetched_at": "2026-11-04",
+      "content_hash": "0818885c2313b6d93f486b04ec2294f9a5fec4835ecf737ead99773ecf4a69fe",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-09-03"
+      "source_last_modified": "2026-11-03",
+      "review_required_since": "2026-11-04",
+      "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
+      "reviewed_content": {
+        "content_hash": "0818885c2313b6d93f486b04ec2294f9a5fec4835ecf737ead99773ecf4a69fe",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
+        "source_last_modified": "2026-11-03",
+        "checked_at": "2026-11-04"
+      }
     },
     {
       "title": "TR 2022/4 Income tax: section 100A reimbursement agreements",
