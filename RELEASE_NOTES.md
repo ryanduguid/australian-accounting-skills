@@ -1,5 +1,12 @@
 # v0.5.1 (unreleased)
 
+The latest practice and land tax additions bring the validation pack to 158
+cards. The FBT workflow reconciles each source line to its register, and the
+tax agent obligations workflow separates optional professional-body rows from
+TPB obligations. Land tax evidence routes cover all 8 jurisdictions, with the
+Northern Territory position left unverified pending a primary source. The 9
+new cards have no recorded model run. New source records await human review.
+
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
 pack from 112 to 145 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in
