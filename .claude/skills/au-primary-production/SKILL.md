@@ -61,4 +61,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A partner in a farming partnership also earns off-farm wages and plans a farm management deposit before year end. Record the partner's taxable non-primary production income evidence and keep the deduction conditional until the year's income test and the partner's share of partnership income are verified.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

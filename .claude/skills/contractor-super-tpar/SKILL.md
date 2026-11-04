@@ -90,4 +90,4 @@ Step 6's labour apportionment method was checked on 1 November 2026 against [SGD
 
 Recheck each compilation, ruling status, rate, instrument, notice and due date at the time of use. The schedule records elements and a bounded SG calculation for qualified review; it does not decide employee status, calculate final SG charge, authorise withholding or lodge a report.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

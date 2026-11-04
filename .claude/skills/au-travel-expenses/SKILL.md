@@ -59,4 +59,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An employee working at one remote site for several months receives a payment labelled 'travel allowance' and claims all accommodation and meals at the reasonable amounts. Test whether the employee is travelling on work or living at the location before applying any exception; the label does not decide it.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

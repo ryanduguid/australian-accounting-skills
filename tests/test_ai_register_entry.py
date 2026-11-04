@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: FSL-1.1-ALv2
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 """The supplier record describes the release the README tells people to install."""
 
 from __future__ import annotations

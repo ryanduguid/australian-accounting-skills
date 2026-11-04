@@ -56,4 +56,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A deed has 2 variations; the second has no execution evidence and adds the beneficiary class the proposed resolution relies on, and the plan streams a capital gain. Show both versions of the affected clauses, list the legal questions and mark the streaming and beneficiary items not ready; do not treat the second variation as effective.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, FSL-1.1-ALv2. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
