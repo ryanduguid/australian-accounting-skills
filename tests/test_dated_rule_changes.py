@@ -4,7 +4,9 @@
 Each test reads one numbered workflow step and checks the dates, authorities,
 exceptions and escalations it must carry, not its wording. A prohibition,
 exception or date scope is checked within one sentence together with its
-negation or its side of the date, so rewording it passes and reversing it fails.
+negation or its side of the date, and an affirmative instruction must sit in a
+clause with no negation, so rewording passes and reversing fails. Each term of
+a list the step must carry in full is required on its own.
 """
 
 from __future__ import annotations
@@ -18,6 +20,8 @@ SKILLS = Path(__file__).resolve().parents[1] / ".claude" / "skills"
 PENDING = "source-discovery-only-human-review-pending"
 PENDING_FACT = "Primary-source discovery only; no human-reviewed current-law fact is recorded."
 ISO_DATE = r"^\d{4}-\d{2}-\d{2}$"
+# 'no longer' states a change, not a negation, and 'No. 86' is a number.
+NEGATION = r"\b(?:not|never|nor|cannot|without)\b|\b\w+n't\b|\bno\b(?! longer)(?!\.)"
 
 
 def skill_text(skill: str) -> str:
@@ -51,6 +55,14 @@ def sentences(text: str) -> list[str]:
     return re.split(r"(?<=\.)\s+(?=[A-Z*\[(])", text)
 
 
+def affirms(sentence: str, pattern: str) -> bool:
+    """`pattern` matches a clause of `sentence` that holds no negation."""
+    return any(
+        re.search(pattern, clause, re.IGNORECASE) and not re.search(NEGATION, clause, re.IGNORECASE)
+        for clause in re.split(r"[,;:]", sentence)
+    )
+
+
 def records(skill: str) -> dict[str, dict[str, object]]:
     payload = json.loads((SKILLS / skill / "sources.json").read_text(encoding="utf-8"))
     return {str(source["url"]): source for source in payload["sources"]}
@@ -63,13 +75,15 @@ class DatedRuleChangeTests(unittest.TestCase):
             with self.subTest(term=term):
                 self.assertIn(term.casefold(), folded)
 
-    def assert_sentence(self, text: str, *patterns: str) -> None:
-        """One sentence of `text` matches every pattern, case-insensitively."""
-        with self.subTest(patterns=patterns):
+    def assert_sentence(self, text: str, *patterns: str, affirmed: tuple[str, ...] = ()) -> None:
+        """One sentence of `text` matches every pattern, case-insensitively, and each
+        `affirmed` pattern in one of its clauses that holds no negation."""
+        with self.subTest(patterns=patterns, affirmed=affirmed):
             self.assertTrue(
                 any(all(re.search(pattern, sentence, re.IGNORECASE) for pattern in patterns)
+                    and all(affirms(sentence, pattern) for pattern in affirmed)
                     for sentence in sentences(text)),
-                f"no sentence matches all of {patterns}",
+                f"no sentence matches all of {patterns} with {affirmed} affirmed",
             )
 
     def assert_cited_and_recorded(self, skill: str, *urls: str) -> None:
@@ -90,21 +104,25 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_smsf_lrba_real_property_must_be_business_real_property(self) -> None:
         step = workflow_step("au-smsf-year-end", 4)
-        self.assert_carries(
-            step,
-            "10 August 2026", "Schedule 5", "s 67A(2)(c)", "business real property", "s 66",
-            "life of the LRBA", "s 67(1)", "escalate", "auditor",
-        )
-        # The rule reaches only arrangements entered into from 10 August 2026,
-        self.assert_sentence(step, r"\bentered into (on or after|from) (that day|10 August 2026)\b")
-        # and not earlier borrowings, their refinancing or earlier contracts settling later.
+        self.assert_carries(step, "10 August 2026", "Schedule 5", "s 67A(2)(c)", "s 66")
+        # The rule reaches arrangements entered into from 10 August 2026,
+        self.assert_sentence(step, affirmed=(r"\bentered into (on or after|from) (that day|10 August 2026)\b",))
+        # but not maintaining or refinancing an earlier borrowing, or an asset acquired
+        # under an earlier arrangement and settling later.
+        excluded = r"\b(not|except|exclud\w*|other than)\b.*"
         self.assert_sentence(
-            step, r"\b(not|except|exclud\w*|other than)\b.*\b(maintain|refinanc)", r"\bbefore (that day|10 August 2026)\b"
+            step, excluded + r"\bmaintain", excluded + r"\brefinanc", r"\bbefore (that day|10 August 2026)\b"
         )
-        self.assert_sentence(step, r"\b(not|except|exclud\w*|other than)\b.*\bacquired under\b", r"\bsettle")
-        self.assert_sentence(step, r"\b(must|only if)\b.*\bbusiness real property\b", r"\blife of the LRBA\b")
-        # The agent escalates the possible contravention and does not decide it.
-        self.assert_sentence(step, r"\bs 67\(1\)", r"\b(do not|never|not to)\W+conclud")
+        self.assert_sentence(step, excluded + r"\bacquired under\b", r"\bsettle")
+        self.assert_sentence(
+            step, affirmed=(r"\b(must|only if)\b[^,;:]*\bbusiness real property\b", r"\blife of the LRBA\b")
+        )
+        # The agent escalates the possible contravention to the trustee and auditor and
+        # does not decide it.
+        self.assert_sentence(
+            step, r"\bs 67\(1\)", r"\b(do not|never|not to)\W+conclud",
+            affirmed=(r"\bescalate\b", r"\btrustee\b", r"\bauditor\b"),
+        )
         self.assert_carries(section("au-smsf-year-end", "Inputs"), "LRBA")
         self.assert_cited_and_recorded(
             "au-smsf-year-end",
@@ -118,22 +136,28 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_rental_holiday_home_costs_are_denied_before_apportionment(self) -> None:
         step = workflow_step("au-rental-property", 4)
-        self.assert_carries(
-            step,
-            "s 26-50", "s 26-50(3)(b)(ii)", "s 8-1", "advertising", "s 26-50(4)",
-            "TR 2026/1", "Appendix 2", "PCG 2026/3", "cost base",
-        )
-        # s 26-50 denies unless the home was mainly for rent at all times, and a denied
-        # cost is not apportioned.
-        self.assert_sentence(step, r"\b(unless|except)\b.*\bat all times\b.*\bmainly\b")
-        self.assert_sentence(step, r"\b(not|never|rather than)\W+(\w+\W+){0,2}apportion")
-        self.assert_sentence(step, r"\bseasonal\b.*\b(not|never|no)\b")
-        # Appendix 2 covers only earlier expenses, never avoidance, fraud or evasion,
-        # and changes no assessment.
+        self.assert_carries(step, "s 26-50(3)(b)(ii)", "TR 2026/1", "Appendix 2", "PCG 2026/3")
+        # s 26-50 denies ownership and use costs unless the home was mainly for rent at
+        # all times, and a denied cost is not apportioned.
         self.assert_sentence(
-            step, r"\bbefore 1 July 2026\b", r"\b(unless|except|other than)\b.*\b(avoidance|fraud|evasion)\b"
+            step, r"\b(unless|except)\b.*\bat all times\b.*\bmainly\b", affirmed=(r"\bs 26-50\b[^,;:]*\bden(y|ies)\b",)
         )
-        self.assert_sentence(step, r"\b(not|no)\W+(an\W+)?exemption\b", r"\bamended assessment\b")
+        self.assert_sentence(step, r"\b(not|never|rather than)\W+(\w+\W+){0,2}apportion")
+        # Advertising stays under s 8-1; a change of use is tested under s 26-50(4), and a
+        # seasonal pattern is not one.
+        self.assert_sentence(step, r"\badvertising\b", affirmed=(r"\bs 8-1\b",))
+        self.assert_sentence(step, r"\bseasonal\b.*\b(not|never|no)\b", affirmed=(r"\btest\w*\b[^,;:]*\bs 26-50\(4\)",))
+        # Appendix 2 covers only earlier expenses, not avoidance, fraud or evasion, and an
+        # amended assessment or private ruling still follows the ruling.
+        unless = r"\b(unless|except|other than)\b.*"
+        self.assert_sentence(
+            step, r"\bbefore 1 July 2026\b", unless + r"\bavoidance\b", unless + r"\bfraud\b", unless + r"\bevasion\b"
+        )
+        self.assert_sentence(
+            step, r"\b(not|no)\W+(an\W+)?exemption\b", affirmed=(r"\bamended assessment\b", r"\bprivate ruling\b")
+        )
+        # Denied amounts are kept for the cost base.
+        self.assert_sentence(step, r"\bcost base\b", affirmed=(r"\bdenied amounts\b",))
         self.assert_cited_and_recorded(
             "au-rental-property",
             "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20261/NAT/ATO/00001",
@@ -146,16 +170,23 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_carries(
             step,
             "Code item 6", "TPB(GS) 55/2026", "22 July 2026", "paragraph 23",
-            "due diligence", "responsible practitioner",
             "https://github.com/ryanduguid/llm-tax-guardrails/blob/main/src/data/gs55-concordance.yaml",
         )
-        # Each client's permission comes before its information goes into an AI tool.
+        # The consent record extends to each AI tool, and each client's permission comes
+        # before its information goes into one.
+        self.assert_sentence(step, affirmed=(r"\brecord\b[^,;:]*\bAI tools?\b",))
         self.assert_sentence(
             step,
             r"\bAI tool\b",
-            r"\bpermission\W+(is\W+)?(needed|required)\W+(first|before)\b"
-            r"|\b(obtain|get|hold|have)\b.*\bpermission\b.*\b(first|before)\b",
+            affirmed=(
+                r"\bpermission\W+(is\W+)?(needed|required)\W+(first|before)\b"
+                r"|\b(obtain|get|hold|have)\b.*\bpermission\b.*\b(first|before)\b",
+            ),
         )
+        # The record includes the practice's due diligence, and whether a use is a
+        # disclosure is for the responsible practitioner.
+        self.assert_sentence(step, r"\bparagraph 25\b", affirmed=(r"\bdue diligence\b",))
+        self.assert_sentence(step, r"\bdisclosure\b", affirmed=(r"\bresponsible practitioner\b",))
         self.assert_carries(section("au-tax-agent-obligations", "Inputs"), "AI tools")
         self.assert_cited_and_recorded(
             "au-tax-agent-obligations",
@@ -164,14 +195,19 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_trust_beneficiary_tfns_move_to_the_statement_of_distribution(self) -> None:
         step = workflow_step("au-trust-distributions", 3)
-        self.assert_carries(step, "closely held trust", "statement of distribution")
-        # The workpaper records the quote, never the number.
-        self.assert_sentence(step, r"\b(not|never)\W+(\w+\W+){0,3}TFN itself\b")
+        self.assert_carries(step, "closely held trust")
+        # Record whether and when each beneficiary quoted a TFN and whether TFN
+        # withholding applied, never the TFN itself.
+        self.assert_sentence(
+            step,
+            r"\b(not|never)\W+(\w+\W+){0,3}TFN itself\b",
+            affirmed=(r"\brecord\b[^,;:]*\bquot", r"\bquot\w*\b[^,;:]*\b(when|date)\b", r"\bwithh(olding|eld)\b"),
+        )
         # The quarterly report ceased from 1 July 2026, the last falling due on 31 July 2026;
         # the return carries TFNs from the 2027 lodgment; TFN withholding stays.
-        self.assert_sentence(step, r"\b(ceased|ended|stopped|no longer)\b", r"\b(from|on|after) 1 July 2026\b")
+        self.assert_sentence(step, r"\b(from|on|after) 1 July 2026\b", affirmed=(r"\b(ceased|ended|stopped|no longer)\b",))
         self.assert_sentence(step, r"\b(last|final)\b", r"\b30 June 2026\b", r"\b31 July 2026\b")
-        self.assert_sentence(step, r"\bstatement of distribution\b", r"\b(starting|from|beginning)\b.*\b2027\b")
+        self.assert_sentence(step, r"\b(starting|from|beginning)\b.*\b2027\b", affirmed=(r"\bstatement of distribution\b",))
         self.assert_sentence(step, r"\bTFN withholding\b.*\b(unchanged|still applies|continues)\b")
         self.assert_carries(section("au-trust-distributions", "Inputs"), "TFN")
         self.assert_cited_and_recorded(
@@ -184,22 +220,36 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_nonresident_cgt_events_from_1_october_2026_use_the_amended_tests(self) -> None:
         step = workflow_step("au-nonresident-cgt", 2)
-        self.assert_carries(
-            step,
-            "Act No. 86 of 2026", "item 39(2)", "s 995-1(1)", "water entitlement", "s 855-20",
-            "s 855-25(1)(b)", "market",
-        )
+        self.assert_carries(step, "Act No. 86 of 2026", "item 39(2)", "s 855-25(1)(b)")
         # The amended Division 855 applies to CGT events from 1 October 2026 and an
         # earlier event keeps the law as it stood.
-        self.assert_sentence(step, r"\bCGT events?\W+(occurring\W+)?(on or after|from) 1 October 2026\b")
+        self.assert_sentence(
+            step,
+            r"\bCGT events?\W+(occurring\W+)?(on or after|from) 1 October 2026\b",
+            affirmed=(r"\bDivision 855\b[^,;:]*\bas amended\b|\bamended Division 855\b",),
+        )
         self.assert_sentence(
             step,
             r"\b(earlier|prior)\b.*\bCGT event\b|\bCGT event\b.*\b(before|prior to) 1 October 2026\b",
-            r"\bas it stood\b|\bunamended\b|\bbefore (the |its )?(amendments?|changes?)\b"
-            r"|\b(earlier|former|previous|old) (law|version|rules)\b",
+            affirmed=(
+                r"\bas it stood\b|\bunamended\b|\bbefore (the |its )?(amendments?|changes?)\b"
+                r"|\b(earlier|former|previous|old) (law|version|rules)\b",
+            ),
         )
-        # The principal asset test looks back 365 days unless a determination sets another time.
-        self.assert_sentence(step, r"\b365 days (before|preceding|prior)\b", r"\b(unless|except)\b.*s 855-25\(1A\)")
+        # The new real property definition; water entitlements and options; the principal
+        # asset test at the event or in the 365 days before it, unless a determination sets
+        # another time; and the record of what was applied.
+        self.assert_sentence(step, affirmed=(r"\bs 995-1\(1\)",))
+        self.assert_sentence(step, r"\bs 855-20\b", affirmed=(r"\bwater entitlements?\b", r"\boptions?\b"))
+        self.assert_sentence(
+            step,
+            r"\b(unless|except)\b.*s 855-25\(1A\)",
+            affirmed=(r"\btime of the (CGT )?event\b", r"\b365 days (before|preceding|prior)\b"),
+        )
+        self.assert_sentence(
+            step,
+            affirmed=(r"\brecord\b[^,;:]*\bevent date\b", r"\bversion of Division 855\b", r"\bmarket[- ]value evidence\b"),
+        )
         self.assert_cited_and_recorded(
             "au-nonresident-cgt",
             "https://www.legislation.gov.au/C2026A00086/asmade/text",
@@ -210,19 +260,30 @@ class DatedRuleChangeTests(unittest.TestCase):
         """The step dates the agent read inline, and both pages are indexed so preflight sees them."""
         base = "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/"
         step = workflow_step("stp-finalisation", 2)
-        self.assert_carries(
-            step, "ABN", "branch", "BMS ID", "Payroll ID", "income statement", "Human review pending",
+        self.assert_carries(step, "income statement", "Human review pending")
+        # Ask whether each identifier changed and record the date of each change.
+        self.assert_sentence(
+            step, r"\bABN\b", r"\bbranch\b", r"\bBMS ID\b", r"\bPayroll ID\b",
+            affirmed=(r"\b(ask|confirm|establish|find out)\b", r"\brecord\b[^,;:]*\bdate\b"),
         )
         # Moved YTD amounts need the replacement method or zeroing out, or duplicates follow.
         self.assert_sentence(
-            step, r"\b(must|needs? to|has to|required)\b", r"\breplacement method\b", r"\bzeroing out\b", r"\bduplicate"
+            step,
+            r"\bduplicate",
+            affirmed=(r"\b(must|needs? to|has to|required)\b[^,;:]*\breplacement method\b", r"\bzeroing out\b"),
         )
         # A changed ABN or branch is finalised under the old one and restarts from zero;
         # an untransferred combination is finalised separately, impossible once cancelled.
-        self.assert_sentence(step, r"\bABN\b", r"\bfinalis\w*\b.*\b(original|old|previous|former)\b", r"\bzero\b")
-        self.assert_sentence(step, r"\bseparately\b", r"\b(cannot|can ?not|can't|unable|not possible)\b.*\bcancelled\b")
+        self.assert_sentence(
+            step, r"\bABN\b", affirmed=(r"\bfinalis\w*\b[^,;:]*\b(original|old|previous|former)\b", r"\bzero\b")
+        )
+        self.assert_sentence(
+            step,
+            r"\b(cannot|can ?not|can't|unable|not possible)\b.*\bcancelled\b",
+            affirmed=(r"\bfinalis\w*\b[^,;:]*\bseparately\b",),
+        )
         # The agent lists exceptions; the authorised person corrects them.
-        self.assert_sentence(step, r"\bcorrect", r"\bauthorised person\b")
+        self.assert_sentence(step, r"\bcorrect", affirmed=(r"\bauthorised person\b",))
         self.assert_carries(section("stp-finalisation", "Inputs"), "Payroll ID")
         self.assert_cited_and_recorded(
             "stp-finalisation",
