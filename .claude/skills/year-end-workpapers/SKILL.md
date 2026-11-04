@@ -35,6 +35,17 @@ If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryan
 
 Bind each claimed completed stage to the supporting artefact and its source version. Check that it contains the required evidence and tie-outs; a filename, empty template or preparer's completion flag cannot establish readiness. Keep supported sections available for review while naming each missing or stale artefact and its dependent stages. Changes to supporting evidence reopen the affected review points.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Lead schedule | Working | Result |
+| --- | --- | --- |
+| Plant and equipment | 40,000.00 + 12,000.00 - 5,000.00 - 6,000.00 = 41,000.00 (opening, additions, disposals, depreciation) | Agrees to the 41,000.00 trial balance |
+| Wages movement | 230,000.00 - 200,000.00 = 30,000.00 (this year, last year) | No explanation supplied, so the item stays open with a query for the client |
+
+A supplied depreciation figure is an input and is not recalculated here. The 30,000.00 is a review point, not a finding that wages are wrong. The reviewer signs off the pack.
+
 ## Boundaries
 
 - Accounting policy choices (revenue recognition, ECL approach, depreciation rates) are engagement decisions. Apply the firm's existing positions and flag anything new.

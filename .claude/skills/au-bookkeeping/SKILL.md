@@ -31,6 +31,18 @@ A completeness register, bank/subledger reconciliations and proposed-correction 
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Roll-forward | Working | Tie-out |
+| --- | --- | --- |
+| Bank | 20,000.00 + 6,000.00 + 3,000.00 - 4,500.00 = 24,500.00 (opening, debtor receipt, loan receipt, creditor payment) | Statement and ledger both 24,500.00 |
+| Debtors | 6,000.00 - 6,000.00 = 0.00 | Agrees to the ledger |
+| Creditors | 4,500.00 - 4,500.00 = 0.00 | Agrees to the ledger |
+
+The 3,000.00 loan receipt stays apart from trading income. If the statement were missing the creditor payment, bank evidence would support 20,000.00 + 6,000.00 + 3,000.00 = 29,000.00 against ledger cash of 24,500.00, and that 4,500.00 gap would stay unverified. Tax coding is not decided here.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

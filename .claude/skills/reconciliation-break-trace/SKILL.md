@@ -40,6 +40,20 @@ A break register with one row per item: account, period, item amount, side, caus
 
 Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+The statement closes at 31,000.00 and the ledger at 29,570.00, so 31,000.00 - 29,570.00 = 1,430.00, with the ledger lower.
+
+| Item | Cause, with evidence | Effect | Owner and next action |
+| --- | --- | --- | --- |
+| Duplicate payment | The ledger records one 1,200.00 payment twice, as a bank feed line and a manual payment; the statement shows one debit | + 1,200.00 | Reviewer: unposted reversal draft |
+| Cheque | Issued in the period, presented after month end on the next statement | + 450.00 | Preparer: timing item, keep its clear date |
+| Bank fee | On the statement, not in the ledger | - 240.00 | Reviewer: unposted fee draft |
+
+Explained: 1,200.00 + 450.00 - 240.00 = 1,410.00. Remainder: 1,430.00 - 1,410.00 = 20.00. The 20.00 stays open with the cause not established; it is never forced to nil.
+
 ## Boundaries
 
 - Never plug, net off, write off or relabel a difference to make a reconciliation agree. An unexplained remainder stays open, however small. Record any authorised reviewer's written threshold decision beside it; do not remove or soften the review flag.

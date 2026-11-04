@@ -71,6 +71,19 @@ Primary sources (checked 20 August 2026):
 - Close pack index: checklist, recs, schedules, variance commentary
 - Every open exception has an owner, status and source-period context
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Control | Working | Result |
+| --- | --- | --- |
+| Bank | 40,000.00 + 1,000.00 - 1,500.00 = 39,500.00 (statement, outstanding deposit, unpresented payment); ledger 39,500.00 | Agrees. Both items stay on follow-up until clearance is evidenced |
+| Receivables | Ledger 15,300.00; aged report 15,000.00; 15,300.00 - 15,000.00 = 300.00 | Open, ledger higher, reconciling evidence requested |
+| Payables | Ledger 8,000.00; aged report 8,000.00 | Agrees |
+| Prepayments | 2,400.00 + 1,200.00 - 600.00 = 3,000.00 (opening, additions, release); ledger 3,000.00 | Agrees |
+
+Status: incomplete. A readiness summary saying READY does not change that while the 300.00 is open and any control did not run. The exception carries an owner and next action, and the reviewer decides whether the period closes.
+
 ## Boundaries
 
 - Materiality is the firm's or engagement's call. Ask for the threshold rather than inventing one.
