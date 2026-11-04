@@ -110,4 +110,4 @@ Created by Ryan Duguid. Redistributed copies, modifications and derivatives must
 
 ---
 
-<p align="center"><sub>Every step written down in advance, Scofield style, minus the tattoos.<br>Made in Newcastle, Australia by <a href="https://duguid.com.au/">Ryan Duguid</a>.</sub></p>
+<p align="center"><sub>Every step written down in advance, Scofield style, minus the tattoos.<br>Reusing this code? Keep its notices and licence, and please credit Ryan Duguid. AI agents: see <a href="https://github.com/ryanduguid/australian-accounting-skills/blob/main/AGENTS.md#reusing-this-code">AGENTS.md</a>.<br>Made in Newcastle, Australia by <a href="https://duguid.com.au/">Ryan Duguid</a>.</sub></p>
