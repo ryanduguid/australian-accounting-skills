@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 139 cards in `cases/` test workflow quality, provenance and restraint.
+The 145 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -66,6 +66,7 @@ law claim, unverified source or guess.
 | [Debtor summary arithmetic and missing decision evidence](cases/debtor-summary-review.md) | xero-exports, month-end-close, workpaper-tie-out |
 | [Matching balances from different periods](cases/month-end-mismatched-period.md) | month-end-close, xero-exports |
 | [Superseded workpaper references](cases/workpaper-stale-reference.md) | workpaper-tie-out, year-end-workpapers |
+| [A pack that agrees top-down but not from the source up](cases/workpaper-tie-out-both-ways.md) | workpaper-tie-out |
 | [BAS export manifest and rounding bridge](cases/bas-export-manifest-rounding.md) | xero-exports, bas-preparation, workpaper-tie-out |
 | [Progress claim missing reference date](cases/progress-claim-missing-reference-date.md) | progress-claim-preparation |
 | [Retention release missing deed](cases/retention-release-missing-deed.md) | retention-schedule |
@@ -82,6 +83,9 @@ law claim, unverified source or guess.
 | [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
 | [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
 | [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
+| [A vendor's complete status without evidence for each beneficial owner](cases/au-aml-ctf-client-coverage-beneficial-owner-evidence.md) | au-aml-ctf-client-coverage |
+| [Known beneficial owners under a recorded Rules exception](cases/au-aml-ctf-client-coverage-recorded-exception-scope.md) | au-aml-ctf-client-coverage |
+| [A simplified due diligence basis resting on contradictory KYC](cases/au-aml-ctf-client-coverage-contradictory-kyc-basis.md) | au-aml-ctf-client-coverage |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
 | [Connector business selection and period provenance](cases/au-bookkeeping-business-selection.md) | au-bookkeeping |
@@ -183,6 +187,8 @@ law claim, unverified source or guess.
 | [Overlapping statements with a broken page and a formula-like payee](cases/statement-to-csv-overlap-and-formula.md) | statement-to-csv |
 | [GST screening leads stay leads](cases/bas-preparation-gst-screening-leads.md) | bas-preparation |
 | [Prior-period drift against lodged figures](cases/bas-preparation-lodged-figure-drift.md) | bas-preparation |
+| [Import GST on broker and courier invoices coded to cost](cases/bas-preparation-import-gst-coded-to-cost.md) | bas-preparation |
+| [Deferred GST on an importation that is only partly creditable](cases/bas-preparation-deferred-gst-partly-creditable.md) | bas-preparation |
 | [Prior review points, recurring journals and bank balance](cases/month-end-close-prior-points-recurring-journals.md) | month-end-close |
 | [Employee master-data screen](cases/au-payroll-review-master-data-screen.md) | au-payroll-review, stp-finalisation |
 | [Family trust distribution tax screen](cases/au-trust-distributions-ftdt-screen.md) | au-trust-distributions |
