@@ -411,7 +411,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         # The gain or loss is disregarded only on all 3 conditions.
         self.assert_sentence(
             step, r"\bdisregards\b", r"\bonly if\b", NOT + r"(an\W+)?excluded foreign resident\b",
-            r"\bs 118-195\(1\)\(c\)", r"\bcolumn 2\b", r"\bcolumn 3\b",
+            r"\bs 118-195\(1\)\(c\)", r"\bcolumn 2\b[^,;:]*\band\b[^,;:]*\bcolumn 3\b",
         )
         self.assert_sentence(
             step,
@@ -422,7 +422,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(
             step,
             r"\bwithin 2 years of the death\b",
-            r"\blonger period the Commissioner allows\b",
+            r"\blonger period the Commissioner allows\W+or from the death until\b",
             r"\bspouse \(except a spouse living permanently separately and apart\b",
             r"\bright to occupy it under the deceased's will\b",
             r"\bbeneficiary whose disposal\b",
@@ -448,8 +448,15 @@ class DatedRuleChangeTests(unittest.TestCase):
             affirmed=(r"\bgrants counts\b",),
         )
         self.assert_sentence(
-            step, r"\blimited period expires\b", r"\bs 118-195\b[^,;:]*" + NOT + r"apply\b",
-            r"\bonly the s 118-200 partial exemption\b", r"\bparagraphs 24 and 25\b",
+            step, r"\bspecified period\b", r"\bafter it expires\b", r"\bcannot be disregarded under s 118-195\(1\)",
+            r"\bpart of it may be disregarded under s 118-200\b", r"\bparagraphs 24 and 25\b",
+        )
+        # The expiry defeats only item 2(b), so the other column 3 routes are tested before s 118-200.
+        self.assert_sentence(
+            step, r"\bonly item 2\(b\)", r"\bparagraph 6\b", r"\bdefeats only the right-to-occupy route\b",
+            r"\bwithin 2 years of the death or a longer period the Commissioner allows\b",
+            r"\bspouse\b", r"\bdisposing beneficiary\b", r"\bbefore falling back to s 118-200\b",
+            affirmed=(r"\bstill test\b",),
         )
         self.assert_sentence(
             step, r"\bbefore and after\b", r"\bparagraph 37\b", r"\bin November 2026\b",
@@ -567,7 +574,9 @@ class DatedRuleChangeTests(unittest.TestCase):
             step, r"\bTo be advised\b", r"\bbefore relying\b", affirmed=(r"\bcheck whether a final has issued\b",)
         )
         # TD 2026/D2: its scope and exclusions, each in its own clause.
-        self.assert_sentence(step, r"\bonly wrapping through a smart contract\b", r"\blocks\b", r"\bmints\b", r"\bparagraph 2\b")
+        self.assert_sentence(step, r"\bonly wrapping through a smart contract\b", r"\blocks\b", r"\bmints\b",
+            r"\bone for one\b|\bon a 1:1 basis\b", r"\bparagraph 2\b",
+        )
         self.assert_sentence(
             step,
             NOT + r"apply\b[^,;:]*\bcustodian counterparty\b", r"\bparagraph 3\b",
@@ -636,7 +645,8 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_carries(
             step,
             "Schedule 4", "s 25-130(2)(a)", "LCR 2026/D5", "26 August 2026", "Human review pending",
-            "4 November 2026", "au-wfh-deductions", "au-car-expenses", "au-travel-expenses",
+            # Backticked, because a quoted skill name gives that skill behavioural gate credit.
+            "4 November 2026", "`au-wfh-deductions`", "`au-car-expenses`", "`au-travel-expenses`",
         )
         self.assert_sentence(
             step, affirmed=(r"\bitem 17\b[^,;:]*\bappl(y|ies)\b[^,;:]*\b2026-27 income year and later\b",)
@@ -714,7 +724,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         )
         self.assert_sentence(
             step, r"\bas well as terminate\b", r"\bSubdivision 40-A\b", r"\bsections 40-5 to 40-15\b",
-            affirmed=(r"\blets the Board suspend\b",),
+            affirmed=(r"\b(lets the Board|allows the Board to) suspend\b",),
         )
         # Interim suspension needs both limbs: the conduct and a significant risk.
         self.assert_sentence(
