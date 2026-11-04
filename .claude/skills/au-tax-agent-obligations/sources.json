@@ -278,6 +278,51 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "APESB: APES 325 Risk Management for Firms",
+      "url": "https://apesb.org.au/standards-guidance/risk-management-for-firms-apes-325/",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. The agent read the standard (March 2023) linked from this page.",
+      "final_url": "https://apesb.org.au/standards-guidance/risk-management-for-firms-apes-325/",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "APESB: APES 320 Quality Management for Firms that provide Non-Assurance Services",
+      "url": "https://apesb.org.au/standards-guidance/quality-management-for-firms-that-provide-non-assurance-services/",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. The agent read the reissued standard (February 2022) linked from this page.",
+      "final_url": "https://apesb.org.au/standards-guidance/quality-management-for-firms-that-provide-non-assurance-services/",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Auditing Standard ASQM 1 Quality Management for Firms that Perform Audits or Reviews of Financial Reports and Other Financial Information, or Other Assurance or Related Services Engagements",
+      "url": "https://www.legislation.gov.au/F2021L00415/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. The agent read the compilation registered as F2025C00310 (12 February 2025) through the Register's PDF of that version.",
+      "final_url": "https://www.legislation.gov.au/F2021L00415/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 149 cards in `cases/` test workflow quality, provenance and restraint.
+The 151 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -196,6 +196,8 @@ law claim, unverified source or guess.
 | [Trust loss after an appointor change and a later family trust election](cases/au-trust-losses-late-election.md) | au-trust-losses |
 | [Mixed batch with a scam SMS, a paper-only letter and a name-only match](cases/au-ato-correspondence-triage-mixed-batch.md) | au-ato-correspondence-triage |
 | [Year-end ATO account reconciliation with a late amendment and a doubled download](cases/au-ato-account-reconciliation-late-amendments.md) | au-ato-account-reconciliation |
+| [FBT sweep schedule that drops a line and a reversal pair](cases/fbt-annual-workflow-line-register-tie-out.md) | fbt-annual-workflow |
+| [Professional-body rows for a mixed-membership practice](cases/au-tax-agent-obligations-professional-body-rows.md) | au-tax-agent-obligations |
 
 Together the cards cover all 97 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -220,7 +222,8 @@ verdicts. The 5 cards added after v0.5.0 for GST screening leads, lodged-figure
 drift, prior review points, the employee master-data screen and the family
 trust distribution tax screen have no recorded run.
 The 4 cards added on 4 November 2026 for the client departure, trust loss, ATO
-correspondence triage and ATO account reconciliation workflows have no recorded run.
+correspondence triage and ATO account reconciliation workflows have no recorded run,
+nor do the FBT line register and professional-body rows cards added the same day.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions
