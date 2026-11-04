@@ -1423,6 +1423,193 @@ class DatedRuleChangeTests(unittest.TestCase):
             "https://treasury.nt.gov.au/dtf/territory-revenue-office/stamp-duty",
         )
 
+    def test_land_tax_routes_each_jurisdiction_to_its_office_act_owner_and_notice(self) -> None:
+        """Each row is read cell by cell, so an office, Act or ownership rule stays with its jurisdiction."""
+        skill = "au-land-tax"
+        step = workflow_step(skill, 1)
+        self.assert_sentence(step, r"\bHuman review pending\b", r"\bon 4 November 2026\b", r"\bnot a human review\b")
+        self.assert_sentence(step, affirmed=(r"\broute the work to the revenue office and Act\b",))
+        self.assert_sentence(
+            step, r"\btitle\b", r"\bcontract\b", r"\bsettlement evidence\b",
+            affirmed=(r"\brecord who owned each parcel\b",),
+        )
+        # The table carries no figure; each comes from the office's current page.
+        self.assert_sentence(
+            step, r"\bno rate\b", r"\bthreshold\b", r"\btaxing date\b", r"\bdue date\b", r"\bfee\b",
+            affirmed=(r"\bread each from the revenue office's current page\b",),
+        )
+        self.assert_sentence(step, r"\blegislation register links\b", NOT + r"indexed\b", r"\boutside the reviewed fetch list\b")
+        self.assert_sentence(step, affirmed=(r"\bconfirm each row\b[^.]*\bAct for the assessment year\b",))
+        self.assert_sentence(step, r"\bdecides no liability, exemption or surcharge\b")
+
+        def acts(cell: str, *links: tuple[str, str]) -> None:
+            for name, url in links:
+                with self.subTest(act=name):
+                    self.assertRegex(cell, rf"\[{re.escape(name)}\b[^\]]*\]\({re.escape(url)}\)")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "New South Wales")
+        self.assert_carries(office, "Revenue NSW")
+        acts(
+            act,
+            ("Land Tax Act 1956", "https://legislation.nsw.gov.au/view/html/inforce/current/act-1956-027"),
+            ("Land Tax Management Act 1956", "https://legislation.nsw.gov.au/view/html/inforce/current/act-1956-026"),
+        )
+        self.assert_sentence(
+            owner, r"\bnon-exempt land\b", r"\bmidnight on the taxing date\b", r"\bfull year\b",
+            affirmed=(r"\bassesses\b",),
+        )
+        self.assert_sentence(notice, r"\bpost\b", r"\bemail\b", r"\bopted in\b")
+        self.assert_sentence(notice, r"\bdownload\w*\b[^.]*\bLand Tax Online\b")
+        self.assert_sentence(surcharge, r"\bsurcharge land tax\b", r"\bforeign\b", r"\bresidential land\b")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "Victoria")
+        self.assert_carries(office, "State Revenue Office Victoria")
+        acts(act, ("Land Tax Act 2005", "https://www.legislation.vic.gov.au/in-force/acts/land-tax-act-2005"))
+        self.assert_sentence(owner, r"\bmidnight on the taxing date in the previous year\b")
+        self.assert_sentence(
+            owner, r"\bsells during the year\b", r"\bfull year's land tax\b",
+            affirmed=(r"\bremains (?:responsible|liable)\b",),
+        )
+        self.assert_sentence(notice, r"\bMy Land Tax\b", r"\b(?:view|download)\b")
+        self.assert_carries(notice, "myGov")
+        self.assert_sentence(surcharge, r"\babsentee owner surcharge\b", r"\b(?:appears|included) in the land tax assessment\b")
+        self.assert_sentence(surcharge, r"\bvacant residential land tax\b", r"\bseparate tax\b", r"\bown assessment\b")
+        self.assert_sentence(surcharge, r"\bwindfall gains tax\b[^.]*\bstep 5\b")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "Queensland")
+        self.assert_carries(office, "Queensland Revenue Office")
+        acts(act, ("Land Tax Act 2010", "https://www.legislation.qld.gov.au/view/html/inforce/current/act-2010-015"))
+        self.assert_sentence(
+            owner, r"\bfreehold land\b", r"\bmidnight on the taxing date\b",
+            NOT + r"(?:divide|split|apportion) the liability between buyer and seller\b",
+        )
+        self.assert_sentence(notice, r"\bpost\b", r"\bemail\b", r"\bQRO Online\b")
+        self.assert_sentence(surcharge, r"\babsentee surcharge\b", r"\bforeign surcharge\b", r"\bassessment notice\b")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "Western Australia")
+        self.assert_carries(office, "RevenueWA")
+        acts(
+            act,
+            ("Land Tax Assessment Act 2002", "https://www.legislation.wa.gov.au/legislation/statutes.nsf/law_a6341.html"),
+            ("Land Tax Act 2002", "https://www.legislation.wa.gov.au/legislation/statutes.nsf/law_a6340.html"),
+        )
+        self.assert_sentence(owner, r"\bmidnight on the taxing date of the previous assessment year\b")
+        self.assert_sentence(owner, r"\bsells during the year\b", affirmed=(r"\bstill liable\b",))
+        self.assert_sentence(notice, r"\bNotice of Assessment\b", r"\bemail\b")
+        self.assert_carries(notice, "online services portal")
+        self.assert_sentence(surcharge, r"^(?:none|no surcharge\w*) (?:is |are )?named\b")
+        self.assert_sentence(
+            surcharge, r"\bmetropolitan region improvement tax\b", r"\bwith land tax\b", r"\bPerth metropolitan region\b",
+            affirmed=(r"\bmay be payable\b",),
+        )
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "South Australia")
+        self.assert_carries(office, "RevenueSA")
+        acts(act, ("Land Tax Act 1936", "https://www.legislation.sa.gov.au/lz?path=%2FC%2FA%2FLAND%20TAX%20ACT%201936"))
+        self.assert_sentence(
+            owner, r"\bmidnight on the taxing date\b", r"\bvendor who sells after it\b", r"\bfull land tax\b",
+            affirmed=(r"\bremains liable\b",),
+        )
+        self.assert_sentence(notice, r"\bLand Tax Assessment\b", r"\bemail billing\b")
+        self.assert_sentence(
+            notice, r"\bseparate assessments\b", r"\bownership structures\b", r"\bon trust\b", r"\bcorporate groups\b"
+        )
+        self.assert_sentence(surcharge, r"^(?:none|no surcharge\w*) (?:is |are )?named\b")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "Tasmania")
+        self.assert_carries(office, "State Revenue Office Tasmania")
+        acts(
+            act,
+            ("Land Tax Act 2000", "https://www.legislation.tas.gov.au/view/html/inforce/current/act-2000-074"),
+            ("Land Tax Rating Act 2000", "https://www.legislation.tas.gov.au/view/html/inforce/current/act-2000-073"),
+        )
+        self.assert_sentence(owner, r"\bGeneral Land\b", r"\btaxing date\b", affirmed=(r"\bpays\b",))
+        self.assert_sentence(
+            owner, r"\bPrincipal Residence Land\b", NOT + r"(?:be\W+)?(?:subject to land tax|apply)\b"
+        )
+        self.assert_sentence(notice, r"\bemail\b")
+        self.assert_sentence(surcharge, r"\bforeign investor land tax surcharge\b", r"\bGeneral Land\b")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "Australian Capital Territory")
+        self.assert_carries(office, "ACT Revenue Office")
+        acts(act, ("Land Tax Act 2004", "https://www.legislation.act.gov.au/a/2004-4/"))
+        self.assert_sentence(owner, r"\bquarterly\b", r"\bfirst day of each quarter\b", r"\bwhole quarters\b", r"\bno pro-rating\b")
+        # Land tax reaches only residential property that is not the owner's home, never commercial property.
+        self.assert_sentence(
+            owner, r"\bresidential property\b", r"\b(?:is|are)\W+" + NOT + r"the owner's principal place of residence\b",
+            NOT + r"(?:apply\W+)?to commercial property\b",
+            affirmed=(r"\bland tax applies to residential property\b",),
+        )
+        self.assert_sentence(owner, r"\bmust\b[^.]*\b(?:tell|notify)\b[^.]*\boffice\b", r"\bbecomes liable\b")
+        self.assert_sentence(notice, r"\bemail or post\b", r"\bnotice delivery preferences\b")
+        self.assert_sentence(surcharge, r"\bforeign ownership surcharge\b")
+
+        office, act, owner, notice, surcharge = table_row(skill, "Workflow", "Northern Territory")
+        self.assert_carries(office, "Territory Revenue Office")
+        self.assert_sentence(act, r"^None listed\b", r"\bmain revenue Acts\b", r"\bno land tax Act\b")
+        for cell in (owner, notice):
+            self.assert_sentence(cell, r"^" + NOT + r"stated\b")
+        self.assert_sentence(surcharge, r"^None named\b")
+        # The office's list names no land tax Act, but it does not say none is levied.
+        self.assert_sentence(
+            step, r"\bTerritory Revenue Office page\b",
+            r"\bdoes\W+" + NOT + r"(?:say|state) in terms that the Territory levies no land tax\b",
+        )
+        self.assert_sentence(
+            step, r"\bno land tax authority was found\b", r"`UNVERIFIED`",
+            affirmed=(r"\bask the office before treating the land as untaxed\b",),
+        )
+
+        # Victorian windfall gains tax keeps its own step.
+        self.assert_sentence(
+            workflow_step(skill, 5), r"\bwindfall gains tax separate from land tax\b", affirmed=(r"\bkeep\b",)
+        )
+        self.assert_carries(workflow_step(skill, 5), "deferral", "`au-transfer-duty`")
+
+        self.assert_carries(
+            section(skill, "Primary-source starting point"),
+            "New South Wales:", "Victoria:", "Queensland:", "Western Australia:", "South Australia:", "Tasmania:",
+            "Australian Capital Territory:", "Northern Territory:",
+        )
+        self.assert_cited_and_recorded(
+            skill,
+            "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/land-tax/your-assessment-notice/"
+            "understand-your-assessment-notice",
+            "https://www.sro.vic.gov.au/owning-property/land-tax/understanding-land-tax",
+            "https://www.sro.vic.gov.au/owning-property/vacant-residential-land-tax/"
+            "understanding-vacant-residential-land-tax",
+            "https://qro.qld.gov.au/land-tax/pay/assessment/",
+            "https://www.wa.gov.au/organisation/department-of-treasury-and-finance/land-tax-assessment",
+            "https://revenuesa.sa.gov.au/landtax",
+            "https://www.sro.tas.gov.au/land-tax",
+            "https://www.revenue.act.gov.au/rates-and-property-charges/land-tax/about-land-tax",
+            "https://www.revenue.act.gov.au/rates-and-property-charges/land-tax/how-land-tax-is-calculated",
+            "https://treasury.nt.gov.au/dtf/territory-revenue-office/legislation",
+        )
+
+        # One card per jurisdiction that levies land tax routes to that office and its Acts.
+        cards = {
+            "nsw-sole-and-joint-notices": ("Revenue NSW", "Land Tax Act 1956", "Land Tax Management Act 1956"),
+            "vic-absentee-vacant-home": ("State Revenue Office Victoria", "Land Tax Act 2005"),
+            "qld-sale-after-taxing-date": ("Queensland Revenue Office", "Land Tax Act 2010"),
+            "wa-metropolitan-notice": ("RevenueWA", "Land Tax Assessment Act 2002", "Land Tax Act 2002"),
+            "sa-trust-assessment": ("RevenueSA", "Land Tax Act 1936"),
+            "tas-shack-and-home": ("State Revenue Office Tasmania", "Land Tax Act 2000", "Land Tax Rating Act 2000"),
+            "act-rented-former-home": ("ACT Revenue Office", "Land Tax Act 2004"),
+        }
+        cases = SKILLS.parents[1] / "validation" / "cases"
+        for card, (office, *named) in cards.items():
+            text = (cases / f"au-land-tax-{card}.md").read_text(encoding="utf-8")
+            checks = text.split("## Required checks", 1)[1].split("\n## ", 1)[0]
+            bullets = [" ".join(item.split()) for item in checks.split("\n- ")[1:]]
+            patterns = [rf"\broute\b[^.;]*?\bto (?:the )?{re.escape(office)}\b",
+                        *(rf"\b{re.escape(name)}\b" for name in named)]
+            with self.subTest(card=card):
+                self.assertTrue(
+                    any(all(re.search(pattern, bullet, re.IGNORECASE) for pattern in patterns) for bullet in bullets),
+                    f"no required check routes to {office} and {named}",
+                )
+
     def test_xero_exports_names_the_gst_pack_the_tax_schedules_and_the_older_bas_trail(self) -> None:
         skill, heading = "xero-exports", "The core exports"
         _, gotchas = table_row(skill, heading, "Activity Statement / GST Reconciliation")
