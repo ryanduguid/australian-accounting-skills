@@ -17,7 +17,11 @@ const HISTORY: &str =
     "https://github.com/ryanduguid/australian-accounting-skills/commits/main/.claude/skills";
 
 fn git(root: &Path, args: &[&str]) -> Result<String> {
-    let output = Command::new("git").arg("-C").arg(root).args(args).output()?;
+    let output = Command::new("git")
+        .arg("-C")
+        .arg(root)
+        .args(args)
+        .output()?;
     if !output.status.success() {
         return Err(format!("git {} failed", args.join(" ")).into());
     }
@@ -67,7 +71,9 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
                 root = PathBuf::from(args.next().ok_or("--root requires a path")?);
             }
             Some("--write") => write = true,
-            _ => return Err("usage: accounting-skills last-changed [--root PATH] [--write]".into()),
+            _ => {
+                return Err("usage: accounting-skills last-changed [--root PATH] [--write]".into());
+            }
         }
     }
     if git(&root, &["rev-parse", "--is-shallow-repository"])? == "true" {
