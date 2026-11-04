@@ -1697,6 +1697,92 @@ class DatedRuleChangeTests(unittest.TestCase):
         )
         self.assertFalse((SKILLS / skill / "sources.exempt.json").exists())
 
+    def test_business_formation_keeps_cp_391_a_dated_proposal(self) -> None:
+        skill = "au-business-formation"
+        step = workflow_step(skill, 3)
+        self.assert_sentence(step, r"\bProposal, not law\b", r"\b5 November 2026\b", r"\bproposes\b")
+        self.assert_sentence(step, r"\b1 July 2027\b", r"\b1 August 2028\b", r"\bonly if no service address\b")
+        self.assert_sentence(step, r"\bMarch 2027\b", r"\bnot necessarily its final position\b")
+        self.assert_sentence(step, affirmed=(r"\bRead the current status at ASIC\b",))
+        self.assert_sentence(step, r"`sources\.json`", r"\bawaits human review\b")
+        self.assert_sentence(step, r"\bkeep it out of the registration requirements\b")
+        self.assert_sentence(step, NOT + r"tell anyone that an address will be published\b", r"\bmust be lodged\b")
+        self.assert_cited_and_recorded(
+            skill,
+            "https://www.asic.gov.au/regulatory-resources/find-a-document/consultations/"
+            "cp-391-access-to-information-on-the-companies-register",
+        )
+
+    def test_tax_research_keeps_the_as_at_check_a_locator(self) -> None:
+        step = workflow_step("au-tax-research", 2)
+        self.assert_carries(step, "python -m fadden as_at", "au-tax-legislation-corpus")
+        for status in ("captured", "before_compilation", "superseded", "after_retrieval"):
+            self.assert_carries(step, f"`{status}`")
+        self.assert_sentence(step, r"`captured` is not a finding that the text was the law\b")
+        self.assert_sentence(step, r"\bendnotes\b", r"\bversion history\b", affirmed=(r"\bRead the compilation\b",))
+        self.assert_sentence(step, r"\bWithout the tool\b", r"\bunchanged\b")
+
+    def test_xero_connector_route_refuses_writes_and_records_each_read(self) -> None:
+        route = section("xero-exports", "Read-only connector route")
+        self.assert_sentence(route, r"\bfile-export path stays the default\b")
+        self.assert_sentence(route, r"\bwhether client data may reach a connector\b", r"\bask before using one\b")
+        self.assert_sentence(route, r"\bconnector in Claude\b", r"\bread-only\b")
+        self.assert_sentence(route, r"\bRemote MCP\b", r"\bopen source server\b", r"\bdifferent\b")
+        self.assert_sentence(route, r"\btools that write\b")
+        self.assert_sentence(route, r"\b5 November 2026\b", r"\bnot indexed\b")
+        self.assert_sentence(route, r"\bNo authenticated request was tested\b")
+        self.assert_sentence(route, r"\bcannot be completed\b", affirmed=(r"\bcall nothing\b",))
+        self.assert_sentence(route, r"\bmust end in `\.read`", r"\breject a connection\b")
+        self.assert_sentence(route, r"\bEvery tool the connection exposes must be on the allowlist\b")
+        self.assert_sentence(route, r"\bother servers\b", r"\bout of this check\b")
+        self.assert_sentence(
+            route, r"\bdoes not show which tools belong to this connection\b", r"\bnot completed\b", r"\bstop\b"
+        )
+        self.assert_sentence(route, r"\bStop on any other name\b", r"\beven when the scopes pass\b")
+        self.assert_sentence(route, r"\bvendor page\b", r"\bdoes not confirm either check\b")
+        allowlist = route.partition("Allowlist, from")[2].partition("The open source server")[0]
+        tools = re.findall(r"`(\w+)`", allowlist)
+        self.assertEqual(18, len(set(tools)), tools)
+        self.assertEqual(["get_connected_tenants"], [tool for tool in tools if not tool.startswith("list_")])
+        card = (SKILLS.parents[1] / "validation" / "cases" / "xero-exports-connector-read-and-write-request.md")
+        self.assert_carries(
+            card.read_text(encoding="utf-8"),
+            "Stop before calling any tool on this connection",
+            "including `list_trial_balance`",
+        )
+        self.assert_carries(
+            route, "organisation", "period or as-at date", "cash or accrual basis", "capture date and time"
+        )
+        self.assert_sentence(route, r"\bdo not merge reads\b")
+        self.assert_sentence(route, r"\bcannot stand in for a UI-only report\b", r"\breconstruction\b")
+        self.assert_sentence(
+            route, r"\bNever call a tool outside the allowlist\b", r"`create_`", r"`update_`", r"`authorise_`", r"`void_`"
+        )
+        self.assert_sentence(route, r"\bunposted draft\b")
+        bas = " ".join(skill_text("bas-preparation").split())
+        self.assert_sentence(bas, r"\bread-only connector route\b", r"\bcapture time\b", r"\brefuses every write\b")
+        self.assert_sentence(bas, r"\bActivity Statement's transaction tabs\b", r"\bstill come from exports\b")
+
+    def test_transfer_duty_cards_cover_each_jurisdiction_without_a_rate(self) -> None:
+        cases = SKILLS.parents[1] / "validation" / "cases"
+        offices = {
+            "nsw-business-with-land": "Revenue NSW",
+            "vic-goods-under-separate-contract": "State Revenue Office Victoria",
+            "qld-business-assets-and-debts": "Queensland Revenue Office",
+            "wa-rent-roll-and-trade-debts": "RevenueWA",
+            "sa-fixed-items-and-old-rule": "RevenueSA",
+            "tas-new-lease-condition": "State Revenue Office Tasmania",
+            "act-goods-with-crown-lease": "ACT Revenue Office",
+            "nt-option-before-9-may-2023": "Territory Revenue Office",
+        }
+        for name, office in offices.items():
+            card = (cases / f"au-transfer-duty-{name}.md").read_text(encoding="utf-8")
+            with self.subTest(card=name):
+                self.assertIn(office, card)
+                self.assertNotRegex(card, r"\d\s?(?:%|per cent)")
+                self.assertIn("Do not state a rate, threshold or concession from memory.", card)
+                self.assertIn("uncalculated unless a period-specific rule is verified", card)
+
 
 if __name__ == "__main__":
     unittest.main()

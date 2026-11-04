@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 166 cards in `cases/` test workflow quality, provenance and restraint.
+The 176 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -213,6 +213,16 @@ law claim, unverified source or guess.
 | [South Australian land held on trust beside the trustee's own land](cases/au-land-tax-sa-trust-assessment.md) | au-land-tax |
 | [Tasmanian home and shack with a co-owner overseas](cases/au-land-tax-tas-shack-and-home.md) | au-land-tax |
 | [Canberra home rented out part-way through a quarter beside a commercial unit](cases/au-land-tax-act-rented-former-home.md) | au-land-tax |
+| [Canberra business sale with goods, a Crown lease and an unsettled asset class](cases/au-transfer-duty-act-goods-with-crown-lease.md) | au-transfer-duty |
+| [NSW business sale with freehold premises, goods and goodwill](cases/au-transfer-duty-nsw-business-with-land.md) | au-transfer-duty |
+| [Northern Territory business sale resting on an undated option](cases/au-transfer-duty-nt-option-before-9-may-2023.md) | au-transfer-duty |
+| [Queensland business sale with goodwill, tools and debts](cases/au-transfer-duty-qld-business-assets-and-debts.md) | au-transfer-duty |
+| [South Australian business sale with a lease and an out-of-date goods rule](cases/au-transfer-duty-sa-fixed-items-and-old-rule.md) | au-transfer-duty |
+| [Tasmanian business sale conditional on a new lease](cases/au-transfer-duty-tas-new-lease-condition.md) | au-transfer-duty |
+| [Victorian motel land with goods under a separate contract](cases/au-transfer-duty-vic-goods-under-separate-contract.md) | au-transfer-duty |
+| [WA property management sale with a rent roll and trade debts](cases/au-transfer-duty-wa-rent-roll-and-trade-debts.md) | au-transfer-duty |
+| [Connector that lists a write tool, and a request to post a journal](cases/xero-exports-connector-read-and-write-request.md) | xero-exports |
+| [BAS requested from connector reads with no exports](cases/bas-preparation-connector-without-exports.md) | bas-preparation, xero-exports |
 
 Together the cards cover all 97 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -241,6 +251,8 @@ correspondence triage and ATO account reconciliation workflows have no recorded 
 nor do the FBT line register and professional-body rows cards added the same day.
 The 7 land tax cards added on 4 November 2026, one for each state and territory
 that levies land tax, have no recorded run.
+The 8 transfer duty cards, one for each state and territory, and the 2 Xero connector cards added on
+5 November 2026 have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

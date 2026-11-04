@@ -143,7 +143,15 @@
           "au-tax-research-missing-evidence",
           "au-tax-research-template-output",
           "au-tax-residency-missing-evidence",
+          "au-transfer-duty-act-goods-with-crown-lease",
           "au-transfer-duty-missing-evidence",
+          "au-transfer-duty-nsw-business-with-land",
+          "au-transfer-duty-nt-option-before-9-may-2023",
+          "au-transfer-duty-qld-business-assets-and-debts",
+          "au-transfer-duty-sa-fixed-items-and-old-rule",
+          "au-transfer-duty-tas-new-lease-condition",
+          "au-transfer-duty-vic-goods-under-separate-contract",
+          "au-transfer-duty-wa-rent-roll-and-trade-debts",
           "au-transfer-pricing-missing-evidence",
           "au-travel-expenses-mixed-overseas-trip",
           "au-trust-deed-review-unexecuted-variation",
@@ -157,6 +165,7 @@
           "bas-gst-credit-and-attribution",
           "bas-gst-fees-and-evidence",
           "bas-gst-missing-and-zero",
+          "bas-preparation-connector-without-exports",
           "bas-preparation-deferred-gst-partly-creditable",
           "bas-preparation-gst-screening-leads",
           "bas-preparation-import-gst-coded-to-cost",
@@ -203,7 +212,8 @@
           "wip-cost-to-complete-gap",
           "workpaper-stale-reference",
           "workpaper-tie-out-both-ways",
-          "xero-export-duplicate-and-missing"
+          "xero-export-duplicate-and-missing",
+          "xero-exports-connector-read-and-write-request"
         ]
       },
       "additionalProperties": {
