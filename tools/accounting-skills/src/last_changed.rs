@@ -3,10 +3,9 @@
 
 //! Writes the per-skill last-changed table from git history.
 
-use crate::{Result, platform_text, replace_file};
+use crate::{Result, discover_skills, platform_text, replace_file};
 use std::{
     ffi::OsString,
-    fs,
     io::{self, Write},
     path::{Path, PathBuf},
     process::Command,
@@ -17,28 +16,11 @@ const HISTORY: &str =
     "https://github.com/ryanduguid/australian-accounting-skills/commits/main/.claude/skills";
 
 fn git(root: &Path, args: &[&str]) -> Result<String> {
-    let output = Command::new("git")
-        .arg("-C")
-        .arg(root)
-        .args(args)
-        .output()?;
+    let output = Command::new("git").args(args).current_dir(root).output()?;
     if !output.status.success() {
         return Err(format!("git {} failed", args.join(" ")).into());
     }
     Ok(String::from_utf8(output.stdout)?.trim().to_string())
-}
-
-fn skills(root: &Path) -> Result<Vec<String>> {
-    let mut names = Vec::new();
-    for entry in fs::read_dir(root.join(".claude/skills"))? {
-        let path = entry?.path();
-        if path.join("SKILL.md").is_file() {
-            let name = path.file_name().ok_or("skill folder has no name")?;
-            names.push(name.to_str().ok_or("skill name is not UTF-8")?.to_string());
-        }
-    }
-    names.sort();
-    Ok(names)
 }
 
 /// The table for `rows` of (skill, ISO date), or an error naming a skill with no date.
@@ -76,11 +58,18 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
             }
         }
     }
+    if !git(&root, &["rev-parse", "--show-prefix"])?.is_empty() {
+        return Err("--root must be the top of the checkout".into());
+    }
     if git(&root, &["rev-parse", "--is-shallow-repository"])? == "true" {
         return Err("a shallow clone cannot date skills; use a full clone".into());
     }
+    let skills = discover_skills(&root)?;
+    if skills.is_empty() {
+        return Err("--root has no skills under .claude/skills".into());
+    }
     let mut rows = Vec::new();
-    for skill in skills(&root)? {
+    for skill in skills {
         let path = format!(".claude/skills/{skill}");
         let date = git(&root, &["log", "-1", "--format=%cs", "--", &path])?;
         rows.push((skill, date));
@@ -97,7 +86,113 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
 
 #[cfg(test)]
 mod tests {
-    use super::render;
+    use super::{OUTPUT, cli, git, render};
+    use crate::read_text;
+    use std::{ffi::OsString, fs, path::Path, process::Command};
+    use tempfile::{TempDir, tempdir};
+
+    fn commit_skill(root: &Path, skill: &str, when: &str) {
+        let folder = root.join(".claude/skills").join(skill);
+        fs::create_dir_all(&folder).unwrap();
+        fs::write(folder.join("SKILL.md"), "fabricated\n").unwrap();
+        for args in [
+            vec!["add", "."],
+            vec![
+                "-c",
+                "user.name=Test",
+                "-c",
+                "user.email=test@example.invalid",
+                "-c",
+                "commit.gpgsign=false",
+                "commit",
+                "-q",
+                "--no-verify",
+                "-m",
+                skill,
+            ],
+        ] {
+            let status = Command::new("git")
+                .args(args)
+                .env("GIT_AUTHOR_DATE", when)
+                .env("GIT_COMMITTER_DATE", when)
+                .current_dir(root)
+                .status()
+                .unwrap();
+            assert!(status.success());
+        }
+    }
+
+    fn checkout() -> TempDir {
+        let directory = tempdir().unwrap();
+        fs::create_dir(directory.path().join("docs")).unwrap();
+        git(directory.path(), &["init", "-q"]).unwrap();
+        commit_skill(directory.path(), "older-skill", "2026-01-02T12:00:00+11:00");
+        commit_skill(directory.path(), "newer-skill", "2026-03-04T12:00:00+11:00");
+        directory
+    }
+
+    fn run(root: &Path, extra: &[&str]) -> Result<u8, String> {
+        let mut args = vec![OsString::from("--root"), root.into()];
+        args.extend(extra.iter().map(OsString::from));
+        cli(args.into_iter()).map_err(|error| error.to_string())
+    }
+
+    #[test]
+    fn writes_each_skill_with_the_date_of_its_own_last_commit() {
+        let directory = checkout();
+        assert_eq!(run(directory.path(), &["--write"]), Ok(0));
+        let text = read_text(&directory.path().join(OUTPUT)).unwrap();
+        let head = git(directory.path(), &["rev-parse", "--short", "HEAD"]).unwrap();
+        assert!(text.contains(&format!("at commit {head}")));
+        assert!(text.contains("/older-skill) | 2026-01-02 |\n"));
+        assert!(text.contains("/newer-skill) | 2026-03-04 |\n"));
+    }
+
+    #[test]
+    fn prints_without_writing_by_default() {
+        let directory = checkout();
+        assert_eq!(run(directory.path(), &[]), Ok(0));
+        assert!(!directory.path().join(OUTPUT).exists());
+    }
+
+    #[test]
+    fn refuses_a_root_below_the_top_of_the_checkout() {
+        let directory = checkout();
+        let error = run(&directory.path().join("docs"), &["--write"]);
+        assert_eq!(error.unwrap_err(), "--root must be the top of the checkout");
+    }
+
+    #[test]
+    fn refuses_a_folder_that_is_not_a_checkout() {
+        let directory = tempdir().unwrap();
+        let error = run(directory.path(), &[]).unwrap_err();
+        assert_eq!(error, "git rev-parse --show-prefix failed");
+    }
+
+    #[test]
+    fn refuses_a_checkout_with_no_skills() {
+        let directory = tempdir().unwrap();
+        git(directory.path(), &["init", "-q"]).unwrap();
+        let error = run(directory.path(), &[]).unwrap_err();
+        assert_eq!(error, "--root has no skills under .claude/skills");
+    }
+
+    #[test]
+    fn refuses_a_shallow_clone() {
+        let directory = checkout();
+        let head = git(directory.path(), &["rev-parse", "HEAD"]).unwrap();
+        fs::write(directory.path().join(".git/shallow"), head + "\n").unwrap();
+        let error = run(directory.path(), &[]).unwrap_err();
+        assert!(error.contains("shallow clone"), "{error}");
+    }
+
+    #[test]
+    fn refuses_bad_arguments() {
+        let no_path = cli([OsString::from("--root")].into_iter());
+        assert!(no_path.unwrap_err().to_string().contains("requires a path"));
+        let unknown = cli([OsString::from("--check")].into_iter());
+        assert!(unknown.unwrap_err().to_string().starts_with("usage:"));
+    }
 
     #[test]
     fn renders_one_linked_row_per_skill() {
