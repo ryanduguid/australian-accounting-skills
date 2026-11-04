@@ -28,13 +28,13 @@ Only the supplied facts are available. The transaction date's duty rates, the pu
 - Route the transaction to RevenueSA Information Circular 99, and record its status and the date read.
 - Show the lease and the fixed items as land, because land there includes interests in land, fixtures and items fixed to land.
 - Show the loose tables and chairs, goodwill and intellectual property as non-dutiable.
-- Reject the adviser's note for a 2026 transaction: the prescribed goods rule it describes was removed from 1 July 2016. Record that as a finding for the reviewer.
+- Reject the adviser's note for this transaction: Circular 99 says the prescribed goods rule it describes has been removed, so record the circular's date for that removal and leave a finding for the reviewer.
 - Leave duty, the dutiable value and any rate uncalculated unless a period-specific rule is verified; otherwise mark them `UNVERIFIED`.
 - Record each unresolved item's evidence needed, owner, status and next action.
 
 ## Must not do
 
-- Do not apply a rule that ended in 2016 to a 2026 transaction.
+- Do not apply a prescribed goods rule the circular says has been removed.
 - Do not state a rate, threshold or concession from memory.
 - Do not decide liability, submit an assessment, declare, pay or contact the revenue office.
 
