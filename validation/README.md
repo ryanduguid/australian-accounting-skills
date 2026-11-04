@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 139 cards in `cases/` test workflow quality, provenance and restraint.
+The 140 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -82,6 +82,7 @@ law claim, unverified source or guess.
 | [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
 | [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
 | [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
+| [A vendor's complete status without evidence for each beneficial owner](cases/au-aml-ctf-client-coverage-beneficial-owner-evidence.md) | au-aml-ctf-client-coverage |
 | [Bookkeeping intake and coding review: missing evidence](cases/au-bookkeeping-missing-evidence.md) | au-bookkeeping |
 | [Supported bookkeeping reconciliation](cases/au-bookkeeping-supported-reconciliation.md) | au-bookkeeping |
 | [Connector business selection and period provenance](cases/au-bookkeeping-business-selection.md) | au-bookkeeping |

@@ -3,30 +3,31 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 93,
-    "sources_indexed": 372,
+    "sources_indexed": 376,
     "skills_source_exempt": 8,
     "skills_with_unreachable_sources": 10,
     "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 23,
-    "skills_with_only_the_seeded_case": 29
+    "skills_with_only_the_seeded_case": 28
   },
   "skills": [
     {
       "skill": "au-aml-ctf-client-coverage",
       "sources": {
-        "indexed": 7,
+        "indexed": 11,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-26",
-        "unreachable": 1,
+        "unreachable": 4,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-aml-ctf-client-coverage-beneficial-owner-evidence",
           "au-aml-ctf-client-coverage-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": false
       },
       "gates": {
         "behavioural": [

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -349,6 +350,44 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Route every `yes` and `UNVERIFIED` to the AML/CTF compliance officer", text)
         self.assertIn("even where the firm's assessment lists no address service", text)
         self.assertIn("using a firm address", text)
+
+    def test_aml_coverage_needs_evidence_for_each_beneficial_owner(self) -> None:
+        text = " ".join(skill_text("au-aml-ctf-client-coverage").split())
+        start = text.index("3. Split the clients receiving a designated service")
+        step = text[start : text.index("4. For every client receiving a designated service", start)]
+
+        self.assertIn("Test beneficial owner evidence owner by owner.", step)
+        self.assertIn("In the Act and Rules as read on 4 November 2026", step)
+        self.assertIn("(s 28(2)(d) and (e) of the *Anti-Money Laundering and Counter-Terrorism Financing Act 2006*)", step)
+        self.assertIn("record a verification evidence reference and a screening date", step)
+        self.assertIn("identified by its position in the register (such as owner 2 of 3), not by name", step)
+        self.assertIn("at least one piece of KYC information verified for each matter", step)
+        self.assertIn("(s 6-7 of the [*Anti-Money Laundering and Counter-Terrorism Financing Rules 2025*]", step)
+        self.assertIn("With no recorded basis, the beneficial owner evidence is missing; do not decide whether a basis applies.", step)
+        self.assertIn("A screening or verification vendor's entity-level `complete` status is not this evidence", step)
+        self.assertIn("Section 111(3) of the Act requires records", step)
+        self.assertIn("remains responsible for complying with the Act and Rules", step)
+        self.assertIn("Record the vendor status beside the per-owner result, never in place of it.", step)
+
+        sources = SKILLS / "au-aml-ctf-client-coverage" / "sources.json"
+        recorded = {s["url"] for s in json.loads(sources.read_text(encoding="utf-8"))["sources"]}
+        for url in (
+            "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/"
+            "customer-due-diligence/initial-customer-due-diligence/overview-initial-customer-due-diligence",
+            "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/"
+            "customer-due-diligence/initial-customer-due-diligence/initial-customer-due-diligence-guides-"
+            "customer-type/initial-cdd-trust",
+            "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/additional-guidance/"
+            "using-outsourcing-help-meet-your-obligations",
+            "https://www.legislation.gov.au/F2025L01026/latest",
+        ):
+            self.assertIn(f"]({url})", text)
+            self.assertIn(url, recorded)
+
+        card = (REPOSITORY / "validation" / "cases" / "au-aml-ctf-client-coverage-beneficial-owner-evidence.md")
+        card_text = card.read_text(encoding="utf-8")
+        self.assertIn("  - au-aml-ctf-client-coverage\n", card_text)
+        self.assertIn("Do not mark H1 complete on the vendor's status.", card_text)
 
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
