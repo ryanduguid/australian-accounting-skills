@@ -14,6 +14,51 @@
       "content_hash": "dec194171484e24ae0d98e7ba83e4e077f485adffb25c508db9997a0c2d0157a",
       "source_last_modified": "2026-06-29",
       "content_hash_covers": "html"
+    },
+    {
+      "title": "TD 2026/D2 Income tax: capital gains tax consequences of using a smart contract to wrap and unwrap crypto assets (draft)",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=DXT/TD2026D2/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=DXT/TD2026D2/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "TR 2026/D1 Income tax: receipt and disposal of crypto assets by an airdrop (draft)",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=DTR/TR2026D1/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=DTR/TR2026D1/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Advice under development - capital gains tax and trust specific issues",
+      "url": "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/advice-under-development-program/advice-under-development-capital-gains-tax-and-trust-specific-issues",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/about-ato/ato-advice-and-guidance/advice-under-development-program/advice-under-development-capital-gains-tax-and-trust-specific-issues",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

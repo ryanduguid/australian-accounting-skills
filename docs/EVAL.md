@@ -279,7 +279,8 @@ now cover 95 of the 145 cards. The 4 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
-au-nonresident-cgt and stp-finalisation postdate every recorded run, so
+au-nonresident-cgt, stp-finalisation, au-deceased-estates, fbt-annual-workflow,
+au-crypto-tax and au-individual-return postdate every recorded run, so
 earlier verdicts on their cards describe the earlier wording.
 
 Most cards name their target skill, so they cannot show whether a task alone
