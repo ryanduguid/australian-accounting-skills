@@ -25,13 +25,15 @@ If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryan
 3. **Support each section.** Bank agrees to recs and statements; AR to aged listing with collectability noted for old balances; fixed assets to the register with additions/disposals/depreciation reconciled; payables to aged listing plus accrual schedule; GST to the BAS position for the period ending at balance date, the June quarter or month for standard balancers (see `bas-preparation`); payroll liabilities to the STP year-end position (see `stp-finalisation`; payroll and SG ageing must follow the Payday Super timing control in that skill); loans to statements with current/non-current split; equity rolls from prior year signed accounts plus profit and distributions.
 4. **Journals.** One schedule of all proposed adjusting journals with reasons; mark posted versus pending. Re-run the TB after posting. The pack is built on the *final* TB.
 5. **Analytical review.** P&L year-on-year by line: movement %, one-line commentary for anything past the engagement materiality. Gross margin, wage ratio, and interest cover sanity checks.
-6. **Carry-forwards and completeness.** Prior year review points addressed; comparatives agree to signed accounts; every TB line mapped to a section (a completeness check; unmapped lines are the classic hole).
+6. **Client request list.** Turn every item still needing something from the client into one page the reviewer can send: what is needed, for which period or balance, why in plain words, and the date needed by if the firm has set one. Leave out workpaper references, tax positions and advice. An authorised human reviews and sends it.
+7. **Carry-forwards and completeness.** Prior year review points addressed; comparatives agree to signed accounts; every TB line mapped to a section (a completeness check; unmapped lines are the classic hole).
 
 ## Checks before handing over
 
 - Sum of lead schedules = TB = draft statements
 - Every section either supported or flagged, none silent
 - Pack index up front, references used consistently
+- Every open client item appears once on the client request list, drafted and not sent
 
 Bind each claimed completed stage to the supporting artefact and its source version. Check that it contains the required evidence and tie-outs; a filename, empty template or preparer's completion flag cannot establish readiness. Keep supported sections available for review while naming each missing or stale artefact and its dependent stages. Changes to supporting evidence reopen the affected review points.
 

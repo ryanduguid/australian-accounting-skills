@@ -1824,6 +1824,30 @@ class DatedRuleChangeTests(unittest.TestCase):
         suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
         self.assertLessEqual(suffixes, {".md", ".json"})
 
+    def test_tracker_reports_are_intake_tied_to_source_records(self) -> None:
+        cgt = " ".join(raw_section("au-capital-gains", "Inputs").split())
+        self.assertIn("Sharesight or Navexa", cgt)
+        self.assert_sentence(cgt, r"\breport name\b", r"\bcost base and parcel-matching settings\b")
+        step = workflow_step("au-capital-gains", 1)
+        self.assert_sentence(step, r"\bTie its disposals, proceeds and parcels to the broker or registry records\b")
+        self.assert_sentence(step, r"\bgain, discount or tax figure\b", r"\bnot evidence of the treatment\b")
+
+        crypto = " ".join(raw_section("au-crypto-tax", "Inputs").split())
+        self.assertIn("such as one from Koinly", crypto)
+        self.assert_sentence(crypto, r"\bwallets and exchanges imported\b", r"\bcost-basis settings\b")
+        step = workflow_step("au-crypto-tax", 1)
+        self.assert_sentence(step, r"\bTie its wallets, transactions and units to the exports\b")
+        self.assert_sentence(step, r"\bclassifications and gain figures\b", r"\bnot evidence of the treatment\b")
+
+    def test_year_end_client_request_list_is_drafted_and_not_sent(self) -> None:
+        text = " ".join(skill_text("year-end-workpapers").split())
+        start = text.index("6. **Client request list.**")
+        step = text[start : text.index("7. **Carry-forwards and completeness.**", start)]
+        self.assertIn("one page the reviewer can send", step)
+        self.assertIn("Leave out workpaper references, tax positions and advice", step)
+        self.assertIn("An authorised human reviews and sends it", step)
+        self.assertIn("appears once on the client request list, drafted and not sent", text)
+
     def test_transfer_duty_cards_cover_each_jurisdiction_without_a_rate(self) -> None:
         cases = SKILLS.parents[1] / "validation" / "cases"
         offices = {

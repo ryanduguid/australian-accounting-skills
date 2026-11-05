@@ -40,6 +40,10 @@ new cards have no recorded model run. New source records await human review.
 Fifteen skills gain a fabricated worked example with no rates, and a test
 recomputes every equation in them.
 
+`au-pre-lodgement-review` adds a missed-claim pass as reviewer questions,
+`au-capital-gains` and `au-crypto-tax` take tracker reports as intake tied to
+source records, and `year-end-workpapers` drafts a one-page client request list.
+
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
 pack from 112 to 145 cards. Sixteen cover in-scope topics from a comparison
 with the public Ask Nagaris skill list, recorded in

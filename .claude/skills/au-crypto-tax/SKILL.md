@@ -7,11 +7,13 @@ description: "Use when preparing Australian tax records from crypto exchange and
 
 ## Inputs
 
-Complete exchange and wallet transaction exports, opening and independently reported closing holdings, cost history, fiat cash statements, transaction identifiers, time zones, fees, AUD valuation evidence, ownership of wallets and purpose of activities. For each wrapping, unwrapping or bridge event, the contract address or counterparty; for each airdrop, the issuer and the basis on which the owner received it. Never request private keys or seed phrases.
+Complete exchange and wallet transaction exports, opening and independently reported closing holdings, cost history, fiat cash statements, transaction identifiers, time zones, fees, AUD valuation evidence, ownership of wallets and purpose of activities. For each wrapping, unwrapping or bridge event, the contract address or counterparty; for each airdrop, the issuer and the basis on which the owner received it. A crypto tax software report, such as one from Koinly, if one is used, with the report name, date range, wallets and exchanges imported and its cost-basis settings. Never request private keys or seed phrases.
 
 ## Workflow
 
 1. Inventory every supplied wallet and exchange and reconcile opening units plus inflows less outflows to closing units by asset.
+
+   Treat a software report as a secondary schedule. Tie its wallets, transactions and units to the exports before using any of it, and list each difference. Its classifications and gain figures are candidates for the steps below, not evidence of the treatment.
 
 2. Match transfers between the owner's accounts before classifying unmatched movements. Keep fees and asset changes separate; do not treat every withdrawal as a sale or every deposit as income.
 
