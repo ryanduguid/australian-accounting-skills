@@ -60,7 +60,7 @@ Claude Code is the tested runtime. Codex packaging and portable skill files are 
 
 ## Start here
 
-Each prompt below starts one skill when pasted into your agent:
+With the skills installed, use the prompts below to ask your agent to run the named skill.
 
 ```text
 Use bas-preparation to prepare this quarter's BAS workpaper from the reports in this folder and show the GST control-account tie-out.
@@ -116,7 +116,9 @@ Australian Accounting Skills is preparation-only and written for Australian prac
 - [openaccountants/openaccountants](https://github.com/openaccountants/openaccountants): a broad
   multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes.
 - [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins): official
-  finance and small-business plugins with no Australian tax, declaring Xero and MYOB connectors.
+  finance and small-business plugins. The `small-business` plugin declares Xero and MYOB connectors. At
+  [commit d900840](https://github.com/anthropics/knowledge-work-plugins/blob/d900840/small-business/skills/tax-prep/SKILL.md),
+  its `tax-prep` skill's maths is US federal and it has no BAS workflow.
 - [darrentmorgan/au-accounting](https://github.com/darrentmorgan/au-accounting): MIT-licensed
   Australian calculators with refusal codes.
 - [adoptai/cpa-skills](https://github.com/adoptai/cpa-skills): US-framed skills that ship proof scripts.
