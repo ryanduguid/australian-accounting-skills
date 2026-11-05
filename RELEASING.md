@@ -62,7 +62,8 @@ Those commands preserve the signer identity of the existing `v0.1.5` release.
 Releases cut after the specialised policy migration are signed by the policy's
 internal publication workflow. For the next release, update `tag` if the
 intended version changes and bind verification to the exact source and policy
-commit. The commands verify `v0.5.0`, signed at the current policy pin,
+commit. Releases after `v0.5.0` are signed at the current policy pin,
+`ca5492bd09693be9e1fd47d980e2740ef8daf023`. The commands verify `v0.5.0`, signed at
 `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`; `v0.4.0` was signed at
 `a601f1d8b143f92b0517f709216993660d21f480` and `v0.3.0` to `v0.3.2` at
 `87767ec809dc7f77bcd45808219adaf67841ae7b`, so verify each with its digest.
