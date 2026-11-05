@@ -3,7 +3,7 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 97,
-    "sources_indexed": 508,
+    "sources_indexed": 510,
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
@@ -179,7 +179,7 @@
     {
       "skill": "au-bookkeeping",
       "sources": {
-        "indexed": 5,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-16",
@@ -198,6 +198,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
           "test_worked_examples.py"
         ],
@@ -2331,7 +2332,7 @@
     {
       "skill": "xero-exports",
       "sources": {
-        "indexed": 5,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "",
         "fetched": "2026-11-04",
