@@ -18,8 +18,9 @@ organisation, period, basis and capture time and refuses writes.
 `au-tax-research` names the corpus `as_at` check as an optional locator.
 
 The connector route now asks a registered tax or BAS agent for the client's
-permission first, citing TPB(GS) 55/2026, and `au-bookkeeping` and
-`docs/integrations.md` point to it. The README gains a Privacy section with
+permission first, citing TPB(GS) 55/2026, `au-bookkeeping` and `bas-preparation`
+hold the same stop, and `docs/integrations.md` points to it. A file export is
+not an exemption from the disclosure question. The README gains a Privacy section with
 what leaves the machine and the conditional APP 1.7 to 1.9 duty from
 10 December 2026.
 
