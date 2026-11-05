@@ -511,6 +511,7 @@ class LegalSourceGateTests(unittest.TestCase):
                 self.assertRegex(text, r"\$82\.50 including GST")
                 self.assertIn("for most supplies", text)
                 self.assertIn("aggregate value", text)
+                self.assertIn("taxable part", text)
                 self.assertIn("(GSTR 2013/1, paragraph 58)", text)
                 self.assertIn("s 29-80(1)", text)
                 self.assertIn("s 29-80.01", text)
@@ -531,6 +532,18 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the price times 10/11 (s 9-75(1))", step)
         self.assertIn("work out the value of the taxable part (s 9-80)", step)
         self.assertIn("A credit at or under the threshold still needs a record", step)
+        self.assertIn("An authorised human decides", step)
+
+        bookkeeping = surfaces["au-bookkeeping"]
+        self.assertIn("work out the value of the taxable part (s 9-80)", bookkeeping)
+        self.assertIn("A purchase at or below the threshold still needs a receipt or other record", bookkeeping)
+        self.assertIn("Whether the credit is claimable stays with the BAS workflow and the reviewer", bookkeeping)
+        self.assertNotIn("A smaller purchase", bookkeeping)
+
+        screen = surfaces["bas-preparation"]
+        self.assertIn("| Missing record | A credit is claimed at or below the Missing document value", screen)
+        self.assertIn("a missing record, not a missing tax invoice", screen)
+        self.assertRegex(screen, r"A hit is a lead for a review unit, never a finding")
 
         card = (REPOSITORY / "validation" / "cases" / "tax-invoice-review-low-value-threshold.md")
         card_text = " ".join(card.read_text(encoding="utf-8").split())
@@ -548,12 +561,22 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertEqual(value("49.50") * 2, 90)
         self.assertEqual(value("80.30"), 73)
         self.assertEqual(Fraction("7.30") * 10, 73)
+        self.assertEqual(value("55.00"), 50)
+        self.assertEqual(Fraction("5.00") * 10, 50)
         for finding in (
             "P-1 has a value of 70.00",
             "P-2 has a value of 75.00, which does not exceed the threshold",
             "P-3 has a value of 76.00, which exceeds the threshold",
             "P-4 has an aggregate value of 90.00, which exceeds the threshold",
             "P-5 has an aggregate value of 73.00, which does not exceed the threshold",
+            "P-5's amounts are adapted from GSTR 2013/1 Example 3",
+            "| P-6 | One taxable item | 55.00 | 5.00 | None |",
+            "no record of any kind for P-6",
+            "P-6 needs no tax invoice but has no record, so keep its credit unresolved with the record needed "
+            "and reviewer action",
+            "Do not treat a purchase under the threshold as needing no record",
+            "Do not decide whether a credit is claimable",
+            "An authorised human makes the legal, tax and accounting decisions",
         ):
             self.assertIn(finding, card_text)
 

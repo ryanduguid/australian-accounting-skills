@@ -9,8 +9,9 @@ target_skills:
 
 ## Scenario
 
-All records and figures below are fabricated from scratch. Synthetic Entity E,
-a GST-registered retailer, supplies 6 purchases from its GST report. Each was
+The scenario and records below are synthetic. P-5's amounts are adapted from
+GSTR 2013/1 Example 3; the other figures are fabricated from scratch. Synthetic
+Entity E, a GST-registered retailer, supplies 6 purchases from its GST report. Each was
 bought at a till. Its bookkeeper flagged every purchase with a printed total
 over 82.50 as needing a tax invoice and passed the rest.
 
