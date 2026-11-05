@@ -1832,15 +1832,24 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assertEqual(readme.count("Anthropic's `small-business` plugin"), 0)
         self.assertEqual(readme.count("The `small-business` plugin declares"), 1)
 
-    def test_readme_ties_data_flow_claims_to_the_host_and_the_pinned_server(self) -> None:
+    def test_readme_documents_the_host_caveat_and_the_audited_mcp_pin(self) -> None:
+        """Documentation consistency only: this does not test the server's network behaviour."""
         root = SKILLS.parents[1]
         readme = " ".join((root / "README.md").read_text(encoding="utf-8").split())
         privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
         self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
         self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
+        audited = "aus-accounting-mcp==0.6.0"
         plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        pin = plugin["mcpServers"]["aus-accounting"]["args"][0]
-        self.assert_sentence(privacy, re.escape(f"`{pin}`"), r"\bno network code of its own\b", r"\bopened no network socket\b")
+        self.assertEqual(plugin["mcpServers"]["aus-accounting"]["args"], [audited])
+        self.assert_sentence(
+            privacy,
+            rf"`{re.escape(audited)}`",
+            r"\bimport a network library\b",
+            r"\b0 socket and 0 connect calls\b",
+            r"\b12 calculation tools\b",
+        )
+        self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
