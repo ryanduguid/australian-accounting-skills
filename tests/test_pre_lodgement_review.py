@@ -68,6 +68,14 @@ class PreLodgementReviewTests(unittest.TestCase):
             self.assertIn(slug, text)
             self.assertTrue(any(url.endswith(slug) for url in recorded), slug)
 
+    def test_missed_claims_are_reviewer_questions_only(self) -> None:
+        text = " ".join(skill_text().split())
+        start = text.index("5. Test income completeness.")
+        step = text[start : text.index("6. Map draft items", start)]
+        self.assertIn("as a possible missed claim, with the record behind it", step)
+        self.assertIn("a question for the reviewer, not a finding of entitlement", step)
+        self.assertIn("do not add, estimate or quantify a claim yourself", step)
+
     def test_cards_hold_the_rating_and_calibration_boundaries(self) -> None:
         rating = card_text("au-pre-lodgement-review-rating-not-clearance")
         self.assertIn("Carry the two skipped checks into the register as not performed", rating)

@@ -7,13 +7,15 @@ description: "Use when preparing an Australian CGT event register, cost-base evi
 
 ## Inputs
 
-Asset ownership and residency history, acquisition and disposal contracts, broker/settlement statements and ledger records, event dates, proceeds, cost records, valuations (including date-of-death and other historical valuations with their instructions), prior capital-loss schedules and any proposed exemption or election.
+Asset ownership and residency history, acquisition and disposal contracts, broker/settlement statements and ledger records, event dates, proceeds, cost records, valuations (including date-of-death and other historical valuations with their instructions), prior capital-loss schedules and any proposed exemption or election. A portfolio tracker's tax report, such as one from Sharesight or Navexa, if one is used, with the report name, date range and its cost base and parcel-matching settings.
 
 ## Workflow
 
 1. Create one row per asset and candidate event. Reconcile disposals against broker, settlement and ledger records; distinguish contract, settlement and payment dates before applying the event-timing rule. Where a subdivision or development may be on revenue account, route the characterisation to `au-property-development-income` before treating the profit as a capital gain.
 
    Give the event a reference reused in rental, crypto, investment and business schedules so the same disposal is not counted again on import. Keep the owner's supported share, acquisition/disposal dates, proceeds, cost components, current-year losses and carried-forward losses separately evidenced.
+
+   Treat a tracker report as a secondary schedule. Tie its disposals, proceeds and parcels to the broker or registry records before using any of it, and list each difference. Its gain, discount or tax figure is not evidence of the treatment.
 
 2. Reconstruct cost base and reduced cost base with separate evidence for each component. Identify expenditure already deducted and missing acquisition history; a missing cost is unknown, not zero.
 
