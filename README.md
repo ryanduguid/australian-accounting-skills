@@ -54,7 +54,7 @@ git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-acc
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 76 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
+That copies the 76 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone when run on Linux on 6 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included, and OpenCode has an install and discovery check only. None of this establishes testing in every agent runtime. The validation record under the fold gives the model runs and their limits.
 
