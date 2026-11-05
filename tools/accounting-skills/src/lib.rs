@@ -385,7 +385,7 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(summary),
         Err(error) => return Err(error.into()),
     };
-    let payload: Value = serde_json::from_str(&read_text(&index)?)?;
+    let payload = validation::strict_json(&read_text(&index)?, &index.display().to_string())?;
     let object = payload
         .as_object()
         .ok_or("source index must be an object")?;

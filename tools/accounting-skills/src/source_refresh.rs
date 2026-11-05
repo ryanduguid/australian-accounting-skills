@@ -375,7 +375,7 @@ pub fn index_files(skills: &Path) -> Result<Vec<PathBuf>> {
 }
 pub fn load_index(path: &Path, skills: &Path) -> Result<Value> {
     checked_index(path, skills)?;
-    Ok(serde_json::from_str(&crate::read_text(path)?)?)
+    crate::validation::strict_json(&crate::read_text(path)?, &path.display().to_string())
 }
 pub fn dump_index(path: &Path, payload: &Value, skills: &Path) -> Result<()> {
     checked_index(path, skills)?;
