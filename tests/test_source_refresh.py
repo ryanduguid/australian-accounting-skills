@@ -887,7 +887,7 @@ class PreflightTests(unittest.TestCase):
     def test_accepting_reviewed_records_cannot_release_pending_import_gst_sources(self) -> None:
         """bas-preparation step 5 relies on 3 import GST records. While they are
         pending, accepting every other record must still leave the skill held."""
-        today = "2026-11-04"
+        today = "2026-11-05"
         index = REPOSITORY / ".claude" / "skills" / "bas-preparation" / "sources.json"
         shipped = json.loads(index.read_text(encoding="utf-8"))["sources"]
         international = (

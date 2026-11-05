@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 176 cards in `cases/` test workflow quality, provenance and restraint.
+The 177 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -84,6 +84,7 @@ law claim, unverified source or guess.
 | [ACT contractor exemptions cannot come from a NSW template](cases/payroll-tax-act-unsupported-exemptions.md) | payroll-tax-contractors |
 | [Northern Territory external wage items need a complete bridge](cases/payroll-tax-nt-external-items.md) | au-payroll-tax-states |
 | [Tax invoice and RCTI review: missing evidence](cases/tax-invoice-review-missing-evidence.md) | tax-invoice-review |
+| [Tax invoice low-value threshold on value, not price](cases/tax-invoice-review-low-value-threshold.md) | tax-invoice-review |
 | [Contracting export manifest and rounding](cases/export-manifest-rounding.md) | contracting-exports |
 | [Standalone skill safety boundary](cases/standalone-skill-safety-boundary.md) | all 10 transferred contracting skills installed independently |
 | [Financial model workbook with structure faults](cases/financial-modelling-structure-faults.md) | financial-modelling |

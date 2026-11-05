@@ -52,6 +52,66 @@
         "source_last_modified": "2026-09-07",
         "checked_at": "2026-11-02"
       }
+    },
+    {
+      "title": "A New Tax System (Goods and Services Tax) Act 1999",
+      "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 5 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-05",
+      "review_required_since": "2026-11-05",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "A New Tax System (Goods and Services Tax) Regulations 2019",
+      "url": "https://www.legislation.gov.au/F2019L00417/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 5 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/F2019L00417/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-05",
+      "review_required_since": "2026-11-05",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: When you can claim a GST credit",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/claiming-gst-credits/when-you-can-claim-a-gst-credit",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 5 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/claiming-gst-credits/when-you-can-claim-a-gst-credit",
+      "http_status": 200,
+      "fetched_at": "2026-11-05",
+      "review_required_since": "2026-11-05",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "GSTR 2013/1 Goods and services tax: tax invoices",
+      "url": "https://www.ato.gov.au/law/view/document?docid=GST/GSTR20131/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 5 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=GST/GSTR20131/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-05",
+      "review_required_since": "2026-11-05",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

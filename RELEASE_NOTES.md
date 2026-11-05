@@ -1,5 +1,13 @@
 # v0.5.1 (unreleased)
 
+`tax-invoice-review`, `bas-preparation` and `au-bookkeeping` now state the tax
+invoice threshold: a taxable supply valued over $75 excluding GST, which for
+most supplies is a price over $82.50 including GST. `bas-preparation` also
+screens for a credit at or below that value with no record. One synthetic card
+brings the validation pack to 177, with no recorded model run for it, so the
+new test checks wording and fixed figures, not model behaviour. The new source
+records await human review.
+
 The 10 cards added next bring the validation pack to 176, with no recorded
 model run for them. The 8 transfer duty cards, one per state and territory,
 exercise each jurisdiction's goods and business-asset rules. The 2 Xero cards
