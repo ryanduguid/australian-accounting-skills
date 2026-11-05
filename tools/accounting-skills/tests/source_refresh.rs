@@ -74,6 +74,25 @@ fn human_dates_refuse_year_zero_even_with_matching_acceptance() {
     }
 }
 #[test]
+fn repeated_index_keys_are_refused_at_any_depth() {
+    let temp = tempfile::tempdir().unwrap();
+    let skills = temp.path().join(".claude/skills");
+    std::fs::create_dir_all(skills.join("fixture")).unwrap();
+    let index = skills.join("fixture/sources.json");
+    for (text, key) in [
+        (r#"{"sources": [{"url": "a"}], "sources": []}"#, "sources"),
+        (r#"{"sources": [{"url": "a", "url": "b"}]}"#, "url"),
+    ] {
+        std::fs::write(&index, text).unwrap();
+        let error = s::load_index(&index, &skills).unwrap_err().to_string();
+        assert!(
+            error.contains(&format!("duplicate JSON key '{key}'")),
+            "{error}"
+        );
+    }
+}
+
+#[test]
 fn malformed_inventory_and_dangling_links_cannot_complete_a_sweep_or_write() {
     let temp = tempfile::tempdir().unwrap();
     let skills = temp.path().join(".claude/skills");
