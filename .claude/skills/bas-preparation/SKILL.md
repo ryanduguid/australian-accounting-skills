@@ -25,7 +25,7 @@ Ask for these if not provided (period-locked where possible; see `xero-exports` 
 7. The figures actually lodged for each prior period in scope, and the ATO statement for the entity's account, where the drift and post-lodgement checks are in scope. An absent input means the check is `not run`, not clean
 8. Where the activity statement shows ATO PAYG withholding pre-fill, the pre-filled W1 and W2 amounts and the date they were viewed
 
-A connector read can supply the trial balance, but only through the read-only connector route in `xero-exports`, which stops unless the connection is confirmed read-only, records the organisation, period, basis and capture time and refuses every write. The Activity Statement's transaction tabs and the GST Reconciliation report still come from exports, so request them; never tie a label to a figure assembled from connector records.
+A connector read can supply the trial balance, but only through the read-only connector route in `xero-exports`, which stops unless the connection is confirmed read-only, asks a registered tax or BAS agent for the client's permission, records the organisation, period, basis and capture time and refuses every write. The Activity Statement's transaction tabs and the GST Reconciliation report still come from exports, so request them; never tie a label to a figure assembled from connector records.
 
 ## Workflow
 

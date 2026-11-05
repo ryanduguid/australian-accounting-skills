@@ -17,6 +17,12 @@ organisation, period, basis and capture time and refuses writes.
 `au-business-formation` adds ASIC CP 391 as a dated proposal, and
 `au-tax-research` names the corpus `as_at` check as an optional locator.
 
+The connector route now asks a registered tax or BAS agent for the client's
+permission first, citing TPB(GS) 55/2026, and `au-bookkeeping` and
+`docs/integrations.md` point to it. The README gains a Privacy section with
+what leaves the machine and the conditional APP 1.7 to 1.9 duty from
+10 December 2026.
+
 Payroll tax source routes now cover all 8 jurisdictions. The contractor
 workflow keeps its detailed NSW steps and routes other jurisdictions to their
 own Acts and guidance, including the WA and ACT differences. New indexed
