@@ -118,10 +118,10 @@ Australian Accounting Skills is preparation-only and written for Australian prac
 - [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins): official
   finance and small-business plugins. The `small-business` plugin declares Xero and MYOB connectors. At
   [commit d900840](https://github.com/anthropics/knowledge-work-plugins/blob/d900840/small-business/skills/tax-prep/SKILL.md),
-  its `tax-prep` skill's maths is US federal and it has no BAS workflow.
+  its `tax-prep` skill documents US federal calculations, not BAS preparation.
 - [darrentmorgan/au-accounting](https://github.com/darrentmorgan/au-accounting): MIT-licensed
   Australian calculators with refusal codes.
-- [adoptai/cpa-skills](https://github.com/adoptai/cpa-skills): US-framed skills that ship proof scripts.
+- [adoptai/cpa-skills](https://github.com/adoptai/cpa-skills): US-framed skills that ship Python scripts.
 
 <details>
 <summary>Validation record, corrections, development installation and guides</summary>
