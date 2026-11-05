@@ -289,6 +289,13 @@ class SkillMetadataTests(unittest.TestCase):
             with self.subTest(route=route):
                 self.assertIn(route, index)
 
+    def test_readme_single_skill_install_names_a_real_skill(self) -> None:
+        readme = (REPOSITORY / "README.md").read_text(encoding="utf-8")
+        match = re.search(r"use `--skill ([a-z0-9-]+)` in place of `--skill '\*'`", readme)
+        self.assertIsNotNone(match)
+        assert match is not None
+        self.assertTrue((SKILLS_DIRECTORY / match[1] / "SKILL.md").is_file())
+
     def test_no_published_file_installs_the_cli_without_a_version(self) -> None:
         """An unpinned npx line runs whatever npm serves when an agent reads it.
 
