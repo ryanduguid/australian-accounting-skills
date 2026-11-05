@@ -42,6 +42,20 @@ KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
     ("contractor-super-tpar/SKILL.md", "10%"): (
         1, "the turnover condition of determination F2019L00864 as read; "
         "test_legal_source_gates.py pins the condition wording"),
+    ("tax-invoice-review/SKILL.md", "$75"): (
+        2, "the amount s 29-80.01 of the GST Regulations 2019 specifies for s 29-80(1) of the GST Act; "
+        "test_legal_source_gates.py pins the wording"),
+    ("tax-invoice-review/SKILL.md", "$82.50"): (
+        2, "the price GSTR 2013/1 footnotes 39 and 44 give for that value; "
+        "test_legal_source_gates.py pins the wording"),
+    ("au-bookkeeping/SKILL.md", "$75"): (
+        1, "the same specified amount; test_legal_source_gates.py pins the wording"),
+    ("au-bookkeeping/SKILL.md", "$82.50"): (
+        1, "the same corresponding price; test_legal_source_gates.py pins the wording"),
+    ("bas-preparation/references/transaction-gst-review.md", "$75"): (
+        1, "the same specified amount; test_legal_source_gates.py pins the wording"),
+    ("bas-preparation/references/transaction-gst-review.md", "$82.50"): (
+        2, "the same corresponding price; test_legal_source_gates.py pins the wording"),
     ("au-trust-losses/SKILL.md", "50%"): (
         4, "the statutory name and conditions of the stake and pattern of distributions "
         "tests in Schedule 2F as read in C2026C00454; test_practice_workflows.py pins the wording"),

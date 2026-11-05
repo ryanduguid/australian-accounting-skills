@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import unittest
+from fractions import Fraction
 from pathlib import Path
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -491,6 +492,70 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("  - bas-preparation\n", deferred_text)
         self.assertIn("Leave declaration B's credit unresolved", deferred_text)
         self.assertIn("Do not propose the full 500.00 at 1B because it matches label 7A.", deferred_text)
+
+    def test_tax_invoice_threshold_is_a_value_test_excluding_gst(self) -> None:
+        act = "https://www.legislation.gov.au/C2004A00446/latest/text"
+        regulations = "https://www.legislation.gov.au/F2019L00417/latest/text"
+        ruling = "https://www.ato.gov.au/law/view/document?docid=GST/GSTR20131/NAT/ATO/00001"
+        references = SKILLS / "bas-preparation" / "references" / "transaction-gst-review.md"
+        surfaces = {
+            "tax-invoice-review": " ".join(skill_text("tax-invoice-review").split()),
+            "au-bookkeeping": " ".join(skill_text("au-bookkeeping").split()),
+            "bas-preparation": " ".join(references.read_text(encoding="utf-8").split()),
+        }
+        for skill, text in surfaces.items():
+            with self.subTest(skill=skill):
+                self.assertIn("$75", text)
+                self.assertIn("$82.50", text)
+                self.assertRegex(text, r"\$75,? excluding GST|does not exceed \$75")
+                self.assertRegex(text, r"\$82\.50 including GST")
+                self.assertIn("for most supplies", text)
+                self.assertIn("aggregate value", text)
+                self.assertIn("(GSTR 2013/1, paragraph 58)", text)
+                self.assertIn("s 29-80(1)", text)
+                self.assertIn("s 29-80.01", text)
+                self.assertRegex(text, r"[Hh]uman review pending")
+                self.assertNotIn("$82.50 threshold", text)
+                self.assertNotRegex(text, r"\$82\.50 excluding GST|\$75 including GST")
+                recorded = {
+                    s["url"]
+                    for s in json.loads((SKILLS / skill / "sources.json").read_text(encoding="utf-8"))["sources"]
+                }
+                for url in (act, regulations, ruling):
+                    self.assertIn(f"]({url})", text)
+                    self.assertIn(url, recorded)
+
+        step = surfaces["tax-invoice-review"]
+        self.assertIn("a recipient can claim a credit without a tax invoice", step)
+        self.assertIn("a supplier need not give one on request", step)
+        self.assertIn("the price times 10/11 (s 9-75(1))", step)
+        self.assertIn("work out the value of the taxable part (s 9-80)", step)
+        self.assertIn("A credit at or under the threshold still needs a record", step)
+
+        card = (REPOSITORY / "validation" / "cases" / "tax-invoice-review-low-value-threshold.md")
+        card_text = " ".join(card.read_text(encoding="utf-8").split())
+        self.assertIn("- tax-invoice-review", card_text)
+
+        # Independent figures: GSTR 2013/1 footnotes 39 and 44 pair a value of $75 with a
+        # price of $82.50, and its Example 3 shows total GST of $7.30 on a sale of $85.30.
+        # Value is price times 10/11 (s 9-75(1)), and the threshold allows exactly $75.
+        def value(price: str) -> Fraction:
+            return Fraction(price) * Fraction(10, 11)
+
+        self.assertEqual(value("82.50"), 75)
+        self.assertEqual(value("77.00"), 70)
+        self.assertEqual(value("83.60"), 76)
+        self.assertEqual(value("49.50") * 2, 90)
+        self.assertEqual(value("80.30"), 73)
+        self.assertEqual(Fraction("7.30") * 10, 73)
+        for finding in (
+            "P-1 has a value of 70.00",
+            "P-2 has a value of 75.00, which does not exceed the threshold",
+            "P-3 has a value of 76.00, which exceeds the threshold",
+            "P-4 has an aggregate value of 90.00, which exceeds the threshold",
+            "P-5 has an aggregate value of 73.00, which does not exceed the threshold",
+        ):
+            self.assertIn(finding, card_text)
 
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
