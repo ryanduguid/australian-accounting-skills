@@ -1865,8 +1865,10 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_year_end_client_request_list_is_drafted_and_not_sent(self) -> None:
         text = " ".join(skill_text("year-end-workpapers").split())
-        start = text.index("6. **Client request list.**")
-        step = text[start : text.index("7. **Carry-forwards and completeness.**", start)]
+        carry_forwards = text.index("6. **Carry-forwards and completeness.**")
+        start = text.index("7. **Client request list.**", carry_forwards)
+        step = text[start : text.index("## Checks before handing over", start)]
+        self.assertIn("including any step 6 found", step)
         self.assertIn("one page the reviewer can send", step)
         self.assertIn("Leave out workpaper references, tax positions and advice", step)
         self.assertIn("An authorised human reviews and sends it", step)
