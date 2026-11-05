@@ -25,7 +25,9 @@
 
 </div>
 
-Agent skills for Australian accounting and tax work: BAS, month-end close, payroll, FBT, Division 7A, trusts, returns and practice compliance. Each skill takes an agent through the workflow, sends it to current primary sources for anything that changes and ends in a review-ready workpaper. An authorised human reviews, decides and lodges.
+Australian Accounting Skills is a set of agent skills for Australian accountants and tax practitioners: BAS, month-end close, payroll, FBT, Division 7A, trusts, returns and practice compliance. An authorised human reviews, decides and lodges.
+
+Each skill takes an agent through the workflow, sends it to current primary sources for anything that changes and ends in a review-ready workpaper. [Scope, limits and examples](https://duguid.com.au/tools/australian-tax-ai-agents/) are on the author's site.
 
 ## Install
 
@@ -58,7 +60,7 @@ Claude Code is the tested runtime. Codex packaging and portable skill files are 
 
 ## Start here
 
-Paste one of these into your agent:
+Each prompt below starts one skill when pasted into your agent:
 
 ```text
 Use bas-preparation to prepare this quarter's BAS workpaper from the reports in this folder and show the GST control-account tie-out.
@@ -89,7 +91,7 @@ See [all 97 skills](docs/skill-catalogue.md), which include the 21 added since v
 
 ## First run
 
-Synthetic example. Prep-only workflow aids.
+The first run is a synthetic BAS example, and the skills are prep-only workflow aids.
 
 **Input:** a fabricated quarterly cash-basis BAS with GST collected of $4,400.00 and GST paid of $1,210.00, plus the matching GST control-account movement.
 
@@ -104,6 +106,20 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 ![Synthetic BAS workpaper showing a $3,190 GST tie-out and blank reviewer sign-off](assets/readme/bas-workpaper-synthetic.svg)
 
 Skills specify the workflow and require current primary authority for mutable rates, thresholds, labels and due dates. Keep real client files in the firm's approved environment, outside this repository.
+
+## Alternatives
+
+Australian Accounting Skills is preparation-only and written for Australian practice. The
+[Ask Nagaris comparison](docs/nagaris-comparison.md) records topic-by-topic decisions as at
+2 November 2026. As read on 5 November 2026, these packs cover nearby ground:
+
+- [openaccountants/openaccountants](https://github.com/openaccountants/openaccountants): a broad
+  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes.
+- [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins): official
+  finance and small-business plugins with no Australian tax, declaring Xero and MYOB connectors.
+- [darrentmorgan/au-accounting](https://github.com/darrentmorgan/au-accounting): MIT-licensed
+  Australian calculators with refusal codes.
+- [adoptai/cpa-skills](https://github.com/adoptai/cpa-skills): US-framed skills that ship proof scripts.
 
 <details>
 <summary>Validation record, corrections, development installation and guides</summary>
@@ -122,6 +138,8 @@ v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-cre
 
 ## Runtime and release
 
+A development installation tracks the default branch, and a citation names the published release.
+
 ### Development installation
 
 The marketplace added without a tag resolves the default branch, which can be ahead of v0.5.0. It is not a published release.
@@ -138,6 +156,8 @@ The default branch prepares v0.5.1 with 97 workflows. See the [Australian topic 
 Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.5.0 pack.
 
 ## Guides
+
+The Australian Accounting Skills guides are grouped as get started, how-to and reference pages.
 
 **Get started**
 

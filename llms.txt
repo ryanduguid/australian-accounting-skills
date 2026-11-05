@@ -14,7 +14,7 @@ primary source at use time rather than recall them; a Markdown skill cannot
 enforce that, so the runtime and the reviewer must check it happened. Not
 affiliated with or endorsed by the Australian Taxation Office.
 
-## Install
+**Install.**
 
 - Claude Code plugin marketplace, delivering the 97 skills on `main`:
   `/plugin marketplace add ryanduguid/australian-accounting-skills` then
@@ -137,6 +137,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [docs/EVAL.md](docs/EVAL.md): how the fabricated validation pack is run and recorded.
 - [DISCLAIMER.md](DISCLAIMER.md): the professional boundary in full.
 - [AGENTS.md](AGENTS.md): contributor guide and hard boundary.
+- [Author's site](https://duguid.com.au/): Ryan Duguid's open source Australian accounting tools.
 
 ## Reuse
 
