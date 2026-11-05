@@ -25,7 +25,9 @@ Ask for these if not provided (period-locked where possible; see `xero-exports` 
 7. The figures actually lodged for each prior period in scope, and the ATO statement for the entity's account, where the drift and post-lodgement checks are in scope. An absent input means the check is `not run`, not clean
 8. Where the activity statement shows ATO PAYG withholding pre-fill, the pre-filled W1 and W2 amounts and the date they were viewed
 
-A connector read can supply the trial balance, but only through the read-only connector route in `xero-exports`, which stops unless the connection is confirmed read-only, asks a registered tax or BAS agent for the client's permission, records the organisation, period, basis and capture time and refuses every write. The Activity Statement's transaction tabs and the GST Reconciliation report still come from exports, so request them; never tie a label to a figure assembled from connector records.
+A connector read can supply the trial balance, but only through the read-only connector route in `xero-exports`, which stops unless the connection is confirmed read-only, records the organisation, period, basis and capture time and refuses every write. The Activity Statement's transaction tabs and the GST Reconciliation report still come from exports, so request them; never tie a label to a figure assembled from connector records.
+
+**Human review pending:** an agent read on 6 November 2026, not a human review. Before any connector read, a registered tax or BAS agent needs a record of this client's permission: [TPB(GS) 55/2026](https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct) says that entering client information into an AI tool can be a disclosure to a third party, depending on how the tool is configured and used (paragraph 23). If no record is supplied, stop, call nothing on that connection and use exports. A file export is not an exemption: where client information in it reaches an external AI provider, assess that disclosure first or use the firm's approved local process.
 
 ## Workflow
 

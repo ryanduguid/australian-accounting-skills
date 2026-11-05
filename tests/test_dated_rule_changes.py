@@ -1763,6 +1763,15 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(bas, r"\bread-only connector route\b", r"\bcapture time\b", r"\brefuses every write\b")
         self.assert_sentence(bas, r"\bActivity Statement's transaction tabs\b", r"\bstill come from exports\b")
 
+    def assert_export_is_no_exemption(self, text: str) -> None:
+        self.assert_sentence(
+            text,
+            r"\bfile export is not an exemption\b",
+            r"\bexternal AI provider\b",
+            r"\bassess that disclosure\b",
+            r"\bapproved local process\b",
+        )
+
     def test_a_ledger_connection_needs_the_read_only_route_and_client_permission(self) -> None:
         route = section("xero-exports", "Read-only connector route")
         self.assert_sentence(route, r"\bregistered tax or BAS agent\b", r"\bthis client's permission\b")
@@ -1770,6 +1779,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(route, r"\bfact find and consent\b", r"\bgeneral authority\b", r"\(paragraph 24\)")
         self.assert_sentence(route, r"\bno record is supplied\b", r"\bstop\b", r"\bfile-export path\b")
         self.assert_sentence(route, r"\bresponsible practitioner\b")
+        self.assert_export_is_no_exemption(route)
         gs55 = "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct"
         self.assert_cited_and_recorded("xero-exports", gs55)
 
@@ -1778,10 +1788,14 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(step, r"\bread-only connector route\b", r"\bclient's permission\b")
         self.assert_sentence(step, r"\bany ledger connector\b", r"\brecord of this client's permission\b", r"\(paragraph 23\)")
         self.assert_sentence(step, r"\bno record is supplied\b", r"\bstop\b", r"\bidentified export\b")
+        self.assert_export_is_no_exemption(step)
         self.assert_cited_and_recorded("au-bookkeeping", gs55)
 
         bas = " ".join(skill_text("bas-preparation").split())
-        self.assert_sentence(bas, r"\bread-only connector route\b", r"\bclient's permission\b")
+        self.assert_sentence(bas, r"\bBefore any connector read\b", r"\brecord of this client's permission\b", r"\(paragraph 23\)")
+        self.assert_sentence(bas, r"\bno record is supplied\b", r"\bcall nothing on that connection\b", r"\buse exports\b", affirmed=(r"\bstop\b",))
+        self.assert_export_is_no_exemption(bas)
+        self.assert_cited_and_recorded("bas-preparation", gs55)
 
         integrations = " ".join((SKILLS.parents[1] / "docs" / "integrations.md").read_text(encoding="utf-8").split())
         self.assertIn("## Xero reads", integrations)
@@ -1817,6 +1831,16 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assertLess(readme.index("## Privacy"), readme.index("## Alternatives"))
         self.assertEqual(readme.count("Anthropic's `small-business` plugin"), 0)
         self.assertEqual(readme.count("The `small-business` plugin declares"), 1)
+
+    def test_readme_ties_data_flow_claims_to_the_host_and_the_pinned_server(self) -> None:
+        root = SKILLS.parents[1]
+        readme = " ".join((root / "README.md").read_text(encoding="utf-8").split())
+        privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
+        self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
+        self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
+        plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        pin = plugin["mcpServers"]["aus-accounting"]["args"][0]
+        self.assert_sentence(privacy, re.escape(f"`{pin}`"), r"\bno network code of its own\b", r"\bopened no network socket\b")
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
