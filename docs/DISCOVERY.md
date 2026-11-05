@@ -23,6 +23,10 @@ and W012 cites a remote command, which the skills do not run; they name the opti
 `review-ready` tool only where the operator has already installed it. Recheck the audit after
 the host re-indexes rather than claiming it is clear.
 
+[Skills Directory](https://www.skillsdirectory.com/authors/ryanduguid) also lists these skills. On
+5 November 2026 its author page showed 65 skills, behind the default branch, so do not quote its
+count as the inventory either. Any new listing needs Ryan's authority first.
+
 ## Keyword map
 
 - Primary: Australian practice and contracting workflow skills, BAS and

@@ -1763,6 +1763,100 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(bas, r"\bread-only connector route\b", r"\bcapture time\b", r"\brefuses every write\b")
         self.assert_sentence(bas, r"\bActivity Statement's transaction tabs\b", r"\bstill come from exports\b")
 
+    def assert_export_is_no_exemption(self, text: str) -> None:
+        self.assert_sentence(
+            text,
+            r"\bfile export is not an exemption\b",
+            r"\bexternal AI provider\b",
+            r"\bassess that disclosure\b",
+            r"\bapproved local process\b",
+        )
+
+    def test_a_ledger_connection_needs_the_read_only_route_and_client_permission(self) -> None:
+        route = section("xero-exports", "Read-only connector route")
+        self.assert_sentence(route, r"\bregistered tax or BAS agent\b", r"\bthis client's permission\b")
+        self.assert_sentence(route, r"\bTPB\(GS\) 55/2026\b", r"\bdepending on how the tool is configured and used\b", r"\(paragraph 23\)")
+        self.assert_sentence(route, r"\bfact find and consent\b", r"\bgeneral authority\b", r"\(paragraph 24\)")
+        self.assert_sentence(route, r"\bno record is supplied\b", r"\bstop\b", r"\bfile-export path\b")
+        self.assert_sentence(route, r"\bresponsible practitioner\b")
+        self.assert_export_is_no_exemption(route)
+        gs55 = "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct"
+        self.assert_cited_and_recorded("xero-exports", gs55)
+
+        step = workflow_step("au-bookkeeping", 1)
+        self.assert_sentence(step, r"\bFor Xero\b", r"\bread-only connector route in `xero-exports`", r"\brefuses every write\b")
+        self.assert_sentence(step, r"\bread-only connector route\b", r"\bclient's permission\b")
+        self.assert_sentence(step, r"\bany ledger connector\b", r"\brecord of this client's permission\b", r"\(paragraph 23\)")
+        self.assert_sentence(step, r"\bno record is supplied\b", r"\bstop\b", r"\bidentified export\b")
+        self.assert_export_is_no_exemption(step)
+        self.assert_cited_and_recorded("au-bookkeeping", gs55)
+
+        bas = " ".join(skill_text("bas-preparation").split())
+        self.assert_sentence(bas, r"\bBefore any connector read\b", r"\brecord of this client's permission\b", r"\(paragraph 23\)")
+        self.assert_sentence(bas, r"\bno record is supplied\b", r"\bcall nothing on that connection\b", r"\buse exports\b", affirmed=(r"\bstop\b",))
+        self.assert_export_is_no_exemption(bas)
+        self.assert_cited_and_recorded("bas-preparation", gs55)
+
+        integrations = " ".join((SKILLS.parents[1] / "docs" / "integrations.md").read_text(encoding="utf-8").split())
+        self.assertIn("## Xero reads", integrations)
+        self.assertIn("xero-exports/SKILL.md#read-only-connector-route", integrations)
+        self.assertIn("Developer Remote MCP", integrations)
+        self.assertIn("It refuses every write.", integrations)
+        self.assertIn("A registered tax or BAS agent also needs a record of the client's permission first", integrations)
+        self.assertIn("These skills give no guidance for writing to Xero.", integrations)
+
+        readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
+        self.assertIn("## Privacy", readme)
+        self.assertIn("[Privacy](#privacy)", readme)
+        self.assertIn(f"[TPB(GS) 55/2026]({gs55})", readme)
+        self.assertIn("unless there is a legal duty", readme)
+        self.assertIn("depending on how the tool is configured and used", readme)
+        self.assertIn("**Human review pending:**", readme.split("## Privacy")[1].split("## Alternatives")[0])
+
+    def test_readme_keeps_the_automated_decision_duty_conditional(self) -> None:
+        readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
+        privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
+        self.assert_sentence(
+            privacy,
+            r"^\W*From 10 December 2026\b",
+            r"\bAPP\) 1\.7\b",
+            r"\bbut only if\b.*\bcomputer program\b",
+            r"\bsignificantly affect an individual's rights or interests\b",
+            r"\bpersonal information about that individual is used\b",
+            r"\]\(https://www\.legislation\.gov\.au/C2024A00128/",
+        )
+        self.assert_sentence(privacy, r"\bdecisions made after that date\b", r"\bwhenever the program was arranged\b")
+        self.assert_sentence(privacy, r"\bhuman reviewing the output\b", r"\bnot by itself\b", r"\]\(https://www\.oaic\.gov\.au/")
+        self.assert_sentence(privacy, r"\bAPP entity\b", r"\bfor the firm to decide\b")
+        self.assertLess(readme.index("## Privacy"), readme.index("## Alternatives"))
+        self.assertEqual(readme.count("Anthropic's `small-business` plugin"), 0)
+        self.assertEqual(readme.count("The `small-business` plugin declares"), 1)
+
+    def test_readme_documents_the_host_caveat_and_the_audited_mcp_pin(self) -> None:
+        """Documentation consistency only: this does not test the server's network behaviour."""
+        root = SKILLS.parents[1]
+        readme = " ".join((root / "README.md").read_text(encoding="utf-8").split())
+        privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
+        self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
+        self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
+        audited = "aus-accounting-mcp==0.6.0"
+        plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(plugin["mcpServers"]["aus-accounting"]["args"], [audited])
+        self.assert_sentence(
+            privacy,
+            rf"`{re.escape(audited)}`",
+            r"\bimport a network library\b",
+            r"\b0 socket and 0 connect calls\b",
+            r"\b12 calculation tools\b",
+        )
+        self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
+
+    def test_skill_folders_hold_no_runtime_scripts(self) -> None:
+        readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
+        self.assertIn("The skill folders hold Markdown and JSON files and no scripts", readme)
+        suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
+        self.assertLessEqual(suffixes, {".md", ".json"})
+
     def test_transfer_duty_cards_cover_each_jurisdiction_without_a_rate(self) -> None:
         cases = SKILLS.parents[1] / "validation" / "cases"
         offices = {

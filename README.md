@@ -21,7 +21,7 @@
 [![release](https://img.shields.io/github/v/release/ryanduguid/australian-accounting-skills?label=release&color=66023C&labelColor=000000&style=flat)](https://github.com/ryanduguid/australian-accounting-skills/releases/latest)
 [![licence: Ryan Duguid Public Attribution Licence 1.0](.github/assets/badges/licence.svg)](LICENSE)
 
-[Install](#install) · [Start here](#start-here) · [First run](#first-run) · [Skill catalogue](docs/skill-catalogue.md) · [Validation](validation/README.md) · [Licence](#licence)
+[Install](#install) · [Start here](#start-here) · [First run](#first-run) · [Privacy](#privacy) · [Skill catalogue](docs/skill-catalogue.md) · [Validation](validation/README.md) · [Licence](#licence)
 
 </div>
 
@@ -106,6 +106,22 @@ Follow the [first run and BAS walkthrough](docs/bas-walkthrough.md) for the comp
 ![Synthetic BAS workpaper showing a $3,190 GST tie-out and blank reviewer sign-off](assets/readme/bas-workpaper-synthetic.svg)
 
 Skills specify the workflow and require current primary authority for mutable rates, thresholds, labels and due dates. Keep real client files in the firm's approved environment, outside this repository.
+
+## Privacy
+
+The skill folders hold Markdown and JSON files and no scripts, so the skills send nothing themselves. What leaves the machine depends on how you run them:
+
+- **Your agent host** decides where the prompts, files and tool results it reads go. With a cloud model they normally reach the model provider, under your account's terms, and a client file the agent opens goes the same way, so check your host's configuration.
+- **The bundled MCP server** ([`aus-accounting-mcp`](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)) runs over stdio. At the pinned `aus-accounting-mcp==0.6.0`, neither it nor its 5 pinned engines import a network library, and a Linux trace on 6 November 2026 saw 0 socket and 0 connect calls from its 12 calculation tools on fabricated valid arguments. Its 8 corpus tools were not traced on a corpus. Your host handles its tool arguments and results as above. The plugin downloads it from PyPI with `uvx` on first start.
+- **A ledger connector** adds whatever the vendor's service handles. Use the [read-only connector route](.claude/skills/xero-exports/SKILL.md#read-only-connector-route) for Xero.
+- **Installing** contacts GitHub and, with `npx skills`, the npm registry. That CLI collects anonymous usage data unless `DISABLE_TELEMETRY` or `DO_NOT_TRACK` is set.
+- **The source preflight** fetches public pages from its allowlisted hosts and sends no client data.
+
+**Human review pending:** an agent read the sources below on 6 November 2026, not a human review.
+
+A registered tax or BAS agent must not disclose a client's information to a third party without the client's permission unless there is a legal duty. [TPB(GS) 55/2026](https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct) says that entering client information into an AI tool can be such a disclosure, depending on how the tool is configured and used, and that each client's permission is needed first (paragraph 23).
+
+From 10 December 2026, Australian Privacy Principle (APP) 1.7 requires an APP entity's privacy policy to state the kinds of personal information used and the kinds of decisions involved, but only if the entity has arranged for a computer program to make a decision, or do a thing substantially and directly related to making one, the decision could reasonably be expected to significantly affect an individual's rights or interests, and personal information about that individual is used in the program's operation ([*Privacy and Other Legislation Amendment Act 2024*, Schedule 1, Part 15](https://www.legislation.gov.au/C2024A00128/asmade/text)). It covers decisions made after that date, whenever the program was arranged. A human reviewing the output does not by itself take a decision out of scope ([OAIC APP Guidelines, chapter 1](https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-1-app-1-open-and-transparent-management-of-personal-information), paragraph 1.41, updated 30 September 2026). Whether a firm is an APP entity and meets that condition is for the firm to decide.
 
 ## Alternatives
 

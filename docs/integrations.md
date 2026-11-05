@@ -15,6 +15,16 @@ These skills name 6 maintained tools rather than asking the agent to invent the 
 
 Trial-balance exception review after the gate runs through [Monthly Close Controls](https://github.com/ryanduguid/accounting-review-pipeline/tree/main/packages/monthly-close-control-plane) (`monthly-close-control-plane` in `accounting-review-pipeline`), which surfaces exceptions and never locks a period.
 
+## Xero reads
+
+A file export stays the default. A live Xero connection goes through the
+[read-only connector route in `xero-exports`](../.claude/skills/xero-exports/SKILL.md#read-only-connector-route),
+which covers Xero's connector in Claude, its Developer Remote MCP and its open
+source server. The last 2 also carry tools that write, so the route stops unless
+the connection's scopes and tools are confirmed read-only. It refuses every write.
+These skills give no guidance for writing to Xero. For a registered tax or BAS
+agent the route also asks for the client's permission first.
+
 ## MYOB reads
 
 The `au-bookkeeping` workflow accepts identified MYOB exports or an approved
@@ -30,6 +40,8 @@ describe provider-managed sign-in and endpoint permissions. Have the approved
 application manage authorisation and credentials; do not paste them into chat,
 workpapers or this repository. Inspect the connector's actual tools and permissions
 before using it; OAuth access can include writes and does not approve them.
+A registered tax or BAS agent also needs a record of the client's permission
+first, as `au-bookkeeping` and the Xero route above explain.
 
 The `@alfe.ai/myob-mcp` package is a separate third-party option, not a bundled
 dependency. Its 0.5.3 metadata declares `UNLICENSED`, and its README requires
