@@ -3,7 +3,7 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
   "totals": {
     "skills": 97,
-    "sources_indexed": 510,
+    "sources_indexed": 511,
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
@@ -1768,7 +1768,7 @@
     {
       "skill": "bas-preparation",
       "sources": {
-        "indexed": 16,
+        "indexed": 17,
         "exempt": false,
         "reviewed": "2026-10-14",
         "fetched": "2026-09-25",
