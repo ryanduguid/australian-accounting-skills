@@ -14,7 +14,7 @@ primary source at use time rather than recall them; a Markdown skill cannot
 enforce that, so the runtime and the reviewer must check it happened. Not
 affiliated with or endorsed by the Australian Taxation Office.
 
-**Install.**
+## Install
 
 - Claude Code plugin marketplace, delivering the 97 skills on `main`:
   `/plugin marketplace add ryanduguid/australian-accounting-skills` then
