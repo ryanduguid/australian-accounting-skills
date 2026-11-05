@@ -137,6 +137,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [docs/EVAL.md](docs/EVAL.md): how the fabricated validation pack is run and recorded.
 - [DISCLAIMER.md](DISCLAIMER.md): the professional boundary in full.
 - [AGENTS.md](AGENTS.md): contributor guide and hard boundary.
+- [Author's site](https://duguid.com.au/): Ryan Duguid's website.
 
 ## Reuse
 

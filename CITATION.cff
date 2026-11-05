@@ -5,6 +5,7 @@ type: software
 authors:
   - family-names: Duguid
     given-names: Ryan
+    website: "https://duguid.com.au/"
 abstract: >-
   Seventy-six preparation-only agent skills for Australian public-practice
   and contracting workflows, with source verification, reconciliation
