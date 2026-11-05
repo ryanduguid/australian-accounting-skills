@@ -59,6 +59,25 @@ class SourcePassageTests(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 source_passages.main(["snapshot", "--url", url, "--output", str(path)])
 
+    def test_duplicate_json_keys_are_rejected(self):
+        url = next(str(record["url"]) for _, _, record in source_refresh.records(source_refresh.index_files()))
+        value = {"text": "fabricated", "text_sha256": hashlib.sha256(b"fabricated").hexdigest(), "url": url,
+                 "final_url": url, "available": True, "text_truncated": False, "source_digest": "a" * 64}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            snapshot = root / "snapshot.json"
+            snapshot.write_text(json.dumps(value))
+            self.assertEqual(source_passages.load_snapshot(snapshot), value)
+            snapshot.write_text(json.dumps(value)[:-1] + ', "available": false}')
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+                source_passages.load_snapshot(snapshot)
+            index = root / "fabricated-skill" / "sources.json"
+            index.parent.mkdir()
+            index.write_text('{"skill": "fabricated-skill", "sources": [{"url": "https://www.ato.gov.au/"}], '
+                             '"sources": []}')
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+                source_refresh.load_index(index, skills=root)
+
     def test_snapshot_flags_require_actual_booleans(self):
         url = next(str(record["url"]) for _, _, record in source_refresh.records(source_refresh.index_files()))
         value = {"url": url, "final_url": url, "available": True, "text_truncated": False,
