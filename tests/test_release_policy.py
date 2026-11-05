@@ -25,7 +25,7 @@ class ReleasePolicyTests(unittest.TestCase):
                 "permissions": {"contents": "read"},
                 "uses": (
                     "ryanduguid/release-policy/.github/workflows/verify-skills.yml@"
-                    "a601f1d8b143f92b0517f709216993660d21f480"
+                    "ca5492bd09693be9e1fd47d980e2740ef8daf023"
                 ),
                 "with": {"skills-verification-mode": "subcontractor-accounting-v1"},
             },
