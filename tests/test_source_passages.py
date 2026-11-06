@@ -78,6 +78,19 @@ class SourcePassageTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
                 source_refresh.load_index(index, skills=root)
 
+    def test_nested_source_index_duplicate_keys_are_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            index = root / "fabricated-skill" / "sources.json"
+            index.parent.mkdir()
+            index.write_text(
+                '{"skill": "fabricated-skill", "sources": ['
+                '{"url": "https://example.test/first", "url": "https://example.test/second"}]}',
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key 'url'"):
+                source_refresh.load_index(index, skills=root)
+
     def test_snapshot_flags_require_actual_booleans(self):
         url = next(str(record["url"]) for _, _, record in source_refresh.records(source_refresh.index_files()))
         value = {"url": url, "final_url": url, "available": True, "text_truncated": False,
