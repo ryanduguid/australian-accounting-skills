@@ -719,6 +719,21 @@ def refresh(
     return report
 
 
+MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
+CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
+
+
+def markdown_text(value: str) -> str:
+    """Make one table cell inert: no HTML, link, image, code span, new cell or new line.
+
+    A detail can quote a host's HTTP reason phrase or a redirect destination, so a
+    compromised approved host could otherwise write markup into the report and the
+    issue filed from it. A control character becomes U+FFFD. Emphasis characters
+    stay: `_` occurs in indexed URLs, and GitHub stops autolinking a URL at `\\_`.
+    """
+    return MARKDOWN_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
+
+
 def render(report: Report, *, write: bool) -> str:
     """Render the sweep as Markdown, usable as an issue body unchanged."""
     counts = {name: len(report.by_outcome(name)) for name in REPORTED_OUTCOMES}
@@ -758,10 +773,13 @@ def render(report: Report, *, write: bool) -> str:
             "| --- | --- | --- | --- | --- | --- |",
         ]
         for outcome in sorted(report.needs_attention, key=lambda o: (o.outcome, o.skill)):
-            upstream = outcome.fetched.last_modified or "not published"
+            title, url, checked_at, upstream, detail = map(markdown_text, (
+                outcome.title, outcome.url, outcome.checked_at,
+                outcome.fetched.last_modified or "not published", outcome.detail,
+            ))
             lines.append(
-                f"| {outcome.outcome} | `{outcome.skill}` | [{outcome.title}]({outcome.url}) "
-                f"| {outcome.checked_at} | {upstream} | {outcome.detail} |"
+                f"| {outcome.outcome} | `{outcome.skill}` | [{title}]({url}) "
+                f"| {checked_at} | {upstream} | {detail} |"
             )
         lines.append("")
     else:

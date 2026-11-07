@@ -614,3 +614,71 @@ fn index_write_preserves_human_fields_and_detects_replacement_links() {
     );
     assert_eq!(std::fs::read_to_string(&outside).unwrap(), "untouched");
 }
+
+// tests/test_source_refresh.py RenderTests holds the same cases and reaches this
+// renderer through tests/source_refresh_parity.py.
+#[test]
+fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
+    let record = json!({"url":URL,"checked_at":"2026-09-08","content_hash":"a","content_hash_covers":"html","content_url":"https://example.test/old"});
+    let outcome = |title: &str, fetched: s::Fetched| {
+        let (outcome, detail) = s::classify(&record, &fetched);
+        s::Outcome {
+            skill: "example-skill".into(),
+            title: title.into(),
+            url: URL.into(),
+            outcome,
+            detail,
+            checked_at: "2026-09-08".into(),
+            fetched,
+            next_review: String::new(),
+        }
+    };
+    let ordinary = "https://example.test/Parliamentary_Business/LSL__1_.pdf?bId=r7554&x=(1)";
+    let report = s::Report {
+        outcomes: vec![
+            outcome(
+                "Refused | Example",
+                s::Fetched {
+                    status: Some(403),
+                    error: "HTTP 403 <svg onload=alert(1)> | [Pay](https://phish.example) `x`\u{1b}[31m\n## Injected \\".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Moved",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://example.test/p/<svg/onload=alert(1)>|[x](https://phish.example)`".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: ordinary.into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+        ],
+        written: Vec::new(),
+    };
+    let rendered = s::render_at(&report, false, "2026-09-20 19:00 UTC");
+    let rows: Vec<&str> = rendered
+        .lines()
+        .skip_while(|line| *line != "| --- | --- | --- | --- | --- | --- |")
+        .skip(1)
+        .collect();
+    assert_eq!(
+        rows,
+        [
+            "| blocked | `example-skill` | [Refused \\| Example](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 \\<svg onload=alert(1)\\> \\| \\[Pay\\](https://phish.example) \\`x\\`\u{FFFD}\\[31m\u{FFFD}## Injected \\\\. This host refuses automated retrieval: review by hand. |".to_owned(),
+            "| changed | `example-skill` | [Moved](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/p/\\<svg/onload=alert(1)\\>\\|\\[x\\](https://phish.example)\\`. |".to_owned(),
+            format!("| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to {ordinary}. |"),
+        ]
+    );
+}

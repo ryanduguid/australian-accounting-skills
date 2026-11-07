@@ -723,6 +723,21 @@ pub fn source_readiness(record: &Value, outcome: &Outcome, today: &str) -> (bool
         format!("READY: human review {checked}; retrieval and destination unchanged."),
     )
 }
+/// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
+pub fn markdown_text(value: &str) -> String {
+    let mut cell = String::with_capacity(value.len());
+    for c in value.chars() {
+        if c.is_control() {
+            cell.push('\u{FFFD}');
+            continue;
+        }
+        if matches!(c, '\\' | '`' | '<' | '>' | '[' | ']' | '|') {
+            cell.push('\\');
+        }
+        cell.push(c);
+    }
+    cell
+}
 pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
     let counts = OUTCOMES
         .iter()
@@ -813,15 +828,15 @@ pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
                 "| {} | `{}` | [{}]({}) | {} | {} | {} |",
                 o.outcome,
                 o.skill,
-                o.title,
-                o.url,
-                o.checked_at,
-                if o.fetched.last_modified.is_empty() {
+                markdown_text(&o.title),
+                markdown_text(&o.url),
+                markdown_text(&o.checked_at),
+                markdown_text(if o.fetched.last_modified.is_empty() {
                     "not published"
                 } else {
                     &o.fetched.last_modified
-                },
-                o.detail
+                }),
+                markdown_text(&o.detail)
             ));
         }
         lines.push(String::new());

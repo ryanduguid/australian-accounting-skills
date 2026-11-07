@@ -508,6 +508,54 @@ class SweepTests(unittest.TestCase):
                     self.assertTrue(source_refresh.review_date(schedule))
 
 
+class RenderTests(unittest.TestCase):
+    """The report is filed as an issue, so a host's words must stay text inside their cell."""
+
+    def rows(self, cases: list[tuple[str, str, source_refresh.Fetched]]) -> list[str]:
+        report = source_refresh.Report()
+        for title, content_url, result in cases:
+            record: dict[str, object] = {"url": "https://example.test/page", "checked_at": "2026-09-08",
+                      source_refresh.DIGEST_FIELD: UNCHANGED_DIGEST,
+                      source_refresh.DIGEST_KIND_FIELD: source_refresh.HTML_KIND,
+                      source_refresh.CONTENT_URL_FIELD: content_url}
+            outcome, detail = source_refresh.classify(record, result)
+            report.outcomes.append(source_refresh.Outcome(
+                skill="example-skill", title=title, url="https://example.test/page",
+                outcome=outcome, detail=detail, checked_at="2026-09-08", fetched=result))
+        lines = source_refresh.render(report, write=False).splitlines()
+        return lines[lines.index("| --- | --- | --- | --- | --- | --- |") + 1:]
+
+    def test_a_hostile_reason_phrase_and_redirect_destination_stay_inert(self) -> None:
+        """Vulnhuntr's proof of concept: a compromised approved host shapes both strings.
+
+        An HTTP reason phrase may hold markup, pipes and control bytes; a same-host
+        redirect may end at a path holding markup that `--write` then stores.
+        """
+        reason = "HTTP 403 <svg onload=alert(1)> | [Pay](https://phish.example) `x`\x1b[31m\n## Injected \\"
+        destination = "https://example.test/p/<svg/onload=alert(1)>|[x](https://phish.example)`"
+        rows = self.rows([
+            ("Refused | Example", "https://example.test/page",
+             fetched(status=403, digest="", error=reason)),
+            ("Moved", "https://example.test/old", fetched(final_url=destination)),
+        ])
+        self.assertEqual(rows, [
+            r"| blocked | `example-skill` | [Refused \| Example](https://example.test/page) "
+            r"| 2026-09-08 | not published | HTTP 403 \<svg onload=alert(1)\> \| \[Pay\](https://phish.example) "
+            "\\`x\\`\ufffd\\[31m\ufffd## Injected \\\\. This host refuses automated retrieval: review by hand. |",
+            r"| changed | `example-skill` | [Moved](https://example.test/page) | 2026-09-08 | not published "
+            r"| Source destination changed from https://example.test/old to "
+            r"https://example.test/p/\<svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
+        ])
+
+    def test_an_ordinary_destination_still_renders_as_a_usable_link(self) -> None:
+        """`_` occurs in indexed URLs; escaping it would stop GitHub autolinking them."""
+        current = "https://example.test/Parliamentary_Business/LSL__1_.pdf?bId=r7554&x=(1)"
+        self.assertEqual(self.rows([("Bills", "https://example.test/old", fetched(final_url=current))]), [
+            "| changed | `example-skill` | [Bills](https://example.test/page) | 2026-09-08 | not published "
+            f"| Source destination changed from https://example.test/old to {current}. |",
+        ])
+
+
 class ReverifyTests(unittest.TestCase):
     """A recorded fact expires after its `reverify_by` date, whatever the page does."""
 
