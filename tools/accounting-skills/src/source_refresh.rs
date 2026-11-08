@@ -729,7 +729,28 @@ pub fn markdown_link(value: &str) -> String {
 }
 /// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
 pub fn markdown_text(value: &str) -> String {
-    markdown_cell(value, true)
+    let text = markdown_cell(value, true);
+    join_after(&join_after(&text, "gh-", 3), "github.com", 6)
+}
+/// Put a word joiner `at` bytes into each ASCII-case-insensitive `word`, scanning left to right.
+fn join_after(text: &str, word: &str, at: usize) -> String {
+    let mut joined = String::with_capacity(text.len());
+    let mut rest = text;
+    while let Some(c) = rest.chars().next() {
+        if rest
+            .get(..word.len())
+            .is_some_and(|head| head.eq_ignore_ascii_case(word))
+        {
+            joined.push_str(&rest[..at]);
+            joined.push('\u{2060}');
+            joined.push_str(&rest[at..word.len()]);
+            rest = &rest[word.len()..];
+        } else {
+            joined.push(c);
+            rest = &rest[c.len_utf8()..];
+        }
+    }
+    joined
 }
 fn markdown_cell(value: &str, text: bool) -> String {
     let mut cell = String::with_capacity(value.len());

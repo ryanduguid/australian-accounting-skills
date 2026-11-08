@@ -561,17 +561,20 @@ class RenderTests(unittest.TestCase):
     def test_host_text_cannot_mention_or_cross_reference(self) -> None:
         """The workflow files the report as an issue, where `@name` and `#12` notify and link.
 
-        The reason phrase, the content type and the destination all reach the Detail
-        cell. The source link keeps its fragment: a destination is not rendered text.
+        `GH-12` and github.com issue URLs link too, in any ASCII case. The reason
+        phrase, the content type and the destination all reach the Detail cell. The
+        source link keeps its fragment: a destination is not rendered text.
         """
-        mentions = "Forbidden @someuser owner/repo#1 #12 @org/team"
-        joined = "Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team"
+        mentions = ("Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 "
+                    "https://GitHub.COM/rust-lang/rust/issues/1")
+        joined = ("Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team "
+                  "GH-\u206012 gh-\u206012 https://GitHub\u2060.COM/rust-lang/rust/issues/1")
         source = "https://example.test/act#sec.11"
         rows = self.rows([
             ("Ruling #3", "https://example.test/page",
              fetched(status=403, digest="", error=f"HTTP 403 {mentions}")),
             ("Moved", "https://example.test/old",
-             fetched(final_url="https://example.test/x<@someuser")),
+             fetched(final_url="https://example.test/x<@someuser<https://github.com/rust-lang/rust/issues/1")),
             ("Odd type", "https://example.test/page", fetched(digest="", content_type="x/@someuser")),
         ], url=source)
         self.assertEqual(rows, [
@@ -579,7 +582,7 @@ class RenderTests(unittest.TestCase):
             f"| HTTP 403 {joined}. This host refuses automated retrieval: review by hand. |",
             f"| changed | `example-skill` | [Moved]({source}) | 2026-09-08 | not published "
             "| Source destination changed from https://example.test/old to "
-            "https://example.test/x\\<@\u2060someuser. |",
+            "https://example.test/x\\<@\u2060someuser\\<https://github\u2060.com/rust-lang/rust/issues/1. |",
             f"| unreadable | `example-skill` | [Odd type]({source}) | 2026-09-08 | not published "
             "| Retrieved x/@\u2060someuser but extracted no content to digest. This is a fault in "
             "scripts/source_refresh.py, not a finding about the source. |",

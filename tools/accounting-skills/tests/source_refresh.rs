@@ -648,7 +648,7 @@ fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
                 "Ruling #3",
                 s::Fetched {
                     status: Some(403),
-                    error: "HTTP 403 Forbidden @someuser owner/repo#1 #12 @org/team".into(),
+                    error: "HTTP 403 Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 https://GitHub.COM/rust-lang/rust/issues/1".into(),
                     ..s::Fetched::default()
                 },
             ),
@@ -685,7 +685,7 @@ fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
         rows,
         [
             "| blocked | `example-skill` | [Refused \\| Example](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 \\<svg onload=alert(1)\\> \\| \\[Pay\\](https://phish.example) \\`x\\`\u{FFFD}\\[31m\u{FFFD}#\u{2060}#\u{2060} Injected \\\\\\| \u{FFFD}\u{a0}\u{FFFD}\\\\. This host refuses automated retrieval: review by hand. |".to_owned(),
-            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team. This host refuses automated retrieval: review by hand. |".to_owned(),
+            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team GH-\u{2060}12 gh-\u{2060}12 https://GitHub\u{2060}.COM/rust-lang/rust/issues/1. This host refuses automated retrieval: review by hand. |".to_owned(),
             "| changed | `example-skill` | [Moved](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/p/\\<svg/onload=alert(1)\\>\\|\\[x\\](https://phish.example)\\`. |".to_owned(),
             format!("| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to {ordinary}. |"),
         ]

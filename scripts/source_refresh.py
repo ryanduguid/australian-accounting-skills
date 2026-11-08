@@ -722,6 +722,9 @@ def refresh(
 MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
 CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
 REFERENCE_MARKS = re.compile("([@#])")
+# ASCII classes, not re.IGNORECASE, which also folds U+0130, U+0131 and U+212A.
+GITHUB_ISSUE_PREFIX = re.compile("([Gg][Hh]-)")
+GITHUB_HOST = re.compile(r"([Gg][Ii][Tt][Hh][Uu][Bb])(\.[Cc][Oo][Mm])")
 
 
 def markdown_link(value: str) -> str:
@@ -734,14 +737,20 @@ def markdown_link(value: str) -> str:
 
 
 def markdown_text(value: str) -> str:
-    """Make one table cell inert: `markdown_link`, and no mention or issue reference.
+    """Make one table cell inert: `markdown_link`, then no GitHub mention or issue link.
 
     A detail can quote a host's HTTP reason phrase, content type or redirect
     destination, so a compromised approved host could otherwise write markup into
     the report and the issue filed from it. GitHub matches mentions and references
-    in the rendered text, so a word joiner (U+2060) follows each `@` and `#`.
+    in the rendered text, so a word joiner (U+2060) follows each `@` and `#`, the
+    `-` of `GH-`, and the `github` of `github.com`, both in any ASCII case. That
+    stops `@user`, `@org/team`, `#12`, `owner/repo#12`, `GH-12` and github.com issue
+    URLs. A URL in the cell holding one of these keeps its text, but GitHub's
+    autolink then carries the joiner into its href.
     """
-    return REFERENCE_MARKS.sub("\\1\u2060", markdown_link(value))
+    text = REFERENCE_MARKS.sub("\\1\u2060", markdown_link(value))
+    text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text)
+    return GITHUB_HOST.sub("\\1\u2060\\2", text)
 
 
 def render(report: Report, *, write: bool) -> str:
