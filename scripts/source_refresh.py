@@ -720,15 +720,14 @@ def refresh(
 
 
 MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
-# Controls, and the soft hyphen, which GitHub drops when it matches references.
-CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f\xad]")
+CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
 REFERENCE_MARKS = re.compile("([@#])")
 # ASCII classes, not re.IGNORECASE, which also folds U+0130, U+0131 and U+212A.
 GITHUB_ISSUE_PREFIX = re.compile("([Gg][Hh]-)")
 GITHUB_HOST = re.compile(r"([Gg][Ii][Tt][Hh][Uu][Bb])(\.[Cc][Oo][Mm])")
 # GitHub links `owner/repo/issues/12` after any host, or none.
 PATH_NUMBER = re.compile("/([0-9])")
-# A URL GitHub autolinks: http(s) after a space or `<`, a dotted host, then up to the next
+# A URL GitHub autolinks: http(s) after a space or `<`, a host, then up to the next
 # space or `<`. GitHub links no reference inside the link, so only its host is protected.
 URL_SPAN = re.compile(
     r"(?:(?<=[ <])|^)[Hh][Tt][Tt][Pp][Ss]?://"
@@ -740,8 +739,8 @@ URL_SPAN = re.compile(
 def markdown_link(value: str) -> str:
     """Make one link destination inert: no HTML, code span, new cell or new line.
 
-    A control character or soft hyphen becomes U+FFFD. Emphasis characters stay:
-    `_` occurs in indexed URLs, and escaping it would corrupt GitHub's autolinked URLs.
+    A control character becomes U+FFFD. Emphasis characters stay: `_` occurs in
+    indexed URLs, and escaping it would corrupt GitHub's autolinked URLs.
     """
     return MARKDOWN_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
 

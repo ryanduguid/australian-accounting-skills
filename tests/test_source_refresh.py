@@ -570,12 +570,12 @@ class RenderTests(unittest.TestCase):
         """The workflow files the report as an issue, where `@name` and `#12` notify and link.
 
         `GH-12`, github.com issue URLs and bare `owner/repo/issues/12` paths link
-        too, in any ASCII case, as do named entities such as `&commat;`, and a soft
-        hyphen GitHub drops. GitHub does not autolink a URL with an underscore host or
-        letters before `https://`, so a GH- reference in one is joined; one inside an
-        autolinked URL is left alone. The reason
-        phrase, the content type and the destination all reach the Detail cell. The
-        source link keeps its fragment: a destination is not rendered text.
+        too, in any ASCII case, as do named entities such as `&commat;`; a soft hyphen
+        in `GH-12` stops the match. GitHub does not autolink a URL with an underscore
+        host or letters before `https://`, so a GH- reference in one is joined; one
+        inside an autolinked URL is left alone. The reason phrase, the content type and
+        the destination all reach the Detail cell. The source link keeps its fragment:
+        a destination is not rendered text.
         """
         mentions = ("Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 "
                     "https://GitHub.COM/rust-lang/rust/issues/1 &commat;someuser &num;12 "
@@ -584,7 +584,7 @@ class RenderTests(unittest.TestCase):
                     "github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2")
         joined = ("Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team "
                   "GH-\u206012 gh-\u206012 https://GitHub\u2060.COM/rust-lang/rust/issues/1 "
-                  "&amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\ufffd-12 "
+                  "&amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\xad-12 "
                   "abchttps://example.test/GH-\u206012 https://a_b.example/GH-\u206012 "
                   "https://example.test/path/GH-12?q=1&r=2 "
                   "github\u2060.com/rust-lang/rust/issues/\u20601 rust-lang/rust/pull/\u20602")

@@ -816,7 +816,7 @@ fn join_after(text: &str, word: &str, at: usize) -> String {
 fn markdown_cell(value: &str, text: bool) -> String {
     let mut cell = String::with_capacity(value.len());
     for c in value.chars() {
-        if c.is_control() || c == '\u{AD}' {
+        if c.is_control() {
             cell.push('\u{FFFD}');
             continue;
         }
