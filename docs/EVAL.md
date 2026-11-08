@@ -249,7 +249,16 @@ before relying on a run:
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-plugin-evals ../plugin-evals --runs 1
 cd ../plugin-evals
 claude plugin eval . --ablation with-without --threshold 0.8 --no-publish --keep-temp --max-cost-usd 10
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- audit-grader-reads KEPT-FOLDER
 ```
+
+`audit-grader-reads` searches each folder for `output.jsonl` traces and lists
+every tool call whose input has `evals`, `graders`, `validation` or `held` as
+a path part after a slash or backslash, or names a rubric, `required-checks`, `restraint.md`, `skill-fired`
+or `case.yaml`. It fails when it flags a call, finds no trace or cannot read a
+line. It reads tool inputs only, so a search over the whole copy, or a
+relative path such as `evals/x` with no slash before it, passes unflagged: a
+clean audit is not proof of isolation.
 
 Pass `--no-publish`, because the command otherwise publishes its report where the
 account supports it. The plugin's MCP server does not start unless you opt in.

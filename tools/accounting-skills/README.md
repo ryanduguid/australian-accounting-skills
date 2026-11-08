@@ -15,6 +15,12 @@ are retired:
 
 `last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
 
+`audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside
+this repository. It prints the same report on the same traces; unlike the
+script, it splits traces only at newlines, so a raw U+2028 inside a tool input
+no longer hides that call, and it fails when it flags a call, finds no trace or
+cannot read a line. `docs/EVAL.md` describes its use and limits.
+
 The others are candidate ports of scripts that remain the authoritative
 commands in `scripts/`:
 
