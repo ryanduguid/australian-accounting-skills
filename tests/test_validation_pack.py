@@ -452,6 +452,27 @@ class SafetyControlTests(unittest.TestCase):
         self.assertIn("re-export affected trial balances", close)
         self.assertIn("period-lock action is recorded as pending or complete", close)
 
+    def test_close_control_step_reports_exit_2_and_quotes_exceptions(self) -> None:
+        close = (
+            REPOSITORY / ".claude" / "skills" / "month-end-close" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        for contract in (
+            "Run it when `close-control --version` shows it is installed",
+            "no release is published, so it is built from source with "
+            "`cargo install --locked --path .` in `packages/monthly-close-control-plane`",
+            "- `2`: the close needs review.",
+            "- `1`: no pack was written",
+            "the whole of `exceptions.csv`, header row included, byte for byte",
+            "Never restate, reword, round, reorder, merge, translate or summarise an exception",
+            "exit `2` does not become a pass",
+        ):
+            with self.subTest(contract=contract):
+                self.assertIn(contract, close)
+        cases = REPOSITORY / "validation" / "cases"
+        for card in ("month-end-close-control-exit-2", "month-end-close-control-not-installed"):
+            with self.subTest(card=card):
+                self.assertIn("  - month-end-close\n", (cases / f"{card}.md").read_text(encoding="utf-8"))
+
     def test_sensitive_and_dated_rule_heuristics_cover_adverse_examples(self) -> None:
         adverse = {
             "email address": "Contact worker@example.test",
