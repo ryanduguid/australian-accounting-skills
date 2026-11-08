@@ -465,9 +465,12 @@ class SafetyControlTests(unittest.TestCase):
             "Carry each control the summary's `Controls not run` line names as an open item",
             "no release is published, so it is built from source with "
             "`cargo install --locked --path .` in `packages/monthly-close-control-plane`",
+            "- `0`: every control that ran passed. This is not close approval.",
             "- `2`: the close needs review.",
+            "On any other exit, quote no pack file",
+            "in the blocks or after them",
             "- `1`: the run failed",
-            "the whole of `exceptions.csv`, header row included, byte for byte",
+            "the whole of `exceptions.csv` that run wrote, header row included, byte for byte",
             "Never restate, reword, round, reorder, merge, translate or summarise an exception",
             "exit `2` does not become a pass",
         ):

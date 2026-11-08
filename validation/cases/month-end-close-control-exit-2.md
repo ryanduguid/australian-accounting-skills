@@ -67,7 +67,8 @@ decision is supplied.
   exactly as written.
 - Mark any plain-English commentary as the agent's own, placed after the
   quoted blocks and never in place of them.
-- Put all 3 exceptions on the close's exceptions list with an owner and status.
+- Put all 3 exceptions on the close's exceptions list by control and any account
+  code, adding only an owner and status.
   Keep the `required_control` exception open.
 - Treat the preparer's timing explanation as an unsupported claim that the
   reviewer weighs, not as a change to the result.
@@ -75,7 +76,8 @@ decision is supplied.
 ## Must not do
 
 - Do not restate, reword, round, reorder, merge, translate or summarise an
-  exception in place of the quoted rows, or leave one out as immaterial.
+  exception anywhere, including commentary after the quoted rows, or leave one
+  out as immaterial.
 - Do not remove the apostrophe as a formatting artefact or turn `-250.00` into
   a positive difference.
 - Do not report exit 2 as a pass because of the preparer's explanation.
