@@ -27,14 +27,16 @@ mod validation_text;
 use serde::Serialize;
 use serde_json::Value;
 use std::{
-    collections::BTreeMap,
+    collections::{BTreeMap, BTreeSet},
     fs,
     io::Write,
     path::{Path, PathBuf},
 };
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.";
+const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results; legacy records without a status are not counted.";
+/// The per-skill table build-coverage writes beside coverage.json.
+pub const VERIFICATION_PAGE: &str = "docs/skill-verification.md";
 
 #[derive(Serialize)]
 pub struct Sources {
@@ -50,6 +52,8 @@ pub struct Validation {
     cases: usize,
     case_ids: Vec<String>,
     only_seeded_case: bool,
+    confirmed_pass: Vec<String>,
+    confirmed_fail: Vec<String>,
 }
 #[derive(Serialize)]
 pub struct Gates {
@@ -72,6 +76,8 @@ pub struct Totals {
     skills_with_sources_moved_since_review: usize,
     skills_with_behavioural_gate: usize,
     skills_with_only_the_seeded_case: usize,
+    skills_with_confirmed_pass: usize,
+    skills_with_confirmed_fail: usize,
 }
 #[derive(Serialize)]
 pub struct Matrix {
@@ -303,9 +309,44 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
     Ok(summary)
 }
 
+/// Cards with a human-confirmed pass, and cards with a human-confirmed fail.
+/// Only version 2 records whose status is confirmed carry verdicts; legacy
+/// records state no status and are not counted.
+fn confirmed_cards(root: &Path) -> Result<(BTreeSet<String>, BTreeSet<String>)> {
+    let mut passed = BTreeSet::new();
+    let mut failed = BTreeSet::new();
+    for path in entries(&root.join("validation/results"))? {
+        if !matches_suffix(&path, ".json")? {
+            continue;
+        }
+        let record: Value = serde_json::from_str(&read_text(&path)?)?;
+        if record.get("status").and_then(Value::as_str) != Some("confirmed") {
+            continue;
+        }
+        let file = name(&path)?;
+        let results = record
+            .get("results")
+            .and_then(Value::as_object)
+            .ok_or_else(|| format!("{file}: results must be an object"))?;
+        for (card, verdict) in results {
+            match verdict.as_str() {
+                Some("pass") => passed.insert(card.clone()),
+                Some("fail") => failed.insert(card.clone()),
+                _ => return Err(format!("{file}: {card} must be pass or fail").into()),
+            };
+        }
+    }
+    Ok((passed, failed))
+}
+
 pub fn build(root: &Path) -> Result<Matrix> {
     let skills = discover_skills(root)?;
     let mut cards = case_targets(root)?;
+    let (passed, failed) = confirmed_cards(root)?;
+    let known: BTreeSet<&String> = cards.values().flatten().collect();
+    if let Some(card) = passed.union(&failed).find(|card| !known.contains(card)) {
+        return Err(format!("a confirmed verdict names {card}, which no card targets").into());
+    }
     let mut mentions: BTreeMap<String, Vec<String>> = skills
         .iter()
         .map(|skill| (skill.clone(), Vec::new()))
@@ -335,6 +376,15 @@ pub fn build(root: &Path) -> Result<Matrix> {
         let sources = source_evidence(root, &skill)?;
         let case_ids = cards.remove(&skill).unwrap_or_default();
         let only_seeded_case = case_ids == [format!("{skill}-missing-evidence")];
+        let confirmed = |verdicts: &BTreeSet<String>| {
+            case_ids
+                .iter()
+                .filter(|card| verdicts.contains(*card))
+                .cloned()
+                .collect::<Vec<_>>()
+        };
+        let confirmed_pass = confirmed(&passed);
+        let confirmed_fail = confirmed(&failed);
         let behavioural = mentions.remove(&skill).unwrap();
         totals.sources_indexed += sources.indexed;
         totals.skills_source_exempt += usize::from(sources.exempt);
@@ -343,6 +393,8 @@ pub fn build(root: &Path) -> Result<Matrix> {
             usize::from(!sources.moved_since_review.is_empty());
         totals.skills_with_behavioural_gate += usize::from(!behavioural.is_empty());
         totals.skills_with_only_the_seeded_case += usize::from(only_seeded_case);
+        totals.skills_with_confirmed_pass += usize::from(!confirmed_pass.is_empty());
+        totals.skills_with_confirmed_fail += usize::from(!confirmed_fail.is_empty());
         rows.push(Row {
             skill,
             sources,
@@ -350,6 +402,8 @@ pub fn build(root: &Path) -> Result<Matrix> {
                 cases: case_ids.len(),
                 case_ids,
                 only_seeded_case,
+                confirmed_pass,
+                confirmed_fail,
             },
             gates: Gates {
                 behavioural,
@@ -367,6 +421,83 @@ pub fn build(root: &Path) -> Result<Matrix> {
 
 pub fn rendered(root: &Path) -> Result<String> {
     Ok(serde_json::to_string_pretty(&build(root)?)? + "\n")
+}
+
+/// The coverage matrix and its verification page, from one build.
+pub fn rendered_with_page(root: &Path) -> Result<(String, String)> {
+    let matrix = build(root)?;
+    Ok((
+        serde_json::to_string_pretty(&matrix)? + "\n",
+        verification_page(&matrix),
+    ))
+}
+
+/// One row per skill from the same matrix as coverage.json, so the page
+/// cannot drift from it whilst build-coverage --check passes.
+pub fn verification_page(matrix: &Matrix) -> String {
+    let totals = &matrix.totals;
+    let mut text = format!(
+        "# How each skill was verified\n\n\
+         Generated from [coverage.json](../coverage.json) by \
+         `accounting-skills build-coverage --write`. Its `--check` mode fails when this page \
+         disagrees with the tree.\n\n\
+         Totals: {} skills, {} indexed primary sources, {} skills exempt from source indexing, \
+         {} skills with an unreachable source, {} skills with a source changed since review, \
+         {} skills with a confirmed pass and {} skills with a confirmed fail.\n\n\
+         - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill \
+         with a recorded exemption.\n\
+         - **Earliest review**: the oldest date on which a person recorded reading one of \
+         those sources. A fetch is not a review.\n\
+         - **Unreachable**: sources whose last fetch did not return HTTP 200 and that have no \
+         manual review record.\n\
+         - **Changed since review**: sources that published a change after their last \
+         review.\n\
+         - **Cards**: fabricated [validation cards](../validation/README.md) that exercise the \
+         skill.\n\
+         - **Confirmed pass** and **Confirmed fail**: those cards with a human-confirmed \
+         verdict in [validation/results](../validation/results/). Legacy records without a \
+         status are not counted. A pass shows that a model followed the card on one run, not \
+         that the skill's content is correct.\n\n\
+         | Skill | Sources | Earliest review | Unreachable | Changed since review | Cards \
+         | Confirmed pass | Confirmed fail |\n\
+         | --- | --- | --- | --- | --- | --- | --- | --- |\n",
+        totals.skills,
+        totals.sources_indexed,
+        totals.skills_source_exempt,
+        totals.skills_with_unreachable_sources,
+        totals.skills_with_sources_moved_since_review,
+        totals.skills_with_confirmed_pass,
+        totals.skills_with_confirmed_fail,
+    );
+    for row in &matrix.skills {
+        let skill = &row.skill;
+        let sources = &row.sources;
+        let indexed = if sources.indexed > 0 {
+            format!(
+                "[{}](../.claude/skills/{skill}/sources.json)",
+                sources.indexed
+            )
+        } else if sources.exempt {
+            "exempt".to_owned()
+        } else {
+            "0".to_owned()
+        };
+        let reviewed = if sources.reviewed.is_empty() {
+            "none"
+        } else {
+            &sources.reviewed
+        };
+        text.push_str(&format!(
+            "| [`{skill}`](../.claude/skills/{skill}/SKILL.md) | {indexed} | {reviewed} | {} | {} \
+             | {} | {} | {} |\n",
+            sources.unreachable,
+            sources.moved_since_review.len(),
+            row.validation.cases,
+            row.validation.confirmed_pass.len(),
+            row.validation.confirmed_fail.len(),
+        ));
+    }
+    text
 }
 
 pub fn platform_text(text: &str) -> String {

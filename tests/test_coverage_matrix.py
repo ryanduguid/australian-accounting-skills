@@ -62,8 +62,44 @@ class CoverageMatrixTests(unittest.TestCase):
             skills_with_only_the_seeded_case=sum(
                 1 for row in listed if row["validation"]["only_seeded_case"]
             ),
+            skills_with_confirmed_pass=sum(
+                1 for row in listed if row["validation"]["confirmed_pass"]
+            ),
+            skills_with_confirmed_fail=sum(
+                1 for row in listed if row["validation"]["confirmed_fail"]
+            ),
         )
         self.assertEqual(totals, expected)
+
+    def test_confirmed_verdicts_come_only_from_confirmed_records(self) -> None:
+        """Recount the human-confirmed verdicts from validation/results directly."""
+        verdicts: dict[str, set[str]] = {"pass": set(), "fail": set()}
+        for path in sorted((REPOSITORY / "validation" / "results").glob("*.json")):
+            record = json.loads(path.read_text(encoding="utf-8"))
+            if record.get("status") == "confirmed":
+                for card, verdict in record["results"].items():
+                    verdicts[verdict].add(card)
+        self.assertTrue(verdicts["pass"], "no confirmed pass found, so the recount is vacuous")
+        for row in rows():
+            cards = row["validation"]["case_ids"]
+            with self.subTest(skill=row["skill"]):
+                for verdict in ("pass", "fail"):
+                    self.assertEqual(
+                        row["validation"][f"confirmed_{verdict}"],
+                        [card for card in cards if card in verdicts[verdict]],
+                    )
+
+    def test_verification_page_states_the_matrix_totals(self) -> None:
+        page = (REPOSITORY / "docs" / "skill-verification.md").read_text(encoding="utf-8")
+        totals = matrix()["totals"]
+        self.assertIn(
+            f"Totals: {totals['skills']} skills, {totals['sources_indexed']} indexed primary "
+            f"sources, {totals['skills_source_exempt']} skills exempt from source indexing, "
+            f"{totals['skills_with_unreachable_sources']} skills with an unreachable source, ",
+            page,
+        )
+        listed = [line for line in page.splitlines() if line.startswith("| [`")]
+        self.assertEqual(len(listed), totals["skills"])
 
     def test_behavioural_gates_separate_some_skills_from_others(self) -> None:
         """Guard against a classification that has stopped discriminating.

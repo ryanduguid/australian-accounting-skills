@@ -144,7 +144,8 @@ files the result as an issue; `accounting-skills sweep-outcome`, built from
 `tools/accounting-skills/`, is what turns the sweep's exit status and report
 into that outcome, and it fails the run on
 exit 1, any unexpected code, or a missing, stale or contradictory report. `coverage.json` carries the result per skill,
-including any source that published a change after its last review.
+including any source that published a change after its last review, and
+[docs/skill-verification.md](docs/skill-verification.md) shows it as a table.
 
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate

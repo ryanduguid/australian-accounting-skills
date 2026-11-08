@@ -77,16 +77,24 @@ accounting-skills build-coverage --root /path/to/checkout --write
 
 The current directory is the default root. A root operand beginning with a dash
 needs an explicit path, such as `./--check`. `--write` takes precedence over
-`--check`, as in the retired Python command. Success prints the matrix unless writing,
-which prints `wrote coverage.json`. A stale check exits 2. Processing and
+`--check`, as in the retired Python command. The command also renders
+`docs/skill-verification.md`, a per-skill table from the same matrix, and
+`--check` compares both files. Success prints the matrix unless writing, which
+prints `wrote coverage.json and docs/skill-verification.md`. A stale check
+names each stale file and exits 2. Processing and
 argument errors exit 1 with a diagnostic instead of a Python traceback or
 argparse usage. Options must be spelt in full: argparse's abbreviations (such
 as `--wr`), the `--` terminator and help text are not ported.
 
-`--write` writes a temporary file beside `coverage.json` and renames it into
-place, so a hard link elsewhere keeps its old contents. A `coverage.json` that
-is a symlink or not a regular file is refused. The retired Python command
-wrote through either link.
+`--write` writes a temporary file beside each output and renames it into
+place, so a hard link elsewhere keeps its old contents. An output that is a
+symlink or not a regular file is refused. The retired Python command wrote
+through either link.
+
+The `confirmed_pass` and `confirmed_fail` fields and their totals, which the
+Python builder did not have and the note now describes, list each skill's cards with a human-confirmed verdict in
+`validation/results`. A confirmed record with a verdict other than `pass` or
+`fail`, or one that names a card no card file targets, is refused.
 
 The schema, field order, note text, source-date distinctions, card deduplication,
 quoted test mentions and platform newline conventions preserve the retired

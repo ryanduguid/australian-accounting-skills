@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review.",
+  "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results; legacy records without a status are not counted.",
   "totals": {
     "skills": 97,
     "sources_indexed": 511,
@@ -8,7 +8,9 @@
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 50,
-    "skills_with_only_the_seeded_case": 27
+    "skills_with_only_the_seeded_case": 27,
+    "skills_with_confirmed_pass": 82,
+    "skills_with_confirmed_fail": 0
   },
   "skills": [
     {
@@ -29,7 +31,11 @@
           "au-aml-ctf-client-coverage-missing-evidence",
           "au-aml-ctf-client-coverage-recorded-exception-scope"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-aml-ctf-client-coverage-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -54,7 +60,11 @@
         "case_ids": [
           "au-asic-company-changes-sole-director-exit"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-asic-company-changes-sole-director-exit"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -76,7 +86,9 @@
         "case_ids": [
           "au-ato-account-reconciliation-late-amendments"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -100,7 +112,9 @@
         "case_ids": [
           "au-ato-correspondence-triage-mixed-batch"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -124,7 +138,11 @@
         "case_ids": [
           "au-ato-objection-uncertain-timing"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-ato-objection-uncertain-timing"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -147,7 +165,12 @@
           "au-ato-penalties-interest-deductibility-split",
           "au-ato-penalties-interest-missing-evidence"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-ato-penalties-interest-deductibility-split",
+          "au-ato-penalties-interest-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -169,7 +192,11 @@
         "case_ids": [
           "au-award-underpayment-review-missing-rate-table"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-award-underpayment-review-missing-rate-table"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -194,7 +221,12 @@
           "au-bookkeeping-supported-reconciliation",
           "statement-correction-revision"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-bookkeeping-missing-evidence",
+          "au-bookkeeping-supported-reconciliation"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -220,7 +252,11 @@
         "case_ids": [
           "au-business-acquisition-review-share-sale-gaps"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-business-acquisition-review-share-sale-gaps"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -242,7 +278,11 @@
         "case_ids": [
           "au-business-formation-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-business-formation-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -268,7 +308,12 @@
           "au-capital-gains-inherited-pre-cgt-valuation",
           "au-capital-gains-missing-evidence"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-capital-gains-inherited-pre-cgt-valuation",
+          "au-capital-gains-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -292,7 +337,11 @@
         "case_ids": [
           "au-car-expenses-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-car-expenses-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -314,7 +363,11 @@
         "case_ids": [
           "au-client-acceptance-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-client-acceptance-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -338,7 +391,9 @@
         "case_ids": [
           "au-client-departure-records-and-clearance"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -362,7 +417,11 @@
         "case_ids": [
           "au-company-tax-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-company-tax-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -384,7 +443,11 @@
         "case_ids": [
           "au-crypto-tax-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-crypto-tax-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -408,7 +471,11 @@
         "case_ids": [
           "au-deceased-estates-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-deceased-estates-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -432,7 +499,11 @@
         "case_ids": [
           "au-depreciation-schedule-register-roll-forward"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-depreciation-schedule-register-roll-forward"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -455,7 +526,12 @@
           "au-director-penalty-review-estimate-and-resignation",
           "au-director-penalty-review-understated-disclosure"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-director-penalty-review-estimate-and-resignation",
+          "au-director-penalty-review-understated-disclosure"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -477,7 +553,11 @@
         "case_ids": [
           "au-division-293-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-division-293-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -499,7 +579,11 @@
         "case_ids": [
           "au-division-296-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-division-296-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -522,7 +606,9 @@
           "au-dssp-mixed-plan-parcels",
           "au-dssp-supported-parcel-bridge"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -544,7 +630,9 @@
         "case_ids": [
           "au-employee-share-schemes-taxing-point"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -566,7 +654,11 @@
         "case_ids": [
           "au-etp-redundancy-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-etp-redundancy-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -590,7 +682,12 @@
           "au-financial-statements-missing-evidence",
           "au-financial-statements-supported-mapping"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-financial-statements-missing-evidence",
+          "au-financial-statements-supported-mapping"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -615,7 +712,11 @@
         "case_ids": [
           "au-foreign-income-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-foreign-income-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -637,7 +738,9 @@
         "case_ids": [
           "au-foreign-pensions-gross-upp-and-arrears"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -659,7 +762,11 @@
         "case_ids": [
           "au-forex-review-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-forex-review-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -681,7 +788,11 @@
         "case_ids": [
           "au-franking-account-ledger-rebuild"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-franking-account-ledger-rebuild"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -703,7 +814,11 @@
         "case_ids": [
           "au-gst-property-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-gst-property-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -726,7 +841,11 @@
           "au-gst-registration-review-missing-evidence",
           "au-short-stay-accommodation-platform-gst-registration"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-gst-registration-review-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -751,7 +870,13 @@
           "au-individual-return-records-request",
           "receipt-schedule-conflicts"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-individual-return-missing-evidence",
+          "au-individual-return-occupation-guide",
+          "au-individual-return-records-request"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -783,7 +908,12 @@
           "au-land-tax-wa-metropolitan-notice",
           "au-land-tax-windfall-gains-deferral"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-land-tax-missing-evidence",
+          "au-land-tax-windfall-gains-deferral"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -807,7 +937,9 @@
         "case_ids": [
           "au-lump-sum-arrears-multiple-payers"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -830,7 +962,9 @@
           "au-managed-fund-amit-complete-reinvestment",
           "au-managed-fund-amit-statement-and-basis"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -854,7 +988,11 @@
         "case_ids": [
           "au-medicare-review-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-medicare-review-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -876,7 +1014,9 @@
         "case_ids": [
           "au-non-commercial-losses-activity-roll-forward"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -898,7 +1038,11 @@
         "case_ids": [
           "au-nonresident-cgt-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-nonresident-cgt-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -922,7 +1066,11 @@
         "case_ids": [
           "au-not-for-profit-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-not-for-profit-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -944,7 +1092,11 @@
         "case_ids": [
           "au-partnership-tax-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-partnership-tax-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -966,7 +1118,11 @@
         "case_ids": [
           "au-payg-instalment-variation-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-payg-instalment-variation-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -991,7 +1147,13 @@
           "au-payroll-review-pay-item-settings",
           "au-payroll-review-supported-tie-out"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-payroll-review-missing-evidence",
+          "au-payroll-review-pay-item-settings",
+          "au-payroll-review-supported-tie-out"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1022,7 +1184,11 @@
           "payroll-tax-sa-group-registration",
           "payroll-tax-tas-workbook-defects"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-payroll-tax-states-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1048,7 +1214,9 @@
           "au-pre-lodgement-review-missing-evidence",
           "au-pre-lodgement-review-rating-not-clearance"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1073,7 +1241,11 @@
         "case_ids": [
           "au-primary-production-early-fmd-withdrawal"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-primary-production-early-fmd-withdrawal"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1095,7 +1267,11 @@
         "case_ids": [
           "au-private-ruling-application-omitted-loan"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-private-ruling-application-omitted-loan"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1117,7 +1293,11 @@
         "case_ids": [
           "au-professional-firm-profits-trust-heavy-allocation"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-professional-firm-profits-trust-heavy-allocation"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1139,7 +1319,11 @@
         "case_ids": [
           "au-property-development-income-three-lot-subdivision"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-property-development-income-three-lot-subdivision"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1162,7 +1346,11 @@
           "au-psi-review-individuals-and-test-order",
           "au-psi-review-missing-evidence"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-psi-review-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1186,7 +1374,11 @@
         "case_ids": [
           "au-rd-incentive-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-rd-incentive-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1209,7 +1401,11 @@
           "au-rental-property-agent-balance-bridge",
           "au-rental-property-missing-evidence"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-rental-property-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1235,7 +1431,11 @@
         "case_ids": [
           "au-restructure-rollovers-sole-trader-incorporation"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-restructure-rollovers-sole-trader-incorporation"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1257,7 +1457,11 @@
         "case_ids": [
           "au-return-amendment-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-return-amendment-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1280,7 +1484,9 @@
           "au-sapto-complete-asymmetric-bridge",
           "au-sapto-rebate-income-and-spouse"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1305,7 +1511,9 @@
           "au-short-stay-accommodation-missing-evidence",
           "au-short-stay-accommodation-platform-gst-registration"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1329,7 +1537,11 @@
         "case_ids": [
           "au-small-business-cgt-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-small-business-cgt-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1353,7 +1565,9 @@
         "case_ids": [
           "au-small-business-income-offset-psi-and-losses"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1375,7 +1589,11 @@
         "case_ids": [
           "au-smsf-year-end-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-smsf-year-end-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1399,7 +1617,11 @@
         "case_ids": [
           "au-sole-trader-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-sole-trader-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1424,7 +1646,12 @@
           "au-super-contribution-caps-missing-evidence",
           "au-super-contribution-caps-salary-sacrifice-headroom"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-super-contribution-caps-missing-evidence",
+          "au-super-contribution-caps-salary-sacrifice-headroom"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1449,7 +1676,12 @@
           "au-director-penalty-review-understated-disclosure",
           "au-super-guarantee-charge-remitted-not-received"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-director-penalty-review-understated-disclosure",
+          "au-super-guarantee-charge-remitted-not-received"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1472,7 +1704,11 @@
           "au-tax-agent-obligations-pi-and-statement",
           "au-tax-agent-obligations-professional-body-rows"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-tax-agent-obligations-pi-and-statement"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1497,7 +1733,11 @@
         "case_ids": [
           "au-tax-planning-review-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-tax-planning-review-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1520,7 +1760,11 @@
           "au-tax-rates-verification-missing-evidence",
           "source-quote-partial-coverage"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-tax-rates-verification-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1544,7 +1788,12 @@
           "au-tax-research-missing-evidence",
           "au-tax-research-template-output"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-tax-research-announced-measure",
+          "au-tax-research-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1568,7 +1817,11 @@
         "case_ids": [
           "au-tax-residency-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-tax-residency-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1598,7 +1851,11 @@
           "au-transfer-duty-vic-goods-under-separate-contract",
           "au-transfer-duty-wa-rent-roll-and-trade-debts"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-transfer-duty-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1622,7 +1879,11 @@
         "case_ids": [
           "au-transfer-pricing-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-transfer-pricing-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1644,7 +1905,11 @@
         "case_ids": [
           "au-travel-expenses-mixed-overseas-trip"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-travel-expenses-mixed-overseas-trip"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1666,7 +1931,11 @@
         "case_ids": [
           "au-trust-deed-review-unexecuted-variation"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-trust-deed-review-unexecuted-variation"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1689,7 +1958,11 @@
           "au-trust-distributions-ftdt-screen",
           "au-trust-distributions-missing-evidence"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "au-trust-distributions-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1714,7 +1987,9 @@
         "case_ids": [
           "au-trust-losses-late-election"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1738,7 +2013,11 @@
         "case_ids": [
           "au-wfh-deductions-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-wfh-deductions-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1760,7 +2039,11 @@
         "case_ids": [
           "au-working-holiday-makers-missing-evidence"
         ],
-        "only_seeded_case": true
+        "only_seeded_case": true,
+        "confirmed_pass": [
+          "au-working-holiday-makers-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1793,7 +2076,13 @@
           "bas-stp-w3-w4",
           "xero-export-duplicate-and-missing"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "bas-export-manifest-rounding",
+          "bas-g10-g11",
+          "bas-stp-w3-w4"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1822,7 +2111,12 @@
           "cashflow-super-regime-transition",
           "cashflow-supported-roll-forward"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "cashflow-super-regime-transition",
+          "cashflow-supported-roll-forward"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1849,7 +2143,12 @@
           "coal-lsl-levy-unverified-rate",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "coal-lsl-levy-unverified-rate",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1874,7 +2173,12 @@
           "contract-cost-unallocated-plant",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "contract-cost-unallocated-plant",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1899,7 +2203,12 @@
           "export-manifest-rounding",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "export-manifest-rounding",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -1922,7 +2231,12 @@
           "payroll-tax-contractor-characterisation",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "payroll-tax-contractor-characterisation",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1946,7 +2260,11 @@
         "case_ids": [
           "div7a-upe-review"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "div7a-upe-review"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1971,7 +2289,11 @@
           "fbt-annual-workflow-line-register-tie-out",
           "fbt-carparking-missing-declaration"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "fbt-carparking-missing-declaration"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -1998,7 +2320,11 @@
           "financial-modelling-formula-change",
           "financial-modelling-structure-faults"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "financial-modelling-structure-faults"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2023,7 +2349,12 @@
           "fuel-tax-credits-missing-docket",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "fuel-tax-credits-missing-docket",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -2052,7 +2383,14 @@
           "reconciliation-break-trace-supported-items",
           "stp-current-vs-overdue-sg"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "month-end-supplier-bank-detail-change",
+          "month-end-supported-partial-close",
+          "post-journal-provenance-tie-out",
+          "stp-current-vs-overdue-sg"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2083,7 +2421,12 @@
           "payroll-tax-wa-relationship-evidence",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "payroll-tax-contractor-characterisation",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2109,7 +2452,12 @@
           "contract-cost-unallocated-plant",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "contract-cost-unallocated-plant",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -2132,7 +2480,12 @@
           "progress-claim-missing-reference-date",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "progress-claim-missing-reference-date",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2158,7 +2511,9 @@
           "reconciliation-break-trace-missing-evidence",
           "reconciliation-break-trace-supported-items"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2184,7 +2539,12 @@
           "retention-release-missing-deed",
           "standalone-skill-safety-boundary"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "retention-release-missing-deed",
+          "standalone-skill-safety-boundary"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2209,7 +2569,11 @@
         "case_ids": [
           "statement-to-csv-overlap-and-formula"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "statement-to-csv-overlap-and-formula"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [],
@@ -2234,7 +2598,13 @@
           "fbt-carparking-missing-declaration",
           "stp-current-vs-overdue-sg"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "cashflow-super-regime-transition",
+          "fbt-carparking-missing-declaration",
+          "stp-current-vs-overdue-sg"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2263,7 +2633,12 @@
           "tax-invoice-review-low-value-threshold",
           "tax-invoice-review-missing-evidence"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "month-end-supplier-bank-detail-change",
+          "tax-invoice-review-missing-evidence"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2288,7 +2663,12 @@
           "standalone-skill-safety-boundary",
           "wip-cost-to-complete-gap"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "standalone-skill-safety-boundary",
+          "wip-cost-to-complete-gap"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2321,7 +2701,13 @@
           "workpaper-tie-out-both-ways",
           "xero-export-duplicate-and-missing"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "bas-export-manifest-rounding",
+          "div7a-upe-review",
+          "post-journal-provenance-tie-out"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2354,7 +2740,12 @@
           "xero-export-duplicate-and-missing",
           "xero-exports-connector-read-and-write-request"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "bas-export-manifest-rounding",
+          "post-journal-provenance-tie-out"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [
@@ -2382,7 +2773,11 @@
           "post-journal-provenance-tie-out",
           "workpaper-stale-reference"
         ],
-        "only_seeded_case": false
+        "only_seeded_case": false,
+        "confirmed_pass": [
+          "post-journal-provenance-tie-out"
+        ],
+        "confirmed_fail": []
       },
       "gates": {
         "behavioural": [

@@ -1,8 +1,11 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-use accounting_skills::{Result, platform_text, read_text, rendered, replace_file};
+use accounting_skills::{
+    Result, VERIFICATION_PAGE, platform_text, read_text, rendered_with_page, replace_file,
+};
 use std::{
+    fs,
     io::{self, Write},
     path::PathBuf,
 };
@@ -53,28 +56,43 @@ fn run() -> Result<u8> {
             _ => return Err("unknown argument".into()),
         }
     }
-    let matrix = rendered(&root)?;
-    let coverage = root.join("coverage.json");
+    let (matrix, page) = rendered_with_page(&root)?;
+    let outputs = [("coverage.json", &matrix), (VERIFICATION_PAGE, &page)];
     if write {
-        replace_file(&coverage, &platform_text(&matrix))?;
-        io::stdout().write_all(platform_text("wrote coverage.json\n").as_bytes())?;
-    } else {
-        let current = if coverage.is_file() {
-            read_text(&coverage)?
-        } else {
-            String::new()
-        };
-        if check && current != matrix {
-            io::stderr().write_all(
-                platform_text(
-                    "coverage.json is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
-                )
-                .as_bytes(),
-            )?;
+        for (path, text) in outputs {
+            let path = root.join(path);
+            fs::create_dir_all(path.parent().ok_or("output has no parent")?)?;
+            replace_file(&path, &platform_text(text))?;
+        }
+        io::stdout().write_all(
+            platform_text(&format!("wrote coverage.json and {VERIFICATION_PAGE}\n")).as_bytes(),
+        )?;
+        return Ok(0);
+    }
+    if check {
+        let mut stale = false;
+        for (path, text) in outputs {
+            let file = root.join(path);
+            let current = if file.is_file() {
+                read_text(&file)?
+            } else {
+                String::new()
+            };
+            if current != *text {
+                stale = true;
+                io::stderr().write_all(
+                    platform_text(&format!(
+                        "{path} is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
+                    ))
+                    .as_bytes(),
+                )?;
+            }
+        }
+        if stale {
             return Ok(2);
         }
-        io::stdout().write_all(platform_text(&matrix).as_bytes())?;
     }
+    io::stdout().write_all(platform_text(&matrix).as_bytes())?;
     Ok(0)
 }
 
