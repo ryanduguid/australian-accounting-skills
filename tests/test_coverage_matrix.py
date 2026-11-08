@@ -80,7 +80,8 @@ class CoverageMatrixTests(unittest.TestCase):
         """Recount the confirmed verdicts, holding each to the card bytes it was judged on.
 
         A verdict counts as current only when the record's rubric digest equals
-        the card as it is now; a verdict on an earlier version is listed apart.
+        the card as it is now; a verdict on an earlier version is listed apart,
+        whether or not the current card also has one.
         Legacy records carry no status and stay out of these lists.
         """
         current: dict[str, set[str]] = {"pass": set(), "fail": set()}
@@ -96,7 +97,6 @@ class CoverageMatrixTests(unittest.TestCase):
                     current[verdict].add(card)
                 else:
                     earlier.add(card)
-        earlier -= current["pass"] | current["fail"]
         self.assertTrue(current["pass"], "no confirmed pass found, so the recount is vacuous")
         for row in rows():
             cards = row["validation"]["case_ids"]

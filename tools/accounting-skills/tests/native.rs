@@ -312,19 +312,42 @@ fn confirmed_verdicts_count_only_for_the_current_card() {
     assert_eq!(matrix["totals"]["sources_reviewed"], 2);
 }
 
-#[test]
-fn a_current_verdict_supersedes_one_on_an_earlier_card() {
+/// The fixture confirms `beta-revised` as a pass on an earlier card version;
+/// this adds a verdict on the current card.
+fn rerun_beta_revised(verdict: &str) -> serde_json::Value {
     let root = verified_tree();
-    let again = confirmed_record(root.path(), &[("beta-revised", "pass")]);
+    let rerun = confirmed_record(root.path(), &[("beta-revised", verdict)]);
     fs::write(
         root.path().join("validation/results/rerun-confirmed.json"),
-        again.to_string(),
+        rerun.to_string(),
     )
     .unwrap();
     let matrix: serde_json::Value = serde_json::from_str(&rendered(root.path()).unwrap()).unwrap();
-    let beta = &matrix["skills"][1]["validation"];
+    matrix["skills"][1]["validation"].clone()
+}
+
+#[test]
+fn a_current_pass_counts_and_the_earlier_verdict_stays_listed() {
+    let beta = rerun_beta_revised("pass");
     assert_eq!(beta["confirmed_pass"], serde_json::json!(["beta-revised"]));
-    assert_eq!(beta["confirmed_on_earlier_card"], serde_json::json!([]));
+    assert_eq!(
+        beta["confirmed_on_earlier_card"],
+        serde_json::json!(["beta-revised"])
+    );
+}
+
+#[test]
+fn a_fail_on_the_current_card_after_a_pass_on_an_earlier_one_is_not_a_conflict() {
+    let beta = rerun_beta_revised("fail");
+    assert_eq!(beta["confirmed_pass"], serde_json::json!([]));
+    assert_eq!(
+        beta["confirmed_fail"],
+        serde_json::json!(["beta-revised", "shared"])
+    );
+    assert_eq!(
+        beta["confirmed_on_earlier_card"],
+        serde_json::json!(["beta-revised"])
+    );
 }
 
 #[test]

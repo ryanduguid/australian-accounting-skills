@@ -10,7 +10,7 @@ Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded huma
 - **Changed since review**: sources that published a change after their last review.
 - **Cards**: fabricated [validation cards](../validation/README.md) that exercise the skill.
 - **Confirmed pass** and **Confirmed fail**: those cards with a human-confirmed verdict in [validation/results](../validation/results/) given on the card as it is now. A pass shows that a model passed the card's rubric on one run, not that the skill's content is correct.
-- **On an earlier card**: cards whose confirmed verdict was given on a version of the card that has since changed, so it no longer counts as a pass or fail.
+- **On an earlier card**: cards whose confirmed verdict was given on a version of the card that has since changed. That verdict no longer counts as a pass or fail; a verdict on the current card, if there is one, is counted in its own column.
 - **Legacy records**: `2026-09-06-claude-opus-5.json` and `2026-09-08-codex.json` predate the confirmed status and state no input mode, so the columns leave them out. They record a fail for `export-manifest-rounding` (`2026-09-08-codex.json`).
 
 | Skill | Sources | Earliest review | Unreachable | Changed since review | Cards | Confirmed pass | Confirmed fail | On an earlier card |

@@ -96,11 +96,13 @@ The Python builder did not have the `reviewed_count`, `confirmed_pass`,
 note now describes them. `reviewed_count` is how many indexed sources carry a
 review date. A confirmed verdict counts as a pass or fail only when the record's
 `rubric_sha256` matches the card's current bytes; otherwise the card is listed
-under `confirmed_on_earlier_card`, unless a later record confirms it on the
-current card. The build refuses a verdict other than `pass` or `fail`, a
-confirmed verdict without a rubric digest or for a card no skill targets, and
-a card confirmed both pass and fail, naming both records, because no rule yet
-says which verdict supersedes the other. Legacy records, which have no status,
+under `confirmed_on_earlier_card`, even if the current card also has a verdict.
+Verdicts on different card versions judged different cards, so a pass on an
+earlier version and a fail on the current one both stand. The build refuses a
+verdict other than `pass` or `fail`, a confirmed verdict without a rubric
+digest or for a card no skill targets, and one card version confirmed both
+pass and fail, naming both records, because no rule yet says which verdict
+supersedes the other. Legacy records, which have no status,
 are left out of the counts and named in the page's legend with any fail they
 hold.
 
