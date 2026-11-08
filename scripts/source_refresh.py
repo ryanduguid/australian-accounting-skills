@@ -727,13 +727,8 @@ GITHUB_ISSUE_PREFIX = re.compile("([Gg][Hh]-)")
 GITHUB_HOST = re.compile(r"([Gg][Ii][Tt][Hh][Uu][Bb])(\.[Cc][Oo][Mm])")
 # GitHub links `owner/repo/issues/12` after any host, or none.
 PATH_NUMBER = re.compile("/([0-9])")
-# A URL GitHub autolinks: http(s) after a space or `<`, a host, then up to the next
-# space or `<`. GitHub links no reference inside the link, so only its host is protected.
-URL_SPAN = re.compile(
-    r"(?:(?<=[ <])|^)[Hh][Tt][Tt][Pp][Ss]?://"
-    r"(?P<host>[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*)"
-    r"(?=[/?#: <]|$)[^ <]*"
-)
+# An autolink candidate: http(s) not after an ASCII letter, then the host GitHub scans.
+URL_START = re.compile(r"(?<![A-Za-z])[Hh][Tt][Tt][Pp][Ss]?://(?P<host>[A-Za-z0-9._-]*)")
 
 
 def markdown_link(value: str) -> str:
@@ -751,27 +746,56 @@ def markdown_text(value: str) -> str:
     A detail can quote a host's HTTP reason phrase, content type or redirect
     destination, so a compromised approved host could otherwise write markup into
     the report and the issue filed from it. GitHub matches mentions and references
-    in the rendered text, after decoding entities. So a word joiner (U+2060) follows
-    each `@` and `#`. Outside an autolinked URL, `&` becomes `&amp;`, and a word
-    joiner follows the `-` of `GH-` and the `github` of `github.com`, both in any
-    ASCII case, and each `/` before a digit. Inside one, only a github.com host is
-    joined: GitHub links nothing else there, and `&amp;` would corrupt the href.
-    That stops `@user`, `@org/team`, `#12`, `owner/repo#12`, `GH-12`, github.com
-    issue URLs, bare `owner/repo/issues/12` paths and their named-entity spellings. A URL holding `@`, `#` or a github.com host keeps its text, but its
-    href carries the joiner.
+    in rendered text outside links, after decoding entities. So outside the URLs
+    GitHub autolinks, `&` becomes `&amp;`, and a word joiner (U+2060) follows each
+    `@` and `#`, the `-` of `GH-`, the `github` of `github.com` (both in any ASCII
+    case) and each `/` before a digit. That stops `@user`, `@org/team`, `#12`,
+    `owner/repo#12`, `GH-12`, bare `owner/repo/issues/12` paths and their
+    named-entity spellings. Inside a URL only a github.com host is joined, which
+    stops an issue link; any other URL keeps its href byte for byte.
     """
-    text = REFERENCE_MARKS.sub("\\1\u2060", markdown_link(value))
-    parts, end = [], 0
-    for url in URL_SPAN.finditer(text):
-        host = GITHUB_HOST.sub("\\1\u2060\\2", url["host"])
-        parts += [_plain_text(text[end:url.start()]),
-                  text[url.start():url.start("host")] + host + text[url.end("host"):url.end()]]
-        end = url.end()
-    return "".join(parts) + _plain_text(text[end:])
+    text = markdown_link(value)
+    parts, plain, at = [], 0, 0
+    while at < len(text):
+        span = _url_span(text, at)
+        if span is None:
+            at += 1
+            continue
+        host, host_end, end = span
+        parts += [_plain_text(text[plain:at]), text[at:host],
+                  _github_host(text[host:host_end]), text[host_end:end]]
+        plain = at = end
+    return "".join(parts) + _plain_text(text[plain:])
+
+
+def _url_span(text: str, at: int) -> tuple[int, int, int] | None:
+    """The URL GitHub autolinks from `at`: its host's start and end, and its own end.
+
+    GitHub links http(s) not after an ASCII letter, up to the next space or `<`,
+    unless its host is empty or has `_` in its last 2 labels. The host it scans ends
+    at the first ASCII character outside letters, digits, `.`, `-` and `_`, but not
+    at a backslash. A host ending at a backslash or a non-ASCII character, or starting
+    with `.` or `_`, is untested, so it counts as plain text, the safe side.
+    """
+    url = URL_START.match(text, at)
+    if url is None:
+        return None
+    host, host_end = url["host"], url.end()
+    stop = text[host_end:host_end + 1]
+    if (not host or host[0] in "._" or "_" in "".join(host.split(".")[-2:])
+            or stop == "\\" or not stop.isascii()):
+        return None
+    ends = [n for n in (text.find(" ", host_end), text.find("<", host_end)) if n >= 0]
+    return url.start("host"), host_end, min(ends, default=len(text))
+
+
+def _github_host(host: str) -> str:
+    return f"{host[:6]}\u2060{host[6:]}" if host.lower() == "github.com" else host
 
 
 def _plain_text(text: str) -> str:
-    text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text.replace("&", "&amp;"))
+    text = REFERENCE_MARKS.sub("\\1\u2060", text.replace("&", "&amp;"))
+    text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text)
     return PATH_NUMBER.sub("/\u2060\\1", GITHUB_HOST.sub("\\1\u2060\\2", text))
 
 

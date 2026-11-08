@@ -551,12 +551,15 @@ class RenderTests(unittest.TestCase):
         ])
 
     def test_an_ordinary_destination_still_renders_as_a_usable_link(self) -> None:
-        """Escaping `_` or `&`, or joining `GH-` or `github.com` in a path, would corrupt the href."""
+        """Escaping `_` or `&`, or joining `GH-`, `@`, `#` or a host other than github.com, would corrupt the href."""
         destinations = [
             "https://example.test/Parliamentary_Business/LSL__1_.pdf?bId=r7554&x=(1)",
             "https://www.ato.gov.au/path/GH-12.pdf",
             "https://www.ato.gov.au/path/github.com/manual.pdf",
             "https://www.ato.gov.au/law/2026/1",
+            "https://notgithub.com/rust-lang/rust/issues/1",
+            "https://github.com.evil/rust-lang/rust/issues/1",
+            "https://example.test/rulings/@archive/doc",
         ]
         rows = self.rows([("Bills", "https://example.test/old", fetched(final_url=current))
                           for current in destinations])
@@ -573,7 +576,7 @@ class RenderTests(unittest.TestCase):
         too, in any ASCII case, as do named entities such as `&commat;`; a soft hyphen
         in `GH-12` stops the match. GitHub does not autolink a URL with an underscore
         host or letters before `https://`, so a GH- reference in one is joined; one
-        inside an autolinked URL is left alone. The reason phrase, the content type and
+        inside an autolinked URL, even after a digit or with an odd host, is left alone. The reason phrase, the content type and
         the destination all reach the Detail cell. The source link keeps its fragment:
         a destination is not rendered text.
         """
@@ -581,13 +584,19 @@ class RenderTests(unittest.TestCase):
                     "https://GitHub.COM/rust-lang/rust/issues/1 &commat;someuser &num;12 "
                     "github&period;com/x GH\xad-12 abchttps://example.test/GH-12 "
                     "https://a_b.example/GH-12 https://example.test/path/GH-12?q=1&r=2 "
-                    "github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2")
+                    "github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2 "
+                    "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
+                    "https://github.com/rust-lang/rust/issues/2 https://_x.example/GH-12 "
+                    "https://a.b\\x_y.z/GH-12 https://example.test/doc#12")
         joined = ("Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team "
                   "GH-\u206012 gh-\u206012 https://GitHub\u2060.COM/rust-lang/rust/issues/1 "
                   "&amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\xad-12 "
                   "abchttps://example.test/GH-\u206012 https://a_b.example/GH-\u206012 "
                   "https://example.test/path/GH-12?q=1&r=2 "
-                  "github\u2060.com/rust-lang/rust/issues/\u20601 rust-lang/rust/pull/\u20602")
+                  "github\u2060.com/rust-lang/rust/issues/\u20601 rust-lang/rust/pull/\u20602 "
+                  "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
+                  "https://github\u2060.com/rust-lang/rust/issues/2 https://_x.example/GH-\u206012 "
+                  "https://a.b\\\\x_y.z/GH-\u206012 https://example.test/doc#12")
         source = "https://example.test/act#sec.11"
         rows = self.rows([
             ("Ruling #3", "https://example.test/page",

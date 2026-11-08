@@ -725,11 +725,22 @@ pub fn source_readiness(record: &Value, outcome: &Outcome, today: &str) -> (bool
 }
 /// One inert link destination, as `markdown_link` in scripts/source_refresh.py makes it.
 pub fn markdown_link(value: &str) -> String {
-    markdown_cell(value, false)
+    let mut cell = String::with_capacity(value.len());
+    for c in value.chars() {
+        if c.is_control() {
+            cell.push('\u{FFFD}');
+            continue;
+        }
+        if matches!(c, '\\' | '`' | '<' | '>' | '[' | ']' | '|') {
+            cell.push('\\');
+        }
+        cell.push(c);
+    }
+    cell
 }
 /// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
 pub fn markdown_text(value: &str) -> String {
-    let text = markdown_cell(value, true);
+    let text = markdown_link(value);
     let mut cell = String::with_capacity(text.len());
     let (mut plain, mut at) = (0, 0);
     while let Some(c) = text[at..].chars().next() {
@@ -737,7 +748,14 @@ pub fn markdown_text(value: &str) -> String {
             Some((host, host_end, end)) => {
                 cell.push_str(&plain_text(&text[plain..at]));
                 cell.push_str(&text[at..host]);
-                cell.push_str(&join_after(&text[host..host_end], "github.com", 6));
+                let name = &text[host..host_end];
+                if name.eq_ignore_ascii_case("github.com") {
+                    cell.push_str(&name[..6]);
+                    cell.push('\u{2060}');
+                    cell.push_str(&name[6..]);
+                } else {
+                    cell.push_str(name);
+                }
                 cell.push_str(&text[host_end..end]);
                 (plain, at) = (end, end);
             }
@@ -748,7 +766,10 @@ pub fn markdown_text(value: &str) -> String {
     cell
 }
 fn plain_text(text: &str) -> String {
-    let text = text.replace('&', "&amp;");
+    let text = text
+        .replace('&', "&amp;")
+        .replace('@', "@\u{2060}")
+        .replace('#', "#\u{2060}");
     let text = join_after(&join_after(&text, "gh-", 3), "github.com", 6);
     // GitHub links `owner/repo/issues/12` after any host, or none.
     let mut cell = String::with_capacity(text.len());
@@ -761,10 +782,14 @@ fn plain_text(text: &str) -> String {
     }
     cell
 }
-/// The autolinked URL starting at `at`, as `URL_SPAN` in scripts/source_refresh.py finds it:
+/// The URL GitHub autolinks from `at`, as `_url_span` in scripts/source_refresh.py finds it:
 /// the byte offsets of its host's start and end, and of its own end.
 fn url_span(text: &str, at: usize) -> Option<(usize, usize, usize)> {
-    if at > 0 && !matches!(text.as_bytes()[at - 1], b' ' | b'<') {
+    if text[..at]
+        .chars()
+        .next_back()
+        .is_some_and(|c| c.is_ascii_alphabetic())
+    {
         return None;
     }
     let scheme = ["https://", "http://"].into_iter().find(|scheme| {
@@ -775,17 +800,19 @@ fn url_span(text: &str, at: usize) -> Option<(usize, usize, usize)> {
     let host = at + scheme.len();
     let host_end = host
         + text[host..]
-            .find(|c: char| !(c.is_ascii_alphanumeric() || c == '.' || c == '-'))
+            .find(|c: char| !(c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_')))
             .unwrap_or(text.len() - host);
-    let labels_valid = text[host..host_end].split('.').all(|label| {
-        label.starts_with(|c: char| c.is_ascii_alphanumeric())
-            && label.ends_with(|c: char| c.is_ascii_alphanumeric())
-    });
-    let follows = text[host_end..]
-        .chars()
-        .next()
-        .is_none_or(|c| matches!(c, '/' | '?' | '#' | ':' | ' ' | '<'));
-    if !labels_valid || !follows {
+    let name = &text[host..host_end];
+    let underscore = name
+        .rsplitn(3, '.')
+        .take(2)
+        .any(|label| label.contains('_'));
+    let stop = text[host_end..].chars().next();
+    if name.is_empty()
+        || name.starts_with(['.', '_'])
+        || underscore
+        || stop.is_some_and(|c| c == '\\' || !c.is_ascii())
+    {
         return None;
     }
     let end = text[host_end..]
@@ -812,23 +839,6 @@ fn join_after(text: &str, word: &str, at: usize) -> String {
         }
     }
     joined
-}
-fn markdown_cell(value: &str, text: bool) -> String {
-    let mut cell = String::with_capacity(value.len());
-    for c in value.chars() {
-        if c.is_control() {
-            cell.push('\u{FFFD}');
-            continue;
-        }
-        if matches!(c, '\\' | '`' | '<' | '>' | '[' | ']' | '|') {
-            cell.push('\\');
-        }
-        cell.push(c);
-        if text && matches!(c, '@' | '#') {
-            cell.push('\u{2060}');
-        }
-    }
-    cell
 }
 pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
     let counts = OUTCOMES

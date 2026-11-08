@@ -648,7 +648,7 @@ fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
                 "Ruling #3",
                 s::Fetched {
                     status: Some(403),
-                    error: "HTTP 403 Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 https://GitHub.COM/rust-lang/rust/issues/1 &commat;someuser &num;12 github&period;com/x GH\u{ad}-12 abchttps://example.test/GH-12 https://a_b.example/GH-12 https://example.test/path/GH-12?q=1&r=2 github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2".into(),
+                    error: "HTTP 403 Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 https://GitHub.COM/rust-lang/rust/issues/1 &commat;someuser &num;12 github&period;com/x GH\u{ad}-12 abchttps://example.test/GH-12 https://a_b.example/GH-12 https://example.test/path/GH-12?q=1&r=2 github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2 1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 https://github.com/rust-lang/rust/issues/2 https://_x.example/GH-12 https://a.b\\x_y.z/GH-12 https://example.test/doc#12".into(),
                     ..s::Fetched::default()
                 },
             ),
@@ -702,6 +702,36 @@ fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
                     ..s::Fetched::default()
                 },
             ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://notgithub.com/rust-lang/rust/issues/1".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://github.com.evil/rust-lang/rust/issues/1".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://example.test/rulings/@archive/doc".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
         ],
         written: Vec::new(),
     };
@@ -715,12 +745,15 @@ fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
         rows,
         [
             "| blocked | `example-skill` | [Refused \\| Example](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 \\<svg onload=alert(1)\\> \\| \\[Pay\\](https://phish.example) \\`x\\`\u{FFFD}\\[31m\u{FFFD}#\u{2060}#\u{2060} Injected \\\\\\| \u{FFFD}\u{a0}\u{FFFD}\\\\. This host refuses automated retrieval: review by hand. |".to_owned(),
-            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team GH-\u{2060}12 gh-\u{2060}12 https://GitHub\u{2060}.COM/rust-lang/rust/issues/1 &amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\u{ad}-12 abchttps://example.test/GH-\u{2060}12 https://a_b.example/GH-\u{2060}12 https://example.test/path/GH-12?q=1&r=2 github\u{2060}.com/rust-lang/rust/issues/\u{2060}1 rust-lang/rust/pull/\u{2060}2. This host refuses automated retrieval: review by hand. |".to_owned(),
+            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team GH-\u{2060}12 gh-\u{2060}12 https://GitHub\u{2060}.COM/rust-lang/rust/issues/1 &amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\u{ad}-12 abchttps://example.test/GH-\u{2060}12 https://a_b.example/GH-\u{2060}12 https://example.test/path/GH-12?q=1&r=2 github\u{2060}.com/rust-lang/rust/issues/\u{2060}1 rust-lang/rust/pull/\u{2060}2 1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 https://github\u{2060}.com/rust-lang/rust/issues/2 https://_x.example/GH-\u{2060}12 https://a.b\\\\x_y.z/GH-\u{2060}12 https://example.test/doc#12. This host refuses automated retrieval: review by hand. |".to_owned(),
             "| changed | `example-skill` | [Moved](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/p/\\<svg/onload=alert(1)\\>\\|\\[x\\](https://phish.example)\\`. |".to_owned(),
             format!("| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to {ordinary}. |"),
             "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/path/GH-12.pdf. |".to_owned(),
             "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/path/github.com/manual.pdf. |".to_owned(),
             "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/law/2026/1. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://notgithub.com/rust-lang/rust/issues/1. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://github.com.evil/rust-lang/rust/issues/1. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/rulings/@archive/doc. |".to_owned(),
         ]
     );
 }
