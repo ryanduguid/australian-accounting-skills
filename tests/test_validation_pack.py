@@ -458,10 +458,15 @@ class SafetyControlTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         for contract in (
             "Run it when `close-control --version` shows it is installed",
+            "Do not convert another export into that format by hand.",
+            "do not describe what it would have found",
+            "Rust 1.99 or newer",
+            "- Any other code: the run failed. Quote its output and record the step as not run.",
+            "Carry each control the summary's `Controls not run` line names as an open item",
             "no release is published, so it is built from source with "
             "`cargo install --locked --path .` in `packages/monthly-close-control-plane`",
             "- `2`: the close needs review.",
-            "- `1`: no pack was written",
+            "- `1`: the run failed",
             "the whole of `exceptions.csv`, header row included, byte for byte",
             "Never restate, reword, round, reorder, merge, translate or summarise an exception",
             "exit `2` does not become a pass",

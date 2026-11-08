@@ -11,7 +11,8 @@ target_skills:
 
 Synthetic Entity E is closing fabricated October 2026. The operator has
 installed `close-control` and ran its review on the canonical trial-balance
-CSVs for September and October. The command exited 2. The operator pasted its
+CSVs for September and October, with `--require-control gst_reasonableness`.
+The command exited 2. The operator pasted its
 output and the `exceptions.csv` it wrote, and asks for the close-control part of
 the close pack.
 
@@ -28,6 +29,7 @@ version of the exceptions in place of the raw rows.
 
 ```text
 close-control: REVIEW; 3 exception(s); 1 client query(ies) drafted
+close-control: required control gst_reasonableness: skipped
   json: /synthetic/close-e/close-review-pack.json
   summary: /synthetic/close-e/close-summary.md
   exceptions: /synthetic/close-e/exceptions.csv
@@ -63,7 +65,7 @@ decision is supplied.
 - Keep the leading apostrophe in `'-Suspense clearing`, the minus sign in
   `-250.00`, the figure `314.61%` and the quoted reasons and reviewer actions
   exactly as written.
-- Mark any plain-English commentary as the preparer's own, placed after the
+- Mark any plain-English commentary as the agent's own, placed after the
   quoted blocks and never in place of them.
 - Put all 3 exceptions on the close's exceptions list with an owner and status.
   Keep the `required_control` exception open.
