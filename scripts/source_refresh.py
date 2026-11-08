@@ -720,6 +720,9 @@ def refresh(
 
 
 MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
+# In a table cell `<` becomes `&lt;` instead: GitHub ends a URL at `<`, so a URL just before
+# `\<` would take the backslash and leave the `<` free to open HTML.
+TEXT_STRUCTURE = re.compile(r"([\\`>\[\]|])")
 CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
 REFERENCE_MARKS = re.compile("([@#])")
 # ASCII classes, not re.IGNORECASE, which also folds U+0130, U+0131 and U+212A.
@@ -752,9 +755,10 @@ def markdown_text(value: str) -> str:
     case) and each `/` before a digit. That stops `@user`, `@org/team`, `#12`,
     `owner/repo#12`, `GH-12`, bare `owner/repo/issues/12` paths and their
     named-entity spellings. Inside a URL only a github.com host is joined, which
-    stops an issue link; any other URL keeps its href byte for byte.
+    stops an issue link; any other URL keeps its href byte for byte. `<` is
+    written `&lt;` throughout, not escaped with a backslash (`TEXT_STRUCTURE`).
     """
-    text = markdown_link(value)
+    text = TEXT_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
     parts, plain, at = [], 0, 0
     while at < len(text):
         span = _url_span(text, at)
@@ -763,7 +767,7 @@ def markdown_text(value: str) -> str:
             continue
         host, host_end, end = span
         parts += [_plain_text(text[plain:at]), text[at:host],
-                  _github_host(text[host:host_end]), text[host_end:end]]
+                  _github_host(text[host:host_end]), text[host_end:end].replace("<", "&lt;")]
         plain = at = end
     return "".join(parts) + _plain_text(text[plain:])
 
@@ -771,22 +775,25 @@ def markdown_text(value: str) -> str:
 def _url_span(text: str, at: int) -> tuple[int, int, int] | None:
     """The URL GitHub autolinks from `at`: its host's start and end, and its own end.
 
-    GitHub links http(s) not after an ASCII letter, up to the next space or `<`,
-    unless its host is empty or has `_` in its last 2 labels. The host it scans ends
-    at the first ASCII character outside letters, digits, `.`, `-` and `_`, but not
-    at a backslash. A host ending at a backslash or a non-ASCII character, or starting
-    with `.` or `_`, is untested, so it counts as plain text, the safe side.
+    GitHub links http(s) not after an ASCII letter, up to the next space (each
+    `<` reaches it as `&lt;`), unless its host is empty, starts with `-` or `.`, or
+    has `_` in its last 2 labels. The host it scans ends at the first ASCII
+    character outside letters, digits, `.`, `-` and `_`, but not at a backslash. A
+    host ending at a backslash or a non-ASCII character, or starting with `_`,
+    counts as plain text, the safe side. So do the links GitHub makes from `www.`,
+    email addresses and hosts of over 10 labels holding `_`, which puts joiners into
+    their hrefs. GitHub does not autolink `ftp://`.
     """
     url = URL_START.match(text, at)
     if url is None:
         return None
     host, host_end = url["host"], url.end()
     stop = text[host_end:host_end + 1]
-    if (not host or host[0] in "._" or "_" in "".join(host.split(".")[-2:])
+    if (not host or host[0] in "-._" or "_" in "".join(host.split(".")[-2:])
             or stop == "\\" or not stop.isascii()):
         return None
-    ends = [n for n in (text.find(" ", host_end), text.find("<", host_end)) if n >= 0]
-    return url.start("host"), host_end, min(ends, default=len(text))
+    end = text.find(" ", host_end)
+    return url.start("host"), host_end, len(text) if end < 0 else end
 
 
 def _github_host(host: str) -> str:
@@ -794,7 +801,7 @@ def _github_host(host: str) -> str:
 
 
 def _plain_text(text: str) -> str:
-    text = REFERENCE_MARKS.sub("\\1\u2060", text.replace("&", "&amp;"))
+    text = REFERENCE_MARKS.sub("\\1\u2060", text.replace("&", "&amp;").replace("<", "&lt;"))
     text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text)
     return PATH_NUMBER.sub("/\u2060\\1", GITHUB_HOST.sub("\\1\u2060\\2", text))
 

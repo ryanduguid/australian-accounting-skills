@@ -542,12 +542,12 @@ class RenderTests(unittest.TestCase):
         ])
         self.assertEqual(rows, [
             r"| blocked | `example-skill` | [Refused \| Example](https://example.test/page) "
-            r"| 2026-09-08 | not published | HTTP 403 \<svg onload=alert(1)\> \| \[Pay\](https://phish.example) "
+            r"| 2026-09-08 | not published | HTTP 403 &lt;svg onload=alert(1)\> \| \[Pay\](https://phish.example) "
             "\\`x\\`\ufffd\\[31m\ufffd#\u2060#\u2060 Injected \\\\\\| \ufffd\xa0\ufffd\\\\. "
             "This host refuses automated retrieval: review by hand. |",
             r"| changed | `example-skill` | [Moved](https://example.test/page) | 2026-09-08 | not published "
             r"| Source destination changed from https://example.test/old to "
-            r"https://example.test/p/\<svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
+            r"https://example.test/p/&lt;svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
         ])
 
     def test_an_ordinary_destination_still_renders_as_a_usable_link(self) -> None:
@@ -560,6 +560,7 @@ class RenderTests(unittest.TestCase):
             "https://notgithub.com/rust-lang/rust/issues/1",
             "https://github.com.evil/rust-lang/rust/issues/1",
             "https://example.test/rulings/@archive/doc",
+            "https://a_b.c.d/GH-12",
         ]
         rows = self.rows([("Bills", "https://example.test/old", fetched(final_url=current))
                           for current in destinations])
@@ -576,7 +577,9 @@ class RenderTests(unittest.TestCase):
         too, in any ASCII case, as do named entities such as `&commat;`; a soft hyphen
         in `GH-12` stops the match. GitHub does not autolink a URL with an underscore
         host or letters before `https://`, so a GH- reference in one is joined; one
-        inside an autolinked URL, even after a digit or with an odd host, is left alone. The reason phrase, the content type and
+        inside an autolinked URL, even after a digit or with an odd host, is left alone.
+        A URL runs on through `<`, written `&lt;`, so its backslash cannot free a `<`
+        to open HTML, as `<a href=…>Pay</a>` would. The reason phrase, the content type and
         the destination all reach the Detail cell. The source link keeps its fragment:
         a destination is not rendered text.
         """
@@ -587,7 +590,9 @@ class RenderTests(unittest.TestCase):
                     "github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2 "
                     "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
                     "https://github.com/rust-lang/rust/issues/2 https://_x.example/GH-12 "
-                    "https://a.b\\x_y.z/GH-12 https://example.test/doc#12")
+                    "https://a.b\\x_y.z/GH-12 https://example.test/doc#12 https://-x.test/GH-12 "
+                    "https://ex\xe4_b.test/GH-12 https://.x/GH-12 https://e.test/x<@someuser "
+                    "https://e.test/<a href=https://phish.example>Pay</a>")
         joined = ("Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team "
                   "GH-\u206012 gh-\u206012 https://GitHub\u2060.COM/rust-lang/rust/issues/1 "
                   "&amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\xad-12 "
@@ -596,7 +601,9 @@ class RenderTests(unittest.TestCase):
                   "github\u2060.com/rust-lang/rust/issues/\u20601 rust-lang/rust/pull/\u20602 "
                   "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
                   "https://github\u2060.com/rust-lang/rust/issues/2 https://_x.example/GH-\u206012 "
-                  "https://a.b\\\\x_y.z/GH-\u206012 https://example.test/doc#12")
+                  "https://a.b\\\\x_y.z/GH-\u206012 https://example.test/doc#12 https://-x.test/GH-\u206012 "
+                  "https://ex\xe4_b.test/GH-\u206012 https://.x/GH-\u206012 https://e.test/x&lt;@someuser "
+                  "https://e.test/&lt;a href=https://phish.example\\>Pay&lt;/a\\>")
         source = "https://example.test/act#sec.11"
         rows = self.rows([
             ("Ruling #3", "https://example.test/page",
@@ -610,7 +617,7 @@ class RenderTests(unittest.TestCase):
             f"| HTTP 403 {joined}. This host refuses automated retrieval: review by hand. |",
             f"| changed | `example-skill` | [Moved]({source}) | 2026-09-08 | not published "
             "| Source destination changed from https://example.test/old to "
-            "https://example.test/x\\<@\u2060someuser\\<https://github\u2060.com/rust-lang/rust/issues/1. |",
+            "https://example.test/x&lt;@someuser&lt;https://github.com/rust-lang/rust/issues/1. |",
             f"| unreadable | `example-skill` | [Odd type]({source}) | 2026-09-08 | not published "
             "| Retrieved x/@\u2060someuser but extracted no content to digest. This is a fault in "
             "scripts/source_refresh.py, not a finding about the source. |",

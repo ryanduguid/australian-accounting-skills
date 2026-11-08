@@ -725,13 +725,18 @@ pub fn source_readiness(record: &Value, outcome: &Outcome, today: &str) -> (bool
 }
 /// One inert link destination, as `markdown_link` in scripts/source_refresh.py makes it.
 pub fn markdown_link(value: &str) -> String {
+    escape_markdown(value, true)
+}
+/// `markdown_link`'s escapes, leaving `<` unescaped when `escape_lt` is false; `TEXT_STRUCTURE`
+/// in scripts/source_refresh.py says why a table cell writes it as `&lt;` instead.
+fn escape_markdown(value: &str, escape_lt: bool) -> String {
     let mut cell = String::with_capacity(value.len());
     for c in value.chars() {
         if c.is_control() {
             cell.push('\u{FFFD}');
             continue;
         }
-        if matches!(c, '\\' | '`' | '<' | '>' | '[' | ']' | '|') {
+        if matches!(c, '\\' | '`' | '>' | '[' | ']' | '|') || (escape_lt && c == '<') {
             cell.push('\\');
         }
         cell.push(c);
@@ -740,7 +745,7 @@ pub fn markdown_link(value: &str) -> String {
 }
 /// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
 pub fn markdown_text(value: &str) -> String {
-    let text = markdown_link(value);
+    let text = escape_markdown(value, false);
     let mut cell = String::with_capacity(text.len());
     let (mut plain, mut at) = (0, 0);
     while let Some(c) = text[at..].chars().next() {
@@ -756,7 +761,7 @@ pub fn markdown_text(value: &str) -> String {
                 } else {
                     cell.push_str(name);
                 }
-                cell.push_str(&text[host_end..end]);
+                cell.push_str(&text[host_end..end].replace('<', "&lt;"));
                 (plain, at) = (end, end);
             }
             None => at += c.len_utf8(),
@@ -768,6 +773,7 @@ pub fn markdown_text(value: &str) -> String {
 fn plain_text(text: &str) -> String {
     let text = text
         .replace('&', "&amp;")
+        .replace('<', "&lt;")
         .replace('@', "@\u{2060}")
         .replace('#', "#\u{2060}");
     let text = join_after(&join_after(&text, "gh-", 3), "github.com", 6);
@@ -809,14 +815,14 @@ fn url_span(text: &str, at: usize) -> Option<(usize, usize, usize)> {
         .any(|label| label.contains('_'));
     let stop = text[host_end..].chars().next();
     if name.is_empty()
-        || name.starts_with(['.', '_'])
+        || name.starts_with(['-', '.', '_'])
         || underscore
         || stop.is_some_and(|c| c == '\\' || !c.is_ascii())
     {
         return None;
     }
     let end = text[host_end..]
-        .find([' ', '<'])
+        .find(' ')
         .map_or(text.len(), |n| host_end + n);
     Some((host, host_end, end))
 }
