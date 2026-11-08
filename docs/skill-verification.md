@@ -2,18 +2,18 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a verdict confirmed on an earlier card version.
+Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
 - **Unreachable**: sources whose last fetch did not return HTTP 200 and that have no manual review record.
 - **Changed since review**: sources that published a change after their last review.
-- **Cards**: fabricated [validation cards](../validation/README.md) that exercise the skill.
-- **Confirmed pass** and **Confirmed fail**: those cards with a human-confirmed verdict in [validation/results](../validation/results/) given on the card as it is now. A pass shows that a model passed the card's rubric on one run, not that the skill's content is correct.
-- **On an earlier card**: cards whose confirmed verdict was given on a version of the card that has since changed. That verdict no longer counts as a pass or fail; a verdict on the current card, if there is one, is counted in its own column.
+- **Cards**: fabricated [validation cards](../validation/README.md) that target the skill. It is a count of cards, not of runs.
+- **Confirmed pass** and **Confirmed fail**: those cards with a human-confirmed verdict in [validation/results](../validation/results/) whose recorded rubric digest matches the card as it is now. A pass shows that a model passed the card's rubric on one run, not that the skill's content is correct.
+- **Non-current digest**: cards with a human-confirmed verdict whose recorded rubric digest does not match the card as it is now. The build does not check the card's history, so this says only that the digests differ. Such a verdict does not count as a pass or fail; a verdict that matches the current card, if there is one, is counted in its own column.
 - **Legacy records**: `2026-09-06-claude-opus-5.json` and `2026-09-08-codex.json` predate the confirmed status and state no input mode, so the columns leave them out. They record a fail for `export-manifest-rounding` (`2026-09-08-codex.json`).
 
-| Skill | Sources | Earliest review | Unreachable | Changed since review | Cards | Confirmed pass | Confirmed fail | On an earlier card |
+| Skill | Sources | Earliest review | Unreachable | Changed since review | Cards | Confirmed pass | Confirmed fail | Non-current digest |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`au-aml-ctf-client-coverage`](../.claude/skills/au-aml-ctf-client-coverage/SKILL.md) | [12](../.claude/skills/au-aml-ctf-client-coverage/sources.json) | 2026-10-14 (6 of 12) | 4 | 0 | 4 | 1 | 0 | 0 |
 | [`au-asic-company-changes`](../.claude/skills/au-asic-company-changes/SKILL.md) | [10](../.claude/skills/au-asic-company-changes/sources.json) | 2026-11-02 (10 of 10) | 0 | 0 | 1 | 1 | 0 | 0 |

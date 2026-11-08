@@ -92,19 +92,22 @@ symlink or not a regular file is refused. The retired Python command wrote
 through either link.
 
 The Python builder did not have the `reviewed_count`, `confirmed_pass`,
-`confirmed_fail` and `confirmed_on_earlier_card` fields or their totals; the
+`confirmed_fail` and `confirmed_noncurrent_digest` fields or their totals; the
 note now describes them. `reviewed_count` is how many indexed sources carry a
 review date. A confirmed verdict counts as a pass or fail only when the record's
 `rubric_sha256` matches the card's current bytes; otherwise the card is listed
-under `confirmed_on_earlier_card`, even if the current card also has a verdict.
-Verdicts on different card versions judged different cards, so a pass on an
-earlier version and a fail on the current one both stand. The build refuses a
-verdict other than `pass` or `fail`, a confirmed verdict without a rubric
-digest or for a card no skill targets, and one card version confirmed both
+under `confirmed_noncurrent_digest`, even if the current card also has a
+verdict. The build does not look for the digest in the card's git history,
+because the native CI job checks out a single commit, so that list claims only
+that the digests differ. Verdicts under different digests judged different
+cards, so a pass under an old digest and a fail on the current card both stand.
+The build refuses a status other than `prepared`, `observed` or `confirmed`
+(an absent status marks a legacy record), a verdict other than `pass` or
+`fail`, a confirmed verdict whose `rubric_sha256` is not 64 lower-case hex
+digits, one for a card no skill targets, and one card version confirmed both
 pass and fail, naming both records, because no rule yet says which verdict
-supersedes the other. Legacy records, which have no status,
-are left out of the counts and named in the page's legend with any fail they
-hold.
+supersedes the other. Legacy records are left out of the counts and named in
+the page's legend with any fail they hold.
 
 The schema, field order, note text, source-date distinctions, card deduplication,
 quoted test mentions and platform newline conventions preserve the retired

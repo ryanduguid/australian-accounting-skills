@@ -303,17 +303,20 @@ fn confirmed_verdicts_count_only_for_the_current_card() {
     assert_eq!(beta["confirmed_pass"], serde_json::json!([]));
     assert_eq!(beta["confirmed_fail"], serde_json::json!(["shared"]));
     assert_eq!(
-        beta["confirmed_on_earlier_card"],
+        beta["confirmed_noncurrent_digest"],
         serde_json::json!(["beta-revised"])
     );
     assert_eq!(matrix["totals"]["skills_with_confirmed_pass"], 1);
     assert_eq!(matrix["totals"]["skills_with_confirmed_fail"], 2);
-    assert_eq!(matrix["totals"]["skills_with_confirmed_on_earlier_card"], 1);
+    assert_eq!(
+        matrix["totals"]["skills_with_confirmed_noncurrent_digest"],
+        1
+    );
     assert_eq!(matrix["totals"]["sources_reviewed"], 2);
 }
 
-/// The fixture confirms `beta-revised` as a pass on an earlier card version;
-/// this adds a verdict on the current card.
+/// The fixture confirms `beta-revised` as a pass under a well-formed digest
+/// that matches no version of the card; this adds a verdict on the current card.
 fn rerun_beta_revised(verdict: &str) -> serde_json::Value {
     let root = verified_tree();
     let rerun = confirmed_record(root.path(), &[("beta-revised", verdict)]);
@@ -331,7 +334,7 @@ fn a_current_pass_counts_and_the_earlier_verdict_stays_listed() {
     let beta = rerun_beta_revised("pass");
     assert_eq!(beta["confirmed_pass"], serde_json::json!(["beta-revised"]));
     assert_eq!(
-        beta["confirmed_on_earlier_card"],
+        beta["confirmed_noncurrent_digest"],
         serde_json::json!(["beta-revised"])
     );
 }
@@ -345,7 +348,7 @@ fn a_fail_on_the_current_card_after_a_pass_on_an_earlier_one_is_not_a_conflict()
         serde_json::json!(["beta-revised", "shared"])
     );
     assert_eq!(
-        beta["confirmed_on_earlier_card"],
+        beta["confirmed_noncurrent_digest"],
         serde_json::json!(["beta-revised"])
     );
 }
@@ -358,9 +361,11 @@ fn verification_page_states_the_matrix_totals_and_one_row_per_skill() {
         "Totals: 2 skills, 3 indexed primary sources of which 2 have a recorded human review, \
          1 skills exempt from source indexing, 1 skills with an unreachable source, \
          0 skills with a source changed since review, 1 skills with a confirmed pass, \
-         2 skills with a confirmed fail and 1 skills with a verdict confirmed on an earlier \
-         card version.\n"
+         2 skills with a confirmed fail and 1 skills with a confirmed verdict whose rubric \
+         digest does not match the current card.\n"
     ));
+    assert!(page.contains("| Confirmed pass | Confirmed fail | Non-current digest |\n"));
+    assert!(page.contains("not of runs"), "{page}");
     assert!(page.contains(
         "| [`alpha`](../.claude/skills/alpha/SKILL.md) | [3](../.claude/skills/alpha/sources.json) \
          | 2026-02-01 (2 of 3) | 1 | 0 | 3 | 1 | 1 | 0 |\n"
@@ -389,6 +394,79 @@ fn malformed_or_orphaned_confirmed_verdicts_are_refused() {
         fs::write(root.path().join("validation/results/bad.json"), record).unwrap();
         assert!(rendered(root.path()).is_err(), "{record}");
     }
+}
+
+#[test]
+fn a_null_non_string_or_unknown_status_is_refused() {
+    for status in [
+        serde_json::Value::Null,
+        serde_json::json!(1),
+        serde_json::json!("confimed"),
+    ] {
+        let root = verified_tree();
+        let mut record = confirmed_record(root.path(), &[("alpha-two", "pass")]);
+        record["status"] = status.clone();
+        fs::write(
+            root.path().join("validation/results/bad.json"),
+            record.to_string(),
+        )
+        .unwrap();
+        let error = rendered(root.path()).unwrap_err().to_string();
+        assert!(error.contains("bad.json"), "{status}: {error}");
+    }
+}
+
+#[test]
+fn an_observed_record_stays_out_of_the_counts() {
+    let root = verified_tree();
+    let mut record = confirmed_record(root.path(), &[("alpha-two", "pass")]);
+    record["status"] = serde_json::json!("observed");
+    fs::write(
+        root.path().join("validation/results/observed-verdict.json"),
+        record.to_string(),
+    )
+    .unwrap();
+    let matrix: serde_json::Value = serde_json::from_str(&rendered(root.path()).unwrap()).unwrap();
+    assert_eq!(
+        matrix["skills"][0]["validation"]["confirmed_pass"],
+        serde_json::json!(["alpha-one"])
+    );
+}
+
+#[test]
+fn a_malformed_rubric_digest_is_refused() {
+    let upper = digest(b"earlier").to_uppercase();
+    for bad in ["abc", upper.as_str(), &"g".repeat(64)] {
+        let root = verified_tree();
+        let mut record = confirmed_record(root.path(), &[("alpha-two", "pass")]);
+        record["provenance"]["alpha-two"]["rubric_sha256"] = serde_json::json!(bad);
+        fs::write(
+            root.path().join("validation/results/bad.json"),
+            record.to_string(),
+        )
+        .unwrap();
+        let error = rendered(root.path()).unwrap_err().to_string();
+        assert!(error.contains("rubric_sha256"), "{bad}: {error}");
+    }
+}
+
+#[test]
+fn a_well_formed_unknown_digest_is_only_called_non_current() {
+    let root = verified_tree();
+    let mut record = confirmed_record(root.path(), &[("alpha-two", "fail")]);
+    record["provenance"]["alpha-two"]["rubric_sha256"] = serde_json::json!("0".repeat(64));
+    fs::write(
+        root.path().join("validation/results/unknown.json"),
+        record.to_string(),
+    )
+    .unwrap();
+    let matrix: serde_json::Value = serde_json::from_str(&rendered(root.path()).unwrap()).unwrap();
+    let alpha = &matrix["skills"][0]["validation"];
+    assert_eq!(alpha["confirmed_fail"], serde_json::json!(["shared"]));
+    assert_eq!(
+        alpha["confirmed_noncurrent_digest"],
+        serde_json::json!(["alpha-two"])
+    );
 }
 
 #[test]

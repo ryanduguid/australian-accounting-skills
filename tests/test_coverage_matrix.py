@@ -69,8 +69,8 @@ class CoverageMatrixTests(unittest.TestCase):
             skills_with_confirmed_fail=sum(
                 1 for row in listed if row["validation"]["confirmed_fail"]
             ),
-            skills_with_confirmed_on_earlier_card=sum(
-                1 for row in listed if row["validation"]["confirmed_on_earlier_card"]
+            skills_with_confirmed_noncurrent_digest=sum(
+                1 for row in listed if row["validation"]["confirmed_noncurrent_digest"]
             ),
             sources_reviewed=sum(row["sources"]["reviewed_count"] for row in listed),
         )
@@ -80,7 +80,7 @@ class CoverageMatrixTests(unittest.TestCase):
         """Recount the confirmed verdicts, holding each to the card bytes it was judged on.
 
         A verdict counts as current only when the record's rubric digest equals
-        the card as it is now; a verdict on an earlier version is listed apart,
+        the card as it is now; a verdict under any other digest is listed apart,
         whether or not the current card also has one.
         Legacy records carry no status and stay out of these lists.
         """
@@ -107,7 +107,7 @@ class CoverageMatrixTests(unittest.TestCase):
                         [card for card in cards if card in current[verdict]],
                     )
                 self.assertEqual(
-                    row["validation"]["confirmed_on_earlier_card"],
+                    row["validation"]["confirmed_noncurrent_digest"],
                     [card for card in cards if card in earlier],
                 )
 

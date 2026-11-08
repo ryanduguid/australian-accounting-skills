@@ -34,7 +34,7 @@ use std::{
 };
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_on_earlier_card lists cards with a confirmed verdict given on an earlier version, whether or not the current card also has one. One card version confirmed both pass and fail is refused. Legacy records without a status are not counted.";
+const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.";
 /// The per-skill table build-coverage writes beside coverage.json.
 pub const VERIFICATION_PAGE: &str = "docs/skill-verification.md";
 
@@ -55,7 +55,7 @@ pub struct Validation {
     only_seeded_case: bool,
     confirmed_pass: Vec<String>,
     confirmed_fail: Vec<String>,
-    confirmed_on_earlier_card: Vec<String>,
+    confirmed_noncurrent_digest: Vec<String>,
 }
 #[derive(Serialize)]
 pub struct Gates {
@@ -80,7 +80,7 @@ pub struct Totals {
     skills_with_only_the_seeded_case: usize,
     skills_with_confirmed_pass: usize,
     skills_with_confirmed_fail: usize,
-    skills_with_confirmed_on_earlier_card: usize,
+    skills_with_confirmed_noncurrent_digest: usize,
     sources_reviewed: usize,
 }
 #[derive(Serialize)]
@@ -324,16 +324,19 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
 struct Verdicts {
     passed: BTreeSet<String>,
     failed: BTreeSet<String>,
-    earlier_card: BTreeSet<String>,
+    noncurrent_digest: BTreeSet<String>,
     legacy: Vec<(String, Vec<String>)>,
 }
 
 /// Reads validation/results. Version 2 records whose status is confirmed
 /// count when their rubric digest matches the current card bytes, and are
 /// listed apart otherwise, even when the current card has its own verdict.
-/// Legacy records state no status: they are kept for the page's legend only.
-/// One card version confirmed both pass and fail is refused, because no rule
-/// yet says which verdict supersedes the other.
+/// A non-matching digest is not checked against the card's history: the
+/// native CI job checks out one commit, so the list claims only that the
+/// digest differs. Legacy records state no status: they are kept for the
+/// page's legend only. Prepared and observed records carry no counted verdict,
+/// and any other status is refused. One card version confirmed both pass and
+/// fail is refused, because no rule yet says which verdict supersedes the other.
 fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts> {
     let mut verdicts = Verdicts::default();
     let mut seen: BTreeMap<(String, String), (String, String)> = BTreeMap::new();
@@ -363,7 +366,12 @@ fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts
                 continue;
             }
             Some(Some("confirmed")) => {}
-            _ => continue,
+            Some(Some("prepared" | "observed")) => continue,
+            Some(_) => {
+                return Err(
+                    format!("{file}: status must be prepared, observed or confirmed").into(),
+                );
+            }
         }
         for (card, verdict) in stated {
             if !known.contains(card) {
@@ -374,7 +382,15 @@ fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts
                 .and_then(|provenance| provenance.get(card))
                 .and_then(|entry| entry.get("rubric_sha256"))
                 .and_then(Value::as_str)
-                .ok_or_else(|| format!("{file}: {card} has no rubric_sha256"))?;
+                .filter(|digest| {
+                    digest.len() == 64
+                        && digest
+                            .bytes()
+                            .all(|byte| matches!(byte, b'0'..=b'9' | b'a'..=b'f'))
+                })
+                .ok_or_else(|| {
+                    format!("{file}: {card} needs a rubric_sha256 of 64 lower-case hex digits")
+                })?;
             // Verdicts on different card versions judged different cards, so
             // only one card version confirmed both ways is a conflict.
             let version = (card.clone(), recorded.to_owned());
@@ -392,7 +408,7 @@ fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts
                 root.join("validation/cases").join(format!("{card}.md")),
             )?);
             let list = if recorded != current {
-                &mut verdicts.earlier_card
+                &mut verdicts.noncurrent_digest
             } else if verdict == "pass" {
                 &mut verdicts.passed
             } else {
@@ -447,7 +463,7 @@ pub fn build(root: &Path) -> Result<Matrix> {
         };
         let confirmed_pass = confirmed(&verdicts.passed);
         let confirmed_fail = confirmed(&verdicts.failed);
-        let confirmed_on_earlier_card = confirmed(&verdicts.earlier_card);
+        let confirmed_noncurrent_digest = confirmed(&verdicts.noncurrent_digest);
         let behavioural = mentions.remove(&skill).unwrap();
         totals.sources_indexed += sources.indexed;
         totals.skills_source_exempt += usize::from(sources.exempt);
@@ -458,8 +474,8 @@ pub fn build(root: &Path) -> Result<Matrix> {
         totals.skills_with_only_the_seeded_case += usize::from(only_seeded_case);
         totals.skills_with_confirmed_pass += usize::from(!confirmed_pass.is_empty());
         totals.skills_with_confirmed_fail += usize::from(!confirmed_fail.is_empty());
-        totals.skills_with_confirmed_on_earlier_card +=
-            usize::from(!confirmed_on_earlier_card.is_empty());
+        totals.skills_with_confirmed_noncurrent_digest +=
+            usize::from(!confirmed_noncurrent_digest.is_empty());
         totals.sources_reviewed += sources.reviewed_count;
         rows.push(Row {
             skill,
@@ -470,7 +486,7 @@ pub fn build(root: &Path) -> Result<Matrix> {
                 only_seeded_case,
                 confirmed_pass,
                 confirmed_fail,
-                confirmed_on_earlier_card,
+                confirmed_noncurrent_digest,
             },
             gates: Gates {
                 behavioural,
@@ -512,8 +528,8 @@ pub fn verification_page(matrix: &Matrix) -> String {
          Totals: {} skills, {} indexed primary sources of which {} have a recorded human \
          review, {} skills exempt from source indexing, {} skills with an unreachable source, \
          {} skills with a source changed since review, {} skills with a confirmed pass, \
-         {} skills with a confirmed fail and {} skills with a verdict confirmed on an earlier \
-         card version.\n\n\
+         {} skills with a confirmed fail and {} skills with a confirmed verdict whose rubric \
+         digest does not match the current card.\n\n\
          - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill \
          with a recorded exemption.\n\
          - **Earliest review**: the oldest date on which a person recorded reading one of \
@@ -523,15 +539,17 @@ pub fn verification_page(matrix: &Matrix) -> String {
          manual review record.\n\
          - **Changed since review**: sources that published a change after their last \
          review.\n\
-         - **Cards**: fabricated [validation cards](../validation/README.md) that exercise the \
-         skill.\n\
+         - **Cards**: fabricated [validation cards](../validation/README.md) that target the \
+         skill. It is a count of cards, not of runs.\n\
          - **Confirmed pass** and **Confirmed fail**: those cards with a human-confirmed \
-         verdict in [validation/results](../validation/results/) given on the card as it is \
-         now. A pass shows that a model passed the card's rubric on one run, not that the \
-         skill's content is correct.\n\
-         - **On an earlier card**: cards whose confirmed verdict was given on a version of the \
-         card that has since changed. That verdict no longer counts as a pass or fail; a \
-         verdict on the current card, if there is one, is counted in its own column.\n",
+         verdict in [validation/results](../validation/results/) whose recorded rubric digest \
+         matches the card as it is now. A pass shows that a model passed the card's rubric on \
+         one run, not that the skill's content is correct.\n\
+         - **Non-current digest**: cards with a human-confirmed verdict whose recorded rubric \
+         digest does not match the card as it is now. The build does not check the card's \
+         history, so this says only that the digests differ. Such a verdict does not count as \
+         a pass or fail; a verdict that matches the current card, if there is one, is counted \
+         in its own column.\n",
         totals.skills,
         totals.sources_indexed,
         totals.sources_reviewed,
@@ -540,7 +558,7 @@ pub fn verification_page(matrix: &Matrix) -> String {
         totals.skills_with_sources_moved_since_review,
         totals.skills_with_confirmed_pass,
         totals.skills_with_confirmed_fail,
-        totals.skills_with_confirmed_on_earlier_card,
+        totals.skills_with_confirmed_noncurrent_digest,
     );
     if !matrix.legacy.is_empty() {
         let files: Vec<String> = matrix
@@ -566,7 +584,7 @@ pub fn verification_page(matrix: &Matrix) -> String {
     }
     text.push_str(
         "\n| Skill | Sources | Earliest review | Unreachable | Changed since review | Cards \
-         | Confirmed pass | Confirmed fail | On an earlier card |\n\
+         | Confirmed pass | Confirmed fail | Non-current digest |\n\
          | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n",
     );
     for row in &matrix.skills {
@@ -600,7 +618,7 @@ pub fn verification_page(matrix: &Matrix) -> String {
             row.validation.cases,
             row.validation.confirmed_pass.len(),
             row.validation.confirmed_fail.len(),
-            row.validation.confirmed_on_earlier_card.len(),
+            row.validation.confirmed_noncurrent_digest.len(),
         ));
     }
     text

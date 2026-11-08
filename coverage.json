@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_on_earlier_card lists cards with a confirmed verdict given on an earlier version, whether or not the current card also has one. One card version confirmed both pass and fail is refused. Legacy records without a status are not counted.",
+  "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
     "skills": 97,
     "sources_indexed": 511,
@@ -11,7 +11,7 @@
     "skills_with_only_the_seeded_case": 27,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
-    "skills_with_confirmed_on_earlier_card": 2,
+    "skills_with_confirmed_noncurrent_digest": 2,
     "sources_reviewed": 341
   },
   "skills": [
@@ -39,7 +39,7 @@
           "au-aml-ctf-client-coverage-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -70,7 +70,7 @@
           "au-asic-company-changes-sole-director-exit"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -96,7 +96,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -124,7 +124,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -154,7 +154,7 @@
           "au-ato-objection-uncertain-timing"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -184,7 +184,7 @@
           "au-ato-penalties-interest-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -212,7 +212,7 @@
           "au-award-underpayment-review-missing-rate-table"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -244,7 +244,7 @@
           "au-bookkeeping-supported-reconciliation"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -276,7 +276,7 @@
           "au-business-acquisition-review-share-sale-gaps"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -304,7 +304,7 @@
           "au-business-formation-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -337,7 +337,7 @@
           "au-capital-gains-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -367,7 +367,7 @@
           "au-car-expenses-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -395,7 +395,7 @@
           "au-client-acceptance-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -423,7 +423,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -453,7 +453,7 @@
           "au-company-tax-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -481,7 +481,7 @@
           "au-crypto-tax-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -511,7 +511,7 @@
           "au-deceased-estates-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -541,7 +541,7 @@
           "au-depreciation-schedule-register-roll-forward"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -571,7 +571,7 @@
           "au-director-penalty-review-understated-disclosure"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -599,7 +599,7 @@
           "au-division-293-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -627,7 +627,7 @@
           "au-division-296-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -654,7 +654,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -680,7 +680,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -708,7 +708,7 @@
           "au-etp-redundancy-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -738,7 +738,7 @@
           "au-financial-statements-supported-mapping"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": [
+        "confirmed_noncurrent_digest": [
           "au-financial-statements-missing-evidence"
         ]
       },
@@ -771,7 +771,7 @@
           "au-foreign-income-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -797,7 +797,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -825,7 +825,7 @@
           "au-forex-review-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -853,7 +853,7 @@
           "au-franking-account-ledger-rebuild"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -881,7 +881,7 @@
           "au-gst-property-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -910,7 +910,7 @@
           "au-gst-registration-review-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -943,7 +943,7 @@
           "au-individual-return-records-request"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -982,7 +982,7 @@
           "au-land-tax-windfall-gains-deferral"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1010,7 +1010,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1037,7 +1037,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1067,7 +1067,7 @@
           "au-medicare-review-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1093,7 +1093,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1121,7 +1121,7 @@
           "au-nonresident-cgt-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1151,7 +1151,7 @@
           "au-not-for-profit-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1179,7 +1179,7 @@
           "au-partnership-tax-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1207,7 +1207,7 @@
           "au-payg-instalment-variation-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1240,7 +1240,7 @@
           "au-payroll-review-supported-tie-out"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1277,7 +1277,7 @@
           "au-payroll-tax-states-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1307,7 +1307,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1338,7 +1338,7 @@
           "au-primary-production-early-fmd-withdrawal"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1366,7 +1366,7 @@
           "au-private-ruling-application-omitted-loan"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1394,7 +1394,7 @@
           "au-professional-firm-profits-trust-heavy-allocation"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1422,7 +1422,7 @@
           "au-property-development-income-three-lot-subdivision"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1451,7 +1451,7 @@
           "au-psi-review-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1481,7 +1481,7 @@
           "au-rd-incentive-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1510,7 +1510,7 @@
           "au-rental-property-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1542,7 +1542,7 @@
           "au-restructure-rollovers-sole-trader-incorporation"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1570,7 +1570,7 @@
           "au-return-amendment-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1597,7 +1597,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1626,7 +1626,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1656,7 +1656,7 @@
           "au-small-business-cgt-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1684,7 +1684,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1712,7 +1712,7 @@
           "au-smsf-year-end-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1742,7 +1742,7 @@
           "au-sole-trader-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1774,7 +1774,7 @@
           "au-super-contribution-caps-salary-sacrifice-headroom"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1806,7 +1806,7 @@
           "au-super-guarantee-charge-remitted-not-received"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1835,7 +1835,7 @@
           "au-tax-agent-obligations-pi-and-statement"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1866,7 +1866,7 @@
           "au-tax-planning-review-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1895,7 +1895,7 @@
           "au-tax-rates-verification-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1926,7 +1926,7 @@
           "au-tax-research-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -1956,7 +1956,7 @@
           "au-tax-residency-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -1992,7 +1992,7 @@
           "au-transfer-duty-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2022,7 +2022,7 @@
           "au-transfer-pricing-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2050,7 +2050,7 @@
           "au-travel-expenses-mixed-overseas-trip"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2078,7 +2078,7 @@
           "au-trust-deed-review-unexecuted-variation"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2107,7 +2107,7 @@
           "au-trust-distributions-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2136,7 +2136,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2166,7 +2166,7 @@
           "au-wfh-deductions-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2194,7 +2194,7 @@
           "au-working-holiday-makers-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2235,7 +2235,7 @@
           "bas-stp-w3-w4"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2271,7 +2271,7 @@
           "cashflow-supported-roll-forward"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2305,7 +2305,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2337,7 +2337,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2369,7 +2369,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2399,7 +2399,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2429,7 +2429,7 @@
           "div7a-upe-review"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2460,7 +2460,7 @@
           "fbt-carparking-missing-declaration"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2493,7 +2493,7 @@
           "financial-modelling-structure-faults"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2525,7 +2525,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2563,7 +2563,7 @@
           "stp-current-vs-overdue-sg"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2601,7 +2601,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2634,7 +2634,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2664,7 +2664,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2694,7 +2694,7 @@
         "only_seeded_case": false,
         "confirmed_pass": [],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2727,7 +2727,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2758,7 +2758,7 @@
           "statement-to-csv-overlap-and-formula"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [],
@@ -2791,7 +2791,7 @@
           "stp-current-vs-overdue-sg"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2827,7 +2827,7 @@
           "tax-invoice-review-missing-evidence"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2858,7 +2858,7 @@
           "standalone-skill-safety-boundary"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": [
+        "confirmed_noncurrent_digest": [
           "wip-cost-to-complete-gap"
         ]
       },
@@ -2901,7 +2901,7 @@
           "post-journal-provenance-tie-out"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2941,7 +2941,7 @@
           "post-journal-provenance-tie-out"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
@@ -2975,7 +2975,7 @@
           "post-journal-provenance-tie-out"
         ],
         "confirmed_fail": [],
-        "confirmed_on_earlier_card": []
+        "confirmed_noncurrent_digest": []
       },
       "gates": {
         "behavioural": [
