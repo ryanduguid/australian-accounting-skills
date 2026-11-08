@@ -36,6 +36,9 @@ RESULT_VERDICTS = ("pass", "fail")
 RESULT_STATUSES = ("prepared", "observed", "confirmed")
 RESULT_INPUT_MODES = ("task-only", "whole-card")
 RESULT_DIGESTS = ("input_sha256", "context_sha256", "rubric_sha256")
+# Optional on a confirmed version 2 record: one verdict per dimension, so a
+# blended pass cannot hide a refusal or authority failure.
+RESULT_DIMENSIONS = ("correctness", "refusal", "authority")
 SHA256_PATTERN = r"[0-9a-f]{64}"
 # A full commit id, which skills_version may carry; its digits can run long
 # enough to look like an identifier, so that one screen is waived for it.
@@ -400,7 +403,17 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
         )
     try:
         properties = schema["properties"]
-        if not (set(properties) == set(RESULT_V2_KEYS)):
+        if not (set(properties) == {*RESULT_V2_KEYS, "scores"}):
+            raise ValueError("schema contract mismatch")
+        scores = properties["scores"]
+        if not (isinstance(scores, dict) and {key: value for key, value in scores.items() if key != "description"} == {
+            "type": "object",
+            "propertyNames": {"$ref": "#/properties/results/propertyNames"},
+            "additionalProperties": {
+                "type": "object", "additionalProperties": False, "required": list(RESULT_DIMENSIONS),
+                "properties": dict.fromkeys(RESULT_DIMENSIONS, {"$ref": "#/properties/results/additionalProperties"}),
+            },
+        }):
             raise ValueError("schema contract mismatch")
         if not (properties["schema_version"] == {"const": 2, "type": "integer"}):
             raise ValueError("schema contract mismatch")
@@ -435,7 +448,7 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
         if not (verdict_rule == {
             "if": {"properties": {"status": {"const": "confirmed"}}},
             "then": {"properties": {"results": {"minProperties": 1}}},
-            "else": {"properties": {"results": {"maxProperties": 0}}},
+            "else": {"properties": {"results": {"maxProperties": 0}}, "not": {"required": ["scores"]}},
         }):
             raise ValueError("schema contract mismatch")
         if not (output_rule == {
@@ -447,7 +460,7 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
         }):
             raise ValueError("schema contract mismatch")
         if not (rules["else"] == {
-            "not": {"anyOf": [{"required": [key]} for key in ("input_mode", "status", "provenance")]},
+            "not": {"anyOf": [{"required": [key]} for key in ("input_mode", "status", "provenance", "scores")]},
             "properties": {"results": {"minProperties": 1}},
         }):
             raise ValueError("schema contract mismatch")
@@ -499,9 +512,10 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
     data = _strict_json(text, rel)
     version_two = isinstance(data, dict) and "schema_version" in data
     keys = RESULT_V2_KEYS if version_two else RESULT_KEYS
-    if not isinstance(data, dict) or sorted(data) != sorted(keys):
+    optional = {"scores"} if version_two else set()
+    if not isinstance(data, dict) or set(data) - optional != set(keys):
         raise ValidationError(
-            f"result keys must be exactly {', '.join(keys)}; "
+            f"result keys must be exactly {', '.join(keys)}{', optionally scores' if optional else ''}; "
             "prompts, outputs and transcripts do not belong in a result file"
         )
     for key in ("model", "run_date", "skills_version", "runner"):
@@ -545,6 +559,19 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
             raise ValidationError("only human-confirmed trials may contain verdicts")
         if status == "confirmed" and (not isinstance(results, dict) or set(results) != set(provenance)):
             raise ValidationError("confirmed verdicts must cover exactly the provenance cases")
+        if "scores" in data:
+            scores = data["scores"]
+            if status != "confirmed":
+                raise ValidationError("only human-confirmed trials may contain scores")
+            if not isinstance(scores, dict) or set(scores) != set(results):
+                raise ValidationError("scores must cover exactly the confirmed verdicts")
+            for case, score in scores.items():
+                if (not isinstance(score, dict) or sorted(score) != sorted(RESULT_DIMENSIONS)
+                        or any(value not in RESULT_VERDICTS for value in score.values())):
+                    raise ValidationError(f"{case}: score must give pass or fail for each of correctness, "
+                                          "refusal and authority")
+                if results[case] != ("pass" if all(value == "pass" for value in score.values()) else "fail"):
+                    raise ValidationError(f"{case}: verdict must be pass only when every dimension passes")
     if not isinstance(results, dict) or (status in ("legacy", "confirmed") and not results):
         raise ValidationError("results must map at least one card id to a verdict")
     # A card can only appear once: _strict_json rejects a repeated key.

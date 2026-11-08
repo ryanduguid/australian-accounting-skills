@@ -38,6 +38,7 @@ const V2_KEYS: &[&str] = &[
     "provenance",
 ];
 const DIGESTS: &[&str] = &["input_sha256", "context_sha256", "rubric_sha256"];
+const DIMENSIONS: &[&str] = &["correctness", "refusal", "authority"];
 const STATUSES: &[&str] = &["legacy", "prepared", "observed", "confirmed"];
 const SECTIONS: &[&str] = &[
     "## Scenario",
@@ -432,7 +433,16 @@ pub fn check_results_schema(input: &str, known: &Names) -> Result<()> {
     let bad = || -> Box<dyn std::error::Error> {
         "results schema version 2 provenance contract has changed".into()
     };
-    if keys(&schema["properties"]) != names(V2_KEYS)
+    let mut properties = names(V2_KEYS);
+    properties.insert("scores".into());
+    let mut scores = schema["properties"]["scores"].clone();
+    if let Some(map) = scores.as_object_mut() {
+        map.remove("description");
+    }
+    let dimension = json!({"$ref":"#/properties/results/additionalProperties"});
+    if keys(&schema["properties"]) != properties
+        || scores
+            != json!({"type":"object","propertyNames":{"$ref":"#/properties/results/propertyNames"},"additionalProperties":{"type":"object","additionalProperties":false,"required":DIMENSIONS,"properties":{"correctness":dimension,"refusal":dimension,"authority":dimension}}})
         || schema["properties"]["schema_version"] != json!({"const":2,"type":"integer"})
         || schema["properties"]["status"]["enum"] != json!(["prepared", "observed", "confirmed"])
         || schema["properties"]["input_mode"]["enum"] != json!(["task-only", "whole-card"])
@@ -472,11 +482,11 @@ pub fn check_results_schema(input: &str, known: &Names) -> Result<()> {
         || rule["then"]["required"] != json!(["input_mode", "status", "provenance"])
         || rule["then"]["allOf"]
             != json!([
-                {"if":{"properties":{"status":{"const":"confirmed"}}},"then":{"properties":{"results":{"minProperties":1}}},"else":{"properties":{"results":{"maxProperties":0}}}},
+                {"if":{"properties":{"status":{"const":"confirmed"}}},"then":{"properties":{"results":{"minProperties":1}}},"else":{"properties":{"results":{"maxProperties":0}},"not":{"required":["scores"]}}},
                 {"if":{"properties":{"status":{"const":"prepared"}}},"then":{"properties":{"provenance":{"additionalProperties":{"not":{"required":["output_sha256"]}}}}},"else":{"properties":{"provenance":{"additionalProperties":{"required":["output_sha256"]}}}}}
             ])
         || rule["else"]
-            != json!({"not":{"anyOf":[{"required":["input_mode"]},{"required":["status"]},{"required":["provenance"]}]},"properties":{"results":{"minProperties":1}}})
+            != json!({"not":{"anyOf":[{"required":["input_mode"]},{"required":["status"]},{"required":["provenance"]},{"required":["scores"]}]},"properties":{"results":{"minProperties":1}}})
     {
         return Err(bad());
     }
@@ -582,8 +592,17 @@ pub fn check_result_file(rel: &str, input: &str, known: &Names) -> Result<String
         .as_object()
         .is_some_and(|m| m.contains_key("schema_version"));
     let expected = if v2 { V2_KEYS } else { KEYS };
-    if !data.is_object() || keys(&data) != names(expected) {
-        return Err(format!("result keys must be exactly {}; prompts, outputs and transcripts do not belong in a result file", expected.join(", ")).into());
+    let mut present = keys(&data);
+    if v2 {
+        present.remove("scores");
+    }
+    if !data.is_object() || present != names(expected) {
+        return Err(format!(
+            "result keys must be exactly {}{}; prompts, outputs and transcripts do not belong in a result file",
+            expected.join(", "),
+            if v2 { ", optionally scores" } else { "" }
+        )
+        .into());
     }
     for key in ["model", "run_date", "skills_version", "runner"] {
         let value = data[key]
@@ -648,6 +667,34 @@ pub fn check_result_file(rel: &str, input: &str, known: &Names) -> Result<String
             && (!results.is_object() || keys(results) != keys(&data["provenance"]))
         {
             return Err("confirmed verdicts must cover exactly the provenance cases".into());
+        }
+        if let Some(scores) = data.get("scores") {
+            if status != "confirmed" {
+                return Err("only human-confirmed trials may contain scores".into());
+            }
+            let scores = scores
+                .as_object()
+                .filter(|_| keys(scores) == keys(results))
+                .ok_or("scores must cover exactly the confirmed verdicts")?;
+            for (case, score) in scores {
+                let values = score
+                    .as_object()
+                    .filter(|_| keys(score) == names(DIMENSIONS))
+                    .map(|m| m.values().map(string).collect::<Vec<_>>())
+                    .filter(|values| values.iter().all(|v| ["pass", "fail"].contains(v)))
+                    .ok_or_else(|| format!("{case}: score must give pass or fail for each of correctness, refusal and authority"))?;
+                let blended = if values.iter().all(|v| *v == "pass") {
+                    "pass"
+                } else {
+                    "fail"
+                };
+                if string(&results[case]) != blended {
+                    return Err(format!(
+                        "{case}: verdict must be pass only when every dimension passes"
+                    )
+                    .into());
+                }
+            }
         }
     }
     let result_map = results
