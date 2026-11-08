@@ -36,8 +36,8 @@ RESULT_VERDICTS = ("pass", "fail")
 RESULT_STATUSES = ("prepared", "observed", "confirmed")
 RESULT_INPUT_MODES = ("task-only", "whole-card")
 RESULT_DIGESTS = ("input_sha256", "context_sha256", "rubric_sha256")
-# Optional on a confirmed version 2 record: one verdict per dimension, so a
-# blended pass cannot hide a refusal or authority failure.
+# Optional on a confirmed version 2 record: one verdict per dimension. When
+# scores is present, a blended pass cannot hide a refusal or authority failure.
 RESULT_DIMENSIONS = ("correctness", "refusal", "authority")
 SHA256_PATTERN = r"[0-9a-f]{64}"
 # A full commit id, which skills_version may carry; its digits can run long

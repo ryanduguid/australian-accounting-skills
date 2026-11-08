@@ -4,9 +4,11 @@
 //! Flags tool calls in kept `claude plugin eval` traces whose input names the
 //! eval suite, a grader or a validation card. The graders sit inside the
 //! evaluated plugin copy, so a model that could have read its own rubric voids
-//! that card. Ported from the 4 November 2026 `audit_grader_reads.py`; the
-//! report is the same, and the command fails when it flags or cannot read
-//! anything.
+//! that card. Ported from the 4 November 2026 `audit_grader_reads.py`: the
+//! report is the same on well-formed traces, and the command fails when it
+//! flags or cannot read anything. Three inputs print differently: an integer
+//! above the 64-bit range prints as a float, and a line holding NaN or a lone
+//! surrogate escape is a SKIP where the script flagged its call.
 use crate::{Result, platform_text};
 use fancy_regex::Regex;
 use serde::Serialize;
@@ -19,6 +21,8 @@ use std::{
     sync::LazyLock,
 };
 
+// Python's re.I also matches dotless and dotted I (U+0131, U+0130) as `i`;
+// the regex crate's case folding does not, so `audit` maps them before matching.
 static SUSPECT: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?i)(^|[\\/])(evals|graders|validation|held)([\\/]|$)|required-checks|restraint\.md|skill-fired|case\.yaml|rubric").unwrap()
 });
@@ -107,14 +111,37 @@ fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
         let path = dir.join(entry.file_name());
         if entry.file_type()?.is_dir() {
             traces(&path, found)?;
-        } else if entry.file_name() == "output.jsonl" {
+        } else if is_trace_name(&entry.file_name()) {
             found.push(path);
         }
     }
     Ok(())
 }
 
-/// The suspect calls in one trace, and the line numbers that were not JSON.
+/// Python's rglob matches the name case-insensitively on Windows only.
+fn is_trace_name(name: &std::ffi::OsStr) -> bool {
+    if cfg!(windows) {
+        name.eq_ignore_ascii_case("output.jsonl")
+    } else {
+        name == "output.jsonl"
+    }
+}
+
+/// Python sorts Windows paths by their lower-cased parts and POSIX paths by
+/// their parts as they are.
+fn sort_traces(found: &mut [PathBuf]) {
+    if cfg!(windows) {
+        found.sort_by_cached_key(|path| {
+            path.components()
+                .map(|part| part.as_os_str().to_string_lossy().to_lowercase())
+                .collect::<Vec<_>>()
+        });
+    } else {
+        found.sort();
+    }
+}
+
+/// The suspect calls in one trace, and the line numbers that were not JSON objects.
 fn audit(trace: &Path) -> Result<(Vec<String>, Vec<usize>)> {
     let bytes = fs::read(trace).map_err(|error| format!("{}: {error}", trace.display()))?;
     let (mut hits, mut unreadable) = (Vec::new(), Vec::new());
@@ -124,7 +151,10 @@ fn audit(trace: &Path) -> Result<(Vec<String>, Vec<usize>)> {
         if line.trim().is_empty() {
             continue;
         }
-        let Ok(event) = serde_json::from_str::<Value>(line) else {
+        let Some(event) = serde_json::from_str::<Value>(line)
+            .ok()
+            .filter(Value::is_object)
+        else {
             unreadable.push(index + 1);
             continue;
         };
@@ -136,7 +166,7 @@ fn audit(trace: &Path) -> Result<(Vec<String>, Vec<usize>)> {
                 continue;
             }
             let input = python_json(block.get("input").unwrap_or(&Value::Null))?;
-            if SUSPECT.is_match(&input)? {
+            if SUSPECT.is_match(&input.replace(['\u{131}', '\u{130}'], "i"))? {
                 let shown: String = input.chars().take(200).collect();
                 hits.push(format!("{} {shown}", python_str(block.get("name"))?));
             }
@@ -160,7 +190,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
             .collect();
         let mut found = Vec::new();
         traces(&root, &mut found)?;
-        found.sort();
+        sort_traces(&mut found);
         for trace in found {
             total += 1;
             let (hits, unreadable) = audit(&trace)?;
@@ -173,7 +203,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
             }
             for line in unreadable {
                 problems += &format!(
-                    "SKIP {}:{line} is not JSON, so its tool calls were not audited\n",
+                    "SKIP {}:{line} is not a JSON object, so its tool calls were not audited\n",
                     trace.display()
                 );
             }

@@ -777,6 +777,7 @@ class RecordedRunTests(unittest.TestCase):
                 validator.check_result_file(self.NAME, json.dumps(data))
 
     def test_one_record_cannot_pool_input_modes(self) -> None:
+        # Pins existing behaviour: the input_mode enum already refused these.
         for mode in (["task-only", "whole-card"], "task-only,whole-card", "mixed"):
             data = self.scored()
             data["input_mode"] = mode

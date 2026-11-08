@@ -4,6 +4,10 @@
 use std::{fs, path::Path, process::Command};
 
 const CLEAN: &str = r#"{"type":"assistant","message":{"content":[{"type":"text","text":"I will not open evals/"},{"type":"tool_use","name":"Read","input":{"file_path":"/tmp/copy/skills/bas-preparation/SKILL.md"}}]}}"#;
+const READ: &str = r#"{"message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"/tmp/copy/evals/graders.yaml"}}]}}"#;
+const READ_HIT: &str = "  Read {\"file_path\": \"/tmp/copy/evals/graders.yaml\"}";
+/// Folder names that only contain a suspect word stay clean.
+const NEAR_MISSES: &str = r#"{"message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"/copy/evals-old/x"}},{"type":"tool_use","name":"Read","input":{"file_path":"/copy/withheld/x"}},{"type":"tool_use","name":"Read","input":{"file_path":"C:\\copy\\graders2\\x"}},{"type":"tool_use","name":"Read","input":{"file_path":"/copy/invalidation/x"}}]}}"#;
 
 fn write(root: &Path, run: &str, lines: &[&str]) {
     let folder = root.join(run);
@@ -37,18 +41,59 @@ fn shown(run: &str) -> String {
 #[test]
 fn a_trace_that_names_the_graders_fails_and_a_clean_one_passes() {
     let folder = tempfile::tempdir().unwrap();
-    write(folder.path(), "run-1", &[CLEAN, ""]);
+    write(folder.path(), "run-1", &[CLEAN, NEAR_MISSES, ""]);
     assert_eq!(
         audit(folder.path(), &["."]),
         (0, "traces=1 flagged=0\n".into(), String::new())
     );
 
-    let read = r#"{"message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"/tmp/copy/evals/graders.yaml"}}]}}"#;
-    write(folder.path(), "run-2", &[read]);
+    write(folder.path(), "run-2", &[READ]);
+    let expected = format!("FLAG {}\n{READ_HIT}\ntraces=2 flagged=1\n", shown("run-2"));
+    assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
+}
+
+/// Python's re.I reads a dotless or dotted I as `i`.
+#[test]
+fn a_dotless_or_dotted_i_still_matches() {
+    let folder = tempfile::tempdir().unwrap();
+    let call = |input: &str| {
+        format!(
+            r#"{{"message":{{"content":[{{"type":"tool_use","name":"Read","input":{{"p":"{input}"}}}}]}}}}"#
+        )
+    };
+    let (dotless, dotted) = (call("/copy/val\u{131}dat\u{131}on/x"), call("rubr\u{130}c"));
+    write(folder.path(), "run", &[dotless.as_str(), dotted.as_str()]);
     let expected = format!(
-        "FLAG {}\n  Read {{\"file_path\": \"/tmp/copy/evals/graders.yaml\"}}\ntraces=2 flagged=1\n",
-        shown("run-2")
+        "FLAG {}\n  Read {{\"p\": \"/copy/val\u{131}dat\u{131}on/x\"}}\n  Read {{\"p\": \"rubr\u{130}c\"}}\ntraces=1 flagged=1\n",
+        shown("run")
     );
+    assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
+}
+
+/// Python's rglob and path sort ignore case on Windows only.
+#[test]
+fn trace_names_and_order_follow_the_platform_case_rule() {
+    let folder = tempfile::tempdir().unwrap();
+    write(folder.path(), "B", &[READ]);
+    write(folder.path(), "a", &[READ]);
+    fs::create_dir(folder.path().join("c")).unwrap();
+    fs::write(folder.path().join("c/Output.JSONL"), format!("{READ}\n")).unwrap();
+    let flag = |path: String| format!("FLAG {path}\n{READ_HIT}\n");
+    let expected = if cfg!(windows) {
+        let upper = Path::new("c").join("Output.JSONL").display().to_string();
+        format!(
+            "{}{}{}traces=3 flagged=3\n",
+            flag(shown("a")),
+            flag(shown("B")),
+            flag(upper)
+        )
+    } else {
+        format!(
+            "{}{}traces=2 flagged=2\n",
+            flag(shown("B")),
+            flag(shown("a"))
+        )
+    };
     assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
 }
 
@@ -97,17 +142,19 @@ fn an_unread_line_or_an_empty_audit_fails() {
     write(
         folder.path(),
         "run",
-        &[CLEAN, "{\"message\": {\"content\": [", "NaN"],
+        &[CLEAN, "{\"message\": {\"content\": [", "NaN", "[1, 2]"],
     );
     let (code, stdout, stderr) = audit(folder.path(), &["run"]);
     assert_eq!((code, stdout.as_str()), (1, "traces=1 flagged=0\n"));
     let trace = shown("run");
-    assert_eq!(
-        stderr,
-        format!(
-            "SKIP {trace}:2 is not JSON, so its tool calls were not audited\nSKIP {trace}:3 is not JSON, so its tool calls were not audited\n"
-        )
-    );
+    let skipped: String = (2..=4)
+        .map(|line| {
+            format!(
+                "SKIP {trace}:{line} is not a JSON object, so its tool calls were not audited\n"
+            )
+        })
+        .collect();
+    assert_eq!(stderr, skipped);
 
     fs::create_dir(folder.path().join("empty")).unwrap();
     assert_eq!(
