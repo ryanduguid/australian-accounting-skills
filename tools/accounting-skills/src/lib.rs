@@ -34,7 +34,7 @@ use std::{
 };
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results; legacy records without a status are not counted.";
+const NOTE: &str = "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_on_earlier_card lists cards whose confirmed verdict was given on an earlier version. A card confirmed both pass and fail is refused. Legacy records without a status are not counted.";
 /// The per-skill table build-coverage writes beside coverage.json.
 pub const VERIFICATION_PAGE: &str = "docs/skill-verification.md";
 
@@ -43,6 +43,7 @@ pub struct Sources {
     indexed: usize,
     exempt: bool,
     reviewed: String,
+    reviewed_count: usize,
     fetched: String,
     unreachable: usize,
     moved_since_review: Vec<String>,
@@ -54,6 +55,7 @@ pub struct Validation {
     only_seeded_case: bool,
     confirmed_pass: Vec<String>,
     confirmed_fail: Vec<String>,
+    confirmed_on_earlier_card: Vec<String>,
 }
 #[derive(Serialize)]
 pub struct Gates {
@@ -78,6 +80,8 @@ pub struct Totals {
     skills_with_only_the_seeded_case: usize,
     skills_with_confirmed_pass: usize,
     skills_with_confirmed_fail: usize,
+    skills_with_confirmed_on_earlier_card: usize,
+    sources_reviewed: usize,
 }
 #[derive(Serialize)]
 pub struct Matrix {
@@ -85,6 +89,10 @@ pub struct Matrix {
     note: &'static str,
     totals: Totals,
     skills: Vec<Row>,
+    /// Each legacy record's file name and the cards it records as failed.
+    /// The page names them; coverage.json does not carry them.
+    #[serde(skip)]
+    legacy: Vec<(String, Vec<String>)>,
 }
 
 /// Replace `path` with `text` without writing through a link. A symlink or
@@ -260,6 +268,7 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
         indexed: 0,
         exempt: directory.join("sources.exempt.json").is_file(),
         reviewed: String::new(),
+        reviewed_count: 0,
         fetched: String::new(),
         unreachable: 0,
         moved_since_review: Vec::new(),
@@ -304,49 +313,102 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
     reviewed.sort();
     fetched.sort();
     summary.moved_since_review.sort();
+    summary.reviewed_count = reviewed.len();
     summary.reviewed = reviewed.into_iter().next().unwrap_or_default();
     summary.fetched = fetched.into_iter().next().unwrap_or_default();
     Ok(summary)
 }
 
-/// Cards with a human-confirmed pass, and cards with a human-confirmed fail.
-/// Only version 2 records whose status is confirmed carry verdicts; legacy
-/// records state no status and are not counted.
-fn confirmed_cards(root: &Path) -> Result<(BTreeSet<String>, BTreeSet<String>)> {
-    let mut passed = BTreeSet::new();
-    let mut failed = BTreeSet::new();
+/// Human-confirmed verdicts, sorted by whether they judged the card as it is now.
+#[derive(Default)]
+struct Verdicts {
+    passed: BTreeSet<String>,
+    failed: BTreeSet<String>,
+    earlier_card: BTreeSet<String>,
+    legacy: Vec<(String, Vec<String>)>,
+}
+
+/// Reads validation/results. Version 2 records whose status is confirmed
+/// count when their rubric digest matches the current card bytes, and are
+/// listed apart otherwise. Legacy records state no status: they are kept for
+/// the page's legend only. A card confirmed both pass and fail is refused,
+/// because no rule yet says which verdict supersedes the other.
+fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts> {
+    let mut verdicts = Verdicts::default();
+    let mut seen: BTreeMap<String, (String, String)> = BTreeMap::new();
     for path in entries(&root.join("validation/results"))? {
         if !matches_suffix(&path, ".json")? {
             continue;
         }
         let record: Value = serde_json::from_str(&read_text(&path)?)?;
-        if record.get("status").and_then(Value::as_str) != Some("confirmed") {
-            continue;
-        }
         let file = name(&path)?;
         let results = record
             .get("results")
             .and_then(Value::as_object)
             .ok_or_else(|| format!("{file}: results must be an object"))?;
+        let mut stated = Vec::new();
         for (card, verdict) in results {
             match verdict.as_str() {
-                Some("pass") => passed.insert(card.clone()),
-                Some("fail") => failed.insert(card.clone()),
+                Some(verdict @ ("pass" | "fail")) => stated.push((card, verdict)),
                 _ => return Err(format!("{file}: {card} must be pass or fail").into()),
+            }
+        }
+        match record.get("status").map(Value::as_str) {
+            None => {
+                let fails = stated.iter().filter(|(_, verdict)| *verdict == "fail");
+                verdicts
+                    .legacy
+                    .push((file, fails.map(|(card, _)| (*card).clone()).collect()));
+                continue;
+            }
+            Some(Some("confirmed")) => {}
+            _ => continue,
+        }
+        for (card, verdict) in stated {
+            if !known.contains(card) {
+                return Err(format!("{file}: {card} is not a card any skill targets").into());
+            }
+            if let Some((other, earlier)) = seen.get(card)
+                && other != verdict
+            {
+                return Err(format!(
+                    "{card} is confirmed {other} in {earlier} and {verdict} in {file}; \
+                     record which verdict stands before it can be counted"
+                )
+                .into());
+            }
+            seen.insert(card.clone(), (verdict.to_owned(), file.clone()));
+            let recorded = record
+                .get("provenance")
+                .and_then(|provenance| provenance.get(card))
+                .and_then(|entry| entry.get("rubric_sha256"))
+                .and_then(Value::as_str)
+                .ok_or_else(|| format!("{file}: {card} has no rubric_sha256"))?;
+            let current = trial::digest(&fs::read(
+                root.join("validation/cases").join(format!("{card}.md")),
+            )?);
+            let list = if recorded != current {
+                &mut verdicts.earlier_card
+            } else if verdict == "pass" {
+                &mut verdicts.passed
+            } else {
+                &mut verdicts.failed
             };
+            list.insert(card.clone());
         }
     }
-    Ok((passed, failed))
+    // A verdict on the current card supersedes one on an earlier version.
+    verdicts
+        .earlier_card
+        .retain(|card| !verdicts.passed.contains(card) && !verdicts.failed.contains(card));
+    Ok(verdicts)
 }
 
 pub fn build(root: &Path) -> Result<Matrix> {
     let skills = discover_skills(root)?;
     let mut cards = case_targets(root)?;
-    let (passed, failed) = confirmed_cards(root)?;
     let known: BTreeSet<&String> = cards.values().flatten().collect();
-    if let Some(card) = passed.union(&failed).find(|card| !known.contains(card)) {
-        return Err(format!("a confirmed verdict names {card}, which no card targets").into());
-    }
+    let verdicts = confirmed_verdicts(root, &known)?;
     let mut mentions: BTreeMap<String, Vec<String>> = skills
         .iter()
         .map(|skill| (skill.clone(), Vec::new()))
@@ -383,8 +445,9 @@ pub fn build(root: &Path) -> Result<Matrix> {
                 .cloned()
                 .collect::<Vec<_>>()
         };
-        let confirmed_pass = confirmed(&passed);
-        let confirmed_fail = confirmed(&failed);
+        let confirmed_pass = confirmed(&verdicts.passed);
+        let confirmed_fail = confirmed(&verdicts.failed);
+        let confirmed_on_earlier_card = confirmed(&verdicts.earlier_card);
         let behavioural = mentions.remove(&skill).unwrap();
         totals.sources_indexed += sources.indexed;
         totals.skills_source_exempt += usize::from(sources.exempt);
@@ -395,6 +458,9 @@ pub fn build(root: &Path) -> Result<Matrix> {
         totals.skills_with_only_the_seeded_case += usize::from(only_seeded_case);
         totals.skills_with_confirmed_pass += usize::from(!confirmed_pass.is_empty());
         totals.skills_with_confirmed_fail += usize::from(!confirmed_fail.is_empty());
+        totals.skills_with_confirmed_on_earlier_card +=
+            usize::from(!confirmed_on_earlier_card.is_empty());
+        totals.sources_reviewed += sources.reviewed_count;
         rows.push(Row {
             skill,
             sources,
@@ -404,6 +470,7 @@ pub fn build(root: &Path) -> Result<Matrix> {
                 only_seeded_case,
                 confirmed_pass,
                 confirmed_fail,
+                confirmed_on_earlier_card,
             },
             gates: Gates {
                 behavioural,
@@ -416,6 +483,7 @@ pub fn build(root: &Path) -> Result<Matrix> {
         note: NOTE,
         totals,
         skills: rows,
+        legacy: verdicts.legacy,
     })
 }
 
@@ -441,13 +509,16 @@ pub fn verification_page(matrix: &Matrix) -> String {
          Generated from [coverage.json](../coverage.json) by \
          `accounting-skills build-coverage --write`. Its `--check` mode fails when this page \
          disagrees with the tree.\n\n\
-         Totals: {} skills, {} indexed primary sources, {} skills exempt from source indexing, \
-         {} skills with an unreachable source, {} skills with a source changed since review, \
-         {} skills with a confirmed pass and {} skills with a confirmed fail.\n\n\
+         Totals: {} skills, {} indexed primary sources of which {} have a recorded human \
+         review, {} skills exempt from source indexing, {} skills with an unreachable source, \
+         {} skills with a source changed since review, {} skills with a confirmed pass, \
+         {} skills with a confirmed fail and {} skills with a verdict confirmed on an earlier \
+         card version.\n\n\
          - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill \
          with a recorded exemption.\n\
          - **Earliest review**: the oldest date on which a person recorded reading one of \
-         those sources. A fetch is not a review.\n\
+         those sources, then how many of them carry a review date at all. A source with no \
+         review date has not been reviewed. A fetch is not a review.\n\
          - **Unreachable**: sources whose last fetch did not return HTTP 200 and that have no \
          manual review record.\n\
          - **Changed since review**: sources that published a change after their last \
@@ -455,19 +526,47 @@ pub fn verification_page(matrix: &Matrix) -> String {
          - **Cards**: fabricated [validation cards](../validation/README.md) that exercise the \
          skill.\n\
          - **Confirmed pass** and **Confirmed fail**: those cards with a human-confirmed \
-         verdict in [validation/results](../validation/results/). Legacy records without a \
-         status are not counted. A pass shows that a model followed the card on one run, not \
-         that the skill's content is correct.\n\n\
-         | Skill | Sources | Earliest review | Unreachable | Changed since review | Cards \
-         | Confirmed pass | Confirmed fail |\n\
-         | --- | --- | --- | --- | --- | --- | --- | --- |\n",
+         verdict in [validation/results](../validation/results/) given on the card as it is \
+         now. A pass shows that a model passed the card's rubric on one run, not that the \
+         skill's content is correct.\n\
+         - **On an earlier card**: cards whose confirmed verdict was given on a version of the \
+         card that has since changed, so it no longer counts as a pass or fail.\n",
         totals.skills,
         totals.sources_indexed,
+        totals.sources_reviewed,
         totals.skills_source_exempt,
         totals.skills_with_unreachable_sources,
         totals.skills_with_sources_moved_since_review,
         totals.skills_with_confirmed_pass,
         totals.skills_with_confirmed_fail,
+        totals.skills_with_confirmed_on_earlier_card,
+    );
+    if !matrix.legacy.is_empty() {
+        let files: Vec<String> = matrix
+            .legacy
+            .iter()
+            .map(|(file, _)| format!("`{file}`"))
+            .collect();
+        let fails: Vec<String> = matrix
+            .legacy
+            .iter()
+            .flat_map(|(file, cards)| cards.iter().map(move |card| format!("`{card}` (`{file}`)")))
+            .collect();
+        let held = if fails.is_empty() {
+            "They record no fail.".to_owned()
+        } else {
+            format!("They record a fail for {}.", listed(&fails))
+        };
+        text.push_str(&format!(
+            "- **Legacy records**: {} predate the confirmed status and state no input mode, so \
+             the columns leave them out. {held}\n",
+            listed(&files)
+        ));
+    }
+    text.push_str(
+        "\n| Skill | Sources | Earliest review | Unreachable | Changed since review | Cards \
+         | Confirmed pass | Confirmed fail | On an earlier card |\n\
+         | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n",
     );
     for row in &matrix.skills {
         let skill = &row.skill;
@@ -482,22 +581,37 @@ pub fn verification_page(matrix: &Matrix) -> String {
         } else {
             "0".to_owned()
         };
-        let reviewed = if sources.reviewed.is_empty() {
+        let date = if sources.reviewed.is_empty() {
             "none"
         } else {
             &sources.reviewed
         };
+        let reviewed = if sources.indexed > 0 {
+            format!("{date} ({} of {})", sources.reviewed_count, sources.indexed)
+        } else {
+            date.to_owned()
+        };
         text.push_str(&format!(
             "| [`{skill}`](../.claude/skills/{skill}/SKILL.md) | {indexed} | {reviewed} | {} | {} \
-             | {} | {} | {} |\n",
+             | {} | {} | {} | {} |\n",
             sources.unreachable,
             sources.moved_since_review.len(),
             row.validation.cases,
             row.validation.confirmed_pass.len(),
             row.validation.confirmed_fail.len(),
+            row.validation.confirmed_on_earlier_card.len(),
         ));
     }
     text
+}
+
+/// `a`, `a and b` or `a, b and c`.
+fn listed(items: &[String]) -> String {
+    match items {
+        [] => String::new(),
+        [only] => only.clone(),
+        [rest @ .., last] => format!("{} and {last}", rest.join(", ")),
+    }
 }
 
 pub fn platform_text(text: &str) -> String {

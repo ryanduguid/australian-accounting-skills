@@ -1,7 +1,7 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-use accounting_skills::{front_matter, rendered, rendered_with_page};
+use accounting_skills::{front_matter, rendered, rendered_with_page, trial::digest};
 use std::{fs, process::Command};
 
 #[test]
@@ -215,7 +215,7 @@ fn check_refuses_stale_output_and_write_wins_over_check() {
     assert!(!run(&["--root", "--check"]).status.success());
 }
 
-/// Two skills, 3 cards and one source index, with confirmed, observed and
+/// Two skills, 4 cards and one source index, with confirmed, observed and
 /// legacy result records.
 fn verified_tree() -> tempfile::TempDir {
     let root = tempfile::tempdir().unwrap();
@@ -231,7 +231,7 @@ fn verified_tree() -> tempfile::TempDir {
     .unwrap();
     fs::write(
         root.path().join(".claude/skills/alpha/sources.json"),
-        r#"{"sources":[{"checked_at":"2026-03-01","http_status":200},{"checked_at":"2026-02-01","http_status":404}]}"#,
+        r#"{"sources":[{"checked_at":"2026-03-01","http_status":200},{"checked_at":"2026-02-01","http_status":404},{"http_status":200}]}"#,
     )
     .unwrap();
     let cases = root.path().join("validation/cases");
@@ -240,6 +240,7 @@ fn verified_tree() -> tempfile::TempDir {
         ("alpha-one", "- alpha"),
         ("alpha-two", "- alpha"),
         ("shared", "- alpha\n- beta"),
+        ("beta-revised", "- beta"),
     ] {
         fs::write(
             cases.join(format!("{card}.md")),
@@ -249,38 +250,81 @@ fn verified_tree() -> tempfile::TempDir {
     }
     let results = root.path().join("validation/results");
     fs::create_dir_all(&results).unwrap();
+    let confirmed = confirmed_record(root.path(), &[("alpha-one", "pass"), ("shared", "fail")]);
+    let mut revised = confirmed_record(root.path(), &[("beta-revised", "pass")]);
+    revised["provenance"]["beta-revised"]["rubric_sha256"] = serde_json::json!(digest(b"earlier"));
     for (file, record) in [
+        ("confirmed.json", confirmed.to_string()),
+        ("revised-confirmed.json", revised.to_string()),
         (
-            "confirmed.json",
-            r#"{"status":"confirmed","results":{"alpha-one":"pass","shared":"fail"}}"#,
+            "observed.json",
+            r#"{"status":"observed","results":{}}"#.to_owned(),
         ),
         (
-            "rerun-confirmed.json",
-            r#"{"status":"confirmed","results":{"shared":"pass"}}"#,
+            "legacy.json",
+            r#"{"results":{"alpha-two":"fail","alpha-one":"pass"}}"#.to_owned(),
         ),
-        ("observed.json", r#"{"status":"observed","results":{}}"#),
-        ("legacy.json", r#"{"results":{"alpha-two":"pass"}}"#),
     ] {
         fs::write(results.join(file), record).unwrap();
     }
     root
 }
 
+/// A confirmed record whose rubric digests match the cards as they are now.
+fn confirmed_record(root: &std::path::Path, verdicts: &[(&str, &str)]) -> serde_json::Value {
+    let mut results = serde_json::Map::new();
+    let mut provenance = serde_json::Map::new();
+    for (card, verdict) in verdicts {
+        let bytes = fs::read(root.join(format!("validation/cases/{card}.md"))).unwrap();
+        results.insert((*card).to_owned(), serde_json::json!(verdict));
+        provenance.insert(
+            (*card).to_owned(),
+            serde_json::json!({"rubric_sha256": digest(&bytes)}),
+        );
+    }
+    serde_json::json!({"status": "confirmed", "results": results, "provenance": provenance})
+}
+
 #[test]
-fn confirmed_verdicts_count_only_human_confirmed_records() {
+fn confirmed_verdicts_count_only_for_the_current_card() {
     let root = verified_tree();
     let matrix: serde_json::Value = serde_json::from_str(&rendered(root.path()).unwrap()).unwrap();
-    let alpha = &matrix["skills"][0]["validation"];
+    let alpha = &matrix["skills"][0];
     assert_eq!(
-        alpha["confirmed_pass"],
-        serde_json::json!(["alpha-one", "shared"])
+        alpha["validation"]["confirmed_pass"],
+        serde_json::json!(["alpha-one"])
     );
-    assert_eq!(alpha["confirmed_fail"], serde_json::json!(["shared"]));
+    assert_eq!(
+        alpha["validation"]["confirmed_fail"],
+        serde_json::json!(["shared"])
+    );
+    assert_eq!(alpha["sources"]["reviewed_count"], 2);
     let beta = &matrix["skills"][1]["validation"];
-    assert_eq!(beta["confirmed_pass"], serde_json::json!(["shared"]));
+    assert_eq!(beta["confirmed_pass"], serde_json::json!([]));
     assert_eq!(beta["confirmed_fail"], serde_json::json!(["shared"]));
-    assert_eq!(matrix["totals"]["skills_with_confirmed_pass"], 2);
+    assert_eq!(
+        beta["confirmed_on_earlier_card"],
+        serde_json::json!(["beta-revised"])
+    );
+    assert_eq!(matrix["totals"]["skills_with_confirmed_pass"], 1);
     assert_eq!(matrix["totals"]["skills_with_confirmed_fail"], 2);
+    assert_eq!(matrix["totals"]["skills_with_confirmed_on_earlier_card"], 1);
+    assert_eq!(matrix["totals"]["sources_reviewed"], 2);
+}
+
+#[test]
+fn a_current_verdict_supersedes_one_on_an_earlier_card() {
+    let root = verified_tree();
+    let again = confirmed_record(root.path(), &[("beta-revised", "pass")]);
+    fs::write(
+        root.path().join("validation/results/rerun-confirmed.json"),
+        again.to_string(),
+    )
+    .unwrap();
+    let matrix: serde_json::Value = serde_json::from_str(&rendered(root.path()).unwrap()).unwrap();
+    let beta = &matrix["skills"][1]["validation"];
+    assert_eq!(beta["confirmed_pass"], serde_json::json!(["beta-revised"]));
+    assert_eq!(beta["confirmed_on_earlier_card"], serde_json::json!([]));
 }
 
 #[test]
@@ -288,29 +332,54 @@ fn verification_page_states_the_matrix_totals_and_one_row_per_skill() {
     let root = verified_tree();
     let (_, page) = rendered_with_page(root.path()).unwrap();
     assert!(page.contains(
-        "Totals: 2 skills, 2 indexed primary sources, 1 skills exempt from source indexing, \
-         1 skills with an unreachable source, 0 skills with a source changed since review, \
-         2 skills with a confirmed pass and 2 skills with a confirmed fail.\n"
+        "Totals: 2 skills, 3 indexed primary sources of which 2 have a recorded human review, \
+         1 skills exempt from source indexing, 1 skills with an unreachable source, \
+         0 skills with a source changed since review, 1 skills with a confirmed pass, \
+         2 skills with a confirmed fail and 1 skills with a verdict confirmed on an earlier \
+         card version.\n"
     ));
     assert!(page.contains(
-        "| [`alpha`](../.claude/skills/alpha/SKILL.md) | [2](../.claude/skills/alpha/sources.json) \
-         | 2026-02-01 | 1 | 0 | 3 | 2 | 1 |\n"
+        "| [`alpha`](../.claude/skills/alpha/SKILL.md) | [3](../.claude/skills/alpha/sources.json) \
+         | 2026-02-01 (2 of 3) | 1 | 0 | 3 | 1 | 1 | 0 |\n"
     ));
     assert!(page.contains(
-        "| [`beta`](../.claude/skills/beta/SKILL.md) | exempt | none | 0 | 0 | 1 | 1 | 1 |\n"
+        "| [`beta`](../.claude/skills/beta/SKILL.md) | exempt | none | 0 | 0 | 2 | 0 | 1 | 1 |\n"
     ));
+    assert!(page.contains("`legacy.json`"), "{page}");
+    assert!(page.contains("`alpha-two` (`legacy.json`)"), "{page}");
+    assert!(
+        page.contains("passed the card's rubric on one run"),
+        "{page}"
+    );
 }
 
 #[test]
 fn malformed_or_orphaned_confirmed_verdicts_are_refused() {
     for record in [
-        r#"{"status":"confirmed","results":{"alpha-one":"passed"}}"#,
+        r#"{"status":"confirmed","results":{"alpha-one":"passed"},"provenance":{}}"#,
         r#"{"status":"confirmed","results":[]}"#,
-        r#"{"status":"confirmed","results":{"retired-card":"pass"}}"#,
+        r#"{"status":"confirmed","results":{"retired-card":"pass"},"provenance":{}}"#,
+        r#"{"status":"confirmed","results":{"alpha-one":"pass"},"provenance":{}}"#,
+        r#"{"results":{"alpha-one":"maybe"}}"#,
     ] {
         let root = verified_tree();
         fs::write(root.path().join("validation/results/bad.json"), record).unwrap();
         assert!(rendered(root.path()).is_err(), "{record}");
+    }
+}
+
+#[test]
+fn a_card_confirmed_both_pass_and_fail_is_refused() {
+    let root = verified_tree();
+    let conflict = confirmed_record(root.path(), &[("shared", "pass")]);
+    fs::write(
+        root.path().join("validation/results/conflict.json"),
+        conflict.to_string(),
+    )
+    .unwrap();
+    let error = rendered(root.path()).unwrap_err().to_string();
+    for part in ["shared", "confirmed.json", "conflict.json"] {
+        assert!(error.contains(part), "{error}");
     }
 }
 

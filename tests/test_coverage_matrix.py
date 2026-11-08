@@ -13,6 +13,7 @@ rows, and a classification that lands every skill in the same bucket.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import unittest
@@ -68,38 +69,92 @@ class CoverageMatrixTests(unittest.TestCase):
             skills_with_confirmed_fail=sum(
                 1 for row in listed if row["validation"]["confirmed_fail"]
             ),
+            skills_with_confirmed_on_earlier_card=sum(
+                1 for row in listed if row["validation"]["confirmed_on_earlier_card"]
+            ),
+            sources_reviewed=sum(row["sources"]["reviewed_count"] for row in listed),
         )
         self.assertEqual(totals, expected)
 
-    def test_confirmed_verdicts_come_only_from_confirmed_records(self) -> None:
-        """Recount the human-confirmed verdicts from validation/results directly."""
-        verdicts: dict[str, set[str]] = {"pass": set(), "fail": set()}
+    def test_confirmed_verdicts_count_only_for_the_current_card(self) -> None:
+        """Recount the confirmed verdicts, holding each to the card bytes it was judged on.
+
+        A verdict counts as current only when the record's rubric digest equals
+        the card as it is now; a verdict on an earlier version is listed apart.
+        Legacy records carry no status and stay out of these lists.
+        """
+        current: dict[str, set[str]] = {"pass": set(), "fail": set()}
+        earlier: set[str] = set()
         for path in sorted((REPOSITORY / "validation" / "results").glob("*.json")):
             record = json.loads(path.read_text(encoding="utf-8"))
-            if record.get("status") == "confirmed":
-                for card, verdict in record["results"].items():
-                    verdicts[verdict].add(card)
-        self.assertTrue(verdicts["pass"], "no confirmed pass found, so the recount is vacuous")
+            if record.get("status") != "confirmed":
+                continue
+            for card, verdict in record["results"].items():
+                card_bytes = (REPOSITORY / "validation" / "cases" / f"{card}.md").read_bytes()
+                digest = hashlib.sha256(card_bytes).hexdigest()
+                if record["provenance"][card]["rubric_sha256"] == digest:
+                    current[verdict].add(card)
+                else:
+                    earlier.add(card)
+        earlier -= current["pass"] | current["fail"]
+        self.assertTrue(current["pass"], "no confirmed pass found, so the recount is vacuous")
         for row in rows():
             cards = row["validation"]["case_ids"]
             with self.subTest(skill=row["skill"]):
                 for verdict in ("pass", "fail"):
                     self.assertEqual(
                         row["validation"][f"confirmed_{verdict}"],
-                        [card for card in cards if card in verdicts[verdict]],
+                        [card for card in cards if card in current[verdict]],
                     )
+                self.assertEqual(
+                    row["validation"]["confirmed_on_earlier_card"],
+                    [card for card in cards if card in earlier],
+                )
+
+    def test_reviewed_count_is_the_sources_with_a_review_date(self) -> None:
+        for row in rows():
+            index = SKILLS_DIRECTORY / row["skill"] / "sources.json"
+            records = []
+            if index.is_file():
+                records = json.loads(index.read_text(encoding="utf-8"))["sources"]
+            with self.subTest(skill=row["skill"]):
+                self.assertEqual(
+                    row["sources"]["reviewed_count"],
+                    sum(1 for record in records if record.get("checked_at")),
+                )
 
     def test_verification_page_states_the_matrix_totals(self) -> None:
         page = (REPOSITORY / "docs" / "skill-verification.md").read_text(encoding="utf-8")
         totals = matrix()["totals"]
         self.assertIn(
             f"Totals: {totals['skills']} skills, {totals['sources_indexed']} indexed primary "
-            f"sources, {totals['skills_source_exempt']} skills exempt from source indexing, "
+            f"sources of which {totals['sources_reviewed']} have a recorded human review, "
+            f"{totals['skills_source_exempt']} skills exempt from source indexing, "
             f"{totals['skills_with_unreachable_sources']} skills with an unreachable source, ",
             page,
         )
         listed = [line for line in page.splitlines() if line.startswith("| [`")]
         self.assertEqual(len(listed), totals["skills"])
+        for row, line in zip(rows(), listed, strict=True):
+            sources = row["sources"]
+            if sources["indexed"]:
+                with self.subTest(skill=row["skill"]):
+                    self.assertIn(f"({sources['reviewed_count']} of {sources['indexed']})", line)
+
+    def test_verification_page_names_every_legacy_record_and_its_fails(self) -> None:
+        """Legacy records are left out of the columns, so the legend must say what they hold."""
+        page = (REPOSITORY / "docs" / "skill-verification.md").read_text(encoding="utf-8")
+        legacy = 0
+        for path in sorted((REPOSITORY / "validation" / "results").glob("*.json")):
+            record = json.loads(path.read_text(encoding="utf-8"))
+            if "status" in record:
+                continue
+            legacy += 1
+            self.assertIn(f"`{path.name}`", page)
+            for card, verdict in record["results"].items():
+                if verdict == "fail":
+                    self.assertIn(f"`{card}` (`{path.name}`)", page)
+        self.assertTrue(legacy, "no legacy record found, so the check is vacuous")
 
     def test_behavioural_gates_separate_some_skills_from_others(self) -> None:
         """Guard against a classification that has stopped discriminating.

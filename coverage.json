@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results; legacy records without a status are not counted.",
+  "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_on_earlier_card lists cards whose confirmed verdict was given on an earlier version. A card confirmed both pass and fail is refused. Legacy records without a status are not counted.",
   "totals": {
     "skills": 97,
     "sources_indexed": 511,
@@ -10,7 +10,9 @@
     "skills_with_behavioural_gate": 50,
     "skills_with_only_the_seeded_case": 27,
     "skills_with_confirmed_pass": 82,
-    "skills_with_confirmed_fail": 0
+    "skills_with_confirmed_fail": 0,
+    "skills_with_confirmed_on_earlier_card": 2,
+    "sources_reviewed": 341
   },
   "skills": [
     {
@@ -19,6 +21,7 @@
         "indexed": 12,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 6,
         "fetched": "2026-09-26",
         "unreachable": 4,
         "moved_since_review": []
@@ -35,7 +38,8 @@
         "confirmed_pass": [
           "au-aml-ctf-client-coverage-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -51,6 +55,7 @@
         "indexed": 10,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 10,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -64,7 +69,8 @@
         "confirmed_pass": [
           "au-asic-company-changes-sole-director-exit"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -77,6 +83,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
@@ -88,7 +95,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -103,6 +111,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
@@ -114,7 +123,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -129,6 +139,7 @@
         "indexed": 7,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 7,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -142,7 +153,8 @@
         "confirmed_pass": [
           "au-ato-objection-uncertain-timing"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -155,6 +167,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 6,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -170,7 +183,8 @@
           "au-ato-penalties-interest-deductibility-split",
           "au-ato-penalties-interest-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -183,6 +197,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 5,
         "moved_since_review": []
@@ -196,7 +211,8 @@
         "confirmed_pass": [
           "au-award-underpayment-review-missing-rate-table"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -209,6 +225,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -226,7 +243,8 @@
           "au-bookkeeping-missing-evidence",
           "au-bookkeeping-supported-reconciliation"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -243,6 +261,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 5,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -256,7 +275,8 @@
         "confirmed_pass": [
           "au-business-acquisition-review-share-sale-gaps"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -269,6 +289,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-10-14",
         "unreachable": 0,
         "moved_since_review": []
@@ -282,7 +303,8 @@
         "confirmed_pass": [
           "au-business-formation-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -297,6 +319,7 @@
         "indexed": 7,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 7,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -313,7 +336,8 @@
           "au-capital-gains-inherited-pre-cgt-valuation",
           "au-capital-gains-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -328,6 +352,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 2,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -341,7 +366,8 @@
         "confirmed_pass": [
           "au-car-expenses-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -354,6 +380,7 @@
         "indexed": 9,
         "exempt": false,
         "reviewed": "2026-09-29",
+        "reviewed_count": 6,
         "fetched": "2026-09-29",
         "unreachable": 1,
         "moved_since_review": []
@@ -367,7 +394,8 @@
         "confirmed_pass": [
           "au-client-acceptance-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -382,6 +410,7 @@
         "indexed": 8,
         "exempt": false,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
@@ -393,7 +422,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -408,6 +438,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 3,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -421,7 +452,8 @@
         "confirmed_pass": [
           "au-company-tax-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -434,6 +466,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -447,7 +480,8 @@
         "confirmed_pass": [
           "au-crypto-tax-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -462,6 +496,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 1,
         "moved_since_review": []
@@ -475,7 +510,8 @@
         "confirmed_pass": [
           "au-deceased-estates-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -490,6 +526,7 @@
         "indexed": 11,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 11,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -503,7 +540,8 @@
         "confirmed_pass": [
           "au-depreciation-schedule-register-roll-forward"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -516,6 +554,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 3,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -531,7 +570,8 @@
           "au-director-penalty-review-estimate-and-resignation",
           "au-director-penalty-review-understated-disclosure"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -544,6 +584,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 2,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -557,7 +598,8 @@
         "confirmed_pass": [
           "au-division-293-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -570,6 +612,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 3,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -583,7 +626,8 @@
         "confirmed_pass": [
           "au-division-296-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -596,6 +640,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 2,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -608,7 +653,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -621,6 +667,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -632,7 +679,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -645,6 +693,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 3,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -658,7 +707,8 @@
         "confirmed_pass": [
           "au-etp-redundancy-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -671,6 +721,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-29",
+        "reviewed_count": 1,
         "fetched": "2026-10-28",
         "unreachable": 0,
         "moved_since_review": []
@@ -684,10 +735,12 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
-          "au-financial-statements-missing-evidence",
           "au-financial-statements-supported-mapping"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": [
+          "au-financial-statements-missing-evidence"
+        ]
       },
       "gates": {
         "behavioural": [
@@ -703,6 +756,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -716,7 +770,8 @@
         "confirmed_pass": [
           "au-foreign-income-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -729,6 +784,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -740,7 +796,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -753,6 +810,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -766,7 +824,8 @@
         "confirmed_pass": [
           "au-forex-review-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -779,6 +838,7 @@
         "indexed": 15,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 15,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -792,7 +852,8 @@
         "confirmed_pass": [
           "au-franking-account-ledger-rebuild"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -805,6 +866,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 2,
         "fetched": "2026-09-30",
         "unreachable": 0,
         "moved_since_review": []
@@ -818,7 +880,8 @@
         "confirmed_pass": [
           "au-gst-property-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -831,6 +894,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -845,7 +909,8 @@
         "confirmed_pass": [
           "au-gst-registration-review-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -858,6 +923,7 @@
         "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 2,
         "fetched": "2026-09-16",
         "unreachable": 2,
         "moved_since_review": []
@@ -876,7 +942,8 @@
           "au-individual-return-occupation-guide",
           "au-individual-return-records-request"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -891,6 +958,7 @@
         "indexed": 12,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 3,
         "fetched": "2026-09-30",
         "unreachable": 0,
         "moved_since_review": []
@@ -913,7 +981,8 @@
           "au-land-tax-missing-evidence",
           "au-land-tax-windfall-gains-deferral"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -928,6 +997,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -939,7 +1009,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -952,6 +1023,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -964,7 +1036,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -979,6 +1052,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -992,7 +1066,8 @@
         "confirmed_pass": [
           "au-medicare-review-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1005,6 +1080,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1016,7 +1092,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1029,6 +1106,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1042,7 +1120,8 @@
         "confirmed_pass": [
           "au-nonresident-cgt-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1057,6 +1136,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -1070,7 +1150,8 @@
         "confirmed_pass": [
           "au-not-for-profit-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1083,6 +1164,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1096,7 +1178,8 @@
         "confirmed_pass": [
           "au-partnership-tax-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1109,6 +1192,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -1122,7 +1206,8 @@
         "confirmed_pass": [
           "au-payg-instalment-variation-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1135,6 +1220,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 2,
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -1153,7 +1239,8 @@
           "au-payroll-review-pay-item-settings",
           "au-payroll-review-supported-tie-out"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1168,6 +1255,7 @@
         "indexed": 17,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 9,
         "fetched": "2026-09-24",
         "unreachable": 2,
         "moved_since_review": []
@@ -1188,7 +1276,8 @@
         "confirmed_pass": [
           "au-payroll-tax-states-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1203,6 +1292,7 @@
         "indexed": 10,
         "exempt": false,
         "reviewed": "2026-10-15",
+        "reviewed_count": 6,
         "fetched": "2026-10-15",
         "unreachable": 0,
         "moved_since_review": []
@@ -1216,7 +1306,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1232,6 +1323,7 @@
         "indexed": 13,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 13,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1245,7 +1337,8 @@
         "confirmed_pass": [
           "au-primary-production-early-fmd-withdrawal"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1258,6 +1351,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 6,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1271,7 +1365,8 @@
         "confirmed_pass": [
           "au-private-ruling-application-omitted-loan"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1284,6 +1379,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 2,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1297,7 +1393,8 @@
         "confirmed_pass": [
           "au-professional-firm-profits-trust-heavy-allocation"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1310,6 +1407,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 6,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1323,7 +1421,8 @@
         "confirmed_pass": [
           "au-property-development-income-three-lot-subdivision"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1336,6 +1435,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 2,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1350,7 +1450,8 @@
         "confirmed_pass": [
           "au-psi-review-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1365,6 +1466,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 2,
         "fetched": "2026-09-26",
         "unreachable": 0,
         "moved_since_review": []
@@ -1378,7 +1480,8 @@
         "confirmed_pass": [
           "au-rd-incentive-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1391,6 +1494,7 @@
         "indexed": 7,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 3,
         "fetched": "2026-09-16",
         "unreachable": 1,
         "moved_since_review": []
@@ -1405,7 +1509,8 @@
         "confirmed_pass": [
           "au-rental-property-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1422,6 +1527,7 @@
         "indexed": 12,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 12,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1435,7 +1541,8 @@
         "confirmed_pass": [
           "au-restructure-rollovers-sole-trader-incorporation"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1448,6 +1555,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1461,7 +1569,8 @@
         "confirmed_pass": [
           "au-return-amendment-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1474,6 +1583,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 2,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1486,7 +1596,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1501,6 +1612,7 @@
         "indexed": 15,
         "exempt": false,
         "reviewed": "2026-10-15",
+        "reviewed_count": 15,
         "fetched": "2026-10-15",
         "unreachable": 0,
         "moved_since_review": []
@@ -1513,7 +1625,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1528,6 +1641,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 3,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1541,7 +1655,8 @@
         "confirmed_pass": [
           "au-small-business-cgt-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1556,6 +1671,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 1,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1567,7 +1683,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1580,6 +1697,7 @@
         "indexed": 9,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 6,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1593,7 +1711,8 @@
         "confirmed_pass": [
           "au-smsf-year-end-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1608,6 +1727,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1621,7 +1741,8 @@
         "confirmed_pass": [
           "au-sole-trader-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1636,6 +1757,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 4,
         "fetched": "2026-09-24",
         "unreachable": 1,
         "moved_since_review": []
@@ -1651,7 +1773,8 @@
           "au-super-contribution-caps-missing-evidence",
           "au-super-contribution-caps-salary-sacrifice-headroom"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1666,6 +1789,7 @@
         "indexed": 8,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 8,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1681,7 +1805,8 @@
           "au-director-penalty-review-understated-disclosure",
           "au-super-guarantee-charge-remitted-not-received"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1694,6 +1819,7 @@
         "indexed": 20,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 2,
         "fetched": "2026-11-02",
         "unreachable": 8,
         "moved_since_review": []
@@ -1708,7 +1834,8 @@
         "confirmed_pass": [
           "au-tax-agent-obligations-pi-and-statement"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1724,6 +1851,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1737,7 +1865,8 @@
         "confirmed_pass": [
           "au-tax-planning-review-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1750,6 +1879,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1764,7 +1894,8 @@
         "confirmed_pass": [
           "au-tax-rates-verification-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1777,6 +1908,7 @@
         "indexed": 11,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 9,
         "fetched": "2026-09-27",
         "unreachable": 7,
         "moved_since_review": []
@@ -1793,7 +1925,8 @@
           "au-tax-research-announced-measure",
           "au-tax-research-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1808,6 +1941,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1821,7 +1955,8 @@
         "confirmed_pass": [
           "au-tax-residency-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1834,6 +1969,7 @@
         "indexed": 13,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 1,
         "fetched": "2026-09-30",
         "unreachable": 0,
         "moved_since_review": []
@@ -1855,7 +1991,8 @@
         "confirmed_pass": [
           "au-transfer-duty-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1870,6 +2007,7 @@
         "indexed": 1,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 1,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -1883,7 +2021,8 @@
         "confirmed_pass": [
           "au-transfer-pricing-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1896,6 +2035,7 @@
         "indexed": 9,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 9,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1909,7 +2049,8 @@
         "confirmed_pass": [
           "au-travel-expenses-mixed-overseas-trip"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1922,6 +2063,7 @@
         "indexed": 8,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 8,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -1935,7 +2077,8 @@
         "confirmed_pass": [
           "au-trust-deed-review-unexecuted-variation"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -1948,6 +2091,7 @@
         "indexed": 14,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 9,
         "fetched": "2026-09-16",
         "unreachable": 2,
         "moved_since_review": []
@@ -1962,7 +2106,8 @@
         "confirmed_pass": [
           "au-trust-distributions-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -1978,6 +2123,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
@@ -1989,7 +2135,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2004,6 +2151,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 3,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -2017,7 +2165,8 @@
         "confirmed_pass": [
           "au-wfh-deductions-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -2030,6 +2179,7 @@
         "indexed": 12,
         "exempt": false,
         "reviewed": "2026-09-29",
+        "reviewed_count": 12,
         "fetched": "2026-09-29",
         "unreachable": 0,
         "moved_since_review": []
@@ -2043,7 +2193,8 @@
         "confirmed_pass": [
           "au-working-holiday-makers-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -2056,6 +2207,7 @@
         "indexed": 17,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 5,
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -2082,7 +2234,8 @@
           "bas-g10-g11",
           "bas-stp-w3-w4"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2101,6 +2254,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 5,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -2116,7 +2270,8 @@
           "cashflow-super-regime-transition",
           "cashflow-supported-roll-forward"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2133,6 +2288,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 5,
         "fetched": "2026-09-30",
         "unreachable": 0,
         "moved_since_review": []
@@ -2148,7 +2304,8 @@
           "coal-lsl-levy-unverified-rate",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2163,6 +2320,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-29",
+        "reviewed_count": 2,
         "fetched": "2026-10-28",
         "unreachable": 0,
         "moved_since_review": []
@@ -2178,7 +2336,8 @@
           "contract-cost-unallocated-plant",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2193,6 +2352,7 @@
         "indexed": 0,
         "exempt": true,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "",
         "unreachable": 0,
         "moved_since_review": []
@@ -2208,7 +2368,8 @@
           "export-manifest-rounding",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -2221,6 +2382,7 @@
         "indexed": 3,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 3,
         "fetched": "2026-09-30",
         "unreachable": 0,
         "moved_since_review": []
@@ -2236,7 +2398,8 @@
           "payroll-tax-contractor-characterisation",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2251,6 +2414,7 @@
         "indexed": 0,
         "exempt": true,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "",
         "unreachable": 0,
         "moved_since_review": []
@@ -2264,7 +2428,8 @@
         "confirmed_pass": [
           "div7a-upe-review"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2279,6 +2444,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
@@ -2293,7 +2459,8 @@
         "confirmed_pass": [
           "fbt-carparking-missing-declaration"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2310,6 +2477,7 @@
         "indexed": 0,
         "exempt": true,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "",
         "unreachable": 0,
         "moved_since_review": []
@@ -2324,7 +2492,8 @@
         "confirmed_pass": [
           "financial-modelling-structure-faults"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2339,6 +2508,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 2,
         "fetched": "2026-09-24",
         "unreachable": 0,
         "moved_since_review": []
@@ -2354,7 +2524,8 @@
           "fuel-tax-credits-missing-docket",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -2367,6 +2538,7 @@
         "indexed": 5,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 5,
         "fetched": "2026-09-16",
         "unreachable": 1,
         "moved_since_review": []
@@ -2390,7 +2562,8 @@
           "post-journal-provenance-tie-out",
           "stp-current-vs-overdue-sg"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2407,6 +2580,7 @@
         "indexed": 11,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 4,
         "fetched": "2026-09-25",
         "unreachable": 1,
         "moved_since_review": []
@@ -2426,7 +2600,8 @@
           "payroll-tax-contractor-characterisation",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2442,6 +2617,7 @@
         "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-29",
+        "reviewed_count": 2,
         "fetched": "2026-10-28",
         "unreachable": 0,
         "moved_since_review": []
@@ -2457,7 +2633,8 @@
           "contract-cost-unallocated-plant",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -2470,6 +2647,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 4,
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -2485,7 +2663,8 @@
           "progress-claim-missing-reference-date",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2501,6 +2680,7 @@
         "indexed": 0,
         "exempt": true,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "",
         "unreachable": 0,
         "moved_since_review": []
@@ -2513,7 +2693,8 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2529,6 +2710,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 4,
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -2544,7 +2726,8 @@
           "retention-release-missing-deed",
           "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2560,6 +2743,7 @@
         "indexed": 4,
         "exempt": false,
         "reviewed": "2026-11-02",
+        "reviewed_count": 2,
         "fetched": "2026-11-02",
         "unreachable": 0,
         "moved_since_review": []
@@ -2573,7 +2757,8 @@
         "confirmed_pass": [
           "statement-to-csv-overlap-and-formula"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [],
@@ -2586,6 +2771,7 @@
         "indexed": 7,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 5,
         "fetched": "2026-09-16",
         "unreachable": 0,
         "moved_since_review": []
@@ -2604,7 +2790,8 @@
           "fbt-carparking-missing-declaration",
           "stp-current-vs-overdue-sg"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2622,6 +2809,7 @@
         "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
+        "reviewed_count": 3,
         "fetched": "2026-09-24",
         "unreachable": 1,
         "moved_since_review": []
@@ -2638,7 +2826,8 @@
           "month-end-supplier-bank-detail-change",
           "tax-invoice-review-missing-evidence"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2653,6 +2842,7 @@
         "indexed": 12,
         "exempt": false,
         "reviewed": "2026-09-30",
+        "reviewed_count": 12,
         "fetched": "2026-09-25",
         "unreachable": 0,
         "moved_since_review": []
@@ -2665,10 +2855,12 @@
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
-          "standalone-skill-safety-boundary",
-          "wip-cost-to-complete-gap"
+          "standalone-skill-safety-boundary"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": [
+          "wip-cost-to-complete-gap"
+        ]
       },
       "gates": {
         "behavioural": [
@@ -2684,6 +2876,7 @@
         "indexed": 0,
         "exempt": true,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "",
         "unreachable": 0,
         "moved_since_review": []
@@ -2707,7 +2900,8 @@
           "div7a-upe-review",
           "post-journal-provenance-tie-out"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2723,6 +2917,7 @@
         "indexed": 6,
         "exempt": false,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "2026-11-04",
         "unreachable": 0,
         "moved_since_review": []
@@ -2745,7 +2940,8 @@
           "bas-export-manifest-rounding",
           "post-journal-provenance-tie-out"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [
@@ -2762,6 +2958,7 @@
         "indexed": 0,
         "exempt": true,
         "reviewed": "",
+        "reviewed_count": 0,
         "fetched": "",
         "unreachable": 0,
         "moved_since_review": []
@@ -2777,7 +2974,8 @@
         "confirmed_pass": [
           "post-journal-provenance-tie-out"
         ],
-        "confirmed_fail": []
+        "confirmed_fail": [],
+        "confirmed_on_earlier_card": []
       },
       "gates": {
         "behavioural": [

@@ -91,10 +91,18 @@ place, so a hard link elsewhere keeps its old contents. An output that is a
 symlink or not a regular file is refused. The retired Python command wrote
 through either link.
 
-The `confirmed_pass` and `confirmed_fail` fields and their totals, which the
-Python builder did not have and the note now describes, list each skill's cards with a human-confirmed verdict in
-`validation/results`. A confirmed record with a verdict other than `pass` or
-`fail`, or one that names a card no card file targets, is refused.
+The Python builder did not have the `reviewed_count`, `confirmed_pass`,
+`confirmed_fail` and `confirmed_on_earlier_card` fields or their totals; the
+note now describes them. `reviewed_count` is how many indexed sources carry a
+review date. A confirmed verdict counts as a pass or fail only when the record's
+`rubric_sha256` matches the card's current bytes; otherwise the card is listed
+under `confirmed_on_earlier_card`, unless a later record confirms it on the
+current card. The build refuses a verdict other than `pass` or `fail`, a
+confirmed verdict without a rubric digest or for a card no skill targets, and
+a card confirmed both pass and fail, naming both records, because no rule yet
+says which verdict supersedes the other. Legacy records, which have no status,
+are left out of the counts and named in the page's legend with any fail they
+hold.
 
 The schema, field order, note text, source-date distinctions, card deduplication,
 quoted test mentions and platform newline conventions preserve the retired
