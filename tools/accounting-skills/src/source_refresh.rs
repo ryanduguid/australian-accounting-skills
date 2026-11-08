@@ -730,7 +730,68 @@ pub fn markdown_link(value: &str) -> String {
 /// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
 pub fn markdown_text(value: &str) -> String {
     let text = markdown_cell(value, true);
-    join_after(&join_after(&text, "gh-", 3), "github.com", 6)
+    let mut cell = String::with_capacity(text.len());
+    let (mut plain, mut at) = (0, 0);
+    while let Some(c) = text[at..].chars().next() {
+        match url_span(&text, at) {
+            Some((host, host_end, end)) => {
+                cell.push_str(&plain_text(&text[plain..at]));
+                cell.push_str(&text[at..host]);
+                cell.push_str(&join_after(&text[host..host_end], "github.com", 6));
+                cell.push_str(&text[host_end..end]);
+                (plain, at) = (end, end);
+            }
+            None => at += c.len_utf8(),
+        }
+    }
+    cell.push_str(&plain_text(&text[plain..]));
+    cell
+}
+fn plain_text(text: &str) -> String {
+    let text = text.replace('&', "&amp;");
+    let text = join_after(&join_after(&text, "gh-", 3), "github.com", 6);
+    // GitHub links `owner/repo/issues/12` after any host, or none.
+    let mut cell = String::with_capacity(text.len());
+    let mut chars = text.chars().peekable();
+    while let Some(c) = chars.next() {
+        cell.push(c);
+        if c == '/' && chars.peek().is_some_and(char::is_ascii_digit) {
+            cell.push('\u{2060}');
+        }
+    }
+    cell
+}
+/// The autolinked URL starting at `at`, as `URL_SPAN` in scripts/source_refresh.py finds it:
+/// the byte offsets of its host's start and end, and of its own end.
+fn url_span(text: &str, at: usize) -> Option<(usize, usize, usize)> {
+    if at > 0 && !matches!(text.as_bytes()[at - 1], b' ' | b'<') {
+        return None;
+    }
+    let scheme = ["https://", "http://"].into_iter().find(|scheme| {
+        text[at..]
+            .get(..scheme.len())
+            .is_some_and(|head| head.eq_ignore_ascii_case(scheme))
+    })?;
+    let host = at + scheme.len();
+    let host_end = host
+        + text[host..]
+            .find(|c: char| !(c.is_ascii_alphanumeric() || c == '.' || c == '-'))
+            .unwrap_or(text.len() - host);
+    let labels_valid = text[host..host_end].split('.').all(|label| {
+        label.starts_with(|c: char| c.is_ascii_alphanumeric())
+            && label.ends_with(|c: char| c.is_ascii_alphanumeric())
+    });
+    let follows = text[host_end..]
+        .chars()
+        .next()
+        .is_none_or(|c| matches!(c, '/' | '?' | '#' | ':' | ' ' | '<'));
+    if !labels_valid || !follows {
+        return None;
+    }
+    let end = text[host_end..]
+        .find([' ', '<'])
+        .map_or(text.len(), |n| host_end + n);
+    Some((host, host_end, end))
 }
 /// Put a word joiner `at` bytes into each ASCII-case-insensitive `word`, scanning left to right.
 fn join_after(text: &str, word: &str, at: usize) -> String {
@@ -755,7 +816,7 @@ fn join_after(text: &str, word: &str, at: usize) -> String {
 fn markdown_cell(value: &str, text: bool) -> String {
     let mut cell = String::with_capacity(value.len());
     for c in value.chars() {
-        if c.is_control() {
+        if c.is_control() || c == '\u{AD}' {
             cell.push('\u{FFFD}');
             continue;
         }

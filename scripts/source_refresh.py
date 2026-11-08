@@ -720,18 +720,28 @@ def refresh(
 
 
 MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
-CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
+# Controls, and the soft hyphen, which GitHub drops when it matches references.
+CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f\xad]")
 REFERENCE_MARKS = re.compile("([@#])")
 # ASCII classes, not re.IGNORECASE, which also folds U+0130, U+0131 and U+212A.
 GITHUB_ISSUE_PREFIX = re.compile("([Gg][Hh]-)")
 GITHUB_HOST = re.compile(r"([Gg][Ii][Tt][Hh][Uu][Bb])(\.[Cc][Oo][Mm])")
+# GitHub links `owner/repo/issues/12` after any host, or none.
+PATH_NUMBER = re.compile("/([0-9])")
+# A URL GitHub autolinks: http(s) after a space or `<`, a dotted host, then up to the next
+# space or `<`. GitHub links no reference inside the link, so only its host is protected.
+URL_SPAN = re.compile(
+    r"(?:(?<=[ <])|^)[Hh][Tt][Tt][Pp][Ss]?://"
+    r"(?P<host>[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*)"
+    r"(?=[/?#: <]|$)[^ <]*"
+)
 
 
 def markdown_link(value: str) -> str:
     """Make one link destination inert: no HTML, code span, new cell or new line.
 
-    A control character becomes U+FFFD. Emphasis characters stay: `_` occurs in
-    indexed URLs, and escaping it would corrupt GitHub's autolinked URLs.
+    A control character or soft hyphen becomes U+FFFD. Emphasis characters stay:
+    `_` occurs in indexed URLs, and escaping it would corrupt GitHub's autolinked URLs.
     """
     return MARKDOWN_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
 
@@ -742,15 +752,28 @@ def markdown_text(value: str) -> str:
     A detail can quote a host's HTTP reason phrase, content type or redirect
     destination, so a compromised approved host could otherwise write markup into
     the report and the issue filed from it. GitHub matches mentions and references
-    in the rendered text, so a word joiner (U+2060) follows each `@` and `#`, the
-    `-` of `GH-`, and the `github` of `github.com`, both in any ASCII case. That
-    stops `@user`, `@org/team`, `#12`, `owner/repo#12`, `GH-12` and github.com issue
-    URLs. A URL in the cell holding one of these keeps its text, but GitHub's
-    autolink then carries the joiner into its href.
+    in the rendered text, after decoding entities. So a word joiner (U+2060) follows
+    each `@` and `#`. Outside an autolinked URL, `&` becomes `&amp;`, and a word
+    joiner follows the `-` of `GH-` and the `github` of `github.com`, both in any
+    ASCII case, and each `/` before a digit. Inside one, only a github.com host is
+    joined: GitHub links nothing else there, and `&amp;` would corrupt the href.
+    That stops `@user`, `@org/team`, `#12`, `owner/repo#12`, `GH-12`, github.com
+    issue URLs, bare `owner/repo/issues/12` paths and their named-entity spellings. A URL holding `@`, `#` or a github.com host keeps its text, but its
+    href carries the joiner.
     """
     text = REFERENCE_MARKS.sub("\\1\u2060", markdown_link(value))
-    text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text)
-    return GITHUB_HOST.sub("\\1\u2060\\2", text)
+    parts, end = [], 0
+    for url in URL_SPAN.finditer(text):
+        host = GITHUB_HOST.sub("\\1\u2060\\2", url["host"])
+        parts += [_plain_text(text[end:url.start()]),
+                  text[url.start():url.start("host")] + host + text[url.end("host"):url.end()]]
+        end = url.end()
+    return "".join(parts) + _plain_text(text[end:])
+
+
+def _plain_text(text: str) -> str:
+    text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text.replace("&", "&amp;"))
+    return PATH_NUMBER.sub("/\u2060\\1", GITHUB_HOST.sub("\\1\u2060\\2", text))
 
 
 def render(report: Report, *, write: bool) -> str:
