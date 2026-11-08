@@ -99,8 +99,9 @@ review date. A confirmed verdict counts as a pass or fail only when the record's
 under `confirmed_noncurrent_digest`, even if the current card also has a
 verdict. The build does not look for the digest in the card's git history,
 because the native CI job checks out a single commit, so that list claims only
-that the digests differ. Verdicts under different digests judged different
-cards, so a pass under an old digest and a fail on the current card both stand.
+that the digests differ. Verdicts under different digests are kept apart, so a
+pass recorded under another digest and a fail on the current card both stand;
+neither digest is taken to identify a particular earlier card.
 The build refuses a status other than `prepared`, `observed` or `confirmed`
 (an absent status marks a legacy record), a verdict other than `pass` or
 `fail`, a confirmed verdict whose `rubric_sha256` is not 64 lower-case hex

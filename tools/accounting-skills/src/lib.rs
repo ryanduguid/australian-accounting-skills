@@ -391,8 +391,8 @@ fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts
                 .ok_or_else(|| {
                     format!("{file}: {card} needs a rubric_sha256 of 64 lower-case hex digits")
                 })?;
-            // Verdicts on different card versions judged different cards, so
-            // only one card version confirmed both ways is a conflict.
+            // Verdicts under different recorded digests are kept apart, so only
+            // one card and digest confirmed both ways is a conflict.
             let version = (card.clone(), recorded.to_owned());
             if let Some((other, earlier)) = seen.get(&version)
                 && other != verdict
