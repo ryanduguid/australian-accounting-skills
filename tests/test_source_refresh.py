@@ -511,7 +511,8 @@ class SweepTests(unittest.TestCase):
 class RenderTests(unittest.TestCase):
     """The report is filed as an issue, so a host's words must stay text inside their cell."""
 
-    def rows(self, cases: list[tuple[str, str, source_refresh.Fetched]]) -> list[str]:
+    def rows(self, cases: list[tuple[str, str, source_refresh.Fetched]],
+             url: str = "https://example.test/page") -> list[str]:
         report = source_refresh.Report()
         for title, content_url, result in cases:
             record: dict[str, object] = {"url": "https://example.test/page", "checked_at": "2026-09-08",
@@ -520,7 +521,7 @@ class RenderTests(unittest.TestCase):
                       source_refresh.CONTENT_URL_FIELD: content_url}
             outcome, detail = source_refresh.classify(record, result)
             report.outcomes.append(source_refresh.Outcome(
-                skill="example-skill", title=title, url="https://example.test/page",
+                skill="example-skill", title=title, url=url,
                 outcome=outcome, detail=detail, checked_at="2026-09-08", fetched=result))
         lines = source_refresh.render(report, write=False).splitlines()
         return lines[lines.index("| --- | --- | --- | --- | --- | --- |") + 1:]
@@ -528,10 +529,11 @@ class RenderTests(unittest.TestCase):
     def test_a_hostile_reason_phrase_and_redirect_destination_stay_inert(self) -> None:
         """Vulnhuntr's proof of concept: a compromised approved host shapes both strings.
 
-        An HTTP reason phrase may hold markup, pipes and control bytes; a same-host
-        redirect may end at a path holding markup that `--write` then stores.
+        An HTTP reason phrase may hold markup, pipes and Latin-1 control bytes; a
+        same-host redirect may end at a path holding markup that `--write` then stores.
         """
-        reason = "HTTP 403 <svg onload=alert(1)> | [Pay](https://phish.example) `x`\x1b[31m\n## Injected \\"
+        reason = ("HTTP 403 <svg onload=alert(1)> | [Pay](https://phish.example) `x`\x1b[31m\n"
+                  "## Injected \\| \x85\xa0\x9f\\")
         destination = "https://example.test/p/<svg/onload=alert(1)>|[x](https://phish.example)`"
         rows = self.rows([
             ("Refused | Example", "https://example.test/page",
@@ -541,18 +543,46 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(rows, [
             r"| blocked | `example-skill` | [Refused \| Example](https://example.test/page) "
             r"| 2026-09-08 | not published | HTTP 403 \<svg onload=alert(1)\> \| \[Pay\](https://phish.example) "
-            "\\`x\\`\ufffd\\[31m\ufffd## Injected \\\\. This host refuses automated retrieval: review by hand. |",
+            "\\`x\\`\ufffd\\[31m\ufffd#\u2060#\u2060 Injected \\\\\\| \ufffd\xa0\ufffd\\\\. "
+            "This host refuses automated retrieval: review by hand. |",
             r"| changed | `example-skill` | [Moved](https://example.test/page) | 2026-09-08 | not published "
             r"| Source destination changed from https://example.test/old to "
             r"https://example.test/p/\<svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
         ])
 
     def test_an_ordinary_destination_still_renders_as_a_usable_link(self) -> None:
-        """`_` occurs in indexed URLs; escaping it would stop GitHub autolinking them."""
+        """`_` occurs in indexed URLs; escaping it would corrupt GitHub's autolinked URLs."""
         current = "https://example.test/Parliamentary_Business/LSL__1_.pdf?bId=r7554&x=(1)"
         self.assertEqual(self.rows([("Bills", "https://example.test/old", fetched(final_url=current))]), [
             "| changed | `example-skill` | [Bills](https://example.test/page) | 2026-09-08 | not published "
             f"| Source destination changed from https://example.test/old to {current}. |",
+        ])
+
+    def test_host_text_cannot_mention_or_cross_reference(self) -> None:
+        """The workflow files the report as an issue, where `@name` and `#12` notify and link.
+
+        The reason phrase, the content type and the destination all reach the Detail
+        cell. The source link keeps its fragment: a destination is not rendered text.
+        """
+        mentions = "Forbidden @someuser owner/repo#1 #12 @org/team"
+        joined = "Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team"
+        source = "https://example.test/act#sec.11"
+        rows = self.rows([
+            ("Ruling #3", "https://example.test/page",
+             fetched(status=403, digest="", error=f"HTTP 403 {mentions}")),
+            ("Moved", "https://example.test/old",
+             fetched(final_url="https://example.test/x<@someuser")),
+            ("Odd type", "https://example.test/page", fetched(digest="", content_type="x/@someuser")),
+        ], url=source)
+        self.assertEqual(rows, [
+            f"| blocked | `example-skill` | [Ruling #\u20603]({source}) | 2026-09-08 | not published "
+            f"| HTTP 403 {joined}. This host refuses automated retrieval: review by hand. |",
+            f"| changed | `example-skill` | [Moved]({source}) | 2026-09-08 | not published "
+            "| Source destination changed from https://example.test/old to "
+            "https://example.test/x\\<@\u2060someuser. |",
+            f"| unreadable | `example-skill` | [Odd type]({source}) | 2026-09-08 | not published "
+            "| Retrieved x/@\u2060someuser but extracted no content to digest. This is a fault in "
+            "scripts/source_refresh.py, not a finding about the source. |",
         ])
 
 

@@ -721,17 +721,27 @@ def refresh(
 
 MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
 CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
+REFERENCE_MARKS = re.compile("([@#])")
+
+
+def markdown_link(value: str) -> str:
+    """Make one link destination inert: no HTML, code span, new cell or new line.
+
+    A control character becomes U+FFFD. Emphasis characters stay: `_` occurs in
+    indexed URLs, and escaping it would corrupt GitHub's autolinked URLs.
+    """
+    return MARKDOWN_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
 
 
 def markdown_text(value: str) -> str:
-    """Make one table cell inert: no HTML, link, image, code span, new cell or new line.
+    """Make one table cell inert: `markdown_link`, and no mention or issue reference.
 
-    A detail can quote a host's HTTP reason phrase or a redirect destination, so a
-    compromised approved host could otherwise write markup into the report and the
-    issue filed from it. A control character becomes U+FFFD. Emphasis characters
-    stay: `_` occurs in indexed URLs, and GitHub stops autolinking a URL at `\\_`.
+    A detail can quote a host's HTTP reason phrase, content type or redirect
+    destination, so a compromised approved host could otherwise write markup into
+    the report and the issue filed from it. GitHub matches mentions and references
+    in the rendered text, so a word joiner (U+2060) follows each `@` and `#`.
     """
-    return MARKDOWN_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
+    return REFERENCE_MARKS.sub("\\1\u2060", markdown_link(value))
 
 
 def render(report: Report, *, write: bool) -> str:
@@ -773,12 +783,12 @@ def render(report: Report, *, write: bool) -> str:
             "| --- | --- | --- | --- | --- | --- |",
         ]
         for outcome in sorted(report.needs_attention, key=lambda o: (o.outcome, o.skill)):
-            title, url, checked_at, upstream, detail = map(markdown_text, (
-                outcome.title, outcome.url, outcome.checked_at,
+            title, checked_at, upstream, detail = map(markdown_text, (
+                outcome.title, outcome.checked_at,
                 outcome.fetched.last_modified or "not published", outcome.detail,
             ))
             lines.append(
-                f"| {outcome.outcome} | `{outcome.skill}` | [{title}]({url}) "
+                f"| {outcome.outcome} | `{outcome.skill}` | [{title}]({markdown_link(outcome.url)}) "
                 f"| {checked_at} | {upstream} | {detail} |"
             )
         lines.append("")

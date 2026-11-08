@@ -723,8 +723,15 @@ pub fn source_readiness(record: &Value, outcome: &Outcome, today: &str) -> (bool
         format!("READY: human review {checked}; retrieval and destination unchanged."),
     )
 }
+/// One inert link destination, as `markdown_link` in scripts/source_refresh.py makes it.
+pub fn markdown_link(value: &str) -> String {
+    markdown_cell(value, false)
+}
 /// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
 pub fn markdown_text(value: &str) -> String {
+    markdown_cell(value, true)
+}
+fn markdown_cell(value: &str, text: bool) -> String {
     let mut cell = String::with_capacity(value.len());
     for c in value.chars() {
         if c.is_control() {
@@ -735,6 +742,9 @@ pub fn markdown_text(value: &str) -> String {
             cell.push('\\');
         }
         cell.push(c);
+        if text && matches!(c, '@' | '#') {
+            cell.push('\u{2060}');
+        }
     }
     cell
 }
@@ -829,7 +839,7 @@ pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
                 o.outcome,
                 o.skill,
                 markdown_text(&o.title),
-                markdown_text(&o.url),
+                markdown_link(&o.url),
                 markdown_text(&o.checked_at),
                 markdown_text(if o.fetched.last_modified.is_empty() {
                     "not published"
