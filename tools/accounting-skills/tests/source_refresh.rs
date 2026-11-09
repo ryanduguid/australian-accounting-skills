@@ -12,6 +12,15 @@ use std::{
 };
 
 const URL: &str = "https://www.ato.gov.au/a";
+
+#[test]
+fn host_text_cannot_emphasise_an_instruction() {
+    assert_eq!(
+        s::markdown_text("**Pay now** _mandatory_ ~~ignore~~ https://example.test/a_b"),
+        r"\*\*Pay now\*\* \_mandatory\_ \~\~ignore\~\~ https://example.test/a_b"
+    );
+}
+
 #[test]
 fn published_dates_preserve_python_numeric_and_mail_rules() {
     for value in [
@@ -755,7 +764,7 @@ fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
         rows,
         [
             "| blocked | `example-skill` | [Refused \\| Example](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 &lt;svg onload=alert(1)\\> \\| \\[Pay\\](https://phish.example) \\`x\\`\u{FFFD}\\[31m\u{FFFD}#\u{2060}#\u{2060} Injected \\\\\\| \u{FFFD}\u{a0}\u{FFFD}\\\\. This host refuses automated retrieval: review by hand. |".to_owned(),
-            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team GH-\u{2060}12 gh-\u{2060}12 https://GitHub\u{2060}.COM/rust-lang/rust/issues/1 &amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\u{ad}-12 abchttps://example.test/GH-\u{2060}12 https://a_b.example/GH-\u{2060}12 https://example.test/path/GH-12?q=1&r=2 github\u{2060}.com/rust-lang/rust/issues/\u{2060}1 rust-lang/rust/pull/\u{2060}2 1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 https://github\u{2060}.com/rust-lang/rust/issues/2 https://_x.example/GH-\u{2060}12 https://a.b\\\\x_y.z/GH-\u{2060}12 https://example.test/doc#12 https://-x.test/GH-\u{2060}12 https://ex\u{e4}_b.test/GH-\u{2060}12 https://.x/GH-\u{2060}12 https://e.test/x&lt;@someuser https://e.test/&lt;a href=https://phish.example\\>Pay&lt;/a\\>. This host refuses automated retrieval: review by hand. |".to_owned(),
+            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team GH-\u{2060}12 gh-\u{2060}12 https://GitHub\u{2060}.COM/rust-lang/rust/issues/1 &amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\u{ad}-12 abchttps://example.test/GH-\u{2060}12 https://a\\_b.example/GH-\u{2060}12 https://example.test/path/GH-12?q=1&r=2 github\u{2060}.com/rust-lang/rust/issues/\u{2060}1 rust-lang/rust/pull/\u{2060}2 1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 https://github\u{2060}.com/rust-lang/rust/issues/2 https://\\_x.example/GH-\u{2060}12 https://a.b\\\\x\\_y.z/GH-\u{2060}12 https://example.test/doc#12 https://-x.test/GH-\u{2060}12 https://ex\u{e4}\\_b.test/GH-\u{2060}12 https://.x/GH-\u{2060}12 https://e.test/x&lt;@someuser https://e.test/&lt;a href=https://phish.example\\>Pay&lt;/a\\>. This host refuses automated retrieval: review by hand. |".to_owned(),
             "| changed | `example-skill` | [Moved](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/p/&lt;svg/onload=alert(1)\\>\\|\\[x\\](https://phish.example)\\`. |".to_owned(),
             format!("| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to {ordinary}. |"),
             "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/path/GH-12.pdf. |".to_owned(),

@@ -723,6 +723,7 @@ MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
 # In a table cell `<` becomes `&lt;` instead: GitHub ends a URL at `<`, so a URL just before
 # `\<` would take the backslash and leave the `<` free to open HTML.
 TEXT_STRUCTURE = re.compile(r"([\\`>\[\]|])")
+TEXT_EMPHASIS = re.compile(r"([*_~])")
 CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
 REFERENCE_MARKS = re.compile("([@#])")
 # ASCII classes, not re.IGNORECASE, which also folds U+0130, U+0131 and U+212A.
@@ -750,7 +751,8 @@ def markdown_text(value: str) -> str:
     destination, so a compromised approved host could otherwise write markup into
     the report and the issue filed from it. GitHub matches mentions and references
     in rendered text outside links, after decoding entities. So outside the URLs
-    GitHub autolinks, `&` becomes `&amp;`, and a word joiner (U+2060) follows each
+    GitHub autolinks, emphasis markers are escaped, `&` becomes `&amp;`, and a
+    word joiner (U+2060) follows each
     `@` and `#`, the `-` of `GH-`, the `github` of `github.com` (both in any ASCII
     case) and each `/` before a digit. That stops `@user`, `@org/team`, `#12`,
     `owner/repo#12`, `GH-12`, bare `owner/repo/issues/12` paths and their
@@ -801,6 +803,7 @@ def _github_host(host: str) -> str:
 
 
 def _plain_text(text: str) -> str:
+    text = TEXT_EMPHASIS.sub(r"\\\1", text)
     text = REFERENCE_MARKS.sub("\\1\u2060", text.replace("&", "&amp;").replace("<", "&lt;"))
     text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text)
     return PATH_NUMBER.sub("/\u2060\\1", GITHUB_HOST.sub("\\1\u2060\\2", text))

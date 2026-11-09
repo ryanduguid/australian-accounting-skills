@@ -781,6 +781,9 @@ fn plain_text(text: &str) -> String {
     let mut cell = String::with_capacity(text.len());
     let mut chars = text.chars().peekable();
     while let Some(c) = chars.next() {
+        if matches!(c, '*' | '_' | '~') {
+            cell.push('\\');
+        }
         cell.push(c);
         if c == '/' && chars.peek().is_some_and(char::is_ascii_digit) {
             cell.push('\u{2060}');

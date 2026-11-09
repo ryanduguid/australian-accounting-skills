@@ -570,6 +570,12 @@ class RenderTests(unittest.TestCase):
             for current in destinations
         ])
 
+    def test_host_text_cannot_emphasise_an_instruction(self) -> None:
+        self.assertEqual(
+            source_refresh.markdown_text("**Pay now** _mandatory_ ~~ignore~~ https://example.test/a_b"),
+            r"\*\*Pay now\*\* \_mandatory\_ \~\~ignore\~\~ https://example.test/a_b",
+        )
+
     def test_host_text_cannot_mention_or_cross_reference(self) -> None:
         """The workflow files the report as an issue, where `@name` and `#12` notify and link.
 
@@ -596,13 +602,13 @@ class RenderTests(unittest.TestCase):
         joined = ("Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team "
                   "GH-\u206012 gh-\u206012 https://GitHub\u2060.COM/rust-lang/rust/issues/1 "
                   "&amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\xad-12 "
-                  "abchttps://example.test/GH-\u206012 https://a_b.example/GH-\u206012 "
+                  "abchttps://example.test/GH-\u206012 https://a\\_b.example/GH-\u206012 "
                   "https://example.test/path/GH-12?q=1&r=2 "
                   "github\u2060.com/rust-lang/rust/issues/\u20601 rust-lang/rust/pull/\u20602 "
                   "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
-                  "https://github\u2060.com/rust-lang/rust/issues/2 https://_x.example/GH-\u206012 "
-                  "https://a.b\\\\x_y.z/GH-\u206012 https://example.test/doc#12 https://-x.test/GH-\u206012 "
-                  "https://ex\xe4_b.test/GH-\u206012 https://.x/GH-\u206012 https://e.test/x&lt;@someuser "
+                  "https://github\u2060.com/rust-lang/rust/issues/2 https://\\_x.example/GH-\u206012 "
+                  "https://a.b\\\\x\\_y.z/GH-\u206012 https://example.test/doc#12 https://-x.test/GH-\u206012 "
+                  "https://ex\xe4\\_b.test/GH-\u206012 https://.x/GH-\u206012 https://e.test/x&lt;@someuser "
                   "https://e.test/&lt;a href=https://phish.example\\>Pay&lt;/a\\>")
         source = "https://example.test/act#sec.11"
         rows = self.rows([
@@ -620,7 +626,7 @@ class RenderTests(unittest.TestCase):
             "https://example.test/x&lt;@someuser&lt;https://github.com/rust-lang/rust/issues/1. |",
             f"| unreadable | `example-skill` | [Odd type]({source}) | 2026-09-08 | not published "
             "| Retrieved x/@\u2060someuser but extracted no content to digest. This is a fault in "
-            "scripts/source_refresh.py, not a finding about the source. |",
+            "scripts/source\\_refresh.py, not a finding about the source. |",
         ])
 
 
