@@ -80,12 +80,11 @@ fn trace_names_and_order_follow_the_platform_case_rule() {
     fs::write(folder.path().join("c/Output.JSONL"), format!("{READ}\n")).unwrap();
     let flag = |path: String| format!("FLAG {path}\n{READ_HIT}\n");
     let expected = if cfg!(windows) {
-        let upper = Path::new("c").join("Output.JSONL").display().to_string();
         format!(
             "{}{}{}traces=3 flagged=3\n",
             flag(shown("a")),
             flag(shown("B")),
-            flag(upper)
+            flag(shown("c"))
         )
     } else {
         format!(
@@ -134,6 +133,26 @@ fn the_report_keeps_the_original_scripts_spelling() {
         shown("b"),
     );
     assert_eq!(audit(folder.path(), &["./"]), (1, expected, String::new()));
+}
+
+#[test]
+fn invalid_utf8_cannot_pass_the_audit() {
+    let folder = tempfile::tempdir().unwrap();
+    write(folder.path(), "croft-manor", &[CLEAN]);
+    let trace = shown("croft-manor");
+    let path = folder.path().join(&trace);
+    let mut bytes = fs::read(&path).unwrap();
+    bytes.extend_from_slice(
+        b"{\"message\":{\"content\":[{\"type\":\"text\",\"text\":\"\xff\"}]}}\n",
+    );
+    fs::write(path, bytes).unwrap();
+
+    let (code, stdout, stderr) = audit(folder.path(), &["."]);
+    assert_eq!((code, stdout.as_str()), (1, "traces=1 flagged=0\n"));
+    assert_eq!(
+        stderr,
+        format!("SKIP {trace}:2 is not a JSON object, so its tool calls were not audited\n")
+    );
 }
 
 #[test]

@@ -19,10 +19,9 @@ are retired:
 this repository. It prints the same report on well-formed traces. It splits
 traces only at newlines, so a raw U+2028 inside a tool input no longer hides
 that call, and it fails when it flags a call, finds no trace or cannot read a
-line. Three inputs print differently: an integer above the 64-bit range prints
-as a float, and a line holding NaN or a lone surrogate escape is reported as a
-SKIP where the script flagged its call. `docs/EVAL.md` describes its use and
-limits.
+line. An integer above the 64-bit range prints as a float. Lines containing
+NaN, lone surrogate escapes or invalid UTF-8 are reported as SKIP.
+`docs/EVAL.md` describes its use and limits.
 
 The others are candidate ports of scripts that remain the authoritative
 commands in `scripts/`:

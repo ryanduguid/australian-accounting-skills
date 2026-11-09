@@ -257,9 +257,10 @@ cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- audit-g
 up to 5 tool calls per trace whose input has `evals`, `graders`, `validation` or `held` as
 a path part after a slash or backslash, or names a rubric, `required-checks`, `restraint.md`, `skill-fired`
 or `case.yaml`. It fails when it flags a call, finds no trace or cannot read a
-line. It reads tool inputs only, so a search over the whole copy, or a
-relative path such as `evals/x` with no slash before it, passes unflagged: a
-clean audit is not proof of isolation.
+line, including a line with invalid UTF-8. It searches JSON-encoded tool
+inputs, so a broad search over the whole copy or a path like `evals/x` with
+no leading separator can pass unflagged. A clean audit does not prove
+isolation.
 
 Pass `--no-publish`, because the command otherwise publishes its report where the
 account supports it. The plugin's MCP server does not start unless you opt in.

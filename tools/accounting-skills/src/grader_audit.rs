@@ -6,9 +6,9 @@
 //! evaluated plugin copy, so a model that could have read its own rubric voids
 //! that card. Ported from the 4 November 2026 `audit_grader_reads.py`: the
 //! report is the same on well-formed traces, and the command fails when it
-//! flags or cannot read anything. Three inputs print differently: an integer
-//! above the 64-bit range prints as a float, and a line holding NaN or a lone
-//! surrogate escape is a SKIP where the script flagged its call.
+//! flags or cannot read anything. An integer above the 64-bit range prints as
+//! a float. Lines containing NaN, lone surrogate escapes or invalid UTF-8
+//! are reported as SKIP.
 use crate::{Result, platform_text};
 use fancy_regex::Regex;
 use serde::Serialize;
@@ -147,7 +147,11 @@ fn audit(trace: &Path) -> Result<(Vec<String>, Vec<usize>)> {
     let (mut hits, mut unreadable) = (Vec::new(), Vec::new());
     // The original split on every Unicode line break, which cuts a record whose
     // tool input holds a raw U+2028 and hides that call; JSON Lines splits on \n.
-    for (index, line) in String::from_utf8_lossy(&bytes).lines().enumerate() {
+    for (index, line) in bytes.split(|&byte| byte == b'\n').enumerate() {
+        let Ok(line) = std::str::from_utf8(line) else {
+            unreadable.push(index + 1);
+            continue;
+        };
         if line.trim().is_empty() {
             continue;
         }
@@ -194,9 +198,15 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
         for trace in found {
             total += 1;
             let (hits, unreadable) = audit(&trace)?;
+            // Python's literal rglob pattern supplies the filename spelling on Windows.
+            let shown = if cfg!(windows) {
+                trace.with_file_name("output.jsonl")
+            } else {
+                trace
+            };
             if !hits.is_empty() {
                 flagged += 1;
-                report += &format!("FLAG {}\n", trace.display());
+                report += &format!("FLAG {}\n", shown.display());
                 for hit in hits.iter().take(5) {
                     report += &format!("  {hit}\n");
                 }
@@ -204,7 +214,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
             for line in unreadable {
                 problems += &format!(
                     "SKIP {}:{line} is not a JSON object, so its tool calls were not audited\n",
-                    trace.display()
+                    shown.display()
                 );
             }
         }
