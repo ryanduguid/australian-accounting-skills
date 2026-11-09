@@ -111,20 +111,17 @@ fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
         let path = dir.join(entry.file_name());
         if entry.file_type()?.is_dir() {
             traces(&path, found)?;
-        } else if is_trace_name(&entry.file_name()) {
-            found.push(path);
         }
     }
-    Ok(())
-}
-
-/// Python's rglob matches the name case-insensitively on Windows only.
-fn is_trace_name(name: &std::ffi::OsStr) -> bool {
-    if cfg!(windows) {
-        name.eq_ignore_ascii_case("output.jsonl")
-    } else {
-        name == "output.jsonl"
+    // Match Python's literal rglob lookup, including the directory's case rule.
+    let trace = dir.join("output.jsonl");
+    match fs::symlink_metadata(&trace) {
+        Ok(metadata) if !metadata.is_dir() => found.push(trace),
+        Ok(_) => {}
+        Err(error) if error.kind() == io::ErrorKind::NotFound => {}
+        Err(error) => return Err(format!("{}: {error}", trace.display()).into()),
     }
+    Ok(())
 }
 
 /// Python sorts Windows paths by their lower-cased parts and POSIX paths by
@@ -198,15 +195,9 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
         for trace in found {
             total += 1;
             let (hits, unreadable) = audit(&trace)?;
-            // Python's literal rglob pattern supplies the filename spelling on Windows.
-            let shown = if cfg!(windows) {
-                trace.with_file_name("output.jsonl")
-            } else {
-                trace
-            };
             if !hits.is_empty() {
                 flagged += 1;
-                report += &format!("FLAG {}\n", shown.display());
+                report += &format!("FLAG {}\n", trace.display());
                 for hit in hits.iter().take(5) {
                     report += &format!("  {hit}\n");
                 }
@@ -214,7 +205,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
             for line in unreadable {
                 problems += &format!(
                     "SKIP {}:{line} is not a JSON object, so its tool calls were not audited\n",
-                    shown.display()
+                    trace.display()
                 );
             }
         }

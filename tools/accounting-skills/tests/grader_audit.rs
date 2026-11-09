@@ -70,7 +70,7 @@ fn a_dotless_or_dotted_i_still_matches() {
     assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
 }
 
-/// Python's rglob and path sort ignore case on Windows only.
+/// The filesystem resolves the literal filename. Python sorts paths case-insensitively on Windows.
 #[test]
 fn trace_names_and_order_follow_the_platform_case_rule() {
     let folder = tempfile::tempdir().unwrap();
@@ -79,20 +79,17 @@ fn trace_names_and_order_follow_the_platform_case_rule() {
     fs::create_dir(folder.path().join("c")).unwrap();
     fs::write(folder.path().join("c/Output.JSONL"), format!("{READ}\n")).unwrap();
     let flag = |path: String| format!("FLAG {path}\n{READ_HIT}\n");
-    let expected = if cfg!(windows) {
-        format!(
-            "{}{}{}traces=3 flagged=3\n",
-            flag(shown("a")),
-            flag(shown("B")),
-            flag(shown("c"))
-        )
+    let mut expected = if cfg!(windows) {
+        flag(shown("a")) + &flag(shown("B"))
     } else {
-        format!(
-            "{}{}traces=2 flagged=2\n",
-            flag(shown("B")),
-            flag(shown("a"))
-        )
+        flag(shown("B")) + &flag(shown("a"))
     };
+    if folder.path().join("c/output.jsonl").exists() {
+        expected += &flag(shown("c"));
+        expected += "traces=3 flagged=3\n";
+    } else {
+        expected += "traces=2 flagged=2\n";
+    }
     assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
 }
 
