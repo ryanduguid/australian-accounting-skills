@@ -16,7 +16,7 @@ If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryan
 Run `close-control review --current <current.csv> --prior <prior.csv> --output <directory>`, adding `--mapping`, `--subledger` and the other optional inputs the close has, with the output directory in the firm-approved secure location (step 8), outside every version-control checkout. The exit code decides the result:
 
 - `0`: every control that ran passed. This is not close approval. Carry each control the summary's `Controls not run` line names as an open item, so an input that was not supplied, such as a subledger, never reads as passed.
-- `2`: the close needs review. The pack is `REVIEW` or `BLOCKED`, and the first output line says which.
+- `2`: use the status on the first output line. For `REVIEW`, carry the open items for the authorised reviewer. For `BLOCKED`, record the output and exceptions as below, then stop the close and return it to the preparer to address the blocker and rerun the tool.
 - `1`: the run failed, for example on a malformed input, an invalid option, an output path inside a checkout or one that cannot be written. Quote the error output and record the step as not run; this is not a result, even if pack files exist.
 - Any other code: the run failed. Quote its output and record the step as not run.
 
@@ -82,7 +82,7 @@ Primary sources (checked 20 August 2026):
 - Statement closing balance bridges to the ledger bank balance through identified timing items, with any residual named as an exception; stale credits, unmatched items and recurring-journal differences are listed or recorded as none on the evidence supplied
 - Post-journal re-exports agree; the authorised-human period-lock action is recorded as pending or complete
 - Close pack index: checklist, recs, schedules, variance commentary
-- Every open exception has an owner, status and source-period context
+- Every open exception has an owner and status. Keep source-period context for close-control exceptions at pack level and on the individual entries for other exceptions.
 
 ## Worked example
 

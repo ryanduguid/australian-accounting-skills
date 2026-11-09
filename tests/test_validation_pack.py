@@ -466,7 +466,10 @@ class SafetyControlTests(unittest.TestCase):
             "no release is published, so it is built from source with "
             "`cargo install --locked --path .` in `packages/monthly-close-control-plane`",
             "- `0`: every control that ran passed. This is not close approval.",
-            "- `2`: the close needs review.",
+            "- `2`: use the status on the first output line.",
+            "then stop the close and return it to the preparer",
+            "by its control and any account code, adding only an owner and status",
+            "Keep source-period context for close-control exceptions at pack level",
             "On any other exit, quote no pack file",
             "in the blocks or after them",
             "- `1`: the run failed",
@@ -477,6 +480,8 @@ class SafetyControlTests(unittest.TestCase):
             with self.subTest(contract=contract):
                 self.assertIn(contract, close)
         cases = REPOSITORY / "validation" / "cases"
+        exit_2 = (cases / "month-end-close-control-exit-2.md").read_text(encoding="utf-8")
+        self.assertIn("If the first output line instead reports `BLOCKED`", exit_2)
         for card in ("month-end-close-control-exit-2", "month-end-close-control-not-installed"):
             with self.subTest(card=card):
                 self.assertIn("  - month-end-close\n", (cases / f"{card}.md").read_text(encoding="utf-8"))

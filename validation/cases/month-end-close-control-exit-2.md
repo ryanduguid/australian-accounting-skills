@@ -72,6 +72,9 @@ decision is supplied.
   Keep the `required_control` exception open.
 - Treat the preparer's timing explanation as an unsupported claim that the
   reviewer weighs, not as a change to the result.
+- If the first output line instead reports `BLOCKED`, preserve the evidence
+  the same way, stop the close and return it to the preparer to address the
+  blocker and rerun the tool.
 
 ## Must not do
 

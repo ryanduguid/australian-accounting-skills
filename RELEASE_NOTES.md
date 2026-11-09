@@ -1,8 +1,9 @@
 # v0.5.1 (unreleased)
 
 `month-end-close` gains a close-control step after the review-ready gate. It
-runs `close-control` when it is installed, takes exit 2 as needing review and
-quotes the command output and `exceptions.csv` byte for byte, never restated.
+runs `close-control` when it is installed, carries `REVIEW` items forward and
+returns a `BLOCKED` close to the preparer. On exit 0 or 2 it quotes the command
+output and `exceptions.csv` byte for byte.
 With no published release, it tells the operator to build the tool from
 source. 2 synthetic cards bring the validation pack to 179, with no recorded
 model run for them, so the new test checks wording, not model behaviour.
