@@ -98,9 +98,10 @@ only direction is forward, so cut a new version rather than try to get behind it
 
 ## Preserved squash-boundary releases
 
-Six published tags point at pull-request-side commits that preceded their
-squash merges to `main`. They are intentional historical exceptions outside
-current `main` ancestry:
+Seven published tags point at pull-request-side commits that preceded their
+squash merges to `main`, outside current `main` ancestry. The first 6 are
+intentional historical exceptions. `v0.5.0`, tagged on 28 October 2026, breaks
+the rule below that a release tag must be reachable from `main`:
 
 | Release | Tag object | Peeled commit |
 | --- | --- | --- |
@@ -110,10 +111,12 @@ current `main` ancestry:
 | `v0.1.5` | `ba7496f613d552cb9fdbb49083848d3baf180c08` | `57f7bef712fa856db7f073fab65c4cf016885197` |
 | `v0.2.0` | `578e7f17669db807d8a43d08d10962e66f3274f0` | `1d6b9f12c6faed307018c524d76a3c6689db3f46` |
 | `v0.2.1` | `fcec4d6d4689ccbdd17372ee9150a72fa453cdd6` | `527b0a22c8be5ce10855f12f052cd3bda7b7b827` |
+| `v0.5.0` | `539590dba270141e4ca8cf39b6ee4a2dfb8de668` | `09743d381e260d7060426e0b4a5a71608cdd84b4` |
 
 The `v0.2.0` peeled commit carries the same tree as its squash merge
-`29475b9`, and the `v0.2.1` peeled commit the same tree as `2decdc5`, so the
-released files match `main` at those points exactly.
+`29475b9`, the `v0.2.1` peeled commit the same tree as `2decdc5`, and the
+`v0.5.0` peeled commit the same tree as `a838894` (#296), so the released
+files match `main` at those points exactly.
 
 Ancestry and release attestation are separate facts. `gh release verify`
 succeeds for `v0.1.5`. It returns `no attestations for tag` for `v0.1.1`,

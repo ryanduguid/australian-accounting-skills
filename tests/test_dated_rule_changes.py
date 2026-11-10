@@ -1861,10 +1861,14 @@ class DatedRuleChangeTests(unittest.TestCase):
             r"\b12 calculation tools\b",
         )
         self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
+        self.assert_sentence(privacy, r"\btrace's method and output\b", r"\bnot published\b")
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
         self.assertIn("The skill folders hold Markdown and JSON files and no scripts", readme)
+        privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
+        for program in ("review-ready", "close-control", "aasb-corpus", "wip-tally"):
+            self.assert_sentence(privacy, r"\bA local program a skill runs\b", rf"`{program}`")
         suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
         self.assertLessEqual(suffixes, {".md", ".json"})
 
