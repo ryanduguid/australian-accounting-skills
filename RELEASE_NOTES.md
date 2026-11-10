@@ -1,5 +1,18 @@
 # v0.5.1 (unreleased)
 
+`statement-to-csv` hands its tie-outs to a new `accounting-skills statement-check`
+command when it is installed, which checks running, page and closing balances,
+gross credits and debits against printed totals, and continuity between
+statements in exact cents. Without it, the skill ties out by hand to the same
+rules. Step 4 now fails omissions that cancel against printed totals, step 3
+accepts a sign from the running balance only when the balance change equals the
+amount and keeps card balances in the owed direction, and step 8 records Xero's
+100,000-row limit and its date-format prompt, read on 11 November 2026. One
+synthetic card brings the validation pack to 180, with no recorded model run for
+it, so the new tests check wording and the checker's arithmetic, not model
+behaviour. The 2 Xero source records still await human review: the source sweep
+extracts no text from those pages, so it records no digest for them.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

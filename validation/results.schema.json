@@ -208,6 +208,7 @@
           "source-quote-partial-coverage",
           "standalone-skill-safety-boundary",
           "statement-correction-revision",
+          "statement-to-csv-card-in-credit-year-end",
           "statement-to-csv-overlap-and-formula",
           "stp-current-vs-overdue-sg",
           "tax-invoice-review-low-value-threshold",
