@@ -411,7 +411,9 @@ def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
             "propertyNames": {"$ref": "#/properties/results/propertyNames"},
             "additionalProperties": {
                 "type": "object", "additionalProperties": False, "required": list(RESULT_DIMENSIONS),
-                "properties": dict.fromkeys(RESULT_DIMENSIONS, {"$ref": "#/properties/results/additionalProperties"}),
+                "properties": {
+                    dimension: {"$ref": "#/properties/results/additionalProperties"} for dimension in RESULT_DIMENSIONS
+                },
             },
         }):
             raise ValueError("schema contract mismatch")
