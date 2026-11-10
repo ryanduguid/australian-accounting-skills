@@ -320,6 +320,28 @@ started) all 37, including the 17 for the skills added in #318, did the same,
 at a reported US$6.11. One run per case is a small sample, and the result shows
 routing only, not the quality of the answer.
 
+## How the content is verified
+
+`accounting-skills check-citations` reads every Markdown file in every skill.
+It checks that each cited legislative section, and each ruling, determination,
+practice statement, guideline and TPB or ASIC guidance number, has a record in
+that skill's `sources.json`, and reports each one without a record by file and
+line. The `native` job in `.github/workflows/verify.yml` fails on any unmatched
+citation.
+
+On 11 November 2026 the skills cited 1,017 sections and rulings: 812
+legislative sections and 205 rulings and other guidance. All 1,017 resolve to a
+recorded source. Before the records and corrections added that day, 658 of
+1,016 did.
+
+A resolved citation shows only that the skill's index names a source to open.
+It does not show that the section exists or says what the skill claims. A
+section is matched to the Act named beside it, otherwise the nearest Act named
+before it, so a section can be credited to the wrong Act. The records added on
+11 November were read by an agent and await human source approval, as each
+record's `verification_status` says; [How each skill was verified](skill-verification.md)
+counts each skill's reviewed sources.
+
 ## Boundary
 
 A recorded pass says a model handled a fabricated scenario within the
