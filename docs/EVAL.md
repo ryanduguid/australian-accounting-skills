@@ -320,27 +320,56 @@ started) all 37, including the 17 for the skills added in #318, did the same,
 at a reported US$6.11. One run per case is a small sample, and the result shows
 routing only, not the quality of the answer.
 
-## How the content is verified
+## How citations are checked
 
-`accounting-skills check-citations` reads every Markdown file in every skill.
-It checks that each cited legislative section, and each ruling, determination,
-practice statement, guideline and TPB or ASIC guidance number, has a record in
-that skill's `sources.json`, and reports each one without a record by file and
-line. The `native` job in `.github/workflows/verify.yml` fails on any unmatched
-citation.
+`accounting-skills check-citations` reads every Markdown file in every skill
+and reports, by file and line, each citation it reads that has no record in
+that skill's `sources.json`. The `native` job in `.github/workflows/verify.yml`
+fails on any unmatched citation.
 
-On 11 November 2026 the skills cited 1,017 sections and rulings: 812
-legislative sections and 205 rulings and other guidance. All 1,017 resolve to a
-recorded source. Before the records and corrections added that day, 658 of
-1,016 did.
+It reads 2 forms:
+
+- **Rulings and guidance** numbered with a year, such as `TR 2022/4`,
+  `PCG 2026/D3` and `PS LA 2011/4`, with the prefixes TR, TD,
+  PR, CR, MT, GSTR, GSTD, FBTR, WETR, WETD, FTR, FTD, SGR, SGD, PCG, LCR, LCG,
+  CLR, MTR, LI, PS LA, ATO ID and TPB(GS), TPB(I) and TPB(EP), and ASIC
+  `RG` and `INFO` numbers. One resolves when a record's title or address names
+  the same document.
+- **Sections and regulations** written `s`, `ss`, `section`, `subsection`,
+  `reg` or `regulation` with a number. One resolves when a record from a
+  legislation register (a Federal Register, ATO legal database or state or
+  territory register address) names its Act or instrument, and that Act is
+  named in the section's own sentence: right after it ('s 8-1 of the ITAA
+  1997'), right before it ('ITAA 1997 s 8-1'), or as the only Act the sentence
+  names apart from an amending Act and one named right after another section.
+  An Act named in an earlier sentence or on an earlier line never owns a
+  section, and a section said to be of 'the Act' without naming it is reported.
+  A sentence can run across a paragraph's wrapped lines, never past a blank
+  line, heading, list item or table row.
+
+It does not read Divisions, Subdivisions, Parts, clauses, cases (such as
+*Newton* [2010] FCA 1440), rulings with a withdrawn suffix (`GSTR 2000/10W`),
+`SMSFR` and `SMSFD` rulings, Taxpayer Alerts, `IT` rulings, `PSLA` written
+without a space, `TPB(PN)` notes, sections of professional standards such as
+APES 110, or cross-references such as 'section 3 below'. On 11 November 2026
+the skills cited Divisions 135 times, Subdivisions 44, Parts 27, clauses 18 and
+cases 11, by a pattern count; none of these is checked.
+
+On 11 November 2026 the check found 1,017 citations: 812 legislative sections
+and regulations and 205 rulings and guidance. All 1,017 resolve. Before that
+day's records and corrections, under an earlier rule that let a section take
+the nearest Act named before it anywhere in the file, 658 of 1,016 resolved.
 
 A resolved citation shows only that the skill's index names a source to open.
-It does not show that the section exists or says what the skill claims. A
-section is matched to the Act named beside it, otherwise the nearest Act named
-before it, so a section can be credited to the wrong Act. The records added on
-11 November were read by an agent and await human source approval, as each
-record's `verification_status` says; [How each skill was verified](skill-verification.md)
-counts each skill's reviewed sources.
+It does not show that the section exists (a proposed section in a Bill
+resolves to the Act it would amend) or says what the skill claims. A state Act
+cited without its jurisdiction can match another state's Act with the same
+title and year. Where a sentence's only Act sits right after its first section,
+the sentence's other sections are credited to that Act too, which can be
+wrong. The records added on 11 November were read by an agent and await human
+source approval, as each record's `verification_status` says;
+[How each skill was verified](skill-verification.md) counts each skill's
+reviewed sources.
 
 ## Boundary
 

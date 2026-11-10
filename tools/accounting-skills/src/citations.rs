@@ -6,12 +6,19 @@
 //!
 //! A ruling, determination, practice statement, guideline or TPB or ASIC
 //! guidance number resolves when a record's title or address names the same
-//! document. A section resolves when a record names the Act, regulations or
-//! instrument the section belongs to. That instrument is the one named right
-//! after the section ("s 8-1 of the ITAA 1997"), otherwise the nearest one
-//! named before it in the same file, passing over an Act named only to own an
-//! earlier section. The check does not confirm that the section exists or says
-//! what the skill claims.
+//! document. A section resolves when a record taken from a legislation register
+//! (a Federal Register, ATO legal database or state or territory register
+//! address) names the Act, regulations or instrument the section belongs to.
+//! That instrument must be named in the section's own sentence: right after
+//! the section ("s 8-1 of the ITAA 1997"), right before it ("ITAA 1997 s 8-1"),
+//! or as the only instrument the sentence names apart from an amending Act and
+//! one that owns another section. When the only Act a sentence names sits
+//! right after its first section, it owns the sentence's other sections too.
+//! A sentence may run across a paragraph's wrapped lines but never past a
+//! blank line, heading, list item or table row. A section whose sentence names
+//! no instrument, or more than one, is reported; "section 3 below" is a
+//! cross-reference and is not counted. The check does not confirm that the
+//! section exists or says what the skill claims.
 
 use crate::{Result, canonical_root, discover_skills, platform_text, read_text};
 use fancy_regex::{Captures, Regex};
@@ -21,6 +28,7 @@ use std::{
     ffi::OsString,
     fs,
     io::{self, Write},
+    ops::Range,
     path::{Path, PathBuf},
     sync::LazyLock,
 };
@@ -88,6 +96,10 @@ const ABBREVIATIONS: &[(&str, &str)] = &[
     (
         "AML/CTF Act",
         "Anti-Money Laundering and Counter-Terrorism Financing Act 2006",
+    ),
+    (
+        "AML/CTF Rules",
+        "Anti-Money Laundering and Counter-Terrorism Financing Rules 2025",
     ),
     (
         "TPB Code Determination",
@@ -183,19 +195,37 @@ const PLURAL: &[&str] = &[
 ];
 // What may sit between a section and the Act named after it: "s 41-5 of the
 // Fuel Tax Act 2006", "s 131-5 of Schedule 1 to the TAA 1953", "s 40-95 ITAA 1997",
-// "s 28(2)(d) and (e) of the AML/CTF Act".
+// "s 28(2)(d) and (e) of the AML/CTF Act", "s 6-7, s 6-17 or s 6-18 of the Rules".
 static FOLLOWING_GAP: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(&format!(
+        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{{1,5}}\))+|(?:,|,? and|,? or) (?:s|[Ss]ections?|[Ss]ubsections?|regs?|regulations?) {NUMBER})*[ *\[]*(?:of|in|under|to)? ?(?:Schedule \d+[A-Z]? (?:to|of) )?(?:the )?[ *\[]*$"
+    ))
+    .unwrap()
+});
+// A section followed by an instrument the text does not name: "s 31 of the Act".
+static UNNAMED: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
-        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{1,5}\))+)*[ *\[]*(?:of|in|under|to)? ?(?:Schedule \d+[A-Z]? (?:to|of) )?(?:the )?[ *\[]*$",
+        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{1,5}\))+)*,? (?:of|in|under) (the \*?(?:Act|Regulations?|Rules|Determination))(?![A-Za-z0-9]|\*? \d{4})",
     )
     .unwrap()
 });
+// What may sit between an Act and a section it names right after it:
+// "Fuel Tax Act 2006 s 41-5", "*ITAA 1997* s 8-1", "[TASA](https://...) s 30-35".
+// Not a bracket: "via s 50 of the Corporations Act (s 79(3))" cites another Act.
+static PRECEDING_GAP: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^[*\]]*(?:\([^)\s]*\))?[ *]*$").unwrap());
+// A sentence ends at a full stop, question or exclamation mark, the closing
+// marks after it and a space, unless a lower-case letter or digit follows
+// ("e.g. the", "No. 1"). A sentence never starts with a numeral.
+static SENTENCE_END: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r#"[.!?][*_)\]'"’”]* +(?![ a-z0-9])"#).unwrap());
+static LIST_ITEM: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^\s*(?:[-*+]|\d+[a-z]?[.)])\s").unwrap());
 
 type Key = (&'static str, String);
 
 /// An Act or other instrument named on a line. `keys` is `None` for a
 /// professional standard, whose sections are not legislation.
-#[derive(Clone)]
 struct Anchor {
     start: usize,
     end: usize,
@@ -244,11 +274,12 @@ fn ruling_key(prefix: &str, year: &str, number: &str) -> String {
     )
 }
 
-/// Each ruling-style citation in `text`, as written and as a key.
-fn rulings(text: &str) -> Result<Vec<(String, String)>> {
+/// Each ruling-style citation in `text`: where it starts, as written and as a key.
+fn rulings(text: &str) -> Result<Vec<(usize, String, String)>> {
     let mut found = Vec::new();
     for found_ruling in captures(&RULING, text)? {
         found.push((
+            span(&found_ruling).0,
             group(&found_ruling, 0).to_string(),
             ruling_key(
                 group(&found_ruling, 1),
@@ -259,6 +290,7 @@ fn rulings(text: &str) -> Result<Vec<(String, String)>> {
     }
     for guide in captures(&ASIC, text)? {
         found.push((
+            span(&guide).0,
             group(&guide, 0).to_string(),
             format!("{} {}", group(&guide, 1), group(&guide, 2)),
         ));
@@ -277,7 +309,7 @@ fn unescape(text: &str) -> String {
 /// The ruling keys a record's title and addresses name.
 fn record_rulings(text: &str) -> Result<BTreeSet<String>> {
     let text = unescape(text);
-    let mut keys: BTreeSet<String> = rulings(&text)?.into_iter().map(|(_, key)| key).collect();
+    let mut keys: BTreeSet<String> = rulings(&text)?.into_iter().map(|(_, _, key)| key).collect();
     for document in captures(&DOCID, &text)? {
         let prefix = group(&document, 1).to_uppercase();
         let prefix = if prefix == "PS" {
@@ -560,7 +592,10 @@ fn markdown_files(folder: &Path, files: &mut Vec<PathBuf>) -> Result<()> {
     Ok(())
 }
 
-/// What each record of a skill's `sources.json` names.
+/// What each record of a skill's `sources.json` names: its rulings, and the
+/// instrument of each record taken from a legislation register. A record from
+/// anywhere else, such as an ATO web page or a ruling, may name an Act in its
+/// title without holding the Act's text, so it owns no section.
 fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
@@ -591,12 +626,167 @@ fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
             .into_iter()
             .map(|(_, key)| key)
             .collect();
+        if keys.is_empty() {
+            continue;
+        }
         for anchor in anchors(&text)? {
             keys.extend(anchor.keys.unwrap_or_default());
         }
         instruments.push(keys);
     }
     Ok((rulings, instruments))
+}
+
+/// A paragraph's wrapped lines joined by spaces, or a heading, table row or
+/// list item with the lines that continue it, with the offset at which each
+/// of its lines starts and that line's number.
+struct Block {
+    text: String,
+    lines: Vec<(usize, usize)>,
+}
+
+impl Block {
+    fn line(&self, offset: usize) -> usize {
+        self.lines[self.lines.partition_point(|(start, _)| *start <= offset) - 1].1
+    }
+}
+
+fn blocks(text: &str) -> Result<Vec<Block>> {
+    let mut found: Vec<Block> = Vec::new();
+    let mut open = false;
+    for (index, line) in text.lines().enumerate() {
+        let trimmed = line.trim_start();
+        if trimmed.is_empty() {
+            open = false;
+            continue;
+        }
+        let opens = ["#", "|", ">", "```", "---"]
+            .iter()
+            .any(|mark| trimmed.starts_with(mark))
+            || LIST_ITEM.is_match(line)?;
+        match found.last_mut() {
+            Some(block) if open && !opens => {
+                block.text.push(' ');
+                block.lines.push((block.text.len(), index + 1));
+                block.text.push_str(trimmed);
+            }
+            _ => found.push(Block {
+                text: line.to_string(),
+                lines: vec![(0, index + 1)],
+            }),
+        }
+        open = !["#", "|", "---"]
+            .iter()
+            .any(|mark| trimmed.starts_with(mark));
+    }
+    Ok(found)
+}
+
+fn sentences(text: &str) -> Result<Vec<Range<usize>>> {
+    let mut found = Vec::new();
+    let mut start = 0;
+    for end in SENTENCE_END.find_iter(text) {
+        let end = end?.end();
+        found.push(start..end);
+        start = end;
+    }
+    found.push(start..text.len());
+    Ok(found)
+}
+
+fn same_anchor(one: &Anchor, other: &Anchor) -> bool {
+    match (&one.keys, &other.keys) {
+        (Some(one), Some(other)) => same_instrument(one, other),
+        (None, None) => true,
+        _ => false,
+    }
+}
+
+/// The instrument each section in `sentence` belongs to, as an index into
+/// `named`: the one named right after or right before the section, otherwise
+/// the only one the sentence names, leaving out an amending Act and one named
+/// right after another section, which owns that section alone unless it owns
+/// the sentence's first section and no other Act is named. `Err` says why none
+/// does, including for a section said to be of "the Act" without naming it.
+fn owners(
+    sentence: &str,
+    named: &[Anchor],
+    sections: &[Captures<'_, str>],
+) -> Result<Vec<std::result::Result<usize, String>>> {
+    let mut beside = Vec::new();
+    let mut tied = vec![false; named.len()];
+    for section in sections {
+        let (start, end) = span(section);
+        let following = match named.iter().position(|anchor| anchor.start >= end) {
+            Some(next) if FOLLOWING_GAP.is_match(&sentence[end..named[next].start])? => {
+                tied[next] = true;
+                Some(Ok(next))
+            }
+            _ => UNNAMED
+                .captures(&sentence[end..])?
+                .map(|unnamed| Err(format!("names its Act only as '{}'", group(&unnamed, 1)))),
+        };
+        let preceding = match named.iter().rposition(|anchor| anchor.end <= start) {
+            Some(last) if PRECEDING_GAP.is_match(&sentence[named[last].end..start])? => {
+                Some(Ok(last))
+            }
+            _ => None,
+        };
+        beside.push(following.or(preceding));
+    }
+    // An amending Act holds amendments to other Acts, not the sections they
+    // insert, so it owns only a section named right beside it.
+    let amending = |anchor: &Anchor| {
+        anchor.keys.as_ref().is_some_and(|keys| {
+            keys.iter()
+                .any(|(kind, name)| *kind == "title" && name.contains(" Amendment "))
+        })
+    };
+    let mut distinct: Vec<usize> = Vec::new();
+    for index in (0..named.len()).filter(|&index| !tied[index] && !amending(&named[index])) {
+        if !distinct
+            .iter()
+            .any(|&other| same_anchor(&named[index], &named[other]))
+        {
+            distinct.push(index);
+        }
+    }
+    // Where every Act the sentence names is beside a section, the others share
+    // the Act only if it is the one Act named and it owns the opening section:
+    // "Section 14ZU of the TAA 1953 requires ... the section 14ZW period".
+    let opening = match beside.first() {
+        Some(Some(Ok(first)))
+            if !amending(&named[*first])
+                && (0..named.len())
+                    .filter(|&index| tied[index])
+                    .all(|index| same_anchor(&named[index], &named[*first])) =>
+        {
+            Some(*first)
+        }
+        _ => None,
+    };
+    let shared = match (&distinct[..], opening) {
+        ([], Some(first)) => Ok(first),
+        ([], None) if tied.contains(&true) => {
+            Err("names its Act only beside another section".to_string())
+        }
+        ([], None) => Err("names no Act".to_string()),
+        ([only], _) => Ok(*only),
+        _ => {
+            let names: Vec<_> = distinct
+                .iter()
+                .map(|&index| sentence[named[index].start..named[index].end].trim_matches('*'))
+                .collect();
+            Err(format!(
+                "its sentence names more than one Act ({})",
+                names.join("; ")
+            ))
+        }
+    };
+    Ok(beside
+        .into_iter()
+        .map(|owner| owner.unwrap_or_else(|| shared.clone()))
+        .collect())
 }
 
 /// Check every skill under `root`.
@@ -614,80 +804,59 @@ pub fn check(root: &Path) -> Result<Report> {
                 .strip_prefix(root)?
                 .to_string_lossy()
                 .replace('\\', "/");
-            let mut carried: Option<Anchor> = None;
-            for (index, line) in read_text(&path)?.lines().enumerate() {
+            for block in blocks(&read_text(&path)?)? {
                 let mut missing = Vec::new();
-                for (citation, key) in rulings(line)? {
+                for (start, citation, key) in rulings(&block.text)? {
                     report.rulings += 1;
                     if recorded_rulings.contains(&key) {
                         report.rulings_resolved += 1;
                     } else {
-                        missing.push((citation, "no record names it".to_string()));
+                        missing.push((start, citation, "no record names it".to_string()));
                     }
                 }
-                let named = anchors(line)?;
-                // An Act named right after a section ("s 50 of the Corporations
-                // Act 2001") owns that section only, so a later section skips it
-                // for an earlier Act on the line where there is one.
-                let mut tied = vec![false; named.len()];
-                for section in captures(&SECTION, line)? {
-                    let (start, end) = span(&section);
-                    let next = named.iter().position(|anchor| anchor.start >= end);
-                    let following = match next {
-                        Some(next) if FOLLOWING_GAP.is_match(&line[end..named[next].start])? => {
-                            tied[next] = true;
-                            Some(next)
+                for range in sentences(&block.text)? {
+                    let sentence = &block.text[range.clone()];
+                    let named = anchors(sentence)?;
+                    // "See section 3 below" points within the skill.
+                    let mut sections = Vec::new();
+                    for section in captures(&SECTION, sentence)? {
+                        let rest = &sentence[span(&section).1..];
+                        if !rest.starts_with(" below") && !rest.starts_with(" above") {
+                            sections.push(section);
                         }
-                        _ => None,
-                    };
-                    let before: Vec<usize> = (0..named.len())
-                        .rev()
-                        .filter(|&index| named[index].end <= start)
-                        .collect();
-                    let preceding = before
-                        .iter()
-                        .find(|&&index| !tied[index])
-                        .or(before.first())
-                        .copied();
-                    let owner = following
-                        .or(preceding)
-                        .map(|index| &named[index])
-                        .or(carried.as_ref());
-                    let resolution = match owner {
-                        Some(Anchor { keys: None, .. }) => continue,
-                        Some(Anchor {
-                            keys: Some(keys), ..
-                        }) => recorded(keys).then_some(()).ok_or_else(|| {
-                            let names: Vec<_> =
-                                keys.iter().map(|(_, name)| name.as_str()).collect();
-                            format!("no record names its Act ({})", names.join("; "))
-                        }),
-                        None => Err("names no Act".to_string()),
-                    };
-                    for number in section_numbers(&section) {
-                        report.sections += 1;
-                        match &resolution {
-                            Ok(()) => report.sections_resolved += 1,
-                            Err(reason) => missing
-                                .push((format!("{} {number}", group(&section, 1)), reason.clone())),
+                    }
+                    let owned = owners(sentence, &named, &sections)?;
+                    for (section, owner) in sections.iter().zip(owned) {
+                        let resolution = match owner.map(|index| &named[index].keys) {
+                            Ok(None) => continue,
+                            Ok(Some(keys)) => recorded(keys).then_some(()).ok_or_else(|| {
+                                let names: Vec<_> =
+                                    keys.iter().map(|(_, name)| name.as_str()).collect();
+                                format!("no record names its Act ({})", names.join("; "))
+                            }),
+                            Err(reason) => Err(reason),
+                        };
+                        for number in section_numbers(section) {
+                            report.sections += 1;
+                            match &resolution {
+                                Ok(()) => report.sections_resolved += 1,
+                                Err(reason) => missing.push((
+                                    range.start + span(section).0,
+                                    format!("{} {number}", group(section, 1)),
+                                    reason.clone(),
+                                )),
+                            }
                         }
                     }
                 }
-                for (citation, reason) in missing {
+                missing.sort_by_key(|(start, _, _)| block.line(*start));
+                for (start, citation, reason) in missing {
                     report.unmatched.push(Unmatched {
                         file: file.clone(),
-                        line: index + 1,
+                        line: block.line(start),
                         citation,
                         reason,
                     });
-                }
-                let last = |free: bool| {
-                    (0..named.len())
-                        .rev()
-                        .find(|&index| named[index].keys.is_some() && !(free && tied[index]))
-                };
-                if let Some(index) = last(true).or_else(|| last(false)) {
-                    carried = Some(named[index].clone());
                 }
             }
         }
@@ -770,7 +939,7 @@ mod tests {
         let found: Vec<_> = rulings("TR 2010/31 and PS LA 2011/4 but not TR 2010/3A1")
             .unwrap()
             .into_iter()
-            .map(|(_, key)| key)
+            .map(|(_, _, key)| key)
             .collect();
         assert_eq!(found, ["TR 2010/31", "PSLA 2011/4"]);
     }
