@@ -5,7 +5,8 @@ farming (s 38-480) and subdivided farm land supplied to an associate
 (s 38-475) condition by condition, with the evidence each needs, and sets them
 beside the going concern path, the recipient's Division 135 adjustments, the
 margin scheme history for a later sale, settlement withholding with the
-credit (to the representative member for a GST group) or refund, and the
+credit (to a GST group's representative member or an insolvency
+representative where liable) or refund, and the
 supplier's notice. `au-primary-production` gains a farm succession step that
 prepares the asset and entity register, CGT events, small business concession
 and rollover evidence, trading stock and plant transfers, and the effect on
@@ -16,7 +17,7 @@ so the new test checks wording and card arithmetic, not model behaviour.
 `au-small-business-cgt` now states the basic conditions and each concession's
 extra conditions that the succession step routes to it, and notes that
 s 152-205(2) changes the basic conditions for the small business reduction
-from the income year that includes 1 July 2027. The 40 new source records
+from the income year that includes 1 July 2027. The 42 new source records
 await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the

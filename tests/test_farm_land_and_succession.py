@@ -72,6 +72,9 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "record the evidence for both outcomes without choosing between them", "(s 18-60)",
             # The credit goes to the entity liable for the GST, which for a grouped supplier is not the supplier.
             "the entity liable for GST on it is entitled to a credit", "representative member (GST Act s 48-40(1))",
+            # A representative of an incapacitated supplier can be liable instead, and so take the credit.
+            "the representative is liable to that extent instead of the supplier or representative member "
+            "(s 58-10(1), (5) and (6))", "(s 58-10(2)(a))", "its capacity, its appointment date",
             "lodged at least 14 days before the supplier must pay GST on the supply",
             "leave the amount blank for the reviewer",
             "mark the classification `UNVERIFIED`",
@@ -79,7 +82,7 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
         self.assert_pending_and_cited(
             "au-gst-property",
             *(LAW + f"PAC/19990055/{section}" for section in
-              ("9-5", "38-325", "38-475", "38-480", "48-40", "75-5", "75-11", "135-5", "135-10", "195-1")),
+              ("9-5", "38-325", "38-475", "38-480", "48-40", "58-10", "75-5", "75-11", "135-5", "135-10", "195-1")),
             "https://www.legislation.gov.au/C2008A00145/asmade/text",
             LAW + "PAC/19530001/Sch1-14-250",
             LAW + "PAC/19530001/Sch1-14-255",
@@ -99,6 +102,9 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "CGT event A1 (s 104-10)", "s 116-30 substitutes market value", "s 128-15",
             # A1 is not the only event: the most specific one is used, with its own timing.
             "s 102-25(1)", "CGT event E2 (s 104-60(1))", "when the asset is transferred (s 104-60(2))",
+            # J2, K5 and K12 apply alongside the other event, so a rolled-over gain is not lost.
+            "subject to the exceptions in s 102-25(2) to (2C)", "record the earlier roll-over",
+            "J2 can happen alongside the transfer (s 102-25(2A))",
             # Farm facts for the concessions; the general conditions live in au-small-business-cgt.
             "Route the concession evidence to `au-small-business-cgt`",
             # Land held outside the partnership is not a partnership asset, so (1)(c)(iii) cannot apply.
@@ -125,7 +131,8 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
         self.assert_pending_and_cited(
             "au-primary-production",
             *(LAW + f"PAC/19970038/{section}" for section in
-              ("40-295", "40-340", "70-90", "70-100", "70-105", "102-25", "104-10", "104-60", "116-30", "128-15",
+              ("40-295", "40-340", "70-90", "70-100", "70-105", "102-25", "104-10", "104-60", "104-185", "116-30",
+               "128-15",
                "152-10", "152-40", "152-105", "393-35")),
         )
         concessions = " ".join(skill_text("au-small-business-cgt").split())
