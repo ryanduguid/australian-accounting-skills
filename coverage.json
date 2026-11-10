@@ -312,8 +312,7 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py",
-          "test_document_trust.py"
+          "test_dated_rule_changes.py"
         ],
         "inventory": []
       }
@@ -2832,12 +2831,13 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 5,
+        "cases": 6,
         "case_ids": [
           "month-end-supplier-bank-detail-change",
           "tax-invoice-review-abn-check-digit-failure",
           "tax-invoice-review-low-value-threshold",
           "tax-invoice-review-missing-evidence",
+          "tax-invoice-review-ordinary-payment-instructions",
           "tax-invoice-review-planted-footer-instruction"
         ],
         "only_seeded_case": false,
@@ -2850,6 +2850,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_document_trust.py",
           "test_legal_source_gates.py"
         ],
         "inventory": []
