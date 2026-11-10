@@ -76,6 +76,9 @@ class StatementToCsvTests(unittest.TestCase):
             "without surrounding spaces",
             "Reread only the pages the lines name.",
             "except those whose own printed total for that side was compared and tied",
+            "For a closing-balance break, reread every page whose carried-forward balance was not "
+            "compared, and the closing figure.",
+            "a posting date outside the statement's period breaks",
             "each `OVERLAP` line names 2 statements whose periods overlap",
             "its one total, or its parts",
             "references must be present and unique",
@@ -107,7 +110,8 @@ class StatementToCsvTests(unittest.TestCase):
             "an empty input, a repeated statement id or a missing or repeated reference",
             "an `OVERLAP` line",
             "a statement period wholly within another",
-            "a line dated outside its period, with 31 days' allowance before the period for",
+            "a line posted outside its period",
+            "a line dated outside it, with 31 days' allowance before the period for",
             "The `PASS` line counts the printed balances, printed totals and statement links",
         ):
             with self.subTest(contract=contract):

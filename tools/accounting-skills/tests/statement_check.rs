@@ -333,6 +333,12 @@ fn an_overlap_is_placed_by_posting_dates_or_not_at_all() {
             "PASS 2 statements, 2 lines; compared 4 printed balances, 0 printed totals, 1 statement links",
         ]
     );
+    let posted_late = run(&input(Some("2026-02-01")));
+    assert_eq!(posted_late.code, Some(2));
+    assert_eq!(
+        posted_late.stdout[0],
+        "BREAK C1 page 1 line 1: posted 2026-02-01, outside the period 2026-01-01 to 2026-01-31"
+    );
     let unplaced = run(&input(None));
     assert_eq!(unplaced.code, Some(2));
     assert_eq!(

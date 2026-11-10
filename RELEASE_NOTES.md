@@ -18,8 +18,9 @@ and 1 on malformed input, which includes an empty input, a repeated statement id
 or a missing or repeated reference. It prints an `OVERLAP` line for each pair of
 overlapping periods and breaks a statement period wholly within another, an
 overlap it cannot place because the earlier lines lack posting dates or are not
-in posting-date order, and a line dated outside its period, with 31 days'
-allowance before the period for cards and other accounts in the owed direction.
+in posting-date order, a line posted outside its period, and a line dated outside
+it, with 31 days' allowance before the period for cards and other accounts in the
+owed direction.
 The `PASS` line counts the printed balances, printed totals and statement links
 it compared.
 

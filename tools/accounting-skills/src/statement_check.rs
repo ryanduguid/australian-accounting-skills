@@ -260,6 +260,14 @@ fn check_page(
             .as_deref()
             .map(|posted| date(posted, &format!("{at} posted")))
             .transpose()?;
+        // Periods run on posting dates, so a posting date has no early allowance.
+        if let Some(posted) = posted.filter(|posted| *posted < period.start || *posted > period.end)
+        {
+            report.breaks.push(format!(
+                "BREAK {at}: posted {posted}, outside the period {} to {}",
+                period.start, period.end
+            ));
+        }
         if when > period.end {
             report.breaks.push(format!(
                 "BREAK {at}: dated {when}, after the period ends {}",
@@ -591,6 +599,9 @@ mod tests {
             "pages": [{"page": "1", "lines": [
                 line("1", "2026-12-13", Some("20.00"), None, Some("-15.00")),
                 line("2", "2026-12-30", Some("99.50"), None, Some("84.50"))]}]}]});
+        // The 13 December purchase posts on 15 December, inside the period.
+        let mut input = input;
+        input["statements"][0]["pages"][0]["lines"][0]["posted"] = json!("2026-12-15");
         assert_eq!(breaks(&input), Vec::<String>::new());
         let mut wrong_way = input.clone();
         wrong_way["direction"] = json!("deposit");
