@@ -30,5 +30,6 @@ class RoutingCaseTests(unittest.TestCase):
     def test_every_skill_has_a_routing_case(self) -> None:
         self.assertEqual(set(), self.names - {case["skill"] for case in self.cases})
 
+
 if __name__ == "__main__":
     unittest.main()

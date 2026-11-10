@@ -194,7 +194,7 @@
 - id: small-business-offset
   skill: au-small-business-income-offset
   not: [au-sole-trader, au-partnership-tax]
-  prompt: A plumber trades on his own account and also receives a share of profit from a small family partnership. Work out which of his business income qualifies and the tax reduction it may attract.
+  prompt: A plumber trades on his own account and also receives a share of profit from a small family partnership. His own business turns over about $310,000 a year and the partnership about $1.4 million, and both schedules are already done. Work out which of his business income qualifies and the tax reduction it may attract.
 - id: weekend-farm-losses
   skill: au-non-commercial-losses
   not: [au-primary-production, au-sole-trader]
