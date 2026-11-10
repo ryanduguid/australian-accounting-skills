@@ -7,11 +7,13 @@ schedule with the moving, changing residence, absence, building, destruction,
 spouse and child rules, income use and the first income use rule, adjacent
 land and the partial exemption inputs. `au-share-buy-back` prepares a
 buy-back's workpapers under Division 16K and Part 2J.1: the tax and
-Corporations Act classifications, the capital and dividend split beside the
-average capital per share, market value, franking debits, Division 7A links
-and each seller's consideration and dividend. `au-capital-gains` and
-`au-franking-account` now route to them. Four synthetic cards bring the
-validation pack to 183, with no recorded model run for them, and the new
+Corporations Act classifications, the share capital tainting test, the
+capital and dividend split beside the average capital per share, market
+value, franking debits including distributions funded by capital raising,
+Division 7A links and each seller's consideration and dividend.
+`au-capital-gains`, `au-franking-account`, `au-nonresident-cgt`,
+`au-rental-property` and `au-short-stay-accommodation` now route to them.
+Five synthetic cards bring the validation pack to 184, with no recorded model run for them, and the new
 source records await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
