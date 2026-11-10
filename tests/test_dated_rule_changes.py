@@ -1721,15 +1721,38 @@ class DatedRuleChangeTests(unittest.TestCase):
         allowlist, _, row = route.partition("Allowlist, from")[2].partition("Fork row,")
         self.assertTrue(row, "the route has no fork row")
         row = row.partition("For every connector read")[0]
-        self.assert_sentence(row, r"\bryanduguid/xero-mcp-server\b", r"`a115f18`", r"\b10 November 2026\b")
-        self.assert_carries(row, "/tree/a115f181895d82d0f9e0604546ef00671e9c47a6)")
+        sha = "a115f181895d82d0f9e0604546ef00671e9c47a6"
+        self.assert_sentence(row, r"\bryanduguid/xero-mcp-server\b", rf"`{sha}`", r"\b10 November 2026\b")
+        self.assert_carries(row, f"/tree/{sha})")
         self.assert_sentence(row, r"\bAt that commit and setting\b", r"\b31 tools\b", r"\bon that server only\b")
         self.assert_sentence(row, r"\bcalls only Xero read methods\b", r"\bno server was run\b")
-        self.assert_sentence(row, r"\bonly after verifying\b", r"\bthat exact full commit\b", r"`XERO_READ_ONLY=true`")
-        self.assert_sentence(row, r"\bIf either is unverified\b", r"\bbase allowlist\b", r"\bfile exports\b")
-        self.assert_sentence(row, r"\btool-list check stops\b", r"\ballowlist that applies to the verified server\b")
+        self.assert_sentence(row, r"\bonly after verifying\b", r"\bthat exact commit\b", r"`XERO_READ_ONLY=true`")
+        self.assert_sentence(
+            row,
+            r"\bin this session\b",
+            r"\bcheckout its launch command runs\b",
+            r"\bno local change\b",
+            r"\blaunch configuration sets the variable\b",
+        )
+        self.assert_sentence(row, r"\bperson's assurance verifies neither\b")
+        self.assert_sentence(
+            row,
+            r"\bIf either is unverified\b",
+            r"\bfork row does not apply\b",
+            r"\bbase allowlist alone\b",
+            r"\bstops on any other name\b",
+            r"\bfile exports\b",
+        )
+        self.assert_sentence(row, r"\bOn the verified server\b", r"\btool-list check stops\b", r"\boutside these 31\b")
         self.assert_sentence(row, r"\bleaves the scopes\b[^.]*\bunchanged\b", r"\bscopes check still decides\b")
-        self.assert_sentence(row, r"\bfirst organisation Xero lists\b", r"`list-organisation-details`")
+        self.assert_sentence(
+            row,
+            r"\bfirst organisation Xero lists\b",
+            r"\blooking it up again during a session\b",
+            r"`list-organisation-details`",
+            r"\bbefore each export\b",
+            r"\bstop if it is not the organisation the engagement names\b",
+        )
         # The names the fork registers with XERO_READ_ONLY=true at a115f18:
         # src/tools/get/index.ts and src/tools/list/index.ts, 2 and 29.
         registered = {

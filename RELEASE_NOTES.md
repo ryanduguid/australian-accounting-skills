@@ -3,7 +3,8 @@
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified
-at that commit and setting; otherwise the base allowlist or file exports apply.
+at that commit and setting; otherwise the base allowlist alone applies and the
+work falls back to file exports.
 The 31 handlers were read and no server was run, so the new test checks wording
 and the tool names, not a live connection. The scopes check is unchanged.
 
