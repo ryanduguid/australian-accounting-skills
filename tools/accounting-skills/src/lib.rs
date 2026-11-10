@@ -181,12 +181,12 @@ pub fn canonical_root(path: &Path) -> Result<PathBuf> {
 
 /// Resolve `relative` inside `root` and refuse a path that leaves it.
 ///
-/// `relative` may contain only normal components. Existing symbolic links and
-/// reparse points are resolved and must stay inside the canonical root. A
-/// component that does not exist yet is kept, so a new output can be confined
-/// before it is created. A final link is left in place once its target has
-/// been confirmed inside the root, so a linked output is still refused by the
-/// writer rather than replaced with the link's target.
+/// `relative` may contain only normal components. Each existing component is
+/// canonicalised and must stay inside the canonical root, so a symbolic link
+/// cannot point the path elsewhere. A component that does not exist yet is
+/// kept, so a new output can be confined before it is created. A final path
+/// whose canonical target is a different file is refused, so a linked output
+/// is not replaced with the link's target.
 pub fn within_root(root: &Path, relative: &Path) -> Result<PathBuf> {
     let root = canonical_root(root)?;
     if relative.as_os_str().is_empty()
@@ -204,18 +204,21 @@ pub fn within_root(root: &Path, relative: &Path) -> Result<PathBuf> {
             return Err(OUTSIDE_ROOT.into());
         };
         let next = resolved.join(name);
-        if !next.starts_with(&root) {
-            return Err(OUTSIDE_ROOT.into());
-        }
-        match fs::symlink_metadata(&next) {
+        match fs::canonicalize(&next) {
+            Ok(target) => {
+                if !target.starts_with(&root) {
+                    return Err(OUTSIDE_ROOT.into());
+                }
+                let last = index + 1 == parts.len();
+                if last && target != next {
+                    return Err(format!("{} must be a regular file", name.to_string_lossy()).into());
+                }
+                resolved = target;
+            }
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
                 return append_missing(&root, next, &parts[index + 1..]);
             }
             Err(error) => return Err(error.into()),
-            Ok(_) if validation::is_reparse_point(&next)? => {
-                resolved = resolve_link(&root, &next, index + 1 == parts.len())?;
-            }
-            Ok(_) => resolved = next,
         }
         if !resolved.starts_with(&root) {
             return Err(OUTSIDE_ROOT.into());
@@ -237,28 +240,6 @@ fn append_missing(root: &Path, mut resolved: PathBuf, rest: &[Component<'_>]) ->
         }
     }
     Ok(resolved)
-}
-
-/// Resolve one symbolic link or reparse point that has already been confined.
-///
-/// A final link is left in place once its target is inside `root`, so the
-/// writer still refuses to replace the link. An earlier link is replaced by
-/// its target, and later components are resolved from there. A final link
-/// whose target is missing stays as the link path.
-fn resolve_link(root: &Path, link: &Path, last: bool) -> Result<PathBuf> {
-    if !link.starts_with(root) {
-        return Err(OUTSIDE_ROOT.into());
-    }
-    match fs::canonicalize(link) {
-        Ok(target) if target.starts_with(root) => {
-            Ok(if last { link.to_path_buf() } else { target })
-        }
-        Ok(_) => Err(OUTSIDE_ROOT.into()),
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound && last => {
-            Ok(link.to_path_buf())
-        }
-        Err(error) => Err(error.into()),
-    }
 }
 
 fn matches_suffix(path: &Path, suffix: &str) -> Result<bool> {
@@ -374,20 +355,33 @@ fn text_field(record: &serde_json::Map<String, Value>, field: &str) -> Result<St
 }
 
 pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
-    let directory = root.join(".claude/skills").join(skill);
+    let root = canonical_root(root)?;
+    if !normal_component(skill) {
+        return Err(format!("skill path escapes the repository root: {skill}").into());
+    }
+    let directory = root.join(".claude").join("skills").join(skill);
+    if !directory.starts_with(&root) {
+        return Err(OUTSIDE_ROOT.into());
+    }
     let mut summary = Sources {
         indexed: 0,
-        exempt: directory.join("sources.exempt.json").is_file(),
+        exempt: existing_file(&root, &directory.join("sources.exempt.json"))?,
         reviewed: String::new(),
         reviewed_count: 0,
         fetched: String::new(),
         unreachable: 0,
         moved_since_review: Vec::new(),
     };
-    let index = directory.join("sources.json");
-    if !index.is_file() {
-        return Ok(summary);
-    }
+    let index = match fs::canonicalize(directory.join("sources.json")) {
+        Ok(path) => {
+            if !path.starts_with(&root) {
+                return Err(OUTSIDE_ROOT.into());
+            }
+            path
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(summary),
+        Err(error) => return Err(error.into()),
+    };
     let payload: Value = serde_json::from_str(&read_text(&index)?)?;
     let object = payload
         .as_object()
@@ -428,6 +422,20 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
     summary.reviewed = reviewed.into_iter().next().unwrap_or_default();
     summary.fetched = fetched.into_iter().next().unwrap_or_default();
     Ok(summary)
+}
+
+/// Whether `path` is an existing file whose canonical location stays in `root`.
+fn existing_file(root: &Path, path: &Path) -> Result<bool> {
+    match fs::canonicalize(path) {
+        Ok(canonical) => {
+            if !canonical.starts_with(root) {
+                return Err(OUTSIDE_ROOT.into());
+            }
+            Ok(canonical.is_file())
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(false),
+        Err(error) => Err(error.into()),
+    }
 }
 
 /// A card id is one normal path component, so it cannot name another directory.

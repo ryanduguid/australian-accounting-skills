@@ -515,6 +515,7 @@ fn check_fails_when_a_source_record_changes_and_the_page_does_not() {
     );
 }
 
+#[cfg(unix)]
 fn coverage(root: &Path, args: &[&str]) -> std::process::Output {
     Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
         .arg("build-coverage")
