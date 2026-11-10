@@ -30,7 +30,7 @@ Only the supplied facts are available. A balance sheet and cash flow forecast at
 - Show that the month 4 dividend set the period's benchmark under s 203-30, and that a higher percentage now would breach s 203-25 with over-franking tax under s 203-50 as a conditional consequence; leave the percentage to the directors.
 - Mark the maximum franking credit and franking percentages `UNVERIFIED` until the imputation rate is verified at the ATO.
 - Draft statements carrying each s 202-80(3) item and the ATO's additional items, and record the private company issue time and its s 202-75(4) exception.
-- Post the projected franking debit at the payment date, not the resolution date, and draft the journals without posting them.
+- Schedule the projected franking debit at the payment date, not the resolution date, and draft the journals without posting them.
 - Record that the set-off counts as a repayment under s 109R(3)(a) and route the minimum yearly repayment and set-off timing to `div7a-compliance`.
 
 ## Must not do

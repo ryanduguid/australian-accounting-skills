@@ -26,6 +26,12 @@ class EntitySuperWorkflowTests(unittest.TestCase):
 
     # au-smsf-death-benefits
 
+    def test_death_benefits_cite_the_restructure_rules(self) -> None:
+        step = workflow_step("au-smsf-death-benefits", 1)
+        self.assert_sentence(step, r"\bs 17A\(3\)\(a\)", r"\blegal personal representative may be a trustee\b",
+                             r"\buntil death benefits commence to be payable\b")
+        self.assert_sentence(step, r"\bs 17A\(4\)", r"\bearlier of an RSE licensee's appointment and 6 months\b")
+
     def test_death_benefits_test_nominations_against_the_deed(self) -> None:
         step = workflow_step("au-smsf-death-benefits", 2)
         # SMSFD 2008/3: the statutory nomination rules do not bind an SMSF; the deed does.
@@ -46,6 +52,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bseparate columns\b", r"\bSIS dependant status\b",
                              r"\bdeath benefits dependant status\b")
         self.assert_sentence(step, r"\bAn adult child can be a SIS dependant without being a death benefits dependant\b")
+        self.assert_sentence(step, r"\ba former spouse is a death benefits dependant under s 302-195\(1\)\(a\)", NOT + r"a SIS dependant as a spouse\b",
+                             r"\bSMSFD 2008/3 \(paragraph 31\)")
         self.assert_sentence(step, DO_NOT + r"decide who is paid or how much\b",
                              affirmed=(r"\bthe trustee decides under the deed\b",))
 
@@ -57,10 +65,14 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bunder 18, or was financially dependent on the member and under 25, or has a disability\b")
         self.assert_sentence(step, r"\bceases on the member's death unless\b", r"\bautomatically transfer\b")
         self.assert_sentence(step, r"\bcannot be retained in accumulation phase\b")
+        self.assert_sentence(step, r"\breg 6\.21\(2B\)", r"\bunless it is rolled over to commence a new annuity or pension\b", r"\bwhichever is earlier\b")
 
     def test_death_benefits_defer_a_reversionary_credit(self) -> None:
         step = workflow_step("au-smsf-death-benefits", 5)
-        self.assert_carries(step, "s 294-25(1) item 2", "Subdivision 294-D")
+        self.assert_carries(step, "s 294-25(1) item 2")
+        # Child recipients are Subdivision 294-E; 294-D is capped defined benefit income streams.
+        self.assert_sentence(step, r"\bSubdivision 294-E modifies the cap for a child recipient\b")
+        self.assertNotIn("294-D", step)
         self.assert_sentence(step, r"\breversionary beneficiary\b",
                              r"\bat the end of the 12 months beginning on the starting day\b")
         self.assert_sentence(step, r"\bdeath itself is not reported\b", r"\bdate of death as the effective date\b")
@@ -71,6 +83,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_carries(step, "s 307-125", "s 307-290", "s 295-465", "s 295-470", "s 302-60", "s 302-145",
                             "ss 302-65 to 302-90", "s 302-10")
         self.assert_sentence(step, r"\bleave the element blank until each input is evidenced\b")
+        self.assert_sentence(step, r"\bcommuting an income stream\b", r"\bwhen that income stream commenced\b",
+                             r"\(s 307-125\(3\)\(c\)\)")
         self.assert_sentence(step, r"\bwithout computing their tax\b")
         self.assert_routes(step, 1)
 
@@ -91,6 +105,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
             f"{ATO_SMSF}/paying-smsf-benefits/death-of-an-smsf-member",
             f"{ATO_SMSF}/smsf-administration-and-reporting/when-to-lodge-a-transfer-balance-account-report-for-smsfs",
             f"{ATO_SMSF}/paying-smsf-benefits/payg-withholding-obligations-when-paying-super-benefits",
+            "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/"
+            "withdrawing-and-using-your-super/superannuation-death-benefits",
         )
 
     # au-family-trust-election
@@ -101,6 +117,10 @@ class EntitySuperWorkflowTests(unittest.TestCase):
                             "parent, grandparent, brother or sister", "nephew, niece or child", "lineal descendant")
         self.assert_sentence(step, r"\bAunts, uncles and cousins\b", NOT + r"in the family under s 272-95\b")
         self.assert_sentence(step, affirmed=(r"\bThe trustee chooses the individual\b",))
+
+    def test_election_family_control_test_counts_family_trusts(self) -> None:
+        step = workflow_step("au-family-trust-election", 3)
+        self.assert_carries(step, "s 272-87(1)(b)", "s 272-87(1)(c)", "paragraph (f)")
 
     def test_election_earlier_year_needs_both_conditions(self) -> None:
         step = workflow_step("au-family-trust-election", 4)
@@ -118,6 +138,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         # The gap between the s 272-80(4A) period and the election date is screened on its own.
         self.assert_sentence(step, r"\bonly the period up to 30 June\b", r"\bseparately\b")
         self.assert_sentence(step, DO_NOT + r"compute or conclude the liability\b")
+        self.assert_sentence(step, r"\bs 272-60\b", r"\bexceed any consideration given in return\b")
+        self.assert_sentence(step, r"\bas trustee of a trust that is not in the family group \(s 271-15\(1\)\(b\)\(ii\)\)")
         self.assert_routes(step, 1)
 
     def test_election_iee_exposes_every_distribution(self) -> None:
@@ -132,7 +154,12 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         step = workflow_step("au-family-trust-election", 7)
         self.assert_carries(step, "s 272-80(5)", "s 272-80(5A)", "(5B)", "s 272-80(5C)", "s 272-80(6)",
                             "s 272-80(6A)", "s 272-80(8)", "s 272-85(5A) to (6)")
-        self.assert_sentence(step, r"\bOne variation\b|\bone variation\b", r"\bfamily at the election commencement time\b")
+        self.assert_sentence(step, r"\bOne variation\b|\bone variation\b", r"\bfamily at the election commencement time\b",
+                             r"\bby the trust and by each entity with an interposed entity election in relation to it\b")
+        # A fixed trust's revocation has its own conditions and is made under s 272-80(7).
+        self.assert_sentence(step, r"\bs 272-80\(6\)", r"\ban outsider later holds a fixed entitlement\b",
+                             r"\(s 272-80\(7\)\)")
+        self.assert_sentence(step, r"\bUnder s 272-80\(8\) any other variation or revocation\b")
         self.assert_sentence(step, r"\bs 272-80\(6B\)\(a\)", r"\bend of the fourth income year after the specified income year\b")
         self.assert_sentence(step, r"\blodged return cannot be amended to add a revocation or variation schedule\b")
 
@@ -155,7 +182,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
 
     def test_dividend_preparation_keeps_the_corporate_law_conditions(self) -> None:
         step = workflow_step("au-franking-account", "5a")
-        self.assert_carries(step, "s 254U", "s 254W(2)", "s 254T(2)", "s 251A", "Section 202-5")
+        self.assert_carries(step, "s 254U", "s 254W(2)", "s 254T(2)", "s 251A(2)", "s 251A(3)",
+                            "s 251A(1)(e) and (4)", "Section 202-5")
         # A determined dividend is revocable until the payment time; a declared one is a debt at once.
         self.assert_sentence(step, r"\bs 254V\(1\)", r"\bonly when the time fixed for payment arrives\b",
                              r"\bcan be revoked before then\b", r"\bs 254V\(2\)", r"\ba debt when declared\b")
@@ -169,15 +197,18 @@ class EntitySuperWorkflowTests(unittest.TestCase):
     def test_dividend_preparation_statements_and_entries(self) -> None:
         step = workflow_step("au-franking-account", "5a")
         self.assert_carries(step, "s 202-60", "s 202-65", "s 203-30", "s 203-50", "s 203-25", "s 202-80(3)")
-        self.assert_sentence(step, r"\bs 202-75\b", r"\b4 months after the income year\b",
-                             r"\bunless the franking credit would create or increase a franking deficit tax liability \(s 202-75\(4\)\)")
+        self.assert_sentence(step, r"\bproposed issue date against the s 202-75 issue time\b", r"\bstep 6 checks both\b")
+        self.assert_sentence(step, r"\blater issue time is not available\b",
+                             r"\bcreate or increase a franking deficit tax liability \(s 202-75\(4\)\)")
         self.assert_sentence(step, r"\bon the date the distribution is made, not the resolution date\b",
                              r"\bwithout posting them\b")
 
     def test_dividend_preparation_routes_division_7a_set_offs(self) -> None:
         step = workflow_step("au-franking-account", "5a")
         self.assert_sentence(step, NOT + r"excluded from counting as a repayment by s 109R\(2\)", r"\(s 109R\(3\)\(a\)\)")
-        self.assert_sentence(step, r"\bs 109ZC\(2\)", r"\bexcept for franking purposes\b")
+        # s 109ZC(2) excludes the set-off only up to the unfranked part; the excess stays a dividend.
+        self.assert_sentence(step, r"\bs 109ZC\(2\)", r"\bonly up to the unfranked part of the later dividend\b")
+        self.assert_sentence(step, r"\bany amount set off above that part is still a dividend\b")
         self.assert_routes(step, 1)
 
     def test_dividend_preparation_sources_are_pending(self) -> None:
