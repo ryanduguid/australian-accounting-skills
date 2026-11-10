@@ -79,7 +79,13 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "except to the extent the supplier received the consideration for the supply before the "
             "representative's appointment (s 58-10(2)(a))", "each amount of consideration with the date it was received",
             "Division 58 does not apply to the extent that s 105-5(1)(a) will apply", "(s 58-95)",
-            "the creditor then makes the taxable supply (s 105-5(1))",
+            # A creditor's supply is taxable only on both s 105-5(1) conditions, and s 105-5(3) has 2 routes out.
+            "in or towards satisfaction of a debt the entity owes it (s 105-5(1)(a))",
+            "the supply would have been a taxable supply had the entity made it (s 105-5(1)(b))",
+            "a written notice stating, with full reasons, that the supply would not be a taxable supply if the "
+            "entity made it (s 105-5(3)(a))",
+            "the creditor cannot obtain such a notice and believes on the basis of reasonable information",
+            "(s 105-5(3)(b))",
             "lodged at least 14 days before the supplier must pay GST on the supply",
             "leave the amount blank for the reviewer",
             "mark the classification `UNVERIFIED`",
@@ -112,6 +118,9 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             # J2 evidence: earlier acquisitions and improvements count, and its triggers stay qualified.
             "starts one year before the last CGT event for the roll-over, s 104-190(1A)",
             "including before the rolled-over event", "(s 104-185(1)(a) and (9))", "s 104-185(1)(c)",
+            "or an asset on which fourth element expenditure was incurred in that period",
+            "stopped being an active asset only because of changes in the market values of assets the company or "
+            "trust owned when the interest was acquired or the expenditure incurred",
             "a change in s 104-185(3)", "s 104-185(8) says J2 does not happen because of paragraph (2)(a)",
             "The reviewer decides whether J2 happens",
             "J2 (s 104-185) can happen alongside the transfer (s 102-25(2A))",
