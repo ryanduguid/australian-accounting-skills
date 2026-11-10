@@ -293,7 +293,8 @@ model run, nor do the 8 transfer duty jurisdiction cards and 2 Xero connector ca
 The close-control step added to month-end-close on 8 November 2026 postdates every recorded run,
 and its 2 cards have no recorded run.
 The farm land step added to au-gst-property and the farm succession step added to
-au-primary-production on 11 November 2026 postdate every recorded run, and their 2 cards have no recorded run.
+au-primary-production on 11 November 2026, and the s 152-205(2) note added to au-small-business-cgt the same day,
+postdate every recorded run, and the 2 new cards have no recorded run.
 Static regression and mutation checks do not establish model
 performance or human acceptance of current law.
 
