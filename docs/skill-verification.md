@@ -103,7 +103,7 @@ Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded huma
 | [`payroll-tax-contractors`](../.claude/skills/payroll-tax-contractors/SKILL.md) | [11](../.claude/skills/payroll-tax-contractors/sources.json) | 2026-09-30 (4 of 11) | 1 | 0 | 6 | 2 | 0 | 0 |
 | [`plant-and-equipment-costing`](../.claude/skills/plant-and-equipment-costing/SKILL.md) | [2](../.claude/skills/plant-and-equipment-costing/sources.json) | 2026-10-29 (2 of 2) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`progress-claim-preparation`](../.claude/skills/progress-claim-preparation/SKILL.md) | [4](../.claude/skills/progress-claim-preparation/sources.json) | 2026-09-30 (4 of 4) | 0 | 0 | 2 | 2 | 0 | 0 |
-| [`reconciliation-break-trace`](../.claude/skills/reconciliation-break-trace/SKILL.md) | exempt | none | 0 | 0 | 2 | 0 | 0 | 0 |
+| [`reconciliation-break-trace`](../.claude/skills/reconciliation-break-trace/SKILL.md) | exempt | none | 0 | 0 | 3 | 0 | 0 | 0 |
 | [`retention-schedule`](../.claude/skills/retention-schedule/SKILL.md) | [4](../.claude/skills/retention-schedule/sources.json) | 2026-09-30 (4 of 4) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`statement-to-csv`](../.claude/skills/statement-to-csv/SKILL.md) | [4](../.claude/skills/statement-to-csv/sources.json) | 2026-11-02 (2 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md) | [7](../.claude/skills/stp-finalisation/sources.json) | 2026-09-30 (5 of 7) | 0 | 0 | 4 | 3 | 0 | 0 |

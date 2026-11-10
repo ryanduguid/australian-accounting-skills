@@ -2701,8 +2701,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
+          "reconciliation-break-trace-explained-timing-difference",
           "reconciliation-break-trace-missing-evidence",
           "reconciliation-break-trace-supported-items"
         ],
@@ -2713,6 +2714,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_document_trust.py",
           "test_reconciliation_break_trace.py",
           "test_worked_examples.py"
         ],
