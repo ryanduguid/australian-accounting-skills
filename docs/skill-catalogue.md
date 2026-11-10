@@ -126,6 +126,15 @@ These practice workflows are independently written; `NOTICE` records where each 
 | [`au-client-departure`](../.claude/skills/au-client-departure/SKILL.md) | A client leaving the practice: records by owner, the reply to the new accountant, cloud ledger handover, lien questions and ATO client list steps |
 | [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | Trust tax loss workpaper: test period, Schedule 2F tests for a non-fixed trust, income injection and family trust election evidence |
 
+## Additions from 11 November 2026
+
+These workflows fill 2 gaps against the Ask Nagaris skill list; `NOTICE` records the source of the topics.
+
+| Skill | Use it for |
+| --- | --- |
+| [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) | Main residence exemption evidence: residency, ownership period, period-by-period use, absence and other choices, first income use, adjacent land, spouses and the partial exemption inputs |
+| [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | Share buy-back workpapers: on-market or off-market, capital and dividend split, market value, franking debits, Corporations Act steps, Division 7A links and each seller's CGT and dividend position |
+
 Also included:
 
 - [`templates/firm-CLAUDE.md.example`](../templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.

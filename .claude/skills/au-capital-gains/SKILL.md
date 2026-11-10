@@ -37,7 +37,7 @@ For an asset said to be pre-CGT, evidence acquisition before 20 September 1985 f
 
 Where the rules need a market value at a past date (an inherited pre-CGT asset, a home first used to produce income, a non-arm's-length transfer, a small business asset test, or the value immediately before 1 July 2027 under the reform transition), record the legislated valuation date, the purpose and the instructions given to the valuer, and check the report against the contents the ATO's market valuation guidance lists. An agent's appraisal or a sales-data estimate is a screen for whether to commission a valuation, not evidence of market value; label it that way and keep the dependent cost base `UNVERIFIED` until the reviewer accepts a valuation.
 
-For a claimed main-residence exemption, collect ownership, occupation, absence, rental/business-use and spouse residence-choice periods as review facts. Identify missing valuations and overlapping property claims. Keep these facts and any proposed small-business concession in the review queue until the relevant detailed workpaper supports them; a claim in the intake is not an established exemption.
+For a claimed main-residence exemption, prepare the ownership, occupation, absence, rental or business use, spouse and adjacent land evidence and the apportionment inputs in `au-main-residence`, and bring its day schedule and any first income use valuation back to the event row. Keep the exemption and any proposed small-business concession in the review queue until the relevant detailed workpaper supports them; a claim in the intake is not an established exemption.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 

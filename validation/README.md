@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 179 cards in `cases/` test workflow quality, provenance and restraint.
+The 183 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -226,8 +226,12 @@ law claim, unverified source or guess.
 | [WA property management sale with a rent roll and trade debts](cases/au-transfer-duty-wa-rent-roll-and-trade-debts.md) | au-transfer-duty |
 | [Connector that lists a write tool, and a request to post a journal](cases/xero-exports-connector-read-and-write-request.md) | xero-exports |
 | [BAS requested from connector reads with no exports](cases/bas-preparation-connector-without-exports.md) | bas-preparation, xero-exports |
+| [A former home let for 8 years whilst a new home is lived in](cases/au-main-residence-absence-and-new-home.md) | au-main-residence |
+| [Spouses with different homes, a block over 2 hectares and an owner who has moved overseas](cases/au-main-residence-spouses-acreage-foreign-resident.md) | au-main-residence |
+| [A private company buys back one shareholder's shares with part of the price set off against a loan](cases/au-share-buy-back-private-selective.md) | au-share-buy-back |
+| [A shareholder in a listed company's off-market tender buy-back that straddles 30 June](cases/au-share-buy-back-listed-tender-seller.md) | au-share-buy-back |
 
-Together the cards cover all 97 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 99 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -256,6 +260,7 @@ The 7 land tax cards added on 4 November 2026, one for each state and territory
 that levies land tax, have no recorded run.
 The 8 transfer duty cards, one for each state and territory, and the 2 Xero connector cards added on
 5 November 2026 have no recorded run.
+The 2 main residence cards and the 2 share buy-back cards added on 11 November 2026 have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

@@ -166,3 +166,19 @@
   skill: au-ato-account-reconciliation
   not: [bas-preparation, reconciliation-break-trace]
   prompt: At year end the ATO's activity statement account and the income tax account don't agree with the ledger, and an amended BAS for March was processed in August. Reconcile them.
+- id: main-residence-former-home-let
+  skill: au-main-residence
+  not: [au-capital-gains, au-rental-property]
+  prompt: A client lived in her house for 4 years, then rented it out for 7 years while living in a new home she bought. She has now sold the old house. How much of the gain does the main residence exemption cover, and what does she have to choose?
+- id: main-residence-spouses-acreage
+  skill: au-main-residence
+  not: [au-capital-gains, au-primary-production]
+  prompt: A married couple each lived in a different home they own for part of the time, and the one being sold sits on 5 hectares with some of it leased for grazing. Prepare the main residence exemption workpaper.
+- id: buy-back-private-company
+  skill: au-share-buy-back
+  not: [au-franking-account, div7a-compliance]
+  prompt: A private company wants to buy back all of one shareholder's shares for more than their paid-up capital and pay most of it as a franked dividend. Prepare the workpapers for the company and the departing shareholder.
+- id: buy-back-listed-tender
+  skill: au-share-buy-back
+  not: [au-capital-gains, au-dssp]
+  prompt: My client sold shares into a listed company's off-market tender buy-back this year. How do we work out her capital proceeds, and is any of the price a dividend?
