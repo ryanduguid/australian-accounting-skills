@@ -150,7 +150,8 @@ including any source that published a change after its last review, and
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate
 names, one level deep, and a marketplace inventory that matches the discovered
-skills exactly.
+skills exactly. `tests/test_routing_cases.py` requires every skill to have at
+least one prompt in `validation/routing-cases.yaml`.
 
 ## Writing rules
 
