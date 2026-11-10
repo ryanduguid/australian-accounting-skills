@@ -21,7 +21,7 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 | Private company dividends and distribution statements | New | `au-franking-account`; its step 5a, added on 11 November 2026, prepares a proposed dividend's s 254T evidence, resolution schedule, benchmark position, draft statements and franking entries, and routes a loan set-off to `div7a-compliance` |
 | Franking account reconciliation and franking deficit tax | New | `au-franking-account` |
 | Private company share buy-back | Not adopted | Specialist matter; `au-franking-account` screens it and routes it to a specialist |
-| Family trust and interposed entity elections | New | `au-family-trust-election`, added on 11 November 2026, prepares the evidence for deciding on a new election: test individual, family group, specified income year, interposed entity elections, revocation limits and FTDT exposure. `au-trust-distributions` screens FTDT each year and `au-trust-deed-review` records existing elections |
+| Family trust and interposed entity elections | New on 11 November 2026 | `au-family-trust-election` prepares the evidence for deciding on a new election: test individual, family group, specified income year, interposed entity elections, revocation limits and FTDT exposure. `au-trust-distributions` screens FTDT each year and `au-trust-deed-review` records existing elections |
 | Trust deed review | New | `au-trust-deed-review` |
 | Trust distribution resolution | Covered | `au-trust-distributions`, with the resolution-readiness checklist in `au-trust-deed-review`; the trustee and adviser draft and execute resolutions |
 | Partnership agreements and partnership tax | Covered | `au-partnership-tax`; briefing a solicitor stays with the adviser |
