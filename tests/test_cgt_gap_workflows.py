@@ -136,6 +136,16 @@ class CgtGapWorkflowTests(unittest.TestCase):
         # Building: life interest excluded, 3 months, 4-year limit.
         self.assert_sentence(step, r"\bother than a life interest\b", r"\bat least 3 months\b")
         self.assert_sentence(step, r"\bshorter of 4 years\b")
+        # Compulsory acquisition or destruction: its deadlines, its income use limit and the overlap it allows.
+        self.assert_sentence(step, r"\babsence choice under s 118-145\b",
+                             r"\bone year after the end of the income year of the key event\b",
+                             r"\bCommissioner allows\b", r"\(s 118-147\(1\)\)")
+        self.assert_sentence(step, r"\bwithin 4 years after the later of the key event\b",
+                             r"\bone year before the key event\b", r"\(s 118-147\(2\)\)")
+        self.assert_sentence(step, r"\bjust before the key event\b", r"\bwhat remained of its s 118-145\(2\)",
+                             r"\(s 118-147\(4\)\)")
+        self.assert_sentence(step, r"\bold dwelling can still be the main residence before the key event\b",
+                             r"\(s 118-147\(6\)\(a\) and \(7\)\)")
         self.assert_sentence(step, r"\bother than because of s 118-147\b", r"\bas soon as practicable\b")
         self.assert_sentence(step, r"\bduring the work\b",
                              r"\bafter it was finished but before moving in was practicable\b",
@@ -157,7 +167,13 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bapplies even where there is no loan\b")
         self.assert_sentence(step, r"\bset aside exclusively\b", r"\bnot readily adaptable for private use\b")
         self.assert_sentence(step, r"\btaken to have acquired the dwelling at that time for its market value\b")
+        # The first-use rule needs a partial exemption now and a full one just before the first use.
+        self.assert_sentence(step, r"\bonly a partial exemption\b", r"\bjust before that first use\b",
+                             affirmed=(r"\bwould have been fully exempt\b",))
         self.assert_sentence(step, r"\bincome use from acquisition\b", r"\bforeign resident\b")
+        # Only a foreign resident who fails the life events test loses the rule.
+        self.assert_sentence(step, r"\bs 118-192\(1\)\(a\)", r"\bforeign resident who does not satisfy the life events test\b",
+                             affirmed=(r"\btest s 118-192 on its conditions for one who does\b",))
         self.assert_sentence(step, r"\bUNVERIFIED\b", r"\baccepts a valuation\b")
         self.assert_sentence(step, r"\bappraisal is a screen\b", r"\bnot evidence of market value\b")
 
@@ -171,6 +187,11 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bevery input is supported\b", affirmed=(r"\bas preliminary\b",))
         self.assert_sentence(step, r"\bblank\b", r"\bUNVERIFIED\b", r"\binput is missing\b")
         self.assert_routes_to(step, "`au-capital-gains`")
+
+    def test_main_residence_overlap_check_keeps_its_exceptions(self) -> None:
+        hand_off = section(MAIN_RESIDENCE, "Hand-off and checks")
+        self.assert_sentence(hand_off, r"\bno two dwellings\b", r"\bs 118-140\b", r"\bs 118-170 nomination\b",
+                             r"\bbefore the key event\b", r"\(s 118-147\(7\)\)")
 
     def test_main_residence_sources_are_pending(self) -> None:
         self.assert_cited_and_recorded(
@@ -239,10 +260,13 @@ class CgtGapWorkflowTests(unittest.TestCase):
         # A tainted share capital account is not one for s 159GZZZP, so its debit leaves the dividend whole.
         self.assert_carries(step, "s 197-5", "s 197-10", "s 197-15", "ss 197-50 and 197-55", "s 975-300(3)",
                             "items 7A and 7B of the s 205-30 table", "(s 197-60)")
-        # Every Subdivision 197-A exclusion, not only ss 197-10 and 197-15, and the excess each leaves taxed.
-        self.assert_sentence(step, r"\bunless an exclusion in ss 197-10 to 197-40 applies\b", r"\(s 197-20\)",
+        # Every Subdivision 197-A exclusion with its conditions, and the excess each leaves taxed.
+        self.assert_sentence(step, r"\bunless an exclusion in ss 197-10 to 197-42 applies\b",
+                             r"\bother than redeemable preference shares\b.{0,150}\(s 197-15\)",
+                             r"\bunder an Australian law that requires or allows\b.{0,100}\(s 197-20\)",
                              r"\boption premium reserve because options\b.{0,60}\bexercised \(s 197-25\)",
                              r"\bdemutualisation\b.{0,60}\(ss 197-30 to 197-40\)",
+                             r"\bgreenfields minerals explorer\b.{0,60}\bexploration credits \(s 197-42\)",
                              r"\bexcept any excess\b.{0,100}\(s 197-15\)")
         self.assert_sentence(step, r"\bexclusion claimed\b", r"\bexcess that stays within Division 197\b")
         self.assert_sentence(step, r"\btransferred to the share capital account from another of the company's accounts\b",
@@ -286,6 +310,9 @@ class CgtGapWorkflowTests(unittest.TestCase):
                              r"\bbefore the day the distribution is made\b")
         self.assert_sentence(step, r"\bon-market\b", r"\bas if the purchase had been off-market\b",
                              r"\bnot listed\b")
+        # The franking workflow prepares the debits; a person posts them.
+        self.assert_sentence(step, r"`au-franking-account` to add to its rebuilt account\b",
+                             r"\bfor an authorised person to post\b")
         self.assert_routes_to(step, "`au-franking-account`")
 
     def test_buy_back_records_integrity_and_ruling_facts_without_concluding(self) -> None:
@@ -295,6 +322,9 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bwithout concluding\b")
         self.assert_sentence(step, r"\bpredates s 207-159\b", r"\bs 207-159\(2\)",
                              r"\bs 207-159\(1\)\(d\) and \(4\)", r"\bunderwriting\b", r"\bwithout concluding\b")
+        # Equity-funded franked distributions do not make a practice.
+        self.assert_sentence(step, r"\bearlier distribution that was franked\b", r"\bpractice condition were omitted\b",
+                             r"\bs 207-159\(3\) disregards such a distribution\b")
         self.assert_sentence(step, r"\bcovers only the scheme it describes\b")
 
     def test_buy_back_screens_division_7a_links(self) -> None:
@@ -347,6 +377,9 @@ class CgtGapWorkflowTests(unittest.TestCase):
     def test_franking_account_routes_a_buy_back(self) -> None:
         step = workflow_step("au-franking-account", 8)
         self.assert_sentence(step, r"\bshare buy-back\b", rf"`{BUY_BACK}`")
+        # It prepares the buy-back's debits; a person posts them.
+        self.assert_sentence(step, r"\bin the rebuilt account\b", r"\bfor an authorised person to post\b")
+        self.assertNotRegex(step, r"\band post the\b")
         self.assert_sentence(step, r"\bcapital return or capital reduction only as a screen\b")
 
 
