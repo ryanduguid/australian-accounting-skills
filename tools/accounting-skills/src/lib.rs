@@ -30,7 +30,7 @@ use std::{
     collections::{BTreeMap, BTreeSet},
     fs,
     io::Write,
-    path::{Path, PathBuf},
+    path::{Component, Path, PathBuf},
 };
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
@@ -148,6 +148,101 @@ fn name(path: &Path) -> Result<String> {
         .and_then(|s| s.to_str())
         .ok_or("filename is not Unicode")?
         .to_owned())
+}
+
+const OUTSIDE_ROOT: &str = "path escapes the repository root";
+
+/// Canonicalise `path` for use as a repository root.
+///
+/// An existing path is canonicalised before anything is read or written, so a
+/// link in its spelling cannot point the root somewhere else. A path that does
+/// not exist yet is made absolute, and refused when its spelling contains `..`,
+/// so a missing root is not created by climbing out of its parent.
+pub fn canonical_root(path: &Path) -> Result<PathBuf> {
+    match fs::canonicalize(path) {
+        Ok(path) => Ok(path),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            let text = path.to_str().ok_or("repository root is not Unicode")?;
+            if text.contains("..") {
+                return Err(OUTSIDE_ROOT.into());
+            }
+            let absolute = std::path::absolute(text)?;
+            if absolute
+                .components()
+                .any(|part| matches!(part, Component::ParentDir))
+            {
+                return Err(OUTSIDE_ROOT.into());
+            }
+            Ok(absolute)
+        }
+        Err(error) => Err(error.into()),
+    }
+}
+
+/// Resolve `relative` inside `root` and refuse a path that leaves it.
+///
+/// `relative` may contain only normal components. Existing symbolic links and
+/// reparse points are resolved and must stay inside the canonical root. A
+/// component that does not exist yet is kept, so a new output can be confined
+/// before it is created. A final link is left in place once its target has
+/// been confirmed inside the root, so a linked output is still refused by the
+/// writer rather than replaced with the link's target.
+pub fn within_root(root: &Path, relative: &Path) -> Result<PathBuf> {
+    let root = canonical_root(root)?;
+    if relative.as_os_str().is_empty()
+        || relative
+            .components()
+            .any(|part| !matches!(part, Component::Normal(_)))
+    {
+        return Err(OUTSIDE_ROOT.into());
+    }
+    let mut resolved = root.clone();
+    let parts: Vec<_> = relative.components().collect();
+    let mut index = 0;
+    while index < parts.len() {
+        let Component::Normal(name) = parts[index] else {
+            return Err(OUTSIDE_ROOT.into());
+        };
+        let next = resolved.join(name);
+        if !next.starts_with(&root) {
+            return Err(OUTSIDE_ROOT.into());
+        }
+        match fs::symlink_metadata(&next) {
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                resolved = next;
+                for part in &parts[index + 1..] {
+                    resolved.push(part.as_os_str());
+                    if !resolved.starts_with(&root) {
+                        return Err(OUTSIDE_ROOT.into());
+                    }
+                }
+                break;
+            }
+            Err(error) => return Err(error.into()),
+            Ok(_) if validation::is_reparse_point(&next)? => {
+                let last = index + 1 == parts.len();
+                match fs::canonicalize(&next) {
+                    Ok(target) if target.starts_with(&root) => {
+                        resolved = if last { next } else { target };
+                    }
+                    Ok(_) => return Err(OUTSIDE_ROOT.into()),
+                    Err(error) if error.kind() == std::io::ErrorKind::NotFound && last => {
+                        resolved = next;
+                    }
+                    Err(error) => return Err(error.into()),
+                }
+            }
+            Ok(_) => resolved = next,
+        }
+        if !resolved.starts_with(&root) {
+            return Err(OUTSIDE_ROOT.into());
+        }
+        index += 1;
+    }
+    if !resolved.starts_with(&root) {
+        return Err(OUTSIDE_ROOT.into());
+    }
+    Ok(resolved)
 }
 
 fn matches_suffix(path: &Path, suffix: &str) -> Result<bool> {
@@ -319,6 +414,41 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
     Ok(summary)
 }
 
+/// A card id is one normal path component, so it cannot name another directory.
+fn normal_component(name: &str) -> bool {
+    if name.contains('/') || name.contains('\\') {
+        return false;
+    }
+    let path = Path::new(name);
+    let mut components = path.components();
+    match components.next() {
+        Some(Component::Normal(part)) if components.next().is_none() => part == path.as_os_str(),
+        _ => false,
+    }
+}
+
+/// The bytes of `validation/cases/{card}.md`, after the path has been
+/// canonicalised and confined to that directory.
+fn card_bytes(root: &Path, card: &str) -> Result<Vec<u8>> {
+    if !normal_component(card) {
+        return Err(format!("card path escapes validation/cases: {card}").into());
+    }
+    let root = canonical_root(root)?;
+    let cases = root.join("validation").join("cases");
+    if !cases.starts_with(&root) {
+        return Err(OUTSIDE_ROOT.into());
+    }
+    let cases = fs::canonicalize(&cases)?;
+    if !cases.starts_with(&root) {
+        return Err(OUTSIDE_ROOT.into());
+    }
+    let path = fs::canonicalize(cases.join(format!("{card}.md")))?;
+    if !path.starts_with(&cases) {
+        return Err(format!("card path escapes validation/cases: {card}").into());
+    }
+    Ok(fs::read(path)?)
+}
+
 /// Human-confirmed verdicts, sorted by whether they judged the card as it is now.
 #[derive(Default)]
 struct Verdicts {
@@ -404,9 +534,7 @@ fn confirmed_verdicts(root: &Path, known: &BTreeSet<&String>) -> Result<Verdicts
                 .into());
             }
             seen.insert(version, (verdict.to_owned(), file.clone()));
-            let current = trial::digest(&fs::read(
-                root.join("validation/cases").join(format!("{card}.md")),
-            )?);
+            let current = trial::digest(&card_bytes(root, card)?);
             let list = if recorded != current {
                 &mut verdicts.noncurrent_digest
             } else if verdict == "pass" {

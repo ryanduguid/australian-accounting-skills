@@ -7,7 +7,7 @@ use accounting_skills::{
 use std::{
     fs,
     io::{self, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 fn run() -> Result<u8> {
@@ -56,13 +56,27 @@ fn run() -> Result<u8> {
             _ => return Err("unknown argument".into()),
         }
     }
+    let root = accounting_skills::canonical_root(&root)?;
     let (matrix, page) = rendered_with_page(&root)?;
     let outputs = [("coverage.json", &matrix), (VERIFICATION_PAGE, &page)];
+    // Confine every output before reading or writing, so one linked path cannot
+    // escape after another output has already been replaced.
+    let mut files = Vec::with_capacity(outputs.len());
+    for (relative, text) in outputs {
+        let path = accounting_skills::within_root(&root, Path::new(relative))?;
+        if !path.starts_with(&root) {
+            return Err("path escapes the repository root".into());
+        }
+        files.push((relative, path, text));
+    }
     if write {
-        for (path, text) in outputs {
-            let path = root.join(path);
-            fs::create_dir_all(path.parent().ok_or("output has no parent")?)?;
-            replace_file(&path, &platform_text(text))?;
+        for (_, path, text) in &files {
+            let parent = path.parent().ok_or("output has no parent")?;
+            if !parent.starts_with(&root) {
+                return Err("path escapes the repository root".into());
+            }
+            fs::create_dir_all(parent)?;
+            replace_file(path, &platform_text(text))?;
         }
         io::stdout().write_all(
             platform_text(&format!("wrote coverage.json and {VERIFICATION_PAGE}\n")).as_bytes(),
@@ -71,18 +85,20 @@ fn run() -> Result<u8> {
     }
     if check {
         let mut stale = false;
-        for (path, text) in outputs {
-            let file = root.join(path);
-            let current = if file.is_file() {
-                read_text(&file)?
+        for (relative, path, text) in &files {
+            if !path.starts_with(&root) {
+                return Err("path escapes the repository root".into());
+            }
+            let current = if path.is_file() {
+                read_text(path)?
             } else {
                 String::new()
             };
-            if current != *text {
+            if current != **text {
                 stale = true;
                 io::stderr().write_all(
                     platform_text(&format!(
-                        "{path} is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
+                        "{relative} is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
                     ))
                     .as_bytes(),
                 )?;

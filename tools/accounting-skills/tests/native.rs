@@ -1,8 +1,10 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-use accounting_skills::{front_matter, rendered, rendered_with_page, trial::digest};
-use std::{fs, process::Command};
+use accounting_skills::{
+    canonical_root, front_matter, rendered, rendered_with_page, trial::digest, within_root,
+};
+use std::{fs, path::Path, process::Command};
 
 #[test]
 fn inventory_distinguishes_sources_cards_and_quoted_gate_mentions() {
@@ -511,4 +513,150 @@ fn check_fails_when_a_source_record_changes_and_the_page_does_not() {
         message.starts_with("docs/skill-verification.md is out of date."),
         "{message}"
     );
+}
+
+fn coverage(root: &Path, args: &[&str]) -> std::process::Output {
+    Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+        .arg("build-coverage")
+        .args(args)
+        .current_dir(root)
+        .output()
+        .unwrap()
+}
+
+#[test]
+fn an_output_relative_path_cannot_climb_out_of_the_root() {
+    let root = tempfile::tempdir().unwrap();
+    let error = within_root(root.path(), Path::new("docs/../../outside"))
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("escapes"), "{error}");
+    let error = within_root(root.path(), Path::new("/etc/passwd"))
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("escapes"), "{error}");
+    let inside = within_root(root.path(), Path::new("docs/skill-verification.md")).unwrap();
+    assert!(inside.starts_with(canonical_root(root.path()).unwrap()));
+}
+
+#[test]
+fn write_creates_a_missing_root_without_a_parent_component() {
+    let parent = tempfile::tempdir().unwrap();
+    let root = parent.path().join("new-repo");
+    let output = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+        .args([
+            "build-coverage",
+            "--root",
+            root.to_str().unwrap(),
+            "--write",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(
+        output.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(root.join("coverage.json").is_file());
+    assert!(root.join("docs").join("skill-verification.md").is_file());
+}
+
+#[test]
+fn a_missing_root_with_a_parent_component_is_not_created() {
+    let parent = tempfile::tempdir().unwrap();
+    let outside = parent.path().join("outside");
+    let requested = parent.path().join("missing").join("..").join("outside");
+    let output = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+        .args([
+            "build-coverage",
+            "--root",
+            requested.to_str().unwrap(),
+            "--write",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(output.status.code(), Some(1));
+    assert!(!outside.exists());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("escapes"));
+}
+
+#[test]
+fn an_existing_root_reached_through_parent_components_stays_that_directory() {
+    let root = tempfile::tempdir().unwrap();
+    let via = root
+        .path()
+        .join("..")
+        .join(root.path().file_name().unwrap());
+    let output = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+        .args(["build-coverage", "--root", via.to_str().unwrap(), "--write"])
+        .output()
+        .unwrap();
+    assert_eq!(
+        output.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(root.path().join("coverage.json").is_file());
+}
+
+#[cfg(unix)]
+#[test]
+fn write_follows_an_output_directory_linked_inside_the_root() {
+    let root = tempfile::tempdir().unwrap();
+    let inside = root.path().join("inside");
+    fs::create_dir(&inside).unwrap();
+    std::os::unix::fs::symlink(&inside, root.path().join("docs")).unwrap();
+    let output = coverage(root.path(), &["--write"]);
+    assert_eq!(
+        output.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(inside.join("skill-verification.md").is_file());
+    assert!(root.path().join("coverage.json").is_file());
+}
+
+#[cfg(unix)]
+#[test]
+fn write_refuses_an_output_directory_linked_outside_the_root() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    std::os::unix::fs::symlink(outside.path(), root.path().join("docs")).unwrap();
+    let output = coverage(root.path(), &["--write"]);
+    assert_eq!(output.status.code(), Some(1));
+    assert!(output.stdout.is_empty());
+    assert_eq!(fs::read_dir(outside.path()).unwrap().count(), 0);
+    assert!(!root.path().join("coverage.json").exists());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("escapes"));
+}
+
+#[cfg(unix)]
+#[test]
+fn a_cases_directory_linked_outside_the_root_is_refused() {
+    let root = verified_tree();
+    let outside = tempfile::tempdir().unwrap();
+    let cases = root.path().join("validation/cases");
+    let moved = outside.path().join("cases");
+    fs::rename(&cases, &moved).unwrap();
+    std::os::unix::fs::symlink(&moved, &cases).unwrap();
+    let error = rendered(root.path()).unwrap_err().to_string();
+    assert!(error.contains("escapes"), "{error}");
+}
+
+#[cfg(unix)]
+#[test]
+fn a_card_symlink_outside_validation_cases_is_refused() {
+    let root = verified_tree();
+    let outside = tempfile::tempdir().unwrap();
+    let secret = outside.path().join("secret.md");
+    fs::write(&secret, "---\n- alpha\n---\n").unwrap();
+    let card = root.path().join("validation/cases/alpha-one.md");
+    fs::remove_file(&card).unwrap();
+    std::os::unix::fs::symlink(&secret, &card).unwrap();
+    let error = rendered(root.path()).unwrap_err().to_string();
+    assert!(error.contains("escapes"), "{error}");
+    assert_eq!(fs::read_to_string(&secret).unwrap(), "---\n- alpha\n---\n");
 }
