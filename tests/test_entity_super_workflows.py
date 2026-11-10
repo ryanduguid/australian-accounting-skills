@@ -44,6 +44,9 @@ class EntitySuperWorkflowTests(unittest.TestCase):
                              r"\blapse 3 years after it was signed, last confirmed or amended\b")
         self.assert_sentence(step, r"\blegal question for the trustee's lawyer\b",
                              DO_NOT + r"conclude on it\b")
+        # The High Court settled the point; SMSFD 2008/3 is not left to carry it alone.
+        self.assert_sentence(step, r"\bHill v Zuda Pty Ltd\b", r"\breg 6\.17A has no application to an SMSF\b",
+                             r"\[4\], \[12\] and \[30\]", r"\bs 55A still applies\b", r"\[33\]")
 
     def test_death_benefits_keep_sis_and_tax_dependants_apart(self) -> None:
         step = workflow_step("au-smsf-death-benefits", 3)
@@ -107,6 +110,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
             f"{ATO_SMSF}/paying-smsf-benefits/payg-withholding-obligations-when-paying-super-benefits",
             "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/"
             "withdrawing-and-using-your-super/superannuation-death-benefits",
+            "https://www.hcourt.gov.au/sites/default/files/eresources/2022/HCA/21.pdf",
         )
 
     # au-family-trust-election
@@ -183,7 +187,10 @@ class EntitySuperWorkflowTests(unittest.TestCase):
     def test_dividend_preparation_keeps_the_corporate_law_conditions(self) -> None:
         step = workflow_step("au-franking-account", "5a")
         self.assert_carries(step, "s 254U", "s 254W(2)", "s 254T(2)", "s 251A(2)", "s 251A(3)",
-                            "s 251A(1)(e) and (4)", "Section 202-5")
+                            "s 251A(1)(d)", "Section 202-5")
+        # A sole director's dividend is a s 248B(1) resolution, not a s 248B(2) declaration.
+        self.assert_sentence(step, r"\b1 director, the director passes the resolution\b", r"\(s 248B\(1\)\)")
+        self.assertNotIn("251A(1)(e)", step)
         # A determined dividend is revocable until the payment time; a declared one is a debt at once.
         self.assert_sentence(step, r"\bs 254V\(1\)", r"\bonly when the time fixed for payment arrives\b",
                              r"\bcan be revoked before then\b", r"\bs 254V\(2\)", r"\ba debt when declared\b")
@@ -206,8 +213,10 @@ class EntitySuperWorkflowTests(unittest.TestCase):
     def test_dividend_preparation_routes_division_7a_set_offs(self) -> None:
         step = workflow_step("au-franking-account", "5a")
         self.assert_sentence(step, NOT + r"excluded from counting as a repayment by s 109R\(2\)", r"\(s 109R\(3\)\(a\)\)")
-        # s 109ZC(2) excludes the set-off only up to the unfranked part; the excess stays a dividend.
-        self.assert_sentence(step, r"\bs 109ZC\(2\)", r"\bonly up to the unfranked part of the later dividend\b")
+        # s 109ZC(2) excludes the set-off only up to the part neither franked nor franked with an
+        # exempting credit; the excess stays a dividend.
+        self.assert_sentence(step, r"\bs 109ZC\(2\)",
+                             r"\bonly up to the part of the later dividend that is neither franked nor franked with an exempting credit\b")
         self.assert_sentence(step, r"\bany amount set off above that part is still a dividend\b")
         self.assert_routes(step, 1)
 

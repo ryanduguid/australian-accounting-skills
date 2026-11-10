@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 99 skills, 528 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 99 skills, 529 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -73,7 +73,7 @@ Totals: 99 skills, 528 indexed primary sources of which 341 have a recorded huma
 | [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) | [15](../.claude/skills/au-short-stay-accommodation/sources.json) | 2026-10-15 (15 of 15) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | [4](../.claude/skills/au-small-business-cgt/sources.json) | 2026-09-30 (3 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | [1](../.claude/skills/au-small-business-income-offset/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
-| [`au-smsf-death-benefits`](../.claude/skills/au-smsf-death-benefits/SKILL.md) | [9](../.claude/skills/au-smsf-death-benefits/sources.json) | none (0 of 9) | 0 | 0 | 1 | 0 | 0 | 0 |
+| [`au-smsf-death-benefits`](../.claude/skills/au-smsf-death-benefits/SKILL.md) | [10](../.claude/skills/au-smsf-death-benefits/sources.json) | none (0 of 10) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | [9](../.claude/skills/au-smsf-year-end/sources.json) | 2026-09-30 (6 of 9) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | [3](../.claude/skills/au-sole-trader/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | [5](../.claude/skills/au-super-contribution-caps/sources.json) | 2026-10-14 (4 of 5) | 1 | 0 | 2 | 2 | 0 | 0 |
