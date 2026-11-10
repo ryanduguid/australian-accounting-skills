@@ -209,28 +209,11 @@ pub fn within_root(root: &Path, relative: &Path) -> Result<PathBuf> {
         }
         match fs::symlink_metadata(&next) {
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-                resolved = next;
-                for part in &parts[index + 1..] {
-                    resolved.push(part.as_os_str());
-                    if !resolved.starts_with(&root) {
-                        return Err(OUTSIDE_ROOT.into());
-                    }
-                }
-                break;
+                return append_missing(&root, next, &parts[index + 1..]);
             }
             Err(error) => return Err(error.into()),
             Ok(_) if validation::is_reparse_point(&next)? => {
-                let last = index + 1 == parts.len();
-                match fs::canonicalize(&next) {
-                    Ok(target) if target.starts_with(&root) => {
-                        resolved = if last { next } else { target };
-                    }
-                    Ok(_) => return Err(OUTSIDE_ROOT.into()),
-                    Err(error) if error.kind() == std::io::ErrorKind::NotFound && last => {
-                        resolved = next;
-                    }
-                    Err(error) => return Err(error.into()),
-                }
+                resolved = resolve_link(&root, &next, index + 1 == parts.len())?;
             }
             Ok(_) => resolved = next,
         }
@@ -243,6 +226,39 @@ pub fn within_root(root: &Path, relative: &Path) -> Result<PathBuf> {
         return Err(OUTSIDE_ROOT.into());
     }
     Ok(resolved)
+}
+
+/// Keep the remaining components of a path that does not exist yet.
+fn append_missing(root: &Path, mut resolved: PathBuf, rest: &[Component<'_>]) -> Result<PathBuf> {
+    for part in rest {
+        resolved.push(part.as_os_str());
+        if !resolved.starts_with(root) {
+            return Err(OUTSIDE_ROOT.into());
+        }
+    }
+    Ok(resolved)
+}
+
+/// Resolve one symbolic link or reparse point that has already been confined.
+///
+/// A final link is left in place once its target is inside `root`, so the
+/// writer still refuses to replace the link. An earlier link is replaced by
+/// its target, and later components are resolved from there. A final link
+/// whose target is missing stays as the link path.
+fn resolve_link(root: &Path, link: &Path, last: bool) -> Result<PathBuf> {
+    if !link.starts_with(root) {
+        return Err(OUTSIDE_ROOT.into());
+    }
+    match fs::canonicalize(link) {
+        Ok(target) if target.starts_with(root) => {
+            Ok(if last { link.to_path_buf() } else { target })
+        }
+        Ok(_) => Err(OUTSIDE_ROOT.into()),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound && last => {
+            Ok(link.to_path_buf())
+        }
+        Err(error) => Err(error.into()),
+    }
 }
 
 fn matches_suffix(path: &Path, suffix: &str) -> Result<bool> {
