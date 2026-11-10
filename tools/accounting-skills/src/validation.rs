@@ -12,9 +12,11 @@ use serde_json::{Map, Value, json};
 use std::{
     collections::{BTreeMap, BTreeSet},
     fmt, fs,
+    io::Write,
     path::{Path, PathBuf},
-    process::Command,
+    process::{Command, Stdio},
     sync::LazyLock,
+    thread,
 };
 
 type Names = BTreeSet<String>;
@@ -388,20 +390,37 @@ pub fn git_entries(paths: &[String], root: &Path) -> Result<BTreeMap<String, Str
     }
     Ok(entries)
 }
-pub fn check_ignored(path: &str, root: &Path) -> Result<()> {
-    let output = Command::new("git")
-        .args(["check-ignore", "--no-index", "--quiet", "--", path])
+/// The paths .gitignore matches, asking Git once for all of them.
+pub fn ignored_paths(paths: &[String], root: &Path) -> Result<Names> {
+    let mut child = Command::new("git")
+        .args(["check-ignore", "--no-index", "--stdin", "-z"])
         .current_dir(root)
-        .output()?;
-    match output.status.code() {
-        Some(0) => Err(format!("tracked source is ignored by .gitignore: {path}").into()),
-        Some(1) => Ok(()),
-        _ => Err(format!(
-            "git check-ignore failed for {path}: {}",
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| format!("cannot run git check-ignore: {e}"))?;
+    let input: Vec<u8> = paths.iter().flat_map(|p| p.bytes().chain([0])).collect();
+    let mut stdin = child.stdin.take().expect("stdin is piped");
+    // A separate writer, so Git cannot block on a full output pipe whilst we still write.
+    let writer = thread::spawn(move || stdin.write_all(&input));
+    let output = child.wait_with_output()?;
+    let written = writer.join().expect("stdin writer panicked");
+    // Exit 0 means at least one path is ignored and 1 means none is.
+    if !matches!(output.status.code(), Some(0 | 1)) {
+        return Err(format!(
+            "git check-ignore failed: {}",
             String::from_utf8_lossy(&output.stderr).trim()
         )
-        .into()),
+        .into());
     }
+    written?;
+    Ok(output
+        .stdout
+        .split(|&b| b == 0)
+        .filter(|p| !p.is_empty())
+        .map(|p| String::from_utf8_lossy(p).into_owned())
+        .collect())
 }
 
 pub fn check_results_schema(input: &str, known: &Names) -> Result<()> {
@@ -801,12 +820,19 @@ pub fn main(root: &Path) -> Result<(u8, String)> {
     if let Err(e) = check_published_inventories(&skills, root) {
         errors.push(e.to_string());
     }
+    let ignored = ignored_paths(&expected_all.iter().cloned().collect::<Vec<_>>(), root)
+        .unwrap_or_else(|e| {
+            errors.push(e.to_string());
+            Names::new()
+        });
     let mut sources = BTreeMap::new();
     for rel in &expected_all {
         let read = || -> Result<String> {
             let path = root.join(rel);
             check_expected_path(&path, root)?;
-            check_ignored(rel, root)?;
+            if ignored.contains(rel) {
+                return Err(format!("tracked source is ignored by .gitignore: {rel}").into());
+            }
             let text = read_utf8(&path)?;
             check_text(rel, &text)?;
             Ok(text)

@@ -135,3 +135,33 @@ fn inventory_and_reads_reject_reparse_points_and_invalid_text() {
             .contains("symlink/reparse")
     );
 }
+
+#[test]
+fn check_ignore_reports_only_the_ignored_paths() {
+    let root = tempdir().unwrap();
+    let init = std::process::Command::new("git")
+        .args(["init", "-q"])
+        .current_dir(root.path())
+        .status()
+        .unwrap();
+    assert!(init.success());
+    fs::write(root.path().join(".gitignore"), "/b.md\n").unwrap();
+    let paths = ["a.md", "b.md", "c.md"].map(String::from);
+    assert_eq!(
+        v::ignored_paths(&paths, root.path()).unwrap(),
+        BTreeSet::from(["b.md".to_owned()])
+    );
+    assert!(
+        v::ignored_paths(&paths[..1], root.path())
+            .unwrap()
+            .is_empty()
+    );
+    let broken = tempdir().unwrap();
+    fs::write(broken.path().join(".git"), "not a repository\n").unwrap();
+    assert!(
+        v::ignored_paths(&paths, broken.path())
+            .unwrap_err()
+            .to_string()
+            .starts_with("git check-ignore failed: ")
+    );
+}
