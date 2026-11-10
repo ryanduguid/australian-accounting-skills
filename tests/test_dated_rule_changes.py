@@ -215,7 +215,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_carries(
             step,
             "Code item 6", "TPB(GS) 55/2026", "22 July 2026", "paragraph 23",
-            "https://github.com/ryanduguid/llm-tax-guardrails/blob/main/src/data/gs55-concordance.yaml",
+            "https://github.com/ryanduguid/DrDebits/blob/main/src/data/gs55-concordance.yaml",
         )
         # The consent record extends to each AI tool, and each client's permission comes
         # before its information goes into one.
@@ -1715,7 +1715,7 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_tax_research_keeps_the_as_at_check_a_locator(self) -> None:
         step = workflow_step("au-tax-research", 2)
-        self.assert_carries(step, "python -m fadden as_at", "au-tax-legislation-corpus")
+        self.assert_carries(step, "python -m fadden as_at", "PaulGoodman")
         for status in ("captured", "before_compilation", "superseded", "after_retrieval"):
             self.assert_carries(step, f"`{status}`")
         self.assert_sentence(step, r"`captured` is not a finding that the text was the law\b")
