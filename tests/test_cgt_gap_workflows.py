@@ -142,7 +142,8 @@ class CgtGapWorkflowTests(unittest.TestCase):
                              r"\bCommissioner allows\b", r"\(s 118-147\(1\)\)")
         self.assert_sentence(step, r"\bwithin 4 years after the later of the key event\b",
                              r"\bone year before the key event\b", r"\(s 118-147\(2\)\)")
-        self.assert_sentence(step, r"\bjust before the key event\b", r"\bwhat remained of its s 118-145\(2\)",
+        self.assert_sentence(step, r"\bafter the later of the key event and the acquisition \(s 118-147\(3\)\)",
+                             r"\bjust before the key event\b", r"\bwhat remained of its s 118-145\(2\)",
                              r"\(s 118-147\(4\)\)")
         self.assert_sentence(step, r"\bold dwelling can still be the main residence before the key event\b",
                              r"\(s 118-147\(6\)\(a\) and \(7\)\)")
@@ -284,7 +285,8 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bexclusion claimed\b", r"\bexcess that stays within Division 197\b")
         self.assert_sentence(step, r"\btransferred to the share capital account from another of the company's accounts\b",
                              r"\bAustralian resident\b")
-        self.assert_sentence(step, r"\bcannot be revoked\b")
+        self.assert_sentence(step, r"\bcannot be revoked\b", r"\bapproved form given to the Commissioner\b")
+        self.assert_sentence(step, r"\buntainting choice with its date and the evidence that it was given\b")
         self.assert_sentence(step, r"\btainted account\b", r"\bdo not include s 159GZZZP\b",
                              r"\bdoes not reduce the s 159GZZZP\(1\) dividend\b")
         self.assert_sentence(step, r"\bsettles whether the account was tainted\b", r"\bUNVERIFIED\b")
@@ -312,6 +314,11 @@ class CgtGapWorkflowTests(unittest.TestCase):
                             "item 9 of the s 205-30 table", "Item 9A", "paragraph 163", "s 159GZZZN")
         self.assert_sentence(step, r"\bunfrankable to the extent the price exceeds that market value\b")
         self.assert_sentence(step, r"\btainted or not\b", r"\b975-300\(3\)\(ba\)")
+        # Non-equity shares, and the Division 7A amounts that can still be franked.
+        self.assert_sentence(step, r"\bnon-equity share \(s 202-45\(d\)\)",
+                             r"\bDivision 7A deemed dividend, unless\b.{0,120}\(s 109RB\(6\)",
+                             r"\bfamily law obligation \(s 109RC\(2\)\)")
+        self.assert_sentence(step, r"\bterms of the class bought back\b", r"\bnon-equity share\b")
         # s 207-159: any entity, all 4 conditions, and its start.
         self.assert_sentence(step, r"\bSection 207-159\(1\) reaches a distribution by any entity, listed or not\b",
                              r"\bno practice of making such distributions regularly\b",
@@ -345,6 +352,7 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_carries(step, "set off against", "shortfall released", "lent to fund the purchase",
                             "left owing", "above market value")
         self.assert_sentence(step, r"\bDivision 7A does not apply to amounts assessable under other parts\b")
+        self.assert_sentence(step, r"\boff the franking schedule unless evidence that s 109RB\(6\) or 109RC\(2\)")
         self.assert_routes_to(step, "`div7a-compliance`")
 
     def test_buy_back_prepares_each_sellers_position(self) -> None:
@@ -353,6 +361,11 @@ class CgtGapWorkflowTests(unittest.TestCase):
                             "s 159GZZZQ(8) and (9)", "s 159GZZZP(1A)", "paragraph 158", "paragraphs 71 to 88",
                             "last in first out")
         self.assert_sentence(step, r"\bCGT event\b", r"\boffer's terms\b")
+        # Failing the qualified person test denies the gross-up and the offset; risk positions are evidence.
+        self.assert_sentence(step, r"\bnot a qualified person\b", r"\bneither the franking credit\b",
+                             r"\bnor the tax offset\b", r"\(s 207-145\(1\)\(a\), \(e\) and \(f\)\)")
+        self.assert_sentence(step, r"\bhedge\b", r"\breduced its risk of loss\b",
+                             r"\bconditional until the reviewer settles whether the seller is a qualified person\b")
         # Market value substitution reaches a listed company; the reduction does not.
         self.assert_sentence(step, r"\bmarket value\b", r"\bwhere the price is lower\b",
                              r"\bincluding for a listed public company\b")

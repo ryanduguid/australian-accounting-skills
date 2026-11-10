@@ -2,7 +2,7 @@
   "skill": "au-share-buy-back",
   "sources": [
     {
-      "title": "Income Tax Assessment Act 1936 (Division 16K of Part III)",
+      "title": "Income Tax Assessment Act 1936 (Division 16K of Part III and ss 109RB and 109RC)",
       "url": "https://www.legislation.gov.au/C1936A00027/latest/text",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -17,7 +17,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "Income Tax Assessment Act 1997 (Division 197 and ss 202-45, 205-30, 207-159 and 975-300)",
+      "title": "Income Tax Assessment Act 1997 (Division 197 and ss 202-45, 205-30, 207-145, 207-159 and 975-300)",
       "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
