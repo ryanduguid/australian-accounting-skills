@@ -93,7 +93,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         # A benefit from a pension that did not revert keeps that pension's proportions:
         # s 307-125(4)(a) displaces the payment-date rule for the method in s 307-125.02.
         self.assert_sentence(step, r"\bs 307-125\(4\)\(a\)", r"\bs 307-125\.02\b", r"\bdid not automatically revert\b",
-                             r"\bother than investment earnings\b", r"\bself-insurance amounts arising on or after the death\b",
+                             r"\bother than investment earnings\b", r"\bonly from that interest\b",
+                             r"\bthe benefit, less any part attributable to life insurance proceeds or self-insurance amounts arising on or after the death\b",
                              r"\bwhen the original income stream commenced\b")
         self.assert_routes(step, 1)
 
