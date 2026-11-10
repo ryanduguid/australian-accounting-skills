@@ -408,6 +408,22 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assertNotRegex(step, r"\band post the\b")
         self.assert_sentence(step, r"\bcapital return or capital reduction only as a screen\b")
 
+    def test_franking_account_admits_a_deemed_dividend_on_either_exception(self) -> None:
+        step = workflow_step("au-franking-account", 8)
+        # Either exception lets a Division 7A dividend be franked; the reviewer decides which applies.
+        self.assert_sentence(step, r"\boff the franking schedule unless evidence that s 109RB\(6\) or 109RC\(2\)",
+                             r"\brecord that evidence for the reviewer\b")
+        self.assert_sentence(step, r"\bdecided in writing under s 109RB\(2\)\(b\)", r"\bmay be franked\b")
+        self.assert_sentence(step, r"\bfamily law obligation\b", r"\bs 109RC\(3\) lets that dividend be franked only\b",
+                             r"\bbenchmark franking percentage for the franking period in which it is taken to be paid\b",
+                             r"\bfranking percentage of 100%", r"\bs 109RC\(4\)")
+
+    def test_tainted_buy_back_card_needs_the_choice_given_to_the_commissioner(self) -> None:
+        card = (SKILLS.parents[1] / "validation" / "cases" / "au-share-buy-back-tainted-share-capital.md")
+        checks = " ".join(card.read_text(encoding="utf-8").split("## Required checks", 1)[1].split())
+        self.assert_sentence(checks, r"\buntainting choice in the approved form given to the Commissioner\b",
+                             r"\bss 197-50 and 197-55\b")
+
 
 if __name__ == "__main__":
     unittest.main()
