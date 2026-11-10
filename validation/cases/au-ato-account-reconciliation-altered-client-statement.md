@@ -25,8 +25,9 @@ control account at 30 June 2026 and prepare the unresolved-items hand-off.
 - Client PDF: opening balance 18400.00 owing; payments of 6400.00 and
   4000.00; one activity statement liability of 3200.00; printed closing
   balance 0.00.
-- Practice download, same account and period: the same 4 transactions and a
-  closing balance of 11200.00 owing, all processed on or before 30 June 2026.
+- Practice download, same account and period: the same opening balance and 3
+  transactions, all processed on or before 30 June 2026, and a closing balance
+  of 11200.00 owing.
 - Ledger control account at 30 June 2026: 11200.00 owing.
 - The client PDF's account sequence number matches the download's.
 

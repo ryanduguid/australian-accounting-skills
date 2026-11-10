@@ -10,8 +10,8 @@ target_skills:
 ## Scenario
 
 All records and figures below are fabricated from scratch. An invented employee
-claims car expenses by the logbook method and supplies a logbook kept over
-consecutive weeks, with fuel and service receipts.
+claims car expenses for the 2026-27 income year by the logbook method and
+supplies a logbook kept over consecutive weeks, with fuel and service receipts.
 
 ## Task
 
@@ -28,7 +28,7 @@ method comparison and the unresolved-items hand-off.
   15, dated 29 July 2026, starts at 47960.
 - Entries 22 to 24 are dated 21 to 25 August 2026, after the signing date.
 - A service receipt dated 1 August 2026 records an odometer reading of 46500.
-- Fuel and service receipts for the year total 3400.00.
+- Fuel and service receipts for the 2026-27 income year total 3400.00.
 
 ## Deliberately unavailable evidence
 

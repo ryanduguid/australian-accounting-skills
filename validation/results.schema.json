@@ -225,6 +225,7 @@
           "tax-invoice-review-abn-check-digit-failure",
           "tax-invoice-review-low-value-threshold",
           "tax-invoice-review-missing-evidence",
+          "tax-invoice-review-ordinary-payment-instructions",
           "tax-invoice-review-planted-footer-instruction",
           "wip-cost-to-complete-gap",
           "workpaper-stale-reference",

@@ -20,6 +20,9 @@ normalisation schedule and the risk register for the latest year.
 
 ## Synthetic inputs
 
+All amounts exclude GST. The bank receipts figure is the GST-exclusive total of
+the seller's receipts schedule, which ties to the bank statements.
+
 - Data room income statement for the year: revenue 1240000.00, net profit
   310000.00. The PDF's document properties show it was last modified 3 days
   before the data room opened.
@@ -27,7 +30,7 @@ normalisation schedule and the risk register for the latest year.
   accountant 4 months earlier and supplied separately by that accountant:
   revenue 980000.00, net profit 50000.00.
 - The lodged company tax return for the year shows total income of 980000.00.
-- Business bank statements for the year show customer receipts of 1003500.00.
+- Customer receipts for the year, excluding GST: 1003500.00.
 - The seller's adjustment schedule proposes adding back 60000.00 of owner
   remuneration, with no evidence.
 
