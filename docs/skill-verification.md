@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 97 skills, 553 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 97 skills, 556 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -44,7 +44,7 @@ Totals: 97 skills, 553 indexed primary sources of which 341 have a recorded huma
 | [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) | [1](../.claude/skills/au-foreign-pensions/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | [1](../.claude/skills/au-forex-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | [15](../.claude/skills/au-franking-account/sources.json) | 2026-11-02 (15 of 15) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | [20](../.claude/skills/au-gst-property/sources.json) | 2026-09-30 (2 of 20) | 0 | 0 | 2 | 1 | 0 | 0 |
+| [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | [22](../.claude/skills/au-gst-property/sources.json) | 2026-09-30 (2 of 22) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | [1](../.claude/skills/au-gst-registration-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | [7](../.claude/skills/au-individual-return/sources.json) | 2026-10-14 (2 of 7) | 2 | 0 | 4 | 3 | 0 | 0 |
 | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | [12](../.claude/skills/au-land-tax/sources.json) | 2026-09-30 (3 of 12) | 0 | 0 | 9 | 2 | 0 | 0 |
@@ -59,7 +59,7 @@ Totals: 97 skills, 553 indexed primary sources of which 341 have a recorded huma
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | [2](../.claude/skills/au-payroll-review/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 4 | 3 | 0 | 0 |
 | [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [17](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 17) | 2 | 0 | 8 | 1 | 0 | 0 |
 | [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | [10](../.claude/skills/au-pre-lodgement-review/sources.json) | 2026-10-15 (6 of 10) | 0 | 0 | 3 | 0 | 0 | 0 |
-| [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | [28](../.claude/skills/au-primary-production/sources.json) | 2026-11-02 (13 of 28) | 0 | 0 | 2 | 1 | 0 | 0 |
+| [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | [29](../.claude/skills/au-primary-production/sources.json) | 2026-11-02 (13 of 29) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | [6](../.claude/skills/au-private-ruling-application/sources.json) | 2026-11-02 (6 of 6) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-professional-firm-profits`](../.claude/skills/au-professional-firm-profits/SKILL.md) | [2](../.claude/skills/au-professional-firm-profits/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md) | [6](../.claude/skills/au-property-development-income/sources.json) | 2026-11-02 (6 of 6) | 0 | 0 | 1 | 1 | 0 | 0 |
