@@ -12,9 +12,11 @@ farm management deposits and averaging, routes duty, land tax and GST to their
 skills and lists the family and legal decisions it leaves open. 2 synthetic
 cards bring the validation pack to 181, with no recorded model run for them,
 so the new test checks wording and card arithmetic, not model behaviour.
-`au-small-business-cgt` now notes that s 152-205(2) changes the basic
-conditions for the small business reduction from the income year that
-includes 1 July 2027. The 34 new source records await human review.
+`au-small-business-cgt` now states the basic conditions and each concession's
+extra conditions that the succession step routes to it, and notes that
+s 152-205(2) changes the basic conditions for the small business reduction
+from the income year that includes 1 July 2027. The 36 new source records
+await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with

@@ -89,12 +89,11 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "Do not choose the structure, the timing or who receives what",
             "A missing cost or value is unknown, not zero",
             "CGT event A1 (s 104-10)", "s 116-30 substitutes market value", "s 128-15",
-            "s 152-10", "s 152-35", "s 152-40(4)(e)", "s 152-40(4A)", "s 152-105", "s 152-305",
-            "s 152-410", "s 152-80(1)(d) and (3)", "(s 104-10(3))",
-            # The reduction's own entity test from the 2027-28 income year.
-            "s 152-205(2), inserted by No 49 of 2026 and applying to assessments for the income year that "
-            "includes 1 July 2027", "s 152-10(1AA)(b)",
-            "unless that main use was only temporary", "s 152-40(2) disregards s 392-20(1)", "s 70-105",
+            # Farm facts for the concessions; the general conditions live in au-small-business-cgt.
+            "Route the concession evidence to `au-small-business-cgt`", "s 152-10(1)(c)(iii) and (1B)",
+            "s 152-40(4)(e)", "s 152-40(4A)", "unless that main use was only temporary",
+            "s 152-40(2) disregards s 392-20(1)", "(s 152-105(d))", "(s 104-10(3))",
+            "s 70-105", "(s 70-105(7))",
             "Verify every threshold, limit and age test at the source for the year",
             "s 40-295", "s 40-340(3)", "s 70-90", "s 70-100(4)",
             "A depositor's rights cannot be transferred to another entity (item 6 of the table in s 393-35)",
@@ -112,12 +111,25 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
         self.assert_pending_and_cited(
             "au-primary-production",
             *(LAW + f"PAC/19970038/{section}" for section in
-              ("40-295", "40-340", "70-90", "70-100", "104-10", "116-30", "128-15", "152-10", "152-35",
-               "152-40", "152-80", "152-105", "152-205", "152-305", "152-325", "152-410", "393-35", "70-105")),
+              ("40-295", "40-340", "70-90", "70-100", "70-105", "104-10", "116-30", "128-15", "152-10",
+               "152-40", "152-105", "393-35")),
         )
-        reduction = " ".join(skill_text("au-small-business-cgt").split())
-        self.assertIn("Section 152-205(2), inserted by No 49 of 2026", reduction)
-        self.assert_pending_and_cited("au-small-business-cgt", LAW + "PAC/19970038/152-205")
+        concessions = " ".join(skill_text("au-small-business-cgt").split())
+        self.assert_carries(
+            concessions,
+            "s 152-10(1)(c)", "s 152-10(1A) and (1B)", "s 152-10(2)", "active asset test in s 152-35",
+            "unless that main use was only temporary (s 152-40(4)(e))", "s 152-40(4A)",
+            "For an individual's 15-year exemption (s 152-105)", "For the retirement exemption (s 152-305)",
+            "s 152-325 requires", "For the small business rollover (s 152-410)", "J2, J5 and J6",
+            "(s 152-80(1)(d) and (3))",
+            # The reduction's own entity test from the 2027-28 income year.
+            "Section 152-205(2), inserted by No 49 of 2026", "disregards s 152-10(1AA)(b)",
+        )
+        self.assert_pending_and_cited(
+            "au-small-business-cgt",
+            *(LAW + f"PAC/19970038/{section}" for section in
+              ("152-10", "152-35", "152-40", "152-80", "152-105", "152-205", "152-305", "152-325", "152-410")),
+        )
 
     def test_cards_target_their_skills_and_their_arithmetic_holds(self) -> None:
         gst = card("au-gst-property-farm-land-and-associate-lot")
