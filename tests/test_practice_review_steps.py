@@ -49,6 +49,7 @@ VALUING = (
 SISR = "https://www.legislation.gov.au/F1996B00580/latest/text"
 SGAA = "https://www.legislation.gov.au/C2004A04402/latest/text"
 SGA_REGULATIONS = "https://www.legislation.gov.au/F2018L01289/latest/text"
+QLD_PAYROLL_TAX_ACT = "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-1971-037"
 
 
 def screen_row(name: str) -> str:
@@ -169,6 +170,7 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"wages in a month, however small its or its group's wages\b",
                              r"\bss 52\(b\) and 53\(1\) of the \[Payroll Tax Act 1971 \(Qld\)\]",
                              r"\bwithin 7 days after the end of that month\b")
+        self.assert_pending("au-payroll-tax-states", QLD_PAYROLL_TAX_ACT)
 
     # au-super-guarantee-charge: R0828
 
