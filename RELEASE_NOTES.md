@@ -1,5 +1,19 @@
 # v0.5.1 (unreleased)
 
+`au-gst-property` gains a farm land step. It tests a supply of farm land for
+farming (s 38-480) and subdivided farm land supplied to an associate
+(s 38-475) condition by condition, with the evidence each needs, and sets them
+beside the going concern path, the recipient's Division 135 adjustment, the
+margin scheme history for a later sale, settlement withholding and the
+supplier's notice. `au-primary-production` gains a farm succession step that
+prepares the asset and entity register, CGT events, small business concession
+and rollover evidence, trading stock and plant transfers, and the effect on
+farm management deposits and averaging, routes duty, land tax and GST to their
+skills and lists the family and legal decisions it leaves open. 2 synthetic
+cards bring the validation pack to 181, with no recorded model run for them,
+so the new test checks wording, not model behaviour. The 28 new source records
+await human review.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

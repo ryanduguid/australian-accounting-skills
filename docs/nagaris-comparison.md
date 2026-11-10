@@ -32,8 +32,8 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 | Tax and accounting depreciation schedules | New | `au-depreciation-schedule`; `plant-and-equipment-costing` keeps per-machine costing |
 | Non-commercial business losses | Covered | `au-non-commercial-losses` |
 | Property development: income or capital | New | `au-property-development-income` |
-| GST on property | Covered | `au-gst-property` |
-| Primary production | New | `au-primary-production` |
+| GST on property | Covered | `au-gst-property`; GST-free farm land under ss 38-480 and 38-475, with its going concern, margin scheme and withholding questions, added on 11 November 2026 |
+| Primary production | New | `au-primary-production`; farm succession evidence added on 11 November 2026 |
 | Fuel tax credits | Covered | `fuel-tax-credits` |
 | Tax residency and overseas income | Covered | `au-tax-residency`, `au-foreign-income`, `au-foreign-pensions`, `au-working-holiday-makers` |
 | Crypto records | Covered | `au-crypto-tax` |

@@ -50,7 +50,7 @@ topics reuse existing skills and which have original new workflows.
 | [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md) | Financial statement preparation pack, with a Chapter 2M sustainability report scope check and an AASB 18 transition check |
 | [`au-foreign-income`](../.claude/skills/au-foreign-income/SKILL.md) | Foreign income and tax-offset workpapers |
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | Foreign currency tax reconciliation |
-| [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | Property GST review pack |
+| [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | Property GST review pack, including going concerns, the margin scheme, GST-free farm land and settlement withholding |
 | [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | GST registration and classification review |
 | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | Individual return preparation pack |
 | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | State land tax assessment review |
@@ -104,7 +104,7 @@ own gap list.
 | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | Fixed asset register and tax depreciation schedule: additions, disposals, methods, pools and the ledger tie-out |
 | [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) | Director penalty evidence: unpaid PAYG withholding, GST or SGC, notice timing, lockdown and defence evidence |
 | [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | Franking account rebuild, franked distribution statements, franking deficit tax and benchmark evidence |
-| [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | Primary production workpapers: business status, income averaging, farm management deposits and livestock |
+| [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | Primary production workpapers: business status, income averaging, farm management deposits, livestock and farm succession evidence |
 | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | Private ruling application preparation: one question per ruling, the facts, the arrangement and the evidence |
 | [`au-professional-firm-profits`](../.claude/skills/au-professional-firm-profits/SKILL.md) | Professional firm profit allocation evidence under the ATO's PCG 2021/4 risk framework |
 | [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md) | Property development: revenue or capital evidence, profit-making intention and the trading stock and GST routes |
