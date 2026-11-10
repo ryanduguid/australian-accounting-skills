@@ -1,5 +1,23 @@
 # v0.5.1 (unreleased)
 
+Seven practice skills gain review steps. The transaction GST review in
+`bas-preparation` screens manual journals to a GST account and credits on
+government fees (GST Act Division 81), and `bas-preparation` runs the payroll
+tax registration test from `au-payroll-tax-states` when payroll is in scope.
+`au-super-guarantee-charge` records the PCG 2026/1 risk zone for each
+first-year QE day with a shortfall and who confirmed the low-zone facts.
+`xero-exports` ties a connector total to the on-screen report before relying
+on a connection and runs completeness checks 1 and 3 on connector reads.
+`tax-invoice-review` checks Peppol tax category codes (Guidance Note 11),
+reads WET and LCT lines as Guidance Note 01 sets them out and holds a Peppol
+self-billed RCTI to the same conditions as any RCTI.
+`au-aml-ctf-client-coverage` names the practice system's code field, reports
+dual-code mismatches and tests a trust's beneficial owner evidence role by
+role. `au-payroll-review` screens new employees for a stapled fund request,
+and `au-smsf-year-end` records each asset's market value basis and evidence.
+The new test checks wording, not model behaviour, and the 6 new source records
+await human review.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

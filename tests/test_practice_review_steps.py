@@ -1,0 +1,262 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+"""The review steps added on 11 November 2026 keep their sources, conditions and limits.
+
+Each test reads one step, screen or table row and checks what it must carry: the
+provisions and dates read, the condition each result rests on, the `not run` and
+`UNVERIFIED` outcomes and the decision left to a person. It checks wording, not
+model behaviour. The helpers are in skill_prose.py.
+"""
+
+from __future__ import annotations
+
+import re
+import unittest
+
+from skill_prose import (
+    DO_NOT,
+    ISO_DATE,
+    PENDING,
+    PENDING_FACT,
+    SKILLS,
+    affirms,
+    raw_section,
+    records,
+    section,
+    sentences,
+    skill_text,
+    workflow_step,
+)
+
+GST_ACT = "https://www.legislation.gov.au/C2004A00446/latest/text"
+GST_REGULATIONS = "https://www.legislation.gov.au/F2019L00417/latest/text"
+PCG_2026_1 = "https://www.ato.gov.au/law/view/document?docid=COG/PCG20261/NAT/ATO/00001"
+FIRST_YEAR = (
+    "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/missed-or-late-payday-super-payments/"
+    "getting-it-right-compliance-in-the-first-year-of-payday-super"
+)
+SELF_BILLING = "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/"
+GN11 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote11_Use_of_Tax_Category_Codes.html"
+GN01 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote01_WETandLCT"
+CLIENT_FIELDS = "https://central.xero.com/s/article/Create-a-client-in-Practice-Manager-AU"
+STAPLED = (
+    "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/"
+    "offer-employees-a-choice-of-super-fund/stapled-super-funds-for-employers"
+)
+VALUING = (
+    "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf/"
+    "smsf-administration-and-reporting/guide-to-valuing-smsf-assets"
+)
+SISR = "https://www.legislation.gov.au/F1996B00580/latest/text"
+
+
+def screen_row(name: str) -> str:
+    """The cells after the first of the transaction GST review's lead-screen row `name`."""
+    path = SKILLS / "bas-preparation" / "references" / "transaction-gst-review.md"
+    for line in path.read_text(encoding="utf-8").splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if line.startswith("|") and cells[0] == name:
+            return " ".join(" | ".join(cells[1:]).split())
+    raise AssertionError(f"the transaction GST review has no '{name}' screen")
+
+
+class PracticeReviewStepTests(unittest.TestCase):
+    def assert_carries(self, text: str, *terms: str) -> None:
+        folded = text.casefold()
+        for term in terms:
+            with self.subTest(term=term):
+                self.assertIn(term.casefold(), folded)
+
+    def assert_sentence(self, text: str, *patterns: str, affirmed: tuple[str, ...] = ()) -> None:
+        """One sentence of `text` matches every pattern, and each `affirmed` pattern unnegated."""
+        with self.subTest(patterns=patterns, affirmed=affirmed):
+            self.assertTrue(
+                any(all(re.search(pattern, sentence, re.IGNORECASE) for pattern in patterns)
+                    and all(affirms(sentence, pattern) for pattern in affirmed)
+                    for sentence in sentences(text)),
+                f"no sentence matches all of {patterns} with {affirmed} affirmed",
+            )
+
+    def assert_pending(self, skill: str, *urls: str) -> None:
+        """Each URL is linked from the skill and indexed as an agent read awaiting human review."""
+        text = skill_text(skill)
+        indexed = records(skill)
+        for url in urls:
+            with self.subTest(skill=skill, url=url):
+                self.assertIn(f"]({url})", text)
+                record = indexed[url]
+                self.assertEqual(record["verification_status"], PENDING)
+                self.assertEqual(record["checked_at"], "")
+                self.assertEqual(record["fact"], PENDING_FACT)
+                self.assertRegex(str(record["review_required_since"]), ISO_DATE)
+
+    # bas-preparation: R0820 and R0824
+
+    def test_manual_journal_screen_reads_the_source_column_and_stays_a_lead(self) -> None:
+        row = screen_row("Manual journal to a GST account")
+        self.assert_carries(row, "GST control account", "`Source`", "General Ledger Detail",
+                            "Account Transactions", "Journal Report")
+        self.assert_sentence(row, r"\bno supplied export shows the source\b", r"`not run`")
+        self.assert_sentence(row, r"\bname that event or keep the line unresolved\b")
+
+    def test_government_fee_screen_carries_division_81_and_its_exceptions(self) -> None:
+        row = screen_row("Credit on a government fee")
+        self.assert_carries(row, "Division 81", "compilation 96", "11 November 2026", "human review pending")
+        self.assert_sentence(row, r"\bnot consideration\b", r"\bAustralian tax \(s 81-5\(1\)\)",
+                             r"\bpermission, exemption, authority or licence\b",
+                             r"\(s 81-10\(1\), \(4\) and \(5\)\)")
+        # The regulations can reverse either exclusion, and agencies make taxable supplies too.
+        self.assert_sentence(row, r"\btreat a prescribed tax, fee or charge as consideration \(ss 81-5\(2\) and 81-10\(2\)\)",
+                             r"\bexclude others \(s 81-15\)", r"\bcan also make taxable supplies\b")
+        indexed = records("bas-preparation")
+        for url in (GST_ACT, GST_REGULATIONS):
+            with self.subTest(url=url):
+                self.assertIn(f"]({url})", row)
+                self.assertEqual(indexed[url]["verification_status"], PENDING)
+
+    def test_bas_preparation_routes_payroll_wages_to_the_payroll_tax_threshold_test(self) -> None:
+        step = workflow_step("bas-preparation", 2)
+        self.assert_sentence(step, r"\bstep 3 of `au-payroll-tax-states`", r"\binput 9\b",
+                             r"\brevenue office page\b")
+        self.assert_sentence(step, r"\bexceed its threshold with no registration recorded\b",
+                             affirmed=(r"\blist each jurisdiction\b",))
+        self.assert_sentence(step, r"\bnot a liability or a registration decision\b",
+                             r"\bgross is not taxable wages\b")
+        self.assert_sentence(step, r"`not run`", r"\bwages by jurisdiction\b",
+                             r"`au-payroll-tax-states` is not installed\b")
+        inputs = section("bas-preparation", "Inputs needed")
+        self.assertRegex(inputs, r"\b9\. Where payroll is in scope, taxable wages by state or territory\b")
+        checks = section("bas-preparation", "Checks before handing over")
+        self.assertIn("the payroll tax screen lists each jurisdiction's wages, threshold, source and difference", checks)
+
+    # au-super-guarantee-charge: R0828
+
+    def test_charge_register_records_the_first_year_risk_zone_from_dates_and_confirmed_facts(self) -> None:
+        step = workflow_step("au-super-guarantee-charge", "5a")
+        self.assert_carries(step, "PCG 2026/1", "28 January 2026", "Human review pending", "11 November 2026",
+                            "1 July 2026 to 30 June 2027 inclusive")
+        self.assert_sentence(step, r"\bdoes not change the law\b")
+        self.assert_sentence(step, r"\bstill apply the law to a shortfall\b", r"\bparagraphs 3, 11 and 13\b")
+        # Table 2's 3 zones, each with its own condition.
+        self.assert_sentence(step, r"\blow: the employer attempted on-time contributions\b",
+                             r"\bas soon as reasonably practicable\b", r"\bindividual final SG shortfall nil\b")
+        self.assert_sentence(step, r"\bmedium: low is not met\b",
+                             r"\bby the end of 28 days after the end of the quarter in which the qualifying earnings were paid\b")
+        self.assert_sentence(step, r"\bold quarterly timing cannot be low \(paragraph 18\)")
+        self.assert_sentence(step, r"\bhigh: neither is met\b", r"\babove nil after that day\b")
+        self.assert_sentence(step, r"\bmissing receipt date makes the zone `UNKNOWN`")
+        self.assert_sentence(step, r"\bwho confirmed them\b")
+        self.assert_sentence(step, r"\bno one has confirmed the low-zone facts\b", r"'not high'", r"`UNVERIFIED`")
+        self.assert_sentence(step, r"\bnot a charge, a penalty position or a finding that nothing is owed\b")
+        self.assertIn("who confirmed the low-zone facts", section("au-super-guarantee-charge", "Hand-off and checks"))
+        self.assert_pending("au-super-guarantee-charge", PCG_2026_1, FIRST_YEAR)
+
+    # xero-exports: R0842
+
+    def test_connector_route_ties_a_connector_total_to_the_on_screen_report_first(self) -> None:
+        route = section("xero-exports", "Read-only connector route")
+        self.assert_sentence(route, r"\bBefore relying on a connection for a client, tie it once to Xero's on-screen report\b")
+        self.assert_sentence(route, r"\bsame organisation, date, basis and filters\b")
+        self.assert_sentence(route, r"\bagree to the cent and name the same contacts\b")
+        self.assert_sentence(route, r"\bOn a difference, stop\b", r"\buse the file-export path\b")
+        self.assert_sentence(route, r"\btie again when the connection, the organisation or the server changes\b")
+        self.assert_sentence(route, r"\bRun completeness checks 1 and 3 above on what the read returns\b")
+        self.assert_sentence(route, r"\bStop on a failure\b")
+
+    # tax-invoice-review: R1012
+
+    def test_einvoice_review_checks_tax_category_codes_and_wet_and_lct_lines(self) -> None:
+        step = workflow_step("tax-invoice-review", 3)
+        self.assert_carries(step, "Guidance Note 11", "version 1.2", "Guidance Note 01", "version 1.0.2",
+                            "Human review pending", "11 November 2026", f"]({GN11})", f"]({GN01})")
+        for code, meaning in (("S", r"taxable supplies at a non-zero rate"), ("E", r"input taxed supplies"),
+                              ("Z", r"GST-free supplies"), ("G", r"GST-free exports only"),
+                              ("O", r"only on invoices from an entity that is neither registered nor required to be registered")):
+            with self.subTest(code=code):
+                self.assertRegex(step, rf"`{code}` for {meaning}" if code != "O" else rf"`O` {meaning}")
+        self.assert_sentence(step, r"\bnever for goods and services sold or provided to customers in Australia\b")
+        self.assert_sentence(step, r"\bnot the GST treatment\b", r"\bmatching code does not clear a line\b")
+        self.assert_sentence(step, r"\breason code `ZZZ`", r"\bWET-inclusive amount\b",
+                             r"\bseparate line coded `E` under the GST scheme\b")
+        self.assert_sentence(step, DO_NOT + r"list such a line as an input taxed supply\b",
+                             r"\bfrom the ATO at use time\b")
+        self.assert_sentence(step, r"\bNeither guidance note is indexed\b", r"\boutside the reviewed fetch list\b")
+
+    def test_peppol_rcti_meets_the_same_conditions_as_any_rcti(self) -> None:
+        step = workflow_step("tax-invoice-review", 4)
+        self.assert_sentence(step, r"\bPINT A-NZ Self-billing specification\b", r"`389`", r"`261`")
+        self.assert_sentence(step, r"\bnot validated\b", r"\bdoes not guarantee or enforce legal compliance\b")
+        self.assert_sentence(step, r"\bApply every condition above to a Peppol RCTI as to any other\b",
+                             r"\bdoes not show a written agreement\b")
+        self.assert_pending("tax-invoice-review", SELF_BILLING)
+
+    # au-aml-ctf-client-coverage: R1019 and R1017
+
+    def test_client_matching_names_the_code_field_and_reports_dual_code_mismatches(self) -> None:
+        step = workflow_step("au-aml-ctf-client-coverage", 1)
+        self.assert_sentence(step, r"\bRecord which field each record keys on\b")
+        self.assert_sentence(step, r"\bclient reference code\b", r"`ExportCode`", r"\bdeprecated\b")
+        self.assert_sentence(step, r"\bmatch on one code but not the other\b", r"\bcodes that match different clients\b",
+                             affirmed=(r"\blist clients\b",))
+        self.assert_sentence(step, r"\bkeyed on one field matched against the other stays `UNVERIFIED`")
+        self.assert_sentence(step, r"\bleaves archived clients out\b", r"\bpossibly archived, not as an unknown client\b")
+        self.assertIn("naming the field it comes from", section("au-aml-ctf-client-coverage", "Inputs"))
+        self.assert_pending("au-aml-ctf-client-coverage", CLIENT_FIELDS)
+
+    def test_trust_beneficial_owner_evidence_is_tested_role_by_role(self) -> None:
+        step = workflow_step("au-aml-ctf-client-coverage", 3)
+        self.assert_carries(step, "last updated 4 November 2026", "Human review pending", "11 November 2026")
+        self.assert_sentence(step, r"\btrustees\b", r"\bsettlors, appointors, guardians and protectors\b",
+                             r"\bother individual with control\b", r"\bbare trust\b")
+        self.assert_sentence(step, r"\bcontrol structure\b", r"\btrust deed\b", r"\bowns or controls the trust\b")
+        self.assert_sentence(step, r"\bscreening\b", r"\ball identifiable beneficiaries\b",
+                             r"\bevery individual settlor, appointor, guardian, protector\b")
+        self.assert_sentence(step, r"\blist each role present by position \(such as trustee 1 of 2 or appointor 1 of 1\)")
+        self.assert_sentence(step, r"\bno identity record\b", r"\bno verification evidence reference\b",
+                             r"\bno screening date\b", r"\bno recorded control structure\b",
+                             affirmed=(r"\bList as a missing element\b",))
+        self.assert_sentence(step, r"\bonly verified individual is a trustee\b")
+        self.assert_sentence(step, r"\bWho owns or controls a trust\b", r"\bare for that officer\b")
+        self.assertIn("for a trust, the recorded control structure", section("au-aml-ctf-client-coverage", "Inputs"))
+
+    # au-payroll-review: R1030
+
+    def test_payroll_review_screens_new_employees_for_a_stapled_fund_request(self) -> None:
+        step = workflow_step("au-payroll-review", "4b")
+        self.assert_carries(step, "last updated 2 September 2026", "Human review pending", "11 November 2026")
+        self.assert_sentence(step, r"\bstarted after 1 November 2021\b", r"\beligible to choose a fund but does not\b",
+                             r"\bnot eligible to choose\b")
+        self.assert_sentence(step, r"\bTFN declaration\b", r"\bSingle Touch Payroll pay event\b")
+        self.assert_sentence(step, r"\bchosen fund, otherwise to the stapled fund\b",
+                             r"\bdefault fund only where there is no stapled fund\b")
+        self.assert_sentence(step, r"\bpaid to the default fund without a request outcome\b",
+                             r"\bfund other than the chosen or stapled fund\b", affirmed=(r"\bList as a lead\b",))
+        self.assert_sentence(step, r"`not run`", r"\bstart dates or fund records\b")
+        self.assert_sentence(step, DO_NOT + r"make the request\b", r"`au-super-guarantee-charge`")
+        self.assertIn("a stapled fund screen result", section("au-payroll-review", "Hand-off and checks"))
+        self.assert_pending("au-payroll-review", STAPLED)
+
+    # au-smsf-year-end: R0678
+
+    def test_smsf_year_end_records_each_assets_market_value_basis_and_evidence(self) -> None:
+        step = workflow_step("au-smsf-year-end", "1a")
+        self.assert_carries(step, "Regulation 8.02B", "compilation 159", "s 35B(1)", "s 10(1)",
+                            "last updated 15 May 2026", "Human review pending", "11 November 2026", f"]({SISR})")
+        self.assert_sentence(step, r"\bvalued at its market value\b")
+        self.assert_sentence(step, r"\bobjective and supportable data\b")
+        self.assert_sentence(step, r"\bclosing price on their exchange or licensed market on 30 June\b",
+                             r"\bpublished exit price\b")
+        self.assert_sentence(step, r"\bmore than one item of evidence\b", r"\bcomparable sales\b",
+                             r"\bassess and document whether it is still appropriate\b")
+        self.assert_sentence(step, r"\bwhether that valuer is independent of the fund\b",
+                             affirmed=(r"\bFor each asset record the value\b",))
+        self.assert_sentence(step, r"\bcarried at cost or a prior-year value\b",
+                             r"\bwhose data, method and assumptions are not recorded\b",
+                             affirmed=(r"\bList as an exception\b",))
+        self.assert_sentence(step, DO_NOT + r"set a value or conclude that a recorded value is market value\b")
+        self.assertIn("an asset valuation schedule", raw_section("au-smsf-year-end", "Hand-off and checks"))
+        self.assert_pending("au-smsf-year-end", VALUING)
+        self.assertIn(SISR, records("au-smsf-year-end"))
+
+
+if __name__ == "__main__":
+    unittest.main()
