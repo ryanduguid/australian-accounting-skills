@@ -7,7 +7,7 @@
     "skills_source_exempt": 6,
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 50,
+    "skills_with_behavioural_gate": 51,
     "skills_with_only_the_seeded_case": 27,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -2746,13 +2746,14 @@
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 2,
-        "fetched": "2026-11-02",
+        "fetched": "2026-11-11",
         "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "statement-to-csv-card-in-credit-year-end",
           "statement-to-csv-overlap-and-formula"
         ],
         "only_seeded_case": false,
@@ -2763,7 +2764,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_statement_to_csv.py"
+        ],
         "inventory": []
       }
     },
