@@ -182,6 +182,36 @@
       "source_last_modified": ""
     },
     {
+      "title": "TD 1999/66: the amount that is reasonable under s 118-190(2)",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=TXD/TD199966/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXD/TD199966/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "TR 93/30: deductions for home office expenses",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR9330/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR9330/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
       "title": "Treasury Laws Amendment (Tax Reform No. 1) Act 2026 (Schedule 1, item 6, s 102-6)",
       "url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
       "checked_at": "",

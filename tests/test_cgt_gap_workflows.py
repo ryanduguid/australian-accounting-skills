@@ -166,6 +166,13 @@ class CgtGapWorkflowTests(unittest.TestCase):
                             "7.30 pm", "20 August 1996")
         self.assert_sentence(step, r"\bapplies even where there is no loan\b")
         self.assert_sentence(step, r"\bset aside exclusively\b", r"\bnot readily adaptable for private use\b")
+        # TR 93/30 weighs factors, none conclusive, including almost exclusive use.
+        self.assert_sentence(step, r"\bTR 93/30\b", r"\bnone conclusive on its own \(paragraphs 5 and 11\)",
+                             r"\bexclusively or almost exclusively\b",
+                             r"\bleave the character of the area to the reviewer\b")
+        # Income use during a s 118-147 choice is ignored as s 118-190(3A) provides.
+        self.assert_sentence(step, r"\bs 118-190\(3A\)", r"\bunder s 118-147\b", r"\bis ignored\b",
+                             r"\bold dwelling's use just before it last ceased\b")
         self.assert_sentence(step, r"\btaken to have acquired the dwelling at that time for its market value\b")
         # The first-use rule needs a partial exemption now and a full one just before the first use.
         self.assert_sentence(step, r"\bonly a partial exemption\b", r"\bjust before that first use\b",
@@ -184,6 +191,10 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bs 102-6\(2\)", r"\bdeemed sale on 30 June 2027\b",
                              r"\bs 102-6\(4\) and \(5\)", r"\bboth leave out days\b")
         self.assert_sentence(step, r"\bnon-main residence days over the days in the ownership period\b")
+        # Without an s 118-192 reset, income use is also weighed by time against the whole ownership period.
+        self.assert_sentence(step, r"\bwhere s 118-192 does not apply\b", r"\bTD 1999/66\b",
+                             r"\bagainst the whole ownership period\b", r"\beven where the use ran to the sale\b",
+                             r"\bincome use days and the ownership days\b")
         self.assert_sentence(step, r"\bevery input is supported\b", affirmed=(r"\bas preliminary\b",))
         self.assert_sentence(step, r"\bblank\b", r"\bUNVERIFIED\b", r"\binput is missing\b")
         self.assert_routes_to(step, "`au-capital-gains`")
@@ -209,6 +220,8 @@ class CgtGapWorkflowTests(unittest.TestCase):
             f"{MR}/home-on-more-than-2-hectares",
             "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/"
             "foreign-residents-and-capital-gains-tax/main-residence-exemption-for-foreign-residents",
+            "https://www.ato.gov.au/law/view/document?DocID=TXD/TD199966/NAT/ATO/00001",
+            "https://www.ato.gov.au/law/view/document?DocID=TXR/TR9330/NAT/ATO/00001",
             "https://www.legislation.gov.au/C2026A00049/asmade/text",
         )
 
