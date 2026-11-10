@@ -8,7 +8,7 @@ rules. Step 4 now fails omissions that cancel against printed totals, step 3
 accepts a sign from the running balance only when the balance change equals the
 amount and keeps card balances in the owed direction, and step 8 records Xero's
 100,000-row limit and its date-format prompt, read on 11 November 2026. One
-synthetic card brings the validation pack to 180, with no recorded model run for
+synthetic card brings the validation pack to 181, with no recorded model run for
 it, so the new tests check wording and the checker's arithmetic, not model
 behaviour. The 2 Xero source records still await human review: the source sweep
 extracts no text from those pages, so it records no digest for them.
