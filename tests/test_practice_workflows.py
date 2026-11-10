@@ -7,78 +7,35 @@ style of test_dated_rule_changes.py. A prohibition or negative predicate is
 checked within one sentence with its negator before its verb, and each action
 of a prohibited list is checked on its own as an item of that list; an
 exception or cut-off is matched inside its own clause; each term of a list the
-step must carry in full is required on its own. The helpers repeat that module's so each
-file stands alone under unittest discovery.
+step must carry in full is required on its own. The helpers are in
+skill_prose.py.
 """
 
 from __future__ import annotations
 
-import json
 import re
 import unittest
-from pathlib import Path
 
-SKILLS = Path(__file__).resolve().parents[1] / ".claude" / "skills"
-PENDING = "source-discovery-only-human-review-pending"
-PENDING_FACT = "Primary-source discovery only; no human-reviewed current-law fact is recorded."
-ISO_DATE = r"^\d{4}-\d{2}-\d{2}$"
-# A negator directly before the matched verb, allowing only auxiliaries, 'to',
-# articles and a set-off 'however' between, as in test_dated_rule_changes.py.
-NEGATED = r"(?:\b(?:not|never|cannot|no(?!\.))|n't)(?:\W+(?:be|been|to|a|an|the|however|also))*\W+$"
-# A required prohibition keeps its negator directly before its verb.
-DO_NOT = r"\b(?:do not|don't|never|must not)\W+"
-# The text before an item of a prohibited list: the negator, then only earlier items of
-# that list, each closed by a comma, 'or' or ', or'.
-IN_PROHIBITED_LIST = DO_NOT + r"(?:[^,.;:]+?(?:,(?:\s+or)?|\s+or)\s+)*$"
+from skill_prose import (
+    DO_NOT,
+    IN_PROHIBITED_LIST,
+    ISO_DATE,
+    PENDING,
+    PENDING_FACT,
+    SKILLS,
+    affirms,
+    records,
+    section,
+    sentences,
+    skill_text,
+    workflow_step,
+)
+
 ATO_AGENTS = "https://www.ato.gov.au/tax-and-super-professionals/digital-services/online-services-for-agents"
 TRUST_LOSS = (
     "https://www.ato.gov.au/businesses-and-organisations/trusts/"
     "trust-income-losses-and-capital-gains/trust-loss-provisions"
 )
-
-
-def skill_text(skill: str) -> str:
-    return (SKILLS / skill / "SKILL.md").read_text(encoding="utf-8")
-
-
-def raw_section(skill: str, heading: str) -> str:
-    """The Markdown under the first `## <heading>...` until the next `## ` heading."""
-    text = skill_text(skill)
-    start = re.search(rf"^## {re.escape(heading)}.*$", text, re.MULTILINE)
-    assert start, f"{skill} has no '## {heading}' section"
-    end = re.compile(r"^## ", re.MULTILINE).search(text, start.end())
-    return text[start.end() : end.start() if end else len(text)]
-
-
-def section(skill: str, heading: str) -> str:
-    return " ".join(raw_section(skill, heading).split())
-
-
-def workflow_step(skill: str, number: int) -> str:
-    """Workflow step `number` with its indented continuation paragraphs, up to the next step."""
-    workflow = raw_section(skill, "Workflow")
-    start = re.search(rf"^{number}\. ", workflow, re.MULTILINE)
-    assert start, f"{skill} has no workflow step {number}"
-    end = re.compile(r"^\d+[a-z]?\. ", re.MULTILINE).search(workflow, start.end())
-    return " ".join(workflow[start.start() : end.start() if end else len(workflow)].split())
-
-
-def sentences(text: str) -> list[str]:
-    """Sentences of normalised text; paragraph numbers such as 'R320.7' do not end one."""
-    return re.split(r"(?<=\.)\s+(?=[A-Z*\[(])", text)
-
-
-def affirms(sentence: str, pattern: str) -> bool:
-    """`pattern` matches somewhere in `sentence` with no negator directly before it."""
-    return any(
-        not re.search(NEGATED, sentence[: match.start()], re.IGNORECASE)
-        for match in re.finditer(rf"(?=(?:{pattern}))", sentence, re.IGNORECASE)
-    )
-
-
-def records(skill: str) -> dict[str, dict[str, object]]:
-    payload = json.loads((SKILLS / skill / "sources.json").read_text(encoding="utf-8"))
-    return {str(source["url"]): source for source in payload["sources"]}
 
 
 class PracticeWorkflowTests(unittest.TestCase):

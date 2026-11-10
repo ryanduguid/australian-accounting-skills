@@ -719,6 +719,96 @@ def refresh(
     return report
 
 
+MARKDOWN_STRUCTURE = re.compile(r"([\\`<>\[\]|])")
+# In a table cell `<` becomes `&lt;` instead: GitHub ends a URL at `<`, so a URL just before
+# `\<` would take the backslash and leave the `<` free to open HTML.
+TEXT_STRUCTURE = re.compile(r"([\\`>\[\]|])")
+TEXT_EMPHASIS = re.compile(r"([*_~])")
+CONTROL_CHARACTERS = re.compile("[\x00-\x1f\x7f-\x9f]")
+REFERENCE_MARKS = re.compile("([@#])")
+# ASCII classes, not re.IGNORECASE, which also folds U+0130, U+0131 and U+212A.
+GITHUB_ISSUE_PREFIX = re.compile("([Gg][Hh]-)")
+GITHUB_HOST = re.compile(r"([Gg][Ii][Tt][Hh][Uu][Bb])(\.[Cc][Oo][Mm])")
+# GitHub links `owner/repo/issues/12` after any host, or none.
+PATH_NUMBER = re.compile("/([0-9])")
+# An autolink candidate: http(s) not after an ASCII letter, then the host GitHub scans.
+URL_START = re.compile(r"(?<![A-Za-z])[Hh][Tt][Tt][Pp][Ss]?://(?P<host>[A-Za-z0-9._-]*)")
+
+
+def markdown_link(value: str) -> str:
+    """Make one link destination inert: no HTML, code span, new cell or new line.
+
+    A control character becomes U+FFFD. Emphasis characters stay: `_` occurs in
+    indexed URLs, and escaping it would corrupt GitHub's autolinked URLs.
+    """
+    return MARKDOWN_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
+
+
+def markdown_text(value: str) -> str:
+    """Make one table cell inert: `markdown_link`, then no GitHub mention or issue link.
+
+    A detail can quote a host's HTTP reason phrase, content type or redirect
+    destination, so a compromised approved host could otherwise write markup into
+    the report and the issue filed from it. GitHub matches mentions and references
+    in rendered text outside links, after decoding entities. So outside the URLs
+    GitHub autolinks, emphasis markers are escaped, `&` becomes `&amp;`, and a
+    word joiner (U+2060) follows each
+    `@` and `#`, the `-` of `GH-`, the `github` of `github.com` (both in any ASCII
+    case) and each `/` before a digit. That stops `@user`, `@org/team`, `#12`,
+    `owner/repo#12`, `GH-12`, bare `owner/repo/issues/12` paths and their
+    named-entity spellings. Inside a URL only a github.com host is joined, which
+    stops an issue link; any other URL keeps its href byte for byte. `<` is
+    written `&lt;` throughout, not escaped with a backslash (`TEXT_STRUCTURE`).
+    """
+    text = TEXT_STRUCTURE.sub(r"\\\1", CONTROL_CHARACTERS.sub("\ufffd", value))
+    parts, plain, at = [], 0, 0
+    while at < len(text):
+        span = _url_span(text, at)
+        if span is None:
+            at += 1
+            continue
+        host, host_end, end = span
+        parts += [_plain_text(text[plain:at]), text[at:host],
+                  _github_host(text[host:host_end]), text[host_end:end].replace("<", "&lt;")]
+        plain = at = end
+    return "".join(parts) + _plain_text(text[plain:])
+
+
+def _url_span(text: str, at: int) -> tuple[int, int, int] | None:
+    """The URL GitHub autolinks from `at`: its host's start and end, and its own end.
+
+    GitHub links http(s) not after an ASCII letter, up to the next space (each
+    `<` reaches it as `&lt;`), unless its host is empty, starts with `-` or `.`, or
+    has `_` in its last 2 labels. The host it scans ends at the first ASCII
+    character outside letters, digits, `.`, `-` and `_`, but not at a backslash. A
+    host ending at a backslash or a non-ASCII character, or starting with `_`,
+    counts as plain text, the safe side. So do the links GitHub makes from `www.`,
+    email addresses and hosts of over 10 labels holding `_`, which puts joiners into
+    their hrefs. GitHub does not autolink `ftp://`.
+    """
+    url = URL_START.match(text, at)
+    if url is None:
+        return None
+    host, host_end = url["host"], url.end()
+    stop = text[host_end:host_end + 1]
+    if (not host or host[0] in "-._" or "_" in "".join(host.split(".")[-2:])
+            or stop == "\\" or not stop.isascii()):
+        return None
+    end = text.find(" ", host_end)
+    return url.start("host"), host_end, len(text) if end < 0 else end
+
+
+def _github_host(host: str) -> str:
+    return f"{host[:6]}\u2060{host[6:]}" if host.lower() == "github.com" else host
+
+
+def _plain_text(text: str) -> str:
+    text = TEXT_EMPHASIS.sub(r"\\\1", text)
+    text = REFERENCE_MARKS.sub("\\1\u2060", text.replace("&", "&amp;").replace("<", "&lt;"))
+    text = GITHUB_ISSUE_PREFIX.sub("\\1\u2060", text)
+    return PATH_NUMBER.sub("/\u2060\\1", GITHUB_HOST.sub("\\1\u2060\\2", text))
+
+
 def render(report: Report, *, write: bool) -> str:
     """Render the sweep as Markdown, usable as an issue body unchanged."""
     counts = {name: len(report.by_outcome(name)) for name in REPORTED_OUTCOMES}
@@ -758,10 +848,13 @@ def render(report: Report, *, write: bool) -> str:
             "| --- | --- | --- | --- | --- | --- |",
         ]
         for outcome in sorted(report.needs_attention, key=lambda o: (o.outcome, o.skill)):
-            upstream = outcome.fetched.last_modified or "not published"
+            title, checked_at, upstream, detail = map(markdown_text, (
+                outcome.title, outcome.checked_at,
+                outcome.fetched.last_modified or "not published", outcome.detail,
+            ))
             lines.append(
-                f"| {outcome.outcome} | `{outcome.skill}` | [{outcome.title}]({outcome.url}) "
-                f"| {outcome.checked_at} | {upstream} | {outcome.detail} |"
+                f"| {outcome.outcome} | `{outcome.skill}` | [{title}]({markdown_link(outcome.url)}) "
+                f"| {checked_at} | {upstream} | {detail} |"
             )
         lines.append("")
     else:

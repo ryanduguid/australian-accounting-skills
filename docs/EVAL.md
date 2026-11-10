@@ -275,7 +275,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 177 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 179 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -289,7 +289,10 @@ and au-ato-account-reconciliation have no recorded run, nor do the 2 cards added
 for the fbt-annual-workflow line register and the au-tax-agent-obligations professional-body rows.
 The 7 land tax cards added that day also have no recorded model run.
 The 8 payroll tax jurisdiction cards added on 5 November have no recorded
-model run, nor do the 8 transfer duty jurisdiction cards and 2 Xero connector cards added the same day. Static regression and mutation checks do not establish model
+model run, nor do the 8 transfer duty jurisdiction cards and 2 Xero connector cards added the same day.
+The close-control step added to month-end-close on 8 November 2026 postdates every recorded run,
+and its 2 cards have no recorded run.
+Static regression and mutation checks do not establish model
 performance or human acceptance of current law.
 
 The worked examples added to 15 skills on 5 November 2026 postdate every recorded run. Their

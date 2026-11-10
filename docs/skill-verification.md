@@ -99,7 +99,7 @@ Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded huma
 | [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | [6](../.claude/skills/fbt-annual-workflow/sources.json) | none (0 of 6) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`financial-modelling`](../.claude/skills/financial-modelling/SKILL.md) | exempt | none | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) | [2](../.claude/skills/fuel-tax-credits/sources.json) | 2026-09-30 (2 of 2) | 0 | 0 | 2 | 2 | 0 | 0 |
-| [`month-end-close`](../.claude/skills/month-end-close/SKILL.md) | [5](../.claude/skills/month-end-close/sources.json) | 2026-09-30 (5 of 5) | 1 | 0 | 8 | 4 | 0 | 0 |
+| [`month-end-close`](../.claude/skills/month-end-close/SKILL.md) | [5](../.claude/skills/month-end-close/sources.json) | 2026-09-30 (5 of 5) | 1 | 0 | 10 | 4 | 0 | 0 |
 | [`payroll-tax-contractors`](../.claude/skills/payroll-tax-contractors/SKILL.md) | [11](../.claude/skills/payroll-tax-contractors/sources.json) | 2026-09-30 (4 of 11) | 1 | 0 | 6 | 2 | 0 | 0 |
 | [`plant-and-equipment-costing`](../.claude/skills/plant-and-equipment-costing/SKILL.md) | [2](../.claude/skills/plant-and-equipment-costing/sources.json) | 2026-10-29 (2 of 2) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`progress-claim-preparation`](../.claude/skills/progress-claim-preparation/SKILL.md) | [4](../.claude/skills/progress-claim-preparation/sources.json) | 2026-09-30 (4 of 4) | 0 | 0 | 2 | 2 | 0 | 0 |

@@ -508,6 +508,128 @@ class SweepTests(unittest.TestCase):
                     self.assertTrue(source_refresh.review_date(schedule))
 
 
+class RenderTests(unittest.TestCase):
+    """The report is filed as an issue, so a host's words must stay text inside their cell."""
+
+    def rows(self, cases: list[tuple[str, str, source_refresh.Fetched]],
+             url: str = "https://example.test/page") -> list[str]:
+        report = source_refresh.Report()
+        for title, content_url, result in cases:
+            record: dict[str, object] = {"url": "https://example.test/page", "checked_at": "2026-09-08",
+                      source_refresh.DIGEST_FIELD: UNCHANGED_DIGEST,
+                      source_refresh.DIGEST_KIND_FIELD: source_refresh.HTML_KIND,
+                      source_refresh.CONTENT_URL_FIELD: content_url}
+            outcome, detail = source_refresh.classify(record, result)
+            report.outcomes.append(source_refresh.Outcome(
+                skill="example-skill", title=title, url=url,
+                outcome=outcome, detail=detail, checked_at="2026-09-08", fetched=result))
+        lines = source_refresh.render(report, write=False).splitlines()
+        return lines[lines.index("| --- | --- | --- | --- | --- | --- |") + 1:]
+
+    def test_a_hostile_reason_phrase_and_redirect_destination_stay_inert(self) -> None:
+        """Vulnhuntr's proof of concept: a compromised approved host shapes both strings.
+
+        An HTTP reason phrase may hold markup, pipes and Latin-1 control bytes; a
+        same-host redirect may end at a path holding markup that `--write` then stores.
+        """
+        reason = ("HTTP 403 <svg onload=alert(1)> | [Pay](https://phish.example) `x`\x1b[31m\n"
+                  "## Injected \\| \x85\xa0\x9f\\")
+        destination = "https://example.test/p/<svg/onload=alert(1)>|[x](https://phish.example)`"
+        rows = self.rows([
+            ("Refused | Example", "https://example.test/page",
+             fetched(status=403, digest="", error=reason)),
+            ("Moved", "https://example.test/old", fetched(final_url=destination)),
+        ])
+        self.assertEqual(rows, [
+            r"| blocked | `example-skill` | [Refused \| Example](https://example.test/page) "
+            r"| 2026-09-08 | not published | HTTP 403 &lt;svg onload=alert(1)\> \| \[Pay\](https://phish.example) "
+            "\\`x\\`\ufffd\\[31m\ufffd#\u2060#\u2060 Injected \\\\\\| \ufffd\xa0\ufffd\\\\. "
+            "This host refuses automated retrieval: review by hand. |",
+            r"| changed | `example-skill` | [Moved](https://example.test/page) | 2026-09-08 | not published "
+            r"| Source destination changed from https://example.test/old to "
+            r"https://example.test/p/&lt;svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
+        ])
+
+    def test_an_ordinary_destination_still_renders_as_a_usable_link(self) -> None:
+        """Escaping `_` or `&`, or joining `GH-`, `@`, `#` or a host other than github.com, would corrupt the href."""
+        destinations = [
+            "https://example.test/Parliamentary_Business/LSL__1_.pdf?bId=r7554&x=(1)",
+            "https://www.ato.gov.au/path/GH-12.pdf",
+            "https://www.ato.gov.au/path/github.com/manual.pdf",
+            "https://www.ato.gov.au/law/2026/1",
+            "https://notgithub.com/rust-lang/rust/issues/1",
+            "https://github.com.evil/rust-lang/rust/issues/1",
+            "https://example.test/rulings/@archive/doc",
+            "https://a_b.c.d/GH-12",
+        ]
+        rows = self.rows([("Bills", "https://example.test/old", fetched(final_url=current))
+                          for current in destinations])
+        self.assertEqual(rows, [
+            "| changed | `example-skill` | [Bills](https://example.test/page) | 2026-09-08 | not published "
+            f"| Source destination changed from https://example.test/old to {current}. |"
+            for current in destinations
+        ])
+
+    def test_host_text_cannot_emphasise_an_instruction(self) -> None:
+        self.assertEqual(
+            source_refresh.markdown_text("**Pay now** _mandatory_ ~~ignore~~ https://example.test/a_b"),
+            r"\*\*Pay now\*\* \_mandatory\_ \~\~ignore\~\~ https://example.test/a_b",
+        )
+
+    def test_host_text_cannot_mention_or_cross_reference(self) -> None:
+        """The workflow files the report as an issue, where `@name` and `#12` notify and link.
+
+        `GH-12`, github.com issue URLs and bare `owner/repo/issues/12` paths link
+        too, in any ASCII case, as do named entities such as `&commat;`; a soft hyphen
+        in `GH-12` stops the match. GitHub does not autolink a URL with an underscore
+        host or letters before `https://`, so a GH- reference in one is joined; one
+        inside an autolinked URL, even after a digit or with an odd host, is left alone.
+        A URL runs on through `<`, written `&lt;`, so its backslash cannot free a `<`
+        to open HTML, as `<a href=…>Pay</a>` would. The reason phrase, the content type and
+        the destination all reach the Detail cell. The source link keeps its fragment:
+        a destination is not rendered text.
+        """
+        mentions = ("Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 "
+                    "https://GitHub.COM/rust-lang/rust/issues/1 &commat;someuser &num;12 "
+                    "github&period;com/x GH\xad-12 abchttps://example.test/GH-12 "
+                    "https://a_b.example/GH-12 https://example.test/path/GH-12?q=1&r=2 "
+                    "github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2 "
+                    "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
+                    "https://github.com/rust-lang/rust/issues/2 https://_x.example/GH-12 "
+                    "https://a.b\\x_y.z/GH-12 https://example.test/doc#12 https://-x.test/GH-12 "
+                    "https://ex\xe4_b.test/GH-12 https://.x/GH-12 https://e.test/x<@someuser "
+                    "https://e.test/<a href=https://phish.example>Pay</a>")
+        joined = ("Forbidden @\u2060someuser owner/repo#\u20601 #\u206012 @\u2060org/team "
+                  "GH-\u206012 gh-\u206012 https://GitHub\u2060.COM/rust-lang/rust/issues/1 "
+                  "&amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\xad-12 "
+                  "abchttps://example.test/GH-\u206012 https://a\\_b.example/GH-\u206012 "
+                  "https://example.test/path/GH-12?q=1&r=2 "
+                  "github\u2060.com/rust-lang/rust/issues/\u20601 rust-lang/rust/pull/\u20602 "
+                  "1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 "
+                  "https://github\u2060.com/rust-lang/rust/issues/2 https://\\_x.example/GH-\u206012 "
+                  "https://a.b\\\\x\\_y.z/GH-\u206012 https://example.test/doc#12 https://-x.test/GH-\u206012 "
+                  "https://ex\xe4\\_b.test/GH-\u206012 https://.x/GH-\u206012 https://e.test/x&lt;@someuser "
+                  "https://e.test/&lt;a href=https://phish.example\\>Pay&lt;/a\\>")
+        source = "https://example.test/act#sec.11"
+        rows = self.rows([
+            ("Ruling #3", "https://example.test/page",
+             fetched(status=403, digest="", error=f"HTTP 403 {mentions}")),
+            ("Moved", "https://example.test/old",
+             fetched(final_url="https://example.test/x<@someuser<https://github.com/rust-lang/rust/issues/1")),
+            ("Odd type", "https://example.test/page", fetched(digest="", content_type="x/@someuser")),
+        ], url=source)
+        self.assertEqual(rows, [
+            f"| blocked | `example-skill` | [Ruling #\u20603]({source}) | 2026-09-08 | not published "
+            f"| HTTP 403 {joined}. This host refuses automated retrieval: review by hand. |",
+            f"| changed | `example-skill` | [Moved]({source}) | 2026-09-08 | not published "
+            "| Source destination changed from https://example.test/old to "
+            "https://example.test/x&lt;@someuser&lt;https://github.com/rust-lang/rust/issues/1. |",
+            f"| unreadable | `example-skill` | [Odd type]({source}) | 2026-09-08 | not published "
+            "| Retrieved x/@\u2060someuser but extracted no content to digest. This is a fault in "
+            "scripts/source\\_refresh.py, not a finding about the source. |",
+        ])
+
+
 class ReverifyTests(unittest.TestCase):
     """A recorded fact expires after its `reverify_by` date, whatever the page does."""
 

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 177 cards in `cases/` test workflow quality, provenance and restraint.
+The 179 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -199,6 +199,8 @@ law claim, unverified source or guess.
 | [Import GST on broker and courier invoices coded to cost](cases/bas-preparation-import-gst-coded-to-cost.md) | bas-preparation |
 | [Deferred GST on an importation that is only partly creditable](cases/bas-preparation-deferred-gst-partly-creditable.md) | bas-preparation |
 | [Prior review points, recurring journals and bank balance](cases/month-end-close-prior-points-recurring-journals.md) | month-end-close |
+| [Close-control exit 2 and its exceptions quoted unchanged](cases/month-end-close-control-exit-2.md) | month-end-close |
+| [Close-control not installed and no canonical trial balance](cases/month-end-close-control-not-installed.md) | month-end-close |
 | [Employee master-data screen](cases/au-payroll-review-master-data-screen.md) | au-payroll-review, stp-finalisation |
 | [Family trust distribution tax screen](cases/au-trust-distributions-ftdt-screen.md) | au-trust-distributions |
 | [Departing company client with unpaid fees and a practice-owned ledger file](cases/au-client-departure-records-and-clearance.md) | au-client-departure |
