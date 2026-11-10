@@ -57,7 +57,7 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "s 135-5",
             # No margin scheme on a GST-free supply; the history decides a later sale.
             "The margin scheme applies only to a taxable supply (s 75-5(1))",
-            "s 75-5(3)(f)", "s 75-11(5)",
+            "s 75-5(2) and (3)(f)", "s 75-11(5)",
             # Withholding needs a taxable supply, but the notice duty is separate.
             "is not a taxable supply (s 9-5)", "s 14-250(9)", "s 14-255",
             "leave the amount blank for the reviewer",
