@@ -26,12 +26,19 @@ GATE_HOOKS = {
     "python scripts/validate_validation.py": "validation-pack",
     "python tests/verify_skills_cli.py": "skills-cli-discovery",
 }
-# The coverage matrix check is native, so CI runs it in the native job, which
-# the gate map does not read.
-COVERAGE_CHECK = (
-    "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check"
-)
-NATIVE_COVERAGE_CHECK = 'accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check'
+# The coverage matrix and citation checks are native, so CI runs them in the
+# native job, which the gate map does not read. Each hook id maps to its local
+# command and the command the native job runs.
+NATIVE_CHECKS = {
+    "coverage-matrix": (
+        "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check",
+        'accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check',
+    ),
+    "citations": (
+        "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations",
+        'accounting-skills check-citations --root "$GITHUB_WORKSPACE"',
+    ),
+}
 
 
 GATE_JOBS = ("lint", "verify")
@@ -124,21 +131,22 @@ class ContributorCheckTests(unittest.TestCase):
                     f"{gate!r} maps to pre-commit hook {hook!r}, which is not configured",
                 )
 
-    def test_the_coverage_matrix_check_runs_in_ci_locally_and_in_every_guide(self) -> None:
-        """The native job is outside the gate map, so this pairs its check by hand."""
+    def test_each_native_check_runs_in_ci_locally_and_in_every_guide(self) -> None:
+        """The native job is outside the gate map, so this pairs its checks by hand."""
         workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
         native = [
             " ".join(step["run"].split())
             for step in workflow["jobs"]["native"]["steps"]
             if "run" in step
         ]
-        self.assertTrue(any(NATIVE_COVERAGE_CHECK in command for command in native))
         config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
         hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
-        self.assertEqual(hooks["coverage-matrix"]["entry"], COVERAGE_CHECK)
-        for guide in CONTRIBUTOR_GUIDES:
-            with self.subTest(guide=guide):
-                self.assertIn(COVERAGE_CHECK, (REPOSITORY / guide).read_text(encoding="utf-8"))
+        for hook, (local, ci) in NATIVE_CHECKS.items():
+            with self.subTest(hook=hook):
+                self.assertTrue(any(ci in command for command in native))
+                self.assertEqual(hooks[hook]["entry"], local)
+                for guide in CONTRIBUTOR_GUIDES:
+                    self.assertIn(local, (REPOSITORY / guide).read_text(encoding="utf-8"), guide)
 
     def test_the_gate_map_describes_gates_that_still_exist(self) -> None:
         """A mapping left behind after a gate is removed is a false assurance."""

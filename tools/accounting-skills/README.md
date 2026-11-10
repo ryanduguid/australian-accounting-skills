@@ -14,6 +14,8 @@ are retired:
 | `build-plugin-evals` | `build_plugin_evals.py` |
 
 `last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
+`check-citations` is also new: it checks that every cited section and ruling
+has a record in its skill's `sources.json`.
 
 The others are candidate ports of scripts that remain the authoritative
 commands in `scripts/`:
@@ -48,8 +50,8 @@ cargo install --locked --path .
 ```
 
 The `native` job in `.github/workflows/verify.yml` runs these checks on Linux
-and Windows, checks this tree with `validate-validation` and `build-coverage
---check`, then runs the comparison harnesses in `tests/*_parity.py` for the
+and Windows, checks this tree with `validate-validation`, `build-coverage
+--check` and `check-citations`, then runs the comparison harnesses in `tests/*_parity.py` for the
 candidate ports. Those replay the original Python tests against the native code
 and compare fabricated inputs with the unchanged scripts, with no indexed source
 fetched. Run them on Python 3.14, as the job does: under Python 3.15 the
@@ -161,6 +163,24 @@ Status operands fit a signed 64-bit integer. Normal flags and `--name=value` are
 supported; argparse's automatic flag abbreviations and help are not ported.
 Decimal classification matches Python 3.14's Unicode 16.0 in qualification;
 new decimal characters in Python 3.15's Unicode 17.0 may be refused.
+
+## Citations
+
+```sh
+accounting-skills check-citations --root /path/to/checkout
+```
+
+This read-only command reads every Markdown file in every skill. It finds each
+ruling, determination, practice statement, guideline, and TPB or ASIC guidance
+number, and each legislative section or regulation. A ruling resolves when a
+record's title or address in the skill's `sources.json` names the same
+document. A section resolves when a record names its Act or instrument: the
+one named right after it, otherwise the nearest one named before it in the
+file, passing over an Act named only to own an earlier section. Sections of a
+professional standard such as APES 110 are not counted. Each unmatched
+citation prints as `file:line: citation: reason`, then a total line; the exit
+code is 2 when any citation is unmatched. A resolved citation shows only that a
+record exists, not that the section exists or says what the skill claims.
 
 ## Validation pack
 

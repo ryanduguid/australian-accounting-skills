@@ -110,14 +110,17 @@ python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
 git diff --check
 ```
 
-The 5 Python checks, ShellCheck, actionlint and the coverage check are the
-gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
+The 5 Python checks, ShellCheck, actionlint, the coverage check and the
+citation check are the gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
 actionlint 1.7.12 run in its `lint` job, then the 3 Python verification checks
-run on Python 3.14 and 3.15. The coverage check needs Rust 1.99 or newer; the
-`native` job runs the same command on Linux and Windows. A third job scans the
+run on Python 3.14 and 3.15. The coverage and citation checks need Rust 1.99
+or newer; the `native` job runs the same commands on Linux and Windows. The
+citation check reports, by file and line, each section, ruling, determination
+or practice statement a skill cites without a record in its `sources.json`. A third job scans the
 full history with gitleaks against
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
