@@ -3,7 +3,8 @@
 
 The FBT sweep keeps a line register whose account totals tie to the ledger,
 and the registered agent self-review adds optional professional-body rows
-that record evidence and gaps without concluding. Each test reads one
+that record evidence and gaps without concluding. The FBT car comparison
+keeps each car's method evidence and leaves the method to the reviewer. Each test reads one
 numbered workflow step, or one section, and checks the columns, statuses,
 authorities, dates and prohibitions it must carry, not its wording, in the
 style of test_practice_workflows.py. A prohibition or negative predicate is
@@ -119,6 +120,20 @@ class ReviewRegisterTests(unittest.TestCase):
             r"\bties to its GL movement for the FBT year\b", r"\bany difference is an open item\b",
         )
         self.assert_carries(workflow_step(FBT, 9), "line register", "account tie-out")
+
+    def test_fbt_car_methods_are_compared_per_car_only_on_records(self) -> None:
+        # The fbt-car-method-records-pair card relies on each of these.
+        self.assert_carries(section(FBT, "Inputs needed"), "odometer/logbooks where operating cost method is in play")
+        self.assert_sentence(workflow_step(FBT, 1), r"\bcars\b",
+                             affirmed=(r"\bstatutory formula versus operating cost\b",
+                                       r"\bcomparing both where logbooks exist\b"))
+        step = workflow_step(FBT, 3)
+        self.assert_sentence(step, affirmed=(r"\bproduce the related missing logbook/odometer list\b",))
+        self.assert_sentence(step, r"\bmissing support\b", r"\breduction\b[^.;:]*\bis " + NOT + r"assumed\b")
+        self.assert_sentence(section(FBT, "Checks before handing over"),
+                             affirmed=(r"\bmethod choice documented per vehicle\b", r"\bdays-available count\b"))
+        self.assert_sentence(section(FBT, "Boundaries"), r"\bmethod elections\b",
+                             affirmed=(r"\bgo to the reviewer as flagged decisions\b",))
 
     # au-tax-agent-obligations
 

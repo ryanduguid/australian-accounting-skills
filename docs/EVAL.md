@@ -275,7 +275,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 182 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 183 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -292,6 +292,7 @@ The 8 payroll tax jurisdiction cards added on 5 November have no recorded
 model run, nor do the 8 transfer duty jurisdiction cards and 2 Xero connector cards added the same day.
 The close-control step added to month-end-close on 8 November 2026 postdates every recorded run,
 and its 2 cards have no recorded run.
+The FBT car valuation card added on 10 November 2026 has no recorded run.
 The 11 November 2026 changes to au-franking-account and au-smsf-year-end postdate every
 recorded run, and the 3 cards added that day for au-smsf-death-benefits, au-franking-account
 and au-family-trust-election have no recorded run.
