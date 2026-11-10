@@ -2450,9 +2450,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "fbt-annual-workflow-line-register-tie-out",
+          "fbt-car-method-records-pair",
           "fbt-carparking-missing-declaration"
         ],
         "only_seeded_case": false,
