@@ -13,6 +13,15 @@ it, so the new tests check wording and the checker's arithmetic, not model
 behaviour. The 2 Xero source records still await human review: the source sweep
 extracts no text from those pages, so it records no digest for them.
 
+`accounting-skills statement-check` exits 0 when everything ties, 2 on any break
+and 1 on malformed input, which includes an empty input, a repeated statement id
+or a missing or repeated reference. It prints an `OVERLAP` line for each pair of
+overlapping periods and breaks a statement period wholly within another, an
+overlap it cannot place because the earlier lines are not in date order, and a
+line dated outside its period, with 31 days' allowance before the period for
+cards and other accounts in the owed direction. The `PASS` line counts the printed
+balances, printed totals and statement links it compared.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

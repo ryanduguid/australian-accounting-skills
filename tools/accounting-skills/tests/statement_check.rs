@@ -258,12 +258,32 @@ fn lines_dated_outside_the_period_break() {
         "BREAK S1 page 1 line 3: dated 2027-01-28, after the period ends 2026-01-31"
     );
     let mut early = january("S1");
-    early["pages"][0]["lines"][0]["date"] = json!("2025-12-02");
-    assert_eq!(run(&deposit(vec![early.clone()])).code, Some(0));
-    early["pages"][0]["lines"][0]["date"] = json!("2025-11-30");
+    early["pages"][0]["lines"][0]["date"] = json!("2025-12-31");
     assert_eq!(
         run(&deposit(vec![early])).stdout[0],
-        "BREAK S1 page 1 line 1: dated 2025-11-30, more than 31 days before the period starts 2026-01-01"
+        "BREAK S1 page 1 line 1: dated 2025-12-31, before the period starts 2026-01-01"
+    );
+}
+
+#[test]
+fn a_card_line_may_be_dated_up_to_31_days_before_its_period() {
+    // In the owed direction the January lines below run 1000.00, 800.00, 850.00 and 750.00.
+    let card = |date: &str| {
+        let mut statement = january("C1");
+        statement["closing"] = json!("750.00");
+        statement["printed_credits"] = json!(["300.00"]);
+        statement["printed_debits"] = json!(["50.00"]);
+        let lines = statement["pages"][0]["lines"].as_array_mut().unwrap();
+        lines[0]["date"] = json!(date);
+        lines[0]["balance"] = json!("800.00");
+        lines[2]["balance"] = json!("750.00");
+        json!({"direction": "owed", "statements": [statement]})
+    };
+    let allowed = run(&card("2025-12-02"));
+    assert_eq!(allowed.code, Some(0), "{:?}", allowed.stdout);
+    assert_eq!(
+        run(&card("2025-11-30")).stdout[0],
+        "BREAK C1 page 1 line 1: dated 2025-11-30, more than 31 days before the period starts 2026-01-01"
     );
 }
 
@@ -278,6 +298,9 @@ fn references_must_be_present_and_unique() {
     let mut empty = january("S1");
     empty["pages"][0]["lines"][0]["line"] = json!(" ");
     assert_refused(&run(&deposit(vec![empty])), "line reference is empty");
+    let mut spaced = january("S1");
+    spaced["pages"][0]["lines"][1]["line"] = json!("1 ");
+    assert_refused(&run(&deposit(vec![spaced])), "has surrounding spaces");
     let mut pages = january("S1");
     let page = pages["pages"][0].clone();
     pages["pages"].as_array_mut().unwrap().push(page);

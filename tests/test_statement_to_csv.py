@@ -63,7 +63,8 @@ class StatementToCsvTests(unittest.TestCase):
             "- `0`: every check passed.",
             "a pass that compared no printed totals cannot detect omissions that cancel",
             "- `2`: each `BREAK` line names a statement, page and line",
-            "more than 31 days before it starts, breaks",
+            "except that with `owed` a line may be dated up to 31 days early",
+            "without surrounding spaces",
             "Reread only the pages the lines name; for a statement-level break",
             "each `OVERLAP` line names 2 statements whose periods overlap",
             "its one total, or its parts",
@@ -86,6 +87,21 @@ class StatementToCsvTests(unittest.TestCase):
         }
         self.assertEqual(documented, accepted)
         self.assertIn("usage: accounting-skills statement-check FILE", source)
+
+    def test_release_notes_describe_the_checker(self) -> None:
+        notes = (REPOSITORY / "RELEASE_NOTES.md").read_text(encoding="utf-8")
+        notes = " ".join(notes[: notes.index("# v0.5.0\n")].split())
+        for contract in (
+            "`accounting-skills statement-check` exits 0 when everything ties, 2 on any break",
+            "and 1 on malformed input",
+            "an empty input, a repeated statement id or a missing or repeated reference",
+            "an `OVERLAP` line",
+            "a statement period wholly within another",
+            "a line dated outside its period, with 31 days' allowance before the period for",
+            "The `PASS` line counts the printed balances, printed totals and statement links",
+        ):
+            with self.subTest(contract=contract):
+                self.assertIn(contract, notes)
 
     def test_xero_row_limit_and_date_prompt_are_dated(self) -> None:
         target = step("8. **Verify the target format at use time.**", "9. **Hand the import")

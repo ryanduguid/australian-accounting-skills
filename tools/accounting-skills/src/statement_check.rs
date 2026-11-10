@@ -16,8 +16,9 @@ use std::{
 };
 
 const USAGE: &str = "usage: accounting-skills statement-check FILE";
-/// How many days before its period a line may be dated. A card prints the transaction date
-/// of a purchase it posts within the period; anything earlier breaks.
+/// How many days before its period a line on an account in the owed direction may be dated:
+/// a card prints the transaction date of a purchase it posts within the period. A deposit
+/// account's lines must fall within the period.
 const EARLY_DAYS: u64 = 31;
 
 #[derive(Deserialize, Clone, Copy)]
@@ -142,6 +143,9 @@ fn reference<'a>(text: &'a str, what: &str, seen: &mut BTreeSet<&'a str>, at: &s
     if text.trim().is_empty() {
         return Err(format!("{at}: {what} reference is empty").into());
     }
+    if text.trim() != text {
+        return Err(format!("{at}: {what} reference {text:?} has surrounding spaces").into());
+    }
     if !seen.insert(text) {
         return Err(format!("{at}: {what} {text} appears more than once").into());
     }
@@ -239,7 +243,11 @@ fn check_page(
         running.balance = forward;
         running.printed_before = true;
     }
-    let earliest = period.start.checked_sub_days(Days::new(EARLY_DAYS));
+    let allowance = match period.direction {
+        Direction::Owed => EARLY_DAYS,
+        Direction::Deposit => 0,
+    };
+    let earliest = period.start.checked_sub_days(Days::new(allowance));
     let (mut credits, mut debits) = (0_i128, 0_i128);
     let mut seen = BTreeSet::new();
     for line in &page.lines {
@@ -252,8 +260,13 @@ fn check_page(
                 period.end
             ));
         } else if earliest.is_some_and(|earliest| when < earliest) {
+            let by = if allowance == 0 {
+                String::new()
+            } else {
+                format!("more than {allowance} days ")
+            };
             report.breaks.push(format!(
-                "BREAK {at}: dated {when}, more than {EARLY_DAYS} days before the period starts {}",
+                "BREAK {at}: dated {when}, {by}before the period starts {}",
                 period.start
             ));
         }
@@ -563,9 +576,13 @@ mod tests {
         assert_eq!(breaks(&input), Vec::<String>::new());
         let mut wrong_way = input.clone();
         wrong_way["direction"] = json!("deposit");
+        // As a deposit account the 13 December line is also out of period.
         assert_eq!(
-            breaks(&wrong_way)[0],
-            "BREAK C1 page 1 line 1: printed balance -15.00, computed -55.00"
+            breaks(&wrong_way)[..2],
+            [
+                "BREAK C1 page 1 line 1: dated 2026-12-13, before the period starts 2026-12-15",
+                "BREAK C1 page 1 line 1: printed balance -15.00, computed -55.00",
+            ]
         );
     }
 
