@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 99 skills, 533 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 99 skills, 534 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -70,7 +70,7 @@ Totals: 99 skills, 533 indexed primary sources of which 341 have a recorded huma
 | [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [12](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 12) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [1](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | [2](../.claude/skills/au-sapto/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 2 | 0 | 0 | 0 |
-| [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | [9](../.claude/skills/au-share-buy-back/sources.json) | none (0 of 9) | 0 | 0 | 2 | 0 | 0 | 0 |
+| [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | [10](../.claude/skills/au-share-buy-back/sources.json) | none (0 of 10) | 0 | 0 | 3 | 0 | 0 | 0 |
 | [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) | [15](../.claude/skills/au-short-stay-accommodation/sources.json) | 2026-10-15 (15 of 15) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | [4](../.claude/skills/au-small-business-cgt/sources.json) | 2026-09-30 (3 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | [1](../.claude/skills/au-small-business-income-offset/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
