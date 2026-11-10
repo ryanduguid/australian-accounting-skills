@@ -47,6 +47,54 @@
         "source_last_modified": "",
         "checked_at": "2026-10-29"
       }
+    },
+    {
+      "title": "Fuel Tax Act 2006",
+      "url": "https://www.legislation.gov.au/C2006A00072/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00140, in force from 2 April 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2006A00072/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Payroll Tax Act 2007 (NSW)",
+      "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 as the version current from 10 July 2026 on the NSW register; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "FTR 2009/1 Fuel tax: entitlement to a fuel tax credit under section 41-5 of the Fuel Tax Act 2006 in a vehicle or equipment hire arrangement",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=RFT/FTR20091/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=RFT/FTR20091/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

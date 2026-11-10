@@ -31,7 +31,7 @@
       "content_hash_covers": "html"
     },
     {
-      "title": "Queensland retention trust account duties, compilation from 28 May 2026",
+      "title": "Building Industry Fairness (Security of Payment) Act 2017 (Qld): retention trust account duties, compilation from 28 May 2026",
       "url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2017-043",
       "checked_at": "2026-09-30",
       "reverify_by": "2027-09-14",
@@ -67,6 +67,54 @@
         "source_last_modified": "2026-10-27",
         "checked_at": "2026-10-29"
       }
+    },
+    {
+      "title": "A New Tax System (Goods and Services Tax) Act 1999",
+      "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00081, in force from 1 January 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Personal Property Securities Act 2009",
+      "url": "https://www.legislation.gov.au/C2009A00130/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2024C00719, in force from 14 October 2024; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2009A00130/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Queensland Building and Construction Commission Act 1991 (Qld)",
+      "url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-1991-098",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 as the in-force whole Act on the Queensland register; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-1991-098",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

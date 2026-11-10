@@ -85,6 +85,38 @@
       "source_last_modified": "2026-04-28",
       "content_hash_covers": "bytes",
       "content_url": "https://assets.ctfassets.net/w7mmu5az9koe/4nhFgjUnZKKO8sEQamwXYw/7b918f8e2e25119c9eaf8442a8c4b911/LSL0093_Levy_Advice_PDF_0426_V4.1accessible__1_.pdf"
+    },
+    {
+      "title": "Fair Work Act 2009",
+      "url": "https://www.legislation.gov.au/C2009A00028/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00355, in force from 7 July 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2009A00028/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992",
+      "url": "https://www.legislation.gov.au/C2004A04353/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2012C00097, in force from 1 January 2012; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A04353/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

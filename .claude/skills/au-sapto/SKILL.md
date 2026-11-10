@@ -7,7 +7,7 @@ description: "Use when preparing Australian seniors and pensioners tax offset (S
 
 ## Inputs
 
-Income year, date-of-birth and pension-eligibility evidence, residency and relevant veteran facts, taxable income and any assessable First Home Super Saver (FHSS) released amount. Obtain reportable employer super contributions, deductible personal super contributions, reportable fringe benefits split between section 57A-exempt and other employers, net financial investment losses and net rental property losses. Obtain spouse tax residency, Australian Government pension or allowance receipt, income components including exempt pension income, eligibility and relationship or illness-separated periods, relevant trust assessments, any whole-year imprisonment facts and the supported return tax calculation.
+Income year, date-of-birth and pension-eligibility evidence, residency and relevant veteran facts, taxable income and any assessable First Home Super Saver (FHSS) released amount. Obtain reportable employer super contributions, deductible personal super contributions, reportable fringe benefits split between employers exempt under section 57A of the *Fringe Benefits Tax Assessment Act 1986* and other employers, net financial investment losses and net rental property losses. Obtain spouse tax residency, Australian Government pension or allowance receipt, income components including exempt pension income, eligibility and relationship or illness-separated periods, relevant trust assessments, any whole-year imprisonment facts and the supported return tax calculation.
 
 ## Workflow
 

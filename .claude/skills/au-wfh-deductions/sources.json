@@ -45,6 +45,38 @@
       "content_hash": "9f8733fdf9efb8908a90d75e4f5b71c00b28507b8d5829f0cf1fa2e96a1e0aac",
       "content_hash_covers": "html",
       "source_last_modified": "2026-09-15"
+    },
+    {
+      "title": "LCR 2026/D5 The standard deduction for work-related expenses",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=COD/LCR2026D5/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database; it is a draft for comment, not a final ruling. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=COD/LCR2026D5/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "PCG 2023/1 Claiming a deduction for additional running expenses incurred while working from home - ATO compliance approach",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20231/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20231/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

@@ -34,7 +34,7 @@ For paydays from 1 July 2026, the ordinary 7-business-day period requires the fu
 - 20 business days for the first eligible contribution to a particular fund, including a new starter, recommencement or fund change, where the statutory conditions apply
 - qualifying out-of-cycle payments that can use a subsequent standard qualifying-earnings payment's window, only when the determination's conditions are proven
 - an exceptional-circumstances determination
-- alignment with an earlier contribution's later due day where s 18C's conditions and actual allocation are evidenced.
+- alignment with an earlier contribution's later due day where SGAA s 18C's conditions and actual allocation are evidenced.
 
 These cases are fact-dependent. A planned or remitted payment is not fund receipt. Missing facts produce an `UNKNOWN` review state and require human review; do not make an SGC determination. Enterprise agreements, awards or fund terms may require earlier payment.
 

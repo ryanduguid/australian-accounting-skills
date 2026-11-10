@@ -251,6 +251,38 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "GSTD 2000/10 Goods and services tax: are outgoings payable by a tenant under a commercial property lease part of the consideration for the supply of the premises?",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=GSD/GSTD200010/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=GSD/GSTD200010/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "GSTR 2002/2 Goods and services tax: GST treatment of financial supplies and related supplies and acquisitions",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR20022/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR20022/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
