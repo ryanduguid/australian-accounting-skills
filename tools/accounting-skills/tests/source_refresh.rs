@@ -12,6 +12,15 @@ use std::{
 };
 
 const URL: &str = "https://www.ato.gov.au/a";
+
+#[test]
+fn host_text_cannot_emphasise_an_instruction() {
+    assert_eq!(
+        s::markdown_text("**Pay now** _mandatory_ ~~ignore~~ https://example.test/a_b"),
+        r"\*\*Pay now\*\* \_mandatory\_ \~\~ignore\~\~ https://example.test/a_b"
+    );
+}
+
 #[test]
 fn published_dates_preserve_python_numeric_and_mail_rules() {
     for value in [
@@ -613,4 +622,158 @@ fn index_write_preserves_human_fields_and_detects_replacement_links() {
             .contains("Linked source index")
     );
     assert_eq!(std::fs::read_to_string(&outside).unwrap(), "untouched");
+}
+
+// tests/test_source_refresh.py RenderTests holds the same cases and reaches this
+// renderer through tests/source_refresh_parity.py.
+#[test]
+fn a_hostile_reason_phrase_and_redirect_destination_stay_inert() {
+    let record = json!({"url":URL,"checked_at":"2026-09-08","content_hash":"a","content_hash_covers":"html","content_url":"https://example.test/old"});
+    let outcome = |title: &str, fetched: s::Fetched| {
+        let (outcome, detail) = s::classify(&record, &fetched);
+        s::Outcome {
+            skill: "example-skill".into(),
+            title: title.into(),
+            url: URL.into(),
+            outcome,
+            detail,
+            checked_at: "2026-09-08".into(),
+            fetched,
+            next_review: String::new(),
+        }
+    };
+    let ordinary = "https://example.test/Parliamentary_Business/LSL__1_.pdf?bId=r7554&x=(1)";
+    let report = s::Report {
+        outcomes: vec![
+            outcome(
+                "Refused | Example",
+                s::Fetched {
+                    status: Some(403),
+                    error: "HTTP 403 <svg onload=alert(1)> | [Pay](https://phish.example) `x`\u{1b}[31m\n## Injected \\| \u{85}\u{a0}\u{9f}\\".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Ruling #3",
+                s::Fetched {
+                    status: Some(403),
+                    error: "HTTP 403 Forbidden @someuser owner/repo#1 #12 @org/team GH-12 gh-12 https://GitHub.COM/rust-lang/rust/issues/1 &commat;someuser &num;12 github&period;com/x GH\u{ad}-12 abchttps://example.test/GH-12 https://a_b.example/GH-12 https://example.test/path/GH-12?q=1&r=2 github.com/rust-lang/rust/issues/1 rust-lang/rust/pull/2 1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 https://github.com/rust-lang/rust/issues/2 https://_x.example/GH-12 https://a.b\\x_y.z/GH-12 https://example.test/doc#12 https://-x.test/GH-12 https://ex\u{e4}_b.test/GH-12 https://.x/GH-12 https://e.test/x<@someuser https://e.test/<a href=https://phish.example>Pay</a>".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Moved",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://example.test/p/<svg/onload=alert(1)>|[x](https://phish.example)`".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: ordinary.into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://www.ato.gov.au/path/GH-12.pdf".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://www.ato.gov.au/path/github.com/manual.pdf".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://www.ato.gov.au/law/2026/1".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://notgithub.com/rust-lang/rust/issues/1".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://github.com.evil/rust-lang/rust/issues/1".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://example.test/rulings/@archive/doc".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+            outcome(
+                "Bills",
+                s::Fetched {
+                    status: Some(200),
+                    final_url: "https://a_b.c.d/GH-12".into(),
+                    digest: "a".into(),
+                    kind: "html".into(),
+                    ..s::Fetched::default()
+                },
+            ),
+        ],
+        written: Vec::new(),
+    };
+    let rendered = s::render_at(&report, false, "2026-09-20 19:00 UTC");
+    let rows: Vec<&str> = rendered
+        .lines()
+        .skip_while(|line| *line != "| --- | --- | --- | --- | --- | --- |")
+        .skip(1)
+        .collect();
+    assert_eq!(
+        rows,
+        [
+            "| blocked | `example-skill` | [Refused \\| Example](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 &lt;svg onload=alert(1)\\> \\| \\[Pay\\](https://phish.example) \\`x\\`\u{FFFD}\\[31m\u{FFFD}#\u{2060}#\u{2060} Injected \\\\\\| \u{FFFD}\u{a0}\u{FFFD}\\\\. This host refuses automated retrieval: review by hand. |".to_owned(),
+            "| blocked | `example-skill` | [Ruling #\u{2060}3](https://www.ato.gov.au/a) | 2026-09-08 | not published | HTTP 403 Forbidden @\u{2060}someuser owner/repo#\u{2060}1 #\u{2060}12 @\u{2060}org/team GH-\u{2060}12 gh-\u{2060}12 https://GitHub\u{2060}.COM/rust-lang/rust/issues/1 &amp;commat;someuser &amp;num;12 github&amp;period;com/x GH\u{ad}-12 abchttps://example.test/GH-\u{2060}12 https://a\\_b.example/GH-\u{2060}12 https://example.test/path/GH-12?q=1&r=2 github\u{2060}.com/rust-lang/rust/issues/\u{2060}1 rust-lang/rust/pull/\u{2060}2 1https://example.test/GH-12 https://a..b/GH-12 https://a-.b/GH-12 https://github\u{2060}.com/rust-lang/rust/issues/2 https://\\_x.example/GH-\u{2060}12 https://a.b\\\\x\\_y.z/GH-\u{2060}12 https://example.test/doc#12 https://-x.test/GH-\u{2060}12 https://ex\u{e4}\\_b.test/GH-\u{2060}12 https://.x/GH-\u{2060}12 https://e.test/x&lt;@someuser https://e.test/&lt;a href=https://phish.example\\>Pay&lt;/a\\>. This host refuses automated retrieval: review by hand. |".to_owned(),
+            "| changed | `example-skill` | [Moved](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/p/&lt;svg/onload=alert(1)\\>\\|\\[x\\](https://phish.example)\\`. |".to_owned(),
+            format!("| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to {ordinary}. |"),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/path/GH-12.pdf. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/path/github.com/manual.pdf. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://www.ato.gov.au/law/2026/1. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://notgithub.com/rust-lang/rust/issues/1. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://github.com.evil/rust-lang/rust/issues/1. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://example.test/rulings/@archive/doc. |".to_owned(),
+            "| changed | `example-skill` | [Bills](https://www.ato.gov.au/a) | 2026-09-08 | not published | Source destination changed from https://example.test/old to https://a_b.c.d/GH-12. |".to_owned(),
+        ]
+    );
 }

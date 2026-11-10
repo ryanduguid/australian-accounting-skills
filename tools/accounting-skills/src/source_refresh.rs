@@ -723,6 +723,132 @@ pub fn source_readiness(record: &Value, outcome: &Outcome, today: &str) -> (bool
         format!("READY: human review {checked}; retrieval and destination unchanged."),
     )
 }
+/// One inert link destination, as `markdown_link` in scripts/source_refresh.py makes it.
+pub fn markdown_link(value: &str) -> String {
+    escape_markdown(value, true)
+}
+/// `markdown_link`'s escapes, leaving `<` unescaped when `escape_lt` is false; `TEXT_STRUCTURE`
+/// in scripts/source_refresh.py says why a table cell writes it as `&lt;` instead.
+fn escape_markdown(value: &str, escape_lt: bool) -> String {
+    let mut cell = String::with_capacity(value.len());
+    for c in value.chars() {
+        if c.is_control() {
+            cell.push('\u{FFFD}');
+            continue;
+        }
+        if matches!(c, '\\' | '`' | '>' | '[' | ']' | '|') || (escape_lt && c == '<') {
+            cell.push('\\');
+        }
+        cell.push(c);
+    }
+    cell
+}
+/// One inert table cell, as `markdown_text` in scripts/source_refresh.py makes it.
+pub fn markdown_text(value: &str) -> String {
+    let text = escape_markdown(value, false);
+    let mut cell = String::with_capacity(text.len());
+    let (mut plain, mut at) = (0, 0);
+    while let Some(c) = text[at..].chars().next() {
+        match url_span(&text, at) {
+            Some((host, host_end, end)) => {
+                cell.push_str(&plain_text(&text[plain..at]));
+                cell.push_str(&text[at..host]);
+                let name = &text[host..host_end];
+                if name.eq_ignore_ascii_case("github.com") {
+                    cell.push_str(&name[..6]);
+                    cell.push('\u{2060}');
+                    cell.push_str(&name[6..]);
+                } else {
+                    cell.push_str(name);
+                }
+                cell.push_str(&text[host_end..end].replace('<', "&lt;"));
+                (plain, at) = (end, end);
+            }
+            None => at += c.len_utf8(),
+        }
+    }
+    cell.push_str(&plain_text(&text[plain..]));
+    cell
+}
+fn plain_text(text: &str) -> String {
+    let text = text
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('@', "@\u{2060}")
+        .replace('#', "#\u{2060}");
+    let text = join_after(&join_after(&text, "gh-", 3), "github.com", 6);
+    // GitHub links `owner/repo/issues/12` after any host, or none.
+    let mut cell = String::with_capacity(text.len());
+    let mut chars = text.chars().peekable();
+    while let Some(c) = chars.next() {
+        if matches!(c, '*' | '_' | '~') {
+            cell.push('\\');
+        }
+        cell.push(c);
+        if c == '/' && chars.peek().is_some_and(char::is_ascii_digit) {
+            cell.push('\u{2060}');
+        }
+    }
+    cell
+}
+/// The URL GitHub autolinks from `at`, as `_url_span` in scripts/source_refresh.py finds it:
+/// the byte offsets of its host's start and end, and of its own end.
+fn url_span(text: &str, at: usize) -> Option<(usize, usize, usize)> {
+    if text[..at]
+        .chars()
+        .next_back()
+        .is_some_and(|c| c.is_ascii_alphabetic())
+    {
+        return None;
+    }
+    let scheme = ["https://", "http://"].into_iter().find(|scheme| {
+        text[at..]
+            .get(..scheme.len())
+            .is_some_and(|head| head.eq_ignore_ascii_case(scheme))
+    })?;
+    let host = at + scheme.len();
+    let host_end = host
+        + text[host..]
+            .find(|c: char| !(c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_')))
+            .unwrap_or(text.len() - host);
+    let name = &text[host..host_end];
+    let underscore = name
+        .rsplitn(3, '.')
+        .take(2)
+        .any(|label| label.contains('_'));
+    let stop = text[host_end..].chars().next();
+    if name.is_empty()
+        || name.starts_with(['-', '.', '_'])
+        || underscore
+        || stop.is_some_and(|c| c == '\\' || !c.is_ascii())
+    {
+        return None;
+    }
+    let end = text[host_end..]
+        .find(' ')
+        .map_or(text.len(), |n| host_end + n);
+    Some((host, host_end, end))
+}
+/// Put a word joiner `at` bytes into each ASCII-case-insensitive `word`, scanning left to right.
+fn join_after(text: &str, word: &str, at: usize) -> String {
+    let mut joined = String::with_capacity(text.len());
+    let mut rest = text;
+    while let Some(c) = rest.chars().next() {
+        if rest
+            .get(..word.len())
+            .is_some_and(|head| head.eq_ignore_ascii_case(word))
+        {
+            joined.push_str(&rest[..at]);
+            joined.push('\u{2060}');
+            joined.push_str(&rest[at..word.len()]);
+            rest = &rest[word.len()..];
+        } else {
+            joined.push(c);
+            rest = &rest[c.len_utf8()..];
+        }
+    }
+    joined
+}
 pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
     let counts = OUTCOMES
         .iter()
@@ -813,15 +939,15 @@ pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
                 "| {} | `{}` | [{}]({}) | {} | {} | {} |",
                 o.outcome,
                 o.skill,
-                o.title,
-                o.url,
-                o.checked_at,
-                if o.fetched.last_modified.is_empty() {
+                markdown_text(&o.title),
+                markdown_link(&o.url),
+                markdown_text(&o.checked_at),
+                markdown_text(if o.fetched.last_modified.is_empty() {
                     "not published"
                 } else {
                     &o.fetched.last_modified
-                },
-                o.detail
+                }),
+                markdown_text(&o.detail)
             ));
         }
         lines.push(String::new());
