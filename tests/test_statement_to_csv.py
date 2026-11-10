@@ -28,7 +28,8 @@ class StatementToCsvTests(unittest.TestCase):
         signs = step("3. **Normalise dates and signs.**", "4. **Tie out before building the file.**")
         self.assertIn("Where a line's sign comes only from the running balance", signs)
         self.assertIn(
-            "accept it only when that line's printed balance less the printed balance on the line before equals the amount exactly",
+            "differs from the printed balance on the line before by exactly the amount, "
+            "and take the sign from the direction of that change",
             signs,
         )
         self.assertIn("never because a sign makes the totals tie", signs)
@@ -60,8 +61,13 @@ class StatementToCsvTests(unittest.TestCase):
             "Leave every description out",
             "quote its output unchanged in the workpaper",
             "- `0`: every check passed.",
+            "a pass that compared no printed totals cannot detect omissions that cancel",
             "- `2`: each `BREAK` line names a statement, page and line",
-            "Reread only the pages the lines name.",
+            "more than 31 days before it starts, breaks",
+            "Reread only the pages the lines name; for a statement-level break",
+            "each `OVERLAP` line names 2 statements whose periods overlap",
+            "its one total, or its parts",
+            "references must be present and unique",
             "- `1` or any other code: the run failed",
         ):
             with self.subTest(contract=contract):
@@ -87,6 +93,7 @@ class StatementToCsvTests(unittest.TestCase):
         self.assertIn("a leading minus sign or brackets", target)
         self.assertIn("a CSV file with more than 100,000 rows cannot be imported", target)
         self.assertIn("applies the choice to the entire statement and all future CSV bank statements", target)
+        self.assertIn("'could be either DD/MM/YY, MM/DD/YY or YY/MM/DD'", target)
         self.assertIn("tell the person to choose that format if Xero asks", target)
         self.assertNotIn("within a stated row limit", target)
 

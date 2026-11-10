@@ -9,12 +9,16 @@ use crate::{Result, platform_text, read_text};
 use chrono::{Days, NaiveDate};
 use serde::Deserialize;
 use std::{
+    collections::BTreeSet,
     ffi::OsString,
     io::{self, Write},
-    path::PathBuf,
+    path::Path,
 };
 
 const USAGE: &str = "usage: accounting-skills statement-check FILE";
+/// How many days before its period a line may be dated. A card prints the transaction date
+/// of a purchase it posts within the period; anything earlier breaks.
+const EARLY_DAYS: u64 = 31;
 
 #[derive(Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
@@ -47,8 +51,8 @@ struct Statement {
     period_end: String,
     opening: String,
     closing: String,
-    printed_credits: Option<String>,
-    printed_debits: Option<String>,
+    printed_credits: Option<Vec<String>>,
+    printed_debits: Option<Vec<String>>,
     pages: Vec<Page>,
 }
 
@@ -58,8 +62,8 @@ struct Page {
     page: String,
     brought_forward: Option<String>,
     carried_forward: Option<String>,
-    printed_credits: Option<String>,
-    printed_debits: Option<String>,
+    printed_credits: Option<Vec<String>>,
+    printed_debits: Option<Vec<String>>,
     lines: Vec<Line>,
 }
 
@@ -95,8 +99,35 @@ fn cents(text: &str, at: &str) -> Result<i128> {
     Ok(if negative { -value } else { value })
 }
 
-fn optional(text: Option<&String>, at: &str) -> Result<Option<i128>> {
+/// A debit or credit: the column gives the sign, so a minus sign is refused, even on zero.
+fn unsigned(text: &str, at: &str) -> Result<i128> {
+    if text.starts_with('-') {
+        return Err(
+            format!("{at}: debit and credit are unsigned; the column gives the sign").into(),
+        );
+    }
+    cents(text, at)
+}
+
+fn optional(text: Option<&str>, at: &str) -> Result<Option<i128>> {
     text.map(|text| cents(text, at)).transpose()
+}
+
+/// The sum of the printed figures for one side, such as purchases, cash advances and fees.
+fn printed_total(parts: Option<&[String]>, at: &str) -> Result<Option<i128>> {
+    let Some(parts) = parts else {
+        return Ok(None);
+    };
+    if parts.is_empty() {
+        return Err(
+            format!("{at}: list at least one printed figure, or leave the field out").into(),
+        );
+    }
+    let mut total = 0;
+    for part in parts {
+        total += unsigned(part, at)?;
+    }
+    Ok(Some(total))
 }
 
 fn date(text: &str, at: &str) -> Result<NaiveDate> {
@@ -104,6 +135,17 @@ fn date(text: &str, at: &str) -> Result<NaiveDate> {
         .ok()
         .filter(|parsed| parsed.format("%Y-%m-%d").to_string() == text)
         .ok_or_else(|| format!("{at}: {text:?} is not a date in the form 2026-01-31").into())
+}
+
+/// A statement, page or line reference: a break must name something a person can find.
+fn reference<'a>(text: &'a str, what: &str, seen: &mut BTreeSet<&'a str>, at: &str) -> Result<()> {
+    if text.trim().is_empty() {
+        return Err(format!("{at}: {what} reference is empty").into());
+    }
+    if !seen.insert(text) {
+        return Err(format!("{at}: {what} {text} appears more than once").into());
+    }
+    Ok(())
 }
 
 fn money(value: i128) -> String {
@@ -125,21 +167,140 @@ struct Checked {
 #[derive(Default)]
 struct Report {
     breaks: Vec<String>,
+    overlaps: Vec<String>,
     lines: usize,
+    balances: usize,
+    totals: usize,
+    links: usize,
 }
 
 impl Report {
-    /// Records a break when a printed figure differs from the one worked out from the lines.
-    fn compare(&mut self, at: &str, what: &str, printed: i128, from_lines: (&str, i128)) {
-        if printed != from_lines.1 {
+    fn differs(&mut self, at: &str, what: &str, printed: i128, label: &str, other: i128) {
+        if printed != other {
             self.breaks.push(format!(
-                "BREAK {at}: {what} {}, {} {}",
+                "BREAK {at}: {what} {}, {label} {}",
                 money(printed),
-                from_lines.0,
-                money(from_lines.1)
+                money(other)
             ));
         }
     }
+
+    /// Compares a printed balance with the one computed from the lines.
+    fn balance(&mut self, at: &str, what: &str, printed: i128, computed: i128) {
+        self.balances += 1;
+        self.differs(at, what, printed, "computed", computed);
+    }
+
+    /// Compares a printed gross total, where one is printed, with the extracted lines.
+    fn total(&mut self, at: &str, side: &str, printed: Option<i128>, extracted: i128) {
+        if let Some(printed) = printed {
+            self.totals += 1;
+            self.differs(
+                at,
+                &format!("printed {side}"),
+                printed,
+                "extracted",
+                extracted,
+            );
+        }
+    }
+}
+
+/// The running state through one statement.
+struct Running {
+    balance: i128,
+    /// Whether the balance was just set from a printed figure, which a sign taken from the
+    /// balance needs on the line before.
+    printed_before: bool,
+    after: Vec<(NaiveDate, i128)>,
+}
+
+/// The statement a page belongs to, as its lines need it.
+struct Period<'a> {
+    id: &'a str,
+    start: NaiveDate,
+    end: NaiveDate,
+    direction: Direction,
+}
+
+/// Checks one page and returns its extracted gross credits and debits.
+fn check_page(
+    page: &Page,
+    period: &Period,
+    running: &mut Running,
+    report: &mut Report,
+) -> Result<(i128, i128)> {
+    let at = format!("{} page {}", period.id, page.page);
+    if let Some(forward) = optional(
+        page.brought_forward.as_deref(),
+        &format!("{at} brought_forward"),
+    )? {
+        report.balance(&at, "brought forward", forward, running.balance);
+        running.balance = forward;
+        running.printed_before = true;
+    }
+    let earliest = period.start.checked_sub_days(Days::new(EARLY_DAYS));
+    let (mut credits, mut debits) = (0_i128, 0_i128);
+    let mut seen = BTreeSet::new();
+    for line in &page.lines {
+        reference(&line.line, "line", &mut seen, &at)?;
+        let at = format!("{at} line {}", line.line);
+        let when = date(&line.date, &format!("{at} date"))?;
+        if when > period.end {
+            report.breaks.push(format!(
+                "BREAK {at}: dated {when}, after the period ends {}",
+                period.end
+            ));
+        } else if earliest.is_some_and(|earliest| when < earliest) {
+            report.breaks.push(format!(
+                "BREAK {at}: dated {when}, more than {EARLY_DAYS} days before the period starts {}",
+                period.start
+            ));
+        }
+        let (debit, credit) = match (line.debit.as_deref(), line.credit.as_deref()) {
+            (Some(debit), None) => (unsigned(debit, &format!("{at} debit"))?, 0),
+            (None, Some(credit)) => (0, unsigned(credit, &format!("{at} credit"))?),
+            _ => return Err(format!("{at}: give exactly one of debit and credit").into()),
+        };
+        debits += debit;
+        credits += credit;
+        running.balance += match period.direction {
+            Direction::Deposit => credit - debit,
+            Direction::Owed => debit - credit,
+        };
+        let balance = optional(line.balance.as_deref(), &format!("{at} balance"))?;
+        if line.sign_from == SignFrom::Balance && !(running.printed_before && balance.is_some()) {
+            report.breaks.push(format!(
+                "BREAK {at}: sign taken from the balance without printed balances on this line and the one before"
+            ));
+        }
+        if let Some(balance) = balance {
+            report.balance(&at, "printed balance", balance, running.balance);
+            running.balance = balance;
+        }
+        running.printed_before = balance.is_some();
+        running.after.push((when, running.balance));
+        report.lines += 1;
+    }
+    if let Some(forward) = optional(
+        page.carried_forward.as_deref(),
+        &format!("{at} carried_forward"),
+    )? {
+        report.balance(&at, "carried forward", forward, running.balance);
+        running.balance = forward;
+        running.printed_before = true;
+    }
+    let printed = printed_total(
+        page.printed_credits.as_deref(),
+        &format!("{at} printed_credits"),
+    )?;
+    report.total(&at, "credits", printed, credits);
+    let printed = printed_total(
+        page.printed_debits.as_deref(),
+        &format!("{at} printed_debits"),
+    )?;
+    report.total(&at, "debits", printed, debits);
+    Ok((credits, debits))
 }
 
 fn check_statement(
@@ -147,7 +308,7 @@ fn check_statement(
     direction: Direction,
     report: &mut Report,
 ) -> Result<Checked> {
-    let id = &statement.id;
+    let id = statement.id.as_str();
     let start = date(&statement.period_start, &format!("{id} period_start"))?;
     let end = date(&statement.period_end, &format!("{id} period_end"))?;
     if end < start {
@@ -155,101 +316,42 @@ fn check_statement(
     }
     let opening = cents(&statement.opening, &format!("{id} opening"))?;
     let closing = cents(&statement.closing, &format!("{id} closing"))?;
-    let mut running = opening;
-    // Whether the running balance was just set from a printed figure, which a sign
-    // taken from the balance needs on the line before.
-    let mut printed_before = true;
+    let period = Period {
+        id,
+        start,
+        end,
+        direction,
+    };
+    let mut running = Running {
+        balance: opening,
+        printed_before: true,
+        after: Vec::new(),
+    };
     let (mut credits, mut debits) = (0_i128, 0_i128);
-    let mut after = Vec::new();
+    let mut seen = BTreeSet::new();
     for page in &statement.pages {
-        let at = format!("{id} page {}", page.page);
-        if let Some(forward) = optional(
-            page.brought_forward.as_ref(),
-            &format!("{at} brought_forward"),
-        )? {
-            report.compare(&at, "brought forward", forward, ("computed", running));
-            running = forward;
-            printed_before = true;
-        }
-        let (mut page_credits, mut page_debits) = (0_i128, 0_i128);
-        for line in &page.lines {
-            let at = format!("{at} line {}", line.line);
-            let when = date(&line.date, &format!("{at} date"))?;
-            let (debit, credit) = match (&line.debit, &line.credit) {
-                (Some(debit), None) => (cents(debit, &format!("{at} debit"))?, 0),
-                (None, Some(credit)) => (0, cents(credit, &format!("{at} credit"))?),
-                _ => return Err(format!("{at}: give exactly one of debit and credit").into()),
-            };
-            if debit < 0 || credit < 0 {
-                return Err(format!(
-                    "{at}: debit and credit are unsigned; the column gives the sign"
-                )
-                .into());
-            }
-            page_debits += debit;
-            page_credits += credit;
-            running += match direction {
-                Direction::Deposit => credit - debit,
-                Direction::Owed => debit - credit,
-            };
-            let balance = optional(line.balance.as_ref(), &format!("{at} balance"))?;
-            if line.sign_from == SignFrom::Balance && !(printed_before && balance.is_some()) {
-                report.breaks.push(format!(
-                    "BREAK {at}: sign taken from the balance without printed balances on this line and the one before"
-                ));
-            }
-            if let Some(balance) = balance {
-                report.compare(&at, "printed balance", balance, ("computed", running));
-                running = balance;
-            }
-            printed_before = balance.is_some();
-            after.push((when, running));
-            report.lines += 1;
-        }
-        if let Some(forward) = optional(
-            page.carried_forward.as_ref(),
-            &format!("{at} carried_forward"),
-        )? {
-            report.compare(&at, "carried forward", forward, ("computed", running));
-            running = forward;
-            printed_before = true;
-        }
-        for (field, printed, extracted) in [
-            ("credits", &page.printed_credits, page_credits),
-            ("debits", &page.printed_debits, page_debits),
-        ] {
-            if let Some(printed) = optional(printed.as_ref(), &format!("{at} printed_{field}"))? {
-                report.compare(
-                    &at,
-                    &format!("printed {field}"),
-                    printed,
-                    ("extracted", extracted),
-                );
-            }
-        }
+        reference(&page.page, "page", &mut seen, id)?;
+        let (page_credits, page_debits) = check_page(page, &period, &mut running, report)?;
         credits += page_credits;
         debits += page_debits;
     }
-    report.compare(id, "closing", closing, ("computed", running));
-    for (field, printed, extracted) in [
-        ("credits", &statement.printed_credits, credits),
-        ("debits", &statement.printed_debits, debits),
-    ] {
-        if let Some(printed) = optional(printed.as_ref(), &format!("{id} printed_{field}"))? {
-            report.compare(
-                id,
-                &format!("printed {field}"),
-                printed,
-                ("extracted", extracted),
-            );
-        }
-    }
+    report.balance(id, "closing", closing, running.balance);
+    let printed = printed_total(
+        statement.printed_credits.as_deref(),
+        &format!("{id} printed_credits"),
+    )?;
+    report.total(id, "credits", printed, credits);
+    let printed = printed_total(
+        statement.printed_debits.as_deref(),
+        &format!("{id} printed_debits"),
+    )?;
+    report.total(id, "debits", printed, debits);
     Ok(Checked {
         start,
         end,
         opening,
         closing,
-        after,
+        after: running.after,
     })
 }
 
@@ -268,6 +370,14 @@ fn check_continuity(ids: (&str, &str), before: &Checked, next: &Checked, report:
     let expected = if Some(next.start) == following {
         before.closing
     } else {
+        // The balance before the overlap is only known when the lines run in date order.
+        if !before.after.windows(2).all(|pair| pair[0].0 <= pair[1].0) {
+            report.breaks.push(format!(
+                "BREAK {at}: overlap cannot be placed, {} lines are not in date order",
+                ids.0
+            ));
+            return;
+        }
         before
             .after
             .iter()
@@ -275,21 +385,48 @@ fn check_continuity(ids: (&str, &str), before: &Checked, next: &Checked, report:
             .find(|(when, _)| *when < next.start)
             .map_or(before.opening, |(_, running)| *running)
     };
-    report.compare(&at, "opening", next.opening, ("computed", expected));
+    report.links += 1;
+    report.differs(&at, "opening", next.opening, "computed", expected);
 }
 
 fn check(input: &Input) -> Result<Report> {
+    if input.statements.is_empty() {
+        return Err("no statements: the input must hold at least one".into());
+    }
     let mut report = Report::default();
-    let mut previous: Option<(&str, Checked)> = None;
+    let mut ids = BTreeSet::new();
+    let mut checked: Vec<Checked> = Vec::new();
     for statement in &input.statements {
-        let checked = check_statement(statement, input.direction, &mut report)?;
-        if let Some((id, before)) = &previous {
-            if checked.start < before.start {
-                return Err(format!("{}: statements must be in period order", statement.id).into());
-            }
-            check_continuity((*id, &statement.id), before, &checked, &mut report);
+        reference(&statement.id, "statement", &mut ids, "statements")?;
+        let current = check_statement(statement, input.direction, &mut report)?;
+        if checked
+            .last()
+            .is_some_and(|before| current.start < before.start)
+        {
+            return Err(format!("{}: statements must be in period order", statement.id).into());
         }
-        previous = Some((&statement.id, checked));
+        checked.push(current);
+    }
+    for (index, next) in checked.iter().enumerate().skip(1) {
+        let next_id = &input.statements[index].id;
+        for (earlier, before) in checked[..index].iter().enumerate() {
+            if before.end < next.start {
+                continue;
+            }
+            let before_id = &input.statements[earlier].id;
+            report.overlaps.push(format!(
+                "OVERLAP {before_id} and {next_id}: {} to {}",
+                next.start,
+                before.end.min(next.end)
+            ));
+            if next.start == before.start || next.end <= before.end {
+                report.breaks.push(format!(
+                    "BREAK {before_id} and {next_id}: one period lies wholly within the other"
+                ));
+            }
+        }
+        let before_id = &input.statements[index - 1].id;
+        check_continuity((before_id, next_id), &checked[index - 1], next, &mut report);
     }
     Ok(report)
 }
@@ -300,25 +437,33 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     let [path] = args.as_slice() else {
         return Err(USAGE.into());
     };
-    let input: Input = serde_json::from_str(&read_text(&PathBuf::from(path))?)?;
+    let path = Path::new(path);
+    let text = read_text(path).map_err(|error| format!("{}: {error}", path.display()))?;
+    // Windows PowerShell 5 writes a byte-order mark; it carries no figures.
+    let text = text.strip_prefix('\u{feff}').unwrap_or(&text);
+    let input: Input =
+        serde_json::from_str(text).map_err(|error| format!("{}: {error}", path.display()))?;
     let report = check(&input)?;
-    let mut text = String::new();
-    for line in &report.breaks {
-        text.push_str(line);
-        text.push('\n');
+    let mut out = String::new();
+    for line in report.breaks.iter().chain(&report.overlaps) {
+        out.push_str(line);
+        out.push('\n');
     }
-    let statements = input.statements.len();
     let code = if report.breaks.is_empty() {
-        text.push_str(&format!(
-            "PASS {statements} statements, {} lines tie\n",
-            report.lines
+        out.push_str(&format!(
+            "PASS {} statements, {} lines; compared {} printed balances, {} printed totals, {} statement links\n",
+            input.statements.len(),
+            report.lines,
+            report.balances,
+            report.totals,
+            report.links
         ));
         0
     } else {
-        text.push_str(&format!("FAIL {} breaks\n", report.breaks.len()));
+        out.push_str(&format!("FAIL {} breaks\n", report.breaks.len()));
         2
     };
-    io::stdout().write_all(platform_text(&text).as_bytes())?;
+    io::stdout().write_all(platform_text(&out).as_bytes())?;
     Ok(code)
 }
 
@@ -347,10 +492,10 @@ mod tests {
         json!({"direction": "deposit", "statements": [{
         "id": "S1", "period_start": "2026-01-01", "period_end": "2026-01-31",
         "opening": "1000.00", "closing": "1150.00",
-        "printed_credits": "300.00", "printed_debits": "150.00",
+        "printed_credits": ["300.00"], "printed_debits": ["150.00"],
         "pages": [
             {"page": "1", "brought_forward": "1000.00", "carried_forward": "1100.00",
-             "printed_credits": "200.00", "printed_debits": "100.00", "lines": [
+             "printed_credits": ["200.00"], "printed_debits": ["100.00"], "lines": [
                 line("1", "2026-01-03", None, Some("200.00"), Some("1200.00")),
                 line("2", "2026-01-09", Some("100.00"), None, Some("1100.00"))]},
             {"page": "2", "brought_forward": "1100.00", "carried_forward": "1150.00", "lines": [
@@ -385,7 +530,7 @@ mod tests {
         let input = json!({"direction": "owed", "statements": [{
             "id": "C1", "period_start": "2026-03-01", "period_end": "2026-03-31",
             "opening": "500.00", "closing": "620.00",
-            "printed_credits": "240.00", "printed_debits": "360.00",
+            "printed_credits": ["240.00"], "printed_debits": ["360.00"],
             "pages": [{"page": "1", "lines": [
                 line("1", "2026-03-04", Some("320.00"), None, None),
                 line("2", "2026-03-15", None, Some("200.00"), None)]}]}]});
@@ -403,7 +548,7 @@ mod tests {
         let input = json!({"direction": "deposit", "statements": [{
             "id": "S1", "period_start": "2026-01-01", "period_end": "2026-01-31",
             "opening": "100.00", "closing": "100.00",
-            "printed_credits": "25.00", "printed_debits": "25.00", "pages": []}]});
+            "printed_credits": ["25.00"], "printed_debits": ["25.00"], "pages": []}]});
         assert_eq!(breaks(&input).len(), 2);
     }
 

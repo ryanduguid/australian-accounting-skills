@@ -43,7 +43,7 @@ Only the supplied facts are available. No other statement for the card, list of 
 - Show that the draft ties to the closing balance and to every printed balance it carries, yet its gross debits of 239.50 and gross credits of 50.00 differ from the printed new debits of 251.50 and new credits of 62.00 by 12.00 each; reread the page and add lines 3 and 4.
 - Accept the credit sign on line 6 only because the printed balance falls from 204.50 to 154.50, a change equal to its 50.00 amount.
 - Run `accounting-skills statement-check` if it is installed and quote its output; otherwise record it as not run and do the tie-outs by hand.
-- Reverify Xero Central's current CSV requirements, show the payment and the refund as positive amounts and the purchases as negative, write dates in a listed format such as DD/MM/YYYY, tell the person that Xero applies a date format chosen at a prompt to future CSV imports, and confirm the row count is within Xero's stated limit.
+- Reverify Xero Central's current CSV requirements, show the payment as positive and the purchases as negative, as Xero's page states for cards, and the refund as positive by the skill's reading that a credit to the card follows the payment's sign, write dates in a listed format such as DD/MM/YYYY, tell the person that Xero applies a date format chosen at a prompt to future CSV imports, and confirm the row count is within Xero's stated limit.
 - Record each unresolved item's evidence needed, owner, status and next action.
 
 ## Must not do

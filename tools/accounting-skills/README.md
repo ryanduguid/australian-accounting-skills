@@ -18,9 +18,11 @@ are retired:
 `statement-check` is also new: the `statement-to-csv` skill runs it on statement lines transcribed
 to JSON. In exact cents it checks each printed running balance, brought-forward and
 carried-forward balance and closing balance, extracted gross credits and debits against printed
-totals, a sign taken from the running balance, and continuity between statements. It prints one
-`BREAK` line per difference and exits 0 when everything ties, 2 on any break and 1 on malformed
-input. The input holds figures and line references only, never descriptions.
+totals, a sign taken from the running balance, line dates against the period, and continuity
+between statements. It prints one `BREAK` line per difference and one `OVERLAP` line per pair of
+overlapping periods, ends with a `PASS` line counting what it compared or a `FAIL` line, and exits
+0 when everything ties, 2 on any break and 1 on malformed input, including an empty one or a
+repeated reference. The input holds figures and line references only, never descriptions.
 
 The others are candidate ports of scripts that remain the authoritative
 commands in `scripts/`:
