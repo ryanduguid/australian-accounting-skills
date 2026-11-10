@@ -23,8 +23,8 @@ W011 reflects that skills read third-party exports and web pages. W012, 'Unverif
 dependency detected', appears on 2 skills and flags the GitHub URL of an optional external tool:
 `solomons-sword` in `au-trust-distributions` (audited 4 November 2026) and
 `xero-trial-balance-export` in `xero-exports` (audited 2 October 2026). Socket warns that
-`wip-over-under-billing` leaves the provenance of its corpus executable unspecified (audited
-4 November 2026). No skill downloads a script or pipes one into a shell. The README's
+`au-financial-statements` and `wip-over-under-billing` leave the provenance of the
+`aasb-corpus` executable unverified (both audited 4 November 2026). No skill downloads a script or pipes one into a shell. The README's
 [Privacy](../README.md#privacy) section lists each local program a skill names and the 2
 `cargo install` commands. Recheck the audits after the host re-indexes rather than claiming
 they are clear.
