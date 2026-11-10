@@ -102,6 +102,21 @@
       "source_last_modified": ""
     },
     {
+      "title": "GST Act s 48-40, who is liable for GST in a GST group",
+      "url": "https://www.ato.gov.au/law/view/document?docid=PAC/19990055/48-40",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19990055/48-40",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
       "title": "GST Act s 75-5, applying the margin scheme",
       "url": "https://www.ato.gov.au/law/view/document?docid=PAC/19990055/75-5",
       "checked_at": "",
@@ -124,6 +139,21 @@
       "verification_status": "source-discovery-only-human-review-pending",
       "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19990055/75-11",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Tax Laws Amendment (2008 Measures No. 5) Act 2008, Schedule 1, item 13, application of the 2008 margin scheme rules",
+      "url": "https://www.legislation.gov.au/C2008A00145/asmade/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2008A00145/asmade/text",
       "http_status": 200,
       "fetched_at": "2026-11-11",
       "review_required_since": "2026-11-11",

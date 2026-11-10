@@ -48,7 +48,9 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "continuous 5 years immediately before the supply",
             "Section 38-480 covers the interest in land only",
             "Evidence the recipient's intention in writing",
-            # s 38-475: potential residential land to an associate below market value.
+            # s 38-475: subdivided from land farmed for 5 years, to an associate below market value.
+            "is GST-free if the land is subdivided from land on which a farming business has been carried on for "
+            "at least 5 years",
             "is to an associate of the supplier without consideration or for less than the GST inclusive market value",
             "(land that it is permissible to use for residential purposes but that does not contain any buildings "
             "that are residential premises, s 195-1)",
@@ -61,10 +63,15 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             # No margin scheme on a GST-free supply; the history decides a later sale.
             "The margin scheme applies only to a taxable supply (s 75-5(1))",
             "s 75-5(2) and (3)(f)", "Test s 75-11(5) first",
+            # The 2008 margin scheme rules apply only to land the later supplier acquired through a new supply.
+            "on or after 9 December 2008", "a right or option granted, before that day",
+            "Schedule 1, item 13)",
             # Withholding needs a taxable supply, but the notice duty is separate.
             "is not a taxable supply (s 9-5)", "s 14-250(9)", "s 14-255",
             # A withheld amount is either the supplier's credit or a refund in error, never chosen here.
             "record the evidence for both outcomes without choosing between them", "(s 18-60)",
+            # The credit goes to the entity liable for the GST, which for a grouped supplier is not the supplier.
+            "the entity liable for GST on it is entitled to a credit", "representative member (GST Act s 48-40(1))",
             "lodged at least 14 days before the supplier must pay GST on the supply",
             "leave the amount blank for the reviewer",
             "mark the classification `UNVERIFIED`",
@@ -72,7 +79,8 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
         self.assert_pending_and_cited(
             "au-gst-property",
             *(LAW + f"PAC/19990055/{section}" for section in
-              ("9-5", "38-325", "38-475", "38-480", "75-5", "75-11", "135-5", "135-10", "195-1")),
+              ("9-5", "38-325", "38-475", "38-480", "48-40", "75-5", "75-11", "135-5", "135-10", "195-1")),
+            "https://www.legislation.gov.au/C2008A00145/asmade/text",
             LAW + "PAC/19530001/Sch1-14-250",
             LAW + "PAC/19530001/Sch1-14-255",
             LAW + "PAC/19530001/Sch1-18-60",
@@ -89,8 +97,14 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "Do not choose the structure, the timing or who receives what",
             "A missing cost or value is unknown, not zero",
             "CGT event A1 (s 104-10)", "s 116-30 substitutes market value", "s 128-15",
+            # A1 is not the only event: the most specific one is used, with its own timing.
+            "s 102-25(1)", "CGT event E2 (s 104-60(1))", "when the asset is transferred (s 104-60(2))",
             # Farm facts for the concessions; the general conditions live in au-small-business-cgt.
-            "Route the concession evidence to `au-small-business-cgt`", "s 152-10(1)(c)(iii) and (1B)",
+            "Route the concession evidence to `au-small-business-cgt`",
+            # Land held outside the partnership is not a partnership asset, so (1)(c)(iii) cannot apply.
+            "s 152-10(1)(c)(iv) through the passively held partnership asset conditions in s 152-10(1B)",
+            "not s 152-10(1)(c)(iii), which covers only an interest in an asset of the partnership",
+            "against s 70-100(6)(b)",
             "s 152-40(4)(e)", "s 152-40(4A)", "unless that main use was only temporary",
             "s 152-40(2) disregards s 392-20(1)", "(s 152-105(d))", "(s 104-10(3))",
             "s 70-105", "(s 70-105(7))",
@@ -111,8 +125,8 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
         self.assert_pending_and_cited(
             "au-primary-production",
             *(LAW + f"PAC/19970038/{section}" for section in
-              ("40-295", "40-340", "70-90", "70-100", "70-105", "104-10", "116-30", "128-15", "152-10",
-               "152-40", "152-105", "393-35")),
+              ("40-295", "40-340", "70-90", "70-100", "70-105", "102-25", "104-10", "104-60", "116-30", "128-15",
+               "152-10", "152-40", "152-105", "393-35")),
         )
         concessions = " ".join(skill_text("au-small-business-cgt").split())
         self.assert_carries(
@@ -122,8 +136,12 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
             "For an individual's 15-year exemption (s 152-105)", "For the retirement exemption (s 152-305)",
             "s 152-325 requires", "For the small business rollover (s 152-410)", "J2, J5 and J6",
             "(s 152-80(1)(d) and (3))",
+            # An estate's concessions turn on the deceased's own entitlement, with the retirement tests modified.
+            "(s 152-80(1)(c))", "s 152-80(2) tests s 152-105(d) only",
+            "disapplies the superannuation contribution in s 152-305(1)(b)",
             # The reduction's own entity test from the 2027-28 income year.
             "Section 152-205(2), inserted by No 49 of 2026", "disregards s 152-10(1AA)(b)",
+            "applying to assessments for the income year that includes 1 July 2027 and later income years",
         )
         self.assert_pending_and_cited(
             "au-small-business-cgt",
@@ -156,6 +174,15 @@ class FarmLandAndSuccessionTests(unittest.TestCase):
         opening, marked, sold, deaths, closing = (int(figure) for figure in flock.groups())
         self.assertEqual(opening + marked - sold - deaths, closing)
         self.assertIn(f"{opening} plus {marked} less {sold} sold and {deaths} deaths equals {closing}", succession)
+        # The s 70-100(6)(b) row must follow from the partnership shares in the scenario.
+        shares = re.search(r"with an (\d+) per cent interest, keeping (\d+) per cent each", succession)
+        assert shares, "the card no longer states the partnership shares"
+        incoming, kept_each = (int(figure) for figure in shares.groups())
+        self.assertEqual(incoming + 2 * kept_each, 100)
+        self.assertLess(2 * kept_each, 25)
+        self.assertIn(f"keep interests worth {2 * kept_each} per cent of the flock between them, below the 25 per "
+                      "cent of its market value s 70-100(6)(b) requires", succession)
+        self.assertIn("flag that condition as not met", succession)
         self.assert_carries(
             succession,
             "cannot be transferred to the daughter", "Do not conclude that any concession applies",
