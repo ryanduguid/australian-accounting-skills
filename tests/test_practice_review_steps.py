@@ -47,6 +47,8 @@ VALUING = (
     "smsf-administration-and-reporting/guide-to-valuing-smsf-assets"
 )
 SISR = "https://www.legislation.gov.au/F1996B00580/latest/text"
+SGAA = "https://www.legislation.gov.au/C2004A04402/latest/text"
+SGA_REGULATIONS = "https://www.legislation.gov.au/F2018L01289/latest/text"
 
 
 def screen_row(name: str) -> str:
@@ -114,6 +116,10 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"\breg 81-10\.01 prescribes as consideration\b", r"\bticketed or metered parking\b",
                              r"\broad tolls\b", r"\breg 81-15\.01 excludes\b", r"\bregulatory cost recovery\b",
                              r"\bcourt and tribunal fees\b", r"\breg 81-15\.02\b")
+        # Only a national park's entry fee is outside reg 81-10.01(1)(c), not every national park charge.
+        self.assertIn("'a fee for hire, use of, or entry to a facility, other than an entry fee to a national park'",
+                      row)
+        self.assertNotIn("facility other than a national park", row)
         indexed = records("bas-preparation")
         for url in (GST_ACT, GST_REGULATIONS):
             with self.subTest(url=url):
@@ -129,6 +135,12 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"\(group wages where the entity is grouped\), not that jurisdiction's own wages\b",
                              r"\bthe month's total against its monthly threshold\b",
                              r"\bthe year-to-date total against its annual threshold\b")
+        # A weekly registration amount is tested too; Queensland's applies whatever the annual total.
+        self.assert_sentence(step, r"\bregistration page also sets a weekly amount, compare each week's total with it\b",
+                             r"\bQueensland's page requires registration within 7 days of the first month in which "
+                             r"Australian wages exceed its weekly amount\b",
+                             r"\beven where wages for the year are expected to stay below its annual threshold\b")
+        self.assert_sentence(step, r"`not run`", r"\bthe weekly totals a weekly amount needs\b")
         self.assert_sentence(step, r"\bwhere wages are paid and the total exceeds a threshold with no registration recorded\b",
                              affirmed=(r"\blist each jurisdiction\b",))
         self.assertNotRegex(step, r"\bwhose (monthly or year-to-date )?wages exceed its threshold\b")
@@ -139,10 +151,15 @@ class PracticeReviewStepTests(unittest.TestCase):
         inputs = section("bas-preparation", "Inputs needed")
         self.assertRegex(inputs, r"\b9\. Where payroll is in scope, taxable wages by state or territory and total "
                                  r"Australian wages \(group wages where the entity is grouped\), each for the month "
-                                 r"and the year to date\b")
+                                 r"and the year to date, total Australian wages for each week of the month where "
+                                 r"wages are paid in Queensland\b")
         checks = section("bas-preparation", "Checks before handing over")
         self.assertIn("the payroll tax screen compares total Australian wages (group wages where grouped) with each "
-                      "paying jurisdiction's monthly and annual thresholds", checks)
+                      "paying jurisdiction's monthly and annual thresholds and any weekly amount its registration "
+                      "page sets", checks)
+        owner = workflow_step("au-payroll-tax-states", 3)
+        self.assert_sentence(owner, r"\bmonthly and annually, and each week's total against any weekly amount its "
+                             r"registration page sets \(Queensland's does\)")
 
     # au-super-guarantee-charge: R0828
 
@@ -167,8 +184,9 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(step, DO_NOT + r"record such a QE day as high\b")
         # A contribution made without receipt evidence is not a contribution never made.
         self.assert_sentence(step, r"\ba contribution made whose fund receipt date is not evidenced makes the zone `UNKNOWN`",
-                             r"\ba contribution never made, or made short, is a shortfall, and once that day has passed "
-                             r"it puts the QE day in the high zone\b")
+                             r"\ba contribution never made, or made short, is a shortfall, and it puts the QE day in the "
+                             r"high zone only if some of it is still unpaid after that day\b",
+                             r"\bone made good by then is medium, as in paragraph 46\b")
         self.assert_sentence(step, r"\bif no errors have been received the employer can assume it was received on time\b")
         self.assert_sentence(step, r"\bleave the receipt date blank and the row's timing `UNKNOWN`",
                              r"\bnot fund receipt evidence\b")
@@ -219,7 +237,9 @@ class PracticeReviewStepTests(unittest.TestCase):
 
     def test_peppol_rcti_meets_the_same_conditions_as_any_rcti(self) -> None:
         step = workflow_step("tax-invoice-review", 4)
-        self.assert_sentence(step, r"\bPINT A-NZ Self-billing specification\b", r"`389`", r"`261`")
+        # Each code bound to its document type, so swapping them fails.
+        self.assert_sentence(step, r"\bPINT A-NZ Self-billing specification\b",
+                             r"\bdocument type code `389` for an invoice or `261` for a credit note\b")
         self.assert_sentence(step, r"\bnot validated\b", r"\bdoes not guarantee or enforce legal compliance\b")
         self.assert_sentence(step, r"\bApply every condition above to a Peppol RCTI as to any other\b",
                              r"\bdoes not show a written agreement\b")
@@ -282,10 +302,16 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(step, r"\bpaid to the default fund without a request outcome\b",
                              r"\bfund other than the chosen fund, the stapled fund or, where the ATO returned none, "
                              r"the default fund\b", affirmed=(r"\bList as a lead\b",))
+        # Contributions s 32C treats as complying without a chosen or stapled fund are recorded, not listed.
+        self.assert_sentence(step, r"\bFirst record whether the contribution is made under a route that s 32C\b",
+                             r"\bwithout a chosen or stapled fund\b", r"\bState industrial award \(s 32C\(8\)\)",
+                             r"\bs 32C\(6\)\(g\), \(h\) and \(6AAA\)", r"\bregulation 15\b.{0,200}\(s 32C\(9\)\)")
+        self.assert_sentence(step, r"\bleave whether it applies to the reviewer\b",
+                             DO_NOT + r"list a contribution so recorded as a lead\b")
         self.assert_sentence(step, r"`not run`", r"\bstart dates or fund records\b")
         self.assert_sentence(step, DO_NOT + r"make the request\b", r"`au-super-guarantee-charge`")
         self.assertIn("a stapled fund screen result", section("au-payroll-review", "Hand-off and checks"))
-        self.assert_pending("au-payroll-review", STAPLED)
+        self.assert_pending("au-payroll-review", STAPLED, SGAA, SGA_REGULATIONS)
 
     # au-smsf-year-end: R0678
 

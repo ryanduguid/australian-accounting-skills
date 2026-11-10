@@ -7,7 +7,7 @@ description: "Use when checking an employer's payroll tax registration, threshol
 
 ## Inputs
 
-Monthly taxable wages by state or territory for the year (including contractor and other deemed wages already characterised), the group structure and any grouping decisions or exclusion orders, payroll tax registrations and returns lodged in each jurisdiction, the designated group employer, days employed in each jurisdiction if part-year, and any regional or other concession claimed.
+Monthly taxable wages by state or territory for the year (including contractor and other deemed wages already characterised), weekly Australian wages where a jurisdiction's registration page sets a weekly amount, the group structure and any grouping decisions or exclusion orders, payroll tax registrations and returns lodged in each jurisdiction, the designated group employer, days employed in each jurisdiction if part-year, and any regional or other concession claimed.
 
 ## Workflow
 
@@ -15,7 +15,7 @@ Monthly taxable wages by state or territory for the year (including contractor a
 
 2. For each jurisdiction, start from its row in the jurisdiction table under Primary-source starting point, which names the revenue office and the governing Act and links its grouping, registration and annual reconciliation guidance. Read that revenue office's current page for the year's threshold or deduction, how it phases out, the rate or rate bands, and any surcharge or levy. Record the page and its date for each. Do not assume two jurisdictions share a rule.
 
-3. Registration test: compare total Australian wages (group wages where grouped) with each jurisdiction's registration threshold, monthly and annually, and list any jurisdiction where registration looks required but is missing. Read who in a group must register, and which member may be the designated group employer, from that jurisdiction's own grouping and registration pages in the table; do not carry one office's rule to another.
+3. Registration test: compare total Australian wages (group wages where grouped) with each jurisdiction's registration threshold, monthly and annually, and each week's total against any weekly amount its registration page sets (Queensland's does), and list any jurisdiction where registration looks required but is missing. Read who in a group must register, and which member may be the designated group employer, from that jurisdiction's own grouping and registration pages in the table; do not carry one office's rule to another.
 
 4. Apportion each threshold or deduction by the jurisdiction's share of Australian wages and by days employed where part-year, as that jurisdiction's page directs. Apply any phase-out to total Australian wages, not local wages.
 
