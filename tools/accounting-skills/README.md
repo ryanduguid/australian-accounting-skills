@@ -77,16 +77,38 @@ accounting-skills build-coverage --root /path/to/checkout --write
 
 The current directory is the default root. A root operand beginning with a dash
 needs an explicit path, such as `./--check`. `--write` takes precedence over
-`--check`, as in the retired Python command. Success prints the matrix unless writing,
-which prints `wrote coverage.json`. A stale check exits 2. Processing and
+`--check`, as in the retired Python command. The command also renders
+`docs/skill-verification.md`, a per-skill table from the same matrix, and
+`--check` compares both files. Success prints the matrix unless writing, which
+prints `wrote coverage.json and docs/skill-verification.md`. A stale check
+names each stale file and exits 2. Processing and
 argument errors exit 1 with a diagnostic instead of a Python traceback or
 argparse usage. Options must be spelt in full: argparse's abbreviations (such
 as `--wr`), the `--` terminator and help text are not ported.
 
-`--write` writes a temporary file beside `coverage.json` and renames it into
-place, so a hard link elsewhere keeps its old contents. A `coverage.json` that
-is a symlink or not a regular file is refused. The retired Python command
-wrote through either link.
+`--write` writes a temporary file beside each output and renames it into
+place, so a hard link elsewhere keeps its old contents. An output that is a
+symlink or not a regular file is refused. The retired Python command wrote
+through either link.
+
+The Python builder did not have the `reviewed_count`, `confirmed_pass`,
+`confirmed_fail` and `confirmed_noncurrent_digest` fields or their totals; the
+note now describes them. `reviewed_count` is how many indexed sources carry a
+review date. A confirmed verdict counts as a pass or fail only when the record's
+`rubric_sha256` matches the card's current bytes; otherwise the card is listed
+under `confirmed_noncurrent_digest`, even if the current card also has a
+verdict. The build does not look for the digest in the card's git history,
+because the native CI job checks out a single commit, so that list claims only
+that the digests differ. Verdicts under different digests are kept apart, so a
+pass recorded under another digest and a fail on the current card both stand;
+neither digest is taken to identify a particular earlier card.
+The build refuses a status other than `prepared`, `observed` or `confirmed`
+(an absent status marks a legacy record), a verdict other than `pass` or
+`fail`, a confirmed verdict whose `rubric_sha256` is not 64 lower-case hex
+digits, one for a card no skill targets, and one card version confirmed both
+pass and fail, naming both records, because no rule yet says which verdict
+supersedes the other. Legacy records are left out of the counts and named in
+the page's legend with any fail they hold.
 
 The schema, field order, note text, source-date distinctions, card deduplication,
 quoted test mentions and platform newline conventions preserve the retired

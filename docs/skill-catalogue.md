@@ -1,6 +1,6 @@
 # Skills
 
-[When each skill last changed](skill-last-changed.md) is a separate generated table.
+[When each skill last changed](skill-last-changed.md) and [how each skill was verified](skill-verification.md) are separate generated tables.
 
 | Skill | Use it for |
 |---|---|

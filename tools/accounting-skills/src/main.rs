@@ -1,10 +1,13 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-use accounting_skills::{Result, platform_text, read_text, rendered, replace_file};
+use accounting_skills::{
+    Result, VERIFICATION_PAGE, platform_text, read_text, rendered_with_page, replace_file,
+};
 use std::{
+    fs,
     io::{self, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 fn run() -> Result<u8> {
@@ -53,28 +56,59 @@ fn run() -> Result<u8> {
             _ => return Err("unknown argument".into()),
         }
     }
-    let matrix = rendered(&root)?;
-    let coverage = root.join("coverage.json");
+    let root = accounting_skills::canonical_root(&root)?;
+    let (matrix, page) = rendered_with_page(&root)?;
+    let outputs = [("coverage.json", &matrix), (VERIFICATION_PAGE, &page)];
+    // Confine every output before reading or writing, so one linked path cannot
+    // escape after another output has already been replaced.
+    let mut files = Vec::with_capacity(outputs.len());
+    for (relative, text) in outputs {
+        let path = accounting_skills::within_root(&root, Path::new(relative))?;
+        if !path.starts_with(&root) {
+            return Err("path escapes the repository root".into());
+        }
+        files.push((relative, path, text));
+    }
     if write {
-        replace_file(&coverage, &platform_text(&matrix))?;
-        io::stdout().write_all(platform_text("wrote coverage.json\n").as_bytes())?;
-    } else {
-        let current = if coverage.is_file() {
-            read_text(&coverage)?
-        } else {
-            String::new()
-        };
-        if check && current != matrix {
-            io::stderr().write_all(
-                platform_text(
-                    "coverage.json is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
-                )
-                .as_bytes(),
-            )?;
+        for (_, path, text) in &files {
+            let parent = path.parent().ok_or("output has no parent")?;
+            if !parent.starts_with(&root) {
+                return Err("path escapes the repository root".into());
+            }
+            fs::create_dir_all(parent)?;
+            replace_file(path, &platform_text(text))?;
+        }
+        io::stdout().write_all(
+            platform_text(&format!("wrote coverage.json and {VERIFICATION_PAGE}\n")).as_bytes(),
+        )?;
+        return Ok(0);
+    }
+    if check {
+        let mut stale = false;
+        for (relative, path, text) in &files {
+            if !path.starts_with(&root) {
+                return Err("path escapes the repository root".into());
+            }
+            let current = if path.is_file() {
+                read_text(path)?
+            } else {
+                String::new()
+            };
+            if current != **text {
+                stale = true;
+                io::stderr().write_all(
+                    platform_text(&format!(
+                        "{relative} is out of date. Run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --write\n",
+                    ))
+                    .as_bytes(),
+                )?;
+            }
+        }
+        if stale {
             return Ok(2);
         }
-        io::stdout().write_all(platform_text(&matrix).as_bytes())?;
     }
+    io::stdout().write_all(platform_text(&matrix).as_bytes())?;
     Ok(0)
 }
 

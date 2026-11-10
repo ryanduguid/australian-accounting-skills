@@ -77,7 +77,7 @@ repos:
         entry: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
         language: system
         pass_filenames: false
-        files: ^(\.claude/skills/|validation/cases/|tests/|tools/accounting-skills/src/|coverage\.json)
+        files: ^(\.claude/skills/|validation/cases/|validation/results/|tests/|tools/accounting-skills/src/|coverage\.json|docs/skill-verification\.md)
 
       - id: whitespace
         name: git diff --cached --check
