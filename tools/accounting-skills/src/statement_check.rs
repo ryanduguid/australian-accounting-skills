@@ -73,6 +73,7 @@ struct Page {
 struct Line {
     line: String,
     date: String,
+    posted: Option<String>,
     debit: Option<String>,
     credit: Option<String>,
     balance: Option<String>,
@@ -164,8 +165,8 @@ struct Checked {
     end: NaiveDate,
     opening: i128,
     closing: i128,
-    /// The running balance after each line, with the line's date, in statement order.
-    after: Vec<(NaiveDate, i128)>,
+    /// The running balance after each line, with its posting date where given, in statement order.
+    after: Vec<(Option<NaiveDate>, i128)>,
 }
 
 #[derive(Default)]
@@ -216,7 +217,7 @@ struct Running {
     /// Whether the balance was just set from a printed figure, which a sign taken from the
     /// balance needs on the line before.
     printed_before: bool,
-    after: Vec<(NaiveDate, i128)>,
+    after: Vec<(Option<NaiveDate>, i128)>,
 }
 
 /// The statement a page belongs to, as its lines need it.
@@ -254,6 +255,11 @@ fn check_page(
         reference(&line.line, "line", &mut seen, &at)?;
         let at = format!("{at} line {}", line.line);
         let when = date(&line.date, &format!("{at} date"))?;
+        let posted = line
+            .posted
+            .as_deref()
+            .map(|posted| date(posted, &format!("{at} posted")))
+            .transpose()?;
         if when > period.end {
             report.breaks.push(format!(
                 "BREAK {at}: dated {when}, after the period ends {}",
@@ -292,7 +298,7 @@ fn check_page(
             running.balance = balance;
         }
         running.printed_before = balance.is_some();
-        running.after.push((when, running.balance));
+        running.after.push((posted, running.balance));
         report.lines += 1;
     }
     if let Some(forward) = optional(
@@ -383,16 +389,28 @@ fn check_continuity(ids: (&str, &str), before: &Checked, next: &Checked, report:
     let expected = if Some(next.start) == following {
         before.closing
     } else {
-        // The balance before the overlap is only known when the lines run in date order.
-        if !before.after.windows(2).all(|pair| pair[0].0 <= pair[1].0) {
+        // Periods run on posting dates, and a card's printed date can precede posting, so only
+        // posting dates in order place the balance before the overlap.
+        let Some(posted) = before
+            .after
+            .iter()
+            .map(|(posted, running)| posted.map(|posted| (posted, *running)))
+            .collect::<Option<Vec<_>>>()
+        else {
             report.breaks.push(format!(
-                "BREAK {at}: overlap cannot be placed, {} lines are not in date order",
+                "BREAK {at}: overlap cannot be placed, {} lines lack posting dates",
+                ids.0
+            ));
+            return;
+        };
+        if !posted.windows(2).all(|pair| pair[0].0 <= pair[1].0) {
+            report.breaks.push(format!(
+                "BREAK {at}: overlap cannot be placed, {} lines are not in posting-date order",
                 ids.0
             ));
             return;
         }
-        before
-            .after
+        posted
             .iter()
             .rev()
             .find(|(when, _)| *when < next.start)
@@ -497,7 +515,7 @@ mod tests {
         credit: Option<&str>,
         balance: Option<&str>,
     ) -> Value {
-        json!({"line": line, "date": date, "debit": debit, "credit": credit, "balance": balance, "sign_from": "column"})
+        json!({"line": line, "date": date, "posted": date, "debit": debit, "credit": credit, "balance": balance, "sign_from": "column"})
     }
 
     /// A fabricated 2 page bank statement that ties on every check.

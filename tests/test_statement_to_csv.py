@@ -42,6 +42,15 @@ class StatementToCsvTests(unittest.TestCase):
         self.assertIn("is not out of period on that ground alone", signs)
         self.assertIn("infer the year across a year end from the statement period", signs)
 
+    def test_manual_tie_outs_follow_the_account_direction(self) -> None:
+        tie_out = step("4. **Tie out before building the file.**", "5. **Resolve overlaps")
+        self.assertIn("plus credits less debits must equal the carried-forward balance for a deposit account", tie_out)
+        self.assertIn("the brought-forward balance plus debits less credits must equal it", tie_out)
+        inventory = step("1. **Inventory and sequence the statements.**", "2. **Extract one row")
+        self.assertIn("after its last line posted before the later statement's period starts", inventory)
+        self.assertIn("Use posting (processing) dates, not transaction dates", inventory)
+        self.assertIn("the overlap cannot be placed; flag it", inventory)
+
     def test_gross_totals_catch_omissions_that_cancel(self) -> None:
         tie_out = step("4. **Tie out before building the file.**", "5. **Resolve overlaps")
         self.assertIn(
@@ -65,7 +74,8 @@ class StatementToCsvTests(unittest.TestCase):
             "- `2`: each `BREAK` line names a statement, page and line",
             "except that with `owed` a line may be dated up to 31 days early",
             "without surrounding spaces",
-            "Reread only the pages the lines name; for a statement-level break",
+            "Reread only the pages the lines name.",
+            "except those whose own printed total for that side was compared and tied",
             "each `OVERLAP` line names 2 statements whose periods overlap",
             "its one total, or its parts",
             "references must be present and unique",

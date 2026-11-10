@@ -48,7 +48,7 @@ fn line(
     credit: Option<&str>,
     balance: Option<&str>,
 ) -> Value {
-    json!({"line": line, "date": date, "debit": debit, "credit": credit, "balance": balance, "sign_from": "column"})
+    json!({"line": line, "date": date, "posted": date, "debit": debit, "credit": credit, "balance": balance, "sign_from": "column"})
 }
 
 /// One January bank statement, one page, 3 lines with balances on 2 of them.
@@ -243,7 +243,7 @@ fn an_overlap_needs_the_earlier_lines_in_date_order() {
     assert_eq!(run.code, Some(2));
     assert_eq!(
         run.stdout[0],
-        "BREAK S1 to S2: overlap cannot be placed, S1 lines are not in date order"
+        "BREAK S1 to S2: overlap cannot be placed, S1 lines are not in posting-date order"
     );
 }
 
@@ -279,7 +279,7 @@ fn a_card_line_may_be_dated_up_to_31_days_before_its_period() {
         lines[2]["balance"] = json!("750.00");
         json!({"direction": "owed", "statements": [statement]})
     };
-    let allowed = run(&card("2025-12-02"));
+    let allowed = run(&card("2025-12-01"));
     assert_eq!(allowed.code, Some(0), "{:?}", allowed.stdout);
     assert_eq!(
         run(&card("2025-11-30")).stdout[0],
@@ -308,5 +308,64 @@ fn references_must_be_present_and_unique() {
     assert_refused(
         &run(&deposit(vec![january("")])),
         "statement reference is empty",
+    );
+}
+
+#[test]
+fn an_overlap_is_placed_by_posting_dates_or_not_at_all() {
+    // A 20.00 purchase made on 13 January and posted on 16 January appears on both card
+    // statements; the second opens before it posts, at 0.00.
+    let card = |id: &str, start: &str, end: &str, posted: Option<&str>| {
+        json!({"id": id, "period_start": start, "period_end": end, "opening": "0.00", "closing": "20.00",
+            "pages": [{"page": "1", "lines": [{"line": "1", "date": "2026-01-13", "posted": posted,
+                "debit": "20.00", "credit": null, "balance": "20.00", "sign_from": "column"}]}]})
+    };
+    let input = |posted| {
+        json!({"direction": "owed", "statements": [
+            card("C1", "2026-01-01", "2026-01-31", posted),
+            card("C2", "2026-01-15", "2026-02-14", Some("2026-01-16"))]})
+    };
+    let placed = run(&input(Some("2026-01-16")));
+    assert_eq!(
+        placed.stdout,
+        [
+            "OVERLAP C1 and C2: 2026-01-15 to 2026-01-31",
+            "PASS 2 statements, 2 lines; compared 4 printed balances, 0 printed totals, 1 statement links",
+        ]
+    );
+    let unplaced = run(&input(None));
+    assert_eq!(unplaced.code, Some(2));
+    assert_eq!(
+        unplaced.stdout[0],
+        "BREAK C1 to C2: overlap cannot be placed, C1 lines lack posting dates"
+    );
+}
+
+#[test]
+fn page_forward_balances_are_compared() {
+    let paged = |brought: &str, carried: &str| {
+        let mut statement = january("S1");
+        statement["pages"][0]["brought_forward"] = json!(brought);
+        statement["pages"][0]["carried_forward"] = json!(carried);
+        deposit(vec![statement])
+    };
+    assert_eq!(run(&paged("1000.00", "1250.00")).code, Some(0));
+    let brought = run(&paged("990.00", "1250.00"));
+    assert_eq!(brought.code, Some(2));
+    assert!(
+        brought
+            .stdout
+            .contains(&"BREAK S1 page 1: brought forward 990.00, computed 1000.00".to_owned()),
+        "{:?}",
+        brought.stdout
+    );
+    let carried = run(&paged("1000.00", "1240.00"));
+    assert_eq!(carried.code, Some(2));
+    assert!(
+        carried
+            .stdout
+            .contains(&"BREAK S1 page 1: carried forward 1240.00, computed 1250.00".to_owned()),
+        "{:?}",
+        carried.stdout
     );
 }
