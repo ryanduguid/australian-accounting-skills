@@ -12,8 +12,9 @@ from __future__ import annotations
 import unittest
 
 import test_practice_workflows as practice
-from skill_prose import DO_NOT, NOT, workflow_step
+from skill_prose import DO_NOT, NOT, SKILLS, section, workflow_step
 
+CASES = SKILLS.parents[1] / "validation" / "cases"
 ATO_SMSF = "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/self-managed-super-funds-smsf"
 
 
@@ -89,7 +90,22 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bcommuting an income stream\b", r"\bwhen that income stream commenced\b",
                              r"\(s 307-125\(3\)\(c\)\)")
         self.assert_sentence(step, r"\bwithout computing their tax\b")
+        # A benefit from a pension that did not revert keeps that pension's proportions:
+        # s 307-125(4)(a) displaces the payment-date rule for the method in s 307-125.02.
+        self.assert_sentence(step, r"\bs 307-125\(4\)\(a\)", r"\bs 307-125\.02\b", r"\bdid not automatically revert\b",
+                             r"\bother than investment earnings\b", r"\bself-insurance amounts arising on or after the death\b",
+                             r"\bwhen the original income stream commenced\b")
         self.assert_routes(step, 1)
+
+    def test_death_benefits_adult_child_interdependency_stays_open(self) -> None:
+        # Financial independence rules out s 302-195(1)(b) and (d), not an interdependency
+        # relationship under (1)(c), so neither the example nor the card may settle it.
+        example = section("au-smsf-death-benefits", "Fabricated acceptance example")
+        card = " ".join((CASES / "au-smsf-death-benefits-reversionary-and-nomination.md").read_text(encoding="utf-8").split())
+        for text in (example, card):
+            self.assert_sentence(text, r"\bSIS dependant\b", r"`UNVERIFIED` under s 302-195\(1\)\(c\)",
+                                 r"\binterdependency\b")
+            self.assertNotRegex(text, r"\bbut not\b[^.]*\ba death benefits dependant\b")
 
     def test_death_benefits_timeline_does_not_judge_lateness(self) -> None:
         step = workflow_step("au-smsf-death-benefits", 7)
@@ -105,6 +121,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
             "https://www.legislation.gov.au/C2004A05138/latest/text",
             "https://www.ato.gov.au/law/view/document?DocID=SFD/SMSFD20083/NAT/ATO/00001",
             "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20135/NAT/ATO/00001",
+            "https://www.legislation.gov.au/F2021L00206/latest/text",
             f"{ATO_SMSF}/paying-smsf-benefits/death-of-an-smsf-member",
             f"{ATO_SMSF}/smsf-administration-and-reporting/when-to-lodge-a-transfer-balance-account-report-for-smsfs",
             f"{ATO_SMSF}/paying-smsf-benefits/payg-withholding-obligations-when-paying-super-benefits",
@@ -150,6 +167,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         step = workflow_step("au-family-trust-election", 6)
         self.assert_carries(step, "s 272-85(1)", "s 272-87(3)", "s 272-85(4)", "(4A)", "s 272-85(6B)",
                             "s 272-90(5)", "s 272-85(7)", "ss 271-20 to 271-30")
+        # The one-trust restriction ignores an IEE revoked under s 272-85(5A) or (5B).
+        self.assert_sentence(step, r"\bs 272-85\(8\)", r"\brevoked under s 272-85\(5A\) or \(5B\)")
         self.assert_sentence(step, r"\bmore than half of its income or capital\b")
         self.assert_sentence(step, r"\ball of its conferrals and distributions outside the family group\b",
                              r"\bnot only amounts that came from the family trust\b")
@@ -164,8 +183,17 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bs 272-80\(6\)", r"\ban outsider later holds a fixed entitlement\b",
                              r"\(s 272-80\(7\)\)")
         self.assert_sentence(step, r"\bUnder s 272-80\(8\) any other variation or revocation\b")
+        # The s 272-80(6A) lookback stops before the year the revocation takes effect.
+        self.assert_sentence(step, r"\bs 272-80\(6A\)",
+                             r"\bend of the income year before the one from which the revocation is to take effect\b")
         self.assert_sentence(step, r"\bs 272-80\(6B\)\(a\)", r"\bend of the fourth income year after the specified income year\b")
         self.assert_sentence(step, r"\blodged return cannot be amended to add a revocation or variation schedule\b")
+
+    def test_election_card_fixes_the_iee_commencement(self) -> None:
+        # Without a specified day, 'every dividend' leaves the IEE's exposure period open.
+        card = " ".join((CASES / "au-family-trust-election-earlier-year.md").read_text(encoding="utf-8").split())
+        self.assert_sentence(card, r"\binterposed entity election specifying the first day of income year 6\b")
+        self.assert_sentence(card, r"\bs 271-30\b", r"\bs 272-85\(6B\)", r"\bincome year 3 to 5 dividends precede it\b")
 
     def test_election_form_pack_is_not_lodged(self) -> None:
         step = workflow_step("au-family-trust-election", 8)
@@ -215,7 +243,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, NOT + r"excluded from counting as a repayment by s 109R\(2\)", r"\(s 109R\(3\)\(a\)\)")
         # s 109ZC(2) excludes the set-off only up to the part neither franked nor franked with an
         # exempting credit; the excess stays a dividend.
-        self.assert_sentence(step, r"\bs 109ZC\(2\)",
+        self.assert_sentence(step, r"\bs 109ZC\(2\)", r"\bexcept for franking purposes\b",
                              r"\bonly up to the part of the later dividend that is neither franked nor franked with an exempting credit\b")
         self.assert_sentence(step, r"\bany amount set off above that part is still a dividend\b")
         self.assert_routes(step, 1)

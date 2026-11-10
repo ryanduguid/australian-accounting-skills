@@ -26,7 +26,7 @@ Only the supplied facts are available. A's will and any grant of probate, the de
 ## Required checks
 
 - Record that SMSFD 2008/3 says s 59 and reg 6.17A do not apply to SMSFs, then test the nomination against the deed, which adopts the reg 6.17A witnessing and lapse requirements, showing the single witness and the 3-year lapse as requirements not met on the evidence, and leave validity to the trustee's lawyer.
-- Record C as a SIS dependant (a child) but not, on the evidence, a death benefits dependant under s 302-195, in separate columns.
+- Record C as a SIS dependant (a child) and, in a separate column, C's death benefits dependant status: not met under s 302-195(1)(b) (aged 34) or, on the evidence, (1)(d), and `UNVERIFIED` under s 302-195(1)(c) until the facts of any interdependency relationship under s 302-200 are evidenced.
 - Record that, on the evidence, C does not meet reg 6.21(2A) for an income stream, so a payment to C would be a lump sum, and that no disability evidence was supplied.
 - Record the pension as reversionary to B under the pension documents, citing TR 2013/5, and date B's transfer balance credit at the end of 12 months from the death under s 294-25(1) item 2, with the TBAR reporting the date of death as the effective date.
 - Identify the insurance proceeds and premium deductions as bringing s 307-290 into play, and leave the element untaxed in the fund blank until the last retirement day and service period are evidenced.
