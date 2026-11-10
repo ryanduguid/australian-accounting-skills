@@ -452,6 +452,40 @@ class SafetyControlTests(unittest.TestCase):
         self.assertIn("re-export affected trial balances", close)
         self.assertIn("period-lock action is recorded as pending or complete", close)
 
+    def test_close_control_step_reports_exit_2_and_quotes_exceptions(self) -> None:
+        close = (
+            REPOSITORY / ".claude" / "skills" / "month-end-close" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        for contract in (
+            "Run it when `close-control --version` shows it is installed",
+            "Do not convert another export into that format by hand.",
+            "do not describe what it would have found",
+            "Rust 1.99 or newer",
+            "- Any other code: the run failed. Quote its output and record the step as not run.",
+            "Carry each control the summary's `Controls not run` line names as an open item",
+            "no release is published, so it is built from source with "
+            "`cargo install --locked --path .` in `packages/monthly-close-control-plane`",
+            "- `0`: every control that ran passed. This is not close approval.",
+            "- `2`: use the status on the first output line.",
+            "then stop the close and return it to the preparer",
+            "by its control and any account code, adding only an owner and status",
+            "Keep source-period context for close-control exceptions at pack level",
+            "On any other exit, quote no pack file",
+            "in the blocks or after them",
+            "- `1`: the run failed",
+            "the whole of `exceptions.csv` that run wrote, header row included, byte for byte",
+            "Never restate, reword, round, reorder, merge, translate or summarise an exception",
+            "exit `2` does not become a pass",
+        ):
+            with self.subTest(contract=contract):
+                self.assertIn(contract, close)
+        cases = REPOSITORY / "validation" / "cases"
+        exit_2 = (cases / "month-end-close-control-exit-2.md").read_text(encoding="utf-8")
+        self.assertIn("If the first output line instead reports `BLOCKED`", exit_2)
+        for card in ("month-end-close-control-exit-2", "month-end-close-control-not-installed"):
+            with self.subTest(card=card):
+                self.assertIn("  - month-end-close\n", (cases / f"{card}.md").read_text(encoding="utf-8"))
+
     def test_sensitive_and_dated_rule_heuristics_cover_adverse_examples(self) -> None:
         adverse = {
             "email address": "Contact worker@example.test",
