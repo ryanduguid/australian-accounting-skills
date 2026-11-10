@@ -11,7 +11,7 @@ Activities and entity structure, current/projected turnover schedules, registrat
 
 ## Workflow
 
-1. Reconcile separate current and projected GST turnover schedules under GST Act ss 188-10 to 188-25. Record the assessment month: current turnover covers the 12 months ending that month; projected turnover covers that month and the next 11. Separate input-taxed supplies from GST-free supplies and record each statutory exclusion. Apply the s 188-25 capital-asset and closure exclusions to projected turnover only, with evidence for the asset's character. Check GST-group rules and special registration rules before applying the verified threshold; a financial-year revenue total alone is insufficient.
+1. Reconcile separate current and projected GST turnover schedules under GST Act ss 188-10 to 188-25. Record the assessment month: current turnover covers the 12 months ending that month; projected turnover covers that month and the next 11. Separate input-taxed supplies from GST-free supplies and record each statutory exclusion. Apply the GST Act s 188-25 capital-asset and closure exclusions to projected turnover only, with evidence for the asset's character. Check GST-group rules and special registration rules before applying the verified threshold; a financial-year revenue total alone is insufficient.
 
 2. Prepare registration, cancellation or basis questions with relevant dates and evidence. Leave any application or election to an authorised human.
 

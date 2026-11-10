@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 97 skills, 597 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 97 skills, 600 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -25,7 +25,7 @@ Totals: 97 skills, 597 indexed primary sources of which 341 have a recorded huma
 | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | [6](../.claude/skills/au-bookkeeping/sources.json) | 2026-10-14 (1 of 6) | 0 | 0 | 4 | 2 | 0 | 0 |
 | [`au-business-acquisition-review`](../.claude/skills/au-business-acquisition-review/SKILL.md) | [5](../.claude/skills/au-business-acquisition-review/sources.json) | 2026-11-02 (5 of 5) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | [2](../.claude/skills/au-business-formation/sources.json) | 2026-10-14 (1 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md) | [7](../.claude/skills/au-capital-gains/sources.json) | 2026-09-30 (7 of 7) | 0 | 0 | 3 | 2 | 0 | 0 |
+| [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md) | [8](../.claude/skills/au-capital-gains/sources.json) | 2026-09-30 (7 of 8) | 0 | 0 | 3 | 2 | 0 | 0 |
 | [`au-car-expenses`](../.claude/skills/au-car-expenses/SKILL.md) | [2](../.claude/skills/au-car-expenses/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-client-acceptance`](../.claude/skills/au-client-acceptance/SKILL.md) | [11](../.claude/skills/au-client-acceptance/sources.json) | 2026-09-29 (6 of 11) | 1 | 0 | 1 | 1 | 0 | 0 |
 | [`au-client-departure`](../.claude/skills/au-client-departure/SKILL.md) | [9](../.claude/skills/au-client-departure/sources.json) | none (0 of 9) | 0 | 0 | 1 | 0 | 0 | 0 |
@@ -35,7 +35,7 @@ Totals: 97 skills, 597 indexed primary sources of which 341 have a recorded huma
 | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | [11](../.claude/skills/au-depreciation-schedule/sources.json) | 2026-11-02 (11 of 11) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) | [5](../.claude/skills/au-director-penalty-review/sources.json) | 2026-11-02 (3 of 5) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`au-division-293`](../.claude/skills/au-division-293/SKILL.md) | [2](../.claude/skills/au-division-293/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | [3](../.claude/skills/au-division-296/sources.json) | 2026-09-30 (3 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | [4](../.claude/skills/au-division-296/sources.json) | 2026-09-30 (3 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) | [2](../.claude/skills/au-dssp/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) | [1](../.claude/skills/au-employee-share-schemes/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | [3](../.claude/skills/au-etp-redundancy/sources.json) | 2026-10-14 (3 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
@@ -101,7 +101,7 @@ Totals: 97 skills, 597 indexed primary sources of which 341 have a recorded huma
 | [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) | [12](../.claude/skills/fuel-tax-credits/sources.json) | 2026-09-30 (2 of 12) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`month-end-close`](../.claude/skills/month-end-close/SKILL.md) | [5](../.claude/skills/month-end-close/sources.json) | 2026-09-30 (5 of 5) | 1 | 0 | 10 | 4 | 0 | 0 |
 | [`payroll-tax-contractors`](../.claude/skills/payroll-tax-contractors/SKILL.md) | [19](../.claude/skills/payroll-tax-contractors/sources.json) | 2026-09-30 (4 of 19) | 1 | 0 | 6 | 2 | 0 | 0 |
-| [`plant-and-equipment-costing`](../.claude/skills/plant-and-equipment-costing/SKILL.md) | [5](../.claude/skills/plant-and-equipment-costing/sources.json) | 2026-10-29 (2 of 5) | 0 | 0 | 2 | 2 | 0 | 0 |
+| [`plant-and-equipment-costing`](../.claude/skills/plant-and-equipment-costing/SKILL.md) | [6](../.claude/skills/plant-and-equipment-costing/sources.json) | 2026-10-29 (2 of 6) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`progress-claim-preparation`](../.claude/skills/progress-claim-preparation/SKILL.md) | [5](../.claude/skills/progress-claim-preparation/sources.json) | 2026-09-30 (4 of 5) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`reconciliation-break-trace`](../.claude/skills/reconciliation-break-trace/SKILL.md) | exempt | none | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`retention-schedule`](../.claude/skills/retention-schedule/SKILL.md) | [7](../.claude/skills/retention-schedule/sources.json) | 2026-09-30 (4 of 7) | 0 | 0 | 2 | 2 | 0 | 0 |
