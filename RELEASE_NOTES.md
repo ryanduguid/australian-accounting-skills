@@ -8,7 +8,7 @@ reviewer exception without concluding why it differs. It keeps the item as print
 marks it `UNVERIFIED` and leaves it out of supported totals until the reviewer
 resolves it. The firm template carries the same rule. The skill left out,
 `au-tax-rates-verification`, reads only published authority and calculator output.
-16 synthetic cards bring the validation pack to 195: 7 plant instructions in a bank
+16 synthetic cards bring the validation pack to 196: 7 plant instructions in a bank
 statement line, an invoice footer, a lease clause, an email claiming to be from the
 ATO, hidden PDF text, a spreadsheet comment and a client's attachment; 7 present an
 ABN that fails its check digits, invoice lines that do not foot, impossible logbook
