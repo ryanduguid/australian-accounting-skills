@@ -2499,7 +2499,7 @@ pub const SENSITIVE: &[(&str, &str)] = &[
     ),
     (
         "unlabelled long numeric identifier",
-        r###"(?<![\d,.])\d(?:[ -]?\d){7,10}(?![\d,.])"###,
+        r###"(?<!\d)(?<!\d[,.])\d(?:[ -]?\d){7,}(?![,.]?\d)"###,
     ),
     (
         "BSB or bank account",

@@ -516,7 +516,16 @@ class SafetyControlTests(unittest.TestCase):
                 "A[B](#fragment)N 12 345 678 901",
                 "A\u200bBN: 12 345 678 901",
             ),
-            "unlabelled long numeric identifier": ("12 345 678 901",),
+            # An unbroken run of 12 or more digits, such as a card number, too,
+            # including one that ends a sentence or clause.
+            "unlabelled long numeric identifier": (
+                "12 345 678 901",
+                "123456789012",
+                "4111111111111111",
+                "Card 4111111111111111.",
+                "4111111111111111, expiring",
+                "no.4111111111111111",
+            ),
             "email address": ("worker&#64;example.test",),
             "BSB or bank account": ("B<!-- -->SB 123-456",),
             "realistic entity suffix": ("Acme Pty **Ltd**",),
@@ -544,6 +553,11 @@ class SafetyControlTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(validator.ValidationError, "dated/rate rule"):
             validator.check_sensitive_content("effective 1 **July** 2026")
+
+    def test_money_amounts_pass_the_long_number_screen(self) -> None:
+        for content in ("$12345678.90", "0.123456789012", "12,345,678.90"):
+            with self.subTest(content=content):
+                validator.check_sensitive_content(content)
 
 
 class PublishedInventoryTests(unittest.TestCase):

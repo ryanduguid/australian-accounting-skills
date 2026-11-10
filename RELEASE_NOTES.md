@@ -203,6 +203,10 @@ reconciling items and pairs offsets. Each has a new card with no recorded run
 and a routing case, and their descriptions keep the combined length below the
 76-skill total. The new source records await human review.
 
+The validation pack's private-data screen now refuses 2 kinds of digit run it
+missed: an unbroken run of 12 or more digits, such as a card number, and a run
+beside a full stop or comma, as at the end of a sentence or clause.
+
 The coverage matrix builder, the source sweep's outcome check, task-only trial
 preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep

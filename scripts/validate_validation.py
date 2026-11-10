@@ -72,7 +72,7 @@ SENSITIVE_PATTERNS = {
         re.I,
     ),
     "unlabelled long numeric identifier": re.compile(
-        r"(?<![\d,.])\d(?:[ -]?\d){7,10}(?![\d,.])"
+        r"(?<!\d)(?<!\d[,.])\d(?:[ -]?\d){7,}(?![,.]?\d)"
     ),
     "BSB or bank account": re.compile(
         r"\b(?:BSB|bank\s+account)\s*(?:(?:number|no\.?|[:#-])\s*)?\d", re.I
