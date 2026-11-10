@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 99 skills, 533 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -49,6 +49,7 @@ Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded huma
 | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | [7](../.claude/skills/au-individual-return/sources.json) | 2026-10-14 (2 of 7) | 2 | 0 | 4 | 3 | 0 | 0 |
 | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | [12](../.claude/skills/au-land-tax/sources.json) | 2026-09-30 (3 of 12) | 0 | 0 | 9 | 2 | 0 | 0 |
 | [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) | [1](../.claude/skills/au-lump-sum-arrears/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
+| [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) | [13](../.claude/skills/au-main-residence/sources.json) | none (0 of 13) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) | [1](../.claude/skills/au-managed-fund-amit/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-medicare-review`](../.claude/skills/au-medicare-review/SKILL.md) | [1](../.claude/skills/au-medicare-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) | [1](../.claude/skills/au-non-commercial-losses/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
@@ -69,6 +70,7 @@ Totals: 97 skills, 511 indexed primary sources of which 341 have a recorded huma
 | [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [12](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 12) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [1](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | [2](../.claude/skills/au-sapto/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 2 | 0 | 0 | 0 |
+| [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | [9](../.claude/skills/au-share-buy-back/sources.json) | none (0 of 9) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) | [15](../.claude/skills/au-short-stay-accommodation/sources.json) | 2026-10-15 (15 of 15) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | [4](../.claude/skills/au-small-business-cgt/sources.json) | 2026-09-30 (3 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | [1](../.claude/skills/au-small-business-income-offset/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
