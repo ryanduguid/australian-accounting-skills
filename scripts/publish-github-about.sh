@@ -20,13 +20,14 @@ TOPICS=(
   australian-tax
   bas
   claude-code
+  claude-skills
   codex
-  construction-accounting
   division-7a
   fbt
   public-practice
   python
   stp
+  tax
   tax-prep
   xero
 )

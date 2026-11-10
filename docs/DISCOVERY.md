@@ -19,8 +19,13 @@ installation guide. Verify the installed revision before advertising its count. 
 On 31 October 2026 it showed 67 skills and 159 installs, behind the 76 released, so do not
 quote its count as the inventory. The index is install telemetry, not a form. Its Snyk audit
 lists W011 and W012 against some skills: W011 reflects that skills read third-party exports,
-and W012 cites a remote command, which the skills do not run; they name the optional
-`review-ready` tool only where the operator has already installed it. Recheck the audit after
+and W012 cites a remote command. No skill downloads a script or pipes one into a shell. Six
+skills tell the agent to run a local program only when it is already installed: `review-ready`
+in `bas-preparation`, `month-end-close`, `workpaper-tie-out` and `year-end-workpapers`,
+`close-control` in `month-end-close`, `aasb-corpus` in `au-financial-statements` and
+`wip-over-under-billing`, and `wip-tally` in `wip-over-under-billing`. The one remote fetch is
+the `cargo install --git` command `wip-over-under-billing` gives for when installation is
+approved, which builds `wip-tally` from a pinned commit. Recheck the audit after
 the host re-indexes rather than claiming it is clear.
 
 [Skills Directory](https://www.skillsdirectory.com/authors/ryanduguid) also lists these skills. On
