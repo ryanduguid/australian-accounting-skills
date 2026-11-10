@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 179 cards in `cases/` test workflow quality, provenance and restraint.
+The 182 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -226,8 +226,11 @@ law claim, unverified source or guess.
 | [WA property management sale with a rent roll and trade debts](cases/au-transfer-duty-wa-rent-roll-and-trade-debts.md) | au-transfer-duty |
 | [Connector that lists a write tool, and a request to post a journal](cases/xero-exports-connector-read-and-write-request.md) | xero-exports |
 | [BAS requested from connector reads with no exports](cases/bas-preparation-connector-without-exports.md) | bas-preparation, xero-exports |
+| [SMSF member death with a reversionary pension and a once-witnessed nomination](cases/au-smsf-death-benefits-reversionary-and-nomination.md) | au-smsf-death-benefits |
+| [Proposed final dividend partly set off against a director's loan](cases/au-franking-account-dividend-preparation.md) | au-franking-account |
+| [Proposed family trust election for an earlier year with a cousin distribution and a part-owned company](cases/au-family-trust-election-earlier-year.md) | au-family-trust-election |
 
-Together the cards cover all 97 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 99 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -256,6 +259,8 @@ The 7 land tax cards added on 4 November 2026, one for each state and territory
 that levies land tax, have no recorded run.
 The 8 transfer duty cards, one for each state and territory, and the 2 Xero connector cards added on
 5 November 2026 have no recorded run.
+The 3 cards added on 11 November 2026 for SMSF death benefits, private company
+dividend preparation and a family trust election have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

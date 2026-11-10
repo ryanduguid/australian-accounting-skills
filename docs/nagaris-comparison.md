@@ -18,10 +18,10 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 | Cost base of dividend reinvestment shares | Covered | `au-dssp` |
 | CGT rollovers on a restructure | New | `au-restructure-rollovers` |
 | Division 7A repayments, deemed dividends and trust entitlements | Covered | `div7a-compliance` |
-| Private company dividends and distribution statements | New | `au-franking-account` |
+| Private company dividends and distribution statements | New | `au-franking-account`; its step 5a, added on 11 November 2026, prepares a proposed dividend's s 254T evidence, resolution schedule, benchmark position, draft statements and franking entries, and routes a loan set-off to `div7a-compliance` |
 | Franking account reconciliation and franking deficit tax | New | `au-franking-account` |
 | Private company share buy-back | Not adopted | Specialist matter; `au-franking-account` screens it and routes it to a specialist |
-| Family trust and interposed entity elections | Covered | `au-trust-distributions` (family trust distribution tax screen); `au-trust-deed-review` records the election evidence |
+| Family trust and interposed entity elections | New | `au-family-trust-election`, added on 11 November 2026, prepares the evidence for deciding on a new election: test individual, family group, specified income year, interposed entity elections, revocation limits and FTDT exposure. `au-trust-distributions` screens FTDT each year and `au-trust-deed-review` records existing elections |
 | Trust deed review | New | `au-trust-deed-review` |
 | Trust distribution resolution | Covered | `au-trust-distributions`, with the resolution-readiness checklist in `au-trust-deed-review`; the trustee and adviser draft and execute resolutions |
 | Partnership agreements and partnership tax | Covered | `au-partnership-tax`; briefing a solicitor stays with the adviser |
@@ -43,7 +43,7 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 
 | Topic | Decision | Where or why |
 | --- | --- | --- |
-| Super and SMSF technical questions | Covered | `au-super-contribution-caps`, `au-smsf-year-end`, `au-division-293`, `au-division-296` |
+| Super and SMSF technical questions | Covered | `au-super-contribution-caps`, `au-smsf-year-end`, `au-division-293`, `au-division-296`; SMSF death benefits had no workflow until `au-smsf-death-benefits` was added on 11 November 2026 |
 | Salary sacrifice to super | Extended | `au-super-contribution-caps` step 7: headroom by fund receipt date and effective-arrangement evidence, with no recommended amount |
 | Super guarantee charge | New | `au-super-guarantee-charge` |
 | Centrelink entitlements | Not adopted | Social security entitlement estimates are outside accounting preparation and Services Australia decides them; `au-sapto` covers the tax offset |
@@ -117,3 +117,5 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 ## Verification and limits
 
 The new skills follow the existing format: inputs, workflow, hand-off, the shared source and review boundary, a primary-source starting point and a discovery-only `sources.json`. Ryan Duguid accepted the fetched readings of those records on 2 November 2026 without recording a current-law fact; records that could not be fetched still await human source review. Each new skill and each extension has at least one fabricated validation card. Their task-only observations on 2 November 2026 led to corrections in 10 of the skills, and Ryan Duguid confirmed a pass for each card on 2 November 2026 ([docs/EVAL.md](EVAL.md)). No rate, threshold, fee or due date was added to skill prose. This comparison does not assess the quality of the Nagaris product, which this repository cannot inspect.
+
+A recheck on 11 November 2026 found 3 sub-topics the rows above had marked as covered or new without a workflow for them: SMSF death benefits, preparing a private company dividend and deciding on a new family trust election. `au-smsf-death-benefits`, `au-family-trust-election` and step 5a of `au-franking-account` now cover them, written from legislation and ATO sources an agent read that day. Their source records await human review, and their 3 validation cards have no recorded model run.
