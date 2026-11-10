@@ -17,7 +17,8 @@ the supplier's earlier invoices.
 ## Task
 
 Use `tax-invoice-review` to prepare the invoice-to-GST-report tie-out, the
-exception schedule and the unresolved-items hand-off for invoices B-1 and B-2.
+exception schedule and the unresolved-items hand-off for invoice B-2, using
+B-1 as a comparison.
 
 ## Synthetic inputs
 
@@ -40,7 +41,8 @@ invoice requirements is supplied.
 
 ## Required checks
 
-- Tie B-1 and B-2 to the GST transaction report.
+- Tie B-2 to the GST transaction report: 2200.00 with a credit of 200.00. B-1
+  is last quarter's and serves only as a comparison.
 - Record that B-2's ABN fails the ABR check-digit test and conflicts with B-1
   and the supplier master, and raise it as a reviewer exception as a sign that
   B-2 may be altered or forged.
