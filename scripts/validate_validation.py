@@ -339,18 +339,23 @@ def git_entries(paths: list[str], root: Path = ROOT) -> dict[str, str]:
     return entries
 
 
-def check_ignored(path: str, root: Path = ROOT) -> None:
-    result = subprocess.run(
-        ["git", "check-ignore", "--no-index", "--quiet", "--", path],
-        cwd=root,
-        capture_output=True,
-        check=False,
-    )
-    if result.returncode == 0:
-        raise ValidationError(f"tracked source is ignored by .gitignore: {path}")
-    if result.returncode != 1:
+def ignored_paths(paths: list[str], root: Path = ROOT) -> set[str]:
+    """Return the paths .gitignore matches, asking Git once for all of them."""
+    try:
+        result = subprocess.run(
+            ["git", "check-ignore", "--no-index", "--stdin", "-z"],
+            cwd=root,
+            input=b"".join(os.fsencode(path) + b"\0" for path in paths),
+            capture_output=True,
+            check=False,
+        )
+    except OSError as error:
+        raise ValidationError(f"cannot run git check-ignore: {error}") from error
+    # Exit 0 means at least one path is ignored and 1 means none is.
+    if result.returncode not in (0, 1):
         detail = result.stderr.decode("utf-8", errors="replace").strip()
-        raise ValidationError(f"git check-ignore failed for {path}: {detail}")
+        raise ValidationError(f"git check-ignore failed: {detail}")
+    return {os.fsdecode(path) for path in result.stdout.split(b"\0") if path}
 
 
 def _strict_json(text: str, label: str) -> object:
@@ -617,12 +622,19 @@ def main(root: Path = ROOT) -> int:
     except ValidationError as error:
         errors.append(str(error))
 
+    ignored: set[str] = set()
+    try:
+        ignored = ignored_paths(sorted(expected_all), root)
+    except ValidationError as error:
+        errors.append(str(error))
+
     read_sources: dict[str, str] = {}
     for rel in sorted(expected_all):
         source_path = root / PurePosixPath(rel)
         try:
             check_expected_path(source_path, root)
-            check_ignored(rel, root)
+            if rel in ignored:
+                raise ValidationError(f"tracked source is ignored by .gitignore: {rel}")
             source_text = read_utf8(source_path)
             check_text(rel, source_text)
             read_sources[rel] = source_text

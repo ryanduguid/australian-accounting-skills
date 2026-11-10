@@ -217,6 +217,10 @@ preparation and the plugin eval builder now run only as native commands in
 files its issue from a separate job that runs no repository code. None of this
 is part of the installed skills.
 
+Both validation pack checkers ask Git once which sources `.gitignore` matches,
+not once per file, so the pre-commit check no longer starts a Git process for
+each of its 210 sources.
+
 # v0.5.0
 
 The pack moves from Apache-2.0 to the Functional Source License,

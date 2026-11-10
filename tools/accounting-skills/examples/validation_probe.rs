@@ -55,10 +55,10 @@ fn invoke(request: &Value) -> Result<Value> {
             &names("names").into_iter().collect::<Vec<_>>(),
             root
         )?),
-        "ignored" => {
-            v::check_ignored(s("path"), root)?;
-            Value::Null
-        }
+        "ignored" => json!(v::ignored_paths(
+            &names("names").into_iter().collect::<Vec<_>>(),
+            root
+        )?),
         "schema" => {
             v::check_results_schema(s("text"), &names("known"))?;
             Value::Null
