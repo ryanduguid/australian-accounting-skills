@@ -17,7 +17,7 @@ so the new test checks wording and card arithmetic, not model behaviour.
 `au-small-business-cgt` now states the basic conditions and each concession's
 extra conditions that the succession step routes to it, and notes that
 s 152-205(2) changes the basic conditions for the small business reduction
-from the income year that includes 1 July 2027. The 42 new source records
+from the income year that includes 1 July 2027. The 45 new source records
 await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
