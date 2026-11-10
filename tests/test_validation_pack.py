@@ -980,6 +980,23 @@ class FullRunTests(unittest.TestCase):
             "run_date must match the file name",
         )
 
+    def test_only_ignored_sources_are_refused_and_git_is_asked_once(self) -> None:
+        """One check-ignore call for every source, not one Git process per file."""
+        root = self.copy()
+        ignored = f"validation/cases/{self.cards(root)[1].name}"
+        write(root / ".gitignore", f"/{ignored}\n")
+        trace = root.parent / "git-trace.txt"
+        with mock.patch.dict(os.environ, {"GIT_TRACE": str(trace)}):
+            status, output = self.run_main(root)
+        self.assertEqual(status, 1, output)
+        self.assertIn(f"{ignored}: tracked source is ignored by .gitignore: {ignored}", output)
+        self.assertEqual(output.count("ignored by .gitignore"), 1, output)
+        calls = [
+            line for line in trace.read_text(encoding="utf-8").splitlines()
+            if "built-in: git check-ignore" in line
+        ]
+        self.assertEqual(len(calls), 1, calls)
+
     def targets(self, path: Path) -> set[str]:
         metadata, _ = validator.parse_front_matter(validator.read_utf8(path), path.name)
         skills = metadata["target_skills"]

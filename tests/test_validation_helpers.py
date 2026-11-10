@@ -121,14 +121,31 @@ class GitInventoryTests(unittest.TestCase):
                     with self.assertRaisesRegex(validator.ValidationError, message):
                         validator.git_entries(["a.md"])
 
-    def test_check_ignore_refuses_ignored_sources_and_git_failures(self) -> None:
-        with mock.patch.object(validator.subprocess, "run", return_value=self.completed(0)):
-            with self.assertRaisesRegex(validator.ValidationError, "ignored by .gitignore"):
-                validator.check_ignored("a.md")
+    def test_check_ignore_asks_git_once_and_fails_closed(self) -> None:
+        paths = ["a.md", "b.md", "c.md"]
+        for result, ignored in (
+            (self.completed(0, stdout=b"b.md\0"), {"b.md"}),
+            (self.completed(1), set()),
+        ):
+            with self.subTest(returncode=result.returncode):
+                with mock.patch.object(validator.subprocess, "run", return_value=result) as run:
+                    self.assertEqual(validator.ignored_paths(paths), ignored)
+                run.assert_called_once()
+                self.assertEqual(run.call_args.kwargs["input"], b"a.md\0b.md\0c.md\0")
         with mock.patch.object(validator.subprocess, "run",
                                return_value=self.completed(128, stderr=b"fatal: broken")):
-            with self.assertRaisesRegex(validator.ValidationError, "git check-ignore failed for a.md: fatal: broken"):
-                validator.check_ignored("a.md")
+            with self.assertRaisesRegex(validator.ValidationError, "git check-ignore failed: fatal: broken"):
+                validator.ignored_paths(paths)
+        with mock.patch.object(validator.subprocess, "run", side_effect=OSError("no git")):
+            with self.assertRaisesRegex(validator.ValidationError, "cannot run git check-ignore: no git"):
+                validator.ignored_paths(paths)
+
+    def test_a_failed_check_ignore_fails_the_run_once(self) -> None:
+        failure = validator.ValidationError("git check-ignore failed: fatal: broken")
+        output = io.StringIO()
+        with mock.patch.object(validator, "ignored_paths", side_effect=failure), redirect_stdout(output):
+            self.assertEqual(validator.main(REPOSITORY), 1)
+        self.assertEqual(output.getvalue().count("git check-ignore failed"), 1, output.getvalue())
 
 
 def _schema_with(change) -> str:

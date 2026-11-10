@@ -1,5 +1,13 @@
 # v0.5.1 (unreleased)
 
+The `xero-exports` connector route gains a fork row in its tool allowlist: the
+31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
+`XERO_READ_ONLY=true`. The row applies only once the running server is verified
+at that commit and setting; otherwise the base allowlist alone applies and the
+work falls back to file exports.
+The 31 handlers were read and no server was run, so the new test checks wording
+and the tool names, not a live connection. The scopes check is unchanged.
+
 `month-end-close` gains a close-control step after the review-ready gate. It
 runs `close-control` when it is installed, carries `REVIEW` items forward and
 returns a `BLOCKED` close to the preparer. On exit 0 or 2 it quotes the command
@@ -212,6 +220,10 @@ preparation and the plugin eval builder now run only as native commands in
 `tools/accounting-skills/`; their Python scripts are retired. The source sweep
 files its issue from a separate job that runs no repository code. None of this
 is part of the installed skills.
+
+Both validation pack checkers ask Git once which sources `.gitignore` matches,
+not once per file, so the pre-commit check no longer starts a Git process for
+each of its 210 sources.
 
 # v0.5.0
 

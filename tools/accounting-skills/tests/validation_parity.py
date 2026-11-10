@@ -34,7 +34,7 @@ def main():
     functions = ('read_utf8', 'parse_front_matter', 'normalise_for_sensitive_scan',
                  'check_sensitive_content', 'is_reparse_point', 'check_expected_path',
                  'inventory_validation_tree', 'discover_case_names', 'expected_validation',
-                 'case_ids', 'split_result_files', 'git_entries', 'check_ignored',
+                 'case_ids', 'split_result_files', 'git_entries', 'ignored_paths',
                  'check_results_schema', 'check_result_file', 'check_published_inventories',
                  'check_text', 'main')
     originals = {name: getattr(v, name) for name in functions}
@@ -87,7 +87,7 @@ def main():
         'case_ids': lambda names: frozenset(call('ids', names=sorted(names))),
         'split_result_files': lambda names: tuple(set(part) for part in call('split', names=sorted(names))),
         'git_entries': lambda paths, directory=root: call('git', names=paths, root=str(directory)),
-        'check_ignored': lambda path, directory=root: call('ignored', path=path, root=str(directory)),
+        'ignored_paths': lambda paths, directory=root: set(call('ignored', names=sorted(paths), root=str(directory))),
         'check_results_schema': lambda text, known=v.CASE_IDS: call('schema', text=text, known=sorted(known)),
         'check_result_file': result_file,
         'check_published_inventories': lambda skills, directory=root: call('published', names=sorted(skills), root=str(directory)),
