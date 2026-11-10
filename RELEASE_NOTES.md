@@ -1,5 +1,12 @@
 # v0.5.1 (unreleased)
 
+The `xero-exports` connector route gains a fork row in its tool allowlist: the
+31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
+`XERO_READ_ONLY=true`. The row applies only once the running server is verified
+at that commit and setting; otherwise the base allowlist or file exports apply.
+The 31 handlers were read and no server was run, so the new test checks wording
+and the tool names, not a live connection. The scopes check is unchanged.
+
 `month-end-close` gains a close-control step after the review-ready gate. It
 runs `close-control` when it is installed, carries `REVIEW` items forward and
 returns a `BLOCKED` close to the preparer. On exit 0 or 2 it quotes the command
