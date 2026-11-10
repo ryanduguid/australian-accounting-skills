@@ -5,7 +5,8 @@ Seven practice skills gain review steps. The transaction GST review in
 government fees (GST Act Division 81 and the GST Regulations), and
 `bas-preparation` runs the payroll tax registration test from
 `au-payroll-tax-states` when payroll is in scope, comparing total Australian
-or group wages with each paying jurisdiction's monthly and annual thresholds.
+or group wages with each paying jurisdiction's monthly, annual and any weekly
+thresholds, and lists an unregistered Queensland group member separately.
 `au-super-guarantee-charge` records the PCG 2026/1 risk zone at a recorded
 as-at date for each first-year QE day with a shortfall, keeps a contribution
 never made apart from one with no receipt date, and records who confirmed the
@@ -20,7 +21,7 @@ dual-code mismatches, tests a trust's beneficial owner evidence role by role
 and lists the trust, its representatives and identifiable beneficiaries for
 screening. `au-payroll-review` screens new employees for a stapled fund request,
 and `au-smsf-year-end` records each asset's market value basis and evidence.
-The new test checks wording, not model behaviour, and the 6 new source records
+The new test checks wording, not model behaviour, and the 8 new source records
 await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the

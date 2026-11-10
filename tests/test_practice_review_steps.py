@@ -141,6 +141,9 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"Australian wages exceed its weekly amount\b",
                              r"\beven where wages for the year are expected to stay below its annual threshold\b")
         self.assert_sentence(step, r"`not run`", r"\bthe weekly totals a weekly amount needs\b")
+        # Queensland's group member rule is a separate lead, not a threshold result.
+        self.assert_sentence(step, r"\bSeparately, where the entity is a group member and pays Queensland wages with no "
+                             r"Queensland registration recorded, list it whatever the thresholds show\b")
         self.assert_sentence(step, r"\bwhere wages are paid and the total exceeds a threshold with no registration recorded\b",
                              affirmed=(r"\blist each jurisdiction\b",))
         self.assertNotRegex(step, r"\bwhose (monthly or year-to-date )?wages exceed its threshold\b")
@@ -157,9 +160,15 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assertIn("the payroll tax screen compares total Australian wages (group wages where grouped) with each "
                       "paying jurisdiction's monthly and annual thresholds and any weekly amount its registration "
                       "page sets", checks)
+        self.assertIn("and separately any Queensland group member paying Queensland wages with no registration "
+                      "recorded", checks)
         owner = workflow_step("au-payroll-tax-states", 3)
         self.assert_sentence(owner, r"\bmonthly and annually, and each week's total against any weekly amount its "
                              r"registration page sets \(Queensland's does\)")
+        self.assert_sentence(owner, r"\bSeparately, list each unregistered group member that paid Queensland taxable "
+                             r"wages in a month, however small its or its group's wages\b",
+                             r"\bss 52\(b\) and 53\(1\) of the \[Payroll Tax Act 1971 \(Qld\)\]",
+                             r"\bwithin 7 days after the end of that month\b")
 
     # au-super-guarantee-charge: R0828
 
@@ -304,9 +313,16 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"the default fund\b", affirmed=(r"\bList as a lead\b",))
         # Contributions s 32C treats as complying without a chosen or stapled fund are recorded, not listed.
         self.assert_sentence(step, r"\bFirst record whether the contribution is made under a route that s 32C\b",
-                             r"\bwithout a chosen or stapled fund\b", r"\bState industrial award \(s 32C\(8\)\)",
-                             r"\bs 32C\(6\)\(g\), \(h\) and \(6AAA\)", r"\bregulation 15\b.{0,200}\(s 32C\(9\)\)")
-        self.assert_sentence(step, r"\bleave whether it applies to the reviewer\b",
+                             r"\balthough the fund paid is not the chosen or stapled fund\b",
+                             r"\bState industrial award \(s 32C\(8\)\)",
+                             r"\benterprise agreement or workplace determination made before 1 January 2021 once the "
+                             r"ATO has returned no stapled fund \(s 32C\(6\)\(g\), \(h\) and \(6AAA\)\)",
+                             r"\bsuccessor fund to which the employee's interest in the default fund or the stapled "
+                             r"fund was transferred without the employee's consent after the employer's last "
+                             r"contribution to that fund \(s 32C\(2AB\)\)",
+                             r"\bregulation 15\b.{0,200}\(s 32C\(9\)\)")
+        self.assert_sentence(step, r"\bsuccessor fund transfer and its evidence\b",
+                             r"\bleave whether it applies to the reviewer\b",
                              DO_NOT + r"list a contribution so recorded as a lead\b")
         self.assert_sentence(step, r"`not run`", r"\bstart dates or fund records\b")
         self.assert_sentence(step, DO_NOT + r"make the request\b", r"`au-super-guarantee-charge`")
