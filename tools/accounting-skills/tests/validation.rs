@@ -47,6 +47,26 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
     ] {
         assert!(v::check_sensitive_content(text, &[]).is_err(), "{text}");
     }
+    // An unbroken run of 12 or more digits, such as a card number, including
+    // one that ends a sentence or clause; money amounts still pass.
+    for text in [
+        "123456789012",
+        "4111111111111111",
+        "Card 4111111111111111.",
+        "4111111111111111, expiring",
+        "no.4111111111111111",
+    ] {
+        let error = v::check_sensitive_content(text, &[])
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("unlabelled long numeric identifier"),
+            "{text}: {error}"
+        );
+    }
+    for text in ["$12345678.90", "0.123456789012", "12,345,678.90"] {
+        assert!(v::check_sensitive_content(text, &[]).is_ok(), "{text}");
+    }
     assert!(
         v::check_sensitive_content("123456789", &["unlabelled long numeric identifier".into()])
             .is_ok()
