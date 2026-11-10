@@ -348,6 +348,45 @@ fn an_overlap_is_placed_by_posting_dates_or_not_at_all() {
 }
 
 #[test]
+fn a_posting_date_is_inside_the_period_at_both_endpoints_and_nowhere_else() {
+    // An owed account allows a transaction date up to 31 days early, but not a posting date.
+    let statement = |posted: &str| {
+        json!({"direction": "owed", "statements": [{"id": "C1",
+            "period_start": "2026-01-01", "period_end": "2026-01-31", "opening": "0.00", "closing": "20.00",
+            "pages": [{"page": "1", "lines": [{"line": "1", "date": posted, "posted": posted,
+                "debit": "20.00", "credit": null, "balance": "20.00", "sign_from": "column"}]}]}]})
+    };
+    for (posted, code, first) in [
+        (
+            "2026-01-01",
+            0,
+            "PASS 1 statements, 1 lines; compared 2 printed balances, 0 printed totals, 0 statement links",
+        ),
+        (
+            "2026-01-31",
+            0,
+            "PASS 1 statements, 1 lines; compared 2 printed balances, 0 printed totals, 0 statement links",
+        ),
+        (
+            "2025-12-31",
+            2,
+            "BREAK C1 page 1 line 1: posted 2025-12-31, outside the period 2026-01-01 to 2026-01-31",
+        ),
+    ] {
+        let result = run(&statement(posted));
+        assert_eq!(result.code, Some(code), "{posted}: {:?}", result.stdout);
+        assert_eq!(
+            result.stdout,
+            [first]
+                .into_iter()
+                .chain((code == 2).then_some("FAIL 1 breaks"))
+                .collect::<Vec<_>>(),
+            "{posted}"
+        );
+    }
+}
+
+#[test]
 fn page_forward_balances_are_compared() {
     let paged = |brought: &str, carried: &str| {
         let mut statement = january("S1");
