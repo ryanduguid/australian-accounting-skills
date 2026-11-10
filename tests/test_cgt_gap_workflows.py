@@ -238,7 +238,13 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bbefore s 159GZZZPA\b")
         # A tainted share capital account is not one for s 159GZZZP, so its debit leaves the dividend whole.
         self.assert_carries(step, "s 197-5", "s 197-10", "s 197-15", "ss 197-50 and 197-55", "s 975-300(3)",
-                            "items 7A and 7B of the s 205-30 table")
+                            "items 7A and 7B of the s 205-30 table", "(s 197-60)")
+        # Every Subdivision 197-A exclusion, not only ss 197-10 and 197-15, and the excess each leaves taxed.
+        self.assert_sentence(step, r"\bunless an exclusion in ss 197-10 to 197-40 applies\b", r"\(s 197-20\)",
+                             r"\boption premium reserve because options\b.{0,60}\bexercised \(s 197-25\)",
+                             r"\bdemutualisation\b.{0,60}\(ss 197-30 to 197-40\)",
+                             r"\bexcept any excess\b.{0,100}\(s 197-15\)")
+        self.assert_sentence(step, r"\bexclusion claimed\b", r"\bexcess that stays within Division 197\b")
         self.assert_sentence(step, r"\btransferred to the share capital account from another of the company's accounts\b",
                              r"\bAustralian resident\b")
         self.assert_sentence(step, r"\bcannot be revoked\b")
@@ -273,7 +279,8 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bSection 207-159\(1\) reaches a distribution by any entity, listed or not\b",
                              r"\bno practice of making such distributions regularly\b",
                              r"\bissue of equity interests\b", r"\bprincipal effect\b", r"\bsubstantial part\b",
-                             r"\bother than an incidental one\b", r"\bAPRA or ASIC\b")
+                             r"\bissued, or facilitated the issue of\b", r"\bother than an incidental one\b",
+                             r"\bAPRA or ASIC\b")
         self.assert_sentence(step, r"\bItem 3 of Schedule 5\b", r"\bmade on or after\b", r"\b28 November 2023\b")
         self.assert_sentence(step, r"\bparagraph 171\b", r"\bgenerally exercise it favourably\b",
                              r"\bbefore the day the distribution is made\b")
