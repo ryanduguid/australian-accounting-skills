@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 196 cards in `cases/` test workflow quality, provenance and restraint.
+The 207 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -258,7 +258,7 @@ law claim, unverified source or guess.
 | [A shareholder in a listed company's off-market tender buy-back that straddles 30 June](cases/au-share-buy-back-listed-tender-seller.md) | au-share-buy-back |
 | [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
 
-Together the cards cover all 99 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 101 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then

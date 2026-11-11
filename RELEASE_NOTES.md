@@ -1,5 +1,8 @@
 # v0.5.1 (unreleased)
 
+Together the changes below provide 101 skills, 207 validation cards and 116 routing
+prompts. The added cards and prompts have no recorded model run.
+
 Every skill that reads client documents, 96 of the 97, now records an instruction
 that tries to change or override the workflow, its output, the firm's instructions
 or the user's request, but not ordinary commercial terms, and any sign that a

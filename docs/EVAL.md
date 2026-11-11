@@ -275,7 +275,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 196 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 207 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -320,8 +320,8 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 107 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-97 skills has at least one, and `tests/test_routing_cases.py` fails when a
+the 116 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+101 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
@@ -332,10 +332,9 @@ neighbouring skill listed under `not` must not. To run just these:
 claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --max-cost-usd 30
 ```
 
-At the cost per case of the 1 and 2 November runs, the 107 cases would cost
-about US$18, an estimate, not a measurement; the cap leaves room above it
-because a run that reaches the cap stops with partial results. The 70 prompts
-added on 4 and 11 November 2026 have no recorded run.
+The estimate for the earlier 107-case pack was about US$18, not a measurement.
+The 116-case pack has no measured cost; a run that reaches the US$30 cap stops
+with partial results. The 79 prompts added on 4 and 11 November 2026 have no recorded run.
 
 On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4
 turns, MCP server not started) all 20 chose the expected skill and none of the

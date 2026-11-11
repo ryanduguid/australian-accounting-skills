@@ -190,10 +190,10 @@ static PROFESSIONAL_STANDARD: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"(?<![A-Za-z0-9])APES \d+").unwrap());
 static LINK: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\[[^\]]*\]\([^)\s]+\)").unwrap());
 
-const NUMBER: &str = r"\d+[A-Z]{0,3}(?:-\d+[A-Z]{0,3})?(?:\.\d+)?(?:\([0-9A-Za-z]{1,5}\))*";
+const NUMBER: &str = r"\d+[A-Z]*(?:-\d+[A-Z]*)?(?:\.\d+[A-Z]*)?(?:\([0-9A-Za-z]{1,5}\))*";
 static SECTION: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(&format!(
-        r"(?<![A-Za-z0-9'’])(s|ss|[Ss]ections?|[Ss]ubsections?|regs?|regulations?) ({NUMBER}(?:(?:, | and | or | to ){NUMBER})*)"
+        r"(?<![A-Za-z0-9'’])(s|ss|[Ss]ections?|[Ss]ubsections?|[Rr]egs?|[Rr]egulations?) ({NUMBER}(?:(?:, | and | or | to ){NUMBER})*)(?![A-Za-z0-9])"
     ))
     .unwrap()
 });
@@ -207,14 +207,16 @@ const PLURAL: &[&str] = &[
     "subsections",
     "Subsections",
     "regs",
+    "Regs",
     "regulations",
+    "Regulations",
 ];
 // What may sit between a section and the Act named after it: "s 41-5 of the
 // Fuel Tax Act 2006", "s 131-5 of Schedule 1 to the TAA 1953", "s 40-95 ITAA 1997",
 // "s 28(2)(d) and (e) of the AML/CTF Act", "s 6-7, s 6-17 or s 6-18 of the Rules".
 static FOLLOWING_GAP: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(&format!(
-        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{{1,5}}\))+|(?:,|,? and|,? or) (?:s|[Ss]ections?|[Ss]ubsections?|regs?|regulations?) {NUMBER})*[ *\[]*(?:of|in|under|to)? ?(?:Schedule \d+[A-Z]? (?:to|of) )?(?:the )?[ *\[]*$"
+        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{{1,5}}\))+|(?:,|,? and|,? or) (?:s|[Ss]ections?|[Ss]ubsections?|[Rr]egs?|[Rr]egulations?) {NUMBER})*[ *\[]*(?:of|in|under|to)? ?(?:Schedule \d+[A-Z]? (?:to|of) )?(?:the )?[ *\[]*$"
     ))
     .unwrap()
 });
@@ -992,9 +994,23 @@ pub fn check(root: &Path) -> Result<Report> {
                 for range in sentences(&block.text)? {
                     let sentence = &block.text[range.clone()];
                     let named = anchors(sentence)?;
+                    let title_ends = captures(&TITLE_END, sentence)?;
                     // "See section 3 below" points within the skill.
                     let mut sections = Vec::new();
                     for section in captures(&SECTION, sentence)? {
+                        // A title such as "Superannuation Regulations 1994"
+                        // names an instrument, not regulation 1994.
+                        let (start, end) = span(&section);
+                        if title_ends.iter().any(|title| {
+                            let (title_start, title_end) = span(title);
+                            start == title_start
+                                && end <= title_end
+                                && named
+                                    .iter()
+                                    .any(|anchor| anchor.start < start && anchor.end == title_end)
+                        }) {
+                            continue;
+                        }
                         let rest = &sentence[span(&section).1..];
                         if !rest.starts_with(" below") && !rest.starts_with(" above") {
                             sections.push(section);
