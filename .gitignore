@@ -133,6 +133,8 @@ exports/
 # Python
 /tools/accounting-skills/target/
 !/tools/accounting-skills/README.md
+# Section lists check-citations reads, one per Act, and their exceptions.
+!/tools/accounting-skills/section-index/*.txt
 __pycache__/
 *.py[cod]
 .coverage

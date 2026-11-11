@@ -15,7 +15,8 @@ are retired:
 
 `last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
 `check-citations` is also new: it checks that every cited section and ruling
-has a record in its skill's `sources.json`.
+has a record in its skill's `sources.json`, and that a cited section exists
+where `section-index/` lists its Act's sections.
 
 `statement-check` is also new: the `statement-to-csv` skill runs it on statement lines transcribed
 to JSON. In exact cents it checks each printed running balance, brought-forward and
@@ -197,10 +198,31 @@ right after it, right before it, or as the only one the sentence names apart
 from an amending Act and one named right after another section. An Act named
 on an earlier line or in an earlier sentence never owns a section. Sections of
 a professional standard such as APES 110, and cross-references such as
-"section 3 below", are not counted. Each unmatched
-citation prints as `file:line: citation: reason`, then a total line; the exit
-code is 2 when any citation is unmatched. A resolved citation shows only that a
-record exists, not that the section exists or says what the skill claims.
+"section 3 below", are not counted.
+
+A resolved section must also exist where `section-index/` in this directory
+lists its Act's sections. Each `REGISTER-ID.txt` there holds one Commonwealth
+Act's or instrument's section numbers, one per line, after `# key: value`
+lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
+`in-force-from`, `source`, `retrieved` and `sha256`. The numbers are every
+table of contents entry of the compilation's EPUB, fetched from the `source`
+request to the Federal Register's API, that starts with a provision number;
+after the first schedule heading only hyphenated numbers count, because a
+schedule's unhyphenated entries are clauses. The SHA-256 is of the EPUB.
+Subsection and paragraph suffixes are ignored, and `ss 17A-18C` is a range
+when both ends are listed but the whole is not. `section-index/exceptions.txt`
+lists, as `REGISTER-ID SECTION: reason`, a section a skill cites on purpose
+although its list lacks it, such as one a Bill proposes or one since repealed.
+A section of an Act with no list is counted as not indexed.
+
+Each failure prints as `file:line: citation: reason`: an unmatched citation, a
+section absent from its Act's list, or an exception no cited section needs.
+Two total lines follow, the second counting the resolved sections found,
+listed as exceptions, absent and in an Act with no list. The exit code is 2 on
+any failure. A found section exists in the current compilation; the check does
+not show that it applied in the skill's period or says what the skill claims.
+No command rebuilds a list: the EPUB is a zip archive, and the crate has no
+decompression dependency.
 
 ## Validation pack
 

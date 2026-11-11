@@ -1,0 +1,8 @@
+# Sections a skill cites on purpose although its Act's section index lacks
+# them: one a Bill proposes, or one since repealed that still governs an
+# earlier period. One per line: REGISTER-ID SECTION: reason. check-citations
+# fails on an entry no cited section needs, so remove it once the Act's index
+# holds the section or no skill cites it.
+C2004A04402 23A: repealed by the Treasury Laws Amendment (Payday Superannuation) Act 2025 (No 57, 2025) from 1 July 2026, as compilation C2026C00272's amendment history records; au-super-guarantee-charge cites it as old law for quarters before that day
+C2004A05138 26-95: repealed by the Treasury Laws Amendment (Payday Superannuation) Act 2025 (No 57, 2025), as compilation C2026C00471's amendment history records; au-super-guarantee-charge cites the repeal and the transitional rule that keeps it for quarters
+C2004A05138 960-590: proposed by Schedule 5 of the Treasury Laws Amendment (Tax Reform No. 3) Bill 2026, introduced on 14 October 2026; au-rental-property cites it as proposed. The number is the skill's and was not checked against the Bill text, which parlinfo.aph.gov.au served only behind a bot challenge on 12 November 2026

@@ -1,0 +1,23 @@
+# title: Tax Agent Services (Code of Professional Conduct) Determination 2024
+# register-id: F2024L00849
+# compilation: F2026C00953
+# compilation-number: 4
+# in-force-from: 2026-10-01
+# source: https://api.prod.legislation.gov.au/v1/documents(titleId='F2024L00849',start=2026-10-01T00:00:00,retrospectiveStart=2026-10-01T00:00:00,rectificationVersionNumber=0,type='Primary',uniqueTypeNumber=0,volumeNumber=0,format='Epub')
+# retrieved: 2026-11-12
+# sha256: d96c66d8011c996ee3fd4bf07e5366dc0e5c0cd6874048e7094e442504894caf
+1
+3
+4
+5
+10
+15
+20
+25
+30
+35
+40
+45
+100
+101
+151
