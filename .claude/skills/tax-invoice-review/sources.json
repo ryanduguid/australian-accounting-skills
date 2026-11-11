@@ -144,6 +144,21 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Peppol Authority: PINT A-NZ Self-billing business interoperability specification",
+      "url": "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Specification, not law: the RCTI determination and the ATO govern which documents are RCTIs.",
+      "final_url": "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
