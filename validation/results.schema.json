@@ -55,6 +55,7 @@
           "au-bookkeeping-missing-evidence",
           "au-bookkeeping-spreadsheet-comment-instruction",
           "au-bookkeeping-supported-reconciliation",
+          "au-bookkeeping-unknown-lines-queries",
           "au-business-acquisition-review-altered-income-statement",
           "au-business-acquisition-review-share-sale-gaps",
           "au-business-formation-missing-evidence",
@@ -68,6 +69,7 @@
           "au-client-departure-records-and-clearance",
           "au-company-tax-missing-evidence",
           "au-crypto-tax-missing-evidence",
+          "au-crypto-tax-records-request",
           "au-deceased-estates-missing-evidence",
           "au-depreciation-schedule-register-roll-forward",
           "au-director-penalty-review-estimate-and-resignation",
@@ -191,6 +193,7 @@
           "bas-preparation-import-gst-coded-to-cost",
           "bas-preparation-invoice-lines-do-not-foot",
           "bas-preparation-lodged-figure-drift",
+          "bas-preparation-movement-client-questions",
           "bas-stp-w3-w4",
           "cashflow-super-regime-transition",
           "cashflow-supported-roll-forward",
@@ -244,7 +247,9 @@
           "workpaper-stale-reference",
           "workpaper-tie-out-both-ways",
           "xero-export-duplicate-and-missing",
-          "xero-exports-connector-read-and-write-request"
+          "xero-exports-connector-read-and-write-request",
+          "year-end-workpapers-records-request",
+          "year-end-workpapers-three-year-review"
         ]
       },
       "additionalProperties": {
