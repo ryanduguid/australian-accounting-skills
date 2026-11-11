@@ -6,9 +6,9 @@ tested. The sections below give the commands. The MCP server is the optional
 
 | Route | Revision | MCP server | Terminal | Tested | Update |
 | --- | --- | --- | --- | --- | --- |
-| [Skills CLI from a release checkout](#tagged-76-workflow-release) | v0.5.0 tag | No | Yes | `--agent opencode` copied all 76 skills on 5 November 2026; install and discovery only, on Linux | Not tested. Clone the new tag and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
-| [Claude Code plugin at the release tag](#tagged-76-workflow-release) | v0.5.0 tag | Yes, `aus-accounting-mcp==0.6.0` through `uvx` | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 76 skills on Claude Code 2.1.316 on 5 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag |
-| [Codex plugin at the release tag](#tagged-76-workflow-release) | v0.5.0 tag | No | Yes | Delivered the 76 skills on Codex CLI 0.166.0 on 5 November 2026 | Not documented |
+| [Skills CLI from a release checkout](#tagged-76-workflow-release) | v0.5.0 tag | No | Yes | `--agent opencode` copied all 76 skills on 5 November 2026; install and discovery only, on Linux; the README's command was run on Linux on 11 November 2026 | Not tested. Clone the new tag and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
+| [Claude Code plugin at the release tag](#tagged-76-workflow-release) | v0.5.0 tag | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 76 skills on Claude Code 2.1.316 on 5 November 2026; the README's commands were run on Linux on 11 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
+| [Codex plugin at the release tag](#tagged-76-workflow-release) | v0.5.0 tag | No | Yes | Delivered the 76 skills on Codex CLI 0.166.0 on 5 November 2026; the README's commands were run on Linux on 11 November 2026 | Not documented |
 | [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.5.0 tag (source ZIP) | No | No | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
 | [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026 | Not documented |
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
@@ -57,7 +57,7 @@ codex plugin add australian-accounting-skills@ryanduguid
 ```
 
 That plugin carries the v0.5.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
-launched with `uvx`. To move to a later release, remove the marketplace with
+launched with `uvx`, so it needs Python 3.14 or later and uv. To move to a later release, remove the marketplace with
 `/plugin marketplace remove ryanduguid` and add it again at the new tag.
 
 ### Claude.ai or the Claude desktop app, without a terminal
