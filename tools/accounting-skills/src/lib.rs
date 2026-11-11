@@ -3,6 +3,7 @@
 
 //! The coverage matrix in coverage.json, derived from the skills, validation cards and tests.
 pub mod citations;
+pub mod grader_audit;
 pub mod last_changed;
 mod passage_diff;
 pub mod plugin_evals;

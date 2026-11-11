@@ -40,6 +40,9 @@ fn run() -> Result<u8> {
     if command.as_deref() == Some(std::ffi::OsStr::new("sweep-outcome")) {
         return accounting_skills::sweep::cli(args);
     }
+    if command.as_deref() == Some(std::ffi::OsStr::new("audit-grader-reads")) {
+        return accounting_skills::grader_audit::cli(args);
+    }
     if command.as_deref() != Some(std::ffi::OsStr::new("build-coverage")) {
         return Err(
             "usage: accounting-skills build-coverage [--root PATH] [--write] [--check]".into(),
