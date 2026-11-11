@@ -362,6 +362,12 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
         return Err("destination already exists; preserve the earlier build".into());
     }
     let destination = source_passages::output_path(destination, &canonical)?;
+    let commit = crate::git(&canonical, &["rev-parse", "HEAD"])?;
+    // The copy carries uncommitted, untracked and ignored files, so the commit
+    // alone would not identify what was evaluated.
+    let mut status = vec!["status", "--porcelain", "--ignored", "--"];
+    status.extend(PLUGIN_PATHS);
+    let dirty = !crate::git(&canonical, &status)?.is_empty();
     // Every case is rendered before anything is created, so a malformed card or
     // routing case leaves no partial copy behind.
     let (mut cases, digests) = card_cases(&canonical, runs, max_turns)?;
@@ -381,12 +387,9 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
         return Err(format!("duplicate eval case: {name}").into());
     }
     write_copy(&canonical, &destination, &cases)?;
-    let head = std::process::Command::new("git")
-        .args(["rev-parse", "HEAD"])
-        .current_dir(root)
-        .output()?;
     let manifest = json!({
-        "commit": String::from_utf8_lossy(&head.stdout).trim(),
+        "commit": commit,
+        "dirty": dirty,
         "runs": runs,
         "card_sha256": digests,
         "routing_sha256": trial::digest(&routing_bytes),

@@ -453,12 +453,15 @@ Its prompt carries every section except `Required checks`, `Must not do` and
 first two, and a `tool_used` grader requires a target skill to fire. Each entry
 in `validation/routing-cases.yaml` becomes a `route-` case whose graders require
 the expected skill and forbid its neighbours. `evals-manifest.json` records the
-commit, run count, card and routing-file digests and routing case names.
+commit, run count, card and routing-file digests and routing case names. Its
+`dirty` field is true when `git status` shows a changed, untracked or ignored
+file under the copied paths, since the copy then differs from that commit. A
+root that is not a Git checkout is refused before anything is written.
 
 Front matter uses double-quoted YAML scalars and flow lists, which YAML 1.1 and
 1.2 readers load to the values the retired Python builder wrote with PyYAML.
-Prompt and grader bodies, copied files and the manifest are byte-identical to
-its output. Every case is rendered before anything is written, so a malformed
+Prompt and grader bodies and copied files are byte-identical to its output;
+the manifest also has the `dirty` field. Every case is rendered before anything is written, so a malformed
 card or routing case leaves no partial copy. Routing case ids and skill names
 must be lowercase hyphenated slugs. The routing file is read with the card YAML
 subset, so aliases, anchors, tags and duplicate keys are refused where PyYAML

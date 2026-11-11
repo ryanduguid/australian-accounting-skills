@@ -210,6 +210,7 @@ fn fixture(root: &Path) {
         ),
         ("DISCLAIMER.md", "Fabricated disclaimer\n"),
         ("LICENSE", "Fabricated licence\n"),
+        (".gitignore", "*.draft\n"),
         ("tests/test_x.py", "fabricated\n"),
         (
             "validation/cases/x.md",
@@ -224,6 +225,77 @@ fn fixture(root: &Path) {
         fs::create_dir_all(path.parent().unwrap()).unwrap();
         fs::write(path, text).unwrap();
     }
+    git(root, &["init", "-q"]);
+    commit(root, "Fixture");
+}
+
+fn git(root: &Path, args: &[&str]) {
+    let output = Command::new("git")
+        .args(args)
+        .current_dir(root)
+        .output()
+        .unwrap();
+    assert!(output.status.success(), "{args:?}: {output:?}");
+}
+
+fn commit(root: &Path, message: &str) {
+    git(root, &["add", "--all"]);
+    git(
+        root,
+        &[
+            "-c",
+            "user.name=Fixture",
+            "-c",
+            "user.email=fixture@example.invalid",
+            "-c",
+            "commit.gpgsign=false",
+            "commit",
+            "-q",
+            "--no-verify",
+            "--allow-empty",
+            "-m",
+            message,
+        ],
+    );
+}
+
+#[test]
+fn the_manifest_names_the_commit_and_flags_uncommitted_plugin_files() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    fixture(root.path());
+    let clean = build(&outside.path().join("clean"), 1, 12, root.path()).unwrap();
+    assert_eq!(clean["commit"].as_str().unwrap().len(), 40, "{clean}");
+    assert_eq!(clean["dirty"], false);
+    // Cards stay behind, so an uncommitted card leaves the copy as committed.
+    fs::write(root.path().join("validation/cases/notes.txt"), "draft\n").unwrap();
+    let card = build(&outside.path().join("card"), 1, 12, root.path()).unwrap();
+    assert_eq!(card["dirty"], false);
+    for (name, path) in [
+        ("edited", ".claude/skills/bas-preparation/SKILL.md"),
+        ("untracked", ".claude/rules/new.md"),
+        ("ignored", ".claude/skills/bas-preparation/notes.draft"),
+    ] {
+        fs::write(root.path().join(path), "Uncommitted\n").unwrap();
+        let manifest = build(&outside.path().join(name), 1, 12, root.path()).unwrap();
+        assert_eq!(manifest["dirty"], true, "{name}");
+        commit(root.path(), name);
+    }
+}
+
+#[test]
+fn a_root_outside_git_is_refused_before_anything_is_written() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    fixture(root.path());
+    fs::remove_dir_all(root.path().join(".git")).unwrap();
+    let target = outside.path().join("plugin");
+    let error = build(&target, 1, 12, root.path()).unwrap_err();
+    assert!(
+        error.to_string().contains("git rev-parse HEAD failed"),
+        "{error}"
+    );
+    assert!(!target.exists());
 }
 
 #[test]
