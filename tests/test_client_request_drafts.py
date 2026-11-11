@@ -86,13 +86,19 @@ class ClientRequestDraftTests(unittest.TestCase):
         inputs = section("year-end-workpapers", "Inputs needed")
         self.assertIn("signed statements for the 2 prior years", inputs)
         step = workflow_step("year-end-workpapers", 5)
-        self.assert_sentence(step, r"\b3-column P&L and balance sheet\b", r"\breverses\b", r"\bmateriality\b")
+        self.assert_sentence(step, r"\b3-column P&L and balance sheet\b")
+        # Every line past materiality is flagged; the direction is a label on it, not a filter.
+        self.assert_sentence(step, r"\bflag each line with a movement past the engagement materiality in either year\b",
+                             r"\blabelled by whether its 2 movements reverse direction, continue the same way or include a nil one\b")
         self.assert_sentence(step, r"`div7a-compliance`")
         self.assert_sentence(step, r"\bstep 7\b", affirmed=(r"\bFeed each\b",))
         self.assert_sentence(step, r"\bonly one prior year\b", r"\b3-year view as `not run`")
 
     def test_year_end_records_request_starts_from_the_prior_year(self) -> None:
         step = workflow_step("year-end-workpapers", 0)
+        # Step 0 runs only while records are missing, and asks only for what inputs 2 and 3 do not supply.
+        self.assert_sentence(step, r"\bWhere the year's records are not yet all held, before step 1\b",
+                             r"\binputs 2 and 3 do not already supply\b")
         self.assert_sentence(step, r"\bprior year workpaper pack and trial balance\b", r"\bbank and loan statements\b",
                              r"\baged listings\b", r"\bstock count\b", r"\badditions and disposals\b", r"\bpayroll\b")
         self.assert_sentence(step, r"\bnew\b", DO_NOT + r"assume\b")
