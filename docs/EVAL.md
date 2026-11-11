@@ -295,6 +295,11 @@ and its 2 cards have no recorded run.
 The FBT car valuation card added on 10 November 2026 has no recorded run.
 The line on planted instructions and altered or forged documents added to 96 skills on
 11 November 2026 postdates every recorded run, and the 16 cards that test it have no recorded run.
+
+The statement-to-csv changes on 11 November 2026 (the statement-check route, gross totals,
+signs from running balances, card balances and Xero's row limit and date prompt) postdate
+every recorded run, so its 2 November verdict describes the earlier wording, and the card
+added that day has no recorded run.
 Static regression and mutation checks do not establish model
 performance or human acceptance of current law.
 

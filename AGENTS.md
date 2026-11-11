@@ -83,7 +83,7 @@ the credit line is the author's request. Never add either to a client deliverabl
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |
 | `validation/` | Validation pack the tests exercise |
-| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, and a candidate port of the other `scripts/` |
+| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, the `statement-check` tie-out `statement-to-csv` runs, and a candidate port of the other `scripts/` |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip

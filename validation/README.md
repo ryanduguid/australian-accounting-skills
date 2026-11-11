@@ -195,6 +195,7 @@ law claim, unverified source or guess.
 | [Mixed work and holiday overseas trip with an allowance and no diary](cases/au-travel-expenses-mixed-overseas-trip.md) | au-travel-expenses |
 | [Abstract a deed whose second variation lacks execution evidence](cases/au-trust-deed-review-unexecuted-variation.md) | au-trust-deed-review |
 | [Overlapping statements with a broken page and a formula-like payee](cases/statement-to-csv-overlap-and-formula.md) | statement-to-csv |
+| [Card statement in credit across a year end, with cancelling omissions](cases/statement-to-csv-card-in-credit-year-end.md) | statement-to-csv |
 | [GST screening leads stay leads](cases/bas-preparation-gst-screening-leads.md) | bas-preparation |
 | [Prior-period drift against lodged figures](cases/bas-preparation-lodged-figure-drift.md) | bas-preparation |
 | [Import GST on broker and courier invoices coded to cost](cases/bas-preparation-import-gst-coded-to-cost.md) | bas-preparation |

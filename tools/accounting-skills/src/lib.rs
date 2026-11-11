@@ -18,6 +18,7 @@ mod source_multibyte_rules;
 pub mod source_passages;
 pub mod source_refresh;
 mod source_urls;
+pub mod statement_check;
 mod strict_yaml;
 pub mod sweep;
 pub mod trial;

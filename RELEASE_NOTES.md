@@ -24,6 +24,30 @@ Every skill now has a routing prompt. Sixty-six synthetic prompts bring
 expected one. A test now fails when a skill has no routing prompt. The new
 prompts have no recorded model run.
 
+`statement-to-csv` hands its tie-outs to a new `accounting-skills statement-check`
+command when it is installed, which checks running, page and closing balances,
+gross credits and debits against printed totals, and continuity between
+statements in exact cents. Without it, the skill ties out by hand to the same
+rules. Step 4 now fails omissions that cancel against printed totals, step 3
+accepts a sign from the running balance only when the balance change equals the
+amount and keeps card balances in the owed direction, and step 8 records Xero's
+100,000-row limit and its date-format prompt, read on 11 November 2026. One
+synthetic card brings the validation pack to 181, with no recorded model run for
+it, so the new tests check wording and the checker's arithmetic, not model
+behaviour. The 2 Xero source records still await human review: the source sweep
+extracts no text from those pages, so it records no digest for them.
+
+`accounting-skills statement-check` exits 0 when everything ties, 2 on any break
+and 1 on malformed input, which includes an empty input, a repeated statement id
+or a missing or repeated reference. It prints an `OVERLAP` line for each pair of
+overlapping periods and breaks a statement period wholly within another, an
+overlap it cannot place because the earlier lines lack posting dates or are not
+in posting-date order, a line posted outside its period, and a line dated outside
+it, with 31 days' allowance before the period for cards and other accounts in the
+owed direction.
+The `PASS` line counts the printed balances, printed totals and statement links
+it compared.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

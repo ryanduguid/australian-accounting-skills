@@ -221,6 +221,7 @@
           "source-quote-partial-coverage",
           "standalone-skill-safety-boundary",
           "statement-correction-revision",
+          "statement-to-csv-card-in-credit-year-end",
           "statement-to-csv-overlap-and-formula",
           "statement-to-csv-planted-memo-instruction",
           "stp-current-vs-overdue-sg",
