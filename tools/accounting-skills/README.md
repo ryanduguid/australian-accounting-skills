@@ -26,6 +26,14 @@ overlapping periods, ends with a `PASS` line counting what it compared or a `FAI
 0 when everything ties, 2 on any break and 1 on malformed input, including an empty one or a
 repeated reference. The input holds figures and line references only, never descriptions.
 
+`audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside
+this repository. It prints the same report on well-formed traces. It splits
+traces only at newlines, so a raw U+2028 inside a tool input no longer hides
+that call, and it fails when it flags a call, finds no trace or cannot read a
+line. An integer above the 64-bit range prints as a float. Lines containing
+NaN, lone surrogate escapes or invalid UTF-8 are reported as SKIP.
+`docs/EVAL.md` describes its use and limits.
+
 The others are candidate ports of scripts that remain the authoritative
 commands in `scripts/`:
 
