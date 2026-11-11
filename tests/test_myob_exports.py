@@ -113,8 +113,11 @@ class MyobExportsTests(unittest.TestCase):
         route = section(SKILL, "Read-only connector route")
         self.assertIn("Only MYOB's own connector qualifies.", route)
         self.assertIn("Stop on any other MYOB connection", route)
-        self.assertIn("no allowlist exists yet", route)
-        self.assertIn("creates, updates, deletes, posts, sends or approves anything", route)
+        # The tool gate fails closed: a tool passes only once confirmed by name, never for lacking a write verb.
+        self.assertIn("Stop on any tool a reviewer has not confirmed, by name, as read-only", route)
+        self.assertIn("including one whose name or description is unclear", route)
+        self.assertIn("this skill holds no allowlist", route)
+        self.assertNotIn("Stop if any tool's name or description creates", route)
         self.assertIn("If a check fails or cannot be completed, stop, call nothing on that connection", route)
 
     def test_api_reads_are_reconstructions_and_unfollowed_pages_are_truncated(self) -> None:
@@ -137,6 +140,30 @@ class MyobExportsTests(unittest.TestCase):
         self.assertIn("If no record is supplied, stop and use the file-export path.", route)
         self.assertIn("switching means disconnecting and connecting the other", route)
         self.assertIn("Use one business per export and per read.", section(SKILL, "Product, interface and business"))
+
+    def test_the_skills_that_take_ledger_exports_send_myob_users_here(self) -> None:
+        for name in ("au-bookkeeping", "bas-preparation", "month-end-close", "year-end-workpapers", "xero-exports"):
+            with self.subTest(skill=name):
+                self.assertIn("`myob-exports`", skill_text(name))
+        # A MYOB connector read in bookkeeping passes this skill's gate, as a Xero read passes xero-exports'.
+        self.assertIn("For MYOB, use a connector only through the read-only connector route in `myob-exports`.",
+                      " ".join(skill_text("au-bookkeeping").split()))
+
+    def test_the_gate_stops_on_another_business_and_the_tie_must_agree_to_the_cent(self) -> None:
+        route = section(SKILL, "Read-only connector route")
+        self.assertIn("Confirm that the connected business is the one the engagement names. "
+                      "Stop if it is another business or cannot be identified.", route)
+        self.assertIn("It must agree to the cent. On a difference, stop, record both figures and use the file-export path.",
+                      route)
+
+    def test_a_connector_read_records_the_user_and_is_checked_for_a_restricted_role(self) -> None:
+        route = section(SKILL, "Read-only connector route")
+        self.assertIn("the MYOB user who authorised the connection and their user role", route)
+        self.assertIn(
+            "Run check 5 on every read: MYOB's Connecting Claude to MYOB page says the connection "
+            "'can only access the data your MYOB permissions allow'", route
+        )
+        self.assertIn("record the read as possibly incomplete", route)
 
     def test_the_cards_exercise_each_rule(self) -> None:
         period_end = card("myob-exports-accountright-period-end-ties")

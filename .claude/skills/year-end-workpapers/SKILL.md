@@ -11,7 +11,7 @@ If the folder uses the filenames [Workpaper Review Gate](https://github.com/ryan
 
 ## Inputs needed
 
-1. Trial balance as at year end (and prior year TB or signed statements; for the 3-year view in step 5, the signed statements for the 2 prior years where supplied); see `xero-exports` for export and completeness checks
+1. Trial balance as at year end (and prior year TB or signed statements; for the 3-year view in step 5, the signed statements for the 2 prior years where supplied); see `xero-exports`, or `myob-exports` for MYOB, for export and completeness checks
 2. GL detail for the year
 3. Subledger and supporting exports: aged AR/AP, bank recs, fixed asset register, loan statements, payroll year summaries
 4. Prior year workpaper pack (for structure and carried-forward positions)
