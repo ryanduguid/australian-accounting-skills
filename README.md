@@ -84,6 +84,7 @@ Use au-tax-research to draft a file note on the question below, with each primar
 | `fbt-annual-workflow` | FBT year-end: benefits, declarations, gross-up and RFBA |
 | `div7a-compliance` | Division 7A loan register and minimum repayments |
 | `au-trust-distributions` | Trust distribution review pack |
+| `au-individual-return` | Individual tax return workpaper: income, deductions and offsets traced to evidence |
 | `au-tax-research` | File note with source status and alternative views |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance and agings |
 
