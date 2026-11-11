@@ -141,6 +141,14 @@ class MyobExportsTests(unittest.TestCase):
         self.assertIn("switching means disconnecting and connecting the other", route)
         self.assertIn("Use one business per export and per read.", section(SKILL, "Product, interface and business"))
 
+    def test_the_skills_that_take_ledger_exports_send_myob_users_here(self) -> None:
+        for name in ("au-bookkeeping", "bas-preparation", "month-end-close", "year-end-workpapers", "xero-exports"):
+            with self.subTest(skill=name):
+                self.assertIn("`myob-exports`", skill_text(name))
+        # A MYOB connector read in bookkeeping passes this skill's gate, as a Xero read passes xero-exports'.
+        self.assertIn("For MYOB, use a connector only through the read-only connector route in `myob-exports`.",
+                      " ".join(skill_text("au-bookkeeping").split()))
+
     def test_the_gate_stops_on_another_business_and_the_tie_must_agree_to_the_cent(self) -> None:
         route = section(SKILL, "Read-only connector route")
         self.assertIn("Confirm that the connected business is the one the engagement names. "

@@ -15,7 +15,7 @@ For full-BAS preparation, if the folder uses the filenames [Workpaper Review Gat
 
 ## Inputs needed
 
-Ask for these if not provided (period-locked where possible; see `xero-exports` for pulling and validating them):
+Ask for these if not provided (period-locked where possible; see `xero-exports`, or `myob-exports` for MYOB, for pulling and validating them):
 1. Activity Statement report for the BAS period, plus the GST Reconciliation report for the GST control tie-out
 2. Trial balance as at period end
 3. GL detail for GST control accounts (GST collected / GST paid, or single GST account)
@@ -26,7 +26,7 @@ Ask for these if not provided (period-locked where possible; see `xero-exports` 
 8. Where the activity statement shows ATO PAYG withholding pre-fill, the pre-filled W1 and W2 amounts and the date they were viewed
 9. Where payroll is in scope, taxable wages by state or territory and total Australian wages (group wages where the entity is grouped), each for the month and the year to date, total Australian wages for each week of the month where wages are paid in Queensland or another jurisdiction whose registration page sets a weekly amount, and the payroll tax registrations held, for the payroll tax screen
 
-A connector read can supply the trial balance, but only through the read-only connector route in `xero-exports`, which stops unless the connection is confirmed read-only, records the organisation, period, basis and capture time and refuses every write. The Activity Statement's transaction tabs and the GST Reconciliation report still come from exports, so request them; never tie a label to a figure assembled from connector records.
+A connector read can supply the trial balance, but only through the read-only connector route in `xero-exports` (for MYOB, in `myob-exports`), which stops unless the connection is confirmed read-only, records the organisation, period, basis and capture time and refuses every write. The Activity Statement's transaction tabs and the GST Reconciliation report still come from exports, so request them; never tie a label to a figure assembled from connector records.
 
 **Human review pending:** an agent read on 6 November 2026, not a human review. Before any connector read, a registered tax or BAS agent needs a record of this client's permission: [TPB(GS) 55/2026](https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct) says that entering client information into an AI tool can be a disclosure to a third party, depending on how the tool is configured and used (paragraph 23). If no record is supplied, stop, call nothing on that connection and use exports. A file export is not an exemption: where client information in it reaches an external AI provider, assess that disclosure first or use the firm's approved local process.
 

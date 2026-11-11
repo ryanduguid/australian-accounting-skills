@@ -24,7 +24,7 @@ On exit `0` or `2`, quote the command's output and the whole of `exceptions.csv`
 
 ## Inputs needed
 
-Ask for these if not provided (see `xero-exports` for pulling and validating them):
+Ask for these if not provided (see `xero-exports`, or `myob-exports` for MYOB, for pulling and validating them):
 1. Trial balance as at month end (and prior month); see `xero-exports` for export and completeness checks
 2. Bank reconciliation report(s) per account
 3. GL detail for the month
