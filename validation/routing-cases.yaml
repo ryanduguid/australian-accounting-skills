@@ -477,3 +477,7 @@
   skill: au-client-meeting-note
   not: [au-tax-research, au-client-acceptance]
   prompt: Here is the AI transcript of this morning's video call with a client and her husband. Write it up as a file note for the partner to review, including what we agreed to do and anything she asked us to take on.
+- id: marketplace-payouts-booked-as-sales
+  skill: marketplace-settlements
+  not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
+  prompt: A client sells homewares through an online marketplace and is paid every week after the platform takes its fees, refunds and a reserve. The bookkeeper has been recording each payout as sales. Rebuild the month from the settlement reports and tie the payouts to the bank before we do the BAS.

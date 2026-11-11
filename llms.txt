@@ -119,6 +119,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [fbt-annual-workflow](.claude/skills/fbt-annual-workflow/SKILL.md)
 - [financial-modelling](.claude/skills/financial-modelling/SKILL.md)
 - [fuel-tax-credits](.claude/skills/fuel-tax-credits/SKILL.md)
+- [marketplace-settlements](.claude/skills/marketplace-settlements/SKILL.md)
 - [month-end-close](.claude/skills/month-end-close/SKILL.md)
 - [myob-exports](.claude/skills/myob-exports/SKILL.md)
 - [payroll-tax-contractors](.claude/skills/payroll-tax-contractors/SKILL.md)

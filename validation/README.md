@@ -262,6 +262,8 @@ law claim, unverified source or guess.
 | [A meeting that adds a new company's BAS, a hedged remark and a revenue figure heard 2 ways](cases/au-client-meeting-note-scope-change-and-tentative-remark.md) | au-client-meeting-note |
 | [AccountRight period-end exports with an aged listing, a wrong GST basis and an unconfirmed user role](cases/myob-exports-accountright-period-end-ties.md) | myob-exports |
 | [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
+| [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
+| [A short payout, sales booked net of fees, a reserve over month end and a late refund](cases/marketplace-settlements-planted-faults.md) | marketplace-settlements, reconciliation-break-trace, bas-preparation |
 
 Together the cards cover all 102 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -308,6 +310,8 @@ unrecorded consent and one with a scope change and a hedged remark, have no reco
 The 2 MYOB export cards added on 12 November 2026 have no recorded run.
 
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
+
+The 2 marketplace settlement cards added on 12 November 2026 have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions
