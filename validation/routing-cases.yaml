@@ -469,3 +469,7 @@
   skill: au-share-buy-back
   not: [au-capital-gains, au-dssp]
   prompt: My client sold shares into a listed company's off-market tender buy-back this year. How do we work out her capital proceeds, and is any of the price a dividend?
+- id: marketplace-payouts-booked-as-sales
+  skill: marketplace-settlements
+  not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
+  prompt: A client sells homewares through an online marketplace and is paid every week after the platform takes its fees, refunds and a reserve. The bookkeeper has been recording each payout as sales. Rebuild the month from the settlement reports and tie the payouts to the bank before we do the BAS.

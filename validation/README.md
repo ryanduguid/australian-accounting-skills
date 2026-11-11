@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 207 cards in `cases/` test workflow quality, provenance and restraint.
+The 209 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -257,8 +257,10 @@ law claim, unverified source or guess.
 | [A private company buys back one shareholder's shares with part of the price set off against a loan](cases/au-share-buy-back-private-selective.md) | au-share-buy-back |
 | [A shareholder in a listed company's off-market tender buy-back that straddles 30 June](cases/au-share-buy-back-listed-tender-seller.md) | au-share-buy-back |
 | [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
+| [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
+| [A short payout, sales booked net of fees, a reserve over month end and a late refund](cases/marketplace-settlements-planted-faults.md) | marketplace-settlements, reconciliation-break-trace, bas-preparation |
 
-Together the cards cover all 101 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 102 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -299,6 +301,8 @@ dividend preparation and a family trust election have no recorded run.
 The farm land GST and farm succession cards added on 11 November 2026 have no recorded run.
 
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
+
+The 2 marketplace settlement cards added on 12 November 2026 have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

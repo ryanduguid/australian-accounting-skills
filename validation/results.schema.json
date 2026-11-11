@@ -206,6 +206,8 @@
           "financial-modelling-formula-change",
           "financial-modelling-structure-faults",
           "fuel-tax-credits-missing-docket",
+          "marketplace-settlements-planted-faults",
+          "marketplace-settlements-weekly-tie-out",
           "month-end-close-control-exit-2",
           "month-end-close-control-not-installed",
           "month-end-close-prior-points-recurring-journals",
