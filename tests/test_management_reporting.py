@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import re
 import unittest
+from pathlib import Path
 
 from skill_prose import (
     DO_NOT,
@@ -28,6 +29,7 @@ from skill_prose import (
 )
 
 AASB_116 = "https://standards.aasb.gov.au/aasb-116-dec-2022"
+CARDS = Path(__file__).resolve().parents[1] / "validation" / "cases"
 
 
 class ManagementReportingTests(unittest.TestCase):
@@ -90,6 +92,12 @@ class ManagementReportingTests(unittest.TestCase):
         self.assert_sentence(step, r"\bafter step 8\b", r"`xero-exports`", r"\binput 13\b")
         self.assert_sentence(step, r"\btie each report's net profit and net assets to the closed trial balance\b",
                              r"\bwhere either does not tie, stop\b", r"\bopen exception\b")
+        # The card supplies both figures the step ties, so a run that follows the step can finish the report.
+        card = " ".join((CARDS / "month-end-close-management-report.md").read_text(encoding="utf-8").split())
+        self.assertIn("The closed trial balance gives the same net profit and net assets.", card)
+        for tie in ("Tie net profit", "Tie net assets"):
+            with self.subTest(tie=tie):
+                self.assertRegex(card, rf"- {tie} [\d. +=-]+ to the closed trial balance before using the report\.")
 
     def test_each_ratio_states_its_formula(self) -> None:
         step = workflow_step("month-end-close", 9)
