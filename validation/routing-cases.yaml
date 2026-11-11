@@ -431,3 +431,16 @@
   skill: wip-over-under-billing
   not: [contract-cost-tracking, au-financial-statements]
   prompt: On a fixed-price contract to build a warehouse on the customer's land, is revenue recognised over time, and how should 2 variations the customer has not yet approved be treated at year end?
+
+- id: smsf-member-died
+  skill: au-smsf-death-benefits
+  not: [au-smsf-year-end, au-deceased-estates]
+  prompt: One of the 2 members of a self-managed super fund died last month. She had a pension and had signed a nomination for her adult son some years ago. Work out who the trustee can pay, in what form, and what each side needs on file.
+- id: private-company-final-dividend
+  skill: au-franking-account
+  not: [div7a-compliance, au-company-tax]
+  prompt: A family company wants to pay a final dividend before 30 June, partly by crediting a director's loan account. Prepare what the directors need for the resolution, the franking and the shareholder statements.
+- id: family-trust-election-decision
+  skill: au-family-trust-election
+  not: [au-trust-losses, au-trust-distributions]
+  prompt: A discretionary trust is thinking about making a family trust election this year, backdated to an earlier year, so it can use an old loss and pass franking credits through. Prepare what the trustee needs to decide, including who the test individual should be.

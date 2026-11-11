@@ -72,6 +72,25 @@ and `au-smsf-year-end` records each asset's market value basis and evidence.
 The new test checks wording, not model behaviour, and the 9 new source records
 await human review.
 
+Two skills bring the pack to 99. `au-smsf-death-benefits` prepares an SMSF's
+work after a member dies: each nomination tested against the deed, SIS and
+tax dependants in separate columns, the forms of payment each recipient can
+take, reversionary transfer balance credits, components and the untaxed
+element, the payment timeline and withholding, and the records the trustee,
+each recipient and the legal personal representative need.
+`au-family-trust-election` prepares the evidence for deciding on a family trust
+or interposed entity election: the reasons, each candidate test individual's
+family and family group, the family control test, the earliest specified income
+year, the FTDT that making the election would create, each interposed entity
+election, the limits on later variation and revocation, and a form data sheet.
+`au-franking-account` gains step 5a, which prepares a proposed private company
+dividend: dividend rights, the s 254T evidence, a resolution schedule, the
+benchmark position, draft distribution statements, the projected franking
+entries and the Division 7A set-off route. `au-smsf-year-end` routes a member's
+death to the new skill. Three synthetic cards bring the validation pack to 183 and
+3 routing prompts bring the routing set to 44, with no recorded model run for
+any of them. The new source records await human review.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

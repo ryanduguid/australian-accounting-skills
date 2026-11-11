@@ -300,6 +300,10 @@ The statement-to-csv changes on 11 November 2026 (the statement-check route, gro
 signs from running balances, card balances and Xero's row limit and date prompt) postdate
 every recorded run, so its 2 November verdict describes the earlier wording, and the card
 added that day has no recorded run.
+
+The 11 November 2026 changes to au-franking-account and au-smsf-year-end postdate every
+recorded run, and the 3 cards added that day for au-smsf-death-benefits, au-franking-account
+and au-family-trust-election have no recorded run.
 Static regression and mutation checks do not establish model
 performance or human acceptance of current law.
 

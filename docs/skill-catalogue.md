@@ -103,7 +103,7 @@ own gap list.
 | [`au-business-acquisition-review`](../.claude/skills/au-business-acquisition-review/SKILL.md) | Buy-side due diligence on a business: financial, tax, employee and contract evidence lists and open findings |
 | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | Fixed asset register and tax depreciation schedule: additions, disposals, methods, pools and the ledger tie-out |
 | [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) | Director penalty evidence: unpaid PAYG withholding, GST or SGC, notice timing, lockdown and defence evidence |
-| [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | Franking account rebuild, franked distribution statements, franking deficit tax and benchmark evidence |
+| [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | Franking account rebuild, proposed dividend preparation (s 254T evidence, resolution schedule and draft statements), franked distribution statements, franking deficit tax and benchmark evidence |
 | [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | Primary production workpapers: business status, income averaging, farm management deposits and livestock |
 | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | Private ruling application preparation: one question per ruling, the facts, the arrangement and the evidence |
 | [`au-professional-firm-profits`](../.claude/skills/au-professional-firm-profits/SKILL.md) | Professional firm profit allocation evidence under the ATO's PCG 2021/4 risk framework |
@@ -125,6 +125,15 @@ These practice workflows are independently written; `NOTICE` records where each 
 | [`au-ato-correspondence-triage`](../.claude/skills/au-ato-correspondence-triage/SKILL.md) | ATO letters and notices sorted by notice type, client match, stated due date and action owner, with no reply sent |
 | [`au-client-departure`](../.claude/skills/au-client-departure/SKILL.md) | A client leaving the practice: records by owner, the reply to the new accountant, cloud ledger handover, lien questions and ATO client list steps |
 | [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | Trust tax loss workpaper: test period, Schedule 2F tests for a non-fixed trust, income injection and family trust election evidence |
+
+## Additions from 11 November 2026
+
+These workflows are independently written from Australian primary sources; `NOTICE` records where each topic came from.
+
+| Skill | Use it for |
+| --- | --- |
+| [`au-family-trust-election`](../.claude/skills/au-family-trust-election/SKILL.md) | Evidence for deciding on a family trust or interposed entity election: test individual, family group, specified income year, revocation limits and FTDT exposure |
+| [`au-smsf-death-benefits`](../.claude/skills/au-smsf-death-benefits/SKILL.md) | SMSF death benefit workpaper: nominations against the deed, SIS and tax dependants, lump sum or income stream, transfer balance credits, components and records |
 
 Also included:
 

@@ -87,7 +87,7 @@ Use au-tax-research to draft a file note on the question below, with each primar
 | `au-tax-research` | File note with source status and alternative views |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance and agings |
 
-See [all 97 skills](docs/skill-catalogue.md), which include the 21 added since v0.5.0.
+See [all 99 skills](docs/skill-catalogue.md), which include the 23 added since v0.5.0.
 
 ## First run
 
@@ -149,7 +149,7 @@ Human-confirmed model verdicts cover 95 of the 196 [validation cards](validation
 
 The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. Most confirmed verdicts also predate the current skill wording: on 11 November 2026, for 73 of the 95 cards, the `SKILL.md` or references of a skill the card names in its `target_skills` had changed beyond copyright and licence lines between the commit its confirmed run recorded and `main`, so those verdicts describe the earlier wording.
 
-The other 101 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, 3 transaction-GST cases, 2 short-stay accommodation cases, 3 pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a formula-change case, 2 reconciliation break-trace cases, GST screening leads, lodged-figure drift, a close with prior review points, 2 close-control cases, a card statement in credit across a year end, an employee master-data screen, a family trust distribution tax screen, 11 payroll tax cases, an AASB 18 comparative-year case, 3 AML/CTF beneficial owner cases, 2 BAS import GST cases, a two-way workpaper tie-out case, 4 cases for the client departure, trust loss, ATO correspondence and ATO account workflows, 2 FBT cases covering the line register and car valuation records, a professional-body obligations case, 7 land tax cases, 8 transfer duty cases, 2 Xero connector cases, a tax invoice threshold case, 7 planted-instruction and 7 altered or forged document cases with 2 positive controls for ordinary payment terms and an explained timing difference, and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 97 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
+The other 101 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, 3 transaction-GST cases, 2 short-stay accommodation cases, 3 pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a formula-change case, 2 reconciliation break-trace cases, GST screening leads, lodged-figure drift, a close with prior review points, 2 close-control cases, a card statement in credit across a year end, an employee master-data screen, a family trust distribution tax screen, 11 payroll tax cases, an AASB 18 comparative-year case, 3 AML/CTF beneficial owner cases, 2 BAS import GST cases, a two-way workpaper tie-out case, 4 cases for the client departure, trust loss, ATO correspondence and ATO account workflows, 2 FBT cases covering the line register and car valuation records, a professional-body obligations case, 7 land tax cases, 8 transfer duty cases, 2 Xero connector cases, a tax invoice threshold case, 7 planted-instruction and 7 altered or forged document cases with 2 positive controls for ordinary payment terms and an explained timing difference, 3 cases for SMSF death benefits, private company dividend preparation and a family trust election, and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 97 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
 
 ## Corrections to v0.2.1
 
@@ -168,7 +168,7 @@ The marketplace added without a tag resolves the default branch, which can be ah
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-The default branch prepares v0.5.1 with 97 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The default branch prepares v0.5.1 with 99 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) identifies the published v0.5.0 release and its 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
@@ -190,7 +190,7 @@ The Australian Accounting Skills guides are grouped as get started, how-to and r
 
 **Reference**
 
-- [All 97 skills and their supporting files](docs/skill-catalogue.md), [how each was verified](docs/skill-verification.md) and [when each last changed](docs/skill-last-changed.md)
+- [All 99 skills and their supporting files](docs/skill-catalogue.md), [how each was verified](docs/skill-verification.md) and [when each last changed](docs/skill-last-changed.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md), [release process](RELEASING.md) and [professional boundary](DISCLAIMER.md)

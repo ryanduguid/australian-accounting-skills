@@ -1,6 +1,6 @@
 # Australian Accounting Skills
 
-> Ninety-seven agent skills for Australian public-practice, tax and contracting-business
+> Ninety-nine agent skills for Australian public-practice, tax and contracting-business
 > preparation, packaged as a Claude Code plugin marketplace and as portable
 > SKILL.md files. Each skill states its inputs, its evidence and tie-out checks,
 > and the decisions it hands to a person.
@@ -16,7 +16,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 
 ## Install
 
-- Claude Code plugin marketplace, delivering the 97 skills on `main`:
+- Claude Code plugin marketplace, delivering the 99 skills on `main`:
   `/plugin marketplace add ryanduguid/australian-accounting-skills` then
   `/plugin install australian-accounting-skills@ryanduguid`
 - Codex plugin, the same revision:
@@ -53,6 +53,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [au-dssp](.claude/skills/au-dssp/SKILL.md)
 - [au-employee-share-schemes](.claude/skills/au-employee-share-schemes/SKILL.md)
 - [au-etp-redundancy](.claude/skills/au-etp-redundancy/SKILL.md)
+- [au-family-trust-election](.claude/skills/au-family-trust-election/SKILL.md)
 - [au-financial-statements](.claude/skills/au-financial-statements/SKILL.md)
 - [au-foreign-income](.claude/skills/au-foreign-income/SKILL.md)
 - [au-foreign-pensions](.claude/skills/au-foreign-pensions/SKILL.md)
@@ -86,6 +87,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [au-short-stay-accommodation](.claude/skills/au-short-stay-accommodation/SKILL.md)
 - [au-small-business-cgt](.claude/skills/au-small-business-cgt/SKILL.md)
 - [au-small-business-income-offset](.claude/skills/au-small-business-income-offset/SKILL.md)
+- [au-smsf-death-benefits](.claude/skills/au-smsf-death-benefits/SKILL.md)
 - [au-smsf-year-end](.claude/skills/au-smsf-year-end/SKILL.md)
 - [au-sole-trader](.claude/skills/au-sole-trader/SKILL.md)
 - [au-super-contribution-caps](.claude/skills/au-super-contribution-caps/SKILL.md)
