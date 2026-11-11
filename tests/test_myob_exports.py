@@ -138,6 +138,15 @@ class MyobExportsTests(unittest.TestCase):
         self.assertIn("switching means disconnecting and connecting the other", route)
         self.assertIn("Use one business per export and per read.", section(SKILL, "Product, interface and business"))
 
+    def test_a_connector_read_records_the_user_and_is_checked_for_a_restricted_role(self) -> None:
+        route = section(SKILL, "Read-only connector route")
+        self.assertIn("the MYOB user who authorised the connection and their user role", route)
+        self.assertIn(
+            "Run check 5 on every read: MYOB's Connecting Claude to MYOB page says the connection "
+            "'can only access the data your MYOB permissions allow'", route
+        )
+        self.assertIn("record the read as possibly incomplete", route)
+
     def test_the_cards_exercise_each_rule(self) -> None:
         period_end = card("myob-exports-accountright-period-end-ties")
         for contract in (
