@@ -30,7 +30,9 @@ overlapping periods, ends with a `PASS` line counting what it compared or a `FAI
 repeated reference. The input holds figures and line references only, never descriptions.
 
 `audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside
-this repository. It prints the same report on well-formed traces. It splits
+this repository. It prints the same report on well-formed traces, except that
+it also flags a suspect folder that ends a path, as in
+`{"path": "/copy/graders"}`, which the script missed. It splits
 traces only at newlines, so a raw U+2028 inside a tool input no longer hides
 that call, and it fails when it flags a call, finds no trace or cannot read a
 line. An integer above the 64-bit range prints as a float. Lines containing
@@ -455,16 +457,21 @@ Its prompt carries every section except `Required checks`, `Must not do` and
 first two, and a `tool_used` grader requires a target skill to fire. Each entry
 in `validation/routing-cases.yaml` becomes a `route-` case whose graders require
 the expected skill and forbid its neighbours. `evals-manifest.json` records the
-commit, run count, card and routing-file digests and routing case names.
+commit, run count, card and routing-file digests and routing case names. Its
+`dirty` field is true when `git status` shows a changed, untracked or ignored
+file under the copied paths, since the copy then differs from that commit. A
+root that is not a Git checkout is refused before anything is written.
 
 Front matter uses double-quoted YAML scalars and flow lists, which YAML 1.1 and
 1.2 readers load to the values the retired Python builder wrote with PyYAML.
-Prompt and grader bodies, copied files and the manifest are byte-identical to
-its output. Every case is rendered before anything is written, so a malformed
+Prompt and grader bodies and copied files are byte-identical to its output;
+the manifest also has the `dirty` and `changed_since` fields. Every case is rendered before anything is written, so a malformed
 card or routing case leaves no partial copy. Routing case ids and skill names
 must be lowercase hyphenated slugs. The routing file is read with the card YAML
 subset, so aliases, anchors, tags and duplicate keys are refused where PyYAML
 accepted them. Links and Windows reparse points among the copied files are
 refused; the Python builder followed them. `--runs` and `--max-turns` take
-integers from 1 to 4,294,967,295 and default to 1 and 12. Success prints
+integers from 1 to 4,294,967,295 and default to 1 and 12. `--changed-since REV`
+builds only the cases grading a skill changed since that revision, as
+[docs/EVAL.md](../../docs/EVAL.md) describes. Success prints
 the case count, usage errors exit 2 and processing failures exit 1.

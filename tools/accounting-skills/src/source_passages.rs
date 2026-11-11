@@ -81,7 +81,7 @@ pub fn load_snapshot(path: &Path, skills: &Path) -> Result<Value> {
     let raw = String::from_utf8(bytes)?
         .replace("\r\n", "\n")
         .replace('\r', "\n");
-    let value: Value = serde_json::from_str(&raw)?;
+    let value = crate::validation::strict_json(&raw, &path.display().to_string())?;
     let text = value
         .get("text")
         .and_then(Value::as_str)

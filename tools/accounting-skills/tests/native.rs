@@ -164,6 +164,8 @@ fn malformed_source_records_are_refused_before_writing() {
         r#"{"sources": [{"checked_at": 1}]}"#,
         r#"{"sources": [{"checked_at": "2026-01-01", "fetched_at": null}]}"#,
         r#"{"sources": [{"checked_at": "2026-01-01", "source_last_modified": "2026-02-01", "url": 1}]}"#,
+        r#"{"sources": {}, "sources": []}"#,
+        r#"{"sources": [{"checked_at": 1, "checked_at": "2026-01-01"}]}"#,
     ] {
         fs::write(folder.join("sources.json"), index).unwrap();
         let output = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))

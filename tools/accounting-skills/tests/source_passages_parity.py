@@ -108,7 +108,7 @@ def replay():
                              compare=lambda before, after: rpc("compare", before=before, after=after),
                              main=native_main):
         result = unittest.TextTestRunner(verbosity=2, resultclass=RecordedResult).run(suite)
-    assert result.testsRun == 6
+    assert result.testsRun == 8
     assert result.wasSuccessful()
     return {"objects": result.testsRun, "failures": len(result.failures), "errors": len(result.errors)}
 

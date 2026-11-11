@@ -524,9 +524,19 @@ def reverify_note(passed: str) -> str:
     )
 
 
+def reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    """Stop a repeated JSON key silently replacing the evidence recorded before it."""
+    mapping: dict[str, object] = {}
+    for key, value in pairs:
+        if key in mapping:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        mapping[key] = value
+    return mapping
+
+
 def load_index(path: Path, *, skills: Path = SKILLS_DIRECTORY) -> dict[str, object]:
     checked_index(path, skills)
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=reject_duplicate_keys)
 
 
 def dump_index(path: Path, payload: dict[str, object], *, skills: Path = SKILLS_DIRECTORY) -> None:
