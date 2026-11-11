@@ -796,6 +796,63 @@ fn a_hyphen_between_two_indexed_sections_reads_as_a_range() {
     assert_eq!(report.unmatched[0].citation, "ss 17A-19");
 }
 
+// An Act whose list holds hyphenated schedule sections beside plain body
+// sections reads a hyphen as part of a section number, never as a range, so
+// a section of another Act cited against it is absent.
+#[test]
+fn a_hyphen_is_no_range_in_an_act_that_lists_hyphenated_sections() {
+    let root = tempfile::tempdir().unwrap();
+    index(
+        root.path(),
+        "C1953A00001",
+        "Taxation Administration Act 1953",
+        &["1", "8", "12-35"],
+    );
+    index(
+        root.path(),
+        "C1936A00027",
+        "Income Tax Assessment Act 1936",
+        &["45", "202", "265-5"],
+    );
+    index(
+        root.path(),
+        "C2004A00818",
+        "Corporations Act 2001",
+        &["5", "197", "90-15"],
+    );
+    index(
+        root.path(),
+        "C2004A04402",
+        "Superannuation Guarantee (Administration) Act 1992",
+        &["17B", "17D"],
+    );
+    skill(
+        root.path(),
+        "alpha",
+        "Apply s 8-1 of the TAA 1953.\n\
+         Apply s 202-45 of the ITAA 1936.\n\
+         Apply s 197-5 of the Corporations Act 2001.\n\
+         Apply s 12-35 of Schedule 1 to the TAA 1953.\n\
+         Apply SGAA ss 17B-17D.\n",
+        Some(
+            r#"{"sources": [
+  {"title": "Taxation Administration Act 1953", "url": "https://www.legislation.gov.au/C1953A00001/latest/text"},
+  {"title": "Income Tax Assessment Act 1936", "url": "https://www.legislation.gov.au/C1936A00027/latest/text"},
+  {"title": "Corporations Act 2001", "url": "https://www.legislation.gov.au/C2004A00818/latest/text"},
+  {"title": "Superannuation Guarantee (Administration) Act 1992", "url": "https://www.legislation.gov.au/C2004A04402/latest/text"}
+]}"#,
+        ),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections_exist, report.sections_absent), (2, 3));
+    let absent: Vec<_> = report
+        .unmatched
+        .iter()
+        .map(|missing| (missing.line, missing.citation.as_str()))
+        .collect();
+    assert_eq!(absent, [(1, "s 8-1"), (2, "s 202-45"), (3, "s 197-5")]);
+}
+
 #[test]
 fn a_malformed_section_index_or_exception_is_refused() {
     let root = tempfile::tempdir().unwrap();

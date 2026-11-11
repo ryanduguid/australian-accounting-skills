@@ -435,7 +435,11 @@ Register of Legislation's API serves. Its header records the title, the
 register and compilation identifiers, the in-force date, the request, the
 retrieval date and the SHA-256 digest of the file read. The check drops
 subsection and paragraph suffixes (`s 43-10(4)` is checked as 43-10), and
-reads `ss 17A-18C` as a range when 17A and 18C are listed and 17A-18C is not.
+reads `ss 17A-18C` as a range when 17A and 18C are listed and the Act's list
+holds no hyphenated number. Where it does, as the ITAA 1936, TAA 1953 and
+Corporations Act lists do for their schedules, a hyphenated number must itself
+be listed, so a section of the ITAA 1997 attributed to one of them, such as
+`s 8-1 of the TAA 1953`, is absent rather than read as sections 8 to 1.
 A section missing from its Act's list fails by file and line unless the
 folder's `exceptions.txt` gives it with a reason, as for a provision a Bill
 proposes or a repealed one that still governs an earlier period; the report

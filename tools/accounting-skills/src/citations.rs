@@ -310,6 +310,9 @@ struct SectionIndex {
     compilation: String,
     keys: BTreeSet<Key>,
     sections: BTreeSet<String>,
+    /// Whether any listed section number holds a hyphen. Only in a list with
+    /// none does "ss 17A-18C" read as a range.
+    hyphenated: bool,
 }
 
 /// A cited section deliberately absent from its Act's index, such as one a
@@ -376,6 +379,7 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
         register_id,
         title,
         compilation,
+        hyphenated: sections.iter().any(|section| section.contains('-')),
         sections,
     })
 }
@@ -1216,11 +1220,12 @@ pub fn check(root: &Path) -> Result<Report> {
                                 continue;
                             };
                             let base = number.split('(').next().unwrap_or_default();
-                            // Where the whole is no section but both ends are,
-                            // "ss 17A-18C" is a range.
-                            let hyphen_range = base.split_once('-').is_some_and(|(first, last)| {
-                                index.sections.contains(first) && index.sections.contains(last)
-                            });
+                            // In an Act that numbers no section with a hyphen,
+                            // "ss 17A-18C" is a range when both ends are listed.
+                            let hyphen_range = !index.hyphenated
+                                && base.split_once('-').is_some_and(|(first, last)| {
+                                    index.sections.contains(first) && index.sections.contains(last)
+                                });
                             if index.sections.contains(base) || hyphen_range {
                                 report.sections_exist += 1;
                             } else if let Some(exception) =

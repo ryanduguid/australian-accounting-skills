@@ -213,8 +213,10 @@ table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
 after the first schedule heading only hyphenated numbers count, because a
 schedule's unhyphenated entries are clauses. The SHA-256 is of the EPUB.
-Subsection and paragraph suffixes are ignored, and `ss 17A-18C` is a range
-when both ends are listed but the whole is not. `section-index/exceptions.txt`
+Subsection and paragraph suffixes are ignored. `ss 17A-18C` is a range when
+both ends are listed and the list holds no hyphenated number; in a list that
+does, such as the TAA 1953's with its Schedule 1 sections, a hyphenated number
+must itself be listed, so `s 8-1 of the TAA 1953` is absent. `section-index/exceptions.txt`
 lists, as `REGISTER-ID SECTION: reason`, a section a skill cites on purpose
 although its list lacks it, such as one a Bill proposes or one since repealed.
 A section of an Act with no list is counted as not indexed.
