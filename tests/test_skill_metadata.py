@@ -719,24 +719,20 @@ class CredentialBoundaryTests(unittest.TestCase):
 
 
 # Terms of another country's tax system. The pack is Australian only, so one of
-# these outside a cross-border skill is a rule imported from the wrong place.
+# these in any skill or card, the cross-border ones included, is a rule imported
+# from the wrong place. No line is exempt: a search on 12 November 2026 found
+# none that names one. If a skill must name a foreign regime, add a per-line
+# exemption then (the path and the exact line, with the reason) and a test that
+# fails when the exempted line is gone. 'Sales tax' is passed when it is
+# Australia's pre-GST wholesale sales tax or part of an Act title with its year.
 FOREIGN_TAX_TERM = re.compile(
-    r"\b(?:HMRC|IRS|Form 1099|sales tax)\b|\b1099-", re.IGNORECASE
-)
-# Skills whose subject is foreign income, a foreign pension or residency, where
-# naming another country's regime is part of the workflow. A search on
-# 12 November 2026 found no other skill or card that names one.
-FOREIGN_TAX_TERM_ALLOWED = (
-    ".claude/skills/au-foreign-income/",
-    ".claude/skills/au-foreign-pensions/",
-    ".claude/skills/au-tax-residency/",
+    r"\b(?:HMRC|IRS|Form 1099|(?<!wholesale )sales tax(?![\w ()]* Act \d{4}))\b",
+    re.IGNORECASE,
 )
 
 
 def foreign_tax_term_hits(path: str, text: str) -> list[str]:
-    """Return `path:line: term` for each foreign tax term outside the allow-list."""
-    if path.startswith(FOREIGN_TAX_TERM_ALLOWED):
-        return []
+    """Return `path:line: term` for each foreign tax term in `text`."""
     return [
         f"{path}:{number}: {match.group()}"
         for number, line in enumerate(text.splitlines(), start=1)
@@ -758,12 +754,7 @@ class JurisdictionTermTests(unittest.TestCase):
                 path.relative_to(REPOSITORY).as_posix(), path.read_text(encoding="utf-8")
             )
         ]
-        self.assertEqual(hits, [], "move the foreign rule out, or allow-list the skill")
-
-    def test_allow_listed_skills_exist(self) -> None:
-        for prefix in FOREIGN_TAX_TERM_ALLOWED:
-            with self.subTest(prefix=prefix):
-                self.assertTrue((REPOSITORY / prefix / "SKILL.md").is_file())
+        self.assertEqual(hits, [], "move the foreign rule out of the pack")
 
     def test_a_planted_term_is_reported_by_file_and_line(self) -> None:
         planted = "Reconcile the ledger.\nFile the Form 1099-NEC with the IRS.\nUS sales tax"
@@ -779,13 +770,22 @@ class JurisdictionTermTests(unittest.TestCase):
             foreign_tax_term_hits("validation/cases/x.md", "Ask HMRC"),
             ["validation/cases/x.md:1: HMRC"],
         )
+        # No skill is exempt, including the cross-border ones.
         self.assertEqual(
-            foreign_tax_term_hits(".claude/skills/au-foreign-income/SKILL.md", planted), []
+            len(foreign_tax_term_hits(".claude/skills/au-foreign-income/SKILL.md", planted)), 3
         )
-        # Word boundaries: none of these is a term.
-        self.assertEqual(
-            foreign_tax_term_hits("validation/cases/x.md", "FIRST 10990 wholesales taxes"), []
-        )
+        # Australian text the guard must pass: the pre-GST wholesale sales tax,
+        # its Acts by title, and a fabricated invoice or page number.
+        for text in (
+            "Before 1 July 2000 the wholesale sales tax applied to the car.",
+            "Sales Tax Assessment Act 1992",
+            "Sales Tax (Exemptions and Classifications) Act 1992",
+            "Invoice INV-1099-03 from the supplier",
+            "pages 1099-1102 of the report",
+            "FIRST 10990",
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(foreign_tax_term_hits("validation/cases/x.md", text), [])
 
 
 if __name__ == "__main__":

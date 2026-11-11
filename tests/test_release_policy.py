@@ -75,6 +75,14 @@ class CorrectionNoticeTests(unittest.TestCase):
         self.assertIsNone(missing_correction_notice(readme, notes, published))
         releasing = " ".join((ROOT / "RELEASING.md").read_text(encoding="utf-8").split())
         self.assertIn("put a short notice above the README's `## Install` heading", releasing)
+        # The check keys on the latest published release, so it stops applying once
+        # step 4 records the new one; the step must say so.
+        self.assertIn(
+            "the test requires the notice only until step 4 adds the new version to "
+            "`RELEASED_INVENTORIES`",
+            releasing,
+        )
+        self.assertIn("no test checks the removal", releasing)
 
     def test_a_correction_of_the_latest_release_needs_the_notice(self) -> None:
         notes = "# v1.1.0\n\n## Corrections since v1.0.0\n\n- A figure.\n"

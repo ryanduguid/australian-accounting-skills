@@ -29,11 +29,6 @@ EQUATION = re.compile(rf"({NUMBER}(?: [-+x/] {NUMBER})+) = ({NUMBER})")
 # A card may state a ratio as a percentage: 18000.00 / 24000.00 = 75 per cent.
 CARD_EQUATION = re.compile(rf"{EQUATION.pattern}( per cent)?")
 
-# Cards whose working is meant not to foot, such as a forged total quoted as printed,
-# each with its reason. None today: bas-preparation-invoice-lines-do-not-foot writes
-# the true sum of the lines beside the printed subtotal, so its equations foot.
-NOT_MEANT_TO_FOOT: dict[str, str] = {}
-
 
 def worked_example(skill: str) -> str:
     text = (SKILLS / skill / "SKILL.md").read_text(encoding="utf-8")
@@ -107,17 +102,10 @@ def foots(expression: str, result: str, per_cent: str) -> bool:
 
 class ValidationCardArithmeticTests(unittest.TestCase):
     def test_every_card_equation_adds_up(self) -> None:
-        cards = sorted(CARDS.glob("*.md"))
-        stems = {card.stem for card in cards}
-        self.assertLessEqual(NOT_MEANT_TO_FOOT.keys(), stems, "exemption names no card")
         checked = 0
-        for card in cards:
+        for card in sorted(CARDS.glob("*.md")):
             equations = card_equations(card)
             checked += bool(equations)
-            if card.stem in NOT_MEANT_TO_FOOT:
-                with self.subTest(card=card.stem):
-                    self.assertFalse(all(foots(*e) for e in equations), "stale exemption")
-                continue
             for expression, result, per_cent in equations:
                 with self.subTest(card=card.stem, expression=expression):
                     stated = f"{expression} = {result}{per_cent}"

@@ -90,9 +90,10 @@ class StatementToCsvTests(unittest.TestCase):
     def test_a_period_break_is_explained_but_left_open(self) -> None:
         tie_out = step("4. **Tie out before building the file.**", "5. **Resolve overlaps")
         for contract in (
-            "a period break can flag a line the statement legitimately prints, although no such "
-            "statement has been confirmed.",
-            "For a period break, compare the line's date with the period the statement itself prints "
+            "a period break can flag a line the statement legitimately prints; no such statement has "
+            "been confirmed.",
+            "For a period break, compare the date the `BREAK` line names, the line's `date` or its "
+            "`posted` date, with the period the statement itself prints "
             "and with any posting cutoff the issuer states, record the explanation and the evidence for "
             "it in the workpaper, and leave the break open for a person.",
             "Never widen `period_start` or `period_end` beyond the printed period to make a line pass.",

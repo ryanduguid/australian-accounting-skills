@@ -56,11 +56,11 @@ The reviewed opening balance is 12,000.00. The franking credit on the distributi
 
 | Roll-forward | Working | Result |
 | --- | --- | --- |
-| Rebuilt account | 12,000.00 + 3,000.00 + 450.00 - 4,500.00 - 600.00 = 10,350.00 (opening, instalments the ATO account allocates to the instalment liability, credit on a distribution received, debit on the dividend paid, income tax refund) | Rebuilt closing balance |
+| Rebuilt account | 12,000.00 + 3,000.00 + 450.00 - 4,500.00 - 600.00 = 10,350.00 (opening, instalments the ATO account allocates to the instalment liability, credit on a distribution received, debit on the dividend paid, income tax refund) | Rebuilt closing balance, conditional on the maximum-credit check |
 | Ledger difference | 11,950.00 - 10,350.00 = 1,600.00 (ledger, rebuilt) | Classified, not plugged |
 | Itemised | 1,000.00 + 600.00 = 1,600.00 (an instalment payment the ATO account allocated to another liability, a refund not debited) | Both carried as reconciling items |
 
-The 4,500.00 debit sits on the day the payment records show the dividend was paid, not the resolution date. The maximum franking credit and the benchmark need the imputation rate and its prior-year evidence, so they stay blank and `UNVERIFIED` here. Had the itemised differences come to less than 1,600.00, the rest would stay an unexplained reconciling item for the reviewer. The directors decide dividends and franking.
+The 4,500.00 debit sits on the day the payment records show the dividend was paid, not the resolution date. The maximum franking credit and the benchmark need the imputation rate and its prior-year evidence, so they stay blank and `UNVERIFIED` here. Step 5 debits a stated credit only up to the maximum, so the 4,500.00 debit, the closing balance and the ledger difference stay conditional until the maximum is verified. Had the itemised differences come to less than 1,600.00, the rest would stay an unexplained reconciling item for the reviewer. The directors decide dividends and franking.
 
 ## Source and review boundary
 

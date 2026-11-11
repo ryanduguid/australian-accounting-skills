@@ -5,6 +5,13 @@ A link into another Markdown file must also name a heading that file has.
 Anchors are checked with GitHub's heading slug rule, so a link that GitHub
 resolves through an explicit HTML `id` or `name` is accepted too. A link to
 any other kind of file is checked for the file only.
+
+YAML front matter, fenced and indented code, code spans, HTML comments and
+footnote definitions are skipped, and setext headings count as headings.
+Unsupported: a prose line that starts `[Label]: value` is read as a reference
+definition, and list tracking is approximate, so an indented block after a list
+item counts as list content until a blank line and an unindented paragraph end
+the list.
 """
 
 from __future__ import annotations
@@ -24,10 +31,15 @@ CODE_SPAN = re.compile(r"(`+).*?\1")
 # definition, `[label]: target`. Nested brackets in link text are rare here
 # and the target is what matters.
 INLINE_LINK = re.compile(r"\]\(\s*(<[^>]*>|[^)\s]+)")
-REFERENCE_DEFINITION = re.compile(r"^ {0,3}\[[^\]]+\]:\s*(<[^>]*>|\S+)")
+# A footnote definition, `[^1]: text`, is not a reference definition.
+REFERENCE_DEFINITION = re.compile(r"^ {0,3}\[(?!\^)[^\]]+\]:\s*(<[^>]*>|\S+)")
 SCHEME = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
 HEADING = re.compile(r"^ {0,3}#{1,6}\s+(.*?)\s*#*\s*$")
+SETEXT_UNDERLINE = re.compile(r"^ {0,3}(?:=+|-+)\s*$")
 HTML_ANCHOR = re.compile(r"""<a\s[^>]*\b(?:id|name)=["']([^"']+)["']""")
+HTML_COMMENT = re.compile(r"<!--.*?-->")
+INDENTED = re.compile(r"^(?: {4}|\t)")
+LIST_ITEM = re.compile(r"^ {0,3}(?:[-*+]|\d{1,9}[.)])(?:\s|$)")
 
 
 def slug(heading: str) -> str:
@@ -40,10 +52,18 @@ def slug(heading: str) -> str:
 
 
 def prose_lines(text: str) -> list[tuple[int, str]]:
-    """Numbered lines outside fenced code blocks, with inline code spans removed."""
+    """Numbered lines outside code blocks and HTML comments, without code spans."""
     lines: list[tuple[int, str]] = []
     fence = ""
+    comment = indented_code = in_list = False
+    previous_blank = True
+    front_matter = text.startswith("---\n")
     for number, line in enumerate(text.splitlines(), 1):
+        if front_matter:
+            # YAML front matter has no links or headings; its closing `---` is
+            # not a setext underline.
+            front_matter = number == 1 or line != "---"
+            continue
         opened = FENCE.match(line)
         if fence:
             if opened and opened.group(1)[0] == fence[0] and len(opened.group(1)) >= len(fence):
@@ -52,6 +72,24 @@ def prose_lines(text: str) -> list[tuple[int, str]]:
         if opened:
             fence = opened.group(1)
             continue
+        blank = not line.strip()
+        # An indented code block starts after a blank line, but not inside a list,
+        # where the indent continues the item.
+        if not blank and INDENTED.match(line):
+            indented_code = indented_code or (previous_blank and not in_list)
+        elif not blank:
+            indented_code = False
+            in_list = bool(LIST_ITEM.match(line)) or (in_list and not previous_blank)
+        previous_blank = blank
+        if indented_code:
+            continue
+        if comment:
+            if "-->" not in line:
+                continue
+            line = line.split("-->", 1)[1]
+        line = HTML_COMMENT.sub("", line)
+        line, comment_opened, _ = line.partition("<!--")
+        comment = bool(comment_opened)
         lines.append((number, CODE_SPAN.sub("", line)))
     return lines
 
@@ -59,9 +97,13 @@ def prose_lines(text: str) -> list[tuple[int, str]]:
 def anchors(path: Path) -> set[str]:
     found: set[str] = set()
     seen: dict[str, int] = {}
+    previous = ""
     for _, line in prose_lines(path.read_text(encoding="utf-8")):
-        found.update(HTML_ANCHOR.findall(line))
+        found.update(anchor.lower() for anchor in HTML_ANCHOR.findall(line))
         heading = HEADING.match(line)
+        if not heading and SETEXT_UNDERLINE.match(line) and previous.strip():
+            heading = HEADING.match(f"# {previous.strip()}")
+        previous = "" if heading else line
         if heading:
             base = slug(heading.group(1))
             count = seen.get(base, 0)
@@ -136,6 +178,34 @@ class MarkdownLinkTests(unittest.TestCase):
                     "README.md:11: /docs/absent.md (no such file)",
                 ],
             )
+
+    def test_text_that_is_not_a_link_is_not_reported(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            page = root / "README.md"
+            page.write_text(
+                "Set up\n======\n\n"
+                'Notes <a id="R1"></a>\n\n'
+                "[setext](#set-up) [capital anchor](#R1)\n\n"
+                "<!-- [one line](docs/gone.md) -->\n"
+                "<!--\n[multi line](docs/gone.md)\n--> [after comment](docs/gone.md)\n\n"
+                "    [indented code](docs/gone.md)\n\n"
+                "A footnote.[^1]\n\n"
+                "[^1]: See the ATO page.\n\n"
+                "- A list item\n\n"
+                "    [list continuation](docs/gone.md)\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                broken_links(root, [page]),
+                [
+                    "README.md:11: docs/gone.md (no such file)",
+                    "README.md:21: docs/gone.md (no such file)",
+                ],
+            )
+            # Front matter's closing line is not a setext underline.
+            page.write_text("---\nname: x\n---\n\n[front matter](#name-x)\n", encoding="utf-8")
+            self.assertEqual(broken_links(root, [page]), ["README.md:5: #name-x (no such heading)"])
 
     def test_slug_follows_github_heading_anchors(self) -> None:
         self.assertEqual(
