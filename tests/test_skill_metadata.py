@@ -651,6 +651,12 @@ class SkillMetadataTests(unittest.TestCase):
         others = cards - len(judged)
         self.assertIn("The other card" if others == 1 else f"The other {others} cards", readme)
 
+    def test_validation_readme_lists_every_card(self) -> None:
+        """A card missing from the coverage table is one a reader cannot find."""
+        table = (REPOSITORY / "validation" / "README.md").read_text(encoding="utf-8")
+        cards = sorted(path.name for path in (REPOSITORY / "validation" / "cases").glob("*.md"))
+        self.assertEqual([name for name in cards if f"(cases/{name})" not in table], [])
+
     def test_last_changed_table_lists_every_skill(self) -> None:
         """A skill missing from the generated table means it was not regenerated."""
         table = (REPOSITORY / "docs" / "skill-last-changed.md").read_text(encoding="utf-8")

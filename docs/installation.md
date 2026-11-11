@@ -124,6 +124,9 @@ a 10k budget.
 
 That fits a 1 million token window with little room, and not a 200,000 token one:
 1% there is 2k tokens, and skill-tax-cli reported 49 of the 97 descriptions at risk.
+On 12 November 2026 the pack held 104 skills whose descriptions total 15,743 characters,
+15% more than the 97 measured above. `/context` has not been run on them, so expect a
+larger Skills row than the 5 November reading.
 Other plugins and skills sharing the listing can also push it over. To check, run
 `/context` and compare the Skills row with your window. To reserve more, set
 `skillListingBudgetFraction` in your Claude Code settings, for example

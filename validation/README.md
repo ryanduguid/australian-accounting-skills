@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 209 cards in `cases/` test workflow quality, provenance and restraint.
+The 228 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -264,8 +264,22 @@ law claim, unverified source or guess.
 | [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
 | [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
 | [A short payout, sales booked net of fees, a reserve over month end and a late refund](cases/marketplace-settlements-planted-faults.md) | marketplace-settlements, reconciliation-break-trace, bas-preparation |
+| [Draft GIC remission request with one unevidenced fact](cases/au-ato-penalties-interest-remission-request.md) | au-ato-penalties-interest |
+| [Client queries for bank lines with an unknown purpose](cases/au-bookkeeping-unknown-lines-queries.md) | au-bookkeeping |
+| [Crypto records checklist built before the exports arrive](cases/au-crypto-tax-records-request.md) | au-crypto-tax |
+| [Accounting depreciation schedule with the policy missing for one class](cases/au-depreciation-schedule-accounting-schedule.md) | au-depreciation-schedule |
+| [Partnership agreement abstract with an unsigned mid-year variation](cases/au-partnership-tax-agreement-questions.md) | au-partnership-tax |
+| [AML/CTF rows for a practice enrolled with AUSTRAC](cases/au-tax-agent-obligations-aml-program-rows.md) | au-tax-agent-obligations |
+| [Practice client list against the ATO client list](cases/au-tax-agent-obligations-ato-client-list.md) | au-tax-agent-obligations |
+| [Budget measure screen for one client](cases/au-tax-research-budget-screen.md) | au-tax-research |
+| [Resolution content schedule with an open deed question](cases/au-trust-distributions-resolution-content-schedule.md) | au-trust-distributions |
+| [Unexplained BAS movements turned into client questions](cases/bas-preparation-movement-client-questions.md) | bas-preparation |
+| [Three-way forecast on an opening balance sheet that does not balance](cases/financial-modelling-three-way.md) | financial-modelling |
+| [Management report with an unexplained revenue variance](cases/month-end-close-management-report.md) | month-end-close |
+| [Year-end records request and covering email built from last year](cases/year-end-workpapers-records-request.md) | year-end-workpapers, au-individual-return |
+| [Three-year analytical review with a related-party loan](cases/year-end-workpapers-three-year-review.md) | year-end-workpapers |
 
-Together the cards cover all 102 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 104 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -312,6 +326,10 @@ The 2 MYOB export cards added on 12 November 2026 have no recorded run.
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
 
 The 2 marketplace settlement cards added on 12 November 2026 have no recorded run.
+
+The 14 cards added on 12 November 2026 for steps that turn working into a draft request, a
+schedule, a report or a register row have no recorded run, nor does the positive control added
+that day for 2 suppliers whose invoices share a number.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions
