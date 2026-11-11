@@ -120,6 +120,7 @@ affiliated with or endorsed by the Australian Taxation Office.
 - [financial-modelling](.claude/skills/financial-modelling/SKILL.md)
 - [fuel-tax-credits](.claude/skills/fuel-tax-credits/SKILL.md)
 - [month-end-close](.claude/skills/month-end-close/SKILL.md)
+- [myob-exports](.claude/skills/myob-exports/SKILL.md)
 - [payroll-tax-contractors](.claude/skills/payroll-tax-contractors/SKILL.md)
 - [plant-and-equipment-costing](.claude/skills/plant-and-equipment-costing/SKILL.md)
 - [progress-claim-preparation](.claude/skills/progress-claim-preparation/SKILL.md)

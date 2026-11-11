@@ -76,7 +76,7 @@ Comparison date: 2 November 2026; the page was read again on 11 November 2026 fo
 | Review after a BAS is lodged | Covered | `bas-preparation` (lodged-figure drift and post-lodgement closing journal) |
 | Transaction coding and client queries | Covered | `au-bookkeeping` |
 | Bank statement, credit card statement or pasted list to import CSV | New | `statement-to-csv` (one skill for all 3 sources) |
-| Xero and MYOB troubleshooting | Not adopted | Vendor help pages own software fixes and change often; `xero-exports` covers the exports the skills use |
+| Xero and MYOB troubleshooting | Not adopted | Vendor help pages own software fixes and change often; `xero-exports` and `myob-exports` cover the exports the skills use |
 
 ### Client reporting and advisory
 

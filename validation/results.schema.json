@@ -223,6 +223,8 @@
           "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
           "month-end-supported-partial-close",
+          "myob-exports-accountright-period-end-ties",
+          "myob-exports-connector-answer-and-write-request",
           "payroll-tax-act-unsupported-exemptions",
           "payroll-tax-contractor-characterisation",
           "payroll-tax-nsw-on-hire-screen",

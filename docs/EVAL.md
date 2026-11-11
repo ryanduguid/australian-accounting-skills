@@ -322,7 +322,8 @@ au-primary-production on 11 November 2026, and the concession conditions added t
 postdate every recorded run, and the 2 new cards have no recorded run.
 
 The 2 main residence cards and 3 share buy-back cards added on 11 November 2026 for the new
-au-main-residence and au-share-buy-back skills have no recorded run.
+au-main-residence and au-share-buy-back skills have no recorded run, nor do the 2 cards
+added on 12 November 2026 for the new myob-exports skill.
 
 The 2 cards and the routing prompt added on 12 November 2026 for the new au-client-meeting-note
 skill have no recorded run.
@@ -361,8 +362,9 @@ claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --ma
 ```
 
 The estimate for the earlier 107-case pack was about US$18, not a measurement.
-The 116-case pack has no measured cost; a run that reaches the US$30 cap stops
-with partial results. The 79 prompts added on 4 and 11 November 2026 have no recorded run.
+The 117-case pack has no measured cost; a run that reaches the US$30 cap stops
+with partial results. The 79 prompts added on 4 and 11 November 2026 and the prompt added on 12 November 2026
+have no recorded run.
 
 On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4
 turns, MCP server not started) all 20 chose the expected skill and none of the

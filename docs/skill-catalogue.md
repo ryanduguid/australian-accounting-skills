@@ -139,11 +139,12 @@ These workflows are independently written from Australian primary sources; `NOTI
 
 ## Additions from 12 November 2026
 
-This workflow is independently written from Federal Register of Legislation, TPB and OAIC sources; `NOTICE` records where the topic came from.
+These workflows are independently written: `au-client-meeting-note` from Federal Register of Legislation, TPB and OAIC sources, with `NOTICE` recording where the topic came from, and `myob-exports` from MYOB's own support and developer pages.
 
 | Skill | Use it for |
 | --- | --- |
 | [`au-client-meeting-note`](../.claude/skills/au-client-meeting-note/SKILL.md) | Draft file note of a client meeting from its transcript or notes: consent exceptions, client facts and instructions, what the practitioner said, decisions, scope changes, actions, routed questions and unclear passages, each traced to the source |
+| [`myob-exports`](../.claude/skills/myob-exports/SKILL.md) | MYOB Business and AccountRight exports: which report to request, the export manifest, user-access and wrong-basis checks, control account tie-outs and a read-only route for MYOB's own connector |
 
 Also included:
 

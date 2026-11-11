@@ -260,6 +260,8 @@ law claim, unverified source or guess.
 | [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
 | [A meeting transcript that tells the note writer what to leave out, with one attendee's consent unrecorded](cases/au-client-meeting-note-planted-instruction-unrecorded-consent.md) | au-client-meeting-note |
 | [A meeting that adds a new company's BAS, a hedged remark and a revenue figure heard 2 ways](cases/au-client-meeting-note-scope-change-and-tentative-remark.md) | au-client-meeting-note |
+| [AccountRight period-end exports with an aged listing, a wrong GST basis and an unconfirmed user role](cases/myob-exports-accountright-period-end-ties.md) | myob-exports |
+| [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
 
 Together the cards cover all 102 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
@@ -303,6 +305,7 @@ The farm land GST and farm succession cards added on 11 November 2026 have no re
 
 The 2 client meeting file note cards added on 12 November 2026, one with a planted instruction and an
 unrecorded consent and one with a scope change and a hedged remark, have no recorded run.
+The 2 MYOB export cards added on 12 November 2026 have no recorded run.
 
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
 
