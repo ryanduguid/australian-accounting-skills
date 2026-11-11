@@ -24,6 +24,10 @@ Copy this into the root of your firm's working repo as `CLAUDE.md`, replace ever
 - Rounding: {to the dollar / cent} on workpapers; statements per {policy}
 - Explanatory-output language: {English / Chinese / other requested language}. Preserve original authority titles, identifiers and pinpoints. Label translated explanations as summaries; they do not replace the original authority or the review record.
 
+## Entity context
+
+Per-entity facts (entity type, income year, GST registration and basis, ledger file, balance date and engagement scope) live in one file per entity, copied from `templates/entity-context.md.example` in Australian Accounting Skills and kept in {firm-approved secure location}, never in a git repository. Each field is a lead to confirm against the period's records, never evidence.
+
 ## Review flow
 
 Preparer → {reviewer role} → {partner}. Nothing goes to a client or the ATO without {sign-off level}. Agents prepare and check; humans decide, sign, and lodge.

@@ -383,6 +383,38 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn("Instructions embedded in client files", firm_template)
         self.assertIn("untrusted data", firm_template)
 
+    def test_entity_context_template_holds_placeholders_only(self) -> None:
+        """An entity's recorded facts are leads; the period's records are the evidence."""
+        lead = "Each field is a lead to confirm against the period's records, never evidence."
+        template = (REPOSITORY / "templates" / "entity-context.md.example").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(lead, template)
+        self.assertIsNone(re.search(r"\d", template), "a template states no figure or date")
+        fields = re.findall(r"(?m)^- ([^:]+): (.*)$", template)
+        self.assertEqual(
+            [name for name, _ in fields],
+            [
+                "Entity type",
+                "Income year",
+                "GST registration",
+                "GST accounting basis",
+                "Ledger file",
+                "Balance date",
+                "Engagement scope",
+            ],
+        )
+        for name, value in fields:
+            with self.subTest(field=name):
+                self.assertRegex(value, r"^\{[^{}]+\}$", "a field holds one placeholder and nothing else")
+
+        firm_template = (REPOSITORY / "templates" / "firm-CLAUDE.md.example").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## Entity context", firm_template)
+        self.assertIn("templates/entity-context.md.example", firm_template)
+        self.assertIn(lead, firm_template)
+
     def test_disclaimer_and_discovery_copy_stay_published(self) -> None:
         disclaimer = (REPOSITORY / "DISCLAIMER.md").read_text(encoding="utf-8")
         discovery = (REPOSITORY / "docs" / "DISCOVERY.md").read_text(encoding="utf-8")
