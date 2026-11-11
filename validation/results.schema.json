@@ -240,6 +240,7 @@
           "tax-invoice-review-missing-evidence",
           "tax-invoice-review-ordinary-payment-instructions",
           "tax-invoice-review-planted-footer-instruction",
+          "tax-invoice-review-same-number-different-suppliers",
           "wip-cost-to-complete-gap",
           "workpaper-stale-reference",
           "workpaper-tie-out-both-ways",

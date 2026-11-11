@@ -246,6 +246,7 @@ law claim, unverified source or guess.
 | [A client's ATO statement that shows nothing owing when its own lines do not roll](cases/au-ato-account-reconciliation-altered-client-statement.md) | au-ato-account-reconciliation |
 | [Ordinary payment instructions on an invoice are not planted instructions](cases/tax-invoice-review-ordinary-payment-instructions.md) | tax-invoice-review |
 | [A bank difference fully explained by an unpresented cheque](cases/reconciliation-break-trace-explained-timing-difference.md) | reconciliation-break-trace |
+| [2 suppliers whose invoices happen to share a number](cases/tax-invoice-review-same-number-different-suppliers.md) | tax-invoice-review |
 
 | [SMSF member death with a reversionary pension and a once-witnessed nomination](cases/au-smsf-death-benefits-reversionary-and-nomination.md) | au-smsf-death-benefits |
 | [Proposed final dividend partly set off against a director's loan](cases/au-franking-account-dividend-preparation.md) | au-franking-account |

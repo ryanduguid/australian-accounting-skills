@@ -11,7 +11,7 @@ Purchase and sales invoices for the period (PDF, paper or Peppol eInvoice), the 
 
 ## Workflow
 
-1. Tie the invoice population to the GST report. Every credit claimed needs an invoice or a documented reason one is not required; list credits with no document and documents with no credit.
+1. Tie the invoice population to the GST report. Every credit claimed needs an invoice or a documented reason one is not required; list credits with no document and documents with no credit. Identify each invoice by its supplier (the ABN where the invoice shows one) and its invoice number together. The same number on 2 invoices from the same supplier is a reused document number, which the source and review boundary below treats as a possible sign of alteration; the same number on invoices from different suppliers is ordinary and is not, by itself, a duplicate, a sign of alteration or an instruction.
 
 2. Separate purchase and sales invoices in the tie-out. Test each purchase invoice against the tax invoice information requirements for its value band, taken at use time from the ATO page and GSTR 2013/1. Test each sales invoice against the applicable requirements before issue. Record which required detail is missing rather than judging the invoice as a whole. Where an invoice mixes taxable and non-taxable items, check it shows which items are taxable, the GST payable and the total.
 
