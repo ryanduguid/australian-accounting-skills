@@ -395,6 +395,10 @@
   skill: xero-exports
   not: [contracting-exports, year-end-workpapers]
   prompt: I have downloaded the trial balance, aged receivables and account transactions reports from Xero at 30 June 2026. Check they are complete and the totals agree, and flag any old debtors.
+- id: accountright-year-end-exports
+  skill: myob-exports
+  not: [xero-exports, year-end-workpapers]
+  prompt: I exported the trial balance, aged payables and GST summary from our client's AccountRight file for 30 June 2026. Check they are complete, on the right basis and agree to the ledger before we start the year-end file.
 - id: thirteen-week-cash
   skill: cashflow-forecast-13week
   not: [financial-modelling]

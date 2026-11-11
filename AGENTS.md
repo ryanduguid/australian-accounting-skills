@@ -6,12 +6,12 @@ through [CLAUDE.md](./CLAUDE.md).
 
 ## What this repository is
 
-One hundred and one agent skills for Australian public-practice and contracting-business
+One hundred and two agent skills for Australian public-practice and contracting-business
 accounting. The Australian topic expansion adds tax returns, investment and
 cross-border workpapers, state-tax evidence, financial statements and formation
 checklists.
 The original practice workflows cover BAS, close, workpapers, FBT,
-Division 7A, STP, Xero exports and cashflow. The consolidated contracting
+Division 7A, STP, Xero and MYOB exports and cashflow. The consolidated contracting
 workflows cover claims, retentions, WIP, contract costs, plant, fuel, payroll
 tax, contractor super, TPAR and Coal LSL. Each skill encodes the process and
 tie-outs, then sends the agent to current primary sources for mutable rules.
