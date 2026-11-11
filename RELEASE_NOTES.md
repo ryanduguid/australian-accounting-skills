@@ -21,7 +21,7 @@ dual-code mismatches, tests a trust's beneficial owner evidence role by role
 and lists the trust, its representatives and identifiable beneficiaries for
 screening. `au-payroll-review` screens new employees for a stapled fund request,
 and `au-smsf-year-end` records each asset's market value basis and evidence.
-The new test checks wording, not model behaviour, and the 8 new source records
+The new test checks wording, not model behaviour, and the 9 new source records
 await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
