@@ -14,6 +14,38 @@
       "content_hash": "b0139f25e5819ec130feddb227fc65f44a9ae5066fe8e62696413e6ca11580d4",
       "source_last_modified": "2026-09-09",
       "content_hash_covers": "bytes"
+    },
+    {
+      "title": "Income Tax Assessment Act 1936",
+      "url": "https://www.legislation.gov.au/C1936A00027/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "This page refused an automated read (HTTP 403) on 12 November 2026. An agent read compilation C2026C00454 (compilation 193, in force from 1 October 2026) through the Federal Register API the same day; ss 90 and 92 were read in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C1936A00027/latest/text",
+      "http_status": 403,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "TR 94/8 Income tax: whether business is carried on in partnership (including 'husband and wife' partnerships)",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR948/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 12 November 2026 on the ATO legal database; paragraphs 3 to 5 were read. The page says the ATO reviewed the ruling and it did not require updates as at 5 April 2017. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR948/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: au-ato-penalties-interest
-description: "Use when estimating or reviewing ATO general interest charge, shortfall interest or failure to lodge penalties, or preparing remission or safe harbour evidence."
+description: "Use when estimating or reviewing ATO general interest charge, shortfall interest or failure to lodge penalties, or preparing remission or safe harbour evidence and a draft remission request."
 ---
 
 # ATO penalties and interest workpapers
@@ -25,9 +25,11 @@ The ATO notice or account statement showing each liability, its original due dat
 
 7. Remission and safe harbour: assemble the facts the ATO page asks for (the event, how it caused the delay, whether it was beyond the taxpayer's control, and why more time was not requested). For safe harbour, test both conditions on the ATO page: evidence that all relevant information reached the registered tax or BAS agent in time to lodge by the due date, and whether the agent's failure was not due to recklessness or intentional disregard of the tax law. The second condition is a reviewer judgement; record the facts and leave it open. Prepare a draft request; do not send it.
 
+   The draft request holds: the taxpayer reference as a placeholder; each liability and period from the step 1 to 5 schedules; the amount asked to be remitted, as the reviewer sets it; each fact from the evidence pack with its evidence reference; and the request. Restate only facts the evidence pack holds. A fact without evidence stays out of the draft and goes on an exception list for the reviewer, with the evidence needed. Leave the draft unsigned and mark it for the registered agent to review and send. **Human review pending:** an agent read these sources on 12 November 2026, not a human review. [PS LA 2011/12](https://www.ato.gov.au/law/view/document?DocID=PSR/PS201112/NAT/ATO/00001) (GIC) says at paragraph 8 that the onus is generally on the client to satisfy the ATO that remission is warranted, with sufficient information for a decision; [PS LA 2006/8](https://www.ato.gov.au/law/view/document?DocID=PSR/PS20068/NAT/ATO/00001) covers SIC and GIC for shortfall periods. Each showed a notice that it is being reviewed: record its status on the date read.
+
 ## Hand-off and checks
 
-A liability schedule tied to the ATO notice, a GIC and SIC schedule by quarter with rate sources, the same charges split at 1 July 2025 and by income year for deductibility, a failure to lodge schedule by document showing days late, periods, penalty unit value and multiplier, and a remission or safe harbour evidence pack with a draft request. Computed charges agree to the ATO statement or the difference is explained. Whether to request remission, and what to say, remain reviewer decisions.
+A liability schedule tied to the ATO notice, a GIC and SIC schedule by quarter with rate sources, the same charges split at 1 July 2025 and by income year for deductibility, a failure to lodge schedule by document showing days late, periods, penalty unit value and multiplier, and a remission or safe harbour evidence pack with a draft request and the exception list of facts left out of it. Computed charges agree to the ATO statement or the difference is explained. Whether to request remission, and what to say, remain reviewer decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
