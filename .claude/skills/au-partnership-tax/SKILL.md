@@ -1,17 +1,19 @@
 ---
 name: au-partnership-tax
-description: "Use when preparing Australian partnership income, partner allocation and capital-account schedules."
+description: "Use when preparing Australian partnership income, partner allocation and capital-account schedules, or abstracting a partnership agreement and listing questions for the partners' solicitor."
 ---
 
 # Partnership tax workpapers
 
 ## Inputs
 
-Partnership agreement and changes, partner and residency details limited to the task, trial balance, income/deduction schedules, capital/current accounts, drawings, contributions and prior-year allocations.
+Partnership agreement and changes, each with its execution evidence (signatures, dates and any consent the agreement requires), or, where there is no written agreement, the records of how the partners deal with each other and with third parties; partner and residency details limited to the task, trial balance, income/deduction schedules, capital/current accounts, drawings, contributions and prior-year allocations.
 
 ## Workflow
 
 1. Confirm the arrangement and relevant tax classification, including whether any special partnership regime needs specialist review.
+
+1a. **Abstract the partnership agreement.** **Human review pending:** an agent read these sources on 12 November 2026, not a human review. Build a document register: the agreement and every variation, each with its date, parties, execution evidence and whether a complete copy is held. Record a missing page, schedule, variation or signature as missing; never assume it. Abstract by clause the profit and loss sharing, partner salaries, interest on capital, drawings, capital, admission, retirement, dissolution and variation clauses, quoting the clause number and paraphrasing without interpreting. Compare the year's actual allocation and drawings with each clause and record each difference with its evidence. Where a variation lacks execution evidence or changes a term part-way through the year, show the allocation under the earlier and the varied clause side by side, keep the earlier clause in the allocation schedule and leave the variation unresolved. Where there is no written agreement, record the conduct the evidence shows against the factors [TR 94/8](https://www.ato.gov.au/law/view/document?DocID=TXR/TR948/NAT/ATO/00001) lists at paragraph 4; TR 94/8 says at paragraph 3 that whether a partnership exists is a question of fact. Section 92(1) of the [*Income Tax Assessment Act 1936*](https://www.legislation.gov.au/C1936A00027/latest/text) (compilation 193) includes in a partner's assessable income their individual interest in the partnership's net income, which s 90 of the ITAA 1936 defines; record the clauses and evidence each partner's share rests on, not a conclusion on it. Output a numbered list of questions for the partners' solicitor, each stating only the facts and the clause references it turns on. The solicitor decides validity and construction and the partners decide and sign any variation: do not decide whether a clause or variation is valid or what it means, and do not draft a variation.
 
 2. Bridge accounting profit to the partnership tax schedule using supported adjustments. Separate partners' drawings and capital movements from business expenses.
 
@@ -23,7 +25,7 @@ Partnership agreement and changes, partner and residency details limited to the 
 
 ## Hand-off and checks
 
-A partnership reconciliation, allocation schedule and partner account roll-forwards. Allocated amounts sum to the supported partnership totals without using drawings as the allocation rule. For a professional practitioner whose share flows to associated entities, route the allocation review to `au-professional-firm-profits`.
+An agreement register and clause abstract, a numbered list of questions for the partners' solicitor, a partnership reconciliation, allocation schedule and partner account roll-forwards. Allocated amounts sum to the supported partnership totals without using drawings as the allocation rule. For a professional practitioner whose share flows to associated entities, route the allocation review to `au-professional-firm-profits`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
