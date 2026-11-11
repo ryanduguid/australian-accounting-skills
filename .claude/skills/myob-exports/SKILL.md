@@ -72,7 +72,7 @@ Where a skill in this pack asks for something generic ('GL detail', 'aged payabl
 
 The Business reports page lists Profit & Loss, Cash movement, Budget management, Balance sheet, Trial balance, GST report, GST return, General ledger, Journal entries, Categories list, Categories transactions, Contacts report, Journal security audit and Taxable payments annual report. The Banking reports page lists Banking activity (recorded transactions and bank feed lines, with a running balance), Banking transactions (bank feed and imported statement lines), Reconciliation (each completed bank reconciliation), Coding and Statement of cash flow. Both pages say the reports available depend on the plan.
 
-The pages read do not describe the browser trial balance's columns or date options, the general ledger's layout, or which browser report ages receivables and payables. Before relying on a browser export for a tie-out, confirm on screen which report the business has, its date and basis options and its columns, and record them. If the plan lacks a report a skill needs, record that evidence as missing; do not substitute a report that measures something else.
+The pages read do not describe the browser trial balance's columns or date options, the general ledger's layout or which browser report ages receivables and payables. Before relying on a browser export for a tie-out, confirm on screen which report the business has, its date and basis options and its columns, and record them. If the plan lacks a report a skill needs, record that evidence as missing; do not substitute a report that measures something else.
 
 ## Completeness checks: run every time
 
