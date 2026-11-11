@@ -723,9 +723,11 @@ class CredentialBoundaryTests(unittest.TestCase):
 # from the wrong place. No line is exempt: a search on 12 November 2026 found
 # none that names one. If a skill must name a foreign regime, add a per-line
 # exemption then (the path and the exact line, with the reason) and a test that
-# fails when the exempted line is gone.
+# fails when the exempted line is gone. 'Sales tax' is passed when it is
+# Australia's pre-GST wholesale sales tax or part of an Act title with its year.
 FOREIGN_TAX_TERM = re.compile(
-    r"\b(?:HMRC|IRS|Form 1099|sales tax)\b|\b1099-", re.IGNORECASE
+    r"\b(?:HMRC|IRS|Form 1099|(?<!wholesale )sales tax(?![\w ()]* Act \d{4}))\b",
+    re.IGNORECASE,
 )
 
 
@@ -772,10 +774,18 @@ class JurisdictionTermTests(unittest.TestCase):
         self.assertEqual(
             len(foreign_tax_term_hits(".claude/skills/au-foreign-income/SKILL.md", planted)), 3
         )
-        # Word boundaries: none of these is a term.
-        self.assertEqual(
-            foreign_tax_term_hits("validation/cases/x.md", "FIRST 10990 wholesales taxes"), []
-        )
+        # Australian text the guard must pass: the pre-GST wholesale sales tax,
+        # its Acts by title, and a fabricated invoice or page number.
+        for text in (
+            "Before 1 July 2000 the wholesale sales tax applied to the car.",
+            "Sales Tax Assessment Act 1992",
+            "Sales Tax (Exemptions and Classifications) Act 1992",
+            "Invoice INV-1099-03 from the supplier",
+            "pages 1099-1102 of the report",
+            "FIRST 10990",
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(foreign_tax_term_hits("validation/cases/x.md", text), [])
 
 
 if __name__ == "__main__":
