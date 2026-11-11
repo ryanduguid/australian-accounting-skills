@@ -552,3 +552,26 @@ fn a_malformed_index_or_root_is_refused() {
     let empty = tempfile::tempdir().unwrap();
     assert_eq!(run(empty.path()).0, 1);
 }
+
+#[test]
+fn document_identifiers_at_the_register_root_resolve() {
+    for (title, url, citation) in [
+        (
+            "Payroll Tax Act 2011 (ACT)",
+            "https://www.legislation.act.gov.au/a/2011-18/",
+            "s 31 of the Payroll Tax Act 2011 (ACT).\n",
+        ),
+        (
+            "Payroll Tax Act 2009 (SA)",
+            "https://www.legislation.sa.gov.au/lz?path=/c/a/payroll%20tax%20act%202009",
+            "s 31 of the Payroll Tax Act 2009 (SA).\n",
+        ),
+    ] {
+        let root = tempfile::tempdir().unwrap();
+        skill(root.path(), "alpha", citation, Some(&record(title, url)));
+        let report = check(root.path()).unwrap();
+        assert_eq!((report.sections, report.sections_resolved), (1, 1), "{url}");
+        assert!(report.unmatched.is_empty(), "{:?}", report.unmatched);
+        assert_eq!(run(root.path()).0, 0, "{url}");
+    }
+}

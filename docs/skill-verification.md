@@ -96,7 +96,7 @@ Totals: 97 skills, 600 indexed primary sources of which 341 have a recorded huma
 | [`contracting-exports`](../.claude/skills/contracting-exports/SKILL.md) | exempt | none | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md) | [14](../.claude/skills/contractor-super-tpar/sources.json) | 2026-09-30 (3 of 14) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`div7a-compliance`](../.claude/skills/div7a-compliance/SKILL.md) | [4](../.claude/skills/div7a-compliance/sources.json) | none (0 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | [7](../.claude/skills/fbt-annual-workflow/sources.json) | none (0 of 7) | 0 | 0 | 2 | 1 | 0 | 0 |
+| [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | [7](../.claude/skills/fbt-annual-workflow/sources.json) | none (0 of 7) | 0 | 0 | 3 | 1 | 0 | 0 |
 | [`financial-modelling`](../.claude/skills/financial-modelling/SKILL.md) | exempt | none | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) | [12](../.claude/skills/fuel-tax-credits/sources.json) | 2026-09-30 (2 of 12) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`month-end-close`](../.claude/skills/month-end-close/SKILL.md) | [5](../.claude/skills/month-end-close/sources.json) | 2026-09-30 (5 of 5) | 1 | 0 | 10 | 4 | 0 | 0 |

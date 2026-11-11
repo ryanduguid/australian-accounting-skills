@@ -492,11 +492,11 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
         return Ok(None);
     };
     let register = group(&found, 1).to_lowercase();
-    let remainder = url[span(&found).1..].to_lowercase();
+    let remainder = url[span(&found).1 - 1..].to_lowercase();
     let document = remainder.split('#').next().unwrap_or("");
     // South Australia's register identifies its document with the path
     // parameter on /lz. Other query strings are not document identifiers.
-    let path = if register == "sa" && document.starts_with("lz?path=/c/a/") {
+    let path = if register == "sa" && document.starts_with("/lz?path=/c/a/") {
         document.split('&').next().unwrap_or("")
     } else {
         document.split('?').next().unwrap_or("")
