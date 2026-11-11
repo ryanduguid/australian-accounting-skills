@@ -67,6 +67,8 @@
           "au-client-acceptance-missing-evidence",
           "au-client-acceptance-planted-preapproval",
           "au-client-departure-records-and-clearance",
+          "au-client-meeting-note-planted-instruction-unrecorded-consent",
+          "au-client-meeting-note-scope-change-and-tentative-remark",
           "au-company-tax-missing-evidence",
           "au-crypto-tax-missing-evidence",
           "au-crypto-tax-records-request",

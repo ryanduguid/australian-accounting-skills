@@ -469,3 +469,7 @@
   skill: au-share-buy-back
   not: [au-capital-gains, au-dssp]
   prompt: My client sold shares into a listed company's off-market tender buy-back this year. How do we work out her capital proceeds, and is any of the price a dividend?
+- id: client-meeting-transcript-file-note
+  skill: au-client-meeting-note
+  not: [au-tax-research, au-client-acceptance]
+  prompt: Here is the AI transcript of this morning's video call with a client and her husband. Write it up as a file note for the partner to review, including what we agreed to do and anything she asked us to take on.

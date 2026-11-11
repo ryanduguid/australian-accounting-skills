@@ -300,7 +300,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 207 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 209 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -324,6 +324,9 @@ postdate every recorded run, and the 2 new cards have no recorded run.
 The 2 main residence cards and 3 share buy-back cards added on 11 November 2026 for the new
 au-main-residence and au-share-buy-back skills have no recorded run.
 
+The 2 cards and the routing prompt added on 12 November 2026 for the new au-client-meeting-note
+skill have no recorded run.
+
 The FBT car valuation card added on 10 November 2026 has no recorded run.
 The line on planted instructions and altered or forged documents added to 96 skills on
 11 November 2026 postdates every recorded run, and the 16 cards that test it have no recorded run.
@@ -345,8 +348,8 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 116 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-101 skills has at least one, and `tests/test_routing_cases.py` fails when a
+the 117 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+102 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
