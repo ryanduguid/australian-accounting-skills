@@ -35,6 +35,7 @@ FIRST_YEAR = (
     "getting-it-right-compliance-in-the-first-year-of-payday-super"
 )
 SELF_BILLING = "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/"
+WITHDRAWAL_NOTICE = "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200010/NAT/ATO/00001"
 GN11 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote11_Use_of_Tax_Category_Codes.html"
 GN01 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote01_WETandLCT"
 CLIENT_FIELDS = "https://central.xero.com/s/article/Create-a-client-in-Practice-Manager-AU"
@@ -255,6 +256,21 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(step, r"\bApply every condition above to a Peppol RCTI as to any other\b",
                              r"\bdoes not show a written agreement\b")
         self.assert_pending("tax-invoice-review", SELF_BILLING)
+
+    def test_rcti_withdrawal_dates_stay_with_the_withdrawal_notice(self) -> None:
+        step = workflow_step("tax-invoice-review", 4)
+        # Each date bound to its event in the sentence that names the notice, so a swapped
+        # or unattributed date fails.
+        self.assert_sentence(step, r"\[GSTR 2000/10W withdrawal notice\]",
+                             r"\bwithdraws GSTR 2000/10 with effect from 29 July 2026\b",
+                             r"\bcontinues to apply to RCTIs issued on or before 14 June 2023\b",
+                             r"\bnot to RCTIs issued on or after 15 June 2023\b")
+        self.assertEqual(step.count("14 June 2023"), 1)
+        self.assert_pending("tax-invoice-review", WITHDRAWAL_NOTICE)
+        limitations = " ".join(str(records("tax-invoice-review")[WITHDRAWAL_NOTICE]["limitations"]).split())
+        self.assert_carries(limitations, "withdrawn with effect from 29 July 2026",
+                            "on or before 14 June 2023", "on or after 15 June 2023", "F2023L00785",
+                            "registered on 14 June 2023", "A reviewer must confirm both dates")
 
     # au-aml-ctf-client-coverage: R1019 and R1017
 
