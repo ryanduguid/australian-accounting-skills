@@ -937,7 +937,8 @@ fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     if !index.is_file() {
         return Ok((rulings, instruments, rejected));
     }
-    let payload: Value = serde_json::from_str(&read_text(&index)?)?;
+    let payload =
+        crate::validation::strict_json(&read_text(&index)?, &index.display().to_string())?;
     let sources = payload["sources"]
         .as_array()
         .ok_or_else(|| format!("{}: sources must be a list", index.display()))?;

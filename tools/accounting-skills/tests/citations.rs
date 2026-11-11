@@ -42,6 +42,19 @@ fn missing(file: &str, line: usize, citation: &str, reason: &str) -> Unmatched {
 }
 
 #[test]
+fn duplicate_source_index_keys_are_refused() {
+    let root = tempfile::tempdir().unwrap();
+    for sources in [
+        r#"{"sources": [], "sources": []}"#,
+        r#"{"sources": [{"title": "One", "title": "Another"}]}"#,
+    ] {
+        skill(root.path(), "alpha", "No citation.\n", Some(sources));
+        let error = check(root.path()).unwrap_err().to_string();
+        assert!(error.contains("duplicate JSON key"), "{error}");
+    }
+}
+
+#[test]
 fn each_unrecorded_ruling_and_section_is_reported_by_file_and_line() {
     let root = tempfile::tempdir().unwrap();
     skill(

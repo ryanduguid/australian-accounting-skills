@@ -125,11 +125,20 @@ pub(crate) fn git(root: &Path, args: &[&str]) -> Result<String> {
     let output = std::process::Command::new("git")
         .args(args)
         .current_dir(root)
-        .output()?;
+        .output()
+        .map_err(|error| format!("cannot run git: {error}"))?;
     if !output.status.success() {
-        return Err(format!("git {} failed", args.join(" ")).into());
+        return Err(format!(
+            "git {} failed: {}",
+            args.join(" "),
+            String::from_utf8_lossy(&output.stderr).trim()
+        )
+        .into());
     }
-    Ok(String::from_utf8(output.stdout)?.trim().to_string())
+    Ok(String::from_utf8(output.stdout)
+        .map_err(|error| format!("git output is not UTF-8: {error}"))?
+        .trim()
+        .to_string())
 }
 
 pub fn read_text(path: &Path) -> Result<String> {

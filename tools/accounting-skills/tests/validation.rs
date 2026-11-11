@@ -58,6 +58,10 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
         // Dot or comma grouping that is not thousands grouping.
         "4111.1111.1111.1111",
         "12345678,2",
+        "4750.00,4111111111111111",
+        "-4750.00,12345678,Transfer",
+        "4750.00,51824753556",
+        "062.000,12345678",
     ] {
         let error = v::check_sensitive_content(text, &[])
             .unwrap_err()

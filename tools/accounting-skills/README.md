@@ -161,8 +161,8 @@ accounting-skills sweep-outcome --status 0 --report sweep.md --started 2026-09-2
 
 This command preserves the report's 7 required counts, duplicate refusal,
 minute-level freshness, status agreement and distinction between actionable and
-unchecked sources. Counts use nonnegative decimal arithmetic rather than a fixed
-integer width, with Python's default 4,300-digit conversion ceiling. The outcome
+unchecked sources. Counts are ASCII digits read as 64-bit unsigned integers;
+a count or actionable total above that range fails. The outcome
 and comment go only to stdout. The command never writes to `GITHUB_OUTPUT`.
 
 The source sweep workflow builds this command and gives it the status and

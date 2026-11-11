@@ -424,9 +424,19 @@ pub fn build(
     }
     let destination = source_passages::output_path(destination, &canonical)?;
     let commit = crate::git(&canonical, &["rev-parse", "HEAD"])?;
+    let git_root = crate::git(&canonical, &["rev-parse", "--show-toplevel"])?;
+    if fs::canonicalize(git_root)? != canonical {
+        return Err("the plugin root must be the Git repository top level".into());
+    }
     // The copy carries uncommitted, untracked and ignored files, so the commit
     // alone would not identify what was evaluated.
-    let mut status = vec!["status", "--porcelain", "--ignored", "--"];
+    let mut status = vec![
+        "status",
+        "--porcelain",
+        "--untracked-files=all",
+        "--ignored",
+        "--",
+    ];
     status.extend(PLUGIN_PATHS);
     let dirty = !crate::git(&canonical, &status)?.is_empty();
     let (since, changed) = match changed_since {

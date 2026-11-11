@@ -77,11 +77,12 @@ SENSITIVE_PATTERNS = {
     # Eight or more digits, run together or grouped by spaces or hyphens, or
     # grouped by dots or commas other than as amounts: thousands grouping with
     # an optional decimal point, or a comma-separated list (such as a CSV row)
-    # whose amounts before each comma have a decimal point.
+    # whose amounts all have a decimal point.
     "unlabelled long numeric identifier": re.compile(
         r"(?<!\d)(?<!\d[,.])(?:\d(?:[ -]?\d){7,}(?![,.]?\d)"
-        r"|(?=(?:[,.]?\d){8})(?!(?:(?:\d{1,3}(?:,\d{3})+|\d+)\.\d+,)*"
-        r"(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?(?![,.]?\d))\d+(?:[,.]\d+)+)"
+        r"|(?=(?:[,.]?\d){8})(?!(?:(?:\d{1,3}(?:,\d{3})+|\d+)\.\d+,)+"
+        r"(?:\d{1,3}(?:,\d{3})+|\d+)\.\d+(?![,.]?\d)"
+        r"|(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?(?![,.]?\d))\d+(?:[,.]\d+)+)"
     ),
     "BSB or bank account": re.compile(
         r"\b(?:BSB|bank\s+account)\s*(?:(?:number|no\.?|[:#-])\s*)?\d", re.I

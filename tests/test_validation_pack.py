@@ -528,6 +528,10 @@ class SafetyControlTests(unittest.TestCase):
                 # Dot or comma grouping that is not thousands grouping.
                 "4111.1111.1111.1111",
                 "12345678,2",
+                "4750.00,4111111111111111",
+                "-4750.00,12345678,Transfer",
+                "4750.00,51824753556",
+                "062.000,12345678",
             ),
             "email address": ("worker&#64;example.test",),
             "BSB or bank account": ("B<!-- -->SB 123-456",),

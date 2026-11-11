@@ -157,7 +157,7 @@ mod tests {
     fn refuses_a_folder_that_is_not_a_checkout() {
         let directory = tempdir().unwrap();
         let error = run(directory.path(), &[]).unwrap_err();
-        assert_eq!(error, "git rev-parse --show-prefix failed");
+        assert!(error.starts_with("git rev-parse --show-prefix failed:"));
     }
 
     #[test]

@@ -230,11 +230,24 @@ fn fixture(root: &Path) {
 }
 
 fn git(root: &Path, args: &[&str]) {
-    let output = Command::new("git")
-        .args(args)
-        .current_dir(root)
-        .output()
-        .unwrap();
+    static LOCAL_ENV: std::sync::OnceLock<Vec<String>> = std::sync::OnceLock::new();
+    let local_env = LOCAL_ENV.get_or_init(|| {
+        let output = Command::new("git")
+            .args(["rev-parse", "--local-env-vars"])
+            .output()
+            .unwrap();
+        assert!(output.status.success(), "{output:?}");
+        String::from_utf8(output.stdout)
+            .unwrap()
+            .lines()
+            .map(str::to_owned)
+            .collect()
+    });
+    let mut command = Command::new("git");
+    for name in local_env {
+        command.env_remove(name);
+    }
+    let output = command.args(args).current_dir(root).output().unwrap();
     assert!(output.status.success(), "{args:?}: {output:?}");
 }
 
@@ -271,6 +284,7 @@ fn the_manifest_names_the_commit_and_flags_uncommitted_plugin_files() {
     fs::write(root.path().join("validation/cases/notes.txt"), "draft\n").unwrap();
     let card = build(&outside.path().join("card"), 1, 12, root.path(), None).unwrap();
     assert_eq!(card["dirty"], false);
+    git(root.path(), &["config", "status.showUntrackedFiles", "no"]);
     for (name, path) in [
         ("edited", ".claude/skills/bas-preparation/SKILL.md"),
         ("untracked", ".claude/rules/new.md"),
@@ -293,6 +307,24 @@ fn a_root_outside_git_is_refused_before_anything_is_written() {
     let error = build(&target, 1, 12, root.path(), None).unwrap_err();
     assert!(
         error.to_string().contains("git rev-parse HEAD failed"),
+        "{error}"
+    );
+    assert!(!target.exists());
+}
+
+#[test]
+fn a_nested_plugin_cannot_borrow_an_enclosing_repository_identity() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    fixture(root.path());
+    let nested = root.path().join("nested");
+    fs::create_dir(&nested).unwrap();
+    fixture(&nested);
+    fs::remove_dir_all(nested.join(".git")).unwrap();
+    let target = outside.path().join("plugin");
+    let error = build(&target, 1, 12, &nested, None).unwrap_err();
+    assert!(
+        error.to_string().contains("repository top level"),
         "{error}"
     );
     assert!(!target.exists());

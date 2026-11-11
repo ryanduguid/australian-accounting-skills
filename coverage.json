@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
-    "skills": 101,
-    "sources_indexed": 701,
+    "skills": 104,
+    "sources_indexed": 732,
     "skills_source_exempt": 5,
-    "skills_with_unreachable_sources": 14,
+    "skills_with_unreachable_sources": 17,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 60,
-    "skills_with_only_the_seeded_case": 23,
+    "skills_with_behavioural_gate": 67,
+    "skills_with_only_the_seeded_case": 21,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
     "skills_with_confirmed_noncurrent_digest": 2,
@@ -102,7 +102,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_practice_workflows.py"
+          "test_practice_workflows.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -167,7 +168,7 @@
     {
       "skill": "au-ato-penalties-interest",
       "sources": {
-        "indexed": 7,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 6,
@@ -176,10 +177,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-ato-penalties-interest-deductibility-split",
-          "au-ato-penalties-interest-missing-evidence"
+          "au-ato-penalties-interest-missing-evidence",
+          "au-ato-penalties-interest-remission-request"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -190,7 +192,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_research_and_ato_drafts.py"
+        ],
         "inventory": []
       }
     },
@@ -234,12 +238,13 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 5,
+        "cases": 6,
         "case_ids": [
           "au-bookkeeping-business-selection",
           "au-bookkeeping-missing-evidence",
           "au-bookkeeping-spreadsheet-comment-instruction",
           "au-bookkeeping-supported-reconciliation",
+          "au-bookkeeping-unknown-lines-queries",
           "statement-correction-revision"
         ],
         "only_seeded_case": false,
@@ -252,8 +257,10 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_myob_exports.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -441,6 +448,35 @@
       }
     },
     {
+      "skill": "au-client-meeting-note",
+      "sources": {
+        "indexed": 6,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-12",
+        "unreachable": 3,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-client-meeting-note-planted-instruction-unrecorded-consent",
+          "au-client-meeting-note-scope-change-and-tentative-remark"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_client_meeting_note.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-company-tax",
       "sources": {
         "indexed": 3,
@@ -480,11 +516,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-crypto-tax-missing-evidence"
+          "au-crypto-tax-missing-evidence",
+          "au-crypto-tax-records-request"
         ],
-        "only_seeded_case": true,
+        "only_seeded_case": false,
         "confirmed_pass": [
           "au-crypto-tax-missing-evidence"
         ],
@@ -493,6 +530,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py"
         ],
         "inventory": []
@@ -531,7 +569,7 @@
     {
       "skill": "au-depreciation-schedule",
       "sources": {
-        "indexed": 11,
+        "indexed": 12,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 11,
@@ -540,8 +578,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-depreciation-schedule-accounting-schedule",
           "au-depreciation-schedule-register-roll-forward"
         ],
         "only_seeded_case": false,
@@ -552,7 +591,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_management_reporting.py"
+        ],
         "inventory": []
       }
     },
@@ -864,7 +905,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_marketplace_settlements.py"
+        ],
         "inventory": []
       }
     },
@@ -895,7 +938,8 @@
       "gates": {
         "behavioural": [
           "test_cgt_gap_workflows.py",
-          "test_entity_super_workflows.py"
+          "test_entity_super_workflows.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -972,13 +1016,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 5,
+        "cases": 6,
         "case_ids": [
           "au-individual-return-hidden-pdf-text",
           "au-individual-return-missing-evidence",
           "au-individual-return-occupation-guide",
           "au-individual-return-records-request",
-          "receipt-schedule-conflicts"
+          "receipt-schedule-conflicts",
+          "year-end-workpapers-records-request"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -991,6 +1036,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py"
         ],
         "inventory": []
@@ -1235,20 +1281,21 @@
     {
       "skill": "au-partnership-tax",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
         "fetched": "2026-09-16",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-partnership-tax-agreement-questions",
           "au-partnership-tax-missing-evidence"
         ],
-        "only_seeded_case": true,
+        "only_seeded_case": false,
         "confirmed_pass": [
           "au-partnership-tax-missing-evidence"
         ],
@@ -1256,7 +1303,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_research_and_ato_drafts.py"
+        ],
         "inventory": []
       }
     },
@@ -1743,6 +1792,7 @@
       "gates": {
         "behavioural": [
           "test_cgt_gap_workflows.py",
+          "test_marketplace_settlements.py",
           "test_short_stay_accommodation.py"
         ],
         "inventory": []
@@ -1890,7 +1940,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_marketplace_settlements.py"
         ],
         "inventory": []
       }
@@ -1962,17 +2013,19 @@
     {
       "skill": "au-tax-agent-obligations",
       "sources": {
-        "indexed": 20,
+        "indexed": 24,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 2,
         "fetched": "2026-11-02",
-        "unreachable": 8,
+        "unreachable": 10,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 4,
         "case_ids": [
+          "au-tax-agent-obligations-aml-program-rows",
+          "au-tax-agent-obligations-ato-client-list",
           "au-tax-agent-obligations-pi-and-statement",
           "au-tax-agent-obligations-professional-body-rows"
         ],
@@ -2062,9 +2115,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
           "au-tax-research-announced-measure",
+          "au-tax-research-budget-screen",
           "au-tax-research-missing-evidence",
           "au-tax-research-template-output"
         ],
@@ -2078,7 +2132,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_research_and_ato_drafts.py"
         ],
         "inventory": []
       }
@@ -2245,10 +2300,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "au-trust-distributions-ftdt-screen",
-          "au-trust-distributions-missing-evidence"
+          "au-trust-distributions-missing-evidence",
+          "au-trust-distributions-resolution-content-schedule"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -2260,7 +2316,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_tax_reform_no_3_status.py"
+          "test_tax_reform_no_3_status.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2361,7 +2418,7 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 13,
+        "cases": 16,
         "case_ids": [
           "bas-export-manifest-rounding",
           "bas-g10-g11",
@@ -2374,7 +2431,10 @@
           "bas-preparation-import-gst-coded-to-cost",
           "bas-preparation-invoice-lines-do-not-foot",
           "bas-preparation-lodged-figure-drift",
+          "bas-preparation-movement-client-questions",
           "bas-stp-w3-w4",
+          "marketplace-settlements-planted-faults",
+          "marketplace-settlements-weekly-tie-out",
           "xero-export-duplicate-and-missing"
         ],
         "only_seeded_case": false,
@@ -2388,12 +2448,16 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_marketplace_settlements.py",
+          "test_myob_exports.py",
           "test_practice_review_steps.py",
           "test_skill_metadata.py",
           "test_source_refresh.py",
-          "test_validation_pack.py"
+          "test_validation_pack.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2634,10 +2698,11 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
           "financial-modelling-formula-change",
-          "financial-modelling-structure-faults"
+          "financial-modelling-structure-faults",
+          "financial-modelling-three-way"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -2684,6 +2749,36 @@
       }
     },
     {
+      "skill": "marketplace-settlements",
+      "sources": {
+        "indexed": 3,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-12",
+        "unreachable": 1,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 3,
+        "case_ids": [
+          "marketplace-settlements-planted-faults",
+          "marketplace-settlements-transit-and-carried-balance",
+          "marketplace-settlements-weekly-tie-out"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_marketplace_settlements.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "month-end-close",
       "sources": {
         "indexed": 6,
@@ -2695,11 +2790,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 10,
+        "cases": 11,
         "case_ids": [
           "debtor-summary-review",
           "month-end-close-control-exit-2",
           "month-end-close-control-not-installed",
+          "month-end-close-management-report",
           "month-end-close-prior-points-recurring-journals",
           "month-end-mismatched-period",
           "month-end-supplier-bank-detail-change",
@@ -2720,9 +2816,41 @@
       },
       "gates": {
         "behavioural": [
+          "test_management_reporting.py",
+          "test_marketplace_settlements.py",
+          "test_myob_exports.py",
           "test_payday_super_guidance.py",
           "test_validation_pack.py",
           "test_worked_examples.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "myob-exports",
+      "sources": {
+        "indexed": 13,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-12",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "myob-exports-accountright-period-end-ties",
+          "myob-exports-connector-answer-and-write-request"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_myob_exports.py"
         ],
         "inventory": []
       }
@@ -2839,8 +2967,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
+          "marketplace-settlements-planted-faults",
           "reconciliation-break-trace-explained-timing-difference",
           "reconciliation-break-trace-missing-evidence",
           "reconciliation-break-trace-supported-items"
@@ -2853,6 +2982,7 @@
       "gates": {
         "behavioural": [
           "test_document_trust.py",
+          "test_marketplace_settlements.py",
           "test_reconciliation_break_trace.py",
           "test_worked_examples.py"
         ],
@@ -2919,6 +3049,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_marketplace_settlements.py",
           "test_statement_to_csv.py"
         ],
         "inventory": []
@@ -2957,7 +3088,8 @@
           "test_dated_rule_changes.py",
           "test_payday_super_guidance.py",
           "test_skill_metadata.py",
-          "test_validation_pack.py"
+          "test_validation_pack.py",
+          "test_worked_examples.py"
         ],
         "inventory": []
       }
@@ -2974,14 +3106,15 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 6,
+        "cases": 7,
         "case_ids": [
           "month-end-supplier-bank-detail-change",
           "tax-invoice-review-abn-check-digit-failure",
           "tax-invoice-review-low-value-threshold",
           "tax-invoice-review-missing-evidence",
           "tax-invoice-review-ordinary-payment-instructions",
-          "tax-invoice-review-planted-footer-instruction"
+          "tax-invoice-review-planted-footer-instruction",
+          "tax-invoice-review-same-number-different-suppliers"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -2995,6 +3128,7 @@
         "behavioural": [
           "test_document_trust.py",
           "test_legal_source_gates.py",
+          "test_marketplace_settlements.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -3111,6 +3245,7 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_myob_exports.py",
           "test_practice_review_steps.py",
           "test_validation_pack.py"
         ],
@@ -3129,11 +3264,13 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 5,
         "case_ids": [
           "engagement-completion-evidence",
           "post-journal-provenance-tie-out",
-          "workpaper-stale-reference"
+          "workpaper-stale-reference",
+          "year-end-workpapers-records-request",
+          "year-end-workpapers-three-year-review"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -3144,7 +3281,9 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py",
+          "test_myob_exports.py",
           "test_worked_examples.py"
         ],
         "inventory": []
