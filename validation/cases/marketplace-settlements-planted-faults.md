@@ -23,8 +23,8 @@ All amounts are in AUD. The bookkeeper supplies Platform Q's written description
 
 - Settlement T1, in the month: gross sales 1700.00, fees 200.00, payout 1500.00. Rebuilt: 1700.00 - 200.00 = 1500.00. The only bank line near the payout date is 1450.00, 2 days after it, with Platform Q's payout reference. The difference is 1500.00 - 1450.00 = 50.00.
 - Settlement T2, in the month: gross sales 2200.00, fees 264.00, reserve held 300.00, payout 1636.00. Rebuilt: 2200.00 - 264.00 - 300.00 = 1636.00. The bank shows 1636.00 the day after the payout date.
-- Settlement T3, the first after month end: gross sales 900.00, including 410.00 of sales made in the month, refunds 90.00 for an order sold in settlement T1, fees 108.00, reserve released 300.00, payout 1002.00. Rebuilt: 900.00 - 90.00 - 108.00 + 300.00 = 1002.00.
-- The report's pending-sales listing at month end shows the 410.00 of sales not yet in a settlement and the 300.00 reserve still held, so the unsettled items total 410.00 + 300.00 = 710.00.
+- Settlement T3, the first after month end: gross sales 900.00, including 410.00 of sales made in the month, refunds 90.00, issued on day 3 of the next month for an order sold in settlement T1, fees 108.00, all charged after month end, reserve released 300.00, payout 1002.00. Rebuilt: 900.00 - 90.00 - 108.00 + 300.00 = 1002.00.
+- The report's pending-sales listing at month end shows the 410.00 of sales not yet in a settlement, with no refunds or fees on them at month end, and the 300.00 reserve still held, so the unsettled items total 410.00 + 300.00 = 710.00.
 - The ledger records settlement T1 as sales of 1500.00, with no fees, posted straight from the report's payout figure. It records settlement T2 through the clearing account, with sales of 2200.00, fees of 264.00 and the payout of 1636.00, and it records no sales for the 410.00.
 - Rebuilt from the reports, the clearing account would close the month at 1700.00 + 2200.00 + 410.00 - 200.00 - 264.00 - 1500.00 - 1636.00 = 710.00.
 - Platform Q's fee tax invoice for settlement T2 shows GST on fees of 24.00. No fee tax invoice for settlement T1 is held.

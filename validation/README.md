@@ -264,6 +264,7 @@ law claim, unverified source or guess.
 | [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
 | [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
 | [A short payout, sales booked net of fees, a reserve over month end and a late refund](cases/marketplace-settlements-planted-faults.md) | marketplace-settlements, reconciliation-break-trace, bas-preparation |
+| [A negative settlement carried forward and a month-end payout still in transit](cases/marketplace-settlements-transit-and-carried-balance.md) | marketplace-settlements |
 | [Draft GIC remission request with one unevidenced fact](cases/au-ato-penalties-interest-remission-request.md) | au-ato-penalties-interest |
 | [Client queries for bank lines with an unknown purpose](cases/au-bookkeeping-unknown-lines-queries.md) | au-bookkeeping |
 | [Crypto records checklist built before the exports arrive](cases/au-crypto-tax-records-request.md) | au-crypto-tax |
@@ -325,7 +326,7 @@ The 2 MYOB export cards added on 12 November 2026 have no recorded run.
 
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
 
-The 2 marketplace settlement cards added on 12 November 2026 have no recorded run.
+The 3 marketplace settlement cards added on 12 November 2026 have no recorded run.
 
 The 14 cards added on 12 November 2026 for steps that turn working into a draft request, a
 schedule, a report or a register row have no recorded run, nor does the positive control added
