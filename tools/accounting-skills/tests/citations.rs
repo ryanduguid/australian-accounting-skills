@@ -662,15 +662,20 @@ fn index(root: &Path, register_id: &str, title: &str, sections: &[&str]) {
     fs::create_dir_all(&folder).unwrap();
     fs::write(
         folder.join(format!("{register_id}.txt")),
-        format!(
-            "# title: {title}\n# register-id: {register_id}\n# compilation: C2099C00001\n\
-             # compilation-number: 1\n# in-force-from: 2099-01-01\n\
-             # source: https://example.invalid/{register_id}\n# retrieved: 2099-01-02\n\
-             # sha256: 00\n{}\n",
-            sections.join("\n")
-        ),
+        index_text(register_id, title, sections),
     )
     .unwrap();
+}
+
+fn index_text(register_id: &str, title: &str, sections: &[&str]) -> String {
+    format!(
+        "# title: {title}\n# register-id: {register_id}\n# compilation: C2099C00001\n\
+         # compilation-number: 1\n# in-force-from: 2099-01-01\n\
+         # source: https://example.invalid/{register_id}\n# retrieved: 2099-01-02\n\
+         # sha256: {}\n{}\n",
+        "0".repeat(64),
+        sections.join("\n")
+    )
 }
 
 fn exceptions(root: &Path, text: &str) {
@@ -796,6 +801,63 @@ fn a_hyphen_between_two_indexed_sections_reads_as_a_range() {
     assert_eq!(report.unmatched[0].citation, "ss 17A-19");
 }
 
+// An Act whose list holds hyphenated schedule sections beside plain body
+// sections reads a hyphen as part of a section number, never as a range, so
+// a section of another Act cited against it is absent.
+#[test]
+fn a_hyphen_is_no_range_in_an_act_that_lists_hyphenated_sections() {
+    let root = tempfile::tempdir().unwrap();
+    index(
+        root.path(),
+        "C1953A00001",
+        "Taxation Administration Act 1953",
+        &["1", "8", "12-35"],
+    );
+    index(
+        root.path(),
+        "C1936A00027",
+        "Income Tax Assessment Act 1936",
+        &["45", "202", "265-5"],
+    );
+    index(
+        root.path(),
+        "C2004A00818",
+        "Corporations Act 2001",
+        &["5", "197", "90-15"],
+    );
+    index(
+        root.path(),
+        "C2004A04402",
+        "Superannuation Guarantee (Administration) Act 1992",
+        &["17B", "17D"],
+    );
+    skill(
+        root.path(),
+        "alpha",
+        "Apply s 8-1 of the TAA 1953.\n\
+         Apply s 202-45 of the ITAA 1936.\n\
+         Apply s 197-5 of the Corporations Act 2001.\n\
+         Apply s 12-35 of Schedule 1 to the TAA 1953.\n\
+         Apply SGAA ss 17B-17D.\n",
+        Some(
+            r#"{"sources": [
+  {"title": "Taxation Administration Act 1953", "url": "https://www.legislation.gov.au/C1953A00001/latest/text"},
+  {"title": "Income Tax Assessment Act 1936", "url": "https://www.legislation.gov.au/C1936A00027/latest/text"},
+  {"title": "Corporations Act 2001", "url": "https://www.legislation.gov.au/C2004A00818/latest/text"},
+  {"title": "Superannuation Guarantee (Administration) Act 1992", "url": "https://www.legislation.gov.au/C2004A04402/latest/text"}
+]}"#,
+        ),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections_exist, report.sections_absent), (2, 3));
+    let absent: Vec<_> = report
+        .unmatched
+        .iter()
+        .map(|missing| (missing.line, missing.citation.as_str()))
+        .collect();
+    assert_eq!(absent, [(1, "s 8-1"), (2, "s 202-45"), (3, "s 197-5")]);
+}
+
 #[test]
 fn a_malformed_section_index_or_exception_is_refused() {
     let root = tempfile::tempdir().unwrap();
@@ -831,4 +893,142 @@ fn a_malformed_section_index_or_exception_is_refused() {
     .unwrap();
     let error = check(root.path()).unwrap_err().to_string();
     assert!(error.ends_with("missing field register-id"), "{error}");
+}
+
+// A Federal Register identifier with no year check ties a record to its
+// address only through a section list's header, in both directions.
+#[test]
+fn a_record_whose_title_and_register_id_disagree_with_a_section_list_owns_nothing() {
+    let sis = "Superannuation Industry (Supervision) Regulations 1994";
+    let root = tempfile::tempdir().unwrap();
+    index(root.path(), "F1996B00580", sis, &["8.02B"]);
+    skill(
+        root.path(),
+        "alpha",
+        "Apply reg 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n",
+        Some(&record(
+            sis,
+            "https://www.legislation.gov.au/F2018L01289/latest/text",
+        )),
+    );
+    skill(
+        root.path(),
+        "beta",
+        "Apply reg 8.02B of the Retirement Savings Accounts Regulations 1997.\n",
+        Some(&record(
+            "Retirement Savings Accounts Regulations 1997",
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        )),
+    );
+    skill(
+        root.path(),
+        "gamma",
+        "Apply reg 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n",
+        Some(&record(
+            sis,
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        )),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (3, 1));
+    assert_eq!(report.sections_exist, 1);
+    assert_eq!(
+        report.unmatched,
+        [
+            missing(
+                ".claude/skills/alpha/SKILL.md",
+                1,
+                "reg 8.02B",
+                "sources.json record 1 ('Superannuation Industry (Supervision) Regulations 1994' \
+                 at F2018L01289) disagrees with the section list for F1996B00580 \
+                 ('Superannuation Industry (Supervision) Regulations 1994')"
+            ),
+            missing(
+                ".claude/skills/beta/SKILL.md",
+                1,
+                "reg 8.02B",
+                "sources.json record 1 ('Retirement Savings Accounts Regulations 1997' \
+                 at F1996B00580) disagrees with the section list for F1996B00580 \
+                 ('Superannuation Industry (Supervision) Regulations 1994')"
+            ),
+        ]
+    );
+    assert_eq!(run(root.path()).0, 2);
+}
+
+#[test]
+fn each_malformed_section_list_or_exception_is_refused() {
+    let valid = index_text("C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
+    let zeros = "0".repeat(64);
+    let cases = [
+        (
+            "C2006A00072.txt",
+            valid.replace("# source:", "# title: Fuel Tax Act 2006\n# source:"),
+            "",
+            "repeated field title",
+        ),
+        (
+            "C2006A00072.txt",
+            format!("{valid}41-5\n"),
+            "",
+            "repeated section 41-5",
+        ),
+        (
+            "C2006A00072.txt",
+            format!("# note: extra\n{valid}"),
+            "",
+            "unknown field note",
+        ),
+        (
+            "C2006A00073.txt",
+            valid.clone(),
+            "",
+            "the file must be named REGISTER-ID.txt",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("Fuel Tax Act 2006", "Fuel Tax Act"),
+            "",
+            "the title must end with its year",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace(&zeros, "00"),
+            "",
+            "sha256 must be 64 lower-case hexadecimal digits",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("2099-01-02", "2 January 2099"),
+            "",
+            "retrieved must be a date written YYYY-MM-DD",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("2099-01-01", "2099-02-30"),
+            "",
+            "in-force-from must be a date written YYYY-MM-DD",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.clone(),
+            "C2006A00072 41-77: proposed\nC2006A00072 41-77: again\n",
+            "exceptions.txt:2: repeats the exception on line 1",
+        ),
+    ];
+    for (file, text, exceptions, expected) in cases {
+        let root = tempfile::tempdir().unwrap();
+        skill(
+            root.path(),
+            "alpha",
+            "s 41-5 of the Fuel Tax Act 2006.\n",
+            Some(FUEL),
+        );
+        let folder = root.path().join("tools/accounting-skills/section-index");
+        fs::create_dir_all(&folder).unwrap();
+        fs::write(folder.join(file), text).unwrap();
+        fs::write(folder.join("exceptions.txt"), exceptions).unwrap();
+        let error = check(root.path()).map(|_| ()).unwrap_err().to_string();
+        assert!(error.ends_with(expected), "{expected}: {error}");
+    }
 }

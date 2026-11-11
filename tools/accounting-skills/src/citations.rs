@@ -32,6 +32,7 @@
 //! claims.
 
 use crate::{Result, canonical_root, discover_skills, platform_text, read_text};
+use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
 use serde_json::Value;
 use std::{
@@ -310,6 +311,9 @@ struct SectionIndex {
     compilation: String,
     keys: BTreeSet<Key>,
     sections: BTreeSet<String>,
+    /// Whether any listed section number holds a hyphen. Only in a list with
+    /// none does "ss 17A-18C" read as a range.
+    hyphenated: bool,
 }
 
 /// A cited section deliberately absent from its Act's index, such as one a
@@ -350,14 +354,22 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     let title = field("title")?;
     let register_id = field("register-id")?;
     let compilation = field("compilation")?;
-    for provenance in [
-        "compilation-number",
-        "in-force-from",
-        "source",
-        "retrieved",
-        "sha256",
-    ] {
+    for provenance in ["compilation-number", "source"] {
         field(provenance)?;
+    }
+    for date in ["in-force-from", "retrieved"] {
+        let value = field(date)?;
+        if value.len() != 10 || NaiveDate::parse_from_str(&value, "%Y-%m-%d").is_err() {
+            return Err(format!("{name}: {date} must be a date written YYYY-MM-DD").into());
+        }
+    }
+    let digest = field("sha256")?;
+    if digest.len() != 64
+        || !digest
+            .bytes()
+            .all(|byte| matches!(byte, b'0'..=b'9' | b'a'..=b'f'))
+    {
+        return Err(format!("{name}: sha256 must be 64 lower-case hexadecimal digits").into());
     }
     if let Some(key) = fields.keys().next() {
         return Err(format!("{name}: unknown field {key}").into());
@@ -376,6 +388,7 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
         register_id,
         title,
         compilation,
+        hyphenated: sections.iter().any(|section| section.contains('-')),
         sections,
     })
 }
@@ -423,6 +436,17 @@ fn section_indexes(root: &Path) -> Result<(Vec<SectionIndex>, Vec<Exception>)> {
                 "{}:{}: no section index for {register_id}",
                 path.display(),
                 number + 1
+            )
+            .into());
+        }
+        if let Some(earlier) = exceptions.iter().find(|exception: &&Exception| {
+            exception.register_id == register_id && exception.section == section
+        }) {
+            return Err(format!(
+                "{}:{}: repeats the exception on line {}",
+                path.display(),
+                number + 1,
+                earlier.line
             )
             .into());
         }
@@ -897,13 +921,21 @@ fn markdown_files(folder: &Path, files: &mut Vec<PathBuf>) -> Result<()> {
 /// sections, and a record whose register or identifier names another
 /// instrument than its title owns none. A record from anywhere else, such as
 /// an ATO web page or a ruling, may name an Act without holding its text, so it
-/// owns no section either.
-fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
+/// owns no section either. A Federal Register record that contradicts a
+/// section list's header (see `contradiction`) is returned apart, with why.
+type Records = (
+    BTreeSet<String>,
+    Vec<BTreeSet<Key>>,
+    Vec<(BTreeSet<Key>, String)>,
+);
+
+fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
     let mut instruments = Vec::new();
+    let mut rejected = Vec::new();
     if !index.is_file() {
-        return Ok((rulings, instruments));
+        return Ok((rulings, instruments, rejected));
     }
     let payload: Value = serde_json::from_str(&read_text(&index)?)?;
     let sources = payload["sources"]
@@ -944,11 +976,59 @@ fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
                 }
             }
         }
-        if agrees && !keys.is_empty() {
+        if !agrees || keys.is_empty() {
+            continue;
+        }
+        if let Some(reason) = contradiction(&keys, field("title"), indexes) {
+            rejected.push((
+                keys,
+                format!("sources.json record {} {reason}", position + 1),
+            ));
+        } else {
             instruments.push(keys);
         }
     }
-    Ok((rulings, instruments))
+    Ok((rulings, instruments, rejected))
+}
+
+/// Why a record copied from the Federal Register contradicts a section list:
+/// its register identifier has a list whose title is not the record's, or its
+/// title is a list's but its identifier is not. The register identifier is
+/// otherwise tied to the title only by kind and, for an Act, year, so this is
+/// the only check that the address holds the instrument the title names.
+fn contradiction(
+    keys: &BTreeSet<Key>,
+    raw_title: &str,
+    indexes: &[SectionIndex],
+) -> Option<String> {
+    let only_titles = |keys: &BTreeSet<Key>| -> BTreeSet<Key> {
+        keys.iter()
+            .filter(|(kind, _)| *kind == "title")
+            .cloned()
+            .collect()
+    };
+    let ids: Vec<&str> = keys
+        .iter()
+        .filter(|(kind, _)| *kind == "register")
+        .map(|(_, id)| id.as_str())
+        .collect();
+    if ids.is_empty() {
+        return None;
+    }
+    indexes
+        .iter()
+        .find(|index| {
+            same_instrument(&only_titles(keys), &only_titles(&index.keys))
+                != ids.contains(&index.register_id.as_str())
+        })
+        .map(|index| {
+            format!(
+                "('{raw_title}' at {}) disagrees with the section list for {} ('{}')",
+                ids.join(", "),
+                index.register_id,
+                index.title
+            )
+        })
 }
 
 /// A paragraph's wrapped lines joined by spaces, or a heading, table row or
@@ -1126,7 +1206,7 @@ pub fn check(root: &Path) -> Result<Report> {
     let (indexes, mut exceptions) = section_indexes(root)?;
     for skill in discover_skills(root)? {
         let folder = root.join(".claude/skills").join(&skill);
-        let (recorded_rulings, instruments) = records(&folder)?;
+        let (recorded_rulings, instruments, rejected) = records(&folder, &indexes)?;
         // None when no record names the Act; otherwise the section index, if
         // any, of the Act a matching record names. Matching the index through
         // the record keeps a state Act cited without its jurisdiction from
@@ -1191,6 +1271,12 @@ pub fn check(root: &Path) -> Result<Report> {
                         let resolution = match owner.map(|index| &named[index].keys) {
                             Ok(None) => continue,
                             Ok(Some(keys)) => recorded(keys).ok_or_else(|| {
+                                if let Some((_, reason)) = rejected
+                                    .iter()
+                                    .find(|(other, _)| same_instrument(keys, other))
+                                {
+                                    return reason.clone();
+                                }
                                 let names: Vec<_> =
                                     keys.iter().map(|(_, name)| name.as_str()).collect();
                                 format!("no record names its Act ({})", names.join("; "))
@@ -1215,12 +1301,15 @@ pub fn check(root: &Path) -> Result<Report> {
                                 report.sections_not_indexed += 1;
                                 continue;
                             };
-                            let base = number.split('(').next().unwrap_or_default();
-                            // Where the whole is no section but both ends are,
-                            // "ss 17A-18C" is a range.
-                            let hyphen_range = base.split_once('-').is_some_and(|(first, last)| {
-                                index.sections.contains(first) && index.sections.contains(last)
-                            });
+                            let base = number
+                                .split_once('(')
+                                .map_or(number.as_str(), |(base, _)| base);
+                            // In an Act that numbers no section with a hyphen,
+                            // "ss 17A-18C" is a range when both ends are listed.
+                            let hyphen_range = !index.hyphenated
+                                && base.split_once('-').is_some_and(|(first, last)| {
+                                    index.sections.contains(first) && index.sections.contains(last)
+                                });
                             if index.sections.contains(base) || hyphen_range {
                                 report.sections_exist += 1;
                             } else if let Some(exception) =

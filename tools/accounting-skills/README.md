@@ -212,12 +212,26 @@ lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
 after the first schedule heading only hyphenated numbers count, because a
-schedule's unhyphenated entries are clauses. The SHA-256 is of the EPUB.
-Subsection and paragraph suffixes are ignored, and `ss 17A-18C` is a range
-when both ends are listed but the whole is not. `section-index/exceptions.txt`
+schedule's unhyphenated entries are clauses; a clause cited as a section is
+therefore checked against the body section with that number. The SHA-256 is of the EPUB.
+Subsection and paragraph suffixes are ignored. `ss 17A-18C` is a range when
+both ends are listed and the list holds no hyphenated number; in a list that
+does, such as the TAA 1953's with its Schedule 1 sections, a hyphenated number
+must itself be listed, so `s 8-1 of the TAA 1953` is absent. `section-index/exceptions.txt`
 lists, as `REGISTER-ID SECTION: reason`, a section a skill cites on purpose
 although its list lacks it, such as one a Bill proposes or one since repealed.
 A section of an Act with no list is counted as not indexed.
+
+A list's header is also the only offline evidence of which instrument a
+Federal Register address holds: the identifier is otherwise tied to the
+record's title by kind and, for an Act, year. A `sources.json` record whose
+register identifier has a list must carry a title matching the list's, and a
+record whose title matches a list's must carry its identifier. A record that
+fails either owns no citation, and each citation it would have resolved
+reports the record, both titles and both identifiers. A record of an
+instrument with no list, or from the ATO legal database or a state register,
+is not checked this way: a mis-titled one still resolves, and a reviewer must
+catch it.
 
 Each failure prints as `file:line: citation: reason`: an unmatched citation, a
 section absent from its Act's list, or an exception no cited section needs.
@@ -227,6 +241,48 @@ any failure. A found section exists in the current compilation; the check does
 not show that it applied in the skill's period or says what the skill claims.
 No command rebuilds a list: the EPUB is a zip archive, and the crate has no
 decompression dependency.
+
+### Rebuilding a section list
+
+Rebuild a list when the register publishes a new compilation of its Act. Until
+then a correct citation of a section a later compilation added fails as absent,
+and a citation of a section it repealed still passes. To build or rebuild
+`section-index/REGISTER-ID.txt`, where `REGISTER-ID` is the Act's series
+identifier such as `C2004A05138`:
+
+1. Ask the register API for the current compilation, URL-encoding the filter:
+   `https://api.prod.legislation.gov.au/v1/versions?$filter=titleId eq 'REGISTER-ID' and isCurrent eq true&$select=titleId,name,start,compilationNumber,registerId`.
+   `registerId` is the compilation's identifier, `compilationNumber` its
+   number, `start` its in-force date and `name` the title.
+2. Ask for that compilation's EPUB:
+   `https://api.prod.legislation.gov.au/v1/documents?$filter=registerId eq 'COMPILATION' and format eq 'Epub' and type eq 'Primary'&$select=titleId,start,retrospectiveStart,rectificationVersionNumber,uniqueTypeNumber,volumeNumber`.
+   Where more than one row comes back, take the highest
+   `rectificationVersionNumber`. One EPUB (`volumeNumber` 0) holds every
+   volume.
+3. Download it from
+   `https://api.prod.legislation.gov.au/v1/documents(titleId='REGISTER-ID',start=START,retrospectiveStart=RETROSPECTIVE-START,rectificationVersionNumber=N,type='Primary',uniqueTypeNumber=U,volumeNumber=V,format='Epub')`,
+   writing the dates as the API returns them (`2026-10-01T00:00:00`, with no
+   time zone). This address is the `source` field. On 12 November 2026 the
+   EPUB address on www.legislation.gov.au refused clients other than browsers.
+4. Unzip the EPUB and read the table of contents, `OEBPS/document.ncx`. Take
+   the text of each `navLabel` in document order. A label is a section when
+   it starts with a number matching
+   `[0-9]+[A-Z]*(-[0-9]+[A-Z]*)?(\.[0-9]+[A-Z]*)?` followed by 2 spaces; the
+   number is the entry. Once a label starting with `Schedule` has appeared,
+   keep only hyphenated numbers, because a schedule's other entries are
+   clauses. Keep the first occurrence of a repeated number: the loader rejects
+   repeats, and the Corporations Act's small business guide repeats 11 body
+   section numbers.
+5. Write the file with LF line endings: the header lines `# title: ` (the
+   version's `name`), `# register-id: `, `# compilation: `,
+   `# compilation-number: `, `# in-force-from: ` (the date part of `start`),
+   `# source: `, `# retrieved: ` (the download date, as YYYY-MM-DD) and
+   `# sha256: ` (the SHA-256 of the EPUB's bytes in lower-case hex, from
+   `sha256sum` or PowerShell's `(Get-FileHash FILE).Hash.ToLower()`), then one
+   number per line in table of contents order.
+6. Run `check-citations`. Remove any exception it reports as unneeded, and
+   check each newly absent section against the compilation before changing a
+   skill or adding an exception.
 
 ## Validation pack
 
