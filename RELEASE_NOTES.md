@@ -1,5 +1,23 @@
 # v0.5.1 (unreleased)
 
+Every skill that reads client documents, 96 of the 97, now records an instruction
+that tries to change or override the workflow, its output, the firm's instructions
+or the user's request, but not ordinary commercial terms, and any sign that a
+document may have been altered or forged that the records do not explain, as a
+reviewer exception without concluding why it differs. It keeps the item as printed,
+marks it `UNVERIFIED` and leaves it out of supported totals until the reviewer
+resolves it. The firm template carries the same rule. The skill left out,
+`au-tax-rates-verification`, reads only published authority and calculator output.
+16 synthetic cards bring the validation pack to 196: 7 plant instructions in a bank
+statement line, an invoice footer, a lease clause, an email claiming to be from the
+ATO, hidden PDF text, a spreadsheet comment and a client's attachment; 7 present an
+ABN that fails its check digits, invoice lines that do not foot, impossible logbook
+entries, a reused invoice number, an altered income statement, a BSB that belongs to
+a different bank and an ATO statement that does not roll; and 2 positive controls
+hold ordinary payment terms, including a note to the preparer, and a fully explained
+timing difference, neither of which may be flagged. They have no recorded model run,
+so the new test checks wording and card structure, not model behaviour.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified
