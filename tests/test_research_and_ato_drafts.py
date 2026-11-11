@@ -107,8 +107,12 @@ class ResearchAndAtoDraftTests(unittest.TestCase):
 
     def test_partnership_sources_are_indexed_and_pending(self) -> None:
         step = workflow_step(PARTNERSHIP, "1a")
+        # Both limbs of s 92(1): the resident period, and the Australian-source part of a non-resident period.
         self.assert_sentence(step, r"^Section 92\(1\) of the \[\*Income Tax Assessment Act 1936\*\]",
-                             r"\(compilation 193\)", r"\bs 90 of the ITAA 1936\b", r"\bnot a conclusion\b")
+                             r"\(compilation 193\)", r"\bs 90 of the ITAA 1936\b", r"\bnot a conclusion\b",
+                             r"\battributable to a period when the partner was a resident\b",
+                             r"\bwhen the partner was not a resident, only so much as is also attributable to sources in Australia\b",
+                             r"\bs 92\(1\)\(a\) and \(b\)")
         self.assert_carries(step, "Human review pending", "12 November 2026")
         self.assert_pending(PARTNERSHIP, ITAA_1936, TR_94_8)
 
