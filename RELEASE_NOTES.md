@@ -13,7 +13,7 @@ value, franking debits including distributions funded by capital raising,
 Division 7A links and each seller's consideration and dividend.
 `au-capital-gains`, `au-franking-account`, `au-nonresident-cgt`,
 `au-rental-property` and `au-short-stay-accommodation` now route to them.
-Five synthetic cards bring the validation pack to 184, with no recorded model run for them, and the new
+Five synthetic cards bring the validation pack to 185, with no recorded model run for them, and the new
 source records await human review.
 
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
