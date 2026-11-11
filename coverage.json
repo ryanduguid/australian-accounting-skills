@@ -5,7 +5,7 @@
     "skills": 97,
     "sources_indexed": 604,
     "skills_source_exempt": 5,
-    "skills_with_unreachable_sources": 17,
+    "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
     "skills_with_behavioural_gate": 50,
     "skills_with_only_the_seeded_case": 27,
@@ -2065,7 +2065,7 @@
         "reviewed": "2026-11-02",
         "reviewed_count": 8,
         "fetched": "2026-11-02",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -2256,7 +2256,7 @@
         "reviewed": "2026-09-30",
         "reviewed_count": 5,
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
@@ -2541,7 +2541,7 @@
         "reviewed": "2026-09-30",
         "reviewed_count": 5,
         "fetched": "2026-09-16",
-        "unreachable": 2,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
@@ -2776,7 +2776,7 @@
         "reviewed": "2026-09-30",
         "reviewed_count": 5,
         "fetched": "2026-09-16",
-        "unreachable": 1,
+        "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
