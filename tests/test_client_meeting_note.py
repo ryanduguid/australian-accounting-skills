@@ -105,7 +105,7 @@ class ClientMeetingNoteTests(unittest.TestCase):
         self.assert_sentence(step, r"\bNever restate a remark as advice, a recommendation or a conclusion the source does not contain\b")
         self.assert_sentence(step, r"\bQuote it, or paraphrase it closely and mark the line `paraphrase`")
         self.assert_sentence(step, r"\bKeep every condition, hedge and caveat\b")
-        self.assert_sentence(workflow_step(SKILL, 6), r"\bNever send the note\b", r"\bto the client or anyone else\b")
+        self.assert_sentence(workflow_step(SKILL, 6), r"\bNever send the note\b", r"\bto the client or anyone outside the firm's review\b")
         self.assert_sentence(workflow_step(SKILL, 6), r"\bnever mark it final\b")
 
     def test_every_attendees_statements_have_a_part_and_a_named_speaker(self) -> None:
