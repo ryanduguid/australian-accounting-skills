@@ -68,7 +68,10 @@ class ManagementReportingTests(unittest.TestCase):
         self.assert_sentence(step, r"\btie closing cost, closing accumulated depreciation and the period's depreciation expense to the trial balance\b")
         self.assert_sentence(step, r"\bwhere a class does not tie\b", DO_NOT + r"adjust the schedule to force the tie\b",
                              r"\bopen item with evidence needed, owner and next action\b")
-        self.assert_sentence(step, r"\binto step 8\b")
+        # An open difference reaches step 8 as both amounts; neither is adopted.
+        self.assert_sentence(step, r"\binto step 8\b", r"\bfor a class that does not tie\b",
+                             r"\bthe schedule's carrying amount, the trial balance's and the difference\b",
+                             r"\badopt neither\b", r"\bconditional until the open item is resolved\b")
 
     def test_aasb_116_paragraphs_name_the_standard_and_the_source_is_indexed(self) -> None:
         step = workflow_step("au-depreciation-schedule", "8a")
