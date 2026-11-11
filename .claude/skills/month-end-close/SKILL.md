@@ -1,6 +1,6 @@
 ---
 name: month-end-close
-description: "Use when running or reviewing a month-end close for an Australian SME: bank and control reconciliations, accruals, prepayments, depreciation and variance."
+description: "Use when running or reviewing a month-end close for an Australian SME: bank and control reconciliations, accruals, prepayments, depreciation, variance and the monthly management report."
 ---
 
 # Month-end close
@@ -37,6 +37,7 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
 10. Supplier master change report for the month: suppliers created and bank or payment details changed, with who made each change and when, plus any evidence that each change was confirmed independently of the request. Step 6 tests these
 11. Prior review points and the correction log from earlier closes. Step 7 tests these. An absent log is recorded as absent, not as no open points
 12. The prior 2 months' recurring journals, and the tracking categories the entity expects on P&L lines if it uses them
+13. If a management report is in scope: the Profit and Loss and Balance Sheet for the month and year to date, the same periods of the prior year, the year-to-date budget and each month of the trend period (3 to 12 months), exported after final journals are posted. Step 9 uses these
 
 ## Workflow
 
@@ -53,6 +54,7 @@ Ask for these if not provided (see `xero-exports` for pulling and validating the
 6. **Supplier payment details.** List every supplier created and every bank or payment detail changed in the month. For each change, record the evidence that it was confirmed independently of the request, such as a call to a phone number already on file rather than one given in the requesting email, and who confirmed it; the Australian Signals Directorate's [guidance on preventing business email compromise](https://www.cyber.gov.au/protect-yourself/securing-your-email/email-security/preventing-business-email-compromise) describes this check. A change without that evidence is an open exception, and the supplier's next payment waits for an authorised human to confirm the details. Do not edit the supplier master, contact the supplier or release a payment.
 7. **Prior review points.** Carry each prior review point into this close and record whether this month's evidence closes it. A point stays open until evidence closes it, not because time passed. Add each correction made in this close to the correction log with what changed, why, who approved it and the period affected, so the next close can test for repeats. Flag a correction type that repeats as a process point for the reviewer.
 8. **Close out.** Checklist with per-item status and preparer initials/date, plus exceptions with owner/status. After an authorised human approves and posts final journals, re-export affected trial balances, bank reconciliations, subledgers and schedules; verify the close pack reflects that post-journal position. Leave period locking as a separate authorised-human action after this check. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
+9. **Management report.** If the owner asks for one, prepare it after step 8 from the post-journal Profit and Loss and Balance Sheet (input 13), pulled and validated through `xero-exports`. Before using them, tie each report's net profit and net assets to the closed trial balance; where either does not tie, stop and carry the difference as an open exception rather than report figures that disagree with the close. Show the month and the year to date against budget and against the same period of the prior year. Show each ratio beside its formula, applied only to the entity's own figures in the tied reports and the step 2 aged listings: gross margin (gross profit / revenue), net margin (net profit / revenue), current ratio (current assets / current liabilities), debtor days (trade debtors / revenue for the period x days in the period), creditor days (trade creditors / purchases or cost of sales for the period x days in the period, naming which) and wages to revenue (wages and salaries / revenue). Never compare a ratio with an industry figure or benchmark supplied from memory or by this skill; compare it only with the entity's own budget and prior periods, or with a benchmark the owner supplies with its source. Show each line and ratio as a trend over 3 to 12 months, as many as the exports cover, naming any month missing. Comment only on movements step 5 explained, quoting its explanation; a step 5 flag still unexplained appears in the report as open with its owner, never with a reason supplied to fill the gap. List actions as options and questions for the owner, as `cashflow-forecast-13week` frames its levers, never as recommendations. The report is management information from the close, not a set of financial statements or an assurance conclusion; an authorised human decides whether it is sent and to whom.
 
 ## Payday Super timing control
 
@@ -81,7 +83,8 @@ Primary sources (checked 20 August 2026):
 - Every prior review point is closed by evidence or carried with an owner, and the correction log is updated
 - Statement closing balance bridges to the ledger bank balance through identified timing items, with any residual named as an exception; stale credits, unmatched items and recurring-journal differences are listed or recorded as none on the evidence supplied
 - Post-journal re-exports agree; the authorised-human period-lock action is recorded as pending or complete
-- Close pack index: checklist, recs, schedules, variance commentary
+- Close pack index: checklist, recs, schedules, variance commentary, and the management report where one is prepared
+- A management report's figures tie to the closed trial balance, each ratio shows its formula, and every unexplained variance appears in it as open
 - Every open exception has an owner and status. Keep source-period context for close-control exceptions at pack level and on the individual entries for other exceptions.
 
 ## Worked example
