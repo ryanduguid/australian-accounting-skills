@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 97 skills, 519 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 97 skills, 520 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 14 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -57,7 +57,7 @@ Totals: 97 skills, 519 indexed primary sources of which 341 have a recorded huma
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | [1](../.claude/skills/au-partnership-tax/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | [1](../.claude/skills/au-payg-instalment-variation/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | [5](../.claude/skills/au-payroll-review/sources.json) | 2026-10-14 (2 of 5) | 0 | 0 | 4 | 3 | 0 | 0 |
-| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [17](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 17) | 2 | 0 | 8 | 1 | 0 | 0 |
+| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [18](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 18) | 2 | 0 | 8 | 1 | 0 | 0 |
 | [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | [10](../.claude/skills/au-pre-lodgement-review/sources.json) | 2026-10-15 (6 of 10) | 0 | 0 | 3 | 0 | 0 | 0 |
 | [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | [13](../.claude/skills/au-primary-production/sources.json) | 2026-11-02 (13 of 13) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | [6](../.claude/skills/au-private-ruling-application/sources.json) | 2026-11-02 (6 of 6) | 0 | 0 | 1 | 1 | 0 | 0 |
