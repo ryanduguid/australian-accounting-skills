@@ -89,6 +89,10 @@ class ClientMeetingNoteTests(unittest.TestCase):
                              r"\bthe practitioner decides whether it is kept, de-identified or destroyed\b",
                              r"\bthis skill deletes and omits nothing itself\b")
 
+    def test_app_5_1_keeps_its_reasonable_in_the_circumstances_qualifier(self) -> None:
+        self.assert_sentence(workflow_step(SKILL, 2), r"\bAPP 5\.1 in Schedule 1 to the \*Privacy Act 1988\*",
+                             r"\bsuch matters referred to in subclause 5\.2 as are reasonable in the circumstances\b")
+
     def test_the_practitioners_words_are_never_upgraded_to_advice(self) -> None:
         step = workflow_step(SKILL, 4)
         self.assert_sentence(step, r"\bNever restate a remark as advice, a recommendation or a conclusion the source does not contain\b")
