@@ -359,11 +359,7 @@ fn an_act_the_text_does_not_name_in_full_is_not_another_named_act() {
     let text = "Claim under s 44 of the Administration Act, and keep the records the Fuel Tax Act 2006 requires.\n";
     assert_eq!(
         only_unmatched(text, FUEL),
-        unmatched_in_alpha(
-            1,
-            "s 44",
-            "names its Act only as 'the Administration Act'"
-        )
+        unmatched_in_alpha(1, "s 44", "names its Act only as 'the Administration Act'")
     );
     let text = "Section 8-1 of that Act applies, unlike the Fuel Tax Act 2006.\n";
     assert_eq!(

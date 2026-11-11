@@ -517,7 +517,9 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
         "act" => "ACT",
         _ => "NT",
     };
-    let year = YEAR.find(id.as_str())?.map(|year| (year.as_str().to_string(), false));
+    let year = YEAR
+        .find(id.as_str())?
+        .map(|year| (year.as_str().to_string(), false));
     let act = if id.as_str().starts_with("sl-") {
         Some(false)
     } else if ["act-", "law_a", "/acts/", "/a/", "path=/c/a/"]
@@ -540,7 +542,10 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
 /// the copy's register or identifier names a different instrument.
 fn copy_keys(copy: &RegisterCopy, title: &str) -> Option<BTreeSet<Key>> {
     let (words, year, place) = title_parts(title)?;
-    if copy.act.is_some_and(|act| act != (words.last() == Some(&"Act"))) {
+    if copy
+        .act
+        .is_some_and(|act| act != (words.last() == Some(&"Act")))
+    {
         return None;
     }
     if let Some((copy_year, federal)) = &copy.year {
@@ -553,7 +558,10 @@ fn copy_keys(copy: &RegisterCopy, title: &str) -> Option<BTreeSet<Key>> {
         return None;
     }
     Some(BTreeSet::from([
-        ("title", format!("{} {year} ({})", words.join(" "), copy.place)),
+        (
+            "title",
+            format!("{} {year} ({})", words.join(" "), copy.place),
+        ),
         copy.id.clone(),
     ]))
 }
@@ -569,7 +577,10 @@ fn anchors(line: &str) -> Result<Vec<Anchor>> {
         let (start, end) = span(&name);
         // A short name inside an explicit title, such as "Fair Work Act" in
         // "Fair Work Act 1994 (SA)", is part of that title.
-        if explicit.iter().any(|title| (start..end).contains(&span(title).0)) {
+        if explicit
+            .iter()
+            .any(|title| (start..end).contains(&span(title).0))
+        {
             continue;
         }
         found.push(Anchor {
@@ -613,11 +624,14 @@ fn anchors(line: &str) -> Result<Vec<Anchor>> {
         let Some(text_end) = link.as_str().find("](") else {
             continue;
         };
-        let Some(copy) = register_copy(&link.as_str()[text_end + 2..link.as_str().len() - 1])? else {
+        let Some(copy) = register_copy(&link.as_str()[text_end + 2..link.as_str().len() - 1])?
+        else {
             continue;
         };
         let range = link.start()..link.start() + text_end;
-        let first = found.iter_mut().find(|anchor| range.contains(&anchor.start));
+        let first = found
+            .iter_mut()
+            .find(|anchor| range.contains(&anchor.start));
         if let Some(Anchor {
             keys: Some(keys), ..
         }) = first
@@ -895,7 +909,10 @@ fn owners(
     let mut amending = Vec::new();
     for anchor in named {
         amending.push(
-            anchor.keys.as_ref().is_some_and(|keys| title(keys).contains(" Amendment "))
+            anchor
+                .keys
+                .as_ref()
+                .is_some_and(|keys| title(keys).contains(" Amendment "))
                 || AMENDS.is_match(&sentence[anchor.end..])?
                 || AMENDED_BY.is_match(&sentence[..anchor.start])?,
         );
