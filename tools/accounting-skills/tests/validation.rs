@@ -55,6 +55,9 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
         "Card 4111111111111111.",
         "4111111111111111, expiring",
         "no.4111111111111111",
+        // Dot or comma grouping that is not thousands grouping.
+        "4111.1111.1111.1111",
+        "12345678,2",
     ] {
         let error = v::check_sensitive_content(text, &[])
             .unwrap_err()
@@ -64,7 +67,13 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
             "{text}: {error}"
         );
     }
-    for text in ["$12345678.90", "0.123456789012", "12,345,678.90"] {
+    for text in [
+        "$12345678.90",
+        "0.123456789012",
+        "12,345,678.90",
+        "1,234,567",
+        "18450.00,4450.00,14000.00,10000.00",
+    ] {
         assert!(v::check_sensitive_content(text, &[]).is_ok(), "{text}");
     }
     assert!(

@@ -525,6 +525,9 @@ class SafetyControlTests(unittest.TestCase):
                 "Card 4111111111111111.",
                 "4111111111111111, expiring",
                 "no.4111111111111111",
+                # Dot or comma grouping that is not thousands grouping.
+                "4111.1111.1111.1111",
+                "12345678,2",
             ),
             "email address": ("worker&#64;example.test",),
             "BSB or bank account": ("B<!-- -->SB 123-456",),
@@ -555,7 +558,8 @@ class SafetyControlTests(unittest.TestCase):
             validator.check_sensitive_content("effective 1 **July** 2026")
 
     def test_money_amounts_pass_the_long_number_screen(self) -> None:
-        for content in ("$12345678.90", "0.123456789012", "12,345,678.90"):
+        for content in ("$12345678.90", "0.123456789012", "12,345,678.90", "1,234,567",
+                        "18450.00,4450.00,14000.00,10000.00"):
             with self.subTest(content=content):
                 validator.check_sensitive_content(content)
 
