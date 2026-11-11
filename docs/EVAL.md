@@ -475,7 +475,9 @@ claims. A list holds every numbered entry in the table of contents: the
 Corporations Act's small business guide items share the numbers of its first
 sections, and a schedule's entries count only when hyphenated, as sections of
 the schedules to the TAA 1953 and ITAA 1936 and of the Insolvency Practice
-Schedule are; unhyphenated schedule clauses are left out. The number of
+Schedule are; unhyphenated schedule clauses are left out, so a clause cited
+as a section, such as 's 1 of Schedule 4 to the Corporations Act 2001', is
+checked against the body section with that number. The number of
 s 960-590 is the skill's: the Bill text was not checked, because the
 Parliament's document server answered with a bot challenge. A list goes stale
 when a later compilation adds or repeals a section, until someone rebuilds it.

@@ -662,15 +662,20 @@ fn index(root: &Path, register_id: &str, title: &str, sections: &[&str]) {
     fs::create_dir_all(&folder).unwrap();
     fs::write(
         folder.join(format!("{register_id}.txt")),
-        format!(
-            "# title: {title}\n# register-id: {register_id}\n# compilation: C2099C00001\n\
-             # compilation-number: 1\n# in-force-from: 2099-01-01\n\
-             # source: https://example.invalid/{register_id}\n# retrieved: 2099-01-02\n\
-             # sha256: 00\n{}\n",
-            sections.join("\n")
-        ),
+        index_text(register_id, title, sections),
     )
     .unwrap();
+}
+
+fn index_text(register_id: &str, title: &str, sections: &[&str]) -> String {
+    format!(
+        "# title: {title}\n# register-id: {register_id}\n# compilation: C2099C00001\n\
+         # compilation-number: 1\n# in-force-from: 2099-01-01\n\
+         # source: https://example.invalid/{register_id}\n# retrieved: 2099-01-02\n\
+         # sha256: {}\n{}\n",
+        "0".repeat(64),
+        sections.join("\n")
+    )
 }
 
 fn exceptions(root: &Path, text: &str) {
@@ -949,4 +954,81 @@ fn a_record_whose_title_and_register_id_disagree_with_a_section_list_owns_nothin
         ]
     );
     assert_eq!(run(root.path()).0, 2);
+}
+
+#[test]
+fn each_malformed_section_list_or_exception_is_refused() {
+    let valid = index_text("C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
+    let zeros = "0".repeat(64);
+    let cases = [
+        (
+            "C2006A00072.txt",
+            valid.replace("# source:", "# title: Fuel Tax Act 2006\n# source:"),
+            "",
+            "repeated field title",
+        ),
+        (
+            "C2006A00072.txt",
+            format!("{valid}41-5\n"),
+            "",
+            "repeated section 41-5",
+        ),
+        (
+            "C2006A00072.txt",
+            format!("# note: extra\n{valid}"),
+            "",
+            "unknown field note",
+        ),
+        (
+            "C2006A00073.txt",
+            valid.clone(),
+            "",
+            "the file must be named REGISTER-ID.txt",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("Fuel Tax Act 2006", "Fuel Tax Act"),
+            "",
+            "the title must end with its year",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace(&zeros, "00"),
+            "",
+            "sha256 must be 64 lower-case hexadecimal digits",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("2099-01-02", "2 January 2099"),
+            "",
+            "retrieved must be a date written YYYY-MM-DD",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("2099-01-01", "2099-02-30"),
+            "",
+            "in-force-from must be a date written YYYY-MM-DD",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.clone(),
+            "C2006A00072 41-77: proposed\nC2006A00072 41-77: again\n",
+            "exceptions.txt:2: repeats the exception on line 1",
+        ),
+    ];
+    for (file, text, exceptions, expected) in cases {
+        let root = tempfile::tempdir().unwrap();
+        skill(
+            root.path(),
+            "alpha",
+            "s 41-5 of the Fuel Tax Act 2006.\n",
+            Some(FUEL),
+        );
+        let folder = root.path().join("tools/accounting-skills/section-index");
+        fs::create_dir_all(&folder).unwrap();
+        fs::write(folder.join(file), text).unwrap();
+        fs::write(folder.join("exceptions.txt"), exceptions).unwrap();
+        let error = check(root.path()).map(|_| ()).unwrap_err().to_string();
+        assert!(error.ends_with(expected), "{expected}: {error}");
+    }
 }

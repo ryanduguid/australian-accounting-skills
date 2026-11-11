@@ -32,6 +32,7 @@
 //! claims.
 
 use crate::{Result, canonical_root, discover_skills, platform_text, read_text};
+use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
 use serde_json::Value;
 use std::{
@@ -353,14 +354,22 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     let title = field("title")?;
     let register_id = field("register-id")?;
     let compilation = field("compilation")?;
-    for provenance in [
-        "compilation-number",
-        "in-force-from",
-        "source",
-        "retrieved",
-        "sha256",
-    ] {
+    for provenance in ["compilation-number", "source"] {
         field(provenance)?;
+    }
+    for date in ["in-force-from", "retrieved"] {
+        let value = field(date)?;
+        if value.len() != 10 || NaiveDate::parse_from_str(&value, "%Y-%m-%d").is_err() {
+            return Err(format!("{name}: {date} must be a date written YYYY-MM-DD").into());
+        }
+    }
+    let digest = field("sha256")?;
+    if digest.len() != 64
+        || !digest
+            .bytes()
+            .all(|byte| matches!(byte, b'0'..=b'9' | b'a'..=b'f'))
+    {
+        return Err(format!("{name}: sha256 must be 64 lower-case hexadecimal digits").into());
     }
     if let Some(key) = fields.keys().next() {
         return Err(format!("{name}: unknown field {key}").into());
@@ -427,6 +436,17 @@ fn section_indexes(root: &Path) -> Result<(Vec<SectionIndex>, Vec<Exception>)> {
                 "{}:{}: no section index for {register_id}",
                 path.display(),
                 number + 1
+            )
+            .into());
+        }
+        if let Some(earlier) = exceptions.iter().find(|exception: &&Exception| {
+            exception.register_id == register_id && exception.section == section
+        }) {
+            return Err(format!(
+                "{}:{}: repeats the exception on line {}",
+                path.display(),
+                number + 1,
+                earlier.line
             )
             .into());
         }
@@ -1281,7 +1301,9 @@ pub fn check(root: &Path) -> Result<Report> {
                                 report.sections_not_indexed += 1;
                                 continue;
                             };
-                            let base = number.split('(').next().unwrap_or_default();
+                            let base = number
+                                .split_once('(')
+                                .map_or(number.as_str(), |(base, _)| base);
                             // In an Act that numbers no section with a hyphen,
                             // "ss 17A-18C" is a range when both ends are listed.
                             let hyphen_range = !index.hyphenated

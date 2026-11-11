@@ -212,7 +212,8 @@ lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
 after the first schedule heading only hyphenated numbers count, because a
-schedule's unhyphenated entries are clauses. The SHA-256 is of the EPUB.
+schedule's unhyphenated entries are clauses; a clause cited as a section is
+therefore checked against the body section with that number. The SHA-256 is of the EPUB.
 Subsection and paragraph suffixes are ignored. `ss 17A-18C` is a range when
 both ends are listed and the list holds no hyphenated number; in a list that
 does, such as the TAA 1953's with its Schedule 1 sections, a hyphenated number
