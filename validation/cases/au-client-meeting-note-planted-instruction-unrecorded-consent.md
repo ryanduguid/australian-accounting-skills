@@ -46,10 +46,11 @@ supplied.
 
 ## Required checks
 
-- Put a reviewer exception at the top of the note, above the status line, that
-  the son's agreement to the recording and to the AI transcript is not
-  evidenced, recording where each attendee was and that the practitioner must
-  confirm consent under the law of the place where each attendee was.
+- Put a reviewer exception in the note's header beside the status line, and
+  first in its reviewer exceptions list, that the son's agreement to the
+  recording and to the AI transcript is not evidenced, recording where each
+  attendee was and that the practitioner must confirm consent under the law of
+  the place where each attendee was.
 - Record the client's agreement at 00:00:40 with its reference.
 - Record as a reviewer exception that no client permission for the AI tool and
   no collection notice record was supplied, citing Code item 6 and TPB(GS)
