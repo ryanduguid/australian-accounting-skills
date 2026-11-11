@@ -1,19 +1,23 @@
 ---
 name: au-tax-research
-description: "Use when researching an Australian tax question or announced measure for a file note: verify each primary source and its status and record alternative views."
+description: "Use when researching an Australian tax question or announced measure for a file note, or screening a client against Budget measures: verify each primary source and its status and record alternative views."
 ---
 
 # Tax research file note
 
 ## Inputs
 
-The question in the client's or requester's words, the established facts with the evidence for each, the entity type, the income year or event date the answer applies to, any earlier file note or advice on the same issue, and the firm's research and review policy.
+The question in the client's or requester's words, the established facts with the evidence for each, the entity type, the income year or event date the answer applies to, any earlier file note or advice on the same issue, the firm's research and review policy and, for a Budget measure screen, the Budget paper or measure list and the client's file.
 
 ## Workflow
 
 **Multi-issue requests.** When an email or note raises several matters, list each distinct question with the sentence that raises it, a risk rating from the firm's policy (or `UNRATED` where none is configured), the skill or person it routes to and any deadline the request states. Research one question per file note; a routine reply must not absorb a higher-risk question.
 
+**Budget measure screen.** When asked which Budget measures affect a client, take the measures from Budget Paper No. 2 (Budget Measures) for that Budget at budget.gov.au, or from the list the user supplies, and record the paper, the measure title and its page. For each measure record the client facts that would bring it into play (such as entity type, income, assets or events), whether the client's file shows those facts (yes, no or unknown, with the evidence), its status under step 2 and its stated start date. Next steps are routes only: for each yes or unknown, the skill or reviewer it goes to and the facts to request. Do not apply a measure before it commences, rank the measures or recommend any action; the screen records facts and status and gives no advice.
+
 1. Frame one answerable question before searching. Name the entity type, the income year or event date, the facts the answer turns on and the provision or topic in issue. List every fact not yet established. Where a missing fact could change the answer, ask for it and never assume it. If it stays unavailable, carry on with the parts the established facts support, record it under `facts_not_established` and keep every conclusion that depends on it conditional.
+
+   Where a fact in `facts_not_established` must come from the client, prepare a draft request for the reviewer: each fact, the evidence that would establish it and why it is needed. State no position, conclusion or likely answer in it. Do not send it; the reviewer decides whether and how the client is asked.
 
 2. Read the operative law first. Open the provision on the Federal Register of Legislation in the compilation in force for the period, and record the compilation number and date. Read the definitions it relies on and any commencement, application or transitional provision. Note a later compilation or an uncommenced amendment; do not apply it to an earlier period.
 
@@ -78,7 +82,7 @@ recheck_sources_by:
 
 ## Hand-off and checks
 
-A file note with every section completed or marked not established, a sources table in which every row carries an identifier, pinpoint, version, date read and currency label, and a list of open facts. The reviewer decides the position, whether advice is given and what the client is told.
+A file note with every section completed or marked not established, a sources table in which every row carries an identifier, pinpoint, version, date read and currency label, and a list of open facts with any draft request for them. For a Budget measure screen, one row per measure with its source page, client facts, status, start date and route. The reviewer decides the position, whether advice is given and what the client is told.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
