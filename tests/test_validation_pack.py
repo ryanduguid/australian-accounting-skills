@@ -847,6 +847,14 @@ class RecordedRunTests(unittest.TestCase):
             with self.subTest(label), self.assertRaises(validator.ValidationError):
                 validator.check_result_file(name, text)
 
+    def test_run_date_is_only_the_extended_calendar_form(self) -> None:
+        # date.fromisoformat reads each of these as 31 January 2026.
+        for value in ("20260131", "2026-W05-6", "2026W056"):
+            with self.subTest(value), self.assertRaisesRegex(
+                validator.ValidationError, "run_date must be a real date, YYYY-MM-DD"
+            ):
+                validator.check_result_file(self.NAME, self.GOOD.replace("2026-01-31", value))
+
     def test_rejection_reasons_are_the_documented_ones(self) -> None:
         with self.assertRaisesRegex(validator.ValidationError, "match the file name"):
             validator.check_result_file(

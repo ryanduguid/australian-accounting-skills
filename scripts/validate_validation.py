@@ -534,11 +534,14 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
                 f"{key} must be one line of at most {RESULT_FIELD_MAX_LENGTH} characters "
                 "with no pipe; an output, transcript or note does not belong in a result file"
             )
+    run_date = data["run_date"]
     try:
-        run_date = date.fromisoformat(data["run_date"])
+        # fromisoformat also reads 20260131 and ISO week dates; only YYYY-MM-DD is accepted.
+        if date.fromisoformat(run_date).isoformat() != run_date:
+            raise ValueError(run_date)
     except ValueError as error:
         raise ValidationError("run_date must be a real date, YYYY-MM-DD") from error
-    if run_date.isoformat() != match.group(1):
+    if run_date != match.group(1):
         raise ValidationError("run_date must match the file name")
     results = data["results"]
     status = "legacy"

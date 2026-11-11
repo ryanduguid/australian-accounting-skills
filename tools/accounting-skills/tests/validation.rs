@@ -107,6 +107,27 @@ fn trial_provenance_does_not_upgrade_preparation_to_a_verdict() {
 }
 
 #[test]
+fn run_date_is_only_the_extended_calendar_form() {
+    let known = BTreeSet::from(["test-card".to_owned()]);
+    let path = "validation/results/2026-01-31-fixture.json";
+    let mut record = json!({"model":"fixture","run_date":"2026-01-31","skills_version":"fixture","runner":"A Person","results":{"test-card":"pass"}});
+    assert_eq!(
+        v::check_result_file(path, &record.to_string(), &known).unwrap(),
+        "legacy"
+    );
+    for value in ["20260131", "2026-W05-6", "2026W056", "+026-01-31"] {
+        record["run_date"] = json!(value);
+        assert!(
+            v::check_result_file(path, &record.to_string(), &known)
+                .unwrap_err()
+                .to_string()
+                .contains("run_date must be a real date, YYYY-MM-DD"),
+            "{value}"
+        );
+    }
+}
+
+#[test]
 fn inventory_and_reads_reject_reparse_points_and_invalid_text() {
     let root = tempdir().unwrap();
     let outside = tempdir().unwrap();
