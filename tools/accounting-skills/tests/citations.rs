@@ -231,7 +231,7 @@ fn a_section_takes_only_an_act_its_own_sentence_names() {
                 &file("alpha"),
                 10,
                 "s 41-5",
-                "its sentence names more than one Act (ITAA 1997; Fuel Tax Act)"
+                "its sentence names more than one Act (ITAA 1997; Fuel Tax Act 2006)"
             ),
             missing(&file("beta"), 3, "section 286", "names no Act"),
             missing(&file("delta"), 2, "section 100A", "names no Act"),
