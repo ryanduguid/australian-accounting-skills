@@ -137,6 +137,14 @@ These workflows are independently written from Australian primary sources; `NOTI
 | [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) | Main residence exemption evidence: residency, ownership period, period-by-period use, absence and other choices, first income use, adjacent land, spouses and the partial exemption inputs |
 | [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | Share buy-back workpapers: on-market or off-market, capital and dividend split, market value, franking debits, Corporations Act steps, Division 7A links and each seller's CGT and dividend position |
 
+## Additions from 12 November 2026
+
+These workflows are independently written from Australian primary sources.
+
+| Skill | Use it for |
+| --- | --- |
+| [`marketplace-settlements`](../.claude/skills/marketplace-settlements/SKILL.md) | Marketplace and payment-platform settlements rebuilt to each payout in exact cents, tied to the bank and carried through a clearing account, with sales booked net of fees, fee GST from documents and platform-collected tax kept as leads |
+
 Also included:
 
 - [`templates/firm-CLAUDE.md.example`](../templates/firm-CLAUDE.md.example): a starter `CLAUDE.md` for an accounting firm's repo.
