@@ -575,3 +575,79 @@ fn document_identifiers_at_the_register_root_resolve() {
         assert_eq!(run(root.path()).0, 0, "{url}");
     }
 }
+
+#[test]
+fn full_section_numbers_are_preserved_in_diagnostics_and_ownership() {
+    let root = tempfile::tempdir().unwrap();
+    let text = "Read s 159GZZZK of the ITAA 1936.\n\
+        Read ss 159GZZZP(3) and 159GZZZPA of the ITAA 1936.\n\
+        Read reg 6.17A of the Superannuation Industry (Supervision) Regulations 1994.\n\
+        Read Regulation 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n\
+        Read Regulations 6.21 and 6.22 of the Superannuation Industry (Supervision) Regulations 1994.\n\
+        Read s 307-125.02 of the Income Tax Assessment (1997 Act) Regulations 2021.\n";
+    skill(root.path(), "alpha", text, None);
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (8, 0));
+    assert_eq!(
+        report
+            .unmatched
+            .iter()
+            .map(|item| item.citation.as_str())
+            .collect::<Vec<_>>(),
+        [
+            "s 159GZZZK",
+            "ss 159GZZZP(3)",
+            "ss 159GZZZPA",
+            "reg 6.17A",
+            "Regulation 8.02B",
+            "Regulations 6.21",
+            "Regulations 6.22",
+            "s 307-125.02"
+        ]
+    );
+    fs::write(
+        root.path().join(".claude/skills/alpha/sources.json"),
+        record(
+            "Superannuation Industry (Supervision) Regulations 1994",
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        ),
+    )
+    .unwrap();
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (8, 4));
+    assert!(
+        report
+            .unmatched
+            .iter()
+            .all(|item| item.citation.starts_with("s ") || item.citation.starts_with("ss "))
+    );
+    skill(
+        root.path(),
+        "alpha",
+        text,
+        Some(
+            r#"{"sources": [
+          {"title": "Income Tax Assessment Act 1936", "url": "https://www.legislation.gov.au/C1936A00027/latest/text"},
+          {"title": "Superannuation Industry (Supervision) Regulations 1994", "url": "https://www.legislation.gov.au/F1996B00580/latest/text"},
+          {"title": "Income Tax Assessment (1997 Act) Regulations 2021", "url": "https://www.legislation.gov.au/F2021L00206/latest/text"}
+        ]}"#,
+        ),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (8, 8));
+    assert!(report.unmatched.is_empty(), "{:?}", report.unmatched);
+}
+
+#[test]
+fn a_section_inside_an_inferred_title_is_still_checked() {
+    let root = tempfile::tempdir().unwrap();
+    skill(
+        root.path(),
+        "alpha",
+        "TASA (s 30-35) and the Corporations Act 2001.\n",
+        None,
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (1, 0));
+    assert_eq!(report.unmatched[0].citation, "s 30-35");
+}
