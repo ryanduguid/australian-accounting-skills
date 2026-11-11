@@ -31,6 +31,20 @@ For each ATO account, a download check, the recomputed balances, the list of ite
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+The client has one activity statement account; an amount owing is positive.
+
+| Step | Working | Result |
+| --- | --- | --- |
+| Duplicated breakdown | The download repeats a 4,800.00 statement as breakdown lines: 3,600.00 + 1,200.00 = 4,800.00 | Breakdown lines removed and listed, so the statement counts once |
+| ATO balance at balance date | 2,100.00 + 4,800.00 - 2,100.00 = 4,800.00 (opening, statement for an earlier quarter, payment), by processed date | Recomputed from the transactions, not the portal's running balance |
+| Payment made on balance date, processed after it | 4,800.00 - 4,800.00 = 0.00 | Agrees to the 0.00 ledger control account |
+
+An amended statement for an earlier quarter, processed after balance date, raises 350.00. It is listed with its processed date, effective date, period and amount and is not netted into either balance; the reviewer decides whether it adjusts the year-end figures. Had the ledger stood at 500.00, the difference of 500.00 - 0.00 = 500.00 would match no ATO transaction: it would go on the unmatched list with a possible cause, the evidence needed and an owner, and would not be cleared against the 350.00.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

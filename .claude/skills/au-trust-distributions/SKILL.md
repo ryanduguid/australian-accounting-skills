@@ -37,6 +37,20 @@ A deed/resolution evidence matrix, income bridge, beneficiary roll-forwards and,
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+An executed resolution is on file. Trust-law income of 48,000.00 comes from the accounts under the deed's definition; taxable net income stays in its own schedule. The distribution statement received shows a franked distribution of 6,400.00 with a franking credit of 1,900.00, which the resolution streams to beneficiary B.
+
+| Check | Working | Result |
+| --- | --- | --- |
+| Entitlements | 24,000.00 + 16,000.00 + 8,000.00 = 48,000.00 (A, B, C) | Agrees to trust-law income |
+| Franked component | B's statement carries 6,400.00 and 1,900.00; A's and C's carry none | Agrees to the trust schedule |
+| C's unpaid entitlement | 5,000.00 + 8,000.00 - 3,000.00 = 10,000.00 (opening, this year, paid) | Agrees to the ledger balance |
+
+C, a company, is owed 10,000.00; its treatment is not assumed and goes to specialist review under steps 4 and 4b. Had the resolution allocated only 47,000.00, the remaining 48,000.00 - 47,000.00 = 1,000.00 would have no supported entitlement: it stays unallocated for the reviewer, never spread across the beneficiaries or inferred from cash paid.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. A record in it that carries a `reverify_by` date expires after that date: do not use it even as a cross-check, and mark results that depend on it `UNVERIFIED` until the live source has been read. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.
