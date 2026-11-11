@@ -1,6 +1,6 @@
 ---
 name: financial-modelling
-description: "Use when building or reviewing a financial model workbook for an Australian entity: driver assumptions, live formulas, check rows and scenarios tied to records."
+description: "Use when building or reviewing a financial model workbook for an Australian entity: driver assumptions, live formulas, check rows, scenarios and monthly three-way forecasts tied to records."
 ---
 
 # Financial model workbook
@@ -19,7 +19,8 @@ client and the authorised reviewer.
 3. Driver assumptions from the client: volumes, prices, growth, payment
    behaviour, hiring and capital plans. Record who supplied each one and when.
 4. The entity's tax and payroll cycles for cash timing (GST and BAS cycle, PAYG
-   withholding, super, payroll tax). Verify current labels, rates and due dates
+   withholding, super, payroll tax, and income tax and PAYG instalments for a
+   three-way forecast). Verify current labels, rates and due dates
    at a primary source at use time; never recall them from memory.
 5. Financing terms where the model carries debt: limits, rates, repayment
    schedules and covenants.
@@ -50,6 +51,48 @@ client and the authorised reviewer.
 7. **Tie the opening position.** Every opening balance traces to a source
    record (statement, ledger or schedule) named in the model's source log.
 
+## Three-way forecast
+
+Use this when the model must forecast profit and loss, balance sheet and cash
+month by month. It adds to the workflow above and changes none of it. Route a
+weekly cash view to `cashflow-forecast-13week`.
+
+1. **Open from the trial balance.** Build the opening balance sheet from the
+   trial balance at the day before the first month (input 2) and show the tie
+   for each line in the source log (workflow step 7). If the trial balance is
+   missing, a line does not tie or the opening balance sheet does not balance,
+   stop: record the gap or difference for the reviewer, and do not plug it to
+   equity, cash or a suspense line.
+2. **Link the statements.** One column per month (workflow step 5). Net
+   profit flows from the profit and loss to retained earnings, and every
+   balance sheet movement other than cash flows through the cash flow
+   statement.
+3. **Working capital.** Trade debtors and trade creditors come from debtor
+   days and creditor days drivers on the Assumptions sheet, supplied by the
+   client and recorded in the assumptions log. Show the days the opening aged
+   listings imply beside the drivers.
+4. **Tax and payroll payables.** A schedule each for GST, PAYG withholding,
+   super and income tax, and payroll tax where it applies (input 4): opening
+   balance tied to the trial balance, accruals from the profit and loss lines
+   that create them, payments in the month of the due date verified at a
+   primary source, and closing balance. Record each due date's source and check
+   date in the source log. A due date that cannot be verified stays
+   `UNVERIFIED`, and its payment month stays blank until the reviewer supplies
+   it.
+5. **Loan schedule.** For each facility (input 5): opening balance tied to the
+   lender's statement, drawdowns, interest, repayments and closing balance.
+   Interest flows to the profit and loss and principal to financing cash flows.
+6. **Balance and cash checks.** Add `check_balance` (total assets less total
+   liabilities less equity) and `check_cash` (balance sheet cash less the cash
+   flow statement's closing cash) beside the other `check_*` rows, and a check
+   that each payable and loan schedule's closing balance equals its balance
+   sheet line. Each is zero in every month. A non-zero result is a broken
+   model: find and fix the cause, and do not hand the forecast over until it is
+   zero.
+
+The forecast is a model on stated assumptions. It predicts nothing and
+recommends nothing; the Boundaries below apply to it unchanged.
+
 ## Output
 
 The workbook, a dated assumptions log naming the source and owner of every
@@ -65,6 +108,8 @@ locations or repository configuration without explicit approval.
 - Every calculation cell is a formula, and every editable driver is a named
   input on the Assumptions sheet and styled as one
 - Each check row evaluates to zero in every period
+- In a three-way forecast, the opening balance sheet ties to the trial
+  balance, and `check_balance` and `check_cash` are zero in every month
 - Period headers align across sheets and name their period explicitly
 - Opening balances tie to the source records and the tie-out is shown
 - The assumptions log records source, owner and date for each driver
