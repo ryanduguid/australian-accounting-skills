@@ -1,8 +1,8 @@
 # Ask Nagaris skill list comparison
 
-Sixteen new skills and 5 extended skills cover the in-scope topics on the Ask Nagaris public skill list that this repository lacked. A seventeenth new skill in the same change, `au-director-penalty-review`, comes from this repository's own gap list rather than the Nagaris page. Every other topic is either already covered here or is outside the repository's preparation-only accounting boundary, as the table below records.
+Sixteen new skills and 5 extended skills cover the in-scope topics on the Ask Nagaris public skill list that this repository lacked. A seventeenth new skill in the same change, `au-director-penalty-review`, comes from this repository's own gap list rather than the Nagaris page. On 11 November 2026 `au-main-residence` and `au-share-buy-back` were added for 2 topics: the main residence exemption, which this table had recorded as covered although `au-capital-gains` held it only as review facts, and private company share buy-backs, which it had recorded as not adopted. Every other topic is either already covered here or is outside the repository's preparation-only accounting boundary, as the table below records.
 
-Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: the full list](https://nagaris.com/ask-nagaris-skills), which names 79 skills with a one-line description each, grouped by kind of work, although its introduction says 'more than 80'. Accounting-skills base: `f7e8c38`. The page publishes no skill content, so only the topics were used. All workflow text, sources and validation cards were written independently for this repository from Australian primary sources read on 2 November 2026; no Nagaris text was copied. Topic labels below are this repository's own summaries, not the page's wording.
+Comparison date: 2 November 2026; the page was read again on 11 November 2026 for the main residence and share buy-back rows. Source: the public page [Ask Nagaris skills: the full list](https://nagaris.com/ask-nagaris-skills), which names 79 skills with a one-line description each, grouped by kind of work, although its introduction says 'more than 80'. Accounting-skills base: `f7e8c38`. The page publishes no skill content, so only the topics were used. All workflow text, sources and validation cards were written independently for this repository from Australian primary sources read on 2 November 2026; no Nagaris text was copied. Topic labels below are this repository's own summaries, not the page's wording.
 
 ## Decisions
 
@@ -12,7 +12,7 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 
 | Topic | Decision | Where or why |
 | --- | --- | --- |
-| Capital gains on a sale, including the discount, small business concessions, main residence and foreign residents | Covered | `au-capital-gains`, `au-small-business-cgt`, `au-nonresident-cgt` |
+| Capital gains on a sale, including the discount, small business concessions, main residence and foreign residents | Covered; main residence new on 11 November 2026 | `au-capital-gains`, `au-small-business-cgt`, `au-nonresident-cgt`; `au-main-residence` prepares the main residence exemption evidence, which `au-capital-gains` had held only as review facts |
 | Pre-CGT status, including inherited assets | Extended | `au-capital-gains`: acquisition evidence, inherited-asset dates and Subdivision 149-B ownership history |
 | Market value of a property at a past date | Extended | `au-capital-gains`: valuation date, purpose, instructions and report contents; an appraisal is only a screen |
 | Cost base of dividend reinvestment shares | Covered | `au-dssp` |
@@ -20,7 +20,7 @@ Comparison date: 2 November 2026. Source: the public page [Ask Nagaris skills: t
 | Division 7A repayments, deemed dividends and trust entitlements | Covered | `div7a-compliance` |
 | Private company dividends and distribution statements | New | `au-franking-account`; its step 5a, added on 11 November 2026, prepares a proposed dividend's s 254T evidence, resolution schedule, benchmark position, draft statements and franking entries, and routes a loan set-off to `div7a-compliance` |
 | Franking account reconciliation and franking deficit tax | New | `au-franking-account` |
-| Private company share buy-back | Not adopted | Specialist matter; `au-franking-account` screens it and routes it to a specialist |
+| Private company share buy-back | New on 11 November 2026 | `au-share-buy-back` prepares the company's and each seller's workpapers; the directors decide and a lawyer advises on the procedure |
 | Family trust and interposed entity elections | New on 11 November 2026 | `au-family-trust-election` prepares the evidence for deciding on a new election: test individual, family group, specified income year, interposed entity elections, revocation limits and FTDT exposure. `au-trust-distributions` screens FTDT each year and `au-trust-deed-review` records existing elections |
 | Trust deed review | New | `au-trust-deed-review` |
 | Trust distribution resolution | Covered | `au-trust-distributions`, with the resolution-readiness checklist in `au-trust-deed-review`; the trustee and adviser draft and execute resolutions |

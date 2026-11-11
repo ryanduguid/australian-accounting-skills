@@ -25,7 +25,7 @@ Owner names and title shares, property type (whole dwelling, granny flat, room i
 
 7. Check the state and local layer. Identify the state or territory and read the current revenue office and council material for short-stay levies, registers and land tax treatment. Victoria's short stay levy, for example, applies to short stays in Victorian property from 1 January 2025 under the *Short Stay Levy Act 2024*. Use `au-land-tax` for land tax. Do not state a levy rate, exemption or registration duty from memory.
 
-8. Route a sale. If the property is or was the owner's home, record the first income-use date, floor area let, nights let and any absence-choice facts, then hand them to `au-capital-gains`. Section 118-190 of the ITAA 1997 limits the main residence exemption to a partial exemption where the dwelling was used to produce assessable income and the interest test in s 118-190(1)(c) is met. Do not compute the exempt share here.
+8. Route a sale. If the property is or was the owner's home, record the first income-use date, floor area let, nights let and any absence-choice facts, then hand them to `au-main-residence` and the sale to `au-capital-gains`. Section 118-190 of the ITAA 1997 limits the main residence exemption to a partial exemption where the dwelling was used to produce assessable income and the interest test in s 118-190(1)(c) of the ITAA 1997 is met. Do not compute the exempt share here.
 
 ## Hand-off and checks
 

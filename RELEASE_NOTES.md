@@ -112,6 +112,22 @@ s 152-205(2) changes the basic conditions for the small business reduction
 from the income year that includes 1 July 2027. The 45 new source records
 await human review.
 
+Two skills fill gaps against the Ask Nagaris skill list. `au-main-residence`
+prepares the main residence exemption evidence from Subdivision 118-B: who can
+use it, the ownership period on contract and settlement dates, a period
+schedule with the moving, changing residence, absence, building, destruction,
+spouse and child rules, income use and the first income use rule, adjacent
+land and the partial exemption inputs. `au-share-buy-back` prepares a
+buy-back's workpapers under Division 16K and Part 2J.1: the tax and
+Corporations Act classifications, the share capital tainting test, the
+capital and dividend split beside the average capital per share, market
+value, franking debits including distributions funded by capital raising,
+Division 7A links and each seller's consideration and dividend.
+`au-capital-gains`, `au-franking-account`, `au-nonresident-cgt`,
+`au-rental-property` and `au-short-stay-accommodation` now route to them.
+Five synthetic cards bring the validation pack to 185, with no recorded model run for them, and the new
+source records await human review.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

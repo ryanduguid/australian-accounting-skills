@@ -134,6 +134,8 @@ These workflows are independently written from Australian primary sources; `NOTI
 | --- | --- |
 | [`au-family-trust-election`](../.claude/skills/au-family-trust-election/SKILL.md) | Evidence for deciding on a family trust or interposed entity election: test individual, family group, specified income year, revocation limits and FTDT exposure |
 | [`au-smsf-death-benefits`](../.claude/skills/au-smsf-death-benefits/SKILL.md) | SMSF death benefit workpaper: nominations against the deed, SIS and tax dependants, lump sum or income stream, transfer balance credits, components and records |
+| [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) | Main residence exemption evidence: residency, ownership period, period-by-period use, absence and other choices, first income use, adjacent land, spouses and the partial exemption inputs |
+| [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | Share buy-back workpapers: on-market or off-market, capital and dividend split, market value, franking debits, Corporations Act steps, Division 7A links and each seller's CGT and dividend position |
 
 Also included:
 

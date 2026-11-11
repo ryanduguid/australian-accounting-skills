@@ -1,0 +1,429 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+"""The main residence and share buy-back workflows added on 11 November 2026 keep their key rules.
+
+Each test reads one numbered workflow step and checks the provisions, conditions and
+prohibitions it must carry, not its wording, in the style of test_practice_workflows.py.
+The helpers are in skill_prose.py.
+"""
+
+from __future__ import annotations
+
+import re
+import unittest
+
+from skill_prose import (
+    DO_NOT,
+    IN_PROHIBITED_LIST,
+    ISO_DATE,
+    PENDING,
+    PENDING_FACT,
+    SKILLS,
+    affirms,
+    records,
+    section,
+    sentences,
+    skill_text,
+    workflow_step,
+)
+
+MR = (
+    "https://www.ato.gov.au/individuals-and-families/investments-and-assets/"
+    "capital-gains-tax/property-and-capital-gains-tax/your-main-residence-home"
+)
+MAIN_RESIDENCE = "au-main-residence"
+BUY_BACK = "au-share-buy-back"
+
+
+class CgtGapWorkflowTests(unittest.TestCase):
+    def assert_carries(self, text: str, *terms: str) -> None:
+        folded = text.casefold()
+        for term in terms:
+            with self.subTest(term=term):
+                self.assertIn(term.casefold(), folded)
+
+    def assert_sentence(self, text: str, *patterns: str, affirmed: tuple[str, ...] = ()) -> None:
+        """One sentence of `text` matches every pattern, case-insensitively, and each
+        `affirmed` pattern with no negator directly before it."""
+        with self.subTest(patterns=patterns, affirmed=affirmed):
+            self.assertTrue(
+                any(all(re.search(pattern, sentence, re.IGNORECASE) for pattern in patterns)
+                    and all(affirms(sentence, pattern) for pattern in affirmed)
+                    for sentence in sentences(text)),
+                f"no sentence matches all of {patterns} with {affirmed} affirmed",
+            )
+
+    def assert_prohibited(self, text: str, *actions: str) -> None:
+        """Each action is named in `text`, and every mention is an item of a prohibited list."""
+        for action in actions:
+            with self.subTest(prohibited=action):
+                mentions = [sentence[: match.start()] for sentence in sentences(text)
+                            for match in re.finditer(action, sentence, re.IGNORECASE)]
+                self.assertTrue(mentions, f"{action!r} is not named")
+                for before in mentions:
+                    self.assertTrue(re.search(IN_PROHIBITED_LIST, before, re.IGNORECASE),
+                                    f"{action!r} is not inside a prohibited list after {before!r}")
+
+    def assert_routes_to(self, text: str, *routes: str) -> None:
+        """Each route is a backticked skill name in `text` whose skill exists. Callers pass the
+        names backticked, because a quoted skill name gives that skill behavioural gate credit
+        in coverage.json, and these checks only test the route."""
+        for route in routes:
+            with self.subTest(route=route):
+                self.assertIn(route, text)
+                self.assertTrue((SKILLS / route.strip("`") / "SKILL.md").is_file())
+
+    def assert_cited_and_recorded(self, skill: str, *urls: str) -> None:
+        text = skill_text(skill)
+        indexed = records(skill)
+        self.assertEqual(set(indexed), set(urls), "every indexed source is cited and checked here")
+        for url in urls:
+            with self.subTest(skill=skill, url=url):
+                self.assertIn(f"]({url})", text)
+                record = indexed[url]
+                self.assertEqual(record["verification_status"], PENDING)
+                self.assertEqual(record["checked_at"], "")
+                self.assertEqual(record["fact"], PENDING_FACT)
+                self.assertRegex(str(record["review_required_since"]), ISO_DATE)
+
+    # main residence
+
+    def test_main_residence_screens_who_can_use_it(self) -> None:
+        step = workflow_step(MAIN_RESIDENCE, 1)
+        self.assert_carries(step, "Section 118-110(1)", "s 118-110(2)", "s 118-110(3)", "s 118-110(4)",
+                            "s 118-110(5)", "s 118-185(3)", "ss 118-195 and 118-200")
+        self.assert_sentence(step, r"\bindividual\b", r"\bdeceased estate\b")
+        # Residency is tested at the CGT event, and the foreign resident bar reaches the partial exemption.
+        self.assert_sentence(step, r"\bresidency at the time of the CGT event\b")
+        self.assert_sentence(step, r"\bcontinuous period of more than 6 years\b")
+        self.assert_sentence(step, r"\blife events test\b", r"\bdoes not satisfy\b")
+        self.assert_sentence(step, r"\bcannot use the home first used to produce income rule\b")
+        # The life events test: its period, and whose condition, death or relationship event counts.
+        self.assert_carries(step, "s 118-110(5)(a)", "s 118-110(5)(b)", "s 126-5(1)")
+        self.assert_sentence(step, r"\bforeign residency ending at the CGT event\b", r"\b6 years or less\b")
+        self.assert_sentence(step, r"\bthe owner or their spouse had a terminal medical condition\b",
+                             r"\bexisted at any time during that period of foreign residency\b",
+                             r"\bchild had a terminal medical condition\b",
+                             r"\bunder 18 at at least one such time\b",
+                             r"\bspouse, or their child who was under 18 at death, died during that period\b",
+                             r"\binvolving the owner and their spouse or former spouse\b")
+        self.assert_routes_to(step, "`au-deceased-estates`", "`au-tax-residency`", "`au-nonresident-cgt`")
+
+    def test_main_residence_keeps_both_date_bases_and_the_land_limits(self) -> None:
+        step = workflow_step(MAIN_RESIDENCE, 2)
+        self.assert_carries(step, "20 September 1985", "s 118-130(2) and (3)", "s 118-115", "s 118-120",
+                            "s 118-165", "s 118-245")
+        self.assert_sentence(step, r"\bboth date pairs\b", r"\bboth day counts\b",
+                             affirmed=(r"\bleave the basis to the reviewer\b",))
+        self.assert_sentence(step, r"\bprimarily for private or domestic purposes\b",
+                             r"\b2 hectares less the land under the dwelling\b")
+        self.assert_sentence(step, r"\bland used to produce income is\W+not exempt\b")
+        self.assert_sentence(step, r"\bmust include the land under the dwelling\b")
+
+    def test_main_residence_tests_each_extension_with_its_conditions(self) -> None:
+        step = workflow_step(MAIN_RESIDENCE, 3)
+        self.assert_carries(step, "s 118-135", "s 118-140", "s 118-145", "s 118-150", "s 118-155",
+                            "ss 118-147 and 118-160", "s 118-170", "s 118-175", "ss 118-178 and 118-180")
+        self.assert_sentence(step, r"\bno gaps or overlaps\b")
+        # Changing residences: the shorter period and both conditions.
+        self.assert_sentence(step, r"\bshorter of 6 months\b", r"\bat least 3 months in the 12 months\b",
+                             r"\bnot used to produce assessable income\b")
+        # Absence: 6 years each absence while income producing, otherwise unlimited, and exclusivity.
+        self.assert_sentence(step, r"\bmaximum is 6 years for each absence\b", r"\botherwise there is no limit\b")
+        self.assert_sentence(step, r"\bNo other dwelling can be the main residence\b", r"\bs 118-140\b")
+        self.assert_sentence(step, r"\bcannot cover a period before the dwelling first became the main residence\b")
+        self.assert_sentence(step, r"\bnot available\b", r"\bs 118-147\(3\) and \(4\)",
+                             r"\(s 118-145\(3A\)\)")
+        # Building: life interest excluded, 3 months, 4-year limit.
+        self.assert_sentence(step, r"\bother than a life interest\b", r"\bat least 3 months\b")
+        self.assert_sentence(step, r"\bshorter of 4 years\b")
+        # Compulsory acquisition or destruction: its deadlines, its income use limit and the overlap it allows.
+        self.assert_sentence(step, r"\babsence choice under s 118-145\b",
+                             r"\bone year after the end of the income year of the key event\b",
+                             r"\bCommissioner allows\b", r"\(s 118-147\(1\)\)")
+        self.assert_sentence(step, r"\bwithin 4 years after the later of the key event\b",
+                             r"\bone year before the key event\b", r"\(s 118-147\(2\)\)")
+        self.assert_sentence(step, r"\bafter the later of the key event and the acquisition \(s 118-147\(3\)\)",
+                             r"\bjust before the key event\b", r"\bwhat remained of its s 118-145\(2\)",
+                             r"\(s 118-147\(4\)\)")
+        self.assert_sentence(step, r"\bold dwelling can still be the main residence before the key event\b",
+                             r"\(s 118-147\(6\)\(a\) and \(7\)\)")
+        self.assert_sentence(step, r"\bother than because of s 118-147\b", r"\bas soon as practicable\b")
+        self.assert_sentence(step, r"\bduring the work\b",
+                             r"\bafter it was finished but before moving in was practicable\b",
+                             r"\bwithin the 3 months\b", r"\bs 118-155\b")
+        # Spouse split by interest, and the child rule.
+        self.assert_sentence(step, r"\bnot more than half\b", r"\bwhole period\b", r"\bhalf the period\b")
+        self.assert_sentence(step, r"\bliving permanently separately and apart\b")
+        self.assert_sentence(step, r"\bunder 18 and dependent on the owner for economic support\b",
+                             r"\bone dwelling must be chosen\b")
+        choices = step[step.index("Do not make"):]
+        self.assert_sentence(choices, DO_NOT + r"make\b")
+        self.assert_prohibited(choices, r"\bmake\b", r"\bvary\b", r"\brecommend\b")
+        self.assert_sentence(choices, affirmed=(r"\bthe owner chooses\b",))
+
+    def test_main_residence_records_income_use_and_the_first_use_rule(self) -> None:
+        step = workflow_step(MAIN_RESIDENCE, 4)
+        self.assert_carries(step, "s 118-190", "s 118-190(1)(c)", "s 118-190(3)", "s 118-192",
+                            "7.30 pm", "20 August 1996")
+        self.assert_sentence(step, r"\bapplies even where there is no loan\b")
+        self.assert_sentence(step, r"\bset aside exclusively\b", r"\bnot readily adaptable for private use\b")
+        # TR 93/30 weighs factors, none conclusive, including almost exclusive use.
+        self.assert_sentence(step, r"\bTR 93/30\b", r"\bnone conclusive on its own \(paragraphs 5 and 11\)",
+                             r"\bexclusively or almost exclusively\b",
+                             r"\bleave the character of the area to the reviewer\b")
+        # Income use during a s 118-147 choice is ignored as s 118-190(3A) provides.
+        self.assert_sentence(step, r"\bs 118-190\(3A\)", r"\bunder s 118-147\b", r"\bis ignored\b",
+                             r"\bold dwelling's use just before it last ceased\b")
+        self.assert_sentence(step, r"\btaken to have acquired the dwelling at that time for its market value\b")
+        # The first-use rule needs a partial exemption now and a full one just before the first use.
+        self.assert_sentence(step, r"\bonly a partial exemption\b", r"\bjust before that first use\b",
+                             affirmed=(r"\bwould have been fully exempt\b",))
+        self.assert_sentence(step, r"\bincome use from acquisition\b", r"\bforeign resident\b")
+        # Only a foreign resident who fails the life events test loses the rule.
+        self.assert_sentence(step, r"\bs 118-192\(1\)\(a\)", r"\bforeign resident who does not satisfy the life events test\b",
+                             affirmed=(r"\btest s 118-192 on its conditions for one who does\b",))
+        self.assert_sentence(step, r"\bUNVERIFIED\b", r"\baccepts a valuation\b")
+        self.assert_sentence(step, r"\bappraisal is a screen\b", r"\bnot evidence of market value\b")
+
+    def test_main_residence_apportions_only_on_supported_inputs(self) -> None:
+        step = workflow_step(MAIN_RESIDENCE, 5)
+        self.assert_carries(step, "s 118-185(2)", "s 118-190(2)", "s 102-6", "1 July 2027", "Subdivision 118-B")
+        # Both residential gain periods leave out main residence days, including the deemed 30 June 2027 sale.
+        self.assert_sentence(step, r"\bs 102-6\(2\)", r"\bdeemed sale on 30 June 2027\b",
+                             r"\bs 102-6\(4\) and \(5\)", r"\bboth leave out days\b")
+        self.assert_sentence(step, r"\bnon-main residence days over the days in the ownership period\b")
+        # Without an s 118-192 reset, income use is also weighed by time against the whole ownership period.
+        self.assert_sentence(step, r"\bwhere s 118-192 does not apply\b", r"\bTD 1999/66\b",
+                             r"\bagainst the whole ownership period\b", r"\beven where the use ran to the sale\b",
+                             r"\bincome use days and the ownership days\b")
+        self.assert_sentence(step, r"\bevery input is supported\b", affirmed=(r"\bas preliminary\b",))
+        self.assert_sentence(step, r"\bblank\b", r"\bUNVERIFIED\b", r"\binput is missing\b")
+        self.assert_routes_to(step, "`au-capital-gains`")
+
+    def test_main_residence_overlap_check_keeps_its_exceptions(self) -> None:
+        hand_off = section(MAIN_RESIDENCE, "Hand-off and checks")
+        self.assert_sentence(hand_off, r"\bno two dwellings\b", r"\bs 118-140\b", r"\bs 118-170 nomination\b",
+                             r"\bbefore the key event\b", r"\(s 118-147\(7\)\)")
+
+    def test_main_residence_sources_are_pending(self) -> None:
+        self.assert_cited_and_recorded(
+            MAIN_RESIDENCE,
+            "https://www.legislation.gov.au/C2004A05138/latest/text",
+            MR,
+            f"{MR}/eligibility-for-main-residence-exemption",
+            f"{MR}/moving-to-a-new-main-residence",
+            f"{MR}/treating-former-home-as-main-residence",
+            f"{MR}/living-separately-to-your-spouse-or-children",
+            f"{MR}/using-your-home-for-rental-or-business",
+            f"{MR}/building-or-renovating-your-home",
+            f"{MR}/destruction-of-your-home",
+            f"{MR}/compulsory-acquisition-of-your-home",
+            f"{MR}/home-on-more-than-2-hectares",
+            "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/"
+            "foreign-residents-and-capital-gains-tax/main-residence-exemption-for-foreign-residents",
+            "https://www.ato.gov.au/law/view/document?DocID=TXD/TD199966/NAT/ATO/00001",
+            "https://www.ato.gov.au/law/view/document?DocID=TXR/TR9330/NAT/ATO/00001",
+            "https://www.legislation.gov.au/C2026A00049/asmade/text",
+        )
+
+    def test_capital_gains_routes_a_main_residence_claim(self) -> None:
+        text = " ".join(skill_text("au-capital-gains").split())
+        self.assert_sentence(text, r"\bmain-residence exemption\b", rf"`{MAIN_RESIDENCE}`")
+        self.assert_sentence(text, r"\bnot an established exemption\b")
+
+    def test_neighbouring_skills_route_a_former_home_directly(self) -> None:
+        for skill, number in (("au-short-stay-accommodation", 8), ("au-nonresident-cgt", 3),
+                              ("au-rental-property", 4)):
+            with self.subTest(skill=skill):
+                self.assert_sentence(workflow_step(skill, number), r"\bmain[- ]residence\b",
+                                     rf"`{MAIN_RESIDENCE}`")
+
+    # share buy-back
+
+    def test_buy_back_classifies_for_tax_and_procedure(self) -> None:
+        step = workflow_step(BUY_BACK, 1)
+        self.assert_carries(step, "s 159GZZZK", "s 159GZZZL", "s 257B(1)", "s 257B(2) and (3)",
+                            "s 257B(4) and (5)", "s 257B(6) and (7)", "10/12 limit", "paragraph 40")
+        self.assert_sentence(step, r"\bordinary course of trading\b", r"\bon-market\b",
+                             r"\bstock exchange in Australia\b", r"\bs 159GZZZL\b")
+        self.assert_sentence(step, r"\bminimum holding\b", r"\bemployee share scheme\b", r"\bequal access\b",
+                             r"\bselective\b")
+        self.assert_sentence(step, r"\bthe two can differ\b")
+
+    def test_buy_back_lists_the_corporations_act_steps_without_concluding(self) -> None:
+        step = workflow_step(BUY_BACK, 2)
+        self.assert_carries(step, "Section 257A", "s 257C", "s 257D", "s 257E", "s 257F", "s 257G", "s 257H(3)",
+                            "s 254Y(1)", "Forms 280 and 281")
+        self.assert_sentence(step, r"\bmaterially prejudice\b", r"\bpay its creditors\b")
+        self.assert_sentence(step, r"\bspecial resolution\b", r"\bno votes in favour\b", r"\bassociates\b",
+                             r"\ball ordinary shareholders\b")
+        self.assert_sentence(step, r"\bwithin 1 month\b")
+        self.assert_sentence(step, r"\b28 days\b")
+        self.assert_sentence(step, r"\bdiary the earlier\b")
+        self.assert_sentence(step, DO_NOT + r"conclude\b", r"\bvalidly taken\b", r"\bsolvent\b")
+
+    def test_buy_back_splits_the_price_by_company_type(self) -> None:
+        step = workflow_step(BUY_BACK, 3)
+        self.assert_carries(step, "s 159GZZZM", "s 159GZZZR", "s 159GZZZP(1)", "s 159GZZZP(2)",
+                            "ss 159GZZZP(3) and 159GZZZPA", "25 October 2022", "paragraphs 12, 62 and 69")
+        self.assert_sentence(step, r"\blisted public company\b", r"\bno part is a dividend\b")
+        self.assert_sentence(step, r"\bnot a listed public company\b", r"\bdebited to the share capital account\b",
+                             r"\bdividend\b")
+        self.assert_sentence(step, r"\baverage capital per share\b", r"\bshares on issue\b")
+        self.assert_sentence(step, r"\bbefore s 159GZZZPA\b")
+        # A tainted share capital account is not one for s 159GZZZP, so its debit leaves the dividend whole.
+        self.assert_carries(step, "s 197-5", "s 197-10", "s 197-15", "ss 197-50 and 197-55", "s 975-300(3)",
+                            "items 7A and 7B of the s 205-30 table", "(s 197-60)")
+        # Every Subdivision 197-A exclusion with its conditions, and the excess each leaves taxed.
+        self.assert_sentence(step, r"\bunless an exclusion in ss 197-10 to 197-42 applies\b",
+                             r"\bother than redeemable preference shares\b.{0,150}\(s 197-15\)",
+                             r"\bunder an Australian law that requires or allows\b.{0,100}\(s 197-20\)",
+                             r"\boption premium reserve because options\b.{0,60}\bexercised \(s 197-25\)",
+                             r"\bdemutualisation\b.{0,60}\(ss 197-30 to 197-40\)",
+                             r"\bgreenfields minerals explorer\b.{0,60}\bexploration credits \(s 197-42\)",
+                             r"\bexcept any excess\b.{0,100}\(s 197-15\)")
+        self.assert_sentence(step, r"\bexclusion claimed\b", r"\bexcess that stays within Division 197\b")
+        self.assert_sentence(step, r"\btransferred to the share capital account from another of the company's accounts\b",
+                             r"\bAustralian resident\b")
+        self.assert_sentence(step, r"\bcannot be revoked\b", r"\bapproved form given to the Commissioner\b")
+        self.assert_sentence(step, r"\buntainting choice with its date and the evidence that it was given\b")
+        self.assert_sentence(step, r"\btainted account\b", r"\bdo not include s 159GZZZP\b",
+                             r"\bdoes not reduce the s 159GZZZP\(1\) dividend\b")
+        self.assert_sentence(step, r"\bsettles whether the account was tainted\b", r"\bUNVERIFIED\b")
+        self.assert_routes_to(step, "`au-franking-account`")
+        self.assert_sentence(step, DO_NOT + r"apply its dividend split guidance\b")
+
+    def test_buy_back_evidences_market_value(self) -> None:
+        step = workflow_step(BUY_BACK, 4)
+        self.assert_carries(step, "s 159GZZZQ(2)", "s 202-45(c)", "TD 2004/22", "5 trading days",
+                            "S&P/ASX 200", "paragraph 14")
+        self.assert_sentence(step, r"\bas if it had not happened and were never proposed\b")
+        # Listed buy-backs are capital-only, so whether TD 2004/22 governs is open.
+        self.assert_sentence(step, r"\bparagraphs 14 and 54\b", r"\bwill not apply TD 2004/22\b",
+                             r"\bcapital-only\b", r"\barm's length\b")
+        self.assert_sentence(step, r"\bs 159GZZZPA\b", r"\bquestion for the reviewer\b",
+                             DO_NOT + r"choose between them\b")
+        self.assert_sentence(step, r"\bCommunity Bank company proposing the buy-back is unlisted\b")
+        self.assert_sentence(step, r"\bany other unlisted company\b", r"\bby analogy\b")
+        self.assert_sentence(step, r"\bUNVERIFIED\b", r"\baccepts it\b")
+        self.assert_sentence(step, r"\bappraisal as a screen only\b")
+
+    def test_buy_back_schedules_franking_debits_and_unfrankable_parts(self) -> None:
+        step = workflow_step(BUY_BACK, 5)
+        self.assert_carries(step, "s 202-45(c)", "202-45(e)", "s 202-45(ea)", "s 202-45(g)(i)", "s 202-45(h)(ii)",
+                            "item 9 of the s 205-30 table", "Item 9A", "paragraph 163", "s 159GZZZN")
+        self.assert_sentence(step, r"\bunfrankable to the extent the price exceeds that market value\b")
+        self.assert_sentence(step, r"\btainted or not\b", r"\b975-300\(3\)\(ba\)")
+        # Non-equity shares, and the Division 7A amounts that can still be franked.
+        self.assert_sentence(step, r"\bnon-equity share \(s 202-45\(d\)\)",
+                             r"\bDivision 7A deemed dividend, unless\b.{0,120}\(s 109RB\(6\)",
+                             r"\bfamily law obligation \(s 109RC\(2\)\)")
+        self.assert_sentence(step, r"\bterms of the class bought back\b", r"\bnon-equity share\b")
+        # s 207-159: any entity, all 4 conditions, and its start.
+        self.assert_sentence(step, r"\bSection 207-159\(1\) reaches a distribution by any entity, listed or not\b",
+                             r"\bno practice of making such distributions regularly\b",
+                             r"\bissue of equity interests\b", r"\bprincipal effect\b", r"\bsubstantial part\b",
+                             r"\bissued, or facilitated the issue of\b", r"\bother than an incidental one\b",
+                             r"\bAPRA or ASIC\b")
+        self.assert_sentence(step, r"\bItem 3 of Schedule 5\b", r"\bmade on or after\b", r"\b28 November 2023\b")
+        self.assert_sentence(step, r"\bparagraph 171\b", r"\bgenerally exercise it favourably\b",
+                             r"\bbefore the day the distribution is made\b")
+        self.assert_sentence(step, r"\bon-market\b", r"\bas if the purchase had been off-market\b",
+                             r"\bnot listed\b")
+        # The franking workflow prepares the debits; a person posts them.
+        self.assert_sentence(step, r"`au-franking-account` to add to its rebuilt account\b",
+                             r"\bfor an authorised person to post\b")
+        self.assert_routes_to(step, "`au-franking-account`")
+
+    def test_buy_back_records_integrity_and_ruling_facts_without_concluding(self) -> None:
+        step = workflow_step(BUY_BACK, 6)
+        self.assert_carries(step, "ss 45A, 45B and 177EA", "s 204-30", "Divisions 725 and 727",
+                            "paragraphs 18 to 24", "class ruling")
+        self.assert_sentence(step, r"\bwithout concluding\b")
+        self.assert_sentence(step, r"\bpredates s 207-159\b", r"\bs 207-159\(2\)",
+                             r"\bs 207-159\(1\)\(d\) and \(4\)", r"\bunderwriting\b", r"\bwithout concluding\b")
+        # Equity-funded franked distributions do not make a practice.
+        self.assert_sentence(step, r"\bearlier distribution that was franked\b", r"\bpractice condition were omitted\b",
+                             r"\bs 207-159\(3\) disregards such a distribution\b")
+        self.assert_sentence(step, r"\bcovers only the scheme it describes\b")
+
+    def test_buy_back_screens_division_7a_links(self) -> None:
+        step = workflow_step(BUY_BACK, 7)
+        self.assert_carries(step, "set off against", "shortfall released", "lent to fund the purchase",
+                            "left owing", "above market value")
+        self.assert_sentence(step, r"\bDivision 7A does not apply to amounts assessable under other parts\b")
+        self.assert_sentence(step, r"\boff the franking schedule unless evidence that s 109RB\(6\) or 109RC\(2\)")
+        self.assert_routes_to(step, "`div7a-compliance`")
+
+    def test_buy_back_prepares_each_sellers_position(self) -> None:
+        step = workflow_step(BUY_BACK, 8)
+        self.assert_carries(step, "s 159GZZZS", "s 159GZZZQ(1)", "s 159GZZZQ(3) to (5)", "s 159GZZZQ(3A)",
+                            "s 159GZZZQ(8) and (9)", "s 159GZZZP(1A)", "paragraph 158", "paragraphs 71 to 88",
+                            "last in first out")
+        self.assert_sentence(step, r"\bCGT event\b", r"\boffer's terms\b")
+        # Failing the qualified person test denies the gross-up and the offset; risk positions are evidence.
+        self.assert_sentence(step, r"\bnot a qualified person\b", r"\bneither the franking credit\b",
+                             r"\bnor the tax offset\b", r"\(s 207-145\(1\)\(a\), \(e\) and \(f\)\)")
+        self.assert_sentence(step, r"\bhedge\b", r"\breduced its risk of loss\b",
+                             r"\bconditional until the reviewer settles whether the seller is a qualified person\b")
+        # Market value substitution reaches a listed company; the reduction does not.
+        self.assert_sentence(step, r"\bmarket value\b", r"\bwhere the price is lower\b",
+                             r"\bincluding for a listed public company\b")
+        self.assert_sentence(step, r"\bs 159GZZZQ\(3A\) excludes a listed public company\b")
+        self.assert_sentence(step, r"\bevery input is supported\b", r"\bpreliminary gain or loss\b")
+        self.assert_sentence(step, r"\bblank\b", r"\bUNVERIFIED\b")
+        self.assert_routes_to(step, "`au-capital-gains`", "`au-dssp`", "`au-nonresident-cgt`")
+
+    def test_buy_back_tie_out_holds_only_for_an_untainted_account(self) -> None:
+        hand_off = section(BUY_BACK, "Hand-off and checks")
+        self.assert_carries(hand_off, "share capital transfer and tainting record")
+        self.assert_sentence(hand_off, r"\bdividend part must equal the price less the share capital debit\b",
+                             r"\bonly once the reviewer has settled that the account was not tainted\b",
+                             r"\bthe split stays `UNVERIFIED`", r"\bits debit does not reduce the dividend\b")
+
+    def test_buy_back_sources_are_pending(self) -> None:
+        self.assert_cited_and_recorded(
+            BUY_BACK,
+            "https://www.legislation.gov.au/C1936A00027/latest/text",
+            "https://www.legislation.gov.au/C2004A05138/latest/text",
+            "https://www.legislation.gov.au/C2023A00101/asmade/text",
+            "https://www.legislation.gov.au/C2004A00818/latest/text",
+            "https://www.ato.gov.au/law/view/document?DocID=PSR/PS20079/NAT/ATO/00001",
+            "https://www.ato.gov.au/law/view/document?DocID=TXD/TD200422/NAT/ATO/00001",
+            "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/"
+            "shares-and-similar-investments/share-buy-backs",
+            "https://www.ato.gov.au/law/view/view.htm?docid=AFS%2FCommunityBankcompanies%2F00001"
+            "&PiT=99991231235958",
+            "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/"
+            "private-company-benefits-division-7a-dividends",
+            "https://www.asic.gov.au/for-business-and-companies/companies/"
+            "company-share-and-shareholder-rules-and-changes/company-share-buy-backs",
+        )
+
+    def test_franking_account_routes_a_buy_back(self) -> None:
+        step = workflow_step("au-franking-account", 8)
+        self.assert_sentence(step, r"\bshare buy-back\b", rf"`{BUY_BACK}`")
+        # It prepares the buy-back's debits; a person posts them.
+        self.assert_sentence(step, r"\bin the rebuilt account\b", r"\bfor an authorised person to post\b")
+        self.assertNotRegex(step, r"\band post the\b")
+        self.assert_sentence(step, r"\bcapital return or capital reduction only as a screen\b")
+
+    def test_franking_account_admits_a_deemed_dividend_on_either_exception(self) -> None:
+        step = workflow_step("au-franking-account", 8)
+        # Either exception lets a Division 7A dividend be franked; the reviewer decides which applies.
+        self.assert_sentence(step, r"\boff the franking schedule unless evidence that s 109RB\(6\) or 109RC\(2\)",
+                             r"\brecord that evidence for the reviewer\b")
+        self.assert_sentence(step, r"\bdecided in writing under s 109RB\(2\)\(b\)", r"\bmay be franked\b")
+        self.assert_sentence(step, r"\bfamily law obligation\b", r"\bs 109RC\(3\) lets that dividend be franked only\b",
+                             r"\bbenchmark franking percentage for the franking period in which it is taken to be paid\b",
+                             r"\bfranking percentage of 100%", r"\bs 109RC\(4\)")
+
+    def test_tainted_buy_back_card_needs_the_choice_given_to_the_commissioner(self) -> None:
+        card = (SKILLS.parents[1] / "validation" / "cases" / "au-share-buy-back-tainted-share-capital.md")
+        checks = " ".join(card.read_text(encoding="utf-8").split("## Required checks", 1)[1].split())
+        self.assert_sentence(checks, r"\buntainting choice in the approved form given to the Commissioner\b",
+                             r"\bss 197-50 and 197-55\b")
+
+
+if __name__ == "__main__":
+    unittest.main()

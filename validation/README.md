@@ -251,6 +251,13 @@ law claim, unverified source or guess.
 | [Proposed final dividend partly set off against a director's loan](cases/au-franking-account-dividend-preparation.md) | au-franking-account |
 | [Proposed family trust election for an earlier year with a cousin distribution and a part-owned company](cases/au-family-trust-election-earlier-year.md) | au-family-trust-election |
 
+
+| [A former home let for 8 years whilst a new home is lived in](cases/au-main-residence-absence-and-new-home.md) | au-main-residence |
+| [Spouses with different homes, a block over 2 hectares and an owner who has moved overseas](cases/au-main-residence-spouses-acreage-foreign-resident.md) | au-main-residence |
+| [A private company buys back one shareholder's shares with part of the price set off against a loan](cases/au-share-buy-back-private-selective.md) | au-share-buy-back |
+| [A shareholder in a listed company's off-market tender buy-back that straddles 30 June](cases/au-share-buy-back-listed-tender-seller.md) | au-share-buy-back |
+| [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
+
 Together the cards cover all 99 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
@@ -290,6 +297,8 @@ The 3 cards added on 11 November 2026 for SMSF death benefits, private company
 dividend preparation and a family trust election have no recorded run.
 
 The farm land GST and farm succession cards added on 11 November 2026 have no recorded run.
+
+The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

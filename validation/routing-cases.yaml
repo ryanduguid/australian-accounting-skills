@@ -452,3 +452,20 @@
   skill: au-family-trust-election
   not: [au-trust-losses, au-trust-distributions]
   prompt: A discretionary trust is thinking about making a family trust election this year, backdated to an earlier year, so it can use an old loss and pass franking credits through. Prepare what the trustee needs to decide, including who the test individual should be.
+
+- id: main-residence-former-home-let
+  skill: au-main-residence
+  not: [au-capital-gains, au-rental-property]
+  prompt: A client lived in her house for 4 years, then rented it out for 7 years while living in a new home she bought. She has now sold the old house. How much of the gain does the main residence exemption cover, and what does she have to choose?
+- id: main-residence-spouses-acreage
+  skill: au-main-residence
+  not: [au-capital-gains, au-primary-production]
+  prompt: A married couple each lived in a different home they own for part of the time, and the one being sold sits on 5 hectares with some of it leased for grazing. Prepare the main residence exemption workpaper.
+- id: buy-back-private-company
+  skill: au-share-buy-back
+  not: [au-franking-account, div7a-compliance]
+  prompt: A private company wants to buy back all of one shareholder's shares for more than their paid-up capital and pay most of it as a franked dividend. Prepare the workpapers for the company and the departing shareholder.
+- id: buy-back-listed-tender
+  skill: au-share-buy-back
+  not: [au-capital-gains, au-dssp]
+  prompt: My client sold shares into a listed company's off-market tender buy-back this year. How do we work out her capital proceeds, and is any of the price a dividend?
