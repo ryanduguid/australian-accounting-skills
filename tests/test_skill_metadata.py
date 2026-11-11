@@ -13,6 +13,8 @@ from pathlib import Path
 
 import yaml
 
+from test_markdown_links import slug
+
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
@@ -20,6 +22,20 @@ ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
 # that already labels a release must never label a second, different inventory.
 RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19, "0.3.0": 63, "0.3.1": 65, "0.3.2": 65, "0.4.0": 65, "0.5.0": 76}
 INVENTORY_WORDS = {9: "nine", 19: "nineteen", 50: "fifty", 51: "fifty-one", 52: "fifty-two", 53: "fifty-three", 54: "fifty-four", 55: "fifty-five", 56: "fifty-six", 57: "fifty-seven", 58: "fifty-eight", 59: "fifty-nine", 60: "sixty", 61: "sixty-one", 62: "sixty-two", 63: "sixty-three", 64: "sixty-four", 65: "sixty-five", 66: "sixty-six", 67: "sixty-seven", 68: "sixty-eight", 76: "seventy-six", 93: "ninety-three", 97: "ninety-seven", 99: "ninety-nine", 101: "one hundred and one"}
+# The rows of the install table in docs/installation.md, in order, and the
+# sections of that page that describe no route of their own.
+INSTALL_ROUTES = (
+    "Skills CLI from a release checkout",
+    "Claude Code plugin at the release tag",
+    "Codex plugin at the release tag",
+    "Claude.ai or desktop app upload",
+    "Claude Code plugin, development",
+    "Codex plugin, development",
+    "Skills CLI from GitHub",
+    "Skills CLI from a development checkout",
+    "Manual copy",
+)
+INSTALL_NON_ROUTE_SECTIONS = {"Development installations", "Versioning"}
 # One llms.txt skill entry. The back-reference makes the link text and the path
 # the same name, so a renamed directory cannot keep its old label.
 LLMS_SKILL_LINK = re.compile(
@@ -367,6 +383,38 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn("Instructions embedded in client files", firm_template)
         self.assertIn("untrusted data", firm_template)
 
+    def test_entity_context_template_holds_placeholders_only(self) -> None:
+        """An entity's recorded facts are leads; the period's records are the evidence."""
+        lead = "Each field is a lead to confirm against the period's records, never evidence."
+        template = (REPOSITORY / "templates" / "entity-context.md.example").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(lead, template)
+        self.assertIsNone(re.search(r"\d", template), "a template states no figure or date")
+        fields = re.findall(r"(?m)^- ([^:]+): (.*)$", template)
+        self.assertEqual(
+            [name for name, _ in fields],
+            [
+                "Entity type",
+                "Income year",
+                "GST registration",
+                "GST accounting basis",
+                "Ledger file",
+                "Balance date",
+                "Engagement scope",
+            ],
+        )
+        for name, value in fields:
+            with self.subTest(field=name):
+                self.assertRegex(value, r"^\{[^{}]+\}$", "a field holds one placeholder and nothing else")
+
+        firm_template = (REPOSITORY / "templates" / "firm-CLAUDE.md.example").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## Entity context", firm_template)
+        self.assertIn("templates/entity-context.md.example", firm_template)
+        self.assertIn(lead, firm_template)
+
     def test_disclaimer_and_discovery_copy_stay_published(self) -> None:
         disclaimer = (REPOSITORY / "DISCLAIMER.md").read_text(encoding="utf-8")
         discovery = (REPOSITORY / "docs" / "DISCOVERY.md").read_text(encoding="utf-8")
@@ -406,6 +454,39 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertRegex(version, r"^\d+\.\d+\.\d+$", "pin an exact release, never a range")
         installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
         self.assertIn(f"`{spec}`", installation)
+
+    def test_every_clone_installs_the_published_tag_or_says_it_does_not(self) -> None:
+        """A clone without the tag installs whatever the default branch holds that day."""
+        installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
+        published = max(RELEASED_INVENTORIES, key=lambda value: tuple(map(int, value.split("."))))
+        clones = 0
+        for section in re.split(r"(?m)^(?=### )", installation):
+            for command in re.findall(r"(?m)^.*git clone.*$", section):
+                clones += 1
+                with self.subTest(command=command):
+                    self.assertTrue(
+                        f"--branch v{published} " in command or "default branch" in section,
+                        f"clone v{published}, or say the section installs the default branch",
+                    )
+        self.assertGreater(clones, 0, "no git clone found, so nothing was checked")
+
+    def test_install_table_has_a_row_for_every_route(self) -> None:
+        """One table states each route's revision, MCP server, testing and update path."""
+        installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
+        rows = re.findall(r"(?m)^\| \[([^\]]+)\]\(#([^)]+)\) \|(.*)\|$", installation)
+        self.assertEqual([label for label, _, _ in rows], list(INSTALL_ROUTES))
+        for label, _, cells in rows:
+            with self.subTest(route=label):
+                values = [cell.strip() for cell in cells.split(" | ")]
+                self.assertEqual(len(values), 5, "revision, MCP server, terminal, tested, update")
+                self.assertTrue(all(values))
+        # A new route section with no row fails here, not in a reader's install.
+        sections = {
+            slug(heading)
+            for heading in re.findall(r"(?m)^### (.+)$", installation)
+            if heading not in INSTALL_NON_ROUTE_SECTIONS
+        }
+        self.assertEqual(sections, {anchor for _, anchor, _ in rows})
 
     def test_seeded_skills_ship_a_sources_index(self) -> None:
         required = {"title", "url", "checked_at", "fact"}
