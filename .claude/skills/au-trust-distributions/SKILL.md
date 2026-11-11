@@ -1,17 +1,19 @@
 ---
 name: au-trust-distributions
-description: "Use when preparing Australian trust income, beneficiary entitlement and distribution reconciliation workpapers."
+description: "Use when preparing Australian trust income, beneficiary entitlement and distribution reconciliation workpapers, and a resolution content schedule for the trustee."
 ---
 
 # Trust distribution review pack
 
 ## Inputs
 
-Trust deed and amendments, trustee resolutions with execution evidence, accounts and tax schedules, beneficiary eligibility/residency and, for a closely held trust, beneficiary TFN quote records, income categories, payments and entitlements, family trust and interposed entity election records (including the specified individual and start income year) and, where the practice can access it, the family trust election and interposed entity election report from Online services for agents, other elections and prior-year balances.
+Trust deed and amendments, trustee resolutions with execution evidence, the proposed distribution plan with any proposed streaming, the deed abstract and resolution-readiness checklist from `au-trust-deed-review` where it has been run, accounts and tax schedules, beneficiary eligibility/residency and, for a closely held trust, beneficiary TFN quote records, income categories, payments and entitlements, family trust and interposed entity election records (including the specified individual and start income year) and, where the practice can access it, the family trust election and interposed entity election report from Online services for agents, other elections and prior-year balances.
 
 ## Workflow
 
 1. Compare proposed beneficiaries, powers and timing with the deed and verified law. A missing or late resolution remains an open legal question; never backdate or fabricate execution. Where `au-trust-deed-review` is installed, use its deed abstract and resolution-readiness checklist as the deed evidence for this step.
+
+1a. **Resolution content schedule.** Where the trustee proposes a distribution, prepare a schedule of the content the proposed resolution would carry, for the trustee and their lawyer, from the deed abstract, the resolution-readiness checklist and the proposed distribution plan. For each beneficiary, record the measure of income the deed uses, with its clause; the amount or share proposed; each streamed class, such as capital gains or franked distributions, with its amount and the clause relied on; the deed's resolution deadline as the deed abstract records it; and each checklist item marked not ready or a question for the lawyer. Total the amounts or shares and compare the total with trust-law income in the step 2 schedule; list any difference for the trustee and never spread it across the beneficiaries. Where there is no deed abstract, or it records no measure, clause or deadline, leave that entry blank and `UNVERIFIED`, and never fill it from the plan, a prior year's resolution or memory. This is a schedule of content, never resolution wording: do not draft, date or sign a resolution, and do not word any part of one. The trustee and their lawyer settle the wording, and the trustee decides and makes the resolution.
 
 2. Keep trust-law income, accounting profit, taxable net income and cash paid in separate schedules with a documented bridge.
 
@@ -33,7 +35,7 @@ Trust deed and amendments, trustee resolutions with execution evidence, accounts
 
 ## Hand-off and checks
 
-A deed/resolution evidence matrix, income bridge, beneficiary roll-forwards and, where an election applies, the family trust distribution tax screen. The trustee and adviser decide and execute distributions.
+A deed/resolution evidence matrix, income bridge, beneficiary roll-forwards, where an election applies the family trust distribution tax screen and, where a distribution is proposed, the resolution content schedule, which is never resolution wording. The trustee and adviser decide and execute distributions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
