@@ -46,8 +46,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\blegal question for the trustee's lawyer\b",
                              DO_NOT + r"conclude on it\b")
         # The High Court settled the point; SMSFD 2008/3 is not left to carry it alone.
-        self.assert_sentence(step, r"\bHill v Zuda Pty Ltd\b", r"\breg 6\.17A has no application to an SMSF\b",
-                             r"\[4\], \[12\] and \[30\]", r"\bs 55A still applies\b", r"\[33\]")
+        self.assert_sentence(step, r"\bHill v Zuda Pty Ltd\b", r"\breg 6\.17A of the Superannuation Industry \(Supervision\) Regulations 1994 has no application to an SMSF\b",
+                             r"\[4\], \[12\] and \[30\]", r"\bs 55A of the SIS Act still applies\b", r"\[33\]")
 
     def test_death_benefits_keep_sis_and_tax_dependants_apart(self) -> None:
         step = workflow_step("au-smsf-death-benefits", 3)
@@ -73,7 +73,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
 
     def test_death_benefits_defer_a_reversionary_credit(self) -> None:
         step = workflow_step("au-smsf-death-benefits", 5)
-        self.assert_carries(step, "s 294-25(1) item 2")
+        self.assert_carries(step, "item 2 of the table in s 294-25(1) of the ITAA 1997")
         # Child recipients are Subdivision 294-E; 294-D is capped defined benefit income streams.
         self.assert_sentence(step, r"\bSubdivision 294-E modifies the cap for a child recipient\b")
         self.assertNotIn("294-D", step)
@@ -88,7 +88,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
                             "ss 302-65 to 302-90", "s 302-10")
         self.assert_sentence(step, r"\bleave the element blank until each input is evidenced\b")
         self.assert_sentence(step, r"\bcommuting an income stream\b", r"\bwhen that income stream commenced\b",
-                             r"\(s 307-125\(3\)\(c\)\)")
+                             r"\(s 307-125\(3\)\(c\) of the ITAA 1997\)")
         self.assert_sentence(step, r"\bwithout computing their tax\b")
         # A benefit from a pension that did not revert keeps that pension's proportions:
         # s 307-125(4)(a) displaces the payment-date rule for the method in s 307-125.02.
@@ -161,7 +161,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bonly the period up to 30 June\b", r"\bseparately\b")
         self.assert_sentence(step, DO_NOT + r"compute or conclude the liability\b")
         self.assert_sentence(step, r"\bs 272-60\b", r"\bexceed any consideration given in return\b")
-        self.assert_sentence(step, r"\bas trustee of a trust that is not in the family group \(s 271-15\(1\)\(b\)\(ii\)\)")
+        self.assert_sentence(step, r"\bas trustee of a trust that is not in the family group \(s 271-15\(1\)\(b\)\(ii\) of the ITAA 1936\)")
         self.assert_routes(step, 1)
 
     def test_election_iee_exposes_every_distribution(self) -> None:
@@ -182,8 +182,8 @@ class EntitySuperWorkflowTests(unittest.TestCase):
                              r"\bby the trust and by each entity with an interposed entity election in relation to it\b")
         # A fixed trust's revocation has its own conditions and is made under s 272-80(7).
         self.assert_sentence(step, r"\bs 272-80\(6\)", r"\ban outsider later holds a fixed entitlement\b",
-                             r"\(s 272-80\(7\)\)")
-        self.assert_sentence(step, r"\bUnder s 272-80\(8\) any other variation or revocation\b")
+                             r"\(s 272-80\(7\) of the ITAA 1936\)")
+        self.assert_sentence(step, r"\bUnder s 272-80\(8\) of the ITAA 1936 any other variation or revocation\b")
         # The s 272-80(6A) lookback stops before the year the revocation takes effect.
         self.assert_sentence(step, r"\bs 272-80\(6A\)",
                              r"\bend of the income year before the one from which the revocation is to take effect\b")
@@ -218,7 +218,7 @@ class EntitySuperWorkflowTests(unittest.TestCase):
         self.assert_carries(step, "s 254U", "s 254W(2)", "s 254T(2)", "s 251A(2)", "s 251A(3)",
                             "s 251A(1)(d)", "Section 202-5")
         # A sole director's dividend is a s 248B(1) resolution, not a s 248B(2) declaration.
-        self.assert_sentence(step, r"\b1 director, the director passes the resolution\b", r"\(s 248B\(1\)\)")
+        self.assert_sentence(step, r"\b1 director, the director passes the resolution\b", r"\(s 248B\(1\) of the Corporations Act 2001\)")
         self.assertNotIn("251A(1)(e)", step)
         # A determined dividend is revocable until the payment time; a declared one is a debt at once.
         self.assert_sentence(step, r"\bs 254V\(1\)", r"\bonly when the time fixed for payment arrives\b",
@@ -233,15 +233,15 @@ class EntitySuperWorkflowTests(unittest.TestCase):
     def test_dividend_preparation_statements_and_entries(self) -> None:
         step = workflow_step("au-franking-account", "5a")
         self.assert_carries(step, "s 202-60", "s 202-65", "s 203-30", "s 203-50", "s 203-25", "s 202-80(3)")
-        self.assert_sentence(step, r"\bproposed issue date against the s 202-75 issue time\b", r"\bstep 6 checks both\b")
+        self.assert_sentence(step, r"\bproposed issue date against the s 202-75 of the ITAA 1997 issue time\b", r"\bstep 6 checks both\b")
         self.assert_sentence(step, r"\blater issue time is not available\b",
-                             r"\bcreate or increase a franking deficit tax liability \(s 202-75\(4\)\)")
+                             r"\bcreate or increase a franking deficit tax liability \(s 202-75\(4\) of the ITAA 1997\)")
         self.assert_sentence(step, r"\bon the date the distribution is made, not the resolution date\b",
                              r"\bwithout posting them\b")
 
     def test_dividend_preparation_routes_division_7a_set_offs(self) -> None:
         step = workflow_step("au-franking-account", "5a")
-        self.assert_sentence(step, NOT + r"excluded from counting as a repayment by s 109R\(2\)", r"\(s 109R\(3\)\(a\)\)")
+        self.assert_sentence(step, NOT + r"excluded from counting as a repayment by s 109R\(2\)", r"\(s 109R\(3\)\(a\) of the ITAA 1936\)")
         # s 109ZC(2) excludes the set-off only up to the part neither franked nor franked with an
         # exempting credit; the excess stays a dividend.
         self.assert_sentence(step, r"\bs 109ZC\(2\)", r"\bexcept for franking purposes\b",
