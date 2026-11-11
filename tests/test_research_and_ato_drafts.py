@@ -89,12 +89,20 @@ class ResearchAndAtoDraftTests(unittest.TestCase):
     def test_partnership_variation_without_evidence_shows_both_clauses_and_changes_nothing(self) -> None:
         step = workflow_step(PARTNERSHIP, "1a")
         # Both splits side by side, the earlier clause kept in the schedule and the variation left open.
-        self.assert_sentence(step, r"\blacks execution evidence\b", r"\bpart-way through the year\b",
+        self.assert_sentence(step, r"\blacks execution evidence\b",
                              r"\bearlier and the varied clause side by side\b",
                              r"\bkeep the earlier clause in the allocation schedule\b",
                              r"\bleave the variation unresolved\b")
+        # An executed mid-year variation records both clauses with their dates; the reviewer decides which applies.
+        self.assert_sentence(step, r"\bexecuted variation changes a term part-way through the year\b",
+                             r"\bearlier and the varied clause, each with the dates it covers\b",
+                             r"\bleave which applies, and from when, to the reviewer\b")
         self.assert_sentence(step, r"\bno written agreement\b", r"\bconduct the evidence shows\b", r"\bTR 94/8\b",
                              r"\bparagraph 4\b")
+        # TR 94/8 paragraph 2 limits where the ruling applies.
+        self.assert_sentence(step, r"\bTR 94/8\b", r"\bparagraph 2\b",
+                             r"\bin receipt of income jointly, unless that income is derived from carrying on business\b",
+                             r"\blimited partnerships\b")
 
     def test_partnership_abstract_lists_questions_and_decides_and_drafts_nothing(self) -> None:
         step = workflow_step(PARTNERSHIP, "1a")
