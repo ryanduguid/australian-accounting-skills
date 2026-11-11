@@ -291,7 +291,10 @@ class ReviewRegisterTests(unittest.TestCase):
              r"\bs 26G of the AML/CTF Act\b"),
             (r"\bgoverning body\b", r"\bs 26H of the AML/CTF Act\b", r"\bss 5-6 and 5-7 of the AML/CTF Rules\b"),
             (r"\bmanagement level\b", r"\bs 26J of the AML/CTF Act\b", r"\bs 26K of the AML/CTF Act\b",
-             r"\bs 5-14 of the AML/CTF Rules\b", r"\bs 26M of the AML/CTF Act\b"),
+             r"\bs 5-14 of the AML/CTF Rules\b", r"\bs 26M of the AML/CTF Act\b",
+             r"\bauthority, independence and access to resources and information\b",
+             r"\bs 26J\(2\)\(b\) of the AML/CTF Act\b", r"\bresident of Australia\b",
+             r"\bs 26J\(3\)\(a\) of the AML/CTF Act\b"),
             (r"\bs 26N of the AML/CTF Act\b", r"\bs 5-15 of the AML/CTF Rules\b", r"\bsenior manager\b",
              r"\bs 26P of the AML/CTF Act\b"),
             (r"\bpersonnel due diligence and training\b", r"\bs 26F\(4\)\(d\) and \(e\) of the AML/CTF Act\b",
@@ -299,12 +302,26 @@ class ReviewRegisterTests(unittest.TestCase):
             (r"\bindependent evaluation\b", r"\bs 26F\(4\)\(f\) of the AML/CTF Act\b", r"\bs 5-10 of the AML/CTF Rules\b"),
             (r"\bss 5-11 to 5-13 of the AML/CTF Rules\b", r"\bs 41 of the AML/CTF Act\b", r"\bs 43 of the AML/CTF Act\b"),
             (r"\breporting period\b", r"\bs 9-9 of the AML/CTF Rules\b", r"\bs 47 of the AML/CTF Act\b"),
-            (r"\bPart 1A of the AML/CTF Act\b", r"\bs 116 of the AML/CTF Act\b"),
+            (r"\bPart 1A of the AML/CTF Act\b", r"\bs 116 of the AML/CTF Act\b", r"\breconstruct\b",
+             r"\bs 107 of the AML/CTF Act\b", r"\bdocument a customer gives\b", r"\bs 108 of the AML/CTF Act\b"),
+            (r"\breview and update\b", r"\bs 26F\(3\)\(c\) and \(d\) of the AML/CTF Act\b",
+             r"\badverse findings\b", r"\bs 5-4 of the AML/CTF Rules\b", r"\btargeted financial sanctions\b",
+             r"\bs 5-3 of the AML/CTF Rules\b", r"\bsenior manager's approval\b",
+             r"\bforeign politically exposed person\b", r"\bs 5-5\(1\) of the AML/CTF Rules\b",
+             r"\bs 5-5\(1A\) of the AML/CTF Rules\b"),
+            (r"\bs 26F\(3\)\(b\) of the AML/CTF Act\b", r"\bsource of wealth and source of funds\b",
+             r"\bs 5-2 of the AML/CTF Rules\b"),
         ):
             self.assert_sentence(step, *provisions)
         # AUSTRAC's summary and the Rules differ on the compliance report period; both go to the officer.
         self.assert_sentence(step, r"\bcalendar year\b", r"\bfinancial year\b", r"\bs 9-9 of the AML/CTF Rules\b",
-                             affirmed=(r"\brecord both\b",))
+                             r"\bthat instrument sets the period\b",
+                             affirmed=(r"\brecord that description as a discrepancy\b",))
+        # A row whose period has not ended is a question, never a gap.
+        self.assert_sentence(step, r"\bperiod has not ended\b", r"\bquestion for the AML/CTF compliance officer\b",
+                             r"\bdate the period runs from\b", NOT + r"(as )?a gap\b")
+        self.assert_sentence(step, r"\bs 46 of the AML/CTF Act\b",
+                             r"\bonly where the AML/CTF compliance officer's assessment records that service\b")
         self.assert_sentence(step, r"\bfrom the provision at use time\b", r"\btimeliness\b",
                              r"\bAML/CTF compliance officer\b")
 
@@ -321,12 +338,18 @@ class ReviewRegisterTests(unittest.TestCase):
         self.assert_sentence(step, r"\bincomplete\b", r"\bpractice list and not the ATO list\b", r"`UNVERIFIED`")
         self.assert_sentence(step, r"\bABN or another identifier both lists carry\b",
                              affirmed=(r"\bmatch the lists\b", r"\brecord which\b"))
-        self.assert_sentence(step, r"\bname only\b", r"`UNVERIFIED`", NOT + r"treat it as a match\b")
+        self.assert_sentence(step, r"\bname only\b", r"`UNVERIFIED`", NOT + r"treat it as a match\b",
+                             r"\blist each such pair in both lists of clients on one list only\b",
+                             r"\bpossible pairing\b")
         self.assert_sentence(step, r"\bpractice list and not the ATO list\b", r"\bATO list and not the practice list\b",
-                             r"\bidentifier conflicts\b", r"\bquestion for the responsible practitioner\b")
+                             r"\bidentifier conflicts\b", r"\bquestion for the responsible practitioner\b",
+                             r"\ban identifier held by 2 or more clients in either list\b",
+                             r"\ba client whose identifiers match different clients on the other list\b")
         self.assert_sentence(step, r"\bsecurity-assessed\b", r"\brestricted in Access Manager\b", r"\bend-dated\b",
                              NOT + r"findings\b")
-        self.assert_sentence(step, r"\bTFN\b", r"\bapproved environment\b", r"\bclient code\b", r"\brow number\b")
+        self.assert_sentence(step, r"\bTFN\b", r"\bkeep it in the matching workpaper in the firm's approved environment\b",
+                             r"\bidentify each client in the output by the practice's client code\b",
+                             r"\bby its row number in the ATO file\b")
 
     def test_agent_client_list_reconciliation_routes_and_changes_nothing_at_the_ato(self) -> None:
         step = workflow_step(AGENT, "8b")
@@ -335,11 +358,12 @@ class ReviewRegisterTests(unittest.TestCase):
         self.assert_prohibited(step, r"\badd, remove or change a client at the ATO\b",
                                r"\bdecide whether the practice may act\b")
         self.assert_carries(section(AGENT, "Inputs"), "Online services for agents", "registered agent number",
-                            "column headings", "AUSTRAC enrolment", "independent evaluation reports")
+                            "column headings", "AUSTRAC enrolment", "independent evaluation reports",
+                            "assessment of which of its services are designated services")
         self.assert_prohibited(workflow_step(AGENT, 9), r"\bAUSTRAC\b")
         hand_off = section(AGENT, "Hand-off")
         self.assert_sentence(hand_off, r"\bAML/CTF rows\b", r"\bapart from the Tax Agent Services Act\b",
-                             r"\bwithout a conclusion about compliance\b", r"\bdesignated\b")
+                             r"\bwithout a conclusion about compliance or about whether a service is designated\b")
         self.assert_sentence(hand_off, r"\bpractice list and not the ATO list\b", r"\bATO list and not the practice list\b",
                              r"\bidentifier conflicts\b")
 
