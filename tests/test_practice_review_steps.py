@@ -145,7 +145,9 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(step, r"`not run`", r"\bthe weekly totals a weekly amount needs\b")
         # Queensland's group member rule is a separate lead, not a threshold result.
         self.assert_sentence(step, r"\bSeparately, where the entity is a group member and pays Queensland wages with no "
-                             r"Queensland registration recorded, list it whatever the thresholds show\b")
+                             r"Queensland registration recorded, list it whatever the thresholds show\b",
+                             # Wider than the rule on purpose: taxable wages are the owner step's call.
+                             r"\bthe rule turns on taxable wages, which that step settles and this screen does not\b")
         self.assert_sentence(step, r"\bwhere wages are paid and the total exceeds a threshold with no registration recorded\b",
                              affirmed=(r"\blist each jurisdiction\b",))
         self.assertNotRegex(step, r"\bwhose (monthly or year-to-date )?wages exceed its threshold\b")
