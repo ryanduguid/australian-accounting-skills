@@ -27,11 +27,13 @@ Period, entity structure and chart of accounts, source-document register, ledger
 
 3. Apply the firm's documented account mapping and verify tax-code conditions where treatment is uncertain. An invoice's wording or a bank-rule match alone does not establish deductibility or creditability.
 
+3a. For each line whose purpose, payee or evidence is unknown, add a query to a draft client query list showing the date, amount and statement text as printed, and what is needed: the invoice or receipt, the purpose, or the business and private split. Any account or tax code proposed for that line stays a suggestion until the client's answer and its evidence are recorded; do not post it. The list asks for facts and records only, states no tax treatment, position, conclusion or advice, and no rate, threshold or due date, and suggests no answer the records do not show. Mark it drafted and not sent: an authorised human reviews and sends it, and this skill never sends it.
+
 4. Prepare proposed corrections with the original entry, evidence, reason and affected control accounts. Hand the reconciled period to month-end close and BAS workflows where installed.
 
 ## Hand-off and checks
 
-A completeness register, bank/subledger reconciliations and proposed-correction list. For fabricated exercises, retain supplied pseudonyms, use roles for preparer and reviewer, and present the draft in chat unless a file is requested. An authorised human approves and posts corrections.
+A completeness register, bank/subledger reconciliations, proposed-correction list and the step 3a draft client query list, drafted and not sent. For fabricated exercises, retain supplied pseudonyms, use roles for preparer and reviewer, and present the draft in chat unless a file is requested. An authorised human approves and posts corrections.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
