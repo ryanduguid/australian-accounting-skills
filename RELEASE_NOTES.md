@@ -12,7 +12,7 @@ prepares the asset and entity register, CGT events, small business concession
 and rollover evidence, trading stock and plant transfers, and the effect on
 farm management deposits and averaging, routes duty, land tax and GST to their
 skills and lists the family and legal decisions it leaves open. 2 synthetic
-cards bring the validation pack to 181, with no recorded model run for them,
+cards bring the validation pack to 182, with no recorded model run for them,
 so the new test checks wording and card arithmetic, not model behaviour.
 `au-small-business-cgt` now states the basic conditions and each concession's
 extra conditions that the succession step routes to it, and notes that
