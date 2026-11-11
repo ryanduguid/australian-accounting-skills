@@ -65,7 +65,8 @@ class ClientRequestDraftTests(unittest.TestCase):
         self.assert_sentence(step, r"\beach flagged movement, or the part of one, with no supported explanation\b",
                              r"\bone plain-words question\b", r"\bdraft client question list\b")
         self.assert_sentence(step, r"\barea in words\b", r"\bthe period\b", r"\bthe movement\b",
-                             r"\bthe record that would explain it\b")
+                             r"\bthe record that would explain it\b", r"\bnot a label number\b")
+        self.assert_sentence(step, r"\bsuggests no reason the records do not show\b")
         checks = section("bas-preparation", "Checks before handing over")
         self.assertIn("Each flagged movement, or the part of one, with no supported explanation", checks)
         self.assertIn("draft client question list, drafted and not sent", checks)
@@ -78,6 +79,7 @@ class ClientRequestDraftTests(unittest.TestCase):
         self.assert_sentence(step, r"\binvoice or receipt\b", r"\bbusiness and private split\b")
         self.assert_sentence(step, r"\bstays? a suggestion\b", r"\buntil the client's answer\b")
         self.assert_sentence(step, DO_NOT + r"post it\b")
+        self.assert_sentence(step, r"\bsuggests no answer the records do not show\b")
         self.assertIn("draft client query list", section("au-bookkeeping", "Hand-off and checks"))
 
     # year-end-workpapers: rows 51 and 73

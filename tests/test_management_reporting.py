@@ -63,6 +63,11 @@ class ManagementReportingTests(unittest.TestCase):
         self.assert_sentence(step, DO_NOT + r"adopt a tax effective life\b", r"\bunless the recorded policy adopts it\b")
         self.assertIn("never from the tax schedule", section("au-depreciation-schedule", "Hand-off and checks"))
 
+    def test_depreciation_starts_when_available_for_use_and_a_missing_date_leaves_it_blank(self) -> None:
+        step = workflow_step("au-depreciation-schedule", "8a")
+        self.assert_sentence(step, r"\bstarting depreciation from the date the evidence shows the asset was available for use\b",
+                             r"\ba missing date leaves that asset's depreciation blank and `UNVERIFIED`")
+
     def test_accounting_schedule_ties_to_the_trial_balance_and_keeps_differences_open(self) -> None:
         step = workflow_step("au-depreciation-schedule", "8a")
         self.assert_sentence(step, r"\btie closing cost, closing accumulated depreciation and the period's depreciation expense to the trial balance\b")

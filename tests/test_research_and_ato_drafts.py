@@ -16,6 +16,7 @@ import unittest
 
 from skill_prose import (
     DO_NOT,
+    IN_PROHIBITED_LIST,
     ISO_DATE,
     PENDING,
     PENDING_FACT,
@@ -138,8 +139,15 @@ class ResearchAndAtoDraftTests(unittest.TestCase):
 
     def test_budget_screen_applies_and_recommends_nothing(self) -> None:
         screen = lead_paragraph(RESEARCH, "Budget measure screen")
-        self.assert_sentence(screen, DO_NOT + r"apply a measure before it commences\b",
-                             r"\brecommend any action\b", r"\bgives no advice\b")
+        self.assert_sentence(screen, DO_NOT + r"apply a measure before it commences\b", r"\bgives no advice\b")
+        # Each mention of ranking or recommending is an item of the 'Do not' list, not merely beside it.
+        for action in (r"\brank the measures\b", r"\brecommend any action\b"):
+            with self.subTest(prohibited=action):
+                mentions = [sentence[: match.start()] for sentence in sentences(screen)
+                            for match in re.finditer(action, sentence, re.IGNORECASE)]
+                self.assertTrue(mentions, f"{action!r} is not named")
+                for before in mentions:
+                    self.assertRegex(before, re.compile(IN_PROHIBITED_LIST, re.IGNORECASE))
 
     def test_research_fact_request_is_a_draft_with_no_position(self) -> None:
         step = workflow_step(RESEARCH, 1)
