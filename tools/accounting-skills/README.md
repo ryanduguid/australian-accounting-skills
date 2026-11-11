@@ -241,6 +241,48 @@ not show that it applied in the skill's period or says what the skill claims.
 No command rebuilds a list: the EPUB is a zip archive, and the crate has no
 decompression dependency.
 
+### Rebuilding a section list
+
+Rebuild a list when the register publishes a new compilation of its Act. Until
+then a correct citation of a section a later compilation added fails as absent,
+and a citation of a section it repealed still passes. To build or rebuild
+`section-index/REGISTER-ID.txt`, where `REGISTER-ID` is the Act's series
+identifier such as `C2004A05138`:
+
+1. Ask the register API for the current compilation, URL-encoding the filter:
+   `https://api.prod.legislation.gov.au/v1/versions?$filter=titleId eq 'REGISTER-ID' and isCurrent eq true&$select=titleId,name,start,compilationNumber,registerId`.
+   `registerId` is the compilation's identifier, `compilationNumber` its
+   number, `start` its in-force date and `name` the title.
+2. Ask for that compilation's EPUB:
+   `https://api.prod.legislation.gov.au/v1/documents?$filter=registerId eq 'COMPILATION' and format eq 'Epub' and type eq 'Primary'&$select=titleId,start,retrospectiveStart,rectificationVersionNumber,uniqueTypeNumber,volumeNumber`.
+   Where more than one row comes back, take the highest
+   `rectificationVersionNumber`. One EPUB (`volumeNumber` 0) holds every
+   volume.
+3. Download it from
+   `https://api.prod.legislation.gov.au/v1/documents(titleId='REGISTER-ID',start=START,retrospectiveStart=RETROSPECTIVE-START,rectificationVersionNumber=N,type='Primary',uniqueTypeNumber=U,volumeNumber=V,format='Epub')`,
+   writing the dates as the API returns them (`2026-10-01T00:00:00`, with no
+   time zone). This address is the `source` field. On 12 November 2026 the
+   EPUB address on www.legislation.gov.au refused clients other than browsers.
+4. Unzip the EPUB and read the table of contents, `OEBPS/document.ncx`. Take
+   the text of each `navLabel` in document order. A label is a section when
+   it starts with a number matching
+   `[0-9]+[A-Z]*(-[0-9]+[A-Z]*)?(\.[0-9]+[A-Z]*)?` followed by 2 spaces; the
+   number is the entry. Once a label starting with `Schedule` has appeared,
+   keep only hyphenated numbers, because a schedule's other entries are
+   clauses. Keep the first occurrence of a repeated number: the loader rejects
+   repeats, and the Corporations Act's small business guide repeats 11 body
+   section numbers.
+5. Write the file with LF line endings: the header lines `# title: ` (the
+   version's `name`), `# register-id: `, `# compilation: `,
+   `# compilation-number: `, `# in-force-from: ` (the date part of `start`),
+   `# source: `, `# retrieved: ` (the download date, as YYYY-MM-DD) and
+   `# sha256: ` (the SHA-256 of the EPUB's bytes in lower-case hex, from
+   `sha256sum` or PowerShell's `(Get-FileHash FILE).Hash.ToLower()`), then one
+   number per line in table of contents order.
+6. Run `check-citations`. Remove any exception it reports as unneeded, and
+   check each newly absent section against the compilation before changing a
+   skill or adding an exception.
+
 ## Validation pack
 
 ```sh
