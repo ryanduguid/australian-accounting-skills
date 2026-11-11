@@ -87,6 +87,22 @@ class StatementToCsvTests(unittest.TestCase):
             with self.subTest(contract=contract):
                 self.assertIn(contract, tie_out)
 
+    def test_a_period_break_is_explained_but_left_open(self) -> None:
+        tie_out = step("4. **Tie out before building the file.**", "5. **Resolve overlaps")
+        for contract in (
+            "a period break can flag a line the statement legitimately prints, although no such "
+            "statement has been confirmed.",
+            "For a period break, compare the line's date with the period the statement itself prints "
+            "and with any posting cutoff the issuer states, record the explanation and the evidence for "
+            "it in the workpaper, and leave the break open for a person.",
+            "Never widen `period_start` or `period_end` beyond the printed period to make a line pass.",
+        ):
+            with self.subTest(contract=contract):
+                self.assertIn(contract, tie_out)
+        tool = " ".join((REPOSITORY / "tools" / "accounting-skills" / "README.md").read_text(encoding="utf-8").split())
+        self.assertIn("The period check can flag a line the issuer legitimately placed on the statement", tool)
+        self.assertIn("never passes a line whose `posted` date falls outside the period.", tool)
+
     def test_the_documented_input_fields_are_the_checkers(self) -> None:
         """Every field the skill names must be one the checker accepts, and the reverse."""
         tie_out = step("Its input is one JSON file per account", "Amounts are plain decimals")

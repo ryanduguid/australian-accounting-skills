@@ -21,7 +21,9 @@ has a record in its skill's `sources.json`.
 to JSON. In exact cents it checks each printed running balance, brought-forward and
 carried-forward balance and closing balance, extracted gross credits and debits against printed
 totals, a sign taken from the running balance, line dates against the period, and continuity
-between statements. It prints one `BREAK` line per difference and one `OVERLAP` line per pair of
+between statements. The period check can flag a line the issuer legitimately placed on the
+statement, for example under its own posting cutoff, and never passes a line whose `posted` date
+falls outside the period. It prints one `BREAK` line per difference and one `OVERLAP` line per pair of
 overlapping periods, ends with a `PASS` line counting what it compared or a `FAIL` line, and exits
 0 when everything ties, 2 on any break and 1 on malformed input, including an empty one or a
 repeated reference. The input holds figures and line references only, never descriptions.
