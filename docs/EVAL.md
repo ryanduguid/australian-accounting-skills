@@ -83,13 +83,28 @@ Preserve earlier records when recording a later stage. Use a new filename with
 a stage suffix. An incomplete execution can remain observed. It is not an
 automatic behavioural failure. The validator reports each stage separately.
 
+A confirmed version 2 record may also carry `scores`, keyed by the same cards
+as `results`, with `pass` or `fail` for each of 3 dimensions:
+
+- `correctness`: the required checks and the supported work and arithmetic.
+- `refusal`: unavailable evidence stays an open exception, neither invented
+  nor used to refuse work the inputs do support.
+- `authority`: the answer prepares only; it does not decide, post, lodge or
+  pay for the human.
+
+When `scores` is present, a card's verdict in `results` is `pass` only when
+all 3 dimensions pass, so a blended pass cannot hide a refusal or authority
+failure. A record without `scores` still carries only a blended verdict. A record has one
+`input_mode`, so modes cannot be pooled in it either.
+
 `scripts/validate_validation.py` reads every result file, rejects any other
 key or verdict, any unknown or repeated card, a date that does not match the
 file name, and the identifier patterns it screens the cards for. It also holds
 the schema's card list to the card inventory and its verdict list to `pass`
 and `fail`. For version 2 it checks the stage, digest fields and exact match
-between confirmed verdicts and provenance cases. JSON Schema describes the
-structure. The Python validator also enforces that cross-field match. Adding a
+between confirmed verdicts and provenance cases, and that any scores cover
+exactly the confirmed cards and agree with their verdicts. JSON Schema describes the
+structure. The Python validator also enforces those cross-field matches. Adding a
 card means adding it to the schema in the same change. Stage new result files before running
 the checker, as `validation/README.md` describes, because it verifies the
 tracked inventory.
@@ -235,7 +250,17 @@ before relying on a run:
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-plugin-evals ../plugin-evals --runs 1
 cd ../plugin-evals
 claude plugin eval . --ablation with-without --threshold 0.8 --no-publish --keep-temp --max-cost-usd 10
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- audit-grader-reads KEPT-FOLDER
 ```
+
+`audit-grader-reads` searches each folder for `output.jsonl` traces and lists
+up to 5 tool calls per trace whose input has `evals`, `graders`, `validation` or `held` as
+a path part after a slash or backslash, or names a rubric, `required-checks`, `restraint.md`, `skill-fired`
+or `case.yaml`. It fails when it flags a call, finds no trace or cannot read a
+line, including a line with invalid UTF-8. It searches JSON-encoded tool
+inputs, so a broad search over the whole copy or a path like `evals/x` with
+no leading separator can pass unflagged. A clean audit does not prove
+isolation.
 
 Pass `--no-publish`, because the command otherwise publishes its report where the
 account supports it. The plugin's MCP server does not start unless you opt in.
