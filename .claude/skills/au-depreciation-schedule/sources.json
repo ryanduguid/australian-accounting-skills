@@ -253,6 +253,22 @@
         "source_last_modified": "",
         "checked_at": "2026-11-02"
       }
+    },
+    {
+      "title": "AASB 116 Property, Plant and Equipment",
+      "url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 12 November 2026 as compilation no. 6 (compilation date 31 December 2022), which applies to annual periods beginning on or after 1 January 2023; paragraphs 6, 43, 50, 51, 53, 55, 60, 61 and 73 were read. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://standards.aasb.gov.au/aasb-116-dec-2022",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
