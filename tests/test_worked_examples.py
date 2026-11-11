@@ -16,10 +16,12 @@ SKILLS = REPOSITORY / ".claude" / "skills"
 CARDS = REPOSITORY / "validation" / "cases"
 
 WORKED = (
-    "au-bookkeeping", "au-financial-statements", "au-managed-fund-amit", "au-payroll-review",
-    "au-rental-property", "au-sapto", "cashflow-forecast-13week", "contract-cost-tracking",
-    "month-end-close", "progress-claim-preparation", "reconciliation-break-trace",
-    "retention-schedule", "wip-over-under-billing", "workpaper-tie-out", "year-end-workpapers",
+    "au-ato-account-reconciliation", "au-bookkeeping", "au-financial-statements",
+    "au-franking-account", "au-managed-fund-amit", "au-payroll-review", "au-rental-property",
+    "au-sapto", "au-trust-distributions", "bas-preparation", "cashflow-forecast-13week",
+    "contract-cost-tracking", "month-end-close", "progress-claim-preparation",
+    "reconciliation-break-trace", "retention-schedule", "stp-finalisation",
+    "wip-over-under-billing", "workpaper-tie-out", "year-end-workpapers",
 )
 
 NUMBER = r"-?\d[\d,]*(?:\.\d+)?"

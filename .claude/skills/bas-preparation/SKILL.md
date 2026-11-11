@@ -87,6 +87,19 @@ scope, without requesting real client records.
 - Each lead screen is reported as run, with its hit count, or as `not run` with the missing field; no hit is reported as an error without its review-unit assessment
 - Every reviewed detail occurrence has separate treatment, entitlement and attribution findings, with evidence, applicable authority and an action for each unresolved dependency
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+The entity's registration and the Activity Statement report are both on the accruals basis. The GST amounts are taken from that report and the ledger, not worked out from a rate.
+
+| Tie-out | Working | Result |
+| --- | --- | --- |
+| Net GST per BAS | 9,400.00 - 3,150.00 = 6,250.00 (1A, 1B) | Proposed net GST |
+| GST control account | 3,200.00 + 9,400.00 - 3,150.00 - 3,200.00 = 6,250.00 (opening, GST on sales, GST on purchases, prior BAS paid) | Agrees to net GST to the cent |
+
+Had the control account also carried a 120.00 journal with no matching transaction in the Activity Statement report, it would close at 6,250.00 + 120.00 = 6,370.00 against net GST of 6,250.00. The 120.00 would go on the exceptions list with its journal for the reviewer; it is never added to 1A or 1B to force the tie.
+
 ## Boundaries
 
 - Never assert current rates, thresholds, or due dates from memory. Cite the ATO page checked and the date checked. If ato.gov.au is unreachable from this session, stop and ask the user for the current figure, record it as 'per [name], [date], unverified', and flag it on the workpaper. Never construct a citation from memory.
