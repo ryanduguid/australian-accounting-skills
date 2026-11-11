@@ -17,7 +17,7 @@ Use `month-end-close` to prepare the management report from the closed figures, 
 
 ## Synthetic inputs
 
-Post-journal Profit and Loss for the month: revenue 50000.00, cost of sales 30000.00, gross profit 20000.00, wages and salaries 12000.00, other expenses 3000.00, net profit 5000.00. Balance Sheet at month end: current assets 45000.00, of which trade debtors 41000.00; non-current assets 25000.00; current liabilities 30000.00; non-current liabilities 10000.00; net assets 30000.00. The closed trial balance gives the same net profit and net assets. The aged receivables total is 41000.00. The month has 30 days.
+Post-journal Profit and Loss for the month: revenue 50000.00, cost of sales 30000.00, gross profit 20000.00, wages and salaries 12000.00, other expenses 3000.00, net profit 5000.00. Balance Sheet at month end: current assets 45000.00, of which trade debtors 41000.00; non-current assets 25000.00; current liabilities 30000.00; non-current liabilities 10000.00; net assets 30000.00. The closed trial balance gives the same net profit and net assets. The aged receivables total is 41000.00, including GST; the Profit and Loss shows revenue excluding GST. The month has 30 days.
 
 Budget revenue for the month is 60000.00. The step 5 variance review flagged revenue (10000.00 below budget) and wages (2000.00 above budget). Wages carry the explanation '2 casual staff covered leave'. Revenue has no explanation and is open with the sales manager as owner.
 
@@ -31,7 +31,7 @@ Only the supplied facts are available. No industry benchmark, prior-year export 
 
 - Tie net profit 50000.00 - 30000.00 - 12000.00 - 3000.00 = 5000.00 to the closed trial balance before using the report.
 - Tie net assets 45000.00 + 25000.00 - 30000.00 - 10000.00 = 30000.00 to the closed trial balance before using the report.
-- Show each ratio with its formula: gross margin 20000.00 / 50000.00 = 40 per cent; net margin 5000.00 / 50000.00 = 10 per cent; current ratio 45000.00 / 30000.00 = 1.5; debtor days 41000.00 / 50000.00 x 30 = 24.6; wages to revenue 12000.00 / 50000.00 = 24 per cent.
+- Show each ratio with its formula: gross margin 20000.00 / 50000.00 = 40 per cent; net margin 5000.00 / 50000.00 = 10 per cent; current ratio 45000.00 / 30000.00 = 1.5; debtor days 41000.00 / 50000.00 x 30 = 24.6, stating that the debtors include GST and the revenue does not; wages to revenue 12000.00 / 50000.00 = 24 per cent.
 - Compare only with the budget and the entity's own earlier months, and state that no industry benchmark was used because none was supplied with a source.
 - Show a 3-month trend and name the prior-year comparison as missing.
 - Show the revenue variance as open with its owner, and comment on wages using the step 5 explanation only.

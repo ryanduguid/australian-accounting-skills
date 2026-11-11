@@ -112,6 +112,8 @@ class ManagementReportingTests(unittest.TestCase):
             with self.subTest(ratio=ratio):
                 self.assertIn(ratio, step)
         self.assert_sentence(step, r"\beach ratio beside its formula\b", r"\bonly to the entity's own figures\b")
+        # Debtor and creditor days can divide a balance including GST by a figure excluding it; the report says which.
+        self.assert_sentence(step, r"\bBeside debtor and creditor days, state whether the balances and the revenue or purchases each include GST\b")
 
     def test_no_benchmark_is_supplied(self) -> None:
         step = workflow_step("month-end-close", 9)
