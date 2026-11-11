@@ -81,6 +81,7 @@ the credit line is the author's request. Never add either to a client deliverabl
 | `.claude-plugin/plugin.json` | Claude Code plugin manifest |
 | `.claude-plugin/marketplace.json` | Claude Code marketplace listing |
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
+| `.cursor-plugin/plugin.json` | Cursor plugin manifest, not yet loaded in Cursor |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |
 | `validation/` | Validation pack the tests exercise |
 | `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, the `statement-check` tie-out `statement-to-csv` runs, and a candidate port of the other `scripts/` |

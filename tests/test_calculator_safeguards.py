@@ -34,6 +34,7 @@ class CalculatorSafeguardTests(unittest.TestCase):
         for manifest in (
             REPOSITORY / ".claude-plugin" / "plugin.json",
             REPOSITORY / ".codex-plugin" / "plugin.json",
+            REPOSITORY / ".cursor-plugin" / "plugin.json",
         ):
             text = manifest.read_text(encoding="utf-8")
             self.assertNotIn(".claude/rules", text, f"{manifest.name} now ships the rules")

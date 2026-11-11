@@ -12,6 +12,7 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.5.0 tag (source ZIP) | No | No | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
 | [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026 | Not documented |
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
+| [Cursor plugin, development](#cursor-plugin) | The branch the team marketplace tracks | No | No | Not tested; the manifest has not been loaded in Cursor | Auto Refresh or **Refresh** in the dashboard, documented by Cursor; not tested |
 | [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
 | [Skills CLI from a development checkout](#development-checkout) | Default branch | No | Yes | A checkout at `63967e8` produced 50 skills in each target directory on 8 September 2026 | Not tested. Pull the checkout and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
 | [Manual copy](#manual-copy) | v0.5.0 tag | No | Yes | None recorded | Copy again from a checkout of the new tag; not tested |
@@ -144,6 +145,25 @@ source inventory and rollback route.
 codex plugin marketplace add ryanduguid/australian-accounting-skills
 codex plugin add australian-accounting-skills@ryanduguid
 ```
+
+### Cursor plugin
+
+`.cursor-plugin/plugin.json` follows Cursor's
+[plugins reference](https://cursor.com/docs/reference/plugins) as read on
+12 November 2026. It has not been loaded in Cursor, so treat this route as
+untested. It declares the skills folder and no MCP server.
+
+Cursor's [plugins page](https://cursor.com/docs/plugins) documents 2 ways in:
+the Cursor Marketplace, which lists only plugins its team has reviewed, and a
+team marketplace on a Teams or Enterprise plan. This plugin is not in the
+Cursor Marketplace. For a team marketplace, an admin opens
+**Dashboard -> Plugins & MCPs**, clicks **Add Marketplace**, uses
+**Import from Repo** with
+`https://github.com/ryanduguid/australian-accounting-skills` and adds the plugin
+with **Add to Marketplace**. Auto Refresh follows the branch the marketplace
+tracks. Cursor's pages do not say
+whether a repository with one plugin and no `.cursor-plugin/marketplace.json`
+imports this way.
 
 ### Any agent, via the skills CLI
 

@@ -31,6 +31,7 @@ INSTALL_ROUTES = (
     "Claude.ai or desktop app upload",
     "Claude Code plugin, development",
     "Codex plugin, development",
+    "Cursor plugin, development",
     "Skills CLI from GitHub",
     "Skills CLI from a development checkout",
     "Manual copy",
@@ -432,6 +433,7 @@ class SkillMetadataTests(unittest.TestCase):
         version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
         plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         codex = json.loads((REPOSITORY / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        cursor = json.loads((REPOSITORY / ".cursor-plugin" / "plugin.json").read_text(encoding="utf-8"))
         marketplace = json.loads(
             (REPOSITORY / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8")
         )
@@ -439,6 +441,10 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertEqual(codex["name"], "australian-accounting-skills")
         self.assertEqual(plugin["version"], version)
         self.assertEqual(codex["version"], version)
+        self.assertEqual(cursor["name"], "australian-accounting-skills")
+        self.assertEqual(cursor["version"], version)
+        self.assertEqual(cursor["skills"], codex["skills"])
+        self.assertEqual(cursor["description"], codex["description"])
         self.assertEqual(marketplace["plugins"][0]["name"], "australian-accounting-skills")
         self.assertTrue((REPOSITORY / plugin["skills"] / "bas-preparation" / "SKILL.md").is_file())
         self.assertEqual(codex["safety"]["noLodgment"], True)
