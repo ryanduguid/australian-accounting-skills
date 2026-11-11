@@ -463,11 +463,13 @@ root that is not a Git checkout is refused before anything is written.
 Front matter uses double-quoted YAML scalars and flow lists, which YAML 1.1 and
 1.2 readers load to the values the retired Python builder wrote with PyYAML.
 Prompt and grader bodies and copied files are byte-identical to its output;
-the manifest also has the `dirty` field. Every case is rendered before anything is written, so a malformed
+the manifest also has the `dirty` and `changed_since` fields. Every case is rendered before anything is written, so a malformed
 card or routing case leaves no partial copy. Routing case ids and skill names
 must be lowercase hyphenated slugs. The routing file is read with the card YAML
 subset, so aliases, anchors, tags and duplicate keys are refused where PyYAML
 accepted them. Links and Windows reparse points among the copied files are
 refused; the Python builder followed them. `--runs` and `--max-turns` take
-integers from 1 to 4,294,967,295 and default to 1 and 12. Success prints
+integers from 1 to 4,294,967,295 and default to 1 and 12. `--changed-since REV`
+builds only the cases grading a skill changed since that revision, as
+[docs/EVAL.md](../../docs/EVAL.md) describes. Success prints
 the case count, usage errors exit 2 and processing failures exit 1.

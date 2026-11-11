@@ -295,9 +295,57 @@ fn copy(source: &Path, target: &Path) -> Result<()> {
     Ok(())
 }
 
-/// Render every validation card's case, and return the cases with each card's
-/// digest.
-fn card_cases(canonical: &Path, runs: u32, max_turns: u32) -> Result<(Cases, Map<String, Value>)> {
+/// The skills with a file under `.claude/skills/<name>/` that differs between
+/// `revision` and the working tree, and the commit `revision` names.
+fn changed_skills(root: &Path, revision: &str) -> Result<(String, BTreeSet<String>)> {
+    let commit = crate::git(
+        root,
+        &[
+            "rev-parse",
+            "--verify",
+            "--quiet",
+            "--end-of-options",
+            &format!("{revision}^{{commit}}"),
+        ],
+    )
+    .map_err(|_| format!("unknown revision: {revision}"))?;
+    let paths = crate::git(
+        root,
+        &[
+            "diff",
+            "--name-only",
+            "--no-renames",
+            "-z",
+            &commit,
+            "--",
+            ".claude/skills",
+        ],
+    )?;
+    let skills = paths
+        .split('\0')
+        .filter_map(|path| path.strip_prefix(".claude/skills/")?.split_once('/'))
+        .map(|(skill, _)| skill.to_owned())
+        .collect();
+    Ok((commit, skills))
+}
+
+/// Whether a case grading `skills` is built: always, unless `changed` limits
+/// the build to cases grading a changed skill.
+fn selected<'a>(
+    changed: Option<&BTreeSet<String>>,
+    mut skills: impl Iterator<Item = &'a str>,
+) -> bool {
+    changed.is_none_or(|changed| skills.any(|skill| changed.contains(skill)))
+}
+
+/// Render every validation card's case, and return the selected cases with
+/// each selected card's digest.
+fn card_cases(
+    canonical: &Path,
+    runs: u32,
+    max_turns: u32,
+    changed: Option<&BTreeSet<String>>,
+) -> Result<(Cases, Map<String, Value>)> {
     let mut cases = Vec::new();
     let mut digests = Map::new();
     for path in crate::entries(&canonical.join("validation/cases"))? {
@@ -310,8 +358,14 @@ fn card_cases(canonical: &Path, runs: u32, max_turns: u32) -> Result<(Cases, Map
             .ok_or("filename is not Unicode")?
             .to_owned();
         let data = fs::read(&path)?;
+        let text = std::str::from_utf8(&data)?;
+        let files = build_case(text, &stem, runs, max_turns)?;
+        let (metadata, _) = validation::parse_front_matter(text, &format!("{stem}.md"))?;
+        let skills = metadata["target_skills"].as_array().into_iter().flatten();
+        if !selected(changed, skills.filter_map(Value::as_str)) {
+            continue;
+        }
         digests.insert(stem.clone(), json!(trial::digest(&data)));
-        let files = build_case(std::str::from_utf8(&data)?, &stem, runs, max_turns)?;
         cases.push((stem, files));
     }
     Ok((cases, digests))
@@ -351,8 +405,15 @@ fn write_copy(canonical: &Path, destination: &Path, cases: &[(String, CaseFiles)
 }
 
 /// Write the plugin copy and its cases to a new `destination` outside `root`,
-/// and return the manifest.
-pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Result<Value> {
+/// and return the manifest. With `changed_since`, only the cases grading a
+/// skill changed since that revision are written.
+pub fn build(
+    destination: &Path,
+    runs: u32,
+    max_turns: u32,
+    root: &Path,
+    changed_since: Option<&str>,
+) -> Result<Value> {
     let canonical = fs::canonicalize(root)?;
     let resolved = sweep::resolve(destination, 0)?;
     if resolved.starts_with(&canonical) {
@@ -368,9 +429,16 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
     let mut status = vec!["status", "--porcelain", "--ignored", "--"];
     status.extend(PLUGIN_PATHS);
     let dirty = !crate::git(&canonical, &status)?.is_empty();
+    let (since, changed) = match changed_since {
+        Some(revision) => {
+            let (commit, skills) = changed_skills(&canonical, revision)?;
+            (Some(commit), Some(skills))
+        }
+        None => (None, None),
+    };
     // Every case is rendered before anything is created, so a malformed card or
     // routing case leaves no partial copy behind.
-    let (mut cases, digests) = card_cases(&canonical, runs, max_turns)?;
+    let (mut cases, digests) = card_cases(&canonical, runs, max_turns, changed.as_ref())?;
     let routing_bytes = fs::read(canonical.join(ROUTING_CASES))?;
     let routing = strict_yaml::card_mapping(std::str::from_utf8(&routing_bytes)?)?;
     let mut routes = Vec::new();
@@ -379,6 +447,12 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
         .ok_or("routing cases must be a YAML list")?
     {
         let (name, files) = build_routing_case(case, runs, max_turns)?;
+        // A routing case grades its expected skill and the neighbours it forbids.
+        let graded =
+            std::iter::once(&case["skill"]).chain(case["not"].as_array().into_iter().flatten());
+        if !selected(changed.as_ref(), graded.filter_map(Value::as_str)) {
+            continue;
+        }
         routes.push(name.clone());
         cases.push((name, files));
     }
@@ -386,10 +460,14 @@ pub fn build(destination: &Path, runs: u32, max_turns: u32, root: &Path) -> Resu
     if let Some((name, _)) = cases.iter().find(|(name, _)| !names.insert(name)) {
         return Err(format!("duplicate eval case: {name}").into());
     }
+    if let (Some(revision), true) = (changed_since, cases.is_empty()) {
+        return Err(format!("no case grades a skill changed since {revision}").into());
+    }
     write_copy(&canonical, &destination, &cases)?;
     let manifest = json!({
         "commit": commit,
         "dirty": dirty,
+        "changed_since": since,
         "runs": runs,
         "card_sha256": digests,
         "routing_sha256": trial::digest(&routing_bytes),
@@ -408,6 +486,7 @@ enum Parsed {
         root: PathBuf,
         runs: u32,
         max_turns: u32,
+        changed_since: Option<String>,
     },
     Help,
     Usage,
@@ -417,10 +496,11 @@ fn parse(mut args: impl Iterator<Item = OsString>) -> Result<Parsed> {
     let mut destination = None;
     let mut root = std::env::current_dir()?;
     let (mut runs, mut max_turns) = (1, 12);
+    let mut changed_since = None;
     while let Some(arg) = args.next() {
         match arg.to_str() {
             Some("--help" | "-h") => return Ok(Parsed::Help),
-            Some(key @ ("--runs" | "--max-turns" | "--root")) => {
+            Some(key @ ("--runs" | "--max-turns" | "--root" | "--changed-since")) => {
                 let Some(value) = args
                     .next()
                     .filter(|value| !value.as_encoded_bytes().starts_with(b"--"))
@@ -429,6 +509,13 @@ fn parse(mut args: impl Iterator<Item = OsString>) -> Result<Parsed> {
                 };
                 if key == "--root" {
                     root = value.into();
+                    continue;
+                }
+                if key == "--changed-since" {
+                    let Some(revision) = value.to_str() else {
+                        return Ok(Parsed::Usage);
+                    };
+                    changed_since = Some(revision.to_owned());
                     continue;
                 }
                 // A case needs at least one run and one turn.
@@ -457,19 +544,21 @@ fn parse(mut args: impl Iterator<Item = OsString>) -> Result<Parsed> {
             root,
             runs,
             max_turns,
+            changed_since,
         }),
     )
 }
 
 pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
-    let usage = "usage: accounting-skills build-plugin-evals DESTINATION [--runs N] [--max-turns N] [--root PATH]";
-    let (destination, root, runs, max_turns) = match parse(args)? {
+    let usage = "usage: accounting-skills build-plugin-evals DESTINATION [--runs N] [--max-turns N] [--root PATH] [--changed-since REV]";
+    let (destination, root, runs, max_turns, changed_since) = match parse(args)? {
         Parsed::Run {
             destination,
             root,
             runs,
             max_turns,
-        } => (destination, root, runs, max_turns),
+            changed_since,
+        } => (destination, root, runs, max_turns, changed_since),
         Parsed::Help => {
             println!("{usage}");
             return Ok(0);
@@ -479,7 +568,13 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
             return Ok(2);
         }
     };
-    let manifest = build(&destination, runs, max_turns, &root)?;
+    let manifest = build(
+        &destination,
+        runs,
+        max_turns,
+        &root,
+        changed_since.as_deref(),
+    )?;
     let cards = manifest["card_sha256"].as_object().map_or(0, Map::len);
     let routes = manifest["routing_cases"].as_array().map_or(0, Vec::len);
     io::stdout().write_all(

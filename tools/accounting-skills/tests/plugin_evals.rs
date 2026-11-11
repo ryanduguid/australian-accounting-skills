@@ -264,12 +264,12 @@ fn the_manifest_names_the_commit_and_flags_uncommitted_plugin_files() {
     let root = tempfile::tempdir().unwrap();
     let outside = tempfile::tempdir().unwrap();
     fixture(root.path());
-    let clean = build(&outside.path().join("clean"), 1, 12, root.path()).unwrap();
+    let clean = build(&outside.path().join("clean"), 1, 12, root.path(), None).unwrap();
     assert_eq!(clean["commit"].as_str().unwrap().len(), 40, "{clean}");
     assert_eq!(clean["dirty"], false);
     // Cards stay behind, so an uncommitted card leaves the copy as committed.
     fs::write(root.path().join("validation/cases/notes.txt"), "draft\n").unwrap();
-    let card = build(&outside.path().join("card"), 1, 12, root.path()).unwrap();
+    let card = build(&outside.path().join("card"), 1, 12, root.path(), None).unwrap();
     assert_eq!(card["dirty"], false);
     for (name, path) in [
         ("edited", ".claude/skills/bas-preparation/SKILL.md"),
@@ -277,7 +277,7 @@ fn the_manifest_names_the_commit_and_flags_uncommitted_plugin_files() {
         ("ignored", ".claude/skills/bas-preparation/notes.draft"),
     ] {
         fs::write(root.path().join(path), "Uncommitted\n").unwrap();
-        let manifest = build(&outside.path().join(name), 1, 12, root.path()).unwrap();
+        let manifest = build(&outside.path().join(name), 1, 12, root.path(), None).unwrap();
         assert_eq!(manifest["dirty"], true, "{name}");
         commit(root.path(), name);
     }
@@ -290,7 +290,7 @@ fn a_root_outside_git_is_refused_before_anything_is_written() {
     fixture(root.path());
     fs::remove_dir_all(root.path().join(".git")).unwrap();
     let target = outside.path().join("plugin");
-    let error = build(&target, 1, 12, root.path()).unwrap_err();
+    let error = build(&target, 1, 12, root.path(), None).unwrap_err();
     assert!(
         error.to_string().contains("git rev-parse HEAD failed"),
         "{error}"
@@ -299,12 +299,89 @@ fn a_root_outside_git_is_refused_before_anything_is_written() {
 }
 
 #[test]
+fn changed_since_builds_only_the_cases_grading_a_changed_skill() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    fixture(root.path());
+    let card = fs::read_to_string(root.path().join("validation/cases/x.md")).unwrap();
+    for (path, text) in [
+        (
+            ".claude/skills/au-payroll-review/SKILL.md".to_owned(),
+            "Fabricated skill\n".to_owned(),
+        ),
+        (
+            "validation/cases/y.md".to_owned(),
+            card.replace("id: x", "id: y")
+                .replace("[bas-preparation]", "[au-payroll-review]"),
+        ),
+        (
+            "validation/routing-cases.yaml".to_owned(),
+            "- id: bas\n  skill: bas-preparation\n  not: []\n  prompt: A synthetic prompt.\n\
+             - id: payroll\n  skill: au-payroll-review\n  not: []\n  prompt: Another synthetic prompt.\n\
+             - id: wages\n  skill: bas-preparation\n  not: [au-payroll-review]\n  prompt: A third synthetic prompt.\n"
+                .to_owned(),
+        ),
+    ] {
+        let path = root.path().join(path);
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
+        fs::write(path, text).unwrap();
+    }
+    commit(root.path(), "Second skill");
+    let error = build(
+        &outside.path().join("none"),
+        1,
+        12,
+        root.path(),
+        Some("HEAD"),
+    )
+    .unwrap_err();
+    assert!(error.to_string().contains("no case grades"), "{error}");
+    let target = outside.path().join("unknown");
+    let error = build(&target, 1, 12, root.path(), Some("no-such-revision")).unwrap_err();
+    assert!(error.to_string().contains("unknown revision"), "{error}");
+    assert!(!target.exists());
+
+    fs::write(
+        root.path()
+            .join(".claude/skills/au-payroll-review/SKILL.md"),
+        "Reworded skill\n",
+    )
+    .unwrap();
+    let target = outside.path().join("plugin");
+    let output = run(&[
+        target.as_os_str(),
+        "--root".as_ref(),
+        root.path().as_os_str(),
+        "--changed-since".as_ref(),
+        "HEAD".as_ref(),
+    ]);
+    assert_eq!(output.status.code(), Some(0), "{output:?}");
+    let mut cases: Vec<_> = fs::read_dir(target.join("evals"))
+        .unwrap()
+        .map(|entry| entry.unwrap().file_name().into_string().unwrap())
+        .collect();
+    cases.sort();
+    assert_eq!(cases, ["route-payroll", "route-wages", "y"]);
+    let manifest: serde_json::Value =
+        serde_json::from_slice(&fs::read(target.join("evals-manifest.json")).unwrap()).unwrap();
+    assert_eq!(
+        manifest["card_sha256"]
+            .as_object()
+            .unwrap()
+            .keys()
+            .collect::<Vec<_>>(),
+        ["y"]
+    );
+    assert_eq!(manifest["changed_since"].as_str().unwrap().len(), 40);
+}
+
+#[test]
 fn the_built_copy_leaves_the_cards_and_tests_behind() {
     let root = tempfile::tempdir().unwrap();
     let outside = tempfile::tempdir().unwrap();
     fixture(root.path());
     let target = outside.path().join("plugin");
-    let manifest = build(&target, 1, 12, root.path()).unwrap();
+    let manifest = build(&target, 1, 12, root.path(), None).unwrap();
     assert!(!target.join("validation").exists());
     assert!(!target.join("tests").exists());
     for copied in [
@@ -349,12 +426,12 @@ fn build_refuses_the_repository_an_existing_destination_and_a_malformed_card() {
     let root = tempfile::tempdir().unwrap();
     let outside = tempfile::tempdir().unwrap();
     fixture(root.path());
-    let error = build(&root.path().join("build-here"), 1, 12, root.path()).unwrap_err();
+    let error = build(&root.path().join("build-here"), 1, 12, root.path(), None).unwrap_err();
     assert!(
         error.to_string().contains("outside the repository"),
         "{error}"
     );
-    let error = build(outside.path(), 1, 12, root.path()).unwrap_err();
+    let error = build(outside.path(), 1, 12, root.path(), None).unwrap_err();
     assert!(error.to_string().contains("already exists"), "{error}");
     fs::write(
         root.path().join("validation/cases/x.md"),
@@ -362,7 +439,7 @@ fn build_refuses_the_repository_an_existing_destination_and_a_malformed_card() {
     )
     .unwrap();
     let target = outside.path().join("plugin");
-    assert!(build(&target, 1, 12, root.path()).is_err());
+    assert!(build(&target, 1, 12, root.path(), None).is_err());
     assert!(!target.exists());
 }
 
@@ -383,7 +460,7 @@ fn routing_cases_refuse_yaml_aliases_and_duplicate_keys() {
         fixture(root.path());
         fs::write(root.path().join("validation/routing-cases.yaml"), routing).unwrap();
         let target = outside.path().join("plugin");
-        let error = build(&target, 1, 12, root.path()).unwrap_err();
+        let error = build(&target, 1, 12, root.path(), None).unwrap_err();
         assert!(error.to_string().contains(refusal), "{error}");
         assert!(!target.exists());
     }
@@ -405,7 +482,7 @@ fn linked_plugin_files_are_refused() {
         .join("bas-preparation")
         .join("linked");
     link_folder(&linked, &link);
-    let error = build(&outside.path().join("plugin"), 1, 12, root.path()).unwrap_err();
+    let error = build(&outside.path().join("plugin"), 1, 12, root.path(), None).unwrap_err();
     assert!(error.to_string().contains("symbolic links"), "{error}");
     #[cfg(windows)]
     fs::remove_dir(link).unwrap();
@@ -420,7 +497,7 @@ fn a_linked_folder_above_a_plugin_path_is_refused() {
     fs::rename(root.path().join(".claude"), &moved).unwrap();
     let link = root.path().join(".claude");
     link_folder(&moved, &link);
-    let error = build(&outside.path().join("plugin"), 1, 12, root.path()).unwrap_err();
+    let error = build(&outside.path().join("plugin"), 1, 12, root.path(), None).unwrap_err();
     assert!(error.to_string().contains("symbolic links"), "{error}");
     #[cfg(windows)]
     fs::remove_dir(link).unwrap();

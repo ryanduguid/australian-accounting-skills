@@ -253,6 +253,14 @@ claude plugin eval . --ablation with-without --threshold 0.8 --no-publish --keep
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- audit-grader-reads KEPT-FOLDER
 ```
 
+To run the billed eval on only what you touched, add `--changed-since REV`
+(such as `--changed-since origin/main`) to `build-plugin-evals`: the copy then
+holds only the cases grading a skill with a file under `.claude/skills/<name>/`
+that differs from that revision, counting uncommitted edits to tracked files
+but not untracked files. A routing case counts when its expected skill or a
+neighbour it forbids changed. An unknown revision, or one that leaves no case,
+is an error, and the manifest records the revision's commit as `changed_since`.
+
 `audit-grader-reads` searches each folder for `output.jsonl` traces and lists
 up to 5 tool calls per trace whose input has `evals`, `graders`, `validation` or `held` as
 a path part after a slash or backslash, or names a rubric, `required-checks`, `restraint.md`, `skill-fired`
