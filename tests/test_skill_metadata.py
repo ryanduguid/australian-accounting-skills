@@ -31,6 +31,7 @@ INSTALL_ROUTES = (
     "Claude.ai or desktop app upload",
     "Claude Code plugin, development",
     "Codex plugin, development",
+    "Cursor plugin, development",
     "Skills CLI from GitHub",
     "Skills CLI from a development checkout",
     "Manual copy",
@@ -432,6 +433,7 @@ class SkillMetadataTests(unittest.TestCase):
         version = (REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
         plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         codex = json.loads((REPOSITORY / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        cursor = json.loads((REPOSITORY / ".cursor-plugin" / "plugin.json").read_text(encoding="utf-8"))
         marketplace = json.loads(
             (REPOSITORY / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8")
         )
@@ -439,6 +441,10 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertEqual(codex["name"], "australian-accounting-skills")
         self.assertEqual(plugin["version"], version)
         self.assertEqual(codex["version"], version)
+        self.assertEqual(cursor["name"], "australian-accounting-skills")
+        self.assertEqual(cursor["version"], version)
+        self.assertEqual(cursor["skills"], codex["skills"])
+        self.assertEqual(cursor["description"], codex["description"])
         self.assertEqual(marketplace["plugins"][0]["name"], "australian-accounting-skills")
         self.assertTrue((REPOSITORY / plugin["skills"] / "bas-preparation" / "SKILL.md").is_file())
         self.assertEqual(codex["safety"]["noLodgment"], True)
@@ -704,6 +710,76 @@ class CredentialBoundaryTests(unittest.TestCase):
         text = " ".join(rules.read_text(encoding="utf-8").split())
         self.assertIn("never print a secret value or pass one on a command line", text)
         self.assertIn("never ask for one in chat", text)
+
+
+# Terms of another country's tax system. The pack is Australian only, so one of
+# these outside a cross-border skill is a rule imported from the wrong place.
+FOREIGN_TAX_TERM = re.compile(
+    r"\b(?:HMRC|IRS|Form 1099|sales tax)\b|\b1099-", re.IGNORECASE
+)
+# Skills whose subject is foreign income, a foreign pension or residency, where
+# naming another country's regime is part of the workflow. A search on
+# 12 November 2026 found no other skill or card that names one.
+FOREIGN_TAX_TERM_ALLOWED = (
+    ".claude/skills/au-foreign-income/",
+    ".claude/skills/au-foreign-pensions/",
+    ".claude/skills/au-tax-residency/",
+)
+
+
+def foreign_tax_term_hits(path: str, text: str) -> list[str]:
+    """Return `path:line: term` for each foreign tax term outside the allow-list."""
+    if path.startswith(FOREIGN_TAX_TERM_ALLOWED):
+        return []
+    return [
+        f"{path}:{number}: {match.group()}"
+        for number, line in enumerate(text.splitlines(), start=1)
+        for match in FOREIGN_TAX_TERM.finditer(line)
+    ]
+
+
+class JurisdictionTermTests(unittest.TestCase):
+    def test_skills_and_cards_name_no_foreign_tax_system(self) -> None:
+        files = [
+            *(REPOSITORY / ".claude" / "skills").rglob("*.md"),
+            *(REPOSITORY / "validation" / "cases").glob("*.md"),
+        ]
+        self.assertGreater(len(files), 0, "no files found, so nothing was checked")
+        hits = [
+            hit
+            for path in sorted(files)
+            for hit in foreign_tax_term_hits(
+                path.relative_to(REPOSITORY).as_posix(), path.read_text(encoding="utf-8")
+            )
+        ]
+        self.assertEqual(hits, [], "move the foreign rule out, or allow-list the skill")
+
+    def test_allow_listed_skills_exist(self) -> None:
+        for prefix in FOREIGN_TAX_TERM_ALLOWED:
+            with self.subTest(prefix=prefix):
+                self.assertTrue((REPOSITORY / prefix / "SKILL.md").is_file())
+
+    def test_a_planted_term_is_reported_by_file_and_line(self) -> None:
+        planted = "Reconcile the ledger.\nFile the Form 1099-NEC with the IRS.\nUS sales tax"
+        self.assertEqual(
+            foreign_tax_term_hits(".claude/skills/bas-preparation/SKILL.md", planted),
+            [
+                ".claude/skills/bas-preparation/SKILL.md:2: Form 1099",
+                ".claude/skills/bas-preparation/SKILL.md:2: IRS",
+                ".claude/skills/bas-preparation/SKILL.md:3: sales tax",
+            ],
+        )
+        self.assertEqual(
+            foreign_tax_term_hits("validation/cases/x.md", "Ask HMRC"),
+            ["validation/cases/x.md:1: HMRC"],
+        )
+        self.assertEqual(
+            foreign_tax_term_hits(".claude/skills/au-foreign-income/SKILL.md", planted), []
+        )
+        # Word boundaries: none of these is a term.
+        self.assertEqual(
+            foreign_tax_term_hits("validation/cases/x.md", "FIRST 10990 wholesales taxes"), []
+        )
 
 
 if __name__ == "__main__":

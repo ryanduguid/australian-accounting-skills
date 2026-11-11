@@ -50,6 +50,8 @@ exports/
 !.claude-plugin/plugin.json
 !/.codex-plugin/
 !/.codex-plugin/**/*.json
+!/.cursor-plugin/
+!/.cursor-plugin/plugin.json
 !/.agents/
 !/.agents/plugins/
 !/.agents/plugins/**/*.json
