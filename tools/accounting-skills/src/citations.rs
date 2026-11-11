@@ -901,13 +901,21 @@ fn markdown_files(folder: &Path, files: &mut Vec<PathBuf>) -> Result<()> {
 /// sections, and a record whose register or identifier names another
 /// instrument than its title owns none. A record from anywhere else, such as
 /// an ATO web page or a ruling, may name an Act without holding its text, so it
-/// owns no section either.
-fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
+/// owns no section either. A Federal Register record that contradicts a
+/// section list's header (see `contradiction`) is returned apart, with why.
+type Records = (
+    BTreeSet<String>,
+    Vec<BTreeSet<Key>>,
+    Vec<(BTreeSet<Key>, String)>,
+);
+
+fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
     let mut instruments = Vec::new();
+    let mut rejected = Vec::new();
     if !index.is_file() {
-        return Ok((rulings, instruments));
+        return Ok((rulings, instruments, rejected));
     }
     let payload: Value = serde_json::from_str(&read_text(&index)?)?;
     let sources = payload["sources"]
@@ -948,11 +956,59 @@ fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
                 }
             }
         }
-        if agrees && !keys.is_empty() {
+        if !agrees || keys.is_empty() {
+            continue;
+        }
+        if let Some(reason) = contradiction(&keys, field("title"), indexes) {
+            rejected.push((
+                keys,
+                format!("sources.json record {} {reason}", position + 1),
+            ));
+        } else {
             instruments.push(keys);
         }
     }
-    Ok((rulings, instruments))
+    Ok((rulings, instruments, rejected))
+}
+
+/// Why a record copied from the Federal Register contradicts a section list:
+/// its register identifier has a list whose title is not the record's, or its
+/// title is a list's but its identifier is not. The register identifier is
+/// otherwise tied to the title only by kind and, for an Act, year, so this is
+/// the only check that the address holds the instrument the title names.
+fn contradiction(
+    keys: &BTreeSet<Key>,
+    raw_title: &str,
+    indexes: &[SectionIndex],
+) -> Option<String> {
+    let only_titles = |keys: &BTreeSet<Key>| -> BTreeSet<Key> {
+        keys.iter()
+            .filter(|(kind, _)| *kind == "title")
+            .cloned()
+            .collect()
+    };
+    let ids: Vec<&str> = keys
+        .iter()
+        .filter(|(kind, _)| *kind == "register")
+        .map(|(_, id)| id.as_str())
+        .collect();
+    if ids.is_empty() {
+        return None;
+    }
+    indexes
+        .iter()
+        .find(|index| {
+            same_instrument(&only_titles(keys), &only_titles(&index.keys))
+                != ids.contains(&index.register_id.as_str())
+        })
+        .map(|index| {
+            format!(
+                "('{raw_title}' at {}) disagrees with the section list for {} ('{}')",
+                ids.join(", "),
+                index.register_id,
+                index.title
+            )
+        })
 }
 
 /// A paragraph's wrapped lines joined by spaces, or a heading, table row or
@@ -1130,7 +1186,7 @@ pub fn check(root: &Path) -> Result<Report> {
     let (indexes, mut exceptions) = section_indexes(root)?;
     for skill in discover_skills(root)? {
         let folder = root.join(".claude/skills").join(&skill);
-        let (recorded_rulings, instruments) = records(&folder)?;
+        let (recorded_rulings, instruments, rejected) = records(&folder, &indexes)?;
         // None when no record names the Act; otherwise the section index, if
         // any, of the Act a matching record names. Matching the index through
         // the record keeps a state Act cited without its jurisdiction from
@@ -1195,6 +1251,12 @@ pub fn check(root: &Path) -> Result<Report> {
                         let resolution = match owner.map(|index| &named[index].keys) {
                             Ok(None) => continue,
                             Ok(Some(keys)) => recorded(keys).ok_or_else(|| {
+                                if let Some((_, reason)) = rejected
+                                    .iter()
+                                    .find(|(other, _)| same_instrument(keys, other))
+                                {
+                                    return reason.clone();
+                                }
                                 let names: Vec<_> =
                                     keys.iter().map(|(_, name)| name.as_str()).collect();
                                 format!("no record names its Act ({})", names.join("; "))

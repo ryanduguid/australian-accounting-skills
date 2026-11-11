@@ -221,6 +221,17 @@ lists, as `REGISTER-ID SECTION: reason`, a section a skill cites on purpose
 although its list lacks it, such as one a Bill proposes or one since repealed.
 A section of an Act with no list is counted as not indexed.
 
+A list's header is also the only offline evidence of which instrument a
+Federal Register address holds: the identifier is otherwise tied to the
+record's title by kind and, for an Act, year. A `sources.json` record whose
+register identifier has a list must carry a title matching the list's, and a
+record whose title matches a list's must carry its identifier. A record that
+fails either owns no citation, and each citation it would have resolved
+reports the record, both titles and both identifiers. A record of an
+instrument with no list, or from the ATO legal database or a state register,
+is not checked this way: a mis-titled one still resolves, and a reviewer must
+catch it.
+
 Each failure prints as `file:line: citation: reason`: an unmatched citation, a
 section absent from its Act's list, or an exception no cited section needs.
 Two total lines follow, the second counting the resolved sections found,

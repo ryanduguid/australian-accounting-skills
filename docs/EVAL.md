@@ -445,7 +445,13 @@ folder's `exceptions.txt` gives it with a reason, as for a provision a Bill
 proposes or a repealed one that still governs an earlier period; the report
 counts those apart, and an exception no cited section needs also fails. A
 section of an Act with no list is counted as not indexed, neither passing nor
-failing.
+failing. A list's header also ties a Federal Register address to the
+instrument it holds: a record whose register identifier has a list must carry
+the list's title, and a record carrying a list's title must carry its
+identifier, or the record owns no citation and its citations fail. The
+register identifier itself shows only an Act's year, so for an instrument with
+no list, and for a record from the ATO legal database or a state register, the
+gate cannot tell a mis-titled record: a reviewer must.
 
 On 12 November 2026 the lists, retrieved that day, covered 12 Acts and 3
 instruments: the ITAA 1997, ITAA 1936, GST Act, Corporations Act, TAA 1953,

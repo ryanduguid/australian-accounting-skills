@@ -889,3 +889,64 @@ fn a_malformed_section_index_or_exception_is_refused() {
     let error = check(root.path()).unwrap_err().to_string();
     assert!(error.ends_with("missing field register-id"), "{error}");
 }
+
+// A Federal Register identifier with no year check ties a record to its
+// address only through a section list's header, in both directions.
+#[test]
+fn a_record_whose_title_and_register_id_disagree_with_a_section_list_owns_nothing() {
+    let sis = "Superannuation Industry (Supervision) Regulations 1994";
+    let root = tempfile::tempdir().unwrap();
+    index(root.path(), "F1996B00580", sis, &["8.02B"]);
+    skill(
+        root.path(),
+        "alpha",
+        "Apply reg 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n",
+        Some(&record(
+            sis,
+            "https://www.legislation.gov.au/F2018L01289/latest/text",
+        )),
+    );
+    skill(
+        root.path(),
+        "beta",
+        "Apply reg 8.02B of the Retirement Savings Accounts Regulations 1997.\n",
+        Some(&record(
+            "Retirement Savings Accounts Regulations 1997",
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        )),
+    );
+    skill(
+        root.path(),
+        "gamma",
+        "Apply reg 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n",
+        Some(&record(
+            sis,
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        )),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (3, 1));
+    assert_eq!(report.sections_exist, 1);
+    assert_eq!(
+        report.unmatched,
+        [
+            missing(
+                ".claude/skills/alpha/SKILL.md",
+                1,
+                "reg 8.02B",
+                "sources.json record 1 ('Superannuation Industry (Supervision) Regulations 1994' \
+                 at F2018L01289) disagrees with the section list for F1996B00580 \
+                 ('Superannuation Industry (Supervision) Regulations 1994')"
+            ),
+            missing(
+                ".claude/skills/beta/SKILL.md",
+                1,
+                "reg 8.02B",
+                "sources.json record 1 ('Retirement Savings Accounts Regulations 1997' \
+                 at F1996B00580) disagrees with the section list for F1996B00580 \
+                 ('Superannuation Industry (Supervision) Regulations 1994')"
+            ),
+        ]
+    );
+    assert_eq!(run(root.path()).0, 2);
+}
