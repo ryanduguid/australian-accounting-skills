@@ -141,6 +141,13 @@ class MyobExportsTests(unittest.TestCase):
         self.assertIn("switching means disconnecting and connecting the other", route)
         self.assertIn("Use one business per export and per read.", section(SKILL, "Product, interface and business"))
 
+    def test_the_gate_stops_on_another_business_and_the_tie_must_agree_to_the_cent(self) -> None:
+        route = section(SKILL, "Read-only connector route")
+        self.assertIn("Confirm that the connected business is the one the engagement names. "
+                      "Stop if it is another business or cannot be identified.", route)
+        self.assertIn("It must agree to the cent. On a difference, stop, record both figures and use the file-export path.",
+                      route)
+
     def test_a_connector_read_records_the_user_and_is_checked_for_a_restricted_role(self) -> None:
         route = section(SKILL, "Read-only connector route")
         self.assertIn("the MYOB user who authorised the connection and their user role", route)
