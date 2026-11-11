@@ -265,7 +265,14 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(step, r"\bblank\b", r"`UNVERIFIED`", NOT + r"fill it from\b")
         self.assert_sentence(step, r"\bschedule of content\b", NOT + r"resolution wording\b",
                              DO_NOT + r"draft, date or sign a resolution\b")
-        self.assert_sentence(step, r"\bsettle the wording\b", r"\btrustee decides\b")
+        self.assert_sentence(step, r"\bthe trustee and their lawyer settle the wording\b", r"\btrustee decides\b")
+        # The schedule carries the proposal as given and derives nothing from it.
+        self.assert_sentence(step, r"\bproposal as given\b", NOT + r"(convert|compute)\b",
+                             r"\bnothing the proposal does not state\b")
+        self.assert_sentence(step, r"\bshares apply before or after the streamed amounts\b",
+                             r"\bquestion for the trustee and their lawyer\b")
+        # Step 2's schedule exists before the comparison.
+        self.assert_sentence(step, r"\btrust-law income\b", r"\bprepared before this schedule\b")
         self.assert_carries(section("au-trust-distributions", "Inputs"), "proposed distribution plan")
         self.assert_sentence(section("au-trust-distributions", "Hand-off"), r"\bresolution content schedule\b",
                              NOT + r"resolution wording\b")

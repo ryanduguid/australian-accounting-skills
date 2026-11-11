@@ -55,12 +55,13 @@ text, nor any AUSTRAC page, is supplied.
 - Give each row its provision in the AML/CTF Act or AML/CTF Rules, the
   compilation in force, the evidence held, the gap, the owner, the status and
   the next action.
-- Record as gaps the missing fit and proper assessment and AUSTRAC notice,
-  the 2 staff without personnel due diligence records, and the missing
-  independent evaluation report, risk assessment and policy reviews,
-  compliance report records and governing body reports.
-- Record the date each period runs from where the records give one, and
-  leave whether anything was due or late to the AML/CTF compliance officer.
+- Record as gaps the missing fit and proper assessment and AUSTRAC notice
+  and the 2 staff without personnel due diligence records.
+- Record that no independent evaluation report, risk assessment or policy
+  review, compliance report record or governing body report is held, each
+  with the date its period runs from where the records give one, as a
+  question for the AML/CTF compliance officer, not as a gap.
+- Leave whether anything was due or late to the AML/CTF compliance officer.
 - Record the company secretarial question for the AML/CTF compliance officer.
 - Route the 2 client-level gaps to `au-aml-ctf-client-coverage` without
   repeating its checks.
@@ -69,6 +70,7 @@ text, nor any AUSTRAC page, is supplied.
 
 ## Must not do
 
+- Do not record as a gap an item whose period has not ended.
 - Do not state that the firm meets or breaches any AML/CTF obligation, as the
   practice manager asks.
 - Do not decide whether the company secretarial service, or any other
