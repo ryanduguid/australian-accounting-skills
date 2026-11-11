@@ -51,6 +51,10 @@
   skill: au-gst-property
   not: [au-capital-gains]
   prompt: A client sold a tenanted commercial building. Is the sale a GST-free supply of a going concern, and what documents show that it qualifies?
+- id: gst-farmland-sale
+  skill: au-gst-property
+  not: [au-primary-production, bas-preparation]
+  prompt: A client is selling the grazing property they have run cattle on for 12 years to a buyer who says they will keep running cattle there. Can the sale be GST-free, and what does the contract and settlement file need to show?
 - id: fuel-tax-credit-earthmoving
   skill: fuel-tax-credits
   not: [bas-preparation]
@@ -131,6 +135,10 @@
   skill: au-primary-production
   not: [au-non-commercial-losses]
   prompt: A grain farmer withdrew a farm management deposit early after a dry year and asks how income averaging and his cattle numbers affect this year's return.
+- id: farm-succession-evidence
+  skill: au-primary-production
+  not: [au-restructure-rollovers, au-deceased-estates]
+  prompt: A dairy farmer in his sixties plans to hand the farm, the herd and the machinery to his son over the next 2 years. Prepare what the tax adviser needs, including what happens to his farm management deposits and income averaging.
 - id: late-super-statement
   skill: au-super-guarantee-charge
   not: [stp-finalisation, contractor-super-tpar]

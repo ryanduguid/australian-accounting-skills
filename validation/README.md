@@ -116,6 +116,7 @@ law claim, unverified source or guess.
 | [Foreign income and tax-offset workpapers: missing evidence](cases/au-foreign-income-missing-evidence.md) | au-foreign-income |
 | [Foreign currency tax reconciliation: missing evidence](cases/au-forex-review-missing-evidence.md) | au-forex-review |
 | [Property GST review pack: missing evidence](cases/au-gst-property-missing-evidence.md) | au-gst-property |
+| [Grazing land sold after destocking and a subdivided lot passed to a family member](cases/au-gst-property-farm-land-and-associate-lot.md) | au-gst-property |
 | [GST turnover and purchase credits: missing evidence](cases/au-gst-registration-review-missing-evidence.md) | au-gst-registration-review |
 | [Individual return preparation pack: missing evidence](cases/au-individual-return-missing-evidence.md) | au-individual-return |
 | [Individual return occupation-guide review](cases/au-individual-return-occupation-guide.md) | au-individual-return |
@@ -184,6 +185,7 @@ law claim, unverified source or guess.
 | [Year-end records request built from the prior year](cases/au-individual-return-records-request.md) | au-individual-return |
 | [Rezoned Victorian land with a deferred windfall gains tax and a lot sale](cases/au-land-tax-windfall-gains-deferral.md) | au-land-tax |
 | [Early farm management deposit withdrawal with unvalued natural increase](cases/au-primary-production-early-fmd-withdrawal.md) | au-primary-production |
+| [Mixed farm passing to the next generation with 2 land blocks and a continuing minority partner](cases/au-primary-production-farm-succession-evidence.md) | au-primary-production |
 | [Draft ruling application that omits a related-party loan](cases/au-private-ruling-application-omitted-loan.md) | au-private-ruling-application |
 | [Practitioner's trust receives most of the firm profit without a remuneration benchmark](cases/au-professional-firm-profits-trust-heavy-allocation.md) | au-professional-firm-profits |
 | [Family home block subdivided into 3 lots with conflicting statements of intention](cases/au-property-development-income-three-lot-subdivision.md) | au-property-development-income |
@@ -286,6 +288,8 @@ timing difference. They have no recorded run.
 
 The 3 cards added on 11 November 2026 for SMSF death benefits, private company
 dividend preparation and a family trust election have no recorded run.
+
+The farm land GST and farm succession cards added on 11 November 2026 have no recorded run.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

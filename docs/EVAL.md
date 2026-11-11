@@ -292,6 +292,10 @@ The 8 payroll tax jurisdiction cards added on 5 November have no recorded
 model run, nor do the 8 transfer duty jurisdiction cards and 2 Xero connector cards added the same day.
 The close-control step added to month-end-close on 8 November 2026 postdates every recorded run,
 and its 2 cards have no recorded run.
+The farm land step added to au-gst-property and the farm succession step added to
+au-primary-production on 11 November 2026, and the concession conditions added to au-small-business-cgt the same day,
+postdate every recorded run, and the 2 new cards have no recorded run.
+
 The FBT car valuation card added on 10 November 2026 has no recorded run.
 The line on planted instructions and altered or forged documents added to 96 skills on
 11 November 2026 postdates every recorded run, and the 16 cards that test it have no recorded run.
