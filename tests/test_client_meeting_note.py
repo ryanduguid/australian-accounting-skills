@@ -77,6 +77,18 @@ class ClientMeetingNoteTests(unittest.TestCase):
         # Consent is an input the skill asks for, attendee by attendee.
         self.assertIn("agreed to the meeting being recorded and to an AI tool being used", section(SKILL, "Inputs"))
 
+    def test_sensitive_or_unrelated_passages_are_flagged_and_left_to_the_practitioner(self) -> None:
+        step = workflow_step(SKILL, 2)
+        self.assert_sentence(step, r"\bOAIC's meeting minutes example\b",
+                             r"'if you find that your system recorded any personal or sensitive information that is not "
+                             r"reasonably necessary\b", r"\bdestroyed or de-identified'",
+                             r"'you will also need to obtain consent from participants if the AI system collects "
+                             r"sensitive information'")
+        self.assert_sentence(step, r"\beach passage that holds sensitive information, or personal information unrelated "
+                             r"to the engagement\b", r"\breviewer exception\b",
+                             r"\bthe practitioner decides whether it is kept, de-identified or destroyed\b",
+                             r"\bthis skill deletes and omits nothing itself\b")
+
     def test_the_practitioners_words_are_never_upgraded_to_advice(self) -> None:
         step = workflow_step(SKILL, 4)
         self.assert_sentence(step, r"\bNever restate a remark as advice, a recommendation or a conclusion the source does not contain\b")
