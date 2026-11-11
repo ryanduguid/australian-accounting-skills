@@ -52,6 +52,27 @@ fn a_trace_that_names_the_graders_fails_and_a_clean_one_passes() {
     assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
 }
 
+/// A suspect folder that ends the path is followed by the JSON quotation mark
+/// or by a space, not by a separator.
+#[test]
+fn a_suspect_folder_at_the_end_of_a_path_is_flagged() {
+    let folder = tempfile::tempdir().unwrap();
+    let grep = r#"{"message":{"content":[{"type":"tool_use","name":"Grep","input":{"path":"/copy/graders"}}]}}"#;
+    let ls = r#"{"message":{"content":[{"type":"tool_use","name":"Bash","input":{"command":"ls /copy/evals"}}]}}"#;
+    let notes = r#"{"message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"/copy/evals-notes"}}]}}"#;
+    write(folder.path(), "clean", &[notes]);
+    assert_eq!(
+        audit(folder.path(), &["."]),
+        (0, "traces=1 flagged=0\n".into(), String::new())
+    );
+    write(folder.path(), "run", &[grep, ls]);
+    let expected = format!(
+        "FLAG {}\n  Grep {{\"path\": \"/copy/graders\"}}\n  Bash {{\"command\": \"ls /copy/evals\"}}\ntraces=2 flagged=1\n",
+        shown("run")
+    );
+    assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
+}
+
 /// Python's re.I reads a dotless or dotted I as `i`.
 #[test]
 fn a_dotless_or_dotted_i_still_matches() {
