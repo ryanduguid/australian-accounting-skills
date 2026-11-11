@@ -15,7 +15,7 @@ election, the limits on later variation and revocation, and a form data sheet.
 dividend: dividend rights, the s 254T evidence, a resolution schedule, the
 benchmark position, draft distribution statements, the projected franking
 entries and the Division 7A set-off route. `au-smsf-year-end` routes a member's
-death to the new skill. Three synthetic cards bring the validation pack to 182 and
+death to the new skill. Three synthetic cards bring the validation pack to 183 and
 3 routing prompts bring the routing set to 44, with no recorded model run for
 any of them. The new source records await human review.
 
