@@ -308,7 +308,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 228 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 229 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -334,7 +334,7 @@ au-main-residence and au-share-buy-back skills have no recorded run, nor do the 
 added on 12 November 2026 for the new myob-exports skill.
 
 The 2 cards and the routing prompt added on 12 November 2026 for the new au-client-meeting-note
-skill have no recorded run, nor do the 2 cards and the routing prompt added that day for the new
+skill have no recorded run, nor do the 3 cards and the routing prompt added that day for the new
 marketplace-settlements skill.
 
 The 14 cards added on 12 November 2026 for steps that turn working into a draft request, a
