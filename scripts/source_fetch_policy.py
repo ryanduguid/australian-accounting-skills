@@ -11,7 +11,10 @@ MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 READ_CHUNK_BYTES = 64 * 1024
 MAX_REDIRECTS = 3
 # Reviewed against the public index on 3 October 2026; docs.peppol.eu, OpenPeppol's
-# specification site, added 26 October 2026. An index cannot authorise itself.
+# specification site, added 26 October 2026. The Victorian, Western Australian,
+# South Australian, Tasmanian, ACT and Northern Territory legislation registers,
+# the official sources for their Acts, added 11 November 2026. An index cannot
+# authorise itself.
 APPROVED_HOSTS = frozenset({
     "www.austrac.gov.au", "www.legislation.gov.au", "www.ato.gov.au", "www.asic.gov.au",
     "apesb.org.au", "www.tpb.gov.au", "standards.aasb.gov.au", "www.revenue.nsw.gov.au",
@@ -22,6 +25,8 @@ APPROVED_HOSTS = frozenset({
     "www.caselaw.nsw.gov.au", "www.legislation.qld.gov.au", "github.com",
     "www.fedcourt.gov.au", "www.art.gov.au", "docs.peppol.eu", "www.aph.gov.au",
     "community.owasp.org", "central.xero.com", "www.myob.com",
+    "www.legislation.vic.gov.au", "www.legislation.wa.gov.au", "www.legislation.sa.gov.au",
+    "www.legislation.tas.gov.au", "www.legislation.act.gov.au", "legislation.nt.gov.au",
 })
 APPROVED_REDIRECT_EDGES: frozenset[tuple[str, str]] = frozenset()
 

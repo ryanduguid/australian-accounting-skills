@@ -105,7 +105,8 @@ jobs:
   # The native Rust tooling in tools/accounting-skills. Its build-coverage,
   # sweep-outcome, prepare-trial and build-plugin-evals commands are the only
   # implementations, and this job's build-coverage --check is the coverage
-  # matrix gate. For the scripts still in scripts/ it is a candidate port, so
+  # matrix gate. Its check-citations is the citation gate: every section and
+  # ruling a skill cites needs a record in that skill's sources.json. For the scripts still in scripts/ it is a candidate port, so
   # the job replays their original tests and fabricated comparisons against it.
   # No indexed source is fetched.
   native:
@@ -185,6 +186,7 @@ jobs:
         run: |
           target/release/accounting-skills validate-validation --root "$GITHUB_WORKSPACE"
           target/release/accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check > /dev/null
+          target/release/accounting-skills check-citations --root "$GITHUB_WORKSPACE"
 
       - name: Compare with the original scripts
         env:

@@ -37,6 +37,9 @@ fn run() -> Result<u8> {
     if command.as_deref() == Some(std::ffi::OsStr::new("statement-check")) {
         return accounting_skills::statement_check::cli(args);
     }
+    if command.as_deref() == Some(std::ffi::OsStr::new("check-citations")) {
+        return accounting_skills::citations::cli(args);
+    }
     if command.as_deref() == Some(std::ffi::OsStr::new("sweep-outcome")) {
         return accounting_skills::sweep::cli(args);
     }

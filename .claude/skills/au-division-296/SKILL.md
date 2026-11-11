@@ -11,7 +11,7 @@ Income year, the individual's total superannuation balance (TSB) reported for ea
 
 ## Workflow
 
-1. Confirm the law applies to the year. Division 296 of the Income Tax Assessment Act 1997 was inserted by the Treasury Laws Amendment (Building a Stronger and Fairer Super System) Act 2026 and applies from the 2026-27 income year. Read the large and very large superannuation balance thresholds for the year from sections 296-30 and 296-35 or the ATO page; they are indexed after 2026-27.
+1. Confirm the law applies to the year. Division 296 of the Income Tax Assessment Act 1997 was inserted by the Treasury Laws Amendment (Building a Stronger and Fairer Super System) Act 2026 and applies from the 2026-27 income year. Read the large and very large superannuation balance thresholds for the year from sections 296-30 and 296-35 of the ITAA 1997 or the ATO page; they are indexed after 2026-27.
 
 2. Work out the TSB reference amount. For 2026-27, use the TSB at the end of the year only. From 2027-28, use the greater of the TSB just before the start of the year and at the end of the year. Remove limited recourse borrowing arrangement amounts. Tie each interest's value to the fund's report.
 
@@ -19,7 +19,7 @@ Income year, the individual's total superannuation balance (TSB) reported for ea
 
 4. Total superannuation earnings: add the relevant earnings each fund reports, including interests held as a reversionary retirement phase recipient or notionally through a family law split. Treat excluded interests and foreign fund interests as nil. A missing fund report leaves the total `UNVERIFIED`.
 
-5. Compute the proportion above each threshold: (reference amount less threshold) divided by reference amount, times 100, rounded to 2 decimal places as section 296-40 directs. Apply the proportion to total superannuation earnings for the large threshold component and, where relevant, the very large threshold component.
+5. Compute the proportion above each threshold: (reference amount less threshold) divided by reference amount, times 100, rounded to 2 decimal places as section 296-40 of the ITAA 1997 directs. Apply the proportion to total superannuation earnings for the large threshold component and, where relevant, the very large threshold component.
 
 6. Apply the rates in the Superannuation (Building a Stronger and Fairer Super System) Imposition Act 2026 for each component, cross-checked against the ATO page. Show each component, its rate and the source separately.
 

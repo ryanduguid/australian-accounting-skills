@@ -15,6 +15,38 @@
       "content_hash": "3c1a93cb7176a1b743485b9c677e00fede72c1cb082e84d742e36992a35be6fe",
       "content_hash_covers": "html",
       "source_last_modified": "2026-06-23"
+    },
+    {
+      "title": "Taxation Administration Act 1953",
+      "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00468, in force from 1 October 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "PCG 2026/D3 Dynamic pay as you go instalments and general interest charge on excessive variation - ATO compliance approach",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=DPC/PCG2026D3/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database; it is a draft for comment, not a final ruling. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=DPC/PCG2026D3/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

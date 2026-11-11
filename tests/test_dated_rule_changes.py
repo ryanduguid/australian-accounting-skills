@@ -1413,7 +1413,7 @@ class DatedRuleChangeTests(unittest.TestCase):
             step, r"\bno rate\b", r"\bthreshold\b", r"\btaxing date\b", r"\bdue date\b", r"\bfee\b",
             affirmed=(r"\bread each from the revenue office's current page\b",),
         )
-        self.assert_sentence(step, r"\blegislation register links\b", NOT + r"indexed\b", r"\boutside the reviewed fetch list\b")
+        self.assert_sentence(step, r"\blegislation register links\b", NOT + r"indexed\b", r"\byet\b")
         self.assert_sentence(step, affirmed=(r"\bconfirm each row\b[^.]*\bAct for the assessment year\b",))
         self.assert_sentence(step, r"\bdecides no liability, exemption or surcharge\b")
 

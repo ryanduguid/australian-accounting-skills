@@ -34,12 +34,13 @@ python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
 ```
 
-Those 8 checks are the gates `.github/workflows/verify.yml` runs. Ruff,
+Those 9 checks are the gates `.github/workflows/verify.yml` runs. Ruff,
 Pyright, ShellCheck and actionlint run in its `lint` job, then 3 verification
-checks run on Python 3.14 and 3.15, and the coverage check runs in its
-`native` job.
+checks run on Python 3.14 and 3.15, and the coverage and citation checks run
+in its `native` job.
 `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 A third job scans the full history with gitleaks.
