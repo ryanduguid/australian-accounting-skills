@@ -227,7 +227,7 @@
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
       "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Only the definitions of potential residential land and property subdivision plan were read; the plain HTTP request failed and the page was read through a local browser.",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. The definitions of potential residential land, property subdivision plan and representative were checked by an agent in the saved 11 November 2026 extract; the initial plain HTTP request failed and the page was read through a local browser.",
       "final_url": "https://www.ato.gov.au/law/view/document?docid=PAC/19990055/195-1",
       "http_status": 200,
       "fetched_at": "2026-11-11",
