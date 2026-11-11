@@ -113,8 +113,11 @@ class MyobExportsTests(unittest.TestCase):
         route = section(SKILL, "Read-only connector route")
         self.assertIn("Only MYOB's own connector qualifies.", route)
         self.assertIn("Stop on any other MYOB connection", route)
-        self.assertIn("no allowlist exists yet", route)
-        self.assertIn("creates, updates, deletes, posts, sends or approves anything", route)
+        # The tool gate fails closed: a tool passes only once confirmed by name, never for lacking a write verb.
+        self.assertIn("Stop on any tool a reviewer has not confirmed, by name, as read-only", route)
+        self.assertIn("including one whose name or description is unclear", route)
+        self.assertIn("this skill holds no allowlist", route)
+        self.assertNotIn("Stop if any tool's name or description creates", route)
         self.assertIn("If a check fails or cannot be completed, stop, call nothing on that connection", route)
 
     def test_api_reads_are_reconstructions_and_unfollowed_pages_are_truncated(self) -> None:
