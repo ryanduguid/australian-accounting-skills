@@ -6,19 +6,24 @@
 //!
 //! A ruling, determination, practice statement, guideline or TPB or ASIC
 //! guidance number resolves when a record's title or address names the same
-//! document. A section resolves when a record taken from a legislation register
-//! (a Federal Register, ATO legal database or state or territory register
-//! address) names the Act, regulations or instrument the section belongs to.
+//! document. A section resolves when a record whose address is a legislation
+//! register document (on the Federal Register, the ATO legal database or a
+//! state or territory register) is a copy of the Act, regulations or
+//! instrument the section belongs to: the first instrument the record's title
+//! names, in the register's jurisdiction, with a year its identifier allows.
 //! That instrument must be named in the section's own sentence: right after
 //! the section ("s 8-1 of the ITAA 1997"), right before it ("ITAA 1997 s 8-1"),
 //! or as the only instrument the sentence names apart from an amending Act and
 //! one that owns another section. When the only Act a sentence names sits
 //! right after its first section, it owns the sentence's other sections too.
 //! A sentence may run across a paragraph's wrapped lines but never past a
-//! blank line, heading, list item or table row. A section whose sentence names
-//! no instrument, or more than one, is reported; "section 3 below" is a
-//! cross-reference and is not counted. The check does not confirm that the
-//! section exists or says what the skill claims.
+//! blank line, heading, list item or table row, and one that starts with a
+//! section ("s 8-1 allows") is a new sentence. A section whose sentence names
+//! no instrument, or more than one, or that is said to be of an instrument the
+//! text does not name in full ("of the Act", "of that Act", "of the
+//! Administration Act"), is reported; "section 3 below" is a cross-reference
+//! and is not counted. The check does not confirm that the section exists or
+//! says what the skill claims.
 
 use crate::{Result, canonical_root, discover_skills, platform_text, read_text};
 use fancy_regex::{Captures, Regex};
@@ -144,15 +149,28 @@ const LEADING_NOISE: &[&str] = &[
     "The", "Under", "This", "See", "In", "Read", "Apply", "Use", "Record", "Check", "Confirm",
     "Open", "Each",
 ];
-static REGISTER_ID: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?<![A-Za-z0-9])([CF]\d{4}[AL]\d{5})(?![A-Za-z0-9])").unwrap());
-static PAC_ID: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)DocID=PAC/(\d{8})").unwrap());
-static STATE_URL: LazyLock<Regex> = LazyLock::new(|| {
+// The addresses of a document on a legislation register. A Federal Register
+// series identifier names an Act (A) or another instrument; a compilation (C)
+// names a version, so it is not one. In an Act's identifier the year is the
+// Act's, except that many Acts made before 2005 carry 2004 ("C2004A05138" is
+// the Income Tax Assessment Act 1997).
+static FEDERAL_DOCUMENT: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
-        r#"(?i)https?://(?:www\.)?legislation\.(?:nsw|qld|vic|sa|wa|tas|act|nt)\.gov\.au/[^\s)"\]]*"#,
+        r"^https?://(?:www\.)?legislation\.gov\.au/(?:Details/)?(([CF])(\d{4})([ABD-Z])\d{5})(?![A-Za-z0-9])",
     )
     .unwrap()
 });
+// The ATO legal database's copy of an Act: the year, then the Act's number.
+static PAC_DOCUMENT: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^https?://(?:www\.)?ato\.gov\.au/law/view/document\?(?:\S*&)?DocID=PAC/((\d{4})\d{4})(?![0-9])")
+        .unwrap()
+});
+static STATE_DOCUMENT: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^https?://(?:www\.)?legislation\.(nsw|qld|vic|sa|wa|tas|act|nt)\.gov\.au/")
+        .unwrap()
+});
+static YEAR: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?<![0-9])(?:18|19|20)\d{2}(?![0-9])").unwrap());
 // The part of a state or territory register address that names the Act, in
 // the order to try them: a Western Australian address also holds "/legislation/".
 static STATE_IDS: LazyLock<Vec<Regex>> = LazyLock::new(|| {
@@ -168,8 +186,6 @@ static STATE_IDS: LazyLock<Vec<Regex>> = LazyLock::new(|| {
     .map(|pattern| Regex::new(pattern).unwrap())
     .collect()
 });
-static STATE_HOST: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^https?://(?:www\.)?([^/]+)").unwrap());
 static PROFESSIONAL_STANDARD: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"(?<![A-Za-z0-9])APES \d+").unwrap());
 static LINK: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\[[^\]]*\]\([^)\s]+\)").unwrap());
@@ -202,23 +218,36 @@ static FOLLOWING_GAP: LazyLock<Regex> = LazyLock::new(|| {
     ))
     .unwrap()
 });
-// A section followed by an instrument the text does not name: "s 31 of the Act".
+// A section followed by an instrument the text does not name in full: "s 31 of
+// the Act", "s 44 of the Administration Act", "s 8-1 of that Act".
 static UNNAMED: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
-        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{1,5}\))+)*,? (?:of|in|under) (the \*?(?:Act|Regulations?|Rules|Determination))(?![A-Za-z0-9]|\*? \d{4})",
+        r"^(?:,? (?:and|or|to) (?:\([0-9A-Za-z]{1,5}\))+)*,? (?:of|in|under) ((?:the|that|this) \*?(?:[A-Z(][\w/()'’-]* )*(?:Act|Regulations?|Rules|Determination))(?![A-Za-z0-9]|\*? \d{4})",
     )
     .unwrap()
+});
+// Words that describe an Act as amending another: "the X Act 2026 inserted s
+// 26-155", "s 26-155 as inserted by the X Act 2026".
+static AMENDS: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+        r"^\*?,? (?:which |that )?(?:inserted|inserts|amended|amends|substituted|substitutes|repealed|repeals|omitted|omits)\b",
+    )
+    .unwrap()
+});
+static AMENDED_BY: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"\b(?:inserted|amended|substituted|repealed|omitted) by (?:the )?[*\[]*$").unwrap()
 });
 // What may sit between an Act and a section it names right after it:
 // "Fuel Tax Act 2006 s 41-5", "*ITAA 1997* s 8-1", "[TASA](https://...) s 30-35".
 // Not a bracket: "via s 50 of the Corporations Act (s 79(3))" cites another Act.
 static PRECEDING_GAP: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[*\]]*(?:\([^)\s]*\))?[ *]*$").unwrap());
-// A sentence ends at a full stop, question or exclamation mark, the closing
-// marks after it and a space, unless a lower-case letter or digit follows
-// ("e.g. the", "No. 1"). A sentence never starts with a numeral.
+// Case and digits do not decide sentence ownership. Only explicit
+// abbreviations keep a full stop inside the sentence.
 static SENTENCE_END: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r#"[.!?][*_)\]'"’”]* +(?![ a-z0-9])"#).unwrap());
+    LazyLock::new(|| Regex::new(r#"[.!?][*_)\]'"’”]* +"#).unwrap());
+static ABBREVIATION_END: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"\b(?:e\.g|i\.e)\.$").unwrap());
 static LIST_ITEM: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^\s*(?:[-*+]|\d+[a-z]?[.)])\s").unwrap());
 
@@ -374,7 +403,7 @@ fn title_words(text: &str, end: usize) -> (Vec<&str>, usize) {
         }
         let mut first = gap;
         while let Some((position, character)) = previous(text, first) {
-            if character.is_alphanumeric() || matches!(character, '-' | '\'' | '’') {
+            if character.is_alphanumeric() || matches!(character, '-' | '\'' | '’' | '/') {
                 first = position;
             } else {
                 break;
@@ -404,72 +433,143 @@ fn title_words(text: &str, end: usize) -> (Vec<&str>, usize) {
     (words.split_off(skip), start)
 }
 
-fn state_key(url: &str) -> String {
-    let url = unescape(url).to_lowercase();
-    let host = STATE_HOST
-        .captures(url.as_str())
-        .ok()
-        .flatten()
-        .map_or(String::new(), |found| group(&found, 1).to_string());
-    let id = STATE_IDS
-        .iter()
-        .find_map(|pattern| pattern.find(url.as_str()).ok().flatten())
-        .map_or_else(
-            || {
-                url.split('#')
-                    .next()
-                    .unwrap_or("")
-                    .trim_end_matches('/')
-                    .to_string()
-            },
-            |found| found.as_str().to_string(),
-        );
-    format!("{host} {id}")
-}
-
+/// The full title a short name stands for. An explicit title keeps its own
+/// year and jurisdiction: "Corporations Act 2001" is the Corporations Act, but
+/// "Fair Work Act 1994 (SA)" is not the Fair Work Act 2009.
 fn full_title(title: &str) -> String {
-    ABBREVIATIONS
-        .iter()
-        .find(|(name, _)| *name == title)
-        .map_or_else(|| title.to_string(), |(_, full)| (*full).to_string())
+    let full = |name: &str| {
+        ABBREVIATIONS
+            .iter()
+            .find(|(short, _)| *short == name)
+            .map(|(_, full)| *full)
+    };
+    if let Some(full) = full(title) {
+        return full.to_string();
+    }
+    if let Some((words, year, place)) = title_parts(title)
+        && let Some(full) = full(&words.join(" "))
+        && let Some((_, full_year, full_place)) = title_parts(full)
+        && full_year == year
+        && (place.is_empty() || place == full_place)
+    {
+        return full.to_string();
+    }
+    title.to_string()
 }
 
-/// The register identifiers and addresses in `text`: Federal Register series,
-/// ATO legal database Acts and state or territory register addresses. A
-/// compilation identifier names a version, not an instrument, so it is skipped.
-fn identifiers(text: &str) -> Result<Vec<(usize, Key)>> {
-    let mut found = Vec::new();
-    for (regex, kind) in [(&*REGISTER_ID, "register"), (&*PAC_ID, "pac")] {
-        for id in captures(regex, text)? {
-            found.push((span(&id).0, (kind, group(&id, 1).to_string())));
+/// A legislation register's copy of a document: its identifier, the
+/// jurisdiction whose register holds it and, where the identifier shows it,
+/// the year of the Act it is.
+struct RegisterCopy {
+    id: Key,
+    place: &'static str,
+    year: Option<(String, bool)>,
+    act: Option<bool>,
+}
+
+/// The register copy at `url`, or `None` when `url` is not the address of a
+/// document on a legislation register.
+fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
+    let url = unescape(url);
+    if let Some(found) = FEDERAL_DOCUMENT.captures(&url)? {
+        let act = group(&found, 2) == "C" && group(&found, 4) == "A";
+        return Ok(Some(RegisterCopy {
+            id: ("register", group(&found, 1).to_string()),
+            place: "Cth",
+            year: act.then(|| (group(&found, 3).to_string(), true)),
+            act: Some(act),
+        }));
+    }
+    if let Some(found) = PAC_DOCUMENT.captures(&url)? {
+        return Ok(Some(RegisterCopy {
+            id: ("pac", group(&found, 1).to_string()),
+            place: "Cth",
+            year: Some((group(&found, 2).to_string(), false)),
+            act: Some(true),
+        }));
+    }
+    let Some(found) = STATE_DOCUMENT.captures(&url)? else {
+        return Ok(None);
+    };
+    let register = group(&found, 1).to_lowercase();
+    let remainder = url[span(&found).1..].to_lowercase();
+    let document = remainder.split('#').next().unwrap_or("");
+    // South Australia's register identifies its document with the path
+    // parameter on /lz. Other query strings are not document identifiers.
+    let path = if register == "sa" && document.starts_with("lz?path=/c/a/") {
+        document.split('&').next().unwrap_or("")
+    } else {
+        document.split('?').next().unwrap_or("")
+    };
+    let Some(id) = STATE_IDS
+        .iter()
+        .find_map(|pattern| pattern.find(&path).ok().flatten())
+    else {
+        return Ok(None);
+    };
+    let place = match register.as_str() {
+        "nsw" => "NSW",
+        "qld" => "Qld",
+        "vic" => "Vic",
+        "sa" => "SA",
+        "wa" => "WA",
+        "tas" => "Tas",
+        "act" => "ACT",
+        _ => "NT",
+    };
+    let year = YEAR.find(id.as_str())?.map(|year| (year.as_str().to_string(), false));
+    Ok(Some(RegisterCopy {
+        id: ("state", format!("{register} {}", id.as_str())),
+        place,
+        year,
+        act: None,
+    }))
+}
+
+/// The keys of the instrument `copy` holds, named by `title`, or `None` when
+/// the copy's register or identifier names a different instrument.
+fn copy_keys(copy: &RegisterCopy, title: &str) -> Option<BTreeSet<Key>> {
+    let (words, year, place) = title_parts(title)?;
+    if copy.act.is_some_and(|act| act != (words.last() == Some(&"Act"))) {
+        return None;
+    }
+    if let Some((copy_year, federal)) = &copy.year {
+        let older = *federal && copy_year == "2004" && year < "2005";
+        if copy_year != year && !older {
+            return None;
         }
     }
-    for url in captures(&STATE_URL, text)? {
-        found.push((span(&url).0, ("state", state_key(group(&url, 0)))));
+    if !place.is_empty() && place != copy.place {
+        return None;
     }
-    Ok(found)
+    Some(BTreeSet::from([
+        ("title", format!("{} {year} ({})", words.join(" "), copy.place)),
+        copy.id.clone(),
+    ]))
 }
 
-/// Every Act or other instrument named on `line`, in order. An identifier or
-/// register address adds its key to a title named in the same Markdown link;
-/// alone it names nothing, since a bare compilation or amending instrument
-/// number is not the Act a section belongs to.
+/// Every Act or other instrument named on `line`, in order. A Markdown link to
+/// a legislation register document adds the document's identifier and
+/// jurisdiction to the title its text starts with, unless the document is
+/// another instrument; alone an address names nothing.
 fn anchors(line: &str) -> Result<Vec<Anchor>> {
     let mut found: Vec<Anchor> = Vec::new();
+    let explicit = captures(&TITLE_END, line)?;
     for name in captures(&ABBREVIATION, line)? {
         let (start, end) = span(&name);
+        // A short name inside an explicit title, such as "Fair Work Act" in
+        // "Fair Work Act 1994 (SA)", is part of that title.
+        if explicit.iter().any(|title| (start..end).contains(&span(title).0)) {
+            continue;
+        }
         found.push(Anchor {
             start,
             end,
             keys: Some(BTreeSet::from([("title", full_title(group(&name, 1)))])),
         });
     }
-    let named: Vec<(usize, usize)> = found.iter().map(|a| (a.start, a.end)).collect();
-    for title in captures(&TITLE_END, line)? {
+    for title in explicit {
         let (kind_start, end) = span(&title);
-        if named.iter().any(|(s, e)| (*s..*e).contains(&kind_start)) {
-            continue;
-        }
         let (words, start) = title_words(line, kind_start);
         if words.is_empty() {
             continue;
@@ -489,24 +589,6 @@ fn anchors(line: &str) -> Result<Vec<Anchor>> {
             keys: Some(BTreeSet::from([("title", full_title(&text))])),
         });
     }
-    let identified = identifiers(line)?;
-    for link in LINK.find_iter(line) {
-        let link = link?;
-        let range = link.start()..link.end();
-        let keys: Vec<Key> = identified
-            .iter()
-            .filter(|(start, _)| range.contains(start))
-            .map(|(_, key)| key.clone())
-            .collect();
-        for anchor in found
-            .iter_mut()
-            .filter(|anchor| range.contains(&anchor.start))
-        {
-            if let Some(names) = anchor.keys.as_mut() {
-                names.extend(keys.iter().cloned());
-            }
-        }
-    }
     for standard in PROFESSIONAL_STANDARD.find_iter(line) {
         let standard = standard?;
         found.push(Anchor {
@@ -516,7 +598,32 @@ fn anchors(line: &str) -> Result<Vec<Anchor>> {
         });
     }
     found.sort_by_key(|anchor| anchor.start);
+    for link in LINK.find_iter(line) {
+        let link = link?;
+        let Some(text_end) = link.as_str().find("](") else {
+            continue;
+        };
+        let Some(copy) = register_copy(&link.as_str()[text_end + 2..link.as_str().len() - 1])? else {
+            continue;
+        };
+        let range = link.start()..link.start() + text_end;
+        let first = found.iter_mut().find(|anchor| range.contains(&anchor.start));
+        if let Some(Anchor {
+            keys: Some(keys), ..
+        }) = first
+            && let Some(copied) = copy_keys(&copy, &title(keys))
+        {
+            *keys = copied;
+        }
+    }
     Ok(found)
+}
+
+/// The title among an instrument's keys.
+fn title(keys: &BTreeSet<Key>) -> String {
+    keys.iter()
+        .find(|(kind, _)| *kind == "title")
+        .map_or_else(String::new, |(_, title)| title.clone())
 }
 
 fn title_parts(title: &str) -> Option<(Vec<&str>, &str, &str)> {
@@ -535,13 +642,24 @@ fn titles(keys: &BTreeSet<Key>) -> Vec<(Vec<&str>, &str, &str)> {
         .collect()
 }
 
-/// Whether two sets of keys identify the same instrument. Titles match when
+/// Whether two sets of keys identify the same instrument. Titles must match:
 /// the year agrees, a stated jurisdiction agrees, and the shorter title of at
 /// least 2 words ends the longer, which tolerates a word a sentence or a
-/// record title puts in front.
+/// record title puts in front. Where both name a register copy of the same
+/// kind, the copies must be the same document too.
 fn same_instrument(cited: &BTreeSet<Key>, recorded: &BTreeSet<Key>) -> bool {
-    if !cited.is_disjoint(recorded) {
-        return true;
+    let copies = |keys: &BTreeSet<Key>, kind: &str| -> BTreeSet<String> {
+        keys.iter()
+            .filter(|(other, _)| *other == kind)
+            .map(|(_, id)| id.clone())
+            .collect()
+    };
+    let documents_agree = ["register", "pac", "state"].iter().all(|kind| {
+        let (one, other) = (copies(cited, kind), copies(recorded, kind));
+        one.is_empty() || other.is_empty() || !one.is_disjoint(&other)
+    });
+    if !documents_agree {
+        return false;
     }
     let recorded = titles(recorded);
     titles(cited).iter().any(|(words, year, place)| {
@@ -593,9 +711,13 @@ fn markdown_files(folder: &Path, files: &mut Vec<PathBuf>) -> Result<()> {
 }
 
 /// What each record of a skill's `sources.json` names: its rulings, and the
-/// instrument of each record taken from a legislation register. A record from
-/// anywhere else, such as an ATO web page or a ruling, may name an Act in its
-/// title without holding the Act's text, so it owns no section.
+/// instrument of each record whose address is a legislation register document.
+/// That instrument is the first one its title names, so a record of an
+/// amending Act or of an instrument made under an Act does not own the Act's
+/// sections, and a record whose register or identifier names another
+/// instrument than its title owns none. A record from anywhere else, such as
+/// an ATO web page or a ruling, may name an Act without holding its text, so it
+/// owns no section either.
 fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
@@ -621,18 +743,30 @@ fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
             .collect::<Vec<_>>()
             .join(" ");
         rulings.extend(record_rulings(&text)?);
-        let text = unescape(&text);
-        let mut keys: BTreeSet<Key> = identifiers(&text)?
+        let field = |name: &str| source.get(name).and_then(Value::as_str).unwrap_or("");
+        let Some(named) = anchors(&unescape(field("title")))?
             .into_iter()
-            .map(|(_, key)| key)
-            .collect();
-        if keys.is_empty() {
+            .next()
+            .and_then(|anchor| anchor.keys)
+        else {
             continue;
+        };
+        let mut keys = BTreeSet::new();
+        let mut agrees = true;
+        for url in ["url", "final_url", "content_url"].map(field) {
+            if let Some(copy) = register_copy(url)? {
+                match copy_keys(&copy, &title(&named)) {
+                    Some(copied) if keys.is_empty() || same_instrument(&copied, &keys) => {
+                        keys.extend(copied);
+                    }
+                    Some(_) => agrees = false,
+                    None => agrees = false,
+                }
+            }
         }
-        for anchor in anchors(&text)? {
-            keys.extend(anchor.keys.unwrap_or_default());
+        if agrees && !keys.is_empty() {
+            instruments.push(keys);
         }
-        instruments.push(keys);
     }
     Ok((rulings, instruments))
 }
@@ -685,8 +819,16 @@ fn blocks(text: &str) -> Result<Vec<Block>> {
 fn sentences(text: &str) -> Result<Vec<Range<usize>>> {
     let mut found = Vec::new();
     let mut start = 0;
-    for end in SENTENCE_END.find_iter(text) {
-        let end = end?.end();
+    for boundary in SENTENCE_END.find_iter(text) {
+        let boundary = boundary?;
+        let end = boundary.end();
+        if boundary.as_str().starts_with('.')
+            && (ABBREVIATION_END.is_match(&text[..boundary.start() + 1])?
+                || (text[..boundary.start()].ends_with("No")
+                    && text[end..].starts_with(|character: char| character.is_ascii_digit())))
+        {
+            continue;
+        }
         found.push(start..end);
         start = end;
     }
@@ -735,15 +877,21 @@ fn owners(
         beside.push(following.or(preceding));
     }
     // An amending Act holds amendments to other Acts, not the sections they
-    // insert, so it owns only a section named right beside it.
-    let amending = |anchor: &Anchor| {
-        anchor.keys.as_ref().is_some_and(|keys| {
-            keys.iter()
-                .any(|(kind, name)| *kind == "title" && name.contains(" Amendment "))
-        })
-    };
+    // insert, so it owns only a section named right beside it. It is known by
+    // "Amendment" in its title or by the sentence saying it amends.
+    // shortcut: an amending Act titled otherwise and not described so here,
+    // such as "the Integrity Measures Act 2026 applies", still owns the
+    // sentence's sections; recognising every one needs the register's metadata.
+    let mut amending = Vec::new();
+    for anchor in named {
+        amending.push(
+            anchor.keys.as_ref().is_some_and(|keys| title(keys).contains(" Amendment "))
+                || AMENDS.is_match(&sentence[anchor.end..])?
+                || AMENDED_BY.is_match(&sentence[..anchor.start])?,
+        );
+    }
     let mut distinct: Vec<usize> = Vec::new();
-    for index in (0..named.len()).filter(|&index| !tied[index] && !amending(&named[index])) {
+    for index in (0..named.len()).filter(|&index| !tied[index] && !amending[index]) {
         if !distinct
             .iter()
             .any(|&other| same_anchor(&named[index], &named[other]))
@@ -756,7 +904,7 @@ fn owners(
     // "Section 14ZU of the TAA 1953 requires ... the section 14ZW period".
     let opening = match beside.first() {
         Some(Some(Ok(first)))
-            if !amending(&named[*first])
+            if !amending[*first]
                 && (0..named.len())
                     .filter(|&index| tied[index])
                     .all(|index| same_anchor(&named[index], &named[*first])) =>

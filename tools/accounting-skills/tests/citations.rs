@@ -287,6 +287,260 @@ fn a_record_off_a_legislation_register_owns_no_section() {
     assert_eq!((report.sections, report.sections_resolved), (2, 2));
 }
 
+const FUEL: &str = r#"{"sources": [{"title": "Fuel Tax Act 2006",
+  "url": "https://www.legislation.gov.au/C2006A00072/latest/text"}]}"#;
+
+fn record(title: &str, url: &str) -> String {
+    format!(r#"{{"sources": [{{"title": "{title}", "url": "{url}"}}]}}"#)
+}
+
+/// The only unmatched citation in a skill holding `text` and `sources`, after
+/// checking that the command exits 2.
+fn only_unmatched(text: &str, sources: &str) -> Unmatched {
+    let root = tempfile::tempdir().unwrap();
+    skill(root.path(), "alpha", text, Some(sources));
+    assert_eq!(run(root.path()).0, 2, "{text}");
+    let mut report = check(root.path()).unwrap();
+    assert_eq!(report.unmatched.len(), 1, "{:?}", report.unmatched);
+    report.unmatched.remove(0)
+}
+
+fn unmatched_in_alpha(line: usize, citation: &str, reason: &str) -> Unmatched {
+    missing(".claude/skills/alpha/SKILL.md", line, citation, reason)
+}
+
+// Each case is a citation an earlier version of the check credited to an Act
+// that is not its own, or to a record that is not a copy of its Act.
+#[test]
+fn a_sentence_that_starts_with_a_section_does_not_take_the_last_ones_act() {
+    let text = "Apply the Fuel Tax Act 2006 to the fuel. s 8-1 allows the deduction.\n";
+    assert_eq!(
+        only_unmatched(text, FUEL),
+        unmatched_in_alpha(1, "s 8-1", "names no Act")
+    );
+    let text = "1. Apply the Fuel Tax Act 2006 to the fuel.\n   s 8-1 allows the deduction.\n";
+    assert_eq!(
+        only_unmatched(text, FUEL),
+        unmatched_in_alpha(2, "s 8-1", "names no Act")
+    );
+}
+
+#[test]
+fn lower_case_and_numeric_sentence_starts_do_not_borrow_an_act() {
+    for text in [
+        "Fuel Tax Act 2006 applies. the deduction under s 8-1 needs review.\n",
+        "Fuel Tax Act 2006 applies. 2 taxpayers claim under s 8-1.\n",
+        "Fuel Tax Act 2006 applies? the deduction under s 8-1 needs review.\n",
+        "Fuel Tax Act 2006 applies! 2 taxpayers claim under s 8-1.\n",
+    ] {
+        assert_eq!(
+            only_unmatched(text, FUEL),
+            unmatched_in_alpha(1, "s 8-1", "names no Act")
+        );
+    }
+}
+
+#[test]
+fn explicit_abbreviations_keep_sections_in_their_sentence() {
+    for text in [
+        "Fuel Tax Act 2006 applies, e.g. s 41-5 needs review.\n",
+        "Fuel Tax Act 2006 applies, i.e. s 41-5 needs review.\n",
+        "Fuel Tax Act 2006 applies to example No. 1 under s 41-5.\n",
+    ] {
+        let root = tempfile::tempdir().unwrap();
+        skill(root.path(), "alpha", text, Some(FUEL));
+        assert_eq!(run(root.path()).0, 0, "{text}");
+        assert!(check(root.path()).unwrap().unmatched.is_empty());
+    }
+}
+
+#[test]
+fn an_act_the_text_does_not_name_in_full_is_not_another_named_act() {
+    let text = "Claim under s 44 of the Administration Act, and keep the records the Fuel Tax Act 2006 requires.\n";
+    assert_eq!(
+        only_unmatched(text, FUEL),
+        unmatched_in_alpha(
+            1,
+            "s 44",
+            "names its Act only as 'the Administration Act'"
+        )
+    );
+    let text = "Section 8-1 of that Act applies, unlike the Fuel Tax Act 2006.\n";
+    assert_eq!(
+        only_unmatched(text, FUEL),
+        unmatched_in_alpha(1, "Section 8-1", "names its Act only as 'that Act'")
+    );
+}
+
+#[test]
+fn an_act_the_sentence_says_amends_does_not_own_its_sections() {
+    let text = "The Tax and Superannuation Laws (Integrity Measures) Act 2026 inserted s 26-155.\n";
+    let sources = record(
+        "Tax and Superannuation Laws (Integrity Measures) Act 2026",
+        "https://www.legislation.gov.au/C2026A00077/asmade/text",
+    );
+    assert_eq!(
+        only_unmatched(text, &sources),
+        unmatched_in_alpha(1, "s 26-155", "names no Act")
+    );
+}
+
+#[test]
+fn a_record_owns_only_the_instrument_it_is_a_copy_of() {
+    let text = "Deduct under s 8-1 of the ITAA 1997.\n";
+    let itaa = "no record names its Act (Income Tax Assessment Act 1997)";
+    for (title, url) in [
+        // An instrument made under the Act.
+        (
+            "Fuel Tax (Correcting Fuel Tax Errors) Determination 2023, made under the Income Tax Assessment Act 1997",
+            "https://www.legislation.gov.au/F2023L01234/latest/text",
+        ),
+        // An Act that amends it.
+        (
+            "Treasury Laws Amendment (Tax Reform No. 1) Act 2026, amending the Income Tax Assessment Act 1997",
+            "https://www.legislation.gov.au/C2026A00049/asmade/text",
+        ),
+        // The Fuel Tax Act's register copy, titled as the ITAA 1997.
+        (
+            "Income Tax Assessment Act 1997",
+            "https://www.legislation.gov.au/C2006A00072/latest/text",
+        ),
+        // An F-series legislative instrument cannot be the Act its title names.
+        (
+            "Income Tax Assessment Act 1997",
+            "https://www.legislation.gov.au/F2023L01234/latest/text",
+        ),
+        // ATO guidance whose title holds the Act's register identifier.
+        (
+            "Income Tax Assessment Act 1997 C2004A05138",
+            "https://www.ato.gov.au/law/view/document?DocID=TXR/TR20103/NAT/ATO/00001",
+        ),
+    ] {
+        assert_eq!(
+            only_unmatched(text, &record(title, url)),
+            unmatched_in_alpha(1, "s 8-1", itaa),
+            "{title}"
+        );
+    }
+    // A record whose title names no jurisdiction takes its register's.
+    let text = "Apply s 32 of the Payroll Tax Act 2007 (Vic).\n";
+    let sources = record(
+        "Payroll Tax Act 2007",
+        "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+    );
+    assert_eq!(
+        only_unmatched(text, &sources),
+        unmatched_in_alpha(
+            1,
+            "s 32",
+            "no record names its Act (Payroll Tax Act 2007 (Vic))"
+        )
+    );
+}
+
+#[test]
+fn a_cited_title_is_not_replaced_by_its_link_or_a_short_name_inside_it() {
+    let itaa = "no record names its Act (Income Tax Assessment Act 1997)";
+    // A link to another Act's register copy.
+    let text = "Deduct under s 8-1 of the [ITAA 1997](https://www.legislation.gov.au/C2006A00072/latest/text).\n";
+    assert_eq!(
+        only_unmatched(text, FUEL),
+        unmatched_in_alpha(1, "s 8-1", itaa)
+    );
+    let text = "Deduct under s 8-1 of [ITAA 1997](https://www.legislation.gov.au/C1936A00027/latest/text).\n";
+    let sources = record(
+        "Income Tax Assessment Act 1936",
+        "https://www.legislation.gov.au/C1936A00027/latest/text",
+    );
+    assert_eq!(
+        only_unmatched(text, &sources),
+        unmatched_in_alpha(1, "s 8-1", itaa)
+    );
+    // "Fair Work Act" is the short name of the Fair Work Act 2009, not of
+    // South Australia's Fair Work Act 1994.
+    let text = "Apply s 4 of Fair Work Act 1994 (SA).\n";
+    let sources = record(
+        "Fair Work Act 2009",
+        "https://www.legislation.gov.au/C2009A00028/latest/text",
+    );
+    assert_eq!(
+        only_unmatched(text, &sources),
+        unmatched_in_alpha(
+            1,
+            "s 4",
+            "no record names its Act (Fair Work Act 1994 (SA))"
+        )
+    );
+}
+
+#[test]
+fn contradictory_register_copies_do_not_resolve_either_jurisdiction() {
+    let sources = r#"{"sources":[{
+        "title":"Payroll Tax Act 2007",
+        "url":"https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021",
+        "final_url":"https://www.legislation.vic.gov.au/in-force/acts/payroll-tax-act-2007"
+    }]}"#;
+    for place in ["Vic", "NSW"] {
+        let text = format!("Apply s 32 of Payroll Tax Act 2007 ({place}).\n");
+        assert_eq!(
+            only_unmatched(&text, sources),
+            unmatched_in_alpha(
+                1,
+                "s 32",
+                &format!("no record names its Act (Payroll Tax Act 2007 ({place}))")
+            )
+        );
+    }
+}
+
+#[test]
+fn a_register_homepage_or_search_query_is_not_a_document() {
+    let text = "Apply s 32 of Payroll Tax Act 2007 (NSW).\n";
+    for url in [
+        "https://legislation.nsw.gov.au/#act-2007-021",
+        "https://legislation.nsw.gov.au/search?query=act-2007-021",
+    ] {
+        assert_eq!(
+            only_unmatched(text, &record("Payroll Tax Act 2007", url)),
+            unmatched_in_alpha(
+                1,
+                "s 32",
+                "no record names its Act (Payroll Tax Act 2007 (NSW))"
+            )
+        );
+    }
+}
+
+#[test]
+fn a_state_register_link_and_a_schedule_resolve() {
+    let root = tempfile::tempdir().unwrap();
+    skill(
+        root.path(),
+        "alpha",
+        "Read [Payroll Tax Act 2007](https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021) s 32.\n\
+         Report under s 131-5 of Schedule 1 to the TAA 1953.\n",
+        Some(
+            r#"{"sources": [
+              {"title": "Payroll Tax Act 2007 (NSW)", "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021"},
+              {"title": "Taxation Administration Act 1953", "url": "https://www.legislation.gov.au/C1953A00001/latest/text"}
+            ]}"#,
+        ),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (2, 2));
+    // The link places the Act in New South Wales, so a Victorian copy is not it.
+    fs::write(
+        root.path().join(".claude/skills/alpha/sources.json"),
+        record(
+            "Payroll Tax Act 2007 (Vic)",
+            "https://www.legislation.vic.gov.au/in-force/acts/payroll-tax-act-2007",
+        ),
+    )
+    .unwrap();
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (2, 0));
+}
+
 #[test]
 fn a_malformed_index_or_root_is_refused() {
     let root = tempfile::tempdir().unwrap();
