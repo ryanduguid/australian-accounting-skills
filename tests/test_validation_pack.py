@@ -744,6 +744,60 @@ class RecordedRunTests(unittest.TestCase):
         with self.assertRaises(validator.ValidationError):
             validator.check_result_file(self.NAME, json.dumps(data))
 
+    def scored(self, **dimensions: str) -> dict:
+        data = self.version_two("confirmed")
+        score = dict.fromkeys(validator.RESULT_DIMENSIONS, "pass") | dimensions
+        data["scores"] = {"bas-g10-g11": score}
+        data["results"]["bas-g10-g11"] = "pass" if set(score.values()) == {"pass"} else "fail"
+        return data
+
+    def test_confirmed_scores_keep_each_dimension_separate(self) -> None:
+        for dimensions in ({}, {"refusal": "fail"}, {"correctness": "fail", "authority": "fail"}):
+            with self.subTest(**dimensions):
+                self.assertEqual(
+                    validator.check_result_file(self.NAME, json.dumps(self.scored(**dimensions))), "confirmed"
+                )
+
+    def test_scores_refuse_a_pooled_partial_or_unconfirmed_record(self) -> None:
+        cases = []
+        for verdict, dimensions in (("pass", {"refusal": "fail"}), ("fail", {})):
+            data = self.scored(**dimensions)
+            data["results"]["bas-g10-g11"] = verdict
+            cases.append((f"blended {verdict}", data, "only when every dimension passes"))
+        passes = dict.fromkeys(validator.RESULT_DIMENSIONS, "pass")
+        for label, score in (
+            ("one pooled score", {"overall": "pass"}),
+            ("missing dimension", {"correctness": "pass", "refusal": "pass"}),
+            ("extra dimension", passes | {"provenance": "pass"}),
+            ("not a verdict", passes | {"authority": "PASS"}),
+            ("not an object", "pass"),
+        ):
+            data = self.scored()
+            data["scores"]["bas-g10-g11"] = score
+            cases.append((label, data, "score must give pass or fail for each"))
+        for label, scores in (("uncovered card", {}), ("list", [passes])):
+            data = self.scored()
+            data["scores"] = scores
+            cases.append((label, data, "scores must cover exactly the confirmed verdicts"))
+        for status in ("prepared", "observed"):
+            data = self.version_two(status)
+            data["scores"] = {}
+            cases.append((status, data, "only human-confirmed trials may contain scores"))
+        legacy = json.loads(self.GOOD)
+        legacy["scores"] = {"bas-g10-g11": passes}
+        cases.append(("legacy", legacy, "result keys must be exactly"))
+        for label, data, reason in cases:
+            with self.subTest(label), self.assertRaisesRegex(validator.ValidationError, reason):
+                validator.check_result_file(self.NAME, json.dumps(data))
+
+    def test_one_record_cannot_pool_input_modes(self) -> None:
+        # Pins existing behaviour: the input_mode enum already refused these.
+        for mode in (["task-only", "whole-card"], "task-only,whole-card", "mixed"):
+            data = self.scored()
+            data["input_mode"] = mode
+            with self.subTest(mode=mode), self.assertRaisesRegex(validator.ValidationError, "input_mode"):
+                validator.check_result_file(self.NAME, json.dumps(data))
+
     def test_accepts_a_minimal_run(self) -> None:
         validator.check_result_file(self.NAME, self.GOOD)
 
@@ -824,6 +878,27 @@ class RecordedRunTests(unittest.TestCase):
                               ('"task-only"', '"unknown"')):
             with self.subTest(before=before), self.assertRaises(validator.ValidationError):
                 validator.check_results_schema(text.replace(before, after))
+
+    def test_schema_keeps_scores_dimensional_and_confirmed_only(self) -> None:
+        schema = json.loads(validator.read_utf8(REPOSITORY / "validation/results.schema.json"))
+        trial = ["allOf", 0, "then", "allOf", 0, "else"]
+        for path, change in (
+            (["properties"], lambda node: node.update(scores=[])),
+            (["properties", "scores", "additionalProperties", "required"], lambda node: node.remove("refusal")),
+            (["properties", "scores", "additionalProperties", "properties"],
+             lambda node: node.update(overall={"$ref": "#/properties/results/additionalProperties"})),
+            (trial, lambda node: node.pop("not")),
+            (["allOf", 0, "else", "not", "anyOf"], lambda node: node.pop()),
+        ):
+            changed = json.loads(json.dumps(schema))
+            node = changed
+            for key in path:
+                node = node[key]
+            change(node)
+            with self.subTest(path=path), self.assertRaisesRegex(validator.ValidationError, "contract has changed"):
+                validator.check_results_schema(json.dumps(changed))
+        schema["properties"]["scores"]["description"] = "Reworded."
+        validator.check_results_schema(json.dumps(schema))
 
     def test_inventory_splits_runs_from_the_fixed_set(self) -> None:
         fixed, runs = validator.split_result_files({

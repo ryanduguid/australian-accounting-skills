@@ -229,6 +229,33 @@
         ]
       }
     },
+    "scores": {
+      "type": "object",
+      "description": "Optional, confirmed version 2 records only: the confirmed verdict on each dimension, keyed by the same cards as results. A card's verdict in results is pass only when all 3 dimensions pass. The Python validator checks that match.",
+      "propertyNames": {
+        "$ref": "#/properties/results/propertyNames"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "correctness",
+          "refusal",
+          "authority"
+        ],
+        "properties": {
+          "correctness": {
+            "$ref": "#/properties/results/additionalProperties"
+          },
+          "refusal": {
+            "$ref": "#/properties/results/additionalProperties"
+          },
+          "authority": {
+            "$ref": "#/properties/results/additionalProperties"
+          }
+        }
+      }
+    },
     "schema_version": {
       "const": 2,
       "type": "integer"
@@ -325,6 +352,11 @@
                 "results": {
                   "maxProperties": 0
                 }
+              },
+              "not": {
+                "required": [
+                  "scores"
+                ]
               }
             }
           },
@@ -379,6 +411,11 @@
             {
               "required": [
                 "provenance"
+              ]
+            },
+            {
+              "required": [
+                "scores"
               ]
             }
           ]
