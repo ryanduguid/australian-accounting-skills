@@ -85,7 +85,9 @@ class FinancialModellingTests(unittest.TestCase):
 
     def test_three_way_card_fails_check_balance_on_the_opening_position(self) -> None:
         text = " ".join(card_text("financial-modelling-three-way").split())
-        self.assertIn("`check_balance` in the first month is 35000.00 - 10000.00 - 24000.00 = 1000.00, not zero", text)
+        # The build stops at the opening position, so the check is on the opening balance sheet, not a first month.
+        self.assertIn("so the opening balance sheet's `check_balance` is 35000.00 - 10000.00 - 24000.00 = 1000.00, not zero", text)
+        self.assertNotIn("first month", text)
         self.assertIn("do not plug the difference to equity, cash or a suspense line", text)
         self.assertIn("Do not hand over a forecast with a non-zero `check_balance` or `check_cash`", text)
         self.assertIn("Do not predict whether the business can afford the hire", text)

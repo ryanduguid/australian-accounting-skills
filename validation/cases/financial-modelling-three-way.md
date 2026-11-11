@@ -25,7 +25,7 @@ Only the supplied facts are available. The trial balance behind the opening posi
 
 ## Required checks
 
-- Show that total assets 20000.00 + 15000.00 = 35000.00 and total liabilities 8000.00 + 2000.00 = 10000.00, so `check_balance` in the first month is 35000.00 - 10000.00 - 24000.00 = 1000.00, not zero.
+- Show that total assets 20000.00 + 15000.00 = 35000.00 and total liabilities 8000.00 + 2000.00 = 10000.00, so the opening balance sheet's `check_balance` is 35000.00 - 10000.00 - 24000.00 = 1000.00, not zero.
 - Stop the build at the opening position: record the 1000.00 difference and the missing trial balance for the reviewer, and do not plug the difference to equity, cash or a suspense line.
 - Set out the remaining structure the section requires: linked monthly statements, working capital from the debtor and creditor days drivers, tax and payroll payable schedules, a loan schedule if there is debt, and `check_cash`.
 - Keep each tax and payroll due date `UNVERIFIED` with its payment month blank until a primary source or the reviewer supplies it.

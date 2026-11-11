@@ -16,6 +16,7 @@ import unittest
 
 from skill_prose import (
     DO_NOT,
+    IN_PROHIBITED_LIST,
     ISO_DATE,
     PENDING,
     PENDING_FACT,
@@ -89,12 +90,20 @@ class ResearchAndAtoDraftTests(unittest.TestCase):
     def test_partnership_variation_without_evidence_shows_both_clauses_and_changes_nothing(self) -> None:
         step = workflow_step(PARTNERSHIP, "1a")
         # Both splits side by side, the earlier clause kept in the schedule and the variation left open.
-        self.assert_sentence(step, r"\blacks execution evidence\b", r"\bpart-way through the year\b",
+        self.assert_sentence(step, r"\blacks execution evidence\b",
                              r"\bearlier and the varied clause side by side\b",
                              r"\bkeep the earlier clause in the allocation schedule\b",
                              r"\bleave the variation unresolved\b")
+        # An executed mid-year variation records both clauses with their dates; the reviewer decides which applies.
+        self.assert_sentence(step, r"\bexecuted variation changes a term part-way through the year\b",
+                             r"\bearlier and the varied clause, each with the dates it covers\b",
+                             r"\bleave which applies, and from when, to the reviewer\b")
         self.assert_sentence(step, r"\bno written agreement\b", r"\bconduct the evidence shows\b", r"\bTR 94/8\b",
                              r"\bparagraph 4\b")
+        # TR 94/8 paragraph 2 limits where the ruling applies.
+        self.assert_sentence(step, r"\bTR 94/8\b", r"\bparagraph 2\b",
+                             r"\bin receipt of income jointly, unless that income is derived from carrying on business\b",
+                             r"\blimited partnerships\b")
 
     def test_partnership_abstract_lists_questions_and_decides_and_drafts_nothing(self) -> None:
         step = workflow_step(PARTNERSHIP, "1a")
@@ -107,8 +116,12 @@ class ResearchAndAtoDraftTests(unittest.TestCase):
 
     def test_partnership_sources_are_indexed_and_pending(self) -> None:
         step = workflow_step(PARTNERSHIP, "1a")
+        # Both limbs of s 92(1): the resident period, and the Australian-source part of a non-resident period.
         self.assert_sentence(step, r"^Section 92\(1\) of the \[\*Income Tax Assessment Act 1936\*\]",
-                             r"\(compilation 193\)", r"\bs 90 of the ITAA 1936\b", r"\bnot a conclusion\b")
+                             r"\(compilation 193\)", r"\bs 90 of the ITAA 1936\b", r"\bnot a conclusion\b",
+                             r"\battributable to a period when the partner was a resident\b",
+                             r"\bwhen the partner was not a resident, only so much as is also attributable to sources in Australia\b",
+                             r"\bs 92\(1\)\(a\) and \(b\)")
         self.assert_carries(step, "Human review pending", "12 November 2026")
         self.assert_pending(PARTNERSHIP, ITAA_1936, TR_94_8)
 
@@ -126,8 +139,15 @@ class ResearchAndAtoDraftTests(unittest.TestCase):
 
     def test_budget_screen_applies_and_recommends_nothing(self) -> None:
         screen = lead_paragraph(RESEARCH, "Budget measure screen")
-        self.assert_sentence(screen, DO_NOT + r"apply a measure before it commences\b",
-                             r"\brecommend any action\b", r"\bgives no advice\b")
+        self.assert_sentence(screen, DO_NOT + r"apply a measure before it commences\b", r"\bgives no advice\b")
+        # Each mention of ranking or recommending is an item of the 'Do not' list, not merely beside it.
+        for action in (r"\brank the measures\b", r"\brecommend any action\b"):
+            with self.subTest(prohibited=action):
+                mentions = [sentence[: match.start()] for sentence in sentences(screen)
+                            for match in re.finditer(action, sentence, re.IGNORECASE)]
+                self.assertTrue(mentions, f"{action!r} is not named")
+                for before in mentions:
+                    self.assertRegex(before, re.compile(IN_PROHIBITED_LIST, re.IGNORECASE))
 
     def test_research_fact_request_is_a_draft_with_no_position(self) -> None:
         step = workflow_step(RESEARCH, 1)

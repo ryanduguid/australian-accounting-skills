@@ -61,11 +61,14 @@ class ClientRequestDraftTests(unittest.TestCase):
 
     def test_bas_unexplained_movements_become_client_questions(self) -> None:
         step = workflow_step("bas-preparation", 6)
-        self.assert_sentence(step, r"\bno supported explanation\b", r"\bone plain-words question\b",
-                             r"\bdraft client question list\b")
+        # A movement is flagged on its whole size; the unexplained part of a partly explained one is still asked about.
+        self.assert_sentence(step, r"\beach flagged movement, or the part of one, with no supported explanation\b",
+                             r"\bone plain-words question\b", r"\bdraft client question list\b")
         self.assert_sentence(step, r"\barea in words\b", r"\bthe period\b", r"\bthe movement\b",
-                             r"\bthe record that would explain it\b")
+                             r"\bthe record that would explain it\b", r"\bnot a label number\b")
+        self.assert_sentence(step, r"\bsuggests no reason the records do not show\b")
         checks = section("bas-preparation", "Checks before handing over")
+        self.assertIn("Each flagged movement, or the part of one, with no supported explanation", checks)
         self.assertIn("draft client question list, drafted and not sent", checks)
 
     # au-bookkeeping: row 46
@@ -76,6 +79,7 @@ class ClientRequestDraftTests(unittest.TestCase):
         self.assert_sentence(step, r"\binvoice or receipt\b", r"\bbusiness and private split\b")
         self.assert_sentence(step, r"\bstays? a suggestion\b", r"\buntil the client's answer\b")
         self.assert_sentence(step, DO_NOT + r"post it\b")
+        self.assert_sentence(step, r"\bsuggests no answer the records do not show\b")
         self.assertIn("draft client query list", section("au-bookkeeping", "Hand-off and checks"))
 
     # year-end-workpapers: rows 51 and 73
@@ -84,13 +88,19 @@ class ClientRequestDraftTests(unittest.TestCase):
         inputs = section("year-end-workpapers", "Inputs needed")
         self.assertIn("signed statements for the 2 prior years", inputs)
         step = workflow_step("year-end-workpapers", 5)
-        self.assert_sentence(step, r"\b3-column P&L and balance sheet\b", r"\breverses\b", r"\bmateriality\b")
+        self.assert_sentence(step, r"\b3-column P&L and balance sheet\b")
+        # Every line past materiality is flagged; the direction is a label on it, not a filter.
+        self.assert_sentence(step, r"\bflag each line with a movement past the engagement materiality in either year\b",
+                             r"\blabelled by whether its 2 movements reverse direction, continue the same way or include a nil one\b")
         self.assert_sentence(step, r"`div7a-compliance`")
         self.assert_sentence(step, r"\bstep 7\b", affirmed=(r"\bFeed each\b",))
         self.assert_sentence(step, r"\bonly one prior year\b", r"\b3-year view as `not run`")
 
     def test_year_end_records_request_starts_from_the_prior_year(self) -> None:
         step = workflow_step("year-end-workpapers", 0)
+        # Step 0 runs only while records are missing, and asks only for what inputs 2 and 3 do not supply.
+        self.assert_sentence(step, r"\bWhere the year's records are not yet all held, before step 1\b",
+                             r"\binputs 2 and 3 do not already supply\b")
         self.assert_sentence(step, r"\bprior year workpaper pack and trial balance\b", r"\bbank and loan statements\b",
                              r"\baged listings\b", r"\bstock count\b", r"\badditions and disposals\b", r"\bpayroll\b")
         self.assert_sentence(step, r"\bnew\b", DO_NOT + r"assume\b")

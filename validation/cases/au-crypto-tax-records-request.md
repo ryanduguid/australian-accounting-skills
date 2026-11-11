@@ -11,7 +11,7 @@ target_skills:
 
 Synthetic Entity N is a fabricated individual taxpayer. All records are invented for this case.
 
-Last year's workpaper shows closing holdings of 2 assets, Synthetic Coin A and Synthetic Coin B, held on Synthetic Exchange 1 and in one self-custody wallet. Synthetic Coin A was first bought 3 years before the current income year and some of it is still held. The client's email says 'I moved some coins around this year and got some free tokens', with no other detail. No current-year exports have been supplied.
+Last year's workpaper shows closing holdings of 2 assets, Synthetic Coin A and Synthetic Coin B, held on Synthetic Exchange 1 and in one self-custody wallet. Synthetic Coin A was first bought 3 years and Synthetic Coin B 5 years before the current income year, and some of each is still held. The workpaper does not show which asset is held where. The client's email says 'I moved some coins around this year and got some free tokens', with no other detail. No current-year exports have been supplied.
 
 ## Task
 
@@ -27,7 +27,7 @@ Current-year exchange and wallet exports, fiat cash statements, cost history and
 
 ## Required checks
 
-- List Synthetic Exchange 1 and the wallet, each with an export date range reaching back to the earliest acquisition of Synthetic Coin A still held.
+- List Synthetic Exchange 1 and the wallet, each with an export date range reaching back to the first purchase of Synthetic Coin B, 5 years before the current income year: it is the earlier of the 2 assets' earliest acquisitions, and the records do not show which asset is held where.
 - Ask for the opening holdings by asset and the fiat deposits and withdrawals at each on and off ramp.
 - Ask one question for each kind of activity (staking, airdrop, wrapping or unwrapping, bridge, NFT, other DeFi activity, and any exchange or wallet not listed), including about the 'free tokens' and the coins moved, without assuming which occurred.
 - Add a short cover note asking for the records.
