@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 184 cards in `cases/` test workflow quality, provenance and restraint.
+The 185 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -61,6 +61,7 @@ law claim, unverified source or guess.
 | [Super-regime transition cashflow](cases/cashflow-super-regime-transition.md) | cashflow-forecast-13week, stp-finalisation |
 | [Division 7A UPE review](cases/div7a-upe-review.md) | div7a-compliance, workpaper-tie-out |
 | [FBT car parking and missing declaration](cases/fbt-carparking-missing-declaration.md) | fbt-annual-workflow, stp-finalisation |
+| [FBT car valuation with and without operating cost records](cases/fbt-car-method-records-pair.md) | fbt-annual-workflow |
 | [Post-journal provenance tie-out](cases/post-journal-provenance-tie-out.md) | xero-exports, workpaper-tie-out, year-end-workpapers, month-end-close |
 | [Duplicate rows and a missing export](cases/xero-export-duplicate-and-missing.md) | xero-exports, workpaper-tie-out, bas-preparation |
 | [Debtor summary arithmetic and missing decision evidence](cases/debtor-summary-review.md) | xero-exports, month-end-close, workpaper-tie-out |
