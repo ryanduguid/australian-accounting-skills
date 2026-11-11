@@ -132,21 +132,21 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bNo other dwelling can be the main residence\b", r"\bs 118-140\b")
         self.assert_sentence(step, r"\bcannot cover a period before the dwelling first became the main residence\b")
         self.assert_sentence(step, r"\bnot available\b", r"\bs 118-147\(3\) and \(4\)",
-                             r"\(s 118-145\(3A\)\)")
+                             r"\(s 118-145\(3A\) of the ITAA 1997\)")
         # Building: life interest excluded, 3 months, 4-year limit.
         self.assert_sentence(step, r"\bother than a life interest\b", r"\bat least 3 months\b")
         self.assert_sentence(step, r"\bshorter of 4 years\b")
         # Compulsory acquisition or destruction: its deadlines, its income use limit and the overlap it allows.
         self.assert_sentence(step, r"\babsence choice under s 118-145\b",
                              r"\bone year after the end of the income year of the key event\b",
-                             r"\bCommissioner allows\b", r"\(s 118-147\(1\)\)")
+                             r"\bCommissioner allows\b", r"\(s 118-147\(1\) of the ITAA 1997\)")
         self.assert_sentence(step, r"\bwithin 4 years after the later of the key event\b",
-                             r"\bone year before the key event\b", r"\(s 118-147\(2\)\)")
-        self.assert_sentence(step, r"\bafter the later of the key event and the acquisition \(s 118-147\(3\)\)",
-                             r"\bjust before the key event\b", r"\bwhat remained of its s 118-145\(2\)",
-                             r"\(s 118-147\(4\)\)")
+                             r"\bone year before the key event\b", r"\(s 118-147\(2\) of the ITAA 1997\)")
+        self.assert_sentence(step, r"\bafter the later of the key event and the acquisition \(s 118-147\(3\) of the ITAA 1997\)",
+                             r"\bjust before the key event\b", r"\bwhat remained of its 6-year period under s 118-145\(2\) of the ITAA 1997",
+                             r"\(s 118-147\(4\) of the ITAA 1997\)")
         self.assert_sentence(step, r"\bold dwelling can still be the main residence before the key event\b",
-                             r"\(s 118-147\(6\)\(a\) and \(7\)\)")
+                             r"\(s 118-147\(6\)\(a\) and \(7\) of the ITAA 1997\)")
         self.assert_sentence(step, r"\bother than because of s 118-147\b", r"\bas soon as practicable\b")
         self.assert_sentence(step, r"\bduring the work\b",
                              r"\bafter it was finished but before moving in was practicable\b",
@@ -181,7 +181,7 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bincome use from acquisition\b", r"\bforeign resident\b")
         # Only a foreign resident who fails the life events test loses the rule.
         self.assert_sentence(step, r"\bs 118-192\(1\)\(a\)", r"\bforeign resident who does not satisfy the life events test\b",
-                             affirmed=(r"\btest s 118-192 on its conditions for one who does\b",))
+                             affirmed=(r"\btest s 118-192 of the ITAA 1997 on its conditions for one who does\b",))
         self.assert_sentence(step, r"\bUNVERIFIED\b", r"\baccepts a valuation\b")
         self.assert_sentence(step, r"\bappraisal is a screen\b", r"\bnot evidence of market value\b")
 
@@ -193,7 +193,7 @@ class CgtGapWorkflowTests(unittest.TestCase):
                              r"\bs 102-6\(4\) and \(5\)", r"\bboth leave out days\b")
         self.assert_sentence(step, r"\bnon-main residence days over the days in the ownership period\b")
         # Without an s 118-192 reset, income use is also weighed by time against the whole ownership period.
-        self.assert_sentence(step, r"\bwhere s 118-192 does not apply\b", r"\bTD 1999/66\b",
+        self.assert_sentence(step, r"\bwhere s 118-192 of the ITAA 1997 does not apply\b", r"\bTD 1999/66\b",
                              r"\bagainst the whole ownership period\b", r"\beven where the use ran to the sale\b",
                              r"\bincome use days and the ownership days\b")
         self.assert_sentence(step, r"\bevery input is supported\b", affirmed=(r"\bas preliminary\b",))
@@ -202,8 +202,8 @@ class CgtGapWorkflowTests(unittest.TestCase):
 
     def test_main_residence_overlap_check_keeps_its_exceptions(self) -> None:
         hand_off = section(MAIN_RESIDENCE, "Hand-off and checks")
-        self.assert_sentence(hand_off, r"\bno two dwellings\b", r"\bs 118-140\b", r"\bs 118-170 nomination\b",
-                             r"\bbefore the key event\b", r"\(s 118-147\(7\)\)")
+        self.assert_sentence(hand_off, r"\bno two dwellings\b", r"\bs 118-140\b", r"\bnomination under s 118-170 of the ITAA 1997\b",
+                             r"\bbefore the key event\b", r"\(s 118-147\(7\) of the ITAA 1997\)")
 
     def test_main_residence_sources_are_pending(self) -> None:
         self.assert_cited_and_recorded(
@@ -273,22 +273,22 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bbefore s 159GZZZPA\b")
         # A tainted share capital account is not one for s 159GZZZP, so its debit leaves the dividend whole.
         self.assert_carries(step, "s 197-5", "s 197-10", "s 197-15", "ss 197-50 and 197-55", "s 975-300(3)",
-                            "items 7A and 7B of the s 205-30 table", "(s 197-60)")
+                            "items 7A and 7B of the table in s 205-30 of the ITAA 1997", "(s 197-60 of the ITAA 1997)")
         # Every Subdivision 197-A exclusion with its conditions, and the excess each leaves taxed.
-        self.assert_sentence(step, r"\bunless an exclusion in ss 197-10 to 197-42 applies\b",
-                             r"\bother than redeemable preference shares\b.{0,150}\(s 197-15\)",
-                             r"\bunder an Australian law that requires or allows\b.{0,100}\(s 197-20\)",
-                             r"\boption premium reserve because options\b.{0,60}\bexercised \(s 197-25\)",
-                             r"\bdemutualisation\b.{0,60}\(ss 197-30 to 197-40\)",
-                             r"\bgreenfields minerals explorer\b.{0,60}\bexploration credits \(s 197-42\)",
-                             r"\bexcept any excess\b.{0,100}\(s 197-15\)")
+        self.assert_sentence(step, r"\bunless an exclusion in ss 197-10 to 197-42 of the ITAA 1997 applies\b",
+                             r"\bother than redeemable preference shares\b.{0,150}\(s 197-15 of the ITAA 1997\)",
+                             r"\bunder an Australian law that requires or allows\b.{0,100}\(s 197-20 of the ITAA 1997\)",
+                             r"\boption premium reserve because options\b.{0,60}\bexercised \(s 197-25 of the ITAA 1997\)",
+                             r"\bdemutualisation\b.{0,60}\(ss 197-30 to 197-40 of the ITAA 1997\)",
+                             r"\bgreenfields minerals explorer\b.{0,60}\bexploration credits \(s 197-42 of the ITAA 1997\)",
+                             r"\bexcept any excess\b.{0,100}\(s 197-15 of the ITAA 1997\)")
         self.assert_sentence(step, r"\bexclusion claimed\b", r"\bexcess that stays within Division 197\b")
         self.assert_sentence(step, r"\btransferred to the share capital account from another of the company's accounts\b",
                              r"\bAustralian resident\b")
         self.assert_sentence(step, r"\bcannot be revoked\b", r"\bapproved form given to the Commissioner\b")
         self.assert_sentence(step, r"\buntainting choice with its date and the evidence that it was given\b")
         self.assert_sentence(step, r"\btainted account\b", r"\bdo not include s 159GZZZP\b",
-                             r"\bdoes not reduce the s 159GZZZP\(1\) dividend\b")
+                             r"\bdoes not reduce the s 159GZZZP\(1\) of the ITAA 1936 dividend\b")
         self.assert_sentence(step, r"\bsettles whether the account was tainted\b", r"\bUNVERIFIED\b")
         self.assert_routes_to(step, "`au-franking-account`")
         self.assert_sentence(step, DO_NOT + r"apply its dividend split guidance\b")
@@ -311,16 +311,16 @@ class CgtGapWorkflowTests(unittest.TestCase):
     def test_buy_back_schedules_franking_debits_and_unfrankable_parts(self) -> None:
         step = workflow_step(BUY_BACK, 5)
         self.assert_carries(step, "s 202-45(c)", "202-45(e)", "s 202-45(ea)", "s 202-45(g)(i)", "s 202-45(h)(ii)",
-                            "item 9 of the s 205-30 table", "Item 9A", "paragraph 163", "s 159GZZZN")
+                            "item 9 of the table in s 205-30 of the ITAA 1997", "Item 9A", "paragraph 163", "s 159GZZZN")
         self.assert_sentence(step, r"\bunfrankable to the extent the price exceeds that market value\b")
         self.assert_sentence(step, r"\btainted or not\b", r"\b975-300\(3\)\(ba\)")
         # Non-equity shares, and the Division 7A amounts that can still be franked.
-        self.assert_sentence(step, r"\bnon-equity share \(s 202-45\(d\)\)",
+        self.assert_sentence(step, r"\bnon-equity share \(s 202-45\(d\) of the ITAA 1997\)",
                              r"\bDivision 7A deemed dividend, unless\b.{0,120}\(s 109RB\(6\)",
-                             r"\bfamily law obligation \(s 109RC\(2\)\)")
+                             r"\bfamily law obligation \(s 109RC\(2\) of the ITAA 1936\)")
         self.assert_sentence(step, r"\bterms of the class bought back\b", r"\bnon-equity share\b")
         # s 207-159: any entity, all 4 conditions, and its start.
-        self.assert_sentence(step, r"\bSection 207-159\(1\) reaches a distribution by any entity, listed or not\b",
+        self.assert_sentence(step, r"\bSection 207-159\(1\) of the ITAA 1997 reaches a distribution by any entity, listed or not\b",
                              r"\bno practice of making such distributions regularly\b",
                              r"\bissue of equity interests\b", r"\bprincipal effect\b", r"\bsubstantial part\b",
                              r"\bissued, or facilitated the issue of\b", r"\bother than an incidental one\b",
@@ -344,7 +344,7 @@ class CgtGapWorkflowTests(unittest.TestCase):
                              r"\bs 207-159\(1\)\(d\) and \(4\)", r"\bunderwriting\b", r"\bwithout concluding\b")
         # Equity-funded franked distributions do not make a practice.
         self.assert_sentence(step, r"\bearlier distribution that was franked\b", r"\bpractice condition were omitted\b",
-                             r"\bs 207-159\(3\) disregards such a distribution\b")
+                             r"\bs 207-159\(3\) of the ITAA 1997 disregards such a distribution\b")
         self.assert_sentence(step, r"\bcovers only the scheme it describes\b")
 
     def test_buy_back_screens_division_7a_links(self) -> None:
@@ -363,13 +363,13 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\bCGT event\b", r"\boffer's terms\b")
         # Failing the qualified person test denies the gross-up and the offset; risk positions are evidence.
         self.assert_sentence(step, r"\bnot a qualified person\b", r"\bneither the franking credit\b",
-                             r"\bnor the tax offset\b", r"\(s 207-145\(1\)\(a\), \(e\) and \(f\)\)")
+                             r"\bnor the tax offset\b", r"\(s 207-145\(1\)\(a\), \(e\) and \(f\) of the ITAA 1997\)")
         self.assert_sentence(step, r"\bhedge\b", r"\breduced its risk of loss\b",
                              r"\bconditional until the reviewer settles whether the seller is a qualified person\b")
         # Market value substitution reaches a listed company; the reduction does not.
         self.assert_sentence(step, r"\bmarket value\b", r"\bwhere the price is lower\b",
                              r"\bincluding for a listed public company\b")
-        self.assert_sentence(step, r"\bs 159GZZZQ\(3A\) excludes a listed public company\b")
+        self.assert_sentence(step, r"\bs 159GZZZQ\(3A\) of the ITAA 1936 excludes a listed public company\b")
         self.assert_sentence(step, r"\bevery input is supported\b", r"\bpreliminary gain or loss\b")
         self.assert_sentence(step, r"\bblank\b", r"\bUNVERIFIED\b")
         self.assert_routes_to(step, "`au-capital-gains`", "`au-dssp`", "`au-nonresident-cgt`")
@@ -414,7 +414,7 @@ class CgtGapWorkflowTests(unittest.TestCase):
         self.assert_sentence(step, r"\boff the franking schedule unless evidence that s 109RB\(6\) or 109RC\(2\)",
                              r"\brecord that evidence for the reviewer\b")
         self.assert_sentence(step, r"\bdecided in writing under s 109RB\(2\)\(b\)", r"\bmay be franked\b")
-        self.assert_sentence(step, r"\bfamily law obligation\b", r"\bs 109RC\(3\) lets that dividend be franked only\b",
+        self.assert_sentence(step, r"\bfamily law obligation\b", r"\bs 109RC\(3\) of the ITAA 1936 lets that dividend be franked only\b",
                              r"\bbenchmark franking percentage for the franking period in which it is taken to be paid\b",
                              r"\bfranking percentage of 100%", r"\bs 109RC\(4\)")
 

@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
-    "skills": 97,
-    "sources_indexed": 604,
+    "skills": 101,
+    "sources_indexed": 701,
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 14,
     "skills_with_sources_moved_since_review": 0,
-    "skills_with_behavioural_gate": 51,
-    "skills_with_only_the_seeded_case": 24,
+    "skills_with_behavioural_gate": 60,
+    "skills_with_only_the_seeded_case": 23,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
     "skills_with_confirmed_noncurrent_digest": 2,
@@ -18,7 +18,7 @@
     {
       "skill": "au-aml-ctf-client-coverage",
       "sources": {
-        "indexed": 12,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 6,
@@ -44,7 +44,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_practice_review_steps.py"
         ],
         "inventory": []
       }
@@ -345,6 +346,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_cgt_gap_workflows.py",
           "test_dated_rule_changes.py"
         ],
         "inventory": []
@@ -722,6 +724,34 @@
       }
     },
     {
+      "skill": "au-family-trust-election",
+      "sources": {
+        "indexed": 5,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-11",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-family-trust-election-earlier-year"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_entity_super_workflows.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-financial-statements",
       "sources": {
         "indexed": 7,
@@ -841,7 +871,7 @@
     {
       "skill": "au-franking-account",
       "sources": {
-        "indexed": 16,
+        "indexed": 18,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 15,
@@ -850,8 +880,9 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-franking-account-dividend-preparation",
           "au-franking-account-ledger-rebuild"
         ],
         "only_seeded_case": false,
@@ -862,14 +893,17 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_cgt_gap_workflows.py",
+          "test_entity_super_workflows.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-gst-property",
       "sources": {
-        "indexed": 2,
+        "indexed": 22,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 2,
@@ -878,11 +912,12 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
+          "au-gst-property-farm-land-and-associate-lot",
           "au-gst-property-missing-evidence"
         ],
-        "only_seeded_case": true,
+        "only_seeded_case": false,
         "confirmed_pass": [
           "au-gst-property-missing-evidence"
         ],
@@ -890,7 +925,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_farm_land_and_succession.py"
+        ],
         "inventory": []
       }
     },
@@ -1025,6 +1062,35 @@
       }
     },
     {
+      "skill": "au-main-residence",
+      "sources": {
+        "indexed": 15,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-11",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 2,
+        "case_ids": [
+          "au-main-residence-absence-and-new-home",
+          "au-main-residence-spouses-acreage-foreign-resident"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_cgt_gap_workflows.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-managed-fund-amit",
       "sources": {
         "indexed": 1,
@@ -1132,6 +1198,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_cgt_gap_workflows.py",
           "test_dated_rule_changes.py"
         ],
         "inventory": []
@@ -1224,7 +1291,7 @@
     {
       "skill": "au-payroll-review",
       "sources": {
-        "indexed": 2,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1252,6 +1319,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_practice_review_steps.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1260,7 +1328,7 @@
     {
       "skill": "au-payroll-tax-states",
       "sources": {
-        "indexed": 17,
+        "indexed": 18,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 9,
@@ -1289,7 +1357,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_payroll_jurisdictions.py"
+          "test_payroll_jurisdictions.py",
+          "test_practice_review_steps.py"
         ],
         "inventory": []
       }
@@ -1328,7 +1397,7 @@
     {
       "skill": "au-primary-production",
       "sources": {
-        "indexed": 13,
+        "indexed": 29,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 13,
@@ -1337,9 +1406,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-primary-production-early-fmd-withdrawal"
+          "au-primary-production-early-fmd-withdrawal",
+          "au-primary-production-farm-succession-evidence"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [
@@ -1349,7 +1419,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_farm_land_and_succession.py"
+        ],
         "inventory": []
       }
     },
@@ -1523,6 +1595,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_cgt_gap_workflows.py",
           "test_dated_rule_changes.py",
           "test_tax_reform_no_3_status.py",
           "test_worked_examples.py"
@@ -1616,6 +1689,36 @@
       }
     },
     {
+      "skill": "au-share-buy-back",
+      "sources": {
+        "indexed": 10,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-11",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 3,
+        "case_ids": [
+          "au-share-buy-back-listed-tender-seller",
+          "au-share-buy-back-private-selective",
+          "au-share-buy-back-tainted-share-capital"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_cgt_gap_workflows.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-short-stay-accommodation",
       "sources": {
         "indexed": 15,
@@ -1639,6 +1742,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_cgt_gap_workflows.py",
           "test_short_stay_accommodation.py"
         ],
         "inventory": []
@@ -1647,7 +1751,7 @@
     {
       "skill": "au-small-business-cgt",
       "sources": {
-        "indexed": 4,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
@@ -1669,7 +1773,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_farm_land_and_succession.py"
         ],
         "inventory": []
       }
@@ -1701,9 +1806,37 @@
       }
     },
     {
+      "skill": "au-smsf-death-benefits",
+      "sources": {
+        "indexed": 11,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-11",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "au-smsf-death-benefits-reversionary-and-nomination"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_entity_super_workflows.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-smsf-year-end",
       "sources": {
-        "indexed": 9,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 6,
@@ -1725,7 +1858,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_practice_review_steps.py"
         ],
         "inventory": []
       }
@@ -1796,7 +1930,7 @@
     {
       "skill": "au-super-guarantee-charge",
       "sources": {
-        "indexed": 10,
+        "indexed": 12,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 8,
@@ -1819,7 +1953,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_practice_review_steps.py"
+        ],
         "inventory": []
       }
     },
@@ -2254,6 +2390,7 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_practice_review_steps.py",
           "test_skill_metadata.py",
           "test_source_refresh.py",
           "test_validation_pack.py"
@@ -2762,13 +2899,14 @@
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 2,
-        "fetched": "2026-11-02",
+        "fetched": "2026-11-11",
         "unreachable": 0,
         "moved_since_review": []
       },
       "validation": {
-        "cases": 2,
+        "cases": 3,
         "case_ids": [
+          "statement-to-csv-card-in-credit-year-end",
           "statement-to-csv-overlap-and-formula",
           "statement-to-csv-planted-memo-instruction"
         ],
@@ -2780,7 +2918,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_statement_to_csv.py"
+        ],
         "inventory": []
       }
     },
@@ -2825,7 +2965,7 @@
     {
       "skill": "tax-invoice-review",
       "sources": {
-        "indexed": 9,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 3,
@@ -2854,7 +2994,8 @@
       "gates": {
         "behavioural": [
           "test_document_trust.py",
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_practice_review_steps.py"
         ],
         "inventory": []
       }
@@ -2970,6 +3111,7 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_practice_review_steps.py",
           "test_validation_pack.py"
         ],
         "inventory": []

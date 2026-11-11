@@ -105,17 +105,17 @@ class PracticeReviewStepTests(unittest.TestCase):
         row = screen_row("Credit on a government fee")
         self.assert_carries(row, "Division 81", "compilation 96", "11 November 2026", "human review pending")
         # Both limbs of s 81-10, each with its qualifier, in the sentence that cites them.
-        self.assert_sentence(row, r"\bnot consideration\b", r"\bAustralian tax \(s 81-5\(1\)\)",
+        self.assert_sentence(row, r"\bnot consideration\b", r"\bAustralian tax \(s 81-5\(1\) of the GST Act\)",
                              r"\bthe provision, retention or amendment under an Australian law of a permission, "
                              r"exemption, authority or licence, or an application for one\b",
                              r"\bor to an agency recording, copying, modifying, allowing access to, receiving, "
-                             r"processing or searching information \(s 81-10\(1\), \(4\) and \(5\)\)")
+                             r"processing or searching information \(s 81-10\(1\), \(4\) and \(5\) of the GST Act\)")
         # The regulations can reverse either exclusion, and agencies make taxable supplies too.
-        self.assert_sentence(row, r"\btreat a prescribed tax, fee or charge as consideration \(ss 81-5\(2\) and 81-10\(2\)\)",
-                             r"\bexclude others \(s 81-15\)", r"\bcan also make taxable supplies\b")
+        self.assert_sentence(row, r"\btreat a prescribed tax, fee or charge as consideration \(ss 81-5\(2\) and 81-10\(2\) of the GST Act\)",
+                             r"\bexclude others \(s 81-15 of the GST Act\)", r"\bcan also make taxable supplies\b")
         self.assert_sentence(row, r"\(compilation 5\)", r"\bno regulation for s 81-5\(2\)",
-                             r"\breg 81-10\.01 prescribes as consideration\b", r"\bticketed or metered parking\b",
-                             r"\broad tolls\b", r"\breg 81-15\.01 excludes\b", r"\bregulatory cost recovery\b",
+                             r"\breg 81-10\.01 of the GST Regulations 2019 prescribes as consideration\b", r"\bticketed or metered parking\b",
+                             r"\broad tolls\b", r"\breg 81-15\.01 of the GST Regulations 2019 excludes\b", r"\bregulatory cost recovery\b",
                              r"\bcourt and tribunal fees\b", r"\breg 81-15\.02\b")
         # Only a national park's entry fee is outside reg 81-10.01(1)(c), not every national park charge.
         self.assertIn("'a fee for hire, use of, or entry to a facility, other than an entry fee to a national park'",
@@ -316,13 +316,13 @@ class PracticeReviewStepTests(unittest.TestCase):
         # Contributions s 32C treats as complying without a chosen or stapled fund are recorded, not listed.
         self.assert_sentence(step, r"\bFirst record whether the contribution is made under a route that s 32C\b",
                              r"\balthough the fund paid is not the chosen or stapled fund\b",
-                             r"\bState industrial award \(s 32C\(8\)\)",
+                             r"\bState industrial award \(s 32C\(8\) of the SGAA\)",
                              r"\benterprise agreement or workplace determination made before 1 January 2021 once the "
-                             r"ATO has returned no stapled fund \(s 32C\(6\)\(g\), \(h\) and \(6AAA\)\)",
+                             r"ATO has returned no stapled fund \(s 32C\(6\)\(g\), \(h\) and \(6AAA\) of the SGAA\)",
                              r"\bsuccessor fund to which the employee's interest in the default fund or the stapled "
                              r"fund was transferred without the employee's consent after the employer's last "
-                             r"contribution to that fund \(s 32C\(2AB\)\)",
-                             r"\bregulation 15\b.{0,200}\(s 32C\(9\)\)")
+                             r"contribution to that fund \(s 32C\(2AB\) of the SGAA\)",
+                             r"\bregulation 15\b.{0,200}\(s 32C\(9\) of the SGAA\)")
         self.assert_sentence(step, r"\bsuccessor fund transfer and its evidence\b",
                              r"\bleave whether it applies to the reviewer\b",
                              DO_NOT + r"list a contribution so recorded as a lead\b")
