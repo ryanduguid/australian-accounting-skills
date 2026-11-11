@@ -16,12 +16,18 @@ skills.sh has no public submit API. `npx --yes skills@1.5.22 add ryanduguid/aust
 resolves the default branch, with the CLI version this repository verifies. The v0.5.0 release contains 76
 skills, and the default branch can be ahead of it. Keep About copy evergreen. Document versioned counts in the README and
 installation guide. Verify the installed revision before advertising its count. skills.sh serves a [page for this repository](https://skills.sh/ryanduguid/australian-accounting-skills).
-On 31 October 2026 it showed 67 skills and 159 installs, behind the 76 released, so do not
-quote its count as the inventory. The index is install telemetry, not a form. Its Snyk audit
-lists W011 and W012 against some skills: W011 reflects that skills read third-party exports,
-and W012 cites a remote command, which the skills do not run; they name the optional
-`review-ready` tool only where the operator has already installed it. Recheck the audit after
-the host re-indexes rather than claiming it is clear.
+On 31 October 2026 it showed 67 skills and 159 installs, and on 11 November 2026 it showed 97 skills
+and 256 installs; do not quote its count as the inventory. The index is install telemetry, not
+a form. On 11 November 2026, 70 of the 97 skills had a Snyk page there and 27 returned 404.
+W011 reflects that skills read third-party exports and web pages. W012, 'Unverifiable external
+dependency detected', appears on 2 skills and flags the GitHub URL of an optional external tool:
+`solomons-sword` in `au-trust-distributions` (audited 4 November 2026) and
+`xero-trial-balance-export` in `xero-exports` (audited 2 October 2026). Socket warns that
+`au-financial-statements` and `wip-over-under-billing` leave the provenance of the
+`aasb-corpus` executable unverified (both audited 4 November 2026). No skill downloads a script or pipes one into a shell. The README's
+[Privacy](../README.md#privacy) section lists each local program a skill names and the 2
+`cargo install` commands. Recheck the audits after the host re-indexes rather than claiming
+they are clear.
 
 [Skills Directory](https://www.skillsdirectory.com/authors/ryanduguid) also lists these skills. On
 5 November 2026 its author page showed 65 skills, behind the default branch, so do not quote its
@@ -29,8 +35,8 @@ count as the inventory either. Any new listing needs Ryan's authority first.
 
 ## Keyword map
 
-- Primary: Australian practice and contracting workflow skills, BAS and
-  contract workpaper tie-outs, accountant handoff.
+- Primary: Australian tax and accounting agent skills, review-ready workpapers for
+  BAS, FBT, Division 7A, trusts, payroll and practice compliance, accountant handoff.
 - Topic clusters: GST/BAS, FBT, Division 7A, STP, payday super, Xero exports,
   month-end close, year-end workpapers, progress claims, retentions, WIP,
   contract costs, plant, fuel, payroll tax, TPAR and Coal LSL.

@@ -33,6 +33,29 @@ from skill_prose import (
     workflow_step,
 )
 
+# Links from a skill to the author's other repositories, and what each names.
+AUTHOR_LINK = re.compile(r"github\.com/ryanduguid/(?!australian-accounting-skills\b)[\w.-]+(?:/[^\s)\"'`>]*)?")
+LINKED_PROGRAMS = {
+    "/packages/review-ready-gate": "review-ready",
+    "/packages/monthly-close-control-plane": "close-control",
+    "/packages/xero-trial-balance-export": "xero-trial-balance-export",
+    "/tools/xero_aged_receivables.py": "xero_aged_receivables.py",
+    "/packages/the-wip-tally": "wip-tally",
+    "/packages/the-exchequer-tally": "the-exchequer-tally",
+    "/packages/solomons-sword": "solomons-sword",
+    "/packages/payday-super-checker": "payday-super-check",
+    "ryanduguid/PaulGoodman": "fadden",
+}
+NOT_PROGRAM_LINKS = (
+    r"/powerquery/",  # an adapter the skill describes; it does not tell the agent to run it
+    r"/samples/",  # fabricated sample data
+    r"ryanduguid/DrDebits/",  # a data file
+    r"ryanduguid/xero-mcp-server/",  # the ledger connector, which has its own Privacy bullet
+    r"ryanduguid/australian-accounting$",  # the repository in wip-tally's cargo install command
+)
+# Named without a link to its source.
+UNLINKED_PROGRAMS = ("aasb-corpus",)
+
 # 'Dutiable' and its faithful rewordings.
 DUTIABLE = r"(?:dutiable|subject to duty|liable to duty)\b"
 
@@ -1856,17 +1879,45 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(
             privacy,
             rf"`{re.escape(audited)}`",
-            r"\bimport a network library\b",
+            r"\bimport no network library apart from `asyncio`",
             r"\b0 socket and 0 connect calls\b",
             r"\b12 calculation tools\b",
         )
         self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
+        self.assert_sentence(privacy, r"\btrace's method and output\b", r"\bnot published\b")
+        self.assert_sentence(privacy, r"\bMCP SDK\b", r"\bnot pinned\b", r"\bdid not cover it\b")
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
         self.assertIn("The skill folders hold Markdown and JSON files and no scripts", readme)
         suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
         self.assertLessEqual(suffixes, {".md", ".json"})
+
+    def test_readme_names_every_local_program_a_skill_names(self) -> None:
+        """A firm reads the Privacy section to decide what can leave the machine, so a
+        program a skill points the agent to must appear there. Programs are found from
+        the skills' links to the author's tool repositories; a link this test cannot
+        classify fails it until the README and the maps below name it."""
+        texts = [path.read_text(encoding="utf-8") for path in sorted(SKILLS.rglob("*.md"))]
+        found = set()
+        for link in sorted({m for text in texts for m in AUTHOR_LINK.findall(text)}):
+            programs = {name for part, name in LINKED_PROGRAMS.items() if part in link}
+            with self.subTest(link=link):
+                self.assertTrue(
+                    programs or any(re.search(pattern, link) for pattern in NOT_PROGRAM_LINKS),
+                    "name this program in the README's Privacy section and in LINKED_PROGRAMS",
+                )
+            found |= programs
+        self.assertEqual(found, set(LINKED_PROGRAMS.values()), "a mapped program is no longer linked")
+        for program in UNLINKED_PROGRAMS:
+            with self.subTest(program=program):
+                self.assertTrue(any(f"`{program}" in text for text in texts), "no skill names it any more")
+        readme = (SKILLS.parents[1] / "README.md").read_text(encoding="utf-8")
+        heading = "- **A local program a skill names**"
+        bullet = next((line for line in readme.splitlines() if line.startswith(heading)), "")
+        for program in sorted(found | set(UNLINKED_PROGRAMS)):
+            with self.subTest(program=program):
+                self.assertIn(f"`{program}`", bullet)
 
     def test_tracker_reports_are_intake_tied_to_source_records(self) -> None:
         cgt = " ".join(raw_section("au-capital-gains", "Inputs").split())
