@@ -11,8 +11,10 @@ target_skills:
 
 All records and figures below are fabricated from scratch. Synthetic Entity X
 reviews its purchase invoices before the quarter's GST credits are claimed. Two
-different suppliers each numbered an invoice 1047. This card is the positive
-control for the reused invoice number card.
+different suppliers each numbered an invoice 1047. This card is the control,
+in `tax-invoice-review`, for `au-sole-trader-reused-invoice-number`, which
+targets `au-sole-trader`: there one supplier reuses a number, and here 2
+suppliers share one, which is not reuse.
 
 ## Task
 
