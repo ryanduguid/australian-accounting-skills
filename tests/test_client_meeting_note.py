@@ -174,6 +174,9 @@ class ClientMeetingNoteTests(unittest.TestCase):
         self.assertIn("untrusted", required)
         self.assertIn("reviewer exception", required)
         self.assertIn("`UNVERIFIED`", required)
+        # The skill makes a missing AI permission an exception under Code item 6, and records a notice under APP 5.
+        self.assertIn("no client permission for the AI tool was supplied, citing Code item 6 and TPB(GS) 55/2026", required)
+        self.assertIn("record that no collection notice record was supplied, citing APP 5", required)
         self.assertIn("lawful under the law of each place involved", required)
         self.assertIn("where the recording was made", required)
         self.assertNotIn("confirm consent under", required)
