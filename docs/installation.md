@@ -14,7 +14,7 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
 | [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
 | [Skills CLI from a development checkout](#development-checkout) | Default branch | No | Yes | A checkout at `63967e8` produced 50 skills in each target directory on 8 September 2026 | Not tested. Pull the checkout and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
-| [Manual copy](#manual-copy) | Default branch | No | Yes | None recorded | Not documented |
+| [Manual copy](#manual-copy) | v0.5.0 tag | No | Yes | None recorded | Copy again from a checkout of the new tag; not tested |
 
 ### Tagged 76-workflow release
 
@@ -168,7 +168,8 @@ agents' copies were not opened in those agents.
 ### Development checkout
 
 v0.5.0 contains 76 skills, and the default `main` branch can be ahead of it.
-To try `main` in a separate project, clone it and install the local checkout:
+To try `main`, the default branch, in a separate project, clone it and install the
+local checkout:
 
 ```bash
 git clone --branch main https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-source
@@ -192,10 +193,13 @@ it does not establish fresh agent behaviour or validate current tax law.
 
 ### Manual copy
 
-Copy the skills you want into your project or user skills directory:
+Clone the published tag, review the checkout, then copy the skills you want into
+your project or user skills directory. Only the clone uses the network; the copy
+reads the local checkout and starts no MCP server. To install from a downloaded
+release archive instead, check it first with [Verify a downloaded release](https://github.com/ryanduguid/release-policy/blob/main/docs/verify-a-release.md).
 
 ```bash
-git clone https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
+git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git australian-accounting-skills
 mkdir -p ~/.claude/skills
 cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
 ```
@@ -203,7 +207,7 @@ cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
 PowerShell:
 
 ```powershell
-git clone https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
+git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git australian-accounting-skills
 New-Item -ItemType Directory -Force "$HOME/.claude/skills"
 Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/skills/"
 ```

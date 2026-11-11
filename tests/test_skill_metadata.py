@@ -423,6 +423,21 @@ class SkillMetadataTests(unittest.TestCase):
         installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
         self.assertIn(f"`{spec}`", installation)
 
+    def test_every_clone_installs_the_published_tag_or_says_it_does_not(self) -> None:
+        """A clone without the tag installs whatever the default branch holds that day."""
+        installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
+        published = max(RELEASED_INVENTORIES, key=lambda value: tuple(map(int, value.split("."))))
+        clones = 0
+        for section in re.split(r"(?m)^(?=### )", installation):
+            for command in re.findall(r"(?m)^.*git clone.*$", section):
+                clones += 1
+                with self.subTest(command=command):
+                    self.assertTrue(
+                        f"--branch v{published} " in command or "default branch" in section,
+                        f"clone v{published}, or say the section installs the default branch",
+                    )
+        self.assertGreater(clones, 0, "no git clone found, so nothing was checked")
+
     def test_install_table_has_a_row_for_every_route(self) -> None:
         """One table states each route's revision, MCP server, testing and update path."""
         installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
