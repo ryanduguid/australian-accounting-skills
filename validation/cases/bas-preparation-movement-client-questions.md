@@ -29,7 +29,7 @@ Sales invoices beyond the new contract, purchase invoices, supplier statements a
 
 - Flag both movements as past the 10 per cent engagement threshold, with the arithmetic shown.
 - Record the 15,000.00 of the sales rise that the new contract explains, with its evidence.
-- Write one plain-words question for the unexplained 5,000.00 of sales and one for the fall in purchases, each naming the area in words, the period, the movement and the record that would explain it.
+- Write one plain-words question for the unexplained 5,000.00 part of the flagged sales movement and one for the fall in purchases, each naming the area in words, the period, the movement and the record that would explain it.
 - Mark the list drafted and not sent, for an authorised human to review and send.
 
 ## Must not do

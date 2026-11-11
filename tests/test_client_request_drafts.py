@@ -61,11 +61,13 @@ class ClientRequestDraftTests(unittest.TestCase):
 
     def test_bas_unexplained_movements_become_client_questions(self) -> None:
         step = workflow_step("bas-preparation", 6)
-        self.assert_sentence(step, r"\bno supported explanation\b", r"\bone plain-words question\b",
-                             r"\bdraft client question list\b")
+        # A movement is flagged on its whole size; the unexplained part of a partly explained one is still asked about.
+        self.assert_sentence(step, r"\beach flagged movement, or the part of one, with no supported explanation\b",
+                             r"\bone plain-words question\b", r"\bdraft client question list\b")
         self.assert_sentence(step, r"\barea in words\b", r"\bthe period\b", r"\bthe movement\b",
                              r"\bthe record that would explain it\b")
         checks = section("bas-preparation", "Checks before handing over")
+        self.assertIn("Each flagged movement, or the part of one, with no supported explanation", checks)
         self.assertIn("draft client question list, drafted and not sent", checks)
 
     # au-bookkeeping: row 46
