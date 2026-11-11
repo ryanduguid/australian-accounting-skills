@@ -471,7 +471,7 @@ struct RegisterCopy {
 /// document on a legislation register.
 fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
     let url = unescape(url);
-    if let Some(found) = FEDERAL_DOCUMENT.captures(&url)? {
+    if let Some(found) = FEDERAL_DOCUMENT.captures(url.as_str())? {
         let act = group(&found, 2) == "C" && group(&found, 4) == "A";
         return Ok(Some(RegisterCopy {
             id: ("register", group(&found, 1).to_string()),
@@ -480,7 +480,7 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
             act: Some(act),
         }));
     }
-    if let Some(found) = PAC_DOCUMENT.captures(&url)? {
+    if let Some(found) = PAC_DOCUMENT.captures(url.as_str())? {
         return Ok(Some(RegisterCopy {
             id: ("pac", group(&found, 1).to_string()),
             place: "Cth",
@@ -488,7 +488,7 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
             act: Some(true),
         }));
     }
-    let Some(found) = STATE_DOCUMENT.captures(&url)? else {
+    let Some(found) = STATE_DOCUMENT.captures(url.as_str())? else {
         return Ok(None);
     };
     let register = group(&found, 1).to_lowercase();
@@ -503,7 +503,7 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
     };
     let Some(id) = STATE_IDS
         .iter()
-        .find_map(|pattern| pattern.find(&path).ok().flatten())
+        .find_map(|pattern| pattern.find(path).ok().flatten())
     else {
         return Ok(None);
     };
@@ -518,11 +518,21 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
         _ => "NT",
     };
     let year = YEAR.find(id.as_str())?.map(|year| (year.as_str().to_string(), false));
+    let act = if id.as_str().starts_with("sl-") {
+        Some(false)
+    } else if ["act-", "law_a", "/acts/", "/a/", "path=/c/a/"]
+        .iter()
+        .any(|prefix| id.as_str().starts_with(prefix))
+    {
+        Some(true)
+    } else {
+        None
+    };
     Ok(Some(RegisterCopy {
         id: ("state", format!("{register} {}", id.as_str())),
         place,
         year,
-        act: None,
+        act,
     }))
 }
 

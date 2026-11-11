@@ -499,6 +499,7 @@ fn a_register_homepage_or_search_query_is_not_a_document() {
     for url in [
         "https://legislation.nsw.gov.au/#act-2007-021",
         "https://legislation.nsw.gov.au/search?query=act-2007-021",
+        "https://legislation.nsw.gov.au/view/html/inforce/current/sl-2007-021",
     ] {
         assert_eq!(
             only_unmatched(text, &record("Payroll Tax Act 2007", url)),
