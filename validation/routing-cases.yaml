@@ -1,7 +1,8 @@
 # Routing checks for `accounting-skills build-plugin-evals`: each prompt names no skill, so
 # a run shows whether Claude Code picks `skill` from the listing and avoids the
 # neighbouring skills in `not`. All facts are synthetic. Graders check only which
-# skill fired, never the answer.
+# skill fired, never the answer. Every skill has at least one case; a new skill
+# needs its own.
 - id: payroll-tax-multistate-threshold
   skill: au-payroll-tax-states
   not: [payroll-tax-contractors]
@@ -166,3 +167,267 @@
   skill: au-ato-account-reconciliation
   not: [bas-preparation, reconciliation-break-trace]
   prompt: At year end the ATO's activity statement account and the income tax account don't agree with the ledger, and an amended BAS for March was processed in August. Reconcile them.
+- id: individual-return-employee
+  skill: au-individual-return
+  not: [au-pre-lodgement-review, au-sole-trader]
+  prompt: A nurse has given us her income statement, bank interest, a private health statement and receipts for uniforms and union fees for 2025-26. Put together the workpaper for her tax return.
+- id: draft-return-review-list
+  skill: au-pre-lodgement-review
+  not: [au-individual-return, au-return-amendment]
+  prompt: This truck driver's return is ready to go to the reviewer. Look for missing records, claims that look high for his income and job, and any income we may have left out.
+- id: return-amendment-missed-income
+  skill: au-return-amendment
+  not: [au-ato-objection, au-individual-return]
+  prompt: After her 2024-25 assessment issued, a client found a second income statement from a short job she had forgotten. Prepare the correction to her return and check we are still in time to make it.
+- id: car-logbook-or-cents
+  skill: au-car-expenses
+  not: [au-travel-expenses, au-individual-return]
+  prompt: An electrician drove his own sedan about 9,000 work kilometres in 2025-26 and kept a 12-week logbook. Compare the cents per kilometre and logbook methods for his car claim.
+- id: home-office-claim
+  skill: au-wfh-deductions
+  not: [au-individual-return]
+  prompt: A policy officer worked from home 3 days a week in 2025-26 and kept a timesheet of her hours. Compare the fixed rate and actual cost methods for her home office claim.
+- id: sole-trader-business-schedule
+  skill: au-sole-trader
+  not: [au-individual-return, au-small-business-income-offset]
+  prompt: A mobile dog groomer who started trading in August 2025 has given us her bank statements and a list of van costs. Prepare her business income and expenses schedule and carry it into her tax return.
+- id: small-business-offset
+  skill: au-small-business-income-offset
+  not: [au-sole-trader, au-partnership-tax]
+  prompt: A plumber trades on his own account and also receives a share of profit from a small family partnership. His own business turns over about $310,000 a year and the partnership about $1.4 million, and both schedules are already done. Work out which of his business income qualifies and the tax reduction it may attract.
+- id: weekend-farm-losses
+  skill: au-non-commercial-losses
+  not: [au-primary-production, au-sole-trader]
+  prompt: An engineer earning $210,000 runs a small alpaca breeding business on weekends that has made a loss for 4 years. Check whether he can offset this year's loss against his salary or must defer it.
+- id: personal-services-contractor
+  skill: au-psi-review
+  not: [au-professional-firm-profits, contractor-super-tpar]
+  prompt: An IT consultant invoices one bank through her own company for about 90% of her work. Check whether the tax rules on income from her own effort apply and whether the company can keep the deductions it has claimed.
+- id: bakery-partnership
+  skill: au-partnership-tax
+  not: [au-professional-firm-profits, au-trust-distributions]
+  prompt: Two sisters run a bakery together with a 60/40 profit share in their written agreement and uneven drawings during the year. Work out the business's net income for its return, each sister's share and what each has left in the business.
+- id: long-term-rental-schedule
+  skill: au-rental-property
+  not: [au-depreciation-schedule, au-short-stay-accommodation]
+  prompt: A couple jointly own a long-term rental in Geelong with an investment loan they partly redrew to buy a car. Prepare what goes in their returns for the property and split the interest between the rental and the car.
+- id: holiday-house-platform-host
+  skill: au-short-stay-accommodation
+  not: [au-rental-property, au-gst-registration-review]
+  prompt: A client lets her coastal house through 2 booking platforms for about 140 nights a year and stays there herself over Christmas. Prepare the income and expense workpaper and the evidence on her private use.
+- id: medicare-surcharge-part-year-cover
+  skill: au-medicare-review
+  not: [au-individual-return]
+  prompt: A couple with one child took out private hospital cover only in October 2025. Work out whether the Medicare levy surcharge applies to either of them for 2025-26 and check their private health statements.
+- id: seniors-offset
+  skill: au-sapto
+  not: [au-medicare-review, au-individual-return]
+  prompt: A retired couple aged 68 and 71 receive a part age pension, some bank interest and franked dividends. Check whether their age and income entitle them to a tax offset and prepare their rebate income figures.
+- id: back-pay-earlier-years
+  skill: au-lump-sum-arrears
+  not: [au-award-underpayment-review, au-etp-redundancy]
+  prompt: After a workplace dispute, a client received $38,000 of back pay in 2025-26 that relates to the previous 3 years. Prepare the workpaper for the tax offset and the Medicare questions on that amount.
+- id: redundancy-payout
+  skill: au-etp-redundancy
+  not: [au-payroll-review, au-lump-sum-arrears]
+  prompt: An employer is making a 22-year employee redundant and will pay notice in lieu, unused annual and long service leave and a severance amount of $96,000. Check how much is tax-free and the PAYG withholding on each component.
+- id: foreign-dividends-and-interest
+  skill: au-foreign-income
+  not: [au-foreign-pensions, au-tax-residency]
+  prompt: An Australian resident client received dividends from US and UK shares and interest from a New Zealand bank account, with foreign tax withheld. Prepare what goes in his return for this income and the credit for the tax already paid overseas.
+- id: uk-pension-and-annuity
+  skill: au-foreign-pensions
+  not: [au-foreign-income, au-lump-sum-arrears]
+  prompt: A client who moved here from the United Kingdom receives a monthly UK workplace pension and a purchased annuity. Work out the assessable amount, including any undeducted purchase price, and whether the treaty affects it.
+- id: leaving-australia-residency
+  skill: au-tax-residency
+  not: [au-nonresident-cgt, au-foreign-income]
+  prompt: A client moved to Singapore in September 2025 on a 3-year contract but kept his Melbourne house and Australian bank accounts. Assemble the evidence on whether he stopped being a resident and what happens to his shares when he leaves.
+- id: backpacker-pickers
+  skill: au-working-holiday-makers
+  not: [au-payroll-review, au-tax-residency]
+  prompt: A Victorian orchard hires 25 backpackers on 417 and 462 visas for the picking season. Check our registration, the withholding, the STP income type and the super for them.
+- id: drp-and-bonus-share-parcels
+  skill: au-dssp
+  not: [au-capital-gains, au-managed-fund-amit]
+  prompt: A client took part in a listed company's dividend reinvestment plan for 4 years and also received bonus shares under a dividend substitution plan. Work out what each holding cost and when it was acquired, so we can calculate the gain when she sells.
+- id: etf-annual-tax-statements
+  skill: au-managed-fund-amit
+  not: [au-capital-gains, au-dssp]
+  prompt: A client holds 5 ETFs and 2 unlisted managed funds and has received their annual tax statements, one of them reissued. Prepare the workpaper for the attributed income and the cost base adjustments to each holding.
+- id: deceased-estate-split
+  skill: au-deceased-estates
+  not: [au-individual-return, au-trust-distributions]
+  prompt: Our client died in February 2026 and her son is the executor. Separate her final individual return income from the estate's income, and set out what the estate has earned from her shares and rental property since her death.
+- id: division-293-notice
+  skill: au-division-293
+  not: [au-super-contribution-caps, au-division-296]
+  prompt: A surgeon has received an ATO notice of extra tax on her 2024-25 concessional contributions because her income was over the threshold, and she thinks it overstates her income. Reconcile the notice to her return and her fund's contribution statements.
+- id: large-super-balance-earnings
+  skill: au-division-296
+  not: [au-division-293, au-smsf-year-end]
+  prompt: A retired client has about $4.2 million in her SMSF and a further retail super account. Estimate, fund by fund, whether the tax on earnings for large super balances applies to her and how much it could be.
+- id: concessional-carry-forward
+  skill: au-super-contribution-caps
+  not: [au-division-293, au-smsf-year-end]
+  prompt: A client wants to put a large personal deductible contribution into super before 30 June 2026, using room left unused in earlier years. Check how much room he has and his total super balance, and whether a further after-tax contribution would go over its limit.
+- id: salary-sacrifice-headroom
+  skill: au-super-contribution-caps
+  not: [au-division-293, au-payroll-review]
+  prompt: An employee wants to salary sacrifice more of her pay into super before 30 June 2026, and her employer's contributions reach the fund about a month after each payday. How much more can she sacrifice in 2025-26 without going over?
+- id: smsf-annual-accounts
+  skill: au-smsf-year-end
+  not: [au-financial-statements, au-super-contribution-caps]
+  prompt: A 2-member SMSF holds listed shares, a term deposit and a commercial property leased to the members' business. Prepare the 2025-26 accounts and member balances ready for the auditor.
+- id: trust-distribution-reconciliation
+  skill: au-trust-distributions
+  not: [au-trust-deed-review, au-trust-losses, div7a-compliance]
+  prompt: The family trust's 2025-26 resolution gives income to 2 adult children and a bucket company. Reconcile the trust's net income to each beneficiary's share and the statements we send them.
+- id: company-tax-reconciliation
+  skill: au-company-tax
+  not: [au-franking-account, year-end-workpapers]
+  prompt: Here is the final trial balance for a client company for 2025-26. Bridge the accounting profit to taxable income and gather the evidence on whether it is a base rate entity.
+- id: director-loan-account
+  skill: div7a-compliance
+  not: [au-company-tax, au-franking-account]
+  prompt: The director's loan account in a client company is $185,000 in debit at 30 June 2026. List the drawings and repayments, check whether a complying loan agreement exists and work out the minimum yearly repayment.
+- id: intercompany-dealings
+  skill: au-transfer-pricing
+  not: [au-forex-review, au-company-tax]
+  prompt: An Australian subsidiary buys stock from its Singapore parent and pays it a management fee and interest on an intercompany loan. Reconcile these dealings and set out the documentation gaps for the specialist.
+- id: usd-account-realisation
+  skill: au-forex-review
+  not: [au-foreign-income, reconciliation-break-trace]
+  prompt: A client company holds a US dollar bank account and pays US suppliers from it. Reconcile the account in US dollars and separate the realised exchange gains and losses for tax from the year-end translation entries.
+- id: software-development-claim
+  skill: au-rd-incentive
+  not: [au-company-tax]
+  prompt: A software start-up spent $640,000 this year developing a new machine learning model. Gather the records of its experiments and reconcile the spending for the specialist who will register the work with the government.
+- id: fbt-year-end-utes
+  skill: fbt-annual-workflow
+  not: [stp-finalisation, au-car-expenses]
+  prompt: It is April 2026. A client lets staff take 4 work utes home, pays for a car park in the city for its manager and held a Christmas party. Work out the fringe benefits tax for the year and the amount that goes on each employee's income statement.
+- id: football-club-status
+  skill: au-not-for-profit
+  not: [au-gst-registration-review]
+  prompt: A community football club with a bar and gaming machines asks whether it is still exempt from income tax and what it must report each year. Review its constitution and activities.
+- id: payg-instalments-too-high
+  skill: au-payg-instalment-variation
+  not: [au-ato-penalties-interest, bas-preparation]
+  prompt: A client's business income has fallen sharply this year and her quarterly PAYG instalments are now too high. Estimate her income and tax for 2025-26, how much she should pay for the rest of the year instead, and the interest risk if the estimate proves too low.
+- id: late-lodgement-penalty-remission
+  skill: au-ato-penalties-interest
+  not: [au-ato-account-reconciliation, au-ato-objection]
+  prompt: A client lodged 3 quarterly activity statements late after her bookkeeper fell ill, and the ATO has charged interest and a penalty for lodging late. Check the amounts charged and gather the evidence for asking the ATO to waive them.
+- id: year-end-timing-options
+  skill: au-tax-planning-review
+  not: [au-tax-research, au-company-tax]
+  prompt: A builder's company expects a profit of about $900,000 this year. Before our June meeting, set out what the directors could do before 30 June to change when income and deductions fall, with the evidence each needs and its cash cost.
+- id: research-file-note
+  skill: au-tax-research
+  not: [au-private-ruling-application]
+  prompt: A client asks whether the cost of keeping a guard dog at her warehouse is deductible. Find the legislation and ATO material that bear on it and record the answer for our files, with any contrary view.
+- id: announced-measure-status
+  skill: au-tax-research
+  not: [au-tax-rates-verification, au-tax-planning-review]
+  prompt: The Government announced a change to a tax concession in the last Budget. Find out whether it has been legislated and when it starts, and record what we can and cannot rely on yet.
+- id: period-rates-register
+  skill: au-tax-rates-verification
+  not: [au-tax-research, au-medicare-review]
+  prompt: Before we update our 2026-27 return templates, check the individual income tax rates, the Medicare levy thresholds and the super guarantee rate for that year, and cite where each figure comes from.
+- id: new-client-takeover
+  skill: au-client-acceptance
+  not: [au-aml-ctf-client-coverage, au-client-departure]
+  prompt: A family group with a company, a trust and 2 individuals wants us to take over their tax work from another firm. Run our checks on whether we can take them on and draft the letter setting out what we will do for them.
+- id: due-diligence-register-gaps
+  skill: au-aml-ctf-client-coverage
+  not: [au-client-acceptance, au-tax-agent-obligations]
+  prompt: Our practice has 240 active clients and a spreadsheet recording the identity checks we ran under the anti-money laundering rules. Match the 2 lists and show which clients have no check, an incomplete check or an overdue one, including the beneficial owners of our company and trust clients.
+- id: new-company-registrations
+  skill: au-business-formation
+  not: [au-asic-company-changes, au-gst-registration-review]
+  prompt: The client's adviser has settled on a company with 2 equal shareholders for a new landscaping business in Victoria. List what we need to register and the details to collect to set it up, including the ABN, business name and GST.
+- id: land-tax-assessment
+  skill: au-land-tax
+  not: [au-transfer-duty, au-rental-property]
+  prompt: A client received her 2026 New South Wales land tax assessment covering 3 investment properties and the house she lives in. Check the assessment and the evidence for any exemption.
+- id: motel-purchase-duty
+  skill: au-transfer-duty
+  not: [au-business-acquisition-review, au-land-tax]
+  prompt: A client is buying a Queensland motel business with its freehold, furniture and goodwill for $3.2 million. Prepare the stamp duty evidence, splitting the price across the assets.
+- id: invoice-validity-before-credits
+  skill: tax-invoice-review
+  not: [bas-preparation, au-gst-registration-review]
+  prompt: Before we claim this quarter's GST credits, check that the 60 supplier invoices over $1,000, and the invoices we issue on behalf of a share-farmer, show everything the GST law requires.
+- id: coding-review-before-close
+  skill: au-bookkeeping
+  not: [month-end-close, bas-preparation]
+  prompt: A cafe client's bookkeeper has allocated 3 months of bank feed transactions in Xero. Check each allocation against the chart of accounts and the receipts, find duplicates and gaps, and list what needs fixing before we close the quarter.
+- id: monthly-close
+  skill: month-end-close
+  not: [au-bookkeeping, year-end-workpapers]
+  prompt: We want to lock October 2026 for a distribution business with 40 staff. Make sure the bank and control accounts agree, the accruals and prepayments are in, and explain the large movements against budget.
+- id: subledger-difference
+  skill: reconciliation-break-trace
+  not: [month-end-close, au-bookkeeping]
+  prompt: The trade creditors subledger is $14,380.55 higher than the control account at 31 October and the bank reconciliation is out by $612. Find the entries that make up each difference, what caused them and who needs to fix them.
+- id: annual-workpaper-pack
+  skill: year-end-workpapers
+  not: [workpaper-tie-out, au-financial-statements]
+  prompt: From the 30 June 2026 trial balance, put together the file the partner will review, with support for every balance and an explanation of the large movements from last year.
+- id: statements-trace-and-recalculate
+  skill: workpaper-tie-out
+  not: [year-end-workpapers, au-financial-statements]
+  prompt: The draft financial statements are ready for manager review. Check every number against its support and the source exports, recalculate the notes and list anything that does not agree.
+- id: draft-statements-disclosures
+  skill: au-financial-statements
+  not: [year-end-workpapers, workpaper-tie-out]
+  prompt: From this final trial balance for a large proprietary company, prepare the draft annual accounts and check the notes its reporting framework requires.
+- id: xero-year-end-exports
+  skill: xero-exports
+  not: [contracting-exports, year-end-workpapers]
+  prompt: I have downloaded the trial balance, aged receivables and account transactions reports from Xero at 30 June 2026. Check they are complete and the totals agree, and flag any old debtors.
+- id: thirteen-week-cash
+  skill: cashflow-forecast-13week
+  not: [financial-modelling]
+  prompt: A joinery client is short of cash after a slow quarter. Show week by week, for the next 3 months, whether it can pay its bills, using the aged debtors and creditors, payroll and the next BAS and super payments.
+- id: bank-loan-forecast-model
+  skill: financial-modelling
+  not: [cashflow-forecast-13week, au-tax-planning-review]
+  prompt: A client wants 3 years of projected profit, cash and balance sheet in Excel to support a bank loan for a second clinic. Build it with the assumptions on one sheet, live formulas and checks that prove it balances.
+- id: budget-workbook-review
+  skill: financial-modelling
+  not: [cashflow-forecast-13week, workpaper-tie-out]
+  prompt: Review the 5-year budget spreadsheet a client built for its board. Find hard-coded numbers inside formulas, checks that do not balance and scenarios that do not tie back to last year's accounts.
+- id: coal-mine-fitters
+  skill: coal-lsl-levy
+  not: [payroll-tax-contractors, au-payroll-review]
+  prompt: A maintenance contractor sends fitters to work at 2 open-cut black coal mines in the Hunter. Check which employees the industry's portable leave fund covers and prepare this month's return to it.
+- id: job-cost-to-complete
+  skill: contract-cost-tracking
+  not: [wip-over-under-billing, plant-and-equipment-costing]
+  prompt: For a $2.4 million civil job, show what we have spent and committed on labour, plant, subcontractors and materials, what is left to spend and the margin we will finish with.
+- id: contracting-system-exports
+  skill: contracting-exports
+  not: [xero-exports, contract-cost-tracking]
+  prompt: I need the job P&L, the claims register, plant hire dockets and payroll by job out of our job costing system for June. Tell me which reports to pull and with what settings, and check that they are complete before anyone uses them.
+- id: excavator-hourly-cost
+  skill: plant-and-equipment-costing
+  not: [au-depreciation-schedule, fuel-tax-credits]
+  prompt: Our civil client owns 6 excavators and 2 graders. Work out a standing and running cost per hour for each machine and whether the wet hire rates it charges cover them.
+- id: fit-out-progress-claim
+  skill: progress-claim-preparation
+  not: [retention-schedule, wip-over-under-billing]
+  prompt: Our subcontractor client is claiming for March on a commercial fit-out in Sydney, with 2 approved variations and 5% retention held. Prepare March's claim for payment and check it meets the security of payment requirements.
+- id: retention-release-dates
+  skill: retention-schedule
+  not: [progress-claim-preparation, wip-over-under-billing]
+  prompt: We hold retention on 9 subcontracts across 3 Queensland projects, and 2 defects liability periods end next month. List each retention with its release date and amount, and check the trust account requirements.
+- id: construction-wip-schedule
+  skill: wip-over-under-billing
+  not: [contract-cost-tracking, progress-claim-preparation]
+  prompt: At 30 June we have 7 construction contracts in progress. Show how complete each job is, which jobs are billed ahead of or behind the work done, and the contract assets and liabilities for the financial statements.
+- id: fixed-price-revenue-timing
+  skill: wip-over-under-billing
+  not: [contract-cost-tracking, au-financial-statements]
+  prompt: On a fixed-price contract to build a warehouse on the customer's land, is revenue recognised over time, and how should 2 variations the customer has not yet approved be treated at year end?

@@ -304,16 +304,22 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 41 synthetic prompts in `validation/routing-cases.yaml`, covering the
-payroll tax, GST and CGT clusters, one case for each of the 17 skills added
-in #318 and one for each of the 4 skills added on 4 November 2026. No prompt
-names a skill. Each case has only
-`tool_used` graders: the expected skill must fire, and each neighbouring skill
-listed under `not` must not. To run just these:
+the 107 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+97 skills has at least one, and `tests/test_routing_cases.py` fails when a
+skill has none. Some skills that sit close together, such as the super contribution
+cap and Division 293 skills, or the WIP and contract cost skills, have a second
+prompt that turns on what separates them. No prompt names a skill. Each case
+has only `tool_used` graders: the expected skill must fire, and each
+neighbouring skill listed under `not` must not. To run just these:
 
 ```bash
-claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --max-cost-usd 10
+claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --max-cost-usd 30
 ```
+
+At the cost per case of the 1 and 2 November runs, the 107 cases would cost
+about US$18, an estimate, not a measurement; the cap leaves room above it
+because a run that reaches the cap stops with partial results. The 70 prompts
+added on 4 and 11 November 2026 have no recorded run.
 
 On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4
 turns, MCP server not started) all 20 chose the expected skill and none of the

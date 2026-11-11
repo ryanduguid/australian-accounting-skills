@@ -18,6 +18,12 @@ hold ordinary payment terms, including a note to the preparer, and a fully expla
 timing difference, neither of which may be flagged. They have no recorded model run,
 so the new test checks wording and card structure, not model behaviour.
 
+Every skill now has a routing prompt. Sixty-six synthetic prompts bring
+`validation/routing-cases.yaml` from 41 prompts for 35 skills to 107 for all
+97, each listing the 1 to 3 neighbouring skills a router could confuse with the
+expected one. A test now fails when a skill has no routing prompt. The new
+prompts have no recorded model run.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified
