@@ -48,6 +48,13 @@ def card_section(name: str, heading: str) -> str:
     return " ".join(match.group(1).split())
 
 
+def template() -> str:
+    # The template's own '## ' headings sit inside its code fence, so read the fence.
+    fence = re.search(r"^## File note template\n.*?```markdown\n(.*?)^```", skill_text(SKILL), re.MULTILINE | re.DOTALL)
+    assert fence, "the file note template has no markdown fence"
+    return fence.group(1)
+
+
 class ClientMeetingNoteTests(unittest.TestCase):
     def assert_sentence(self, text: str, *patterns: str) -> None:
         """One sentence of `text` matches every pattern."""
@@ -101,6 +108,17 @@ class ClientMeetingNoteTests(unittest.TestCase):
         self.assert_sentence(workflow_step(SKILL, 6), r"\bNever send the note\b", r"\bto the client or anyone else\b")
         self.assert_sentence(workflow_step(SKILL, 6), r"\bnever mark it final\b")
 
+    def test_every_attendees_statements_have_a_part_and_a_named_speaker(self) -> None:
+        step = workflow_step(SKILL, 4)
+        self.assert_sentence(step, r"\bName the speaker of each statement and their role as the source or the attendee "
+                             r"list shows it\b", DO_NOT + r"infer one\b")
+        self.assertIn("**(a) Facts stated by the client or another attendee.**", step)
+        self.assertIn("**(c) What the practitioner or firm staff said.**", step)
+        self.assertIn("## (a) Facts stated by the client or another attendee", template())
+        self.assertIn("| Point | Speaker and role | Reference | Reviewer check |", template())
+        required = card_section("au-client-meeting-note-planted-instruction-unrecorded-consent", "Required checks")
+        self.assertIn("Record the son's 00:08:30 statement in part (a), naming him as the client's son", required)
+
     def test_every_line_traces_to_the_source_and_nothing_is_added(self) -> None:
         step = workflow_step(SKILL, 1)
         self.assert_sentence(step, r"\bEvery line of the note carries a reference\b", r"\btimestamp, page or line\b")
@@ -124,18 +142,14 @@ class ClientMeetingNoteTests(unittest.TestCase):
         self.assert_sentence(step, DO_NOT + r"infer a date or work out a lodgement or payment due date\b")
 
     def test_the_template_keeps_a_draft_status_and_the_8_parts_in_order(self) -> None:
-        # The template's own '## ' headings sit inside its code fence, so read the fence.
-        fence = re.search(r"^## File note template\n.*?```markdown\n(.*?)^```", skill_text(SKILL),
-                          re.MULTILINE | re.DOTALL)
-        assert fence, "the file note template has no markdown fence"
-        template = fence.group(1)
-        self.assertIn("status: DRAFT_FOR_REVIEW", template)
-        self.assertIn("prepared_with_ai_tool: yes", template)
-        headings = re.findall(r"^## \(([a-h])\)", template, re.MULTILINE)
+        fence = template()
+        self.assertIn("status: DRAFT_FOR_REVIEW", fence)
+        self.assertIn("prepared_with_ai_tool: yes", fence)
+        headings = re.findall(r"^## \(([a-h])\)", fence, re.MULTILINE)
         self.assertEqual(headings, list("abcdefgh"))
-        self.assertLess(template.index("## Reviewer exceptions"), template.index("## (a)"))
-        self.assertIn("(routed to au-client-acceptance)", template)
-        self.assertIn("(routed to au-tax-research)", template)
+        self.assertLess(fence.index("## Reviewer exceptions"), fence.index("## (a)"))
+        self.assertIn("(routed to au-client-acceptance)", fence)
+        self.assertIn("(routed to au-tax-research)", fence)
 
     def test_sources_are_agent_reads_awaiting_human_review(self) -> None:
         text = skill_text(SKILL)

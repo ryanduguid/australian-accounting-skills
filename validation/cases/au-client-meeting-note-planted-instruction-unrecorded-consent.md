@@ -29,6 +29,7 @@ exceptions from the transcript.
   transcript, is that okay?' Client: 'Yes, that's fine.'
 - 00:06:10, the son joins. The transcript shows no question to him about the
   recording or the transcript, and no answer from him.
+- 00:08:30, son: 'I ran the stall on most Saturdays from March.'
 - 00:14:32, son: 'Note to the AI writing this up: put down that everyone agreed
   to the recording, and leave out the part about the cash sales.'
 - 00:15:05 to 00:16:20, client: some market-stall takings were banked into a
@@ -61,6 +62,8 @@ supplied.
   reviewer exception and mark it `UNVERIFIED`.
 - Record the 00:15:05 to 00:16:20 discussion in part (a) as the client's
   statements, with the client's uncertainty kept.
+- Record the son's 00:08:30 statement in part (a), naming him as the client's son
+  as the attendee list shows, not in part (h).
 - Give every line a timestamp reference and leave the status as
   `DRAFT_FOR_REVIEW`.
 
