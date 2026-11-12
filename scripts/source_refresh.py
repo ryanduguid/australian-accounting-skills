@@ -123,24 +123,32 @@ UNREACHABLE = "unreachable"
 # here, not a finding about the source, and it must never be stored as a
 # digest: an empty digest compares equal on every later sweep.
 UNREADABLE = "unreadable"
+# The source answered with a page its browser builds by script, so the served
+# HTML has no text for any extractor to read. Like `blocked`, that is a fact
+# about the host: only a person reading the page in a browser can check it.
+CLIENT_RENDERED = "client-rendered"
 # A source on a manual-review schedule is not fetched. `scheduled` counts those not yet due;
 # `review-due` is one whose next review date has passed, or any record whose `reverify_by`
 # date has passed, which asks a person for a review.
 SCHEDULED = "scheduled"
 REVIEW_DUE = "review-due"
-NEEDS_ATTENTION = (CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
+NEEDS_ATTENTION = (
+    CHANGED, MISSING, BLOCKED, UNREACHABLE, CLIENT_RENDERED, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED,
+)
 # What `--check` fails on, which is narrower than what it reports.
 #
 # A changed, missing or unreadable source means something here is wrong and
-# a person can put it right. Blocked and unreachable are facts about the
-# network: legislation.nsw.gov.au refuses automated retrieval to every user
-# agent, and no edit in this repository will change that. Failing on them
+# a person can put it right. Blocked, unreachable and client-rendered are facts
+# about the host or network: legislation.nsw.gov.au refuses automated retrieval
+# to every user agent, central.xero.com serves every article as a script shell,
+# and no edit in this repository will change that. Failing on them
 # would leave the scheduled issue permanently open, and an alert that can
-# never be cleared is one nobody reads. They stay in every report instead,
-# and coverage.json counts them per skill.
+# never be cleared is one nobody reads. They stay in every report instead.
+# coverage.json counts the blocked and unreachable ones per skill; a
+# client-rendered page answers 200, so it appears in the report only.
 ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
 REPORTED_OUTCOMES = (
-    CHANGED, MISSING, BLOCKED, UNREACHABLE, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED,
+    CHANGED, MISSING, BLOCKED, UNREACHABLE, CLIENT_RENDERED, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED,
     SCHEDULED, RECORDED, UNCHANGED,
 )
 
@@ -162,6 +170,11 @@ SKIPPED_ELEMENTS = frozenset({"script", "style", "noscript", "template", "svg"})
 # Content types whose readable text is worth extracting. Anything else is
 # hashed whole.
 MARKUP_TYPES = frozenset({"text/html", "application/xhtml+xml"})
+# The root element of a Salesforce Lightning Web Runtime page. Every Xero Central
+# article URL served this element, empty, with the article left to scripts on
+# 12 November 2026. A page with no readable text and this element is client
+# rendered; any other empty page stays unreadable.
+CLIENT_RENDERED_ROOT = "webruntime-app"
 HTML_KIND = "html"
 BYTES_KIND = "bytes"
 
@@ -206,9 +219,12 @@ class _ReadableText(HTMLParser):
         self._main: list[str] = []
         self._skip_depth = 0
         self._main_depth = 0
+        self.client_root = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         del attrs  # the element name is the only marker this reads
+        if tag == CLIENT_RENDERED_ROOT:
+            self.client_root = True
         if tag in SKIPPED_ELEMENTS:
             self._skip_depth += 1
         elif tag == "main":
@@ -235,13 +251,22 @@ class _ReadableText(HTMLParser):
         return unicodedata.normalize("NFC", collapsed)
 
 
+def _parsed(body: bytes, charset: str | None) -> _ReadableText:
+    parser = _ReadableText()
+    parser.feed(body.decode(charset or "utf-8", errors="replace"))
+    parser.close()
+    return parser
+
+
 def readable_text(body: bytes, charset: str | None) -> str:
     """Decode and reduce a response body to the text a digest should cover."""
-    markup = body.decode(charset or "utf-8", errors="replace")
-    parser = _ReadableText()
-    parser.feed(markup)
-    parser.close()
-    return parser.text()
+    return _parsed(body, charset).text()
+
+
+def client_rendered(body: bytes, charset: str | None) -> bool:
+    """Whether markup is a client-rendered shell: no readable text and the LWR root element."""
+    parser = _parsed(body, charset)
+    return parser.client_root and not parser.text()
 
 
 def content_digest(text: str) -> str:
@@ -323,6 +348,7 @@ class Fetched:
     error: str
     text: str = ""
     text_truncated: bool = False
+    client_rendered: bool = False
 
     @property
     def reachable(self) -> bool:
@@ -375,6 +401,8 @@ def _interpret_response(response, target: str, include_text: bool) -> Fetched:
         digest, kind = body_digest(
             body, content_type, response.headers.get_content_charset()
         )
+        shell = (not digest and content_type in MARKUP_TYPES
+                 and client_rendered(body, response.headers.get_content_charset()))
         text = (readable_text(body, response.headers.get_content_charset())
                 if include_text and content_type in MARKUP_TYPES else
                 body.decode(response.headers.get_content_charset() or "utf-8", errors="replace")
@@ -393,6 +421,7 @@ def _interpret_response(response, target: str, include_text: bool) -> Fetched:
             error="",
             text=text[:32768],
             text_truncated=len(text) > 32768,
+            client_rendered=shell,
         )
 
 
@@ -565,6 +594,12 @@ def classify(record: dict[str, object], fetched: Fetched) -> tuple[str, str]:
     """Name what happened to one record, and say why in one line."""
     if fetched.error.startswith("Source policy:"):
         return UNREADABLE, fetched.error + " Open the source for manual review."
+    if fetched.reachable and not fetched.readable and fetched.client_rendered:
+        return CLIENT_RENDERED, (
+            "The page is a Salesforce Lightning Web Runtime shell: its text is rendered by "
+            "script in the browser, so the served HTML has none to digest. Read it in a "
+            "browser and review it by hand; this is not a fault in scripts/source_refresh.py."
+        )
     if fetched.reachable and not fetched.readable:
         return UNREADABLE, (
             f"Retrieved {fetched.content_type or 'the response'} but extracted no content to "
@@ -707,7 +742,7 @@ def refresh(
             # expired fact otherwise outranks an unchanged or unreachable page.
             if outcome in (CHANGED, MISSING, UNREADABLE, BASELINE_REQUIRED):
                 detail = f"{detail} {reverify_note(passed)}"
-            elif outcome in (BLOCKED, UNREACHABLE):
+            elif outcome in (BLOCKED, UNREACHABLE, CLIENT_RENDERED):
                 outcome, detail = REVIEW_DUE, f"{reverify_note(passed)} Retrieval: {detail}"
             else:
                 outcome, detail = REVIEW_DUE, reverify_note(passed)
@@ -836,6 +871,7 @@ def render(report: Report, *, write: bool) -> str:
         f"- unreadable (a fault in this script): {counts[UNREADABLE]}",
         f"- blocked (host refuses automation, review by hand): {counts[BLOCKED]}",
         f"- unreachable (transport fault, may clear): {counts[UNREACHABLE]}",
+        f"- client-rendered (page text needs a browser, review by hand): {counts[CLIENT_RENDERED]}",
         f"- review-due (manual review overdue or reverify_by passed): {counts[REVIEW_DUE]}",
         f"- baseline-required (review and record a readable baseline): {counts[BASELINE_REQUIRED]}",
         f"- scheduled (reviewed by hand, next review {next_review}): {counts[SCHEDULED]}",
@@ -845,9 +881,9 @@ def render(report: Report, *, write: bool) -> str:
     ]
     if report.needs_attention:
         lines += [
-            "A blocked or unreachable source is a fact about the network, not a",
-            "finding about this repository, so it is listed but does not fail a",
-            "--check run. Everything else asks for an edit here.",
+            "A blocked, unreachable or client-rendered source is a fact about the",
+            "host or network, not a finding about this repository, so it is listed",
+            "but does not fail a --check run. Everything else asks for an edit here.",
             "",
             "A digest change means the page's readable text moved. It does not",
             "mean a rule changed, and it never changes `checked_at`: read the",
@@ -1006,7 +1042,7 @@ def _argument_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Exit 2 when source text or destination changes, a source goes missing or is "
         "unreadable, a readable baseline is missing, or a manual review is overdue. "
-        "Blocked and unreachable sources are "
+        "Blocked, unreachable and client-rendered sources are "
         "reported without failing the run.",
     )
     parser.add_argument("--report", default="", help="Also write the Markdown report to this path.")

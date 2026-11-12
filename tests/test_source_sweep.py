@@ -89,7 +89,8 @@ class RenderedReportTests(unittest.TestCase):
             source_refresh.UNCHANGED, source_refresh.CHANGED, source_refresh.MISSING,
             source_refresh.UNREADABLE, source_refresh.REVIEW_DUE,
             source_refresh.BASELINE_REQUIRED, source_refresh.BLOCKED,
-            source_refresh.UNREACHABLE, source_refresh.RECORDED, source_refresh.SCHEDULED,
+            source_refresh.UNREACHABLE, source_refresh.CLIENT_RENDERED,
+            source_refresh.RECORDED, source_refresh.SCHEDULED,
         )
         self.assertEqual(
             report_text(dict.fromkeys(categories, 1)),

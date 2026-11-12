@@ -29,7 +29,7 @@ edges are currently approved.
 |---|---:|---|
 | READY | 0 | Retrieval is unchanged and recorded human review meets the applicable date checks |
 | READY_MANUAL | 0 | A current explicit manual review is recorded; automatic retrieval may remain unavailable |
-| Unavailable or review required | 2 | A source moved, is missing/unreadable, lacks a reviewed baseline, remains discovery-only, or needs human review |
+| Unavailable or review required | 2 | A source moved, is missing, unreadable or client-rendered, lacks a reviewed baseline, remains discovery-only, or needs human review |
 | Unknown skill or invalid index | 1 | The checker could not assess the requested complete inventory |
 
 A source exemption returns 2. It records a verification limitation and cannot

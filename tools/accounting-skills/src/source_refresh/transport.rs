@@ -216,6 +216,9 @@ fn attempt(
             content_type(response.header("Content-Type")).map_err(interpretation_error)?;
         let (digest, reading) =
             content::body_digest(&body, &kind, charset.as_deref()).map_err(interpretation_error)?;
+        let client_rendered = digest.is_empty()
+            && ["text/html", "application/xhtml+xml"].contains(&kind.as_str())
+            && content::client_rendered(&body, charset.as_deref()).map_err(interpretation_error)?;
         let text =
             if include_text && ["text/html", "application/xhtml+xml"].contains(&kind.as_str()) {
                 content::readable_text(&body, charset.as_deref())
@@ -241,6 +244,7 @@ fn attempt(
             error: String::new(),
             text_truncated: text.chars().count() > 32768,
             text: text.chars().take(32768).collect(),
+            client_rendered,
         });
     }
     unreachable!()

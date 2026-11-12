@@ -65,6 +65,7 @@ fn invoke(r: &Value, input: &mut impl BufRead) -> Result<Value> {
             ))
         }
         "text" => json!(p::readable_text(&body(), r["charset"].as_str())?),
+        "shell" => json!(p::client_rendered(&body(), r["charset"].as_str())?),
         "digest" => json!(p::body_digest(
             &body(),
             text("kind"),

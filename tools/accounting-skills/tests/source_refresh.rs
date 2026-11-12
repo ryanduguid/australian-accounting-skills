@@ -442,6 +442,49 @@ fn response_destination_redirect_ceiling_and_charset_fail_closed() {
     assert!(sleeps.is_empty());
     assert_eq!(s::classify(&json!({}), &value).0, s::UNREADABLE);
 }
+// tests/test_source_refresh.py ClientRenderedTests holds the same cases and
+// reaches this parser through tests/source_refresh_parity.py.
+#[test]
+fn a_lightning_web_runtime_shell_is_client_rendered_not_unreadable() {
+    let shell = "<html><head><script>boot('<p>x</p>')</script></head><body><webruntime-app></webruntime-app></body></html>";
+    let (value, _) = fetch(&mut Fake::new(vec![Spec::html(shell)]));
+    assert!(value.reachable() && value.digest.is_empty() && value.client_rendered);
+    let (outcome, detail) = s::classify(&json!({}), &value);
+    assert_eq!(outcome, s::CLIENT_RENDERED);
+    assert!(detail.contains("Read it in a browser"));
+    let (value, _) = fetch(&mut Fake::new(vec![Spec::html(
+        "<html><body></body></html>",
+    )]));
+    assert!(!value.client_rendered);
+    assert_eq!(s::classify(&json!({}), &value).0, s::UNREADABLE);
+    let mut plain = Spec::html(shell);
+    plain.headers = vec![("Content-Type".into(), "text/plain; charset=utf-8".into())];
+    let (value, _) = fetch(&mut Fake::new(vec![plain]));
+    assert!(value.readable() && !value.client_rendered);
+    for markup in [
+        "<body><WebRuntime-App></WebRuntime-App></body>",
+        "<body><webruntime-app/></body>",
+    ] {
+        assert!(
+            s::client_rendered(markup.as_bytes(), Some("utf-8")).unwrap(),
+            "{markup}"
+        );
+    }
+    for markup in [
+        "<html><body></body></html>",
+        "<title>Article</title><webruntime-app></webruntime-app>",
+        "<webruntime-app><p>Rendered on the server</p></webruntime-app>",
+        "<script>document.write('<webruntime-app>')</script><!-- <webruntime-app> -->",
+        "<webruntime-application></webruntime-application>",
+        "<x-webruntime-app></x-webruntime-app>",
+        "</webruntime-app>",
+    ] {
+        assert!(
+            !s::client_rendered(markup.as_bytes(), Some("utf-8")).unwrap(),
+            "{markup}"
+        );
+    }
+}
 #[test]
 fn text_limit_counts_characters_and_digest_covers_the_whole_body() {
     let text = "𝄞".repeat(32769);
