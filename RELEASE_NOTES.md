@@ -458,6 +458,13 @@ passage against the corrected text before relying on it.
   withdrew that ruling with effect from 29 July 2026. The skill now works from
   the current RCTI determination as draft GSTR 2026/D2 explains it; an agent
   read the notice and the draft, and human review is pending.
+- `au-company-tax` said the ATO summary limited the loss carry back tax
+  offset to corporate tax entities below a turnover threshold. Division 160
+  of the ITAA 1997, as the *Treasury Laws Amendment (Tax Reform No. 2) Act
+  2026* (made 26 August 2026) substituted it, tests whether the entity is a
+  significant global entity, not its turnover. The skill now gives the Act's
+  conditions; an agent read the Act and the ATO summary, and human review is
+  pending.
 - `docs/ai-register-entry.md` said recorded runs covered 72 of the 76
   validation cards. v0.5.0 had 107 cards, so the figure was 72 of 107. It now
   says human-confirmed model verdicts cover 95 of the 235 cards.
