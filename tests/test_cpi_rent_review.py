@@ -137,6 +137,8 @@ class CpiRentReviewTests(unittest.TestCase):
         self.assert_sentence(limits, r"\bWork out the index result and each limit separately in exact decimals\b",
                              r"\bleaving each limit unrounded\b")
         self.assert_sentence(limits, r"\bNever round a limit's result past the limit\b")
+        self.assert_sentence(limits, r"\bCompare the index result after the clause's rounding with each unrounded "
+                             r"limit\b")
         self.assert_sentence(limits, r"\bcap result rounded down to the cent\b", r"\bcollar\b", r"\brounded up\b")
         self.assert_sentence(limits, r"\bshow both and raise the difference as a reviewer exception\b")
         self.assert_sentence(limits, r"\bdoes not say the order\b", r"\bshow each reading's result\b")
@@ -149,7 +151,7 @@ class CpiRentReviewTests(unittest.TestCase):
         self.assert_sentence(step, r"\bWhere the calculation is open, leave the reviewed rent blank\b", r"`NOT READY`")
         # An unverified figure must not reach a notice marked ready for the landlord to send.
         self.assert_sentence(step, r"`READY FOR REVIEW` only where the calculation is `COMPLETE`",
-                             r"\bno index series or base quarter exception is open\b",
+                             r"\bno index series, base quarter or market or other review exception is open\b",
                              r"\bcarry each `UNVERIFIED` marker from the workpaper into the notice\b")
         notice = fence("Draft notice template")
         self.assertTrue(notice.startswith("DRAFT FOR LANDLORD OR AGENT REVIEW. NOT SENT. NOT SIGNED."))
