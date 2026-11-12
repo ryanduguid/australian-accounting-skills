@@ -1,0 +1,51 @@
+{
+  "skill": "au-professional-firm-profits",
+  "sources": [
+    {
+      "title": "PCG 2021/4 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20214/NAT/ATO/00001",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20214/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "2325d9aeaa8b35baa923aab2523414e3c25f9cbd536bbb70489942e7afc125aa",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20214/NAT/ATO/00001",
+      "reviewed_content": {
+        "content_hash": "2325d9aeaa8b35baa923aab2523414e3c25f9cbd536bbb70489942e7afc125aa",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=COG/PCG20214/NAT/ATO/00001",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Assessing the risk: allocation of profits within professional firms | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/professional-firms/assessing-the-risk-allocation-of-profits-within-professional-firms",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/professional-firms/assessing-the-risk-allocation-of-profits-within-professional-firms",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "db35c9b5a658970c1fb7038f517dbf9fcf2f39499e409ffd084c2d7ec8f3366b",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-12-11",
+      "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/professional-firms/assessing-the-risk-allocation-of-profits-within-professional-firms",
+      "reviewed_content": {
+        "content_hash": "db35c9b5a658970c1fb7038f517dbf9fcf2f39499e409ffd084c2d7ec8f3366b",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/professional-firms/assessing-the-risk-allocation-of-profits-within-professional-firms",
+        "source_last_modified": "2025-12-11",
+        "checked_at": "2026-11-02"
+      }
+    }
+  ]
+}

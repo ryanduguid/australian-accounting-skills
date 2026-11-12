@@ -1,0 +1,44 @@
+{
+  "skill": "au-gst-registration-review",
+  "sources": [
+    {
+      "title": "ATO registering for GST (direct access unavailable during preparation)",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst",
+      "checked_at": "2026-10-14",
+      "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
+      "verification_status": "unavailable-http-403",
+      "limitations": "Direct retrieval returned HTTP 403. Open an authoritative source at use time before relying on any rule. An agent read the page on 12 November 2026 (last updated 14 September 2026): it opened directly (HTTP 200), and it still defines current and projected GST turnover as the current month with the previous or next 11 months and excludes capital asset and closure sales from projected turnover, as the skill does. Human review pending.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "content_hash": "903d8b409e98db4be1a4933adf03c76c9a385f5de37c9196699ab34873ea4f63",
+      "source_last_modified": "2026-10-27",
+      "content_hash_covers": "html",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "15d1cc8f52ee36e7f875d2a12805b1798f7dd5328e98824a4dc8c102131a8061",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-10-27"
+      },
+      "content_url": ""
+    },
+    {
+      "title": "A New Tax System (Goods and Services Tax) Act 1999",
+      "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00081, in force from 1 January 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    }
+  ]
+}

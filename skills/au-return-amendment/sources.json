@@ -1,0 +1,51 @@
+{
+  "skill": "au-return-amendment",
+  "sources": [
+    {
+      "title": "ATO amendment time limits",
+      "url": "https://www.ato.gov.au/api/public/content/0-f9693a0f-35d4-4a60-912a-61913daaac0f",
+      "checked_at": "2026-10-14",
+      "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time. An agent read the source on 12 November 2026: this content address returns a print PDF of the whole 'Your tax return' section, regenerated on 2 November 2026, whose amendment material is a contents entry and a mention of the 2 or 4 year amendment period, not the time-limits page. The skill now links 'Time limits on tax return amendments' instead. Human review pending.",
+      "final_url": "https://www.ato.gov.au/api/public/content/0-f9693a0f-35d4-4a60-912a-61913daaac0f",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "content_hash": "be3591024d5453ee8ec2dcca11554d4a8cac435e8e02164085a79a5b1b3625b6",
+      "source_last_modified": "2026-11-02",
+      "content_hash_covers": "bytes",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "b9ae73d5775194107b446fd6842391d9463cc926254508c696c2bd978f25ca37",
+        "content_hash_covers": "bytes",
+        "content_url": "https://www.ato.gov.au/api/public/content/0-f9693a0f-35d4-4a60-912a-61913daaac0f",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-02"
+      },
+      "content_url": ""
+    },
+    {
+      "title": "ATO: Time limits on tax return amendments",
+      "url": "https://www.ato.gov.au/individuals-and-families/your-tax-return/amend-your-tax-return/time-limits-on-amendments",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 12 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. The page (last updated 24 April 2026) covers individuals and sole traders only, and says an out-of-time change may need an objection instead.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/your-tax-return/amend-your-tax-return/time-limits-on-amendments",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "2026-05-01",
+      "pending_review": {
+        "content_hash": "4ef917367d999edec47d8550cb4b4f11ecd554f8614d069c4713c8932650650b",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/your-tax-return/amend-your-tax-return/time-limits-on-amendments",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-05-01"
+      },
+      "content_url": ""
+    }
+  ]
+}

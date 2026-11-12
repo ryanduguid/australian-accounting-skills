@@ -1,0 +1,49 @@
+{
+  "skill": "au-nonresident-cgt",
+  "sources": [
+    {
+      "title": "ATO foreign and temporary resident CGT (historical, reverify applicable law)",
+      "url": "https://www.ato.gov.au/forms-and-instructions/capital-gains-tax-guide-2021/whats-new/does-capital-gains-tax-apply-to-you/foreign-residents-temporary-residents-and-changing-residency",
+      "checked_at": "2026-10-14",
+      "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.ato.gov.au/forms-and-instructions/capital-gains-tax-guide-2021/whats-new/does-capital-gains-tax-apply-to-you/foreign-residents-temporary-residents-and-changing-residency",
+      "http_status": 200,
+      "fetched_at": "2026-09-16",
+      "content_hash": "577cd47f083f14bae7005a10204574c2eae1b7e611d48e8e5fe7a60e94ff8e6a",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
+    },
+    {
+      "title": "Income Tax Assessment Act 1997",
+      "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Treasury Laws Amendment (Strengthening Accountability for Tax Adviser Misconduct and Other Measures) Act 2026",
+      "url": "https://www.legislation.gov.au/C2026A00086/asmade/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2026A00086/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-04",
+      "review_required_since": "2026-11-04",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

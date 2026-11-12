@@ -1,0 +1,5 @@
+{
+  "skill": "contracting-exports",
+  "exempt": true,
+  "reason": "This procedural export-integrity skill carries no mutable rate, threshold, deadline or form-label fact. Product field names and export behaviour are verified against the live ledger at use time."
+}

@@ -1,0 +1,153 @@
+australian-accounting-skills
+Copyright 2026 Ryan Duguid (https://github.com/ryanduguid)
+
+Ryan Duguid's contributions are licensed under the Ryan Duguid Public
+Attribution Licence, Version 1.0: the Functional Source License, Version 1.1,
+ALv2 Future License (FSL-1.1-ALv2) text with a Public Attribution Condition;
+see LICENSE. Retained third-party material remains under its own licence, as
+stated below.
+
+Public attribution applies when you rely on the FSL grant of a version released
+with the condition (from 4 November 2026) to redistribute or make available a
+copy, modification or derivative: name Ryan Duguid and link to this repository
+in its README or main documentation and in any credits screen. Internal use is
+exempt.
+
+For each version, an additional licence under the Apache License, Version 2.0
+becomes effective on the second anniversary of the date that version was made
+available. The condition does not apply to that licence.
+
+Versions made available before the condition keep the terms they were released
+with.
+
+Redistribution under the FSL grant requires including its terms or a link to
+them and keeping the copyright notices supplied with the software.
+Redistribution under another applicable licence follows that licence's
+conditions.
+
+Copying and reuse: versions under FSL-1.1-ALv2, with or without the Public
+Attribution Condition, are not open source. LICENSE does
+not permit a Competing Use, which it defines as making the software available to
+others in a commercial product or service that substitutes for the software,
+substitutes for another product or service offered using it, or offers the same or
+substantially similar functionality. That covers the skill text, validation cards
+and tests, whether a person copies them directly or through an AI agent or coding
+tool. A Competing Use needs the copyright holder's written permission. Earlier
+versions remain under the licences they were released with.
+
+This product includes work by Ryan Duguid
+(https://github.com/ryanduguid/australian-accounting-skills).
+
+Attribution: LICENSE applies to all copies, modifications and derivatives, and
+redistributing any of them must keep the copyright notices provided in or with the
+software. Those include the copyright line above, the notice ending each skill,
+reference and rule, and the header of each script and test. For versions released
+with the Public Attribution Condition, LICENSE also requires public credit with a
+link to this repository whenever a copy, modification or derivative is made
+available to others; for earlier versions the author asks for it. Credit reuse as
+follows. Neither belongs in client deliverables prepared with the skills:
+
+  Based on australian-accounting-skills by Ryan Duguid
+  (https://github.com/ryanduguid/australian-accounting-skills).
+
+Provenance
+
+The mid-month transfer, messy-workbook and external-items ideas in 3 payroll
+tax validation cards adapt scenarios S03, S08 and S07 from
+Tim-Claessen/payrolltaxdatasets, commit
+8f7d9bb79578fc2b62c3885c54640695cb4355b7 (CC0-1.0), inspected on 5 November
+2026: https://github.com/Tim-Claessen/payrolltaxdatasets. The cards use newly
+fabricated amounts and no upstream rows, identifiers, rates or generator code.
+The remaining jurisdiction cards are original. Existing grouping, back-pay
+and threshold-edge cards already cover the S04, S06 and S10 topics.
+
+Workflow skills for Australian public-practice and contracting-business
+accounting, written independently, from scratch, in my own time and on my own
+equipment.
+
+
+The v0.3.0 development expansion uses OpenAccountants Australian topic names
+for gap identification. No OpenAccountants Guide bodies were copied or
+adapted. The new workflow text is original; primary-source starting points
+and their retrieval limitations are recorded beside each skill.
+
+Additional intake and handoff gaps were identified by reviewing TaxMate
+Australia (now varnikacreative-spec/taxmate-australia, then
+nijanthan-dev/taxmate-australia), tree
+42ba67d458439e7882a3e8e0d76bfa6efdecbad7, on 6 October 2026. The new workflow
+text is independently written for these skills. TaxMate runtime code,
+generated source text, cached ATO material and tax tables were not copied.
+The comparison and source licence are recorded in docs/taxmate-adoptions.md.
+
+Additional workflow and regression patterns were inspected on 6 October 2026
+in these MIT-licensed software repositories:
+
+- hearthresearch/citefact, 469bb993e4047b5f3679877bdd4c710485e4e316
+- marinasofia/statement-agent, b34c2ddc3062eff247e151d26fb126241162cab4
+- kiwizznz/au-tax-return, 00256983631cc88cf6f08d78166351ac6d5174d5
+- cynco-labs/ai-accounting-skills, 8d527e57164ee6581612178670234778b0a29440
+- gunba/australian-legal-mcp, f900398e92d509031402534eac1803b45f376a21
+- FoundrySoftHQ/agent-for-accounting, 7a9e8f9a81eb314b70418051b75213cf6230a01f
+
+The new instructions and fabricated validation cards are independently
+written. No upstream code, guide bodies, corpus text, rate tables, email
+access or hosted-service integration is imported.
+
+The short-stay accommodation topic gap, the contract-date CGT timing card and
+a test against hard-coded figures in skill prose were identified on
+15 October 2026 by reviewing the MIT-licensed darrentmorgan/au-accounting,
+commit 8576474dbe0c. The au-short-stay-accommodation workflow and its cards
+are independently written from ATO, legislation and State Revenue Office
+Victoria sources read that day, and tests/test_skill_figures.py is
+independently written. No upstream skill text,
+evaluation case, code, rates data or refusal codes were copied.
+
+The idea of a pre-lodgement review list came from the published feature list
+of william-laverty/ato-mcp (AGPL-3.0), commit aa0d341bbca4, on 15 October
+2026. The au-pre-lodgement-review workflow is an original design written
+from ATO sources; no ato-mcp code, schemas, prompts or prose were used.
+
+The idea of a reconciliation break-trace workflow, with a one-sentence cause
+per break and a diagnose-only boundary, came from the break-trace skill in
+the Apache-2.0-licensed anthropics/financial-services, commit
+574ed3624aeb, read on 20 October 2026. The reconciliation-break-trace
+workflow and its cards are independently written for Australian practice
+ledgers; no upstream skill text, prompts, schemas or code were copied.
+
+The topics of 16 skills added on 2 November 2026, and of 5 extensions, were
+identified by comparing the public skill list at
+https://nagaris.com/ask-nagaris-skills, read that day. The page publishes only
+skill names and one-line descriptions; no Nagaris text was copied. The new
+workflows and cards are independently written from Australian primary
+sources. The comparison is recorded in docs/nagaris-comparison.md.
+
+The topics of 4 skills added on 4 November 2026 were identified from public
+material; no text from it was copied. au-client-departure and au-trust-losses
+come from the public titles of CA ANZ member resources, including its N1
+guidance note on client records and a members-only trust losses checklist
+that was not read. au-ato-correspondence-triage and
+au-ato-account-reconciliation come from the public product descriptions of
+Business Automation Works' ATOmate and Omble, read on 3 November 2026, and the
+year-end list of ATO amendments processed after balance date from the idea of
+LodgeiT's True Balance Validator help article, read on 4 November 2026. The
+workflows and cards are independently written from APESB, TPB, ATO and Federal
+Register of Legislation sources; CA ANZ's N1 and CR 3 are cited as member
+guidance and regulation.
+
+The topics of au-smsf-death-benefits, au-family-trust-election and the
+dividend preparation step in au-franking-account, added on 11 November 2026,
+were identified by comparing the public skill list at
+https://nagaris.com/ask-nagaris-skills, read that day. No Nagaris text was
+copied. The workflows and cards are independently written from the Federal
+Register of Legislation and ATO sources.
+
+The topics of au-main-residence and au-share-buy-back, added on 11 November
+2026, come from the same public Ask Nagaris skill list, read again on
+11 November 2026. No Nagaris text was copied. The workflows and cards are
+independently written from Federal Register of Legislation, ATO and ASIC
+sources.
+
+The topic of au-client-meeting-note, added on 12 November 2026, comes from the
+same public Ask Nagaris skill list, read again on 12 November 2026. No Nagaris
+text was copied. The workflow and cards are independently written from Federal
+Register of Legislation, TPB and OAIC sources.

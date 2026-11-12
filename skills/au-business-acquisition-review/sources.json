@@ -1,0 +1,120 @@
+{
+  "skill": "au-business-acquisition-review",
+  "sources": [
+    {
+      "title": "Buy an existing business | business.gov.au",
+      "url": "https://business.gov.au/planning/new-businesses/buy-an-existing-business",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://business.gov.au/planning/new-businesses/buy-an-existing-business",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "e5310216c839cecbbe968b6313dab214d40c1f31be291b7ef29011b3965b3da4",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://business.gov.au/planning/new-businesses/buy-an-existing-business",
+      "reviewed_content": {
+        "content_hash": "e5310216c839cecbbe968b6313dab214d40c1f31be291b7ef29011b3965b3da4",
+        "content_hash_covers": "html",
+        "content_url": "https://business.gov.au/planning/new-businesses/buy-an-existing-business",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Acquiring a new business | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/privately-owned-and-wealthy-groups/tax-governance/tax-governance-guide-for-privately-owned-groups/starting-your-business/acquiring-a-new-business",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/privately-owned-and-wealthy-groups/tax-governance/tax-governance-guide-for-privately-owned-groups/starting-your-business/acquiring-a-new-business",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "2a3b9254958de91f69e7f413150722d2559451cfbb3ccc3eeac921a7d55feb02",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-10-02",
+      "content_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/privately-owned-and-wealthy-groups/tax-governance/tax-governance-guide-for-privately-owned-groups/starting-your-business/acquiring-a-new-business",
+      "reviewed_content": {
+        "content_hash": "2a3b9254958de91f69e7f413150722d2559451cfbb3ccc3eeac921a7d55feb02",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/privately-owned-and-wealthy-groups/tax-governance/tax-governance-guide-for-privately-owned-groups/starting-your-business/acquiring-a-new-business",
+        "source_last_modified": "2025-10-02",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Private company benefits - Division 7A dividends | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/private-company-benefits-division-7a-dividends",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/private-company-benefits-division-7a-dividends",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "d2f63b807f21a95e0f30a63d3c49a74465b6f013704ff945d683b6af8afc200a",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-10-02",
+      "content_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/private-company-benefits-division-7a-dividends",
+      "reviewed_content": {
+        "content_hash": "d2f63b807f21a95e0f30a63d3c49a74465b6f013704ff945d683b6af8afc200a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/private-company-benefits-division-7a-dividends",
+        "source_last_modified": "2025-10-02",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Disclosure of business tax debts | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/disclosure-of-business-tax-debts",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/disclosure-of-business-tax-debts",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "a4f62f401eb26e9c451396ed545105ed22ea1d2ca9c62cf0724da944a2280dc0",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-10-29",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/disclosure-of-business-tax-debts",
+      "reviewed_content": {
+        "content_hash": "a4f62f401eb26e9c451396ed545105ed22ea1d2ca9c62cf0724da944a2280dc0",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/disclosure-of-business-tax-debts",
+        "source_last_modified": "2026-10-29",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Foreign resident capital gains withholding overview | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/foreign-residents-and-capital-gains-tax/foreign-resident-capital-gains-withholding/foreign-resident-capital-gains-withholding-overview",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/foreign-residents-and-capital-gains-tax/foreign-resident-capital-gains-withholding/foreign-resident-capital-gains-withholding-overview",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "d4763defb486692db2638c6523343df4c7ecf067186bb83686852afa43daca4f",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-22",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/foreign-residents-and-capital-gains-tax/foreign-resident-capital-gains-withholding/foreign-resident-capital-gains-withholding-overview",
+      "reviewed_content": {
+        "content_hash": "d4763defb486692db2638c6523343df4c7ecf067186bb83686852afa43daca4f",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/foreign-residents-and-capital-gains-tax/foreign-resident-capital-gains-withholding/foreign-resident-capital-gains-withholding-overview",
+        "source_last_modified": "2026-06-22",
+        "checked_at": "2026-11-02"
+      }
+    }
+  ]
+}

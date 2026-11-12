@@ -1,0 +1,106 @@
+{
+  "skill": "au-director-penalty-review",
+  "sources": [
+    {
+      "title": "Director penalties | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "dced99b96fd0caa5378750130e9e380428efe9baa0df31208837a8b6dc8d0510",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-10-13",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+      "reviewed_content": {
+        "content_hash": "dced99b96fd0caa5378750130e9e380428efe9baa0df31208837a8b6dc8d0510",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/paying-the-ato/if-you-don-t-pay/firmer-action-we-may-take/director-penalty-regime",
+        "source_last_modified": "2026-10-13",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "PS LA 2011/18 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "8095366399d4252b9ea432e0cebb174453ef998d89a94754b42589271aad6a98",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+      "reviewed_content": {
+        "content_hash": "8095366399d4252b9ea432e0cebb174453ef998d89a94754b42589271aad6a98",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=PSR/PS201118/NAT/ATO/00001",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Treasury Laws Amendment (Payday Superannuation) Act 2025, as made",
+      "url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "35db9d1c12699f672be0ac157a6241f6e06efd7cef4adb5e55bbf8a6a5b2f7cd",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+      "reviewed_content": {
+        "content_hash": "35db9d1c12699f672be0ac157a6241f6e06efd7cef4adb5e55bbf8a6a5b2f7cd",
+        "content_hash_covers": "html",
+        "content_url": "https://www.legislation.gov.au/C2025A00057/asmade/text",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Taxation Administration Act 1953",
+      "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00468, in force from 1 October 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Superannuation Guarantee (Administration) Act 1992",
+      "url": "https://www.legislation.gov.au/C2004A04402/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00272, in force from 1 July 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A04402/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    }
+  ]
+}

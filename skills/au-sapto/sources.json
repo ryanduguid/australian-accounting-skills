@@ -1,0 +1,67 @@
+{
+  "skill": "au-sapto",
+  "sources": [
+    {
+      "title": "Seniors and pensioners tax offset | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 21 October 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-10-21",
+      "content_hash": "d6ba43b816f01455acc6284da9b6e19376404430277be23ab9714f71689f05de",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-10-02",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset",
+      "reviewed_content": {
+        "content_hash": "d6ba43b816f01455acc6284da9b6e19376404430277be23ab9714f71689f05de",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/seniors-and-pensioners-tax-offset",
+        "source_last_modified": "2026-10-02",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Rebate income 2026 | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 21 October 2026. This is the 2025-26 worksheet. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-10-21",
+      "content_hash": "075ba538854c458ab8ef5f2fbcc22cba0029481e218c00621cd60df750b9388b",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-08-17",
+      "content_url": "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
+      "reviewed_content": {
+        "content_hash": "075ba538854c458ab8ef5f2fbcc22cba0029481e218c00621cd60df750b9388b",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/forms-and-instructions/individual-tax-return-2026-instructions/supporting-information-individual-tax-return-2026/rebate-income-2026",
+        "source_last_modified": "2026-08-17",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Fringe Benefits Tax Assessment Act 1986",
+      "url": "https://www.legislation.gov.au/C2004A03280/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00332, in force from 1 July 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A03280/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    }
+  ]
+}

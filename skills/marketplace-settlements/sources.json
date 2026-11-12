@@ -1,0 +1,50 @@
+{
+  "skill": "marketplace-settlements",
+  "sources": [
+    {
+      "title": "A New Tax System (Goods and Services Tax) Act 1999 (Division 84)",
+      "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 12 November 2026. The page refused the agent's fetch (HTTP 403), so compilation 96 (register ID C2026C00081, compilation date 1 January 2026) was read through the Federal Register of Legislation API. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+      "http_status": 403,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: If you are an electronic distribution platform operator",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/gst-for-non-resident-businesses/how-to-charge-gst/if-you-are-an-edp-operator",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 12 November 2026; the page showed last updated 11 September 2025. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/gst-for-non-resident-businesses/how-to-charge-gst/if-you-are-an-edp-operator",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: GST on low value imported goods",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/gst-for-non-resident-businesses/gst-on-low-value-imported-goods",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 12 November 2026; the page showed last updated 11 September 2025. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/international-tax-for-business/gst-for-non-resident-businesses/gst-on-low-value-imported-goods",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

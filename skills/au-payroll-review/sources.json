@@ -1,0 +1,78 @@
+{
+  "skill": "au-payroll-review",
+  "sources": [
+    {
+      "title": "Fair Work Ombudsman record-keeping and pay slips",
+      "url": "https://www.fairwork.gov.au/tools-and-resources/fact-sheets/rights-and-obligations/record-keeping-pay-slips",
+      "checked_at": "2026-10-14",
+      "fact": "Primary-source starting point for the workflow. No current rate, threshold, deadline or eligibility conclusion is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Located through indexed primary-source material. Verify the complete document, applicable period and current status at use time.",
+      "final_url": "https://www.fairwork.gov.au/tools-and-resources/fact-sheets/rights-and-obligations/record-keeping-pay-slips",
+      "http_status": 200,
+      "fetched_at": "2026-09-25",
+      "content_hash": "0fdc36b69cd47019ea5915e9a782685720efc96c29d93a2180828586e41441b6",
+      "source_last_modified": "",
+      "content_hash_covers": "html"
+    },
+    {
+      "title": "ATO: What payments are qualifying earnings",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday/what-payments-are-qualifying-earnings",
+      "checked_at": "2026-10-14",
+      "fact": "Read 26 September 2026. Tabulates, by payment type and STP paid leave type, whether a payment is ordinary time earnings and whether it is qualifying earnings for super guarantee from 1 July 2026. No classification or rate conclusion is adopted from this record.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Check the row for each pay item and the payday's period at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-on-payday/what-payments-are-qualifying-earnings",
+      "http_status": 200,
+      "fetched_at": "2026-09-26",
+      "content_hash": "e24f4d7ab598e44b17bfd8a0fab027dc4fbac7f703d8d959d47ae0c794fe3d2a",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-09-02"
+    },
+    {
+      "title": "Stapled super funds for employers | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/offer-employees-a-choice-of-super-fund/stapled-super-funds-for-employers",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/offer-employees-a-choice-of-super-fund/stapled-super-funds-for-employers",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Superannuation Guarantee (Administration) Act 1992 (s 32C)",
+      "url": "https://www.legislation.gov.au/C2004A04402/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A04402/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "Superannuation Guarantee (Administration) Regulations 2018 (regulation 15)",
+      "url": "https://www.legislation.gov.au/F2018L01289/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/F2018L01289/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    }
+  ]
+}

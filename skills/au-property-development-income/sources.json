@@ -1,0 +1,159 @@
+{
+  "skill": "au-property-development-income",
+  "sources": [
+    {
+      "title": "TR 92/3 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR923/NAT/ATO/00001",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR923/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "313a1da69f79c9f30585997d0e69538400c6e0e51247fa2c0e6d47997da07170",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR923/NAT/ATO/00001",
+      "reviewed_content": {
+        "content_hash": "313a1da69f79c9f30585997d0e69538400c6e0e51247fa2c0e6d47997da07170",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXR/TR923/NAT/ATO/00001",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "TD 92/124 | Legal database",
+      "url": "https://www.ato.gov.au/law/view/document?docid=TXD/TD92124/NAT/ATO/00001",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=TXD/TD92124/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "11148614728a4faa9ea73804f64a6859792210a7b1e447e6178911d4ec6bac92",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.ato.gov.au/law/view/document?docid=TXD/TD92124/NAT/ATO/00001",
+      "reviewed_content": {
+        "content_hash": "11148614728a4faa9ea73804f64a6859792210a7b1e447e6178911d4ec6bac92",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=TXD/TD92124/NAT/ATO/00001",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Tax consequences on sales of property | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/assets-and-property/property/tax-consequences-on-sales-of-property",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/assets-and-property/property/tax-consequences-on-sales-of-property",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "eabef5465e31fe444080df20ffe58a413d189b96d9f05a360893539874d52769",
+      "content_hash_covers": "html",
+      "source_last_modified": "2025-12-16",
+      "content_url": "https://www.ato.gov.au/businesses-and-organisations/assets-and-property/property/tax-consequences-on-sales-of-property",
+      "reviewed_content": {
+        "content_hash": "eabef5465e31fe444080df20ffe58a413d189b96d9f05a360893539874d52769",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/assets-and-property/property/tax-consequences-on-sales-of-property",
+        "source_last_modified": "2025-12-16",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Examples of tax consequences on sales of land including small-scale land subdivision",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=GUI/tax-consequences-land-sales&PiT=99991231235958",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=GUI/tax-consequences-land-sales&PiT=99991231235958",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "cfd31d36cd74d902136a87b7efca93beaa4d59ae2cb935f621f6e005e0c80250",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.ato.gov.au/law/view/document?DocID=GUI/tax-consequences-land-sales&PiT=99991231235958",
+      "reviewed_content": {
+        "content_hash": "cfd31d36cd74d902136a87b7efca93beaa4d59ae2cb935f621f6e005e0c80250",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=GUI/tax-consequences-land-sales&PiT=99991231235958",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Subdividing land | Australian Taxation Office",
+      "url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/property-and-land/land-vacant-land-and-subdividing/subdividing-land",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/property-and-land/land-vacant-land-and-subdividing/subdividing-land",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "cc996a8ccb51bcc1d72c746f65f1b2014499302bcf805d824118c0955958decb",
+      "content_hash_covers": "html",
+      "source_last_modified": "2026-06-11",
+      "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/property-and-land/land-vacant-land-and-subdividing/subdividing-land",
+      "reviewed_content": {
+        "content_hash": "cc996a8ccb51bcc1d72c746f65f1b2014499302bcf805d824118c0955958decb",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/property-and-land/land-vacant-land-and-subdividing/subdividing-land",
+        "source_last_modified": "2026-06-11",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Commissioner of Taxation v Morton [2026] FCAFC 31 (Published 5 June 2026)",
+      "url": "https://www.ato.gov.au/law/view/document?docid=LIT/ICD/VID578of2025/00001",
+      "checked_at": "2026-11-02",
+      "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
+      "verification_status": "indexed-source-discovery-only",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?docid=LIT/ICD/VID578of2025/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-02",
+      "review_required_since": "2026-11-02",
+      "content_hash": "d9a064d48f314e232f4b925ed517bc5da7d09c243aa5b39cbcc64ba58213d602",
+      "content_hash_covers": "html",
+      "source_last_modified": "",
+      "content_url": "https://www.ato.gov.au/law/view/document?docid=LIT/ICD/VID578of2025/00001",
+      "reviewed_content": {
+        "content_hash": "d9a064d48f314e232f4b925ed517bc5da7d09c243aa5b39cbcc64ba58213d602",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?docid=LIT/ICD/VID578of2025/00001",
+        "source_last_modified": "",
+        "checked_at": "2026-11-02"
+      }
+    },
+    {
+      "title": "Income Tax Assessment Act 1997",
+      "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 through the Federal Register as compilation C2026C00471, in force from 1 October 2026; the headings of the sections this skill cites were confirmed in it. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    }
+  ]
+}
