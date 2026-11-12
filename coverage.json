@@ -3,10 +3,10 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
     "skills": 107,
-    "sources_indexed": 741,
+    "sources_indexed": 742,
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 17,
-    "skills_with_sources_moved_since_review": 0,
+    "skills_with_sources_moved_since_review": 13,
     "skills_with_behavioural_gate": 70,
     "skills_with_only_the_seeded_case": 21,
     "skills_with_confirmed_pass": 82,
@@ -543,7 +543,9 @@
         "reviewed_count": 3,
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-tax-loss-carry-back"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -749,9 +751,11 @@
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
-        "fetched": "2026-09-24",
+        "fetched": "2026-09-30",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/division-296-tax/how-division-296-tax-is-calculated"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -1069,9 +1073,11 @@
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
-        "fetched": "2026-09-16",
+        "fetched": "2026-11-11",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst"
+        ]
       },
       "validation": {
         "cases": 2,
@@ -1469,7 +1475,7 @@
         "reviewed": "2026-09-30",
         "reviewed_count": 9,
         "fetched": "2026-09-24",
-        "unreachable": 2,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
@@ -1748,7 +1754,9 @@
         "reviewed_count": 12,
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -1770,13 +1778,16 @@
     {
       "skill": "au-return-amendment",
       "sources": {
-        "indexed": 1,
+        "indexed": 2,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
-        "fetched": "2026-09-16",
+        "fetched": "2026-11-12",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/api/public/content/0-f9693a0f-35d4-4a60-912a-61913daaac0f",
+          "https://www.ato.gov.au/individuals-and-families/your-tax-return/amend-your-tax-return/time-limits-on-amendments"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -2042,7 +2053,9 @@
         "reviewed_count": 4,
         "fetched": "2026-09-24",
         "unreachable": 1,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/concessional-contributions-cap"
+        ]
       },
       "validation": {
         "cases": 2,
@@ -2328,7 +2341,9 @@
         "reviewed_count": 9,
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -2356,7 +2371,9 @@
         "reviewed_count": 8,
         "fetched": "2026-11-02",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -2384,7 +2401,10 @@
         "reviewed_count": 9,
         "fetched": "2026-09-16",
         "unreachable": 2,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/extension-of-gic-remission-offer-for-ftdt-liabilities",
+          "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts"
+        ]
       },
       "validation": {
         "cases": 3,
@@ -2446,7 +2466,9 @@
         "reviewed_count": 3,
         "fetched": "2026-09-24",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -2474,7 +2496,9 @@
         "reviewed_count": 12,
         "fetched": "2026-09-29",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/reporting-the-amounts-you-have-paid/income-types"
+        ]
       },
       "validation": {
         "cases": 1,
@@ -3118,7 +3142,9 @@
         "reviewed_count": 2,
         "fetched": "2026-11-11",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://community.owasp.org/attacks/CSV_Injection"
+        ]
       },
       "validation": {
         "cases": 3,
@@ -3151,7 +3177,9 @@
         "reviewed_count": 5,
         "fetched": "2026-09-16",
         "unreachable": 0,
-        "moved_since_review": []
+        "moved_since_review": [
+          "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/finalising-your-stp-data"
+        ]
       },
       "validation": {
         "cases": 4,

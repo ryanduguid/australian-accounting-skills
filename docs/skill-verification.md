@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 107 skills, 742 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -32,14 +32,14 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`au-client-email-triage`](../.claude/skills/au-client-email-triage/SKILL.md) | [1](../.claude/skills/au-client-email-triage/sources.json) | none (0 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-client-letter`](../.claude/skills/au-client-letter/SKILL.md) | [1](../.claude/skills/au-client-letter/sources.json) | none (0 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-client-meeting-note`](../.claude/skills/au-client-meeting-note/SKILL.md) | [6](../.claude/skills/au-client-meeting-note/sources.json) | none (0 of 6) | 3 | 0 | 2 | 0 | 0 | 0 |
-| [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | [3](../.claude/skills/au-company-tax/sources.json) | 2026-09-30 (3 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | [3](../.claude/skills/au-company-tax/sources.json) | 2026-09-30 (3 of 3) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-cpi-rent-review`](../.claude/skills/au-cpi-rent-review/SKILL.md) | [7](../.claude/skills/au-cpi-rent-review/sources.json) | none (0 of 7) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) | [5](../.claude/skills/au-crypto-tax/sources.json) | 2026-10-14 (1 of 5) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | [4](../.claude/skills/au-deceased-estates/sources.json) | 2026-10-14 (1 of 4) | 1 | 0 | 1 | 1 | 0 | 0 |
 | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | [12](../.claude/skills/au-depreciation-schedule/sources.json) | 2026-11-02 (11 of 12) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) | [5](../.claude/skills/au-director-penalty-review/sources.json) | 2026-11-02 (3 of 5) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`au-division-293`](../.claude/skills/au-division-293/SKILL.md) | [2](../.claude/skills/au-division-293/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | [4](../.claude/skills/au-division-296/sources.json) | 2026-09-30 (3 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | [4](../.claude/skills/au-division-296/sources.json) | 2026-09-30 (3 of 4) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) | [2](../.claude/skills/au-dssp/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) | [1](../.claude/skills/au-employee-share-schemes/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | [3](../.claude/skills/au-etp-redundancy/sources.json) | 2026-10-14 (3 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
@@ -50,7 +50,7 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | [1](../.claude/skills/au-forex-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | [18](../.claude/skills/au-franking-account/sources.json) | 2026-11-02 (15 of 18) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | [22](../.claude/skills/au-gst-property/sources.json) | 2026-09-30 (2 of 22) | 0 | 0 | 2 | 1 | 0 | 0 |
-| [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | [2](../.claude/skills/au-gst-registration-review/sources.json) | 2026-10-14 (1 of 2) | 0 | 0 | 2 | 1 | 0 | 0 |
+| [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | [2](../.claude/skills/au-gst-registration-review/sources.json) | 2026-10-14 (1 of 2) | 0 | 1 | 2 | 1 | 0 | 0 |
 | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | [7](../.claude/skills/au-individual-return/sources.json) | 2026-10-14 (2 of 7) | 2 | 0 | 6 | 3 | 0 | 0 |
 | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | [12](../.claude/skills/au-land-tax/sources.json) | 2026-09-30 (3 of 12) | 0 | 0 | 9 | 2 | 0 | 0 |
 | [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) | [1](../.claude/skills/au-lump-sum-arrears/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
@@ -63,7 +63,7 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | [3](../.claude/skills/au-partnership-tax/sources.json) | 2026-10-14 (1 of 3) | 1 | 0 | 2 | 1 | 0 | 0 |
 | [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | [3](../.claude/skills/au-payg-instalment-variation/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | [5](../.claude/skills/au-payroll-review/sources.json) | 2026-10-14 (2 of 5) | 0 | 0 | 5 | 3 | 0 | 0 |
-| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [18](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 18) | 2 | 0 | 8 | 1 | 0 | 0 |
+| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [18](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 18) | 1 | 0 | 8 | 1 | 0 | 0 |
 | [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | [12](../.claude/skills/au-pre-lodgement-review/sources.json) | 2026-10-15 (6 of 12) | 0 | 0 | 3 | 0 | 0 | 0 |
 | [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | [29](../.claude/skills/au-primary-production/sources.json) | 2026-11-02 (13 of 29) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | [6](../.claude/skills/au-private-ruling-application/sources.json) | 2026-11-02 (6 of 6) | 0 | 0 | 1 | 1 | 0 | 0 |
@@ -72,8 +72,8 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | [4](../.claude/skills/au-psi-review/sources.json) | 2026-10-14 (2 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | [2](../.claude/skills/au-rd-incentive/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | [7](../.claude/skills/au-rental-property/sources.json) | 2026-09-30 (3 of 7) | 1 | 0 | 3 | 1 | 0 | 0 |
-| [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [13](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 13) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [1](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [13](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 13) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [2](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 2) | 0 | 2 | 1 | 1 | 0 | 0 |
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | [3](../.claude/skills/au-sapto/sources.json) | 2026-11-02 (2 of 3) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-share-buy-back`](../.claude/skills/au-share-buy-back/SKILL.md) | [10](../.claude/skills/au-share-buy-back/sources.json) | none (0 of 10) | 0 | 0 | 3 | 0 | 0 | 0 |
 | [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) | [15](../.claude/skills/au-short-stay-accommodation/sources.json) | 2026-10-15 (15 of 15) | 0 | 0 | 2 | 0 | 0 | 0 |
@@ -82,7 +82,7 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`au-smsf-death-benefits`](../.claude/skills/au-smsf-death-benefits/SKILL.md) | [11](../.claude/skills/au-smsf-death-benefits/sources.json) | none (0 of 11) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | [10](../.claude/skills/au-smsf-year-end/sources.json) | 2026-09-30 (6 of 10) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | [4](../.claude/skills/au-sole-trader/sources.json) | 2026-10-14 (1 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
-| [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | [7](../.claude/skills/au-super-contribution-caps/sources.json) | 2026-10-14 (4 of 7) | 1 | 0 | 2 | 2 | 0 | 0 |
+| [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | [7](../.claude/skills/au-super-contribution-caps/sources.json) | 2026-10-14 (4 of 7) | 1 | 1 | 2 | 2 | 0 | 0 |
 | [`au-super-guarantee-charge`](../.claude/skills/au-super-guarantee-charge/SKILL.md) | [12](../.claude/skills/au-super-guarantee-charge/sources.json) | 2026-11-02 (8 of 12) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`au-tax-agent-obligations`](../.claude/skills/au-tax-agent-obligations/SKILL.md) | [24](../.claude/skills/au-tax-agent-obligations/sources.json) | 2026-11-02 (2 of 24) | 10 | 0 | 4 | 1 | 0 | 0 |
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | [1](../.claude/skills/au-tax-planning-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
@@ -91,12 +91,12 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | [1](../.claude/skills/au-tax-residency/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-transfer-duty`](../.claude/skills/au-transfer-duty/SKILL.md) | [16](../.claude/skills/au-transfer-duty/sources.json) | 2026-09-30 (1 of 16) | 0 | 0 | 9 | 1 | 0 | 0 |
 | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | [1](../.claude/skills/au-transfer-pricing/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-travel-expenses`](../.claude/skills/au-travel-expenses/SKILL.md) | [12](../.claude/skills/au-travel-expenses/sources.json) | 2026-11-02 (9 of 12) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md) | [11](../.claude/skills/au-trust-deed-review/sources.json) | 2026-11-02 (8 of 11) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | [15](../.claude/skills/au-trust-distributions/sources.json) | 2026-09-30 (9 of 15) | 2 | 0 | 3 | 1 | 0 | 0 |
+| [`au-travel-expenses`](../.claude/skills/au-travel-expenses/SKILL.md) | [12](../.claude/skills/au-travel-expenses/sources.json) | 2026-11-02 (9 of 12) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md) | [11](../.claude/skills/au-trust-deed-review/sources.json) | 2026-11-02 (8 of 11) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | [15](../.claude/skills/au-trust-distributions/sources.json) | 2026-09-30 (9 of 15) | 2 | 2 | 3 | 1 | 0 | 0 |
 | [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | [5](../.claude/skills/au-trust-losses/sources.json) | none (0 of 5) | 0 | 0 | 1 | 0 | 0 | 0 |
-| [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | [5](../.claude/skills/au-wfh-deductions/sources.json) | 2026-10-14 (3 of 5) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | [12](../.claude/skills/au-working-holiday-makers/sources.json) | 2026-09-29 (12 of 12) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | [5](../.claude/skills/au-wfh-deductions/sources.json) | 2026-10-14 (3 of 5) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | [12](../.claude/skills/au-working-holiday-makers/sources.json) | 2026-09-29 (12 of 12) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | [19](../.claude/skills/bas-preparation/sources.json) | 2026-10-14 (5 of 19) | 0 | 0 | 16 | 3 | 0 | 0 |
 | [`cashflow-forecast-13week`](../.claude/skills/cashflow-forecast-13week/SKILL.md) | [6](../.claude/skills/cashflow-forecast-13week/sources.json) | 2026-09-30 (5 of 6) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`coal-lsl-levy`](../.claude/skills/coal-lsl-levy/SKILL.md) | [7](../.claude/skills/coal-lsl-levy/sources.json) | 2026-09-30 (5 of 7) | 0 | 0 | 2 | 2 | 0 | 0 |
@@ -115,8 +115,8 @@ Totals: 107 skills, 741 indexed primary sources of which 341 have a recorded hum
 | [`progress-claim-preparation`](../.claude/skills/progress-claim-preparation/SKILL.md) | [5](../.claude/skills/progress-claim-preparation/sources.json) | 2026-09-30 (4 of 5) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`reconciliation-break-trace`](../.claude/skills/reconciliation-break-trace/SKILL.md) | exempt | none | 0 | 0 | 4 | 0 | 0 | 0 |
 | [`retention-schedule`](../.claude/skills/retention-schedule/SKILL.md) | [7](../.claude/skills/retention-schedule/sources.json) | 2026-09-30 (4 of 7) | 0 | 0 | 2 | 2 | 0 | 0 |
-| [`statement-to-csv`](../.claude/skills/statement-to-csv/SKILL.md) | [4](../.claude/skills/statement-to-csv/sources.json) | 2026-11-02 (2 of 4) | 0 | 0 | 3 | 1 | 0 | 0 |
-| [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md) | [8](../.claude/skills/stp-finalisation/sources.json) | 2026-09-30 (5 of 8) | 0 | 0 | 4 | 3 | 0 | 0 |
+| [`statement-to-csv`](../.claude/skills/statement-to-csv/SKILL.md) | [4](../.claude/skills/statement-to-csv/sources.json) | 2026-11-02 (2 of 4) | 0 | 1 | 3 | 1 | 0 | 0 |
+| [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md) | [8](../.claude/skills/stp-finalisation/sources.json) | 2026-09-30 (5 of 8) | 0 | 1 | 4 | 3 | 0 | 0 |
 | [`tax-invoice-review`](../.claude/skills/tax-invoice-review/SKILL.md) | [10](../.claude/skills/tax-invoice-review/sources.json) | 2026-10-14 (3 of 10) | 1 | 0 | 7 | 2 | 0 | 0 |
 | [`wip-over-under-billing`](../.claude/skills/wip-over-under-billing/SKILL.md) | [12](../.claude/skills/wip-over-under-billing/sources.json) | 2026-09-30 (12 of 12) | 0 | 0 | 2 | 1 | 0 | 1 |
 | [`workpaper-tie-out`](../.claude/skills/workpaper-tie-out/SKILL.md) | exempt | none | 0 | 0 | 9 | 3 | 0 | 0 |

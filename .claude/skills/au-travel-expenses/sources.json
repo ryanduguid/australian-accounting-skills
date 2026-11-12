@@ -168,14 +168,14 @@
       "checked_at": "2026-11-02",
       "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time. An agent read the page on 12 November 2026 (last updated 24 September 2025): it still sets the 4 conditions for not withholding from a travel allowance and lists reasonable amounts determinations only up to TD 2025/4, so it is not a source for the 2026-27 amounts. Human review pending.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "eac83439dbee7d37caea3779fdc5875d883353fc626f23559dd4f722ccfcf606",
       "content_hash_covers": "html",
-      "source_last_modified": "2025-10-02",
+      "source_last_modified": "2026-11-06",
       "content_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances",
       "reviewed_content": {
         "content_hash": "eac83439dbee7d37caea3779fdc5875d883353fc626f23559dd4f722ccfcf606",
@@ -183,6 +183,13 @@
         "content_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances",
         "source_last_modified": "2025-10-02",
         "checked_at": "2026-11-02"
+      },
+      "pending_review": {
+        "content_hash": "eac83439dbee7d37caea3779fdc5875d883353fc626f23559dd4f722ccfcf606",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-06"
       }
     },
     {

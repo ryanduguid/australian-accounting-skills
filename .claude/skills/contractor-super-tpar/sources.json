@@ -46,11 +46,11 @@
       "checked_at": "2026-11-02",
       "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Retrieved by an agent on 1 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 1 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time. An agent read the page on 12 November 2026: it is still a draft dated 2 September 2026, and it now says the comment period closed on 2 October 2026; no final determination was found linked from it. Human review pending.",
       "final_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-01",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "c931069aaa28aa265f57828d28929c57ee4616fa782774e3a14c9a7fa1188c03",
       "content_hash_covers": "html",
       "source_last_modified": "",
@@ -61,6 +61,13 @@
         "content_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
         "source_last_modified": "",
         "checked_at": "2026-11-02"
+      },
+      "pending_review": {
+        "content_hash": "fd1c4df214720173d40ebf180ec62636f7e3c54143a06c1b0b08c7c6fab9d3d5",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=DSD/SGD2026D1/NAT/ATO/00001",
+        "observed_at": "2026-11-12",
+        "source_last_modified": ""
       }
     },
     {

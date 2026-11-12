@@ -34,19 +34,27 @@
       "volatile": true,
       "final_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
       "http_status": 200,
-      "fetched_at": "2026-11-04",
+      "fetched_at": "2026-11-12",
       "content_hash": "cfacda4aeeaf43eb7adc3baf5797b6a3a12f6e4cbab2662a709643df93026a99",
       "source_last_modified": "",
       "content_hash_covers": "html",
       "content_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
-      "review_required_since": "2026-11-04",
+      "review_required_since": "2026-11-12",
       "reviewed_content": {
         "content_hash": "cfacda4aeeaf43eb7adc3baf5797b6a3a12f6e4cbab2662a709643df93026a99",
         "content_hash_covers": "html",
         "content_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
         "source_last_modified": "",
         "checked_at": "2026-11-04"
-      }
+      },
+      "pending_review": {
+        "content_hash": "2723356b4a0ae4afacceb7ee0f4de72628a7bb8ec0e00462d4f3ebc3d9dee53e",
+        "content_hash_covers": "html",
+        "content_url": "https://github.com/ryanduguid/australian-accounting/tree/a5a56e5e126c6d8eabb6341cbba2f2a18e0c3d7b/packages/the-wip-tally",
+        "observed_at": "2026-11-12",
+        "source_last_modified": ""
+      },
+      "limitations": "An agent read the pinned page and the repository history on 12 November 2026: the pinned commit (a5a56e5, package tree c92b312) cannot change and still states the recorded boundary, so the digest change appears to be GitHub page furniture. The 4 later commits on main that touch the package change only the README disclaimer layout, copyright and licence headers, the licence and the fuzz harness; version 1.0.0 and Cargo.lock are unchanged. Human review pending."
     },
     {
       "title": "AASB 9 Financial Instruments",
@@ -180,22 +188,29 @@
       "reverify_by": "2027-06-30",
       "fact": "ASIC's section 'Definition of a large proprietary company - financial years commencing on or after 1 July 2019' sets the size criteria. For those years, a proprietary company is large if it meets at least two of consolidated revenue of $50 million or more, consolidated gross assets of $25 million or more at year end, and 100 or more employees at year end. Each criterion includes the company and its controlled entities. That section also requires large proprietary companies to prepare and lodge annual financial and directors' reports, with the financial report audited unless ASIC grants relief. No size or reporting conclusion is adopted from this record.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Located and read on 25 September 2026 by an agent on the maintainer's instruction. Thresholds are period-specific. Read the cited section for the relevant financial year before concluding size.",
+      "limitations": "Located and read on 25 September 2026 by an agent on the maintainer's instruction. Thresholds are period-specific. Read the cited section for the relevant financial year before concluding size. An agent read the page on 12 November 2026 (no date shown): the recorded thresholds for financial years from 1 July 2019 and the reporting and audit requirement are still stated; the page now also says the Government is consulting on raising the revenue threshold to $100 million and the assets threshold to $50 million (2026-27 Budget), that the proposals are not yet in effect and that the existing thresholds continue to apply. Human review pending.",
       "volatile": true,
       "final_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
       "http_status": 200,
-      "fetched_at": "2026-10-20",
+      "fetched_at": "2026-11-12",
       "content_hash": "3d396b761953d6b2cc50faa9a45077bafb3a5de54196fe1d13e0928e61a907b5",
       "content_hash_covers": "html",
       "source_last_modified": "",
       "content_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
-      "review_required_since": "2026-10-20",
+      "review_required_since": "2026-11-12",
       "reviewed_content": {
         "content_hash": "3d396b761953d6b2cc50faa9a45077bafb3a5de54196fe1d13e0928e61a907b5",
         "content_hash_covers": "html",
         "content_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
         "source_last_modified": "",
         "checked_at": "2026-10-20"
+      },
+      "pending_review": {
+        "content_hash": "3a1dd17461d24ab82fc808a025959130d2da370c54a54bb0b87d658d0ca0961a",
+        "content_hash_covers": "html",
+        "content_url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
+        "observed_at": "2026-11-12",
+        "source_last_modified": ""
       }
     },
     {

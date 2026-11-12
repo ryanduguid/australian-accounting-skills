@@ -23,13 +23,22 @@
       "checked_at": "2026-10-14",
       "fact": "Reviewed on 27 September 2026 at Ryan Duguid's direction: issued 4 October 2006, review date 25 February 2031. Paragraph 1 says the Ruling outlines the system of public rulings under Divisions 357 and 358 of Schedule 1 to the Taxation Administration Act 1953; it explains when a public ruling binds the Commissioner and cites subsection 357-60(1).",
       "volatile": false,
-      "limitations": "Check the ruling's history for amendments before relying on a specific paragraph.",
+      "limitations": "Check the ruling's history for amendments before relying on a specific paragraph. An agent read the ruling on 12 November 2026 (consolidated version of 25 February 2026, no later addendum): paragraph 30 still says a public ruling binds the Commissioner if it applies to the entity and the entity relies on it, and adds that reliance fails where other actions materially change the outcome (footnote 20A, Aitken [2025] FCA 372). Human review pending.",
       "final_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR200610/NAT/ATO/00001",
       "http_status": 200,
-      "fetched_at": "2026-09-27",
+      "fetched_at": "2026-11-12",
       "content_hash": "dbb031fcf02bac3efcdea0c7cc7d02cc57dde21c19e2642569999733e58509b9",
       "content_hash_covers": "html",
-      "source_last_modified": ""
+      "source_last_modified": "",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "32b135c5f86bc60226f896da0fe091d3b3ee9d5f798b1cfe857ab477e6c61a6f",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/law/view/document?DocID=TXR/TR200610/NAT/ATO/00001",
+        "observed_at": "2026-11-12",
+        "source_last_modified": ""
+      },
+      "content_url": ""
     },
     {
       "title": "PS LA 2008/4 Publication of edited versions of written binding advice",

@@ -126,14 +126,14 @@
       "checked_at": "2026-11-02",
       "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Retrieved by an agent on 31 October 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 31 October 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time. An agent read the page on 12 November 2026 (last updated 10 November 2026): the passages step 4a relies on (extended distribution, family group exclusions, notice at any time, the 21-day due date, GIC remission to 30 June 2027 and the IEE narrowing sentence) are still stated. Human review pending.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-10-31",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "307d8d7f7d76bda2272879461940057ab60f95f28f6959401b7a9e9af82caea4",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-10-20",
+      "source_last_modified": "2026-11-10",
       "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
       "reviewed_content": {
         "content_hash": "307d8d7f7d76bda2272879461940057ab60f95f28f6959401b7a9e9af82caea4",
@@ -141,6 +141,13 @@
         "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
         "source_last_modified": "2026-10-20",
         "checked_at": "2026-11-02"
+      },
+      "pending_review": {
+        "content_hash": "e3512ee217029144b1768f9e9b0ac5a57508a517ab722445d681b5f89ff9603b",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-10"
       }
     },
     {
@@ -227,19 +234,27 @@
       "source_last_modified": ""
     },
     {
-      "title": "ATO: Increased visibility for trust elections",
-      "url": "https://www.ato.gov.au/tax-and-super-professionals/for-tax-professionals/tax-professionals-newsroom/increased-visibility-for-trust-elections",
+      "title": "ATO: Extension of GIC remission offer for FTDT liabilities",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/extension-of-gic-remission-offer-for-ftdt-liabilities",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
       "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 4 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
-      "final_url": "https://www.ato.gov.au/tax-and-super-professionals/for-tax-professionals/tax-professionals-newsroom/increased-visibility-for-trust-elections",
+      "limitations": "Retrieved by an agent on 12 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Replaces 'ATO: Increased visibility for trust elections' (tax professionals newsroom), which returned HTTP 404 on 12 November 2026 with no archived copy; no live ATO page found lists the report's fields. This bulletin (last updated 19 October 2026) says the report was enhanced from 18 April 2026 to show more about all elections lodged, including the date lodged, and that the ATO forms no opinion about validity; it still links the removed page.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/extension-of-gic-remission-offer-for-ftdt-liabilities",
       "http_status": 200,
-      "fetched_at": "2026-11-04",
-      "review_required_since": "2026-11-04",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "",
       "content_hash_covers": "",
-      "source_last_modified": ""
+      "source_last_modified": "2026-10-20",
+      "pending_review": {
+        "content_hash": "ad8c93681bd4c6a7ba634e4e4af4e5a5b4015f42c6eeec512bbd13589c825347",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/extension-of-gic-remission-offer-for-ftdt-liabilities",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-10-20"
+      },
+      "content_url": ""
     },
     {
       "title": "TD 2022/11 Income tax: Division 7A: when will an unpaid present entitlement or amount held on sub-trust become the provision of 'financial accommodation'?",

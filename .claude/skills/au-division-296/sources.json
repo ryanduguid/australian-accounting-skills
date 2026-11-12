@@ -40,13 +40,22 @@
       "reverify_by": "2027-06-30",
       "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 29 June 2026): 15% tax on total super earnings for the proportion of the TSB reference amount over the large threshold, and an additional 10% on earnings for the proportion over the very large threshold. Limited recourse borrowing arrangement amounts are never included in TSB for Division 296. Funds report relevant super earnings; SMSFs report through the SMSF annual return.",
       "volatile": true,
-      "limitations": "The page's Leanne example multiplies $4,072.65 by '5%' but states $610.90, which is 15%; the worked figure matches the 15% rule. The ATO says it is drafting a law companion ruling on fund earnings. Verify the complete page at use time.",
+      "limitations": "The page's Leanne example multiplies $4,072.65 by '5%' but states $610.90, which is 15%; the worked figure matches the 15% rule. The ATO says it is drafting a law companion ruling on fund earnings. Verify the complete page at use time. An agent read the page on 12 November 2026 (last updated 3 November 2026): the recorded fact is still stated; the Leanne example now shows 15%, and the page no longer mentions a law companion ruling being drafted, so those 2 earlier observations are out of date. Human review pending.",
       "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/division-296-tax/how-division-296-tax-is-calculated",
       "http_status": 200,
-      "fetched_at": "2026-09-24",
+      "fetched_at": "2026-11-12",
       "content_hash": "b60814814307171858f4c685e6f2882410d697729d79d5adbd8742d3f7a0bf74",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-07-02"
+      "source_last_modified": "2026-11-03",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "202a098fe686beae31a2abf099fd3c034859bf3e2d1baa76407729615d310c89",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/division-296-tax/how-division-296-tax-is-calculated",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-03"
+      },
+      "content_url": ""
     },
     {
       "title": "Income Tax Assessment Act 1997",

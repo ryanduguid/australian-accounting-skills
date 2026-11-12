@@ -260,14 +260,14 @@
       "checked_at": "2026-11-02",
       "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time. An agent read the page on 12 November 2026 (last updated 3 November 2026): it still says the measure is not yet law, describes a time-limited (3 years) restructure rollover available from 1 July 2027, and links the Treasury Laws Amendment (Tax Reform No. 3) Bill 2026 and the Income Tax Rates Amendment (Minimum Tax on Discretionary Trusts) Bill 2026. Human review pending.",
       "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "ad20d47f139d3924af4851302aebc82bdb52c7e795df232c9337389fdfd6b2ce",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-09-03",
+      "source_last_modified": "2026-11-03",
       "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
       "reviewed_content": {
         "content_hash": "ad20d47f139d3924af4851302aebc82bdb52c7e795df232c9337389fdfd6b2ce",
@@ -275,6 +275,13 @@
         "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
         "source_last_modified": "2026-09-03",
         "checked_at": "2026-11-02"
+      },
+      "pending_review": {
+        "content_hash": "0818885c2313b6d93f486b04ec2294f9a5fec4835ecf737ead99773ecf4a69fe",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-introducing-a-minimum-tax-on-discretionary-trusts",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-03"
       }
     },
     {

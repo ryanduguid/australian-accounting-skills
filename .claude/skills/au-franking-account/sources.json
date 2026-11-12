@@ -344,11 +344,11 @@
       "checked_at": "2026-11-02",
       "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time. An agent read the page and the package's commit history on 12 November 2026 (latest package commit 6462edc, 4 November 2026): commits since 2 November change only README wording, copyright and licence headers and the licence (FSL-1.1-ALv2 to LicenseRef-Duguid-Public-Attribution-1.0); the commands, inputs, outputs, FY2018 to FY2027 table coverage and entry types the skill describes are unchanged. Human review pending.",
       "final_url": "https://github.com/ryanduguid/australian-accounting/tree/main/packages/the-exchequer-tally",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "7d56cd6a901ad442a0595ecc7a5491912d2dcec0ae8739e15e95ffe73dcc38ed",
       "content_hash_covers": "html",
       "source_last_modified": "",
@@ -359,6 +359,13 @@
         "content_url": "https://github.com/ryanduguid/australian-accounting/tree/main/packages/the-exchequer-tally",
         "source_last_modified": "",
         "checked_at": "2026-11-02"
+      },
+      "pending_review": {
+        "content_hash": "6304a8e6744dff268296691501adfefee3c92cbabf29fb518f80cfdc2b1f3aef",
+        "content_hash_covers": "html",
+        "content_url": "https://github.com/ryanduguid/australian-accounting/tree/main/packages/the-exchequer-tally",
+        "observed_at": "2026-11-12",
+        "source_last_modified": ""
       }
     },
     {
