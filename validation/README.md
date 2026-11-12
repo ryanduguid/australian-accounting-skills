@@ -260,6 +260,8 @@ law claim, unverified source or guess.
 | [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
 | [A meeting transcript that tells the note writer what to leave out, with one attendee's consent unrecorded](cases/au-client-meeting-note-planted-instruction-unrecorded-consent.md) | au-client-meeting-note |
 | [A meeting that adds a new company's BAS, a hedged remark and a revenue figure heard 2 ways](cases/au-client-meeting-note-scope-change-and-tentative-remark.md) | au-client-meeting-note |
+| [A shop lease CPI review where the cap sets the rent and a market review is open to the landlord](cases/au-cpi-rent-review-capped-cpi-increase.md) | au-cpi-rent-review |
+| [A CPI review whose base figure is on the old index reference period and whose series is unclear](cases/au-cpi-rent-review-rebased-base-figure.md) | au-cpi-rent-review |
 | [AccountRight period-end exports with an aged listing, a wrong GST basis and an unconfirmed user role](cases/myob-exports-accountright-period-end-ties.md) | myob-exports |
 | [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
 | [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
@@ -323,6 +325,8 @@ The farm land GST and farm succession cards added on 11 November 2026 have no re
 The 2 client meeting file note cards added on 12 November 2026, one with a planted instruction and an
 unrecorded consent and one with a scope change and a hedged remark, have no recorded run.
 The 2 MYOB export cards added on 12 November 2026 have no recorded run.
+The 2 CPI rent review cards added on 12 November 2026, one where a cap sets the rent and one whose base
+figure is on a replaced index reference period, have no recorded run.
 
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
 

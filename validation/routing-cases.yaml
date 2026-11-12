@@ -477,6 +477,10 @@
   skill: au-client-meeting-note
   not: [au-tax-research, au-client-acceptance]
   prompt: Here is the AI transcript of this morning's video call with a client and her husband. Write it up as a file note for the partner to review, including what we agreed to do and anything she asked us to take on.
+- id: cpi-rent-review-shop-lease
+  skill: au-cpi-rent-review
+  not: [au-rental-property, au-gst-property]
+  prompt: Our client owns a shop it leases out, and the lease says the rent goes up each March by the CPI movement, capped and never going down. Work out the new rent from the clause and the ABS figures, and draft the letter telling the tenant.
 - id: marketplace-payouts-booked-as-sales
   skill: marketplace-settlements
   not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
