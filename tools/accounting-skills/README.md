@@ -222,6 +222,11 @@ lists, as `REGISTER-ID SECTION: reason`, a section a skill cites on purpose
 although its list lacks it, such as one a Bill proposes or one since repealed.
 A section of an Act with no list is counted as not indexed.
 
+After any failures the command prints its summary: each Act or instrument's
+resolved sections, most cited first, named with its jurisdiction, then the
+totals. `docs/EVAL.md` quotes that summary, and `tests/citations.rs` fails when
+the quote and the command's output differ.
+
 A list's header is also the only offline evidence of which instrument a
 Federal Register address holds: the identifier is otherwise tied to the
 record's title by kind and, for an Act, year. A `sources.json` record whose

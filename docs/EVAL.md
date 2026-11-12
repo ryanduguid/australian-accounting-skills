@@ -479,6 +479,17 @@ citations, all resolved, including 1,437 sections: 1,200 in an indexed Act, of
 which 1,197 were listed and 3 were the same exceptions, and 237 not indexed.
 None was missing.
 
+The figures above are dated. The block below is what `check-citations` prints
+for the commit this file is in, after any failures: each Act or instrument's
+resolved sections, most cited first, then the totals. A test in
+`tools/accounting-skills/tests/citations.rs` fails when the block and the
+command's output differ, so a change to a skill's citations updates it.
+
+<!-- check-citations summary -->
+```text
+PLACEHOLDER
+```
+
 A section found on a list exists in the current compilation; that says nothing
 of whether it applied in the period the skill concerns or says what the skill
 claims. A list holds every numbered entry in the table of contents: the

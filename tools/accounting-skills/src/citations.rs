@@ -36,7 +36,7 @@ use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
 use serde_json::Value;
 use std::{
-    collections::BTreeSet,
+    collections::{BTreeMap, BTreeSet},
     ffi::OsString,
     fs,
     io::{self, Write},
@@ -293,7 +293,20 @@ pub struct Report {
     pub sections_absent: usize,
     pub sections_excepted: usize,
     pub sections_not_indexed: usize,
+    /// Resolved sections by the Act or instrument that owns them, named with
+    /// its jurisdiction.
+    pub acts: BTreeMap<String, ActCount>,
     pub unmatched: Vec<Unmatched>,
+}
+
+/// One Act's resolved sections. Sections neither found, excepted nor absent
+/// sit in an Act with no section index.
+#[derive(Debug, Default, PartialEq, Eq)]
+pub struct ActCount {
+    pub cited: usize,
+    pub found: usize,
+    pub excepted: usize,
+    pub absent: usize,
 }
 
 const SECTION_INDEX: &str = "tools/accounting-skills/section-index";
@@ -1213,22 +1226,25 @@ pub fn check(root: &Path) -> Result<Report> {
     for skill in discover_skills(root)? {
         let folder = root.join(".claude/skills").join(&skill);
         let (recorded_rulings, instruments, rejected) = records(&folder, &indexes)?;
-        // None when no record names the Act; otherwise the section index, if
-        // any, of the Act a matching record names. Matching the index through
-        // the record keeps a state Act cited without its jurisdiction from
-        // taking a Commonwealth Act's index.
+        // None when no record names the Act; otherwise the Act's name and the
+        // section index, if any, of the Act a matching record names. Matching
+        // the index through the record keeps a state Act cited without its
+        // jurisdiction from taking a Commonwealth Act's index.
         let recorded = |keys: &BTreeSet<Key>| {
             let matching: Vec<_> = instruments
                 .iter()
                 .filter(|other| same_instrument(keys, other))
                 .collect();
-            (!matching.is_empty()).then(|| {
-                matching.iter().find_map(|record| {
-                    indexes
-                        .iter()
-                        .find(|index| same_instrument(record, &index.keys))
-                })
-            })
+            let index = matching.iter().find_map(|record| {
+                indexes
+                    .iter()
+                    .find(|index| same_instrument(record, &index.keys))
+            });
+            let name = match index {
+                Some(index) => format!("{} (Cth)", index.title),
+                None => title(matching.first()?),
+            };
+            Some((name, index))
         };
         let mut files = Vec::new();
         markdown_files(&folder, &mut files)?;
@@ -1293,16 +1309,18 @@ pub fn check(root: &Path) -> Result<Report> {
                             report.sections += 1;
                             let citation = format!("{} {number}", group(section, 1));
                             let start = range.start + span(section).0;
-                            let index = match &resolution {
-                                Ok(index) => {
+                            let (act, index) = match &resolution {
+                                Ok(found) => {
                                     report.sections_resolved += 1;
-                                    index
+                                    found
                                 }
                                 Err(reason) => {
                                     missing.push((start, citation, reason.clone()));
                                     continue;
                                 }
                             };
+                            let count = report.acts.entry(act.clone()).or_default();
+                            count.cited += 1;
                             let Some(index) = index else {
                                 report.sections_not_indexed += 1;
                                 continue;
@@ -1318,6 +1336,7 @@ pub fn check(root: &Path) -> Result<Report> {
                                 });
                             if index.sections.contains(base) || hyphen_range {
                                 report.sections_exist += 1;
+                                count.found += 1;
                             } else if let Some(exception) =
                                 exceptions.iter_mut().find(|exception| {
                                     exception.register_id == index.register_id
@@ -1326,8 +1345,10 @@ pub fn check(root: &Path) -> Result<Report> {
                             {
                                 exception.used = true;
                                 report.sections_excepted += 1;
+                                count.excepted += 1;
                             } else {
                                 report.sections_absent += 1;
+                                count.absent += 1;
                                 missing.push((
                                     start,
                                     citation,
@@ -1363,7 +1384,7 @@ pub fn check(root: &Path) -> Result<Report> {
     Ok(report)
 }
 
-/// Render the report: one line per failure, then the totals.
+/// Render the report: one line per failure, then the summary.
 pub fn render(report: &Report) -> String {
     let mut text = String::new();
     for missing in &report.unmatched {
@@ -1371,6 +1392,28 @@ pub fn render(report: &Report) -> String {
             "{}:{}: {}: {}\n",
             missing.file, missing.line, missing.citation, missing.reason
         ));
+    }
+    text + &summary(report)
+}
+
+/// The resolved sections of each Act, most cited first, then the totals.
+pub fn summary(report: &Report) -> String {
+    let mut text = String::new();
+    let mut acts: Vec<_> = report.acts.iter().collect();
+    acts.sort_by_key(|(name, count)| (std::cmp::Reverse(count.cited), *name));
+    for (name, count) in acts {
+        let cited = match count.cited {
+            1 => "1 section".to_string(),
+            cited => format!("{cited} sections"),
+        };
+        if count.found + count.excepted + count.absent == 0 {
+            text.push_str(&format!("{name}: {cited}, no index.\n"));
+        } else {
+            text.push_str(&format!(
+                "{name}: {cited}, {} found, {} listed exceptions, {} absent.\n",
+                count.found, count.excepted, count.absent
+            ));
+        }
     }
     let total = report.rulings + report.sections;
     let resolved = report.rulings_resolved + report.sections_resolved;
