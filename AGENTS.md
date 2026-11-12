@@ -83,8 +83,9 @@ the credit line is the author's request. Never add either to a client deliverabl
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
 | `.cursor-plugin/plugin.json` | Cursor plugin manifest, not yet loaded in Cursor |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |
+| `claude-plugin` branch | The plugin alone, which the Claude plugin directory reads; generated from `main`, never edited (see [RELEASING.md](RELEASING.md#plugin-directory-branch)) |
 | `validation/` | Validation pack the tests exercise |
-| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, the `statement-check` tie-out `statement-to-csv` runs, and a candidate port of the other `scripts/` |
+| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial, plugin-eval and plugin-branch builders, the `statement-check` tie-out `statement-to-csv` runs, and a candidate port of the other `scripts/` |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip

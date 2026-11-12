@@ -37,6 +37,12 @@ The workflow reruns the repository tests, the fabricated-pack validator and the 
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final 4-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
+## Plugin directory branch
+
+The Claude plugin directory reads every file under the plugin folder and holds a version for review when it cannot inspect one, so it reads the generated `claude-plugin` branch rather than `main`. On each push to `main`, `.github/workflows/plugin-dist.yml` runs `accounting-skills build-plugin-dist`, which takes from that commit only what the plugin loads: `.claude-plugin/plugin.json` and its icon, `.claude/skills/`, `.claude/rules/`, `DISCLAIMER.md`, `LICENSE`, `NOTICE` and `PRIVACY.md`, plus a README whose links to other files point at `main`. It commits to the branch only when that plugin changed. Never edit the branch by hand.
+
+The build fails when the plugin would exceed the directory's 512 files and folders, when a file other than an image is over 256 KiB or is not UTF-8 text, and when a Markdown link in it names a file it does not ship. Add a path to `SHIPPED` in `tools/accounting-skills/src/plugin_dist.rs` only when the plugin loads it. The marketplace, Codex, Cursor and agent plugin routes read `main` and are unaffected.
+
 ## Cadence
 
 A release follows a finished batch of work, not a calendar, and there is no promised

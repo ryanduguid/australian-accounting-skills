@@ -28,6 +28,9 @@ fn run() -> Result<u8> {
     if command.as_deref() == Some(std::ffi::OsStr::new("validate-validation")) {
         return accounting_skills::validation::cli(args);
     }
+    if command.as_deref() == Some(std::ffi::OsStr::new("build-plugin-dist")) {
+        return accounting_skills::plugin_dist::cli(args);
+    }
     if command.as_deref() == Some(std::ffi::OsStr::new("build-plugin-evals")) {
         return accounting_skills::plugin_evals::cli(args);
     }
