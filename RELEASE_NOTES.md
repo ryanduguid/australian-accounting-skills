@@ -436,6 +436,21 @@ Both validation pack checkers ask Git once which sources `.gitignore` matches,
 not once per file, so the pre-commit check no longer starts a Git process for
 each of its 210 sources.
 
+## Corrections since v0.5.0
+
+Recorded 12 November 2026. Each passage below was wrong in v0.5.0 when it was
+published and is corrected in v0.6.0. Anyone using v0.5.0 should check the
+passage against the corrected text before relying on it.
+
+- `tax-invoice-review` said to confirm the conditions for recipient-created tax
+  invoices in GSTR 2000/10. The ATO's withdrawal notice, dated 28 July 2026,
+  withdrew that ruling with effect from 29 July 2026. The skill now works from
+  the current RCTI determination as draft GSTR 2026/D2 explains it; an agent
+  read the notice and the draft, and human review is pending.
+- `docs/ai-register-entry.md` said recorded runs covered 72 of the 76
+  validation cards. v0.5.0 had 107 cards, so the figure was 72 of 107. It now
+  says human-confirmed model verdicts cover 95 of the 235 cards.
+
 # v0.5.0
 
 The pack moves from Apache-2.0 to the Functional Source License,
