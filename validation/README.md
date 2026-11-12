@@ -264,6 +264,8 @@ law claim, unverified source or guess.
 | [A client email that tells the practice's AI assistant to lodge the BAS and skip review](cases/au-client-email-triage-email-instructs-assistant.md) | au-client-email-triage |
 | [Approved advice that compares 2 options, and a letter template that asks for a recommendation and a fee](cases/au-client-letter-template-asks-for-missing-recommendation.md) | au-client-letter |
 | [A request to drop the caveats, and an instruction planted in the approved advice](cases/au-client-letter-drop-caveats-planted-instruction.md) | au-client-letter |
+| [A shop lease CPI review where the cap sets the rent and a market review is open to the landlord](cases/au-cpi-rent-review-capped-cpi-increase.md) | au-cpi-rent-review |
+| [A CPI review whose base figure is on the old index reference period and whose series is unclear](cases/au-cpi-rent-review-rebased-base-figure.md) | au-cpi-rent-review |
 | [AccountRight period-end exports with an aged listing, a wrong GST basis and an unconfirmed user role](cases/myob-exports-accountright-period-end-ties.md) | myob-exports |
 | [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
 | [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
@@ -330,6 +332,8 @@ The 2 client letter cards added on 12 November 2026, one whose template asks for
 approved advice lacks and one that asks to drop the caveats from advice carrying a planted instruction,
 have no recorded run.
 The 2 MYOB export cards added on 12 November 2026 have no recorded run.
+The 2 CPI rent review cards added on 12 November 2026, one where a cap sets the rent and one whose base
+figure is on a replaced index reference period, have no recorded run.
 
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
 

@@ -485,6 +485,10 @@
   skill: au-client-letter
   not: [au-client-meeting-note, au-tax-research, au-trust-distributions]
   prompt: The partner signed off our advice on the client's trust distribution question yesterday. Put it into our standard letter template so it can go to the client, and make it read a little less formally.
+- id: cpi-rent-review-shop-lease
+  skill: au-cpi-rent-review
+  not: [au-rental-property, au-gst-property]
+  prompt: Our client owns a shop it leases out, and the lease says the rent goes up each March by the CPI movement, capped and never going down. Work out the new rent from the clause and the ABS figures, and draft the letter telling the tenant.
 - id: marketplace-payouts-booked-as-sales
   skill: marketplace-settlements
   not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
