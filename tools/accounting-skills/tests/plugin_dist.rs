@@ -39,7 +39,7 @@ fn git(root: &Path, args: &[&str]) -> Vec<u8> {
 
 /// A committed repository holding a fabricated plugin and files it must not ship.
 fn fixture(root: &Path, skip: &str) {
-    let files: [(&str, &[u8]); 13] = [
+    let files: [(&str, &[u8]); 14] = [
         (
             ".claude-plugin/plugin.json",
             br#"{"name": "fixture", "version": "1.0.0", "skills": "./.claude/skills", "mcpServers": {"local": {"command": "uvx"}}}"#,
@@ -60,6 +60,7 @@ fn fixture(root: &Path, skip: &str) {
         ("LICENSE", b"Fabricated licence\n"),
         ("NOTICE", b"Fabricated notice\n"),
         ("PRIVACY.md", b"Fabricated privacy policy\n"),
+        ("SECURITY.md", b"Fabricated security policy\n"),
         ("README.md", b"The repository README\n"),
         ("docs/plugin-directory-readme.md", b"The listing README\n"),
         ("tests/fixture.bin", b"\xff\xfe"),
@@ -122,7 +123,7 @@ fn the_build_ships_the_skills_in_skills_without_the_mcp_server() {
     // An uncommitted edit is not shipped: the build reads the commit.
     fs::write(root.join("LICENSE"), "Uncommitted licence\n").unwrap();
     let destination = directory.path().join("plugin");
-    assert_eq!(build(&root, &destination).unwrap(), (9, 13));
+    assert_eq!(build(&root, &destination).unwrap(), (10, 14));
     assert_eq!(
         listing(&destination),
         BTreeSet::from(
@@ -134,6 +135,7 @@ fn the_build_ships_the_skills_in_skills_without_the_mcp_server() {
                 "NOTICE",
                 "PRIVACY.md",
                 "README.md",
+                "SECURITY.md",
                 "skills/bas-preparation/SKILL.md",
                 "skills/bas-preparation/references/guide.md",
             ]
@@ -320,6 +322,7 @@ fn the_repository_plugin_fits_the_directory() {
                 "NOTICE",
                 "PRIVACY.md",
                 "README.md",
+                "SECURITY.md",
                 "skills"
             ]
             .map(str::to_owned)
@@ -359,6 +362,6 @@ fn the_repository_plugin_fits_the_directory() {
             "{path}"
         );
     }
-    // The manifest, icon, README and 4 notices beside the skills.
-    assert_eq!(count, committed.lines().count() + 7);
+    // The manifest, icon, README and 5 notices beside the skills.
+    assert_eq!(count, committed.lines().count() + 8);
 }

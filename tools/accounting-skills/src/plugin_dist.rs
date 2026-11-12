@@ -19,7 +19,7 @@ use std::{
 };
 
 /// Each committed path or folder the build ships, and where it ships it.
-pub const SOURCES: [(&str, &str); 8] = [
+pub const SOURCES: [(&str, &str); 9] = [
     (MANIFEST, MANIFEST),
     (".claude-plugin/icon.png", ".claude-plugin/icon.png"),
     (".claude/skills", "skills"),
@@ -27,6 +27,8 @@ pub const SOURCES: [(&str, &str); 8] = [
     ("LICENSE", "LICENSE"),
     ("NOTICE", "NOTICE"),
     ("PRIVACY.md", "PRIVACY.md"),
+    // DISCLAIMER.md and PRIVACY.md link to it.
+    ("SECURITY.md", "SECURITY.md"),
     ("docs/plugin-directory-readme.md", "README.md"),
 ];
 const MANIFEST: &str = ".claude-plugin/plugin.json";
