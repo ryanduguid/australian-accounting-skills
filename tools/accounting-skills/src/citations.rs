@@ -929,6 +929,31 @@ type Records = (
     Vec<(BTreeSet<Key>, String)>,
 );
 
+/// A named instrument whose Register addresses all agree on its identity.
+fn record_instrument(source: &serde_json::Map<String, Value>) -> Result<Option<BTreeSet<Key>>> {
+    let field = |name: &str| source.get(name).and_then(Value::as_str).unwrap_or("");
+    let Some(named) = anchors(&unescape(field("title")))?
+        .into_iter()
+        .next()
+        .and_then(|anchor| anchor.keys)
+    else {
+        return Ok(None);
+    };
+    let mut keys = BTreeSet::new();
+    let mut agrees = true;
+    for url in ["url", "final_url", "content_url"].map(field) {
+        if let Some(copy) = register_copy(url)? {
+            match copy_keys(&copy, &title(&named)) {
+                Some(copied) if keys.is_empty() || same_instrument(&copied, &keys) => {
+                    keys.extend(copied);
+                }
+                _ => agrees = false,
+            }
+        }
+    }
+    Ok((agrees && !keys.is_empty()).then_some(keys))
+}
+
 fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
@@ -956,31 +981,11 @@ fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
             .collect::<Vec<_>>()
             .join(" ");
         rulings.extend(record_rulings(&text)?);
-        let field = |name: &str| source.get(name).and_then(Value::as_str).unwrap_or("");
-        let Some(named) = anchors(&unescape(field("title")))?
-            .into_iter()
-            .next()
-            .and_then(|anchor| anchor.keys)
-        else {
+        let Some(keys) = record_instrument(source)? else {
             continue;
         };
-        let mut keys = BTreeSet::new();
-        let mut agrees = true;
-        for url in ["url", "final_url", "content_url"].map(field) {
-            if let Some(copy) = register_copy(url)? {
-                match copy_keys(&copy, &title(&named)) {
-                    Some(copied) if keys.is_empty() || same_instrument(&copied, &keys) => {
-                        keys.extend(copied);
-                    }
-                    Some(_) => agrees = false,
-                    None => agrees = false,
-                }
-            }
-        }
-        if !agrees || keys.is_empty() {
-            continue;
-        }
-        if let Some(reason) = contradiction(&keys, field("title"), indexes) {
+        let raw_title = source.get("title").and_then(Value::as_str).unwrap_or("");
+        if let Some(reason) = contradiction(&keys, raw_title, indexes) {
             rejected.push((
                 keys,
                 format!("sources.json record {} {reason}", position + 1),

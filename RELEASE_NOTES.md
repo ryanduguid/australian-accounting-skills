@@ -48,8 +48,9 @@ GSTR 2000/10 and checks reused invoice numbers by supplier and number together, 
 a new card for 2 suppliers sharing a number. `statement-to-csv` explains a
 posting-date period break but leaves it open, since an issuer's terms may place a
 line outside the printed period. `bas-preparation` says why its payroll tax screen
-lists a Queensland group member on any wages: taxable wages are settled in
-`au-payroll-tax-states`, not in the screen.
+lists a Queensland group member on wages paid or already payable: taxable wages
+are settled in `au-payroll-tax-states`, not in the screen. The owner skill also
+includes wages the employer is liable to pay in its registration check.
 
 Five tie-out skills gain a worked example: `au-ato-account-reconciliation`,
 `au-franking-account`, `au-trust-distributions`, `bas-preparation` and

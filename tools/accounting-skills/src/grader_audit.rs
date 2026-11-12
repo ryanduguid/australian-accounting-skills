@@ -25,7 +25,7 @@ use std::{
 // Python's re.I also matches dotless and dotted I (U+0131, U+0130) as `i`;
 // the regex crate's case folding does not, so `audit` maps them before matching.
 static SUSPECT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?i)(^|[\\/])(evals|graders|validation|held)(?![\w.-])|required-checks|restraint\.md|skill-fired|case\.yaml|rubric").unwrap()
+    Regex::new(r"(?i)(^|[\\/])(evals|graders|validation|held)([^\w.-]|$)|required-checks|restraint\.md|skill-fired|case\.yaml|rubric").unwrap()
 });
 
 /// Python's `json.dumps` spacing and float spelling, so the printed input and

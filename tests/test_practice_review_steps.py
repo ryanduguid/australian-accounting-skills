@@ -144,7 +144,7 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"\beven where wages for the year are expected to stay below its annual threshold\b")
         self.assert_sentence(step, r"`not run`", r"\bthe weekly totals a weekly amount needs\b")
         # Queensland's group member rule is a separate lead, not a threshold result.
-        self.assert_sentence(step, r"\bSeparately, where the entity is a group member and pays Queensland wages with no "
+        self.assert_sentence(step, r"\bSeparately, where the entity is a group member and pays or is liable to pay Queensland wages with no "
                              r"Queensland registration recorded, list it whatever the thresholds show\b",
                              # Wider than the rule on purpose: taxable wages are the owner step's call.
                              r"\bthe rule turns on taxable wages, which that step settles and this screen does not\b")
@@ -164,12 +164,12 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assertIn("the payroll tax screen compares total Australian wages (group wages where grouped) with each "
                       "paying jurisdiction's monthly and annual thresholds and any weekly amount its registration "
                       "page sets", checks)
-        self.assertIn("and separately any Queensland group member paying Queensland wages with no registration "
+        self.assertIn("and separately any Queensland group member paying or liable to pay Queensland wages with no registration "
                       "recorded", checks)
         owner = workflow_step("au-payroll-tax-states", 3)
         self.assert_sentence(owner, r"\bmonthly and annually, and each week's total against any weekly amount its "
                              r"registration page sets \(Queensland's does\)")
-        self.assert_sentence(owner, r"\bSeparately, list each unregistered group member that paid Queensland taxable "
+        self.assert_sentence(owner, r"\bSeparately, list each unregistered group member that paid or was liable to pay Queensland taxable "
                              r"wages in a month, however small its or its group's wages\b",
                              r"\bss 52\(b\) and 53\(1\) of the \[Payroll Tax Act 1971 \(Qld\)\]",
                              r"\bwithin 7 days after the end of that month\b")

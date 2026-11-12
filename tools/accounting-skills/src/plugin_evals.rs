@@ -404,6 +404,51 @@ fn write_copy(canonical: &Path, destination: &Path, cases: &[(String, CaseFiles)
     Ok(())
 }
 
+/// Identify the repository revision and whether the plugin copy will differ.
+fn plugin_revision(root: &Path) -> Result<(String, bool)> {
+    let commit = crate::git(root, &["rev-parse", "HEAD"])?;
+    let git_root = crate::git(root, &["rev-parse", "--show-toplevel"])?;
+    if fs::canonicalize(git_root)? != root {
+        return Err("the plugin root must be the Git repository top level".into());
+    }
+    // The copy carries uncommitted, untracked and ignored files, so the commit
+    // alone would not identify what was evaluated.
+    let mut status = vec![
+        "status",
+        "--porcelain",
+        "--untracked-files=all",
+        "--ignored",
+        "--",
+    ];
+    status.extend(PLUGIN_PATHS);
+    let dirty = !crate::git(root, &status)?.is_empty();
+    Ok((commit, dirty))
+}
+
+/// Render every routing case before selecting those grading changed skills.
+fn routing_cases(
+    bytes: &[u8],
+    runs: u32,
+    max_turns: u32,
+    changed: Option<&BTreeSet<String>>,
+) -> Result<Cases> {
+    let routing = strict_yaml::card_mapping(std::str::from_utf8(bytes)?)?;
+    let mut cases = Vec::new();
+    for case in routing
+        .as_array()
+        .ok_or("routing cases must be a YAML list")?
+    {
+        let rendered = build_routing_case(case, runs, max_turns)?;
+        // A routing case grades its expected skill and the neighbours it forbids.
+        let graded =
+            std::iter::once(&case["skill"]).chain(case["not"].as_array().into_iter().flatten());
+        if selected(changed, graded.filter_map(Value::as_str)) {
+            cases.push(rendered);
+        }
+    }
+    Ok(cases)
+}
+
 /// Write the plugin copy and its cases to a new `destination` outside `root`,
 /// and return the manifest. With `changed_since`, only the cases grading a
 /// skill changed since that revision are written.
@@ -423,22 +468,7 @@ pub fn build(
         return Err("destination already exists; preserve the earlier build".into());
     }
     let destination = source_passages::output_path(destination, &canonical)?;
-    let commit = crate::git(&canonical, &["rev-parse", "HEAD"])?;
-    let git_root = crate::git(&canonical, &["rev-parse", "--show-toplevel"])?;
-    if fs::canonicalize(git_root)? != canonical {
-        return Err("the plugin root must be the Git repository top level".into());
-    }
-    // The copy carries uncommitted, untracked and ignored files, so the commit
-    // alone would not identify what was evaluated.
-    let mut status = vec![
-        "status",
-        "--porcelain",
-        "--untracked-files=all",
-        "--ignored",
-        "--",
-    ];
-    status.extend(PLUGIN_PATHS);
-    let dirty = !crate::git(&canonical, &status)?.is_empty();
+    let (commit, dirty) = plugin_revision(&canonical)?;
     let (since, changed) = match changed_since {
         Some(revision) => {
             let (commit, skills) = changed_skills(&canonical, revision)?;
@@ -450,22 +480,9 @@ pub fn build(
     // routing case leaves no partial copy behind.
     let (mut cases, digests) = card_cases(&canonical, runs, max_turns, changed.as_ref())?;
     let routing_bytes = fs::read(canonical.join(ROUTING_CASES))?;
-    let routing = strict_yaml::card_mapping(std::str::from_utf8(&routing_bytes)?)?;
-    let mut routes = Vec::new();
-    for case in routing
-        .as_array()
-        .ok_or("routing cases must be a YAML list")?
-    {
-        let (name, files) = build_routing_case(case, runs, max_turns)?;
-        // A routing case grades its expected skill and the neighbours it forbids.
-        let graded =
-            std::iter::once(&case["skill"]).chain(case["not"].as_array().into_iter().flatten());
-        if !selected(changed.as_ref(), graded.filter_map(Value::as_str)) {
-            continue;
-        }
-        routes.push(name.clone());
-        cases.push((name, files));
-    }
+    let routing = routing_cases(&routing_bytes, runs, max_turns, changed.as_ref())?;
+    let routes: Vec<_> = routing.iter().map(|(name, _)| name.clone()).collect();
+    cases.extend(routing);
     let mut names = BTreeSet::new();
     if let Some((name, _)) = cases.iter().find(|(name, _)| !names.insert(name)) {
         return Err(format!("duplicate eval case: {name}").into());
