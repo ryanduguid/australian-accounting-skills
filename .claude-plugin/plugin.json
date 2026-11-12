@@ -9,6 +9,7 @@
   "homepage": "https://duguid.com.au/tools/australian-tax-ai-agents/",
   "repository": "https://github.com/ryanduguid/australian-accounting-skills",
   "license": "LicenseRef-Duguid-Public-Attribution-1.0",
+  "privacyPolicyUrl": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/PRIVACY.md",
   "keywords": [
     "australian tax",
     "accounting",
