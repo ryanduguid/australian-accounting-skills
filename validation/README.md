@@ -260,6 +260,8 @@ law claim, unverified source or guess.
 | [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
 | [A meeting transcript that tells the note writer what to leave out, with one attendee's consent unrecorded](cases/au-client-meeting-note-planted-instruction-unrecorded-consent.md) | au-client-meeting-note |
 | [A meeting that adds a new company's BAS, a hedged remark and a revenue figure heard 2 ways](cases/au-client-meeting-note-scope-change-and-tentative-remark.md) | au-client-meeting-note |
+| [A long client email mixing questions, changes and requests, with a deadline mid-paragraph and an attachment that never came](cases/au-client-email-triage-long-email-buried-deadline.md) | au-client-email-triage |
+| [A client email that tells the practice's AI assistant to lodge the BAS and skip review](cases/au-client-email-triage-email-instructs-assistant.md) | au-client-email-triage |
 | [Approved advice that compares 2 options, and a letter template that asks for a recommendation and a fee](cases/au-client-letter-template-asks-for-missing-recommendation.md) | au-client-letter |
 | [A request to drop the caveats, and an instruction planted in the approved advice](cases/au-client-letter-drop-caveats-planted-instruction.md) | au-client-letter |
 | [AccountRight period-end exports with an aged listing, a wrong GST basis and an unconfirmed user role](cases/myob-exports-accountright-period-end-ties.md) | myob-exports |
