@@ -1,15 +1,14 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-use accounting_skills::plugin_dist::{Files, MAX_ENTRIES, MAX_TEXT_BYTES, build, check, readme};
+use accounting_skills::plugin_dist::{Files, MAX_ENTRIES, MAX_TEXT_BYTES, build, check, manifest};
+use serde_json::{Value, json};
 use std::{
     collections::BTreeSet,
     fs,
     path::{Path, PathBuf},
     process::Command,
 };
-
-const REPOSITORY: &str = "https://github.com/owner/plugin";
 
 fn repository() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")
@@ -40,10 +39,10 @@ fn git(root: &Path, args: &[&str]) -> Vec<u8> {
 
 /// A committed repository holding a fabricated plugin and files it must not ship.
 fn fixture(root: &Path, skip: &str) {
-    let files: [(&str, &[u8]); 12] = [
+    let files: [(&str, &[u8]); 13] = [
         (
             ".claude-plugin/plugin.json",
-            br#"{"name": "fixture", "repository": "https://github.com/owner/plugin"}"#,
+            br#"{"name": "fixture", "version": "1.0.0", "skills": "./.claude/skills", "mcpServers": {"local": {"command": "uvx"}}}"#,
         ),
         // A PNG signature and bytes that are not UTF-8.
         (".claude-plugin/icon.png", b"\x89PNG\r\n\x1a\n\xff\xfe"),
@@ -61,10 +60,8 @@ fn fixture(root: &Path, skip: &str) {
         ("LICENSE", b"Fabricated licence\n"),
         ("NOTICE", b"Fabricated notice\n"),
         ("PRIVACY.md", b"Fabricated privacy policy\n"),
-        (
-            "README.md",
-            b"![Banner](assets/banner.svg)\n[Guide](docs/guide.md#start) and [licence](LICENSE).\n",
-        ),
+        ("README.md", b"The repository README\n"),
+        ("docs/plugin-directory-readme.md", b"The listing README\n"),
         ("tests/fixture.bin", b"\xff\xfe"),
     ];
     for (path, bytes) in files {
@@ -116,7 +113,7 @@ fn listing(root: &Path) -> BTreeSet<String> {
 }
 
 #[test]
-fn the_build_ships_only_the_plugin_and_rewrites_links_that_leave_it() {
+fn the_build_ships_the_skills_in_skills_without_the_mcp_server() {
     let directory = tempfile::tempdir().unwrap();
     let root = directory.path().join("repository");
     fs::create_dir(&root).unwrap();
@@ -125,30 +122,38 @@ fn the_build_ships_only_the_plugin_and_rewrites_links_that_leave_it() {
     // An uncommitted edit is not shipped: the build reads the commit.
     fs::write(root.join("LICENSE"), "Uncommitted licence\n").unwrap();
     let destination = directory.path().join("plugin");
-    assert_eq!(build(&root, &destination).unwrap(), (10, 16));
+    assert_eq!(build(&root, &destination).unwrap(), (9, 13));
     assert_eq!(
         listing(&destination),
         BTreeSet::from(
             [
                 ".claude-plugin/icon.png",
                 ".claude-plugin/plugin.json",
-                ".claude/rules/rule.md",
-                ".claude/skills/bas-preparation/SKILL.md",
-                ".claude/skills/bas-preparation/references/guide.md",
                 "DISCLAIMER.md",
                 "LICENSE",
                 "NOTICE",
                 "PRIVACY.md",
                 "README.md",
+                "skills/bas-preparation/SKILL.md",
+                "skills/bas-preparation/references/guide.md",
             ]
             .map(str::to_owned)
         )
     );
-    assert_eq!(fs::read_to_string(destination.join("LICENSE")).unwrap(), "Fabricated licence\n");
+    assert_eq!(
+        fs::read_to_string(destination.join("LICENSE")).unwrap(),
+        "Fabricated licence\n"
+    );
     assert_eq!(
         fs::read_to_string(destination.join("README.md")).unwrap(),
-        "![Banner](https://raw.githubusercontent.com/owner/plugin/main/assets/banner.svg)\n\
-         [Guide](https://github.com/owner/plugin/blob/main/docs/guide.md#start) and [licence](LICENSE).\n"
+        "The listing README\n"
+    );
+    let shipped: Value =
+        serde_json::from_slice(&fs::read(destination.join(".claude-plugin/plugin.json")).unwrap())
+            .unwrap();
+    assert_eq!(
+        shipped,
+        json!({"name": "fixture", "version": "1.0.0", "skills": "./skills"})
     );
     // The destination must be new.
     assert!(build(&root, &destination).is_err());
@@ -159,10 +164,13 @@ fn the_build_refuses_a_missing_path_and_an_executable_file() {
     let directory = tempfile::tempdir().unwrap();
     let missing = directory.path().join("missing");
     fs::create_dir(&missing).unwrap();
-    fixture(&missing, ".claude-plugin/icon.png");
+    fixture(&missing, "docs/plugin-directory-readme.md");
     commit(&missing);
     let error = build(&missing, &directory.path().join("a")).unwrap_err();
-    assert_eq!(error.to_string(), ".claude-plugin/icon.png is not committed at HEAD");
+    assert_eq!(
+        error.to_string(),
+        "docs/plugin-directory-readme.md is not committed at HEAD"
+    );
 
     let executable = directory.path().join("executable");
     fs::create_dir(&executable).unwrap();
@@ -178,27 +186,21 @@ fn the_build_refuses_a_missing_path_and_an_executable_file() {
 }
 
 #[test]
-fn readme_keeps_shipped_targets_anchors_urls_and_code() {
-    let shipped = BTreeSet::from(["LICENSE".to_owned(), ".claude".to_owned()]);
-    let text = concat!(
-        "<img src=\".github/assets/banner.svg\" width=\"100%\">\n",
-        "<source srcset=\"./.github/assets/banner-light.svg\">\n",
-        "[![Badge](.github/assets/badges/slsa.svg)](https://example.com/x)\n",
-        "[Install](#install) · [Notes](RELEASE_NOTES.md#corrections) · [Licence](LICENSE) · [Skills](.claude)\n",
-        "```\n[Not a link](docs/inside-code.md)\n```\n",
-    );
+fn manifest_drops_only_the_mcp_servers_and_refuses_an_unknown_component() {
+    let source = br#"{"$schema": "s", "name": "n", "version": "2.0.0", "skills": "./.claude/skills", "keywords": ["a"], "mcpServers": {}}"#;
+    let shipped = String::from_utf8(manifest(source).unwrap()).unwrap();
+    // Key order is kept, with the skills path in place.
     assert_eq!(
-        readme(text, REPOSITORY, &shipped).unwrap(),
-        concat!(
-            "<img src=\"https://raw.githubusercontent.com/owner/plugin/main/.github/assets/banner.svg\" width=\"100%\">\n",
-            "<source srcset=\"https://raw.githubusercontent.com/owner/plugin/main/.github/assets/banner-light.svg\">\n",
-            "[![Badge](https://raw.githubusercontent.com/owner/plugin/main/.github/assets/badges/slsa.svg)](https://example.com/x)\n",
-            "[Install](#install) · [Notes](https://github.com/owner/plugin/blob/main/RELEASE_NOTES.md#corrections) · [Licence](LICENSE) · [Skills](.claude)\n",
-            "```\n[Not a link](docs/inside-code.md)\n```\n",
-        )
+        shipped,
+        "{\n  \"$schema\": \"s\",\n  \"name\": \"n\",\n  \"version\": \"2.0.0\",\n  \"skills\": \"./skills\",\n  \"keywords\": [\n    \"a\"\n  ]\n}\n"
     );
-    assert!(readme("[x](../outside.md)\n", REPOSITORY, &shipped).is_err());
-    assert!(readme("", "https://gitlab.com/owner/plugin", &shipped).is_err());
+    for key in ["hooks", "lspServers", "monitors", "commands", "agents"] {
+        let source = format!(r#"{{"name": "n", "{key}": "./x"}}"#);
+        assert_eq!(
+            manifest(source.as_bytes()).unwrap_err().to_string(),
+            format!("plugin.json key {key} is not one the directory build ships")
+        );
+    }
 }
 
 fn files(entries: &[(&str, &[u8])]) -> Files {
@@ -209,34 +211,91 @@ fn files(entries: &[(&str, &[u8])]) -> Files {
 }
 
 #[test]
-fn check_refuses_what_the_directory_would_hold_or_a_link_that_leaves_the_plugin() {
+fn check_refuses_what_the_directory_would_refuse_or_a_link_that_leaves_the_plugin() {
     let error = |files: &Files| check(files).unwrap_err().to_string();
     assert_eq!(
         check(&files(&[
             ("icon.png", b"\xff"),
-            ("a/SKILL.md", b"[guide](references/guide.md#top) [web](https://example.com)"),
-            ("a/references/guide.md", b"[skill](../SKILL.md)"),
+            ("LICENSE", b"Licence"),
+            (
+                "skills/a/SKILL.md",
+                b"[guide](references/guide.md#top) [web](https://example.com)"
+            ),
+            ("skills/a/references/guide.md", b"[skill](../SKILL.md)"),
+            ("skills/a/sources.json", b"{}"),
+            ("notes.txt", b""),
+            ("config.yaml", b""),
         ]))
         .unwrap(),
-        5
+        10
     );
-    assert_eq!(
-        error(&files(&[("source.bin", b"\xff")])),
-        "source.bin is neither UTF-8 text nor an image the directory inspects"
-    );
+    for (path, message) in [
+        (
+            "source.bin",
+            "source.bin is not a file type the directory accepts",
+        ),
+        (
+            "skills/a/verify.py",
+            "skills/a/verify.py is not a file type the directory accepts",
+        ),
+        (
+            "skills/LICENSE",
+            "skills/LICENSE is not a file type the directory accepts",
+        ),
+        (
+            ".claude/skills/a/SKILL.md",
+            ".claude/skills/a/SKILL.md is in a folder the directory refuses",
+        ),
+        (
+            "skills/.claude-plugin/plugin.json",
+            "skills/.claude-plugin/plugin.json is in a folder the directory refuses",
+        ),
+        (
+            "skills/a/hooks.json",
+            "skills/a/hooks.json is a file the directory refuses",
+        ),
+        (".mcp.json", ".mcp.json is a file the directory refuses"),
+        (
+            "package.json",
+            "package.json is a file the directory refuses",
+        ),
+    ] {
+        assert_eq!(error(&files(&[(path, b"{}")])), message);
+    }
+    for bytes in [&b"\xff"[..], b"a\0b", b"#!/bin/sh\n"] {
+        assert_eq!(
+            error(&files(&[("a.md", bytes)])),
+            "a.md must be UTF-8 text without NUL bytes or a #! line"
+        );
+    }
     let large = vec![b'a'; MAX_TEXT_BYTES + 1];
     assert_eq!(
         error(&files(&[("large.json", &large)])),
-        format!("large.json has {} bytes; the directory inspects up to {MAX_TEXT_BYTES}", MAX_TEXT_BYTES + 1)
+        format!(
+            "large.json has {} bytes; the directory accepts up to {MAX_TEXT_BYTES}",
+            MAX_TEXT_BYTES + 1
+        )
     );
-    let many: Files = (0..MAX_ENTRIES).map(|n| (format!("f/{n}.md"), Vec::new())).collect();
+    // 510 files and their folder are 511 entries, which fits; one more file does not.
+    let fits: Files = (0..MAX_ENTRIES - 2)
+        .map(|n| (format!("f/{n}.md"), Vec::new()))
+        .collect();
+    assert_eq!(check(&fits).unwrap(), MAX_ENTRIES - 1);
+    let many: Files = (0..MAX_ENTRIES - 1)
+        .map(|n| (format!("f/{n}.md"), Vec::new()))
+        .collect();
     assert_eq!(
         error(&many),
-        format!("the plugin has {} files and folders; the directory reads {MAX_ENTRIES}", MAX_ENTRIES + 1)
+        format!(
+            "the plugin has {MAX_ENTRIES} files and folders; the directory needs fewer than {MAX_ENTRIES}"
+        )
     );
     assert_eq!(
-        error(&files(&[("a/SKILL.md", b"[policy](../../PRIVACY.md)")])),
-        "a/SKILL.md links to ../../PRIVACY.md, which the plugin does not ship"
+        error(&files(&[(
+            "skills/a/SKILL.md",
+            b"[policy](../../../PRIVACY.md)"
+        )])),
+        "skills/a/SKILL.md links to ../../../PRIVACY.md, which the plugin does not ship"
     );
 }
 
@@ -246,7 +305,7 @@ fn the_repository_plugin_fits_the_directory() {
     let destination = directory.path().join("plugin");
     let root = fs::canonicalize(repository()).unwrap();
     let (count, entries) = build(&root, &destination).unwrap();
-    assert!(entries <= MAX_ENTRIES, "{entries}");
+    assert!(entries < MAX_ENTRIES, "{entries}");
     let top: BTreeSet<String> = fs::read_dir(&destination)
         .unwrap()
         .map(|entry| entry.unwrap().file_name().to_string_lossy().into_owned())
@@ -254,20 +313,52 @@ fn the_repository_plugin_fits_the_directory() {
     assert_eq!(
         top,
         BTreeSet::from(
-            [".claude", ".claude-plugin", "DISCLAIMER.md", "LICENSE", "NOTICE", "PRIVACY.md", "README.md"]
-                .map(str::to_owned)
+            [
+                ".claude-plugin",
+                "DISCLAIMER.md",
+                "LICENSE",
+                "NOTICE",
+                "PRIVACY.md",
+                "README.md",
+                "skills"
+            ]
+            .map(str::to_owned)
         )
     );
-    // The manifest ships as committed, so its skills path and MCP pin are unchanged.
-    assert_eq!(
-        fs::read(destination.join(".claude-plugin/plugin.json")).unwrap(),
-        git(&root, &["show", "HEAD:.claude-plugin/plugin.json"])
-    );
+    // The shipped manifest is main's without its MCP server, skills moved.
+    let mut expected: Value =
+        serde_json::from_slice(&git(&root, &["show", "HEAD:.claude-plugin/plugin.json"])).unwrap();
+    expected
+        .as_object_mut()
+        .unwrap()
+        .remove("mcpServers")
+        .unwrap();
+    expected["skills"] = json!("./skills");
+    let shipped: Value =
+        serde_json::from_slice(&fs::read(destination.join(".claude-plugin/plugin.json")).unwrap())
+            .unwrap();
+    assert_eq!(shipped, expected);
     let committed = String::from_utf8(git(
         &root,
-        &["ls-tree", "-r", "--name-only", "HEAD", "--", ".claude"],
+        &[
+            "ls-tree",
+            "-r",
+            "--name-only",
+            "HEAD",
+            "--",
+            ".claude/skills",
+        ],
     ))
     .unwrap();
-    // The manifest and icon, the 4 notices and the README beside .claude.
+    // Every committed skill file ships byte for byte under skills/.
+    for path in committed.lines() {
+        let shipped = destination.join(path.strip_prefix(".claude/").unwrap());
+        assert_eq!(
+            fs::read(&shipped).unwrap(),
+            git(&root, &["show", &format!("HEAD:{path}")]),
+            "{path}"
+        );
+    }
+    // The manifest, icon, README and 4 notices beside the skills.
     assert_eq!(count, committed.lines().count() + 7);
 }

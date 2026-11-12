@@ -1,13 +1,14 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-//! Build the plugin as the Claude plugin directory reads it: the files the
-//! plugin loads, taken from the checked-out commit at the paths its manifest
-//! names, and a README whose links still resolve. The directory reads every
-//! file under the plugin folder and holds a version for review when it cannot
-//! inspect one, so tests, tooling and fixtures stay behind.
+//! Build the plugin as the Claude plugin directory reads it. The directory
+//! refuses, from an organisation it has not verified, a local MCP server, a
+//! file type other than Markdown, text, JSON, YAML or an image, and skills
+//! outside `skills/`. So this build takes from the checked-out commit only the
+//! skills and the files the listing needs, moves the skills to `skills/` and
+//! ships a manifest without the MCP server. The full plugin stays on `main`.
 use crate::{Result, platform_text};
-use serde_json::Value;
+use serde_json::{Map, Value};
 use std::{
     collections::{BTreeMap, BTreeSet},
     ffi::OsString,
@@ -17,29 +18,60 @@ use std::{
     process::{Command, Stdio},
 };
 
-/// What the plugin loads or must carry, besides the README it is listed with.
-pub const SHIPPED: [&str; 8] = [
-    ".claude-plugin/plugin.json",
-    ".claude-plugin/icon.png",
-    ".claude/skills",
-    ".claude/rules",
-    "DISCLAIMER.md",
-    "LICENSE",
-    "NOTICE",
-    "PRIVACY.md",
+/// Each committed path or folder the build ships, and where it ships it.
+pub const SOURCES: [(&str, &str); 8] = [
+    (MANIFEST, MANIFEST),
+    (".claude-plugin/icon.png", ".claude-plugin/icon.png"),
+    (".claude/skills", "skills"),
+    ("DISCLAIMER.md", "DISCLAIMER.md"),
+    ("LICENSE", "LICENSE"),
+    ("NOTICE", "NOTICE"),
+    ("PRIVACY.md", "PRIVACY.md"),
+    ("docs/plugin-directory-readme.md", "README.md"),
 ];
-const README: &str = "README.md";
 const MANIFEST: &str = ".claude-plugin/plugin.json";
-/// The branch a README link points to once its target is not shipped.
-const SOURCE_BRANCH: &str = "main";
-/// The directory holds a version with more files and folders than this.
+/// The manifest keys the build ships unchanged. Any other key fails the build,
+/// so a component added on `main` is never shipped or dropped unnoticed.
+const MANIFEST_KEYS: [&str; 13] = [
+    "$schema",
+    "name",
+    "version",
+    "description",
+    "author",
+    "homepage",
+    "repository",
+    "license",
+    "privacyPolicyUrl",
+    "documentationUrl",
+    "supportUrl",
+    "keywords",
+    "skills",
+];
+/// The directory refuses a version with this many files and folders or more.
 pub const MAX_ENTRIES: usize = 512;
-/// The directory holds a version with a file larger than this, images and fonts aside.
+/// The directory refuses a file larger than this, images aside.
 pub const MAX_TEXT_BYTES: usize = 256 * 1024;
-/// The binary files the directory inspects. Every other file must be UTF-8 text.
-const IMAGES: [&str; 5] = ["png", "jpg", "jpeg", "gif", "webp"];
-/// SVG is text the directory reads, but a README shows it as an image.
-const README_IMAGES: [&str; 6] = ["png", "jpg", "jpeg", "gif", "webp", "svg"];
+const TEXT: [&str; 5] = ["md", "txt", "json", "yaml", "yml"];
+const IMAGES: [&str; 6] = ["png", "jpg", "jpeg", "gif", "webp", "ico"];
+/// Text files without an extension that may sit at the plugin root.
+const BARE_TEXT: [&str; 2] = ["LICENSE", "NOTICE"];
+/// Names the directory refuses whatever their type: component files the
+/// manifest does not name, and package manager configs.
+const REFUSED_NAMES: [&str; 13] = [
+    "hooks.json",
+    ".mcp.json",
+    ".lsp.json",
+    "monitors.json",
+    "package.json",
+    "package-lock.json",
+    "npm-shrinkwrap.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    ".yarnrc.yml",
+    "bower.json",
+    "composer.json",
+    "deno.json",
+];
 
 /// Files keyed by their path relative to the plugin folder.
 pub type Files = BTreeMap<String, Vec<u8>>;
@@ -87,12 +119,11 @@ fn targets(text: &str) -> Vec<(usize, usize)> {
         }
         offset += line.len();
     }
-    found.sort_unstable();
     found
 }
 
-/// The path part of a target that names a file in this repository, or `None`
-/// for a URL, an anchor or an empty target.
+/// The path part of a target that names a file in this plugin, or `None` for
+/// a URL, an anchor or an empty target.
 fn local(target: &str) -> Option<&str> {
     let path = target.split('#').next().unwrap_or_default();
     (!path.is_empty() && !target.contains(':')).then_some(path)
@@ -114,67 +145,62 @@ fn resolve(base: &str, path: &str) -> Option<String> {
     Some(parts.join("/"))
 }
 
-/// The README with each relative target the plugin does not ship rewritten to
-/// its absolute URL on the source branch of `repository`, so the listing's
-/// links and images resolve. A shipped target, an anchor or a URL is kept.
-pub fn readme(text: &str, repository: &str, shipped: &BTreeSet<String>) -> Result<String> {
-    let project = repository
-        .strip_prefix("https://github.com/")
-        .filter(|project| project.split('/').count() == 2)
-        .ok_or("plugin.json repository must be https://github.com/<owner>/<name>")?;
-    let mut out = String::with_capacity(text.len());
-    let mut copied = 0;
-    for (start, end) in targets(text) {
-        let target = &text[start..end];
-        let Some(path) = local(target) else {
-            continue;
-        };
-        let path = resolve("", path).ok_or_else(|| format!("README link {target} leaves the repository"))?;
-        if shipped.contains(&path) {
-            continue;
-        }
-        let fragment = &target[target.find('#').unwrap_or(target.len())..];
-        out.push_str(&text[copied..start]);
-        if README_IMAGES.contains(&extension(&path).as_str()) {
-            out.push_str(&format!(
-                "https://raw.githubusercontent.com/{project}/{SOURCE_BRANCH}/{path}{fragment}"
-            ));
-        } else {
-            out.push_str(&format!(
-                "https://github.com/{project}/blob/{SOURCE_BRANCH}/{path}{fragment}"
-            ));
-        }
-        copied = end;
+/// The manifest the directory reads: `main`'s, without its MCP servers and
+/// with the skills at `./skills`.
+pub fn manifest(bytes: &[u8]) -> Result<Vec<u8>> {
+    let mut manifest: Map<String, Value> = serde_json::from_slice(bytes)?;
+    manifest.shift_remove("mcpServers");
+    if let Some(key) = manifest
+        .keys()
+        .find(|key| !MANIFEST_KEYS.contains(&key.as_str()))
+    {
+        return Err(format!("plugin.json key {key} is not one the directory build ships").into());
     }
-    out.push_str(&text[copied..]);
+    manifest.insert("skills".to_owned(), Value::from("./skills"));
+    let mut out = serde_json::to_vec_pretty(&manifest)?;
+    out.push(b'\n');
     Ok(out)
 }
 
-/// Refuse a plugin the directory would hold for files it cannot inspect, or
-/// one whose Markdown links leave it, and return its count of files and folders.
+/// Refuse a plugin the directory would refuse, or one whose Markdown links
+/// leave it, and return its count of files and folders.
 pub fn check(files: &Files) -> Result<usize> {
     let folders = folders(files);
     let entries = files.len() + folders.len();
-    if entries > MAX_ENTRIES {
+    if entries >= MAX_ENTRIES {
         return Err(format!(
-            "the plugin has {entries} files and folders; the directory reads {MAX_ENTRIES}"
+            "the plugin has {entries} files and folders; the directory needs fewer than {MAX_ENTRIES}"
         )
         .into());
     }
     for (path, bytes) in files {
-        if IMAGES.contains(&extension(path).as_str()) {
+        let parts: Vec<&str> = path.split('/').collect();
+        let name = parts[parts.len() - 1];
+        if parts.contains(&".claude") || parts[1..].contains(&".claude-plugin") {
+            return Err(format!("{path} is in a folder the directory refuses").into());
+        }
+        if REFUSED_NAMES.contains(&name) {
+            return Err(format!("{path} is a file the directory refuses").into());
+        }
+        let kind = extension(path);
+        if IMAGES.contains(&kind.as_str()) {
             continue;
+        }
+        if !TEXT.contains(&kind.as_str()) && !BARE_TEXT.contains(&path.as_str()) {
+            return Err(format!("{path} is not a file type the directory accepts").into());
         }
         if bytes.len() > MAX_TEXT_BYTES {
             return Err(format!(
-                "{path} has {} bytes; the directory inspects up to {MAX_TEXT_BYTES}",
+                "{path} has {} bytes; the directory accepts up to {MAX_TEXT_BYTES}",
                 bytes.len()
             )
             .into());
         }
         let text = std::str::from_utf8(bytes)
-            .map_err(|_| format!("{path} is neither UTF-8 text nor an image the directory inspects"))?;
-        if extension(path) != "md" {
+            .ok()
+            .filter(|text| !text.contains('\0') && !text.starts_with("#!"))
+            .ok_or_else(|| format!("{path} must be UTF-8 text without NUL bytes or a #! line"))?;
+        if kind != "md" {
             continue;
         }
         let base = path.rsplit_once('/').map_or("", |(folder, _)| folder);
@@ -183,22 +209,25 @@ pub fn check(files: &Files) -> Result<usize> {
             let Some(target_path) = local(target) else {
                 continue;
             };
-            let found = resolve(base, target_path)
-                .is_some_and(|resolved| files.contains_key(&resolved) || folders.contains(&resolved));
+            let found = resolve(base, target_path).is_some_and(|resolved| {
+                files.contains_key(&resolved) || folders.contains(&resolved)
+            });
             if !found {
-                return Err(format!("{path} links to {target}, which the plugin does not ship").into());
+                return Err(
+                    format!("{path} links to {target}, which the plugin does not ship").into(),
+                );
             }
         }
     }
     Ok(entries)
 }
 
-/// The shipped files and the README at HEAD, as stored in Git. Anything other
-/// than a regular, non-executable file is refused, as is a missing path.
+/// The shipped files at HEAD, as stored in Git, at the paths they ship to.
+/// Anything other than a regular, non-executable file is refused, as is a
+/// missing source.
 fn committed(root: &Path) -> Result<Files> {
     let mut args = vec!["ls-tree", "-r", "-z", "--full-tree", "HEAD", "--"];
-    args.extend(SHIPPED);
-    args.push(README);
+    args.extend(SOURCES.map(|(source, _)| source));
     let listing = crate::git(root, &args)?;
     let mut entries = Vec::new();
     for record in listing.split('\0').filter(|record| !record.is_empty()) {
@@ -210,22 +239,39 @@ fn committed(root: &Path) -> Result<Files> {
             return Err("unexpected git ls-tree output".into());
         };
         if mode != "100644" {
-            return Err(format!("{path} must be a regular, non-executable file, not mode {mode}").into());
+            return Err(
+                format!("{path} must be a regular, non-executable file, not mode {mode}").into(),
+            );
         }
-        entries.push((path.to_owned(), oid.to_owned()));
+        let shipped = SOURCES
+            .iter()
+            .find_map(|(source, destination)| {
+                if path == *source {
+                    Some((*destination).to_owned())
+                } else {
+                    path.strip_prefix(&format!("{source}/"))
+                        .map(|rest| format!("{destination}/{rest}"))
+                }
+            })
+            .ok_or_else(|| format!("git ls-tree listed {path}, which the build does not ship"))?;
+        entries.push((shipped, oid.to_owned()));
     }
-    for required in SHIPPED.iter().chain([&README]) {
-        let prefix = format!("{required}/");
+    for (source, destination) in SOURCES {
+        let prefix = format!("{destination}/");
         if !entries
             .iter()
-            .any(|(path, _)| path == required || path.starts_with(&prefix))
+            .any(|(path, _)| path == destination || path.starts_with(&prefix))
         {
-            return Err(format!("{required} is not committed at HEAD").into());
+            return Err(format!("{source} is not committed at HEAD").into());
         }
     }
     let oids: Vec<String> = entries.iter().map(|(_, oid)| oid.clone()).collect();
     let blobs = blobs(root, &oids)?;
-    Ok(entries.into_iter().map(|(path, _)| path).zip(blobs).collect())
+    Ok(entries
+        .into_iter()
+        .map(|(path, _)| path)
+        .zip(blobs)
+        .collect())
 }
 
 /// Read `oids` through one `git cat-file --batch`, in order.
@@ -269,15 +315,8 @@ fn blobs(root: &Path, oids: &[String]) -> Result<Vec<Vec<u8>>> {
 /// return its counts of files and of files and folders.
 pub fn build(root: &Path, destination: &Path) -> Result<(usize, usize)> {
     let mut files = committed(root)?;
-    let manifest: Value = serde_json::from_slice(&files[MANIFEST])?;
-    let repository = manifest["repository"]
-        .as_str()
-        .ok_or("plugin.json has no repository")?;
-    let mut shipped: BTreeSet<String> = files.keys().cloned().collect();
-    shipped.extend(folders(&files));
-    let text = std::str::from_utf8(&files[README])?;
-    let rewritten = readme(text, repository, &shipped)?;
-    files.insert(README.to_owned(), rewritten.into_bytes());
+    let generated = manifest(&files[MANIFEST])?;
+    files.insert(MANIFEST.to_owned(), generated);
     let entries = check(&files)?;
     fs::create_dir_all(destination.parent().ok_or("destination has no parent")?)?;
     fs::create_dir(destination)?;
@@ -303,7 +342,10 @@ pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
                 println!("{usage}");
                 return Ok(0);
             }
-            Some("--root") => match args.next().filter(|value| !value.as_encoded_bytes().starts_with(b"-")) {
+            Some("--root") => match args
+                .next()
+                .filter(|value| !value.as_encoded_bytes().starts_with(b"-"))
+            {
                 Some(value) => root = value.into(),
                 None => {
                     eprintln!("{usage}");

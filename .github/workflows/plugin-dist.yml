@@ -1,8 +1,8 @@
 name: Plugin branch
 
-# The Claude plugin directory reads every file under the plugin folder and holds
-# a version for review when it cannot inspect one. This keeps the claude-plugin
-# branch to the files the plugin loads, built from main by
+# The Claude plugin directory refuses, from an unverified organisation, a local
+# MCP server and files other than Markdown, text, JSON, YAML and images. The
+# claude-plugin branch holds the skills-only plugin it reads, built from main by
 # `accounting-skills build-plugin-dist`. The install routes on main are unchanged.
 
 on:
@@ -60,6 +60,18 @@ jobs:
               echo "The plugin is unchanged on $BRANCH at $parent."
               exit 0
             fi
+            # Installs and the directory key updates on the version, so a
+            # changed plugin waits for the release that bumps it.
+            version="$(jq -r .version "$RUNNER_TEMP/plugin/.claude-plugin/plugin.json")"
+            if [ "$(git show "$parent:.claude-plugin/plugin.json" | jq -r .version)" = "$version" ]; then
+              echo "::notice::The plugin changed but its version is still $version, so $BRANCH stays at $parent."
+              exit 0
+            fi
+          fi
+          # A run for an older main commit must not publish over a newer one.
+          if [ "$(git ls-remote origin refs/heads/main | cut -f1)" != "$GITHUB_SHA" ]; then
+            echo "::notice::main has moved past $GITHUB_SHA; its own run publishes."
+            exit 0
           fi
           commit="$(git -c user.name='github-actions[bot]' \
             -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
