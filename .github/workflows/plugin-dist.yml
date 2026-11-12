@@ -19,7 +19,34 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # The directory's own validator runs here, without write access, so the
+  # package it downloads never shares a job with the push token.
+  validate:
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 20
+    name: validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/accounting-skills
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install the pinned Rust toolchain
+        # rustup reads the version from rust-toolchain.toml in this directory.
+        run: rustup toolchain install
+
+      - name: Build the plugin
+        run: cargo run --locked -- build-plugin-dist "$RUNNER_TEMP/plugin" --root "$GITHUB_WORKSPACE"
+
+      - name: Validate the plugin as the directory does
+        run: npx --yes @anthropic-ai/claude-code@2.1.322 plugin validate --profile directory --strict "$RUNNER_TEMP/plugin"
+
   publish:
+    needs: validate
     # Only main is published, including on a manual run.
     if: github.ref == 'refs/heads/main'
     timeout-minutes: 20
@@ -41,7 +68,9 @@ jobs:
         run: rustup toolchain install
 
       - name: Build the plugin
-        run: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-plugin-dist "$RUNNER_TEMP/plugin"
+        # Run from the toolchain's directory, so rustup uses its pin.
+        working-directory: tools/accounting-skills
+        run: cargo run --locked -- build-plugin-dist "$RUNNER_TEMP/plugin" --root "$GITHUB_WORKSPACE"
 
       # The token reaches only this step, after the build has run.
       - name: Commit the plugin to its branch when it changed
@@ -50,7 +79,7 @@ jobs:
         run: |
           set -euo pipefail
           export GIT_INDEX_FILE="$RUNNER_TEMP/plugin.index"
-          git --git-dir="$GITHUB_WORKSPACE/.git" --work-tree="$RUNNER_TEMP/plugin" -C "$RUNNER_TEMP/plugin" add --all --force .
+          git -c core.autocrlf=false --git-dir="$GITHUB_WORKSPACE/.git" --work-tree="$RUNNER_TEMP/plugin" -C "$RUNNER_TEMP/plugin" add --all --force .
           tree="$(git write-tree)"
           parent=""
           if git ls-remote --exit-code --heads origin "refs/heads/$BRANCH" > /dev/null; then
@@ -60,11 +89,12 @@ jobs:
               echo "The plugin is unchanged on $BRANCH at $parent."
               exit 0
             fi
-            # Installs and the directory key updates on the version, so a
-            # changed plugin waits for the release that bumps it.
+            # Installs update only when the version rises, so a changed plugin
+            # waits for the release that raises it.
             version="$(jq -r .version "$RUNNER_TEMP/plugin/.claude-plugin/plugin.json")"
-            if [ "$(git show "$parent:.claude-plugin/plugin.json" | jq -r .version)" = "$version" ]; then
-              echo "::notice::The plugin changed but its version is still $version, so $BRANCH stays at $parent."
+            published="$(git show "$parent:.claude-plugin/plugin.json" | jq -r .version)"
+            if [ "$version" = "$published" ] || [ "$(printf '%s\n%s\n' "$published" "$version" | sort -V | tail -n 1)" != "$version" ]; then
+              echo "::notice::The plugin changed but its version $version is not above $published, so $BRANCH stays at $parent."
               exit 0
             fi
           fi

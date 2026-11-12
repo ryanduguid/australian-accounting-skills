@@ -1,6 +1,6 @@
 # Australian Accounting Skills
 
-107 Claude skills for Australian accounting and tax preparation: BAS, month-end close, payroll and STP, FBT, Division 7A, capital gains, trusts, SMSFs, individual and company returns, and the workpapers behind them. Each skill sets out its inputs, the primary sources to check, the reconciliations to run and the points where a person must decide.
+Claude skills for Australian accounting and tax preparation: BAS, month-end close, payroll and STP, FBT, Division 7A, capital gains, trusts, SMSFs, individual and company returns, and the workpapers behind them. Each skill sets out its inputs, the primary sources to check, the reconciliations to run and the points where a person must decide.
 
 The skills prepare and check. They give no professional advice and lodge nothing: a qualified practitioner keeps the professional judgement, and lodgement, declarations, payments and client correspondence stay with authorised people. Keep client names and identifiers out of any folder a model can read.
 
