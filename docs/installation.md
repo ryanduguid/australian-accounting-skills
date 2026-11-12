@@ -1,5 +1,22 @@
 ## Install
 
+Every route this page describes, with the revision it installs and how it was
+tested. The sections below give the commands. The MCP server is the optional
+[Aus Accounting MCP](#claude-code-plugin) calculator cross-check.
+
+| Route | Revision | MCP server | Terminal | Tested | Update |
+| --- | --- | --- | --- | --- | --- |
+| [Skills CLI from a release checkout](#tagged-76-workflow-release) | v0.5.0 tag | No | Yes | `--agent opencode` copied all 76 skills on 5 November 2026; install and discovery only, on Linux; the README's command was run on Linux on 11 November 2026 | Not tested. Clone the new tag and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
+| [Claude Code plugin at the release tag](#tagged-76-workflow-release) | v0.5.0 tag | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 76 skills on Claude Code 2.1.316 on 5 November 2026; the README's commands were run on Linux on 11 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
+| [Codex plugin at the release tag](#tagged-76-workflow-release) | v0.5.0 tag | No | Yes | Delivered the 76 skills on Codex CLI 0.166.0 on 5 November 2026; the README's commands were run on Linux on 11 November 2026 | Not documented |
+| [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.5.0 tag (source ZIP) | No | No | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
+| [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026 | Not documented |
+| [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
+| [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
+| [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
+| [Skills CLI from a development checkout](#development-checkout) | Default branch | No | Yes | A checkout at `63967e8` produced 50 skills in each target directory on 8 September 2026 | Not tested. Pull the checkout and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
+| [Manual copy](#manual-copy) | v0.5.0 tag | No | Yes | None recorded | Copy again from a checkout of the new tag; not tested |
+
 ### Tagged 76-workflow release
 
 Start with v0.5.0, the latest published release. From a separate project
@@ -40,7 +57,7 @@ codex plugin add australian-accounting-skills@ryanduguid
 ```
 
 That plugin carries the v0.5.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
-launched with `uvx`. To move to a later release, remove the marketplace with
+launched with `uvx`, so it needs Python 3.14 or later and uv. To move to a later release, remove the marketplace with
 `/plugin marketplace remove ryanduguid` and add it again at the new tag.
 
 ### Claude.ai or the Claude desktop app, without a terminal
@@ -68,12 +85,6 @@ putting client information into any cloud service.
 
 The options below resolve the default branch or installed repository revision.
 They can deliver unreleased changes made after v0.5.0. Choose them when you intend to test development work.
-
-| Need | Install | What you get |
-| --- | --- | --- |
-| Claude Code, with updates from this repo | Plugin install | Skills at the installed repository revision as `australian-accounting-skills:*` |
-| Codex | Codex plugin | The same revision's skills via `.codex-plugin/plugin.json` |
-| Any agent that reads `SKILL.md` | `npx skills` | Portable skill files only. No extra runtime. |
 
 ### Claude Code plugin
 
@@ -113,6 +124,9 @@ a 10k budget.
 
 That fits a 1 million token window with little room, and not a 200,000 token one:
 1% there is 2k tokens, and skill-tax-cli reported 49 of the 97 descriptions at risk.
+On 12 November 2026 the pack held 104 skills whose descriptions total 15,743 characters,
+15% more than the 97 measured above. `/context` has not been run on them, so expect a
+larger Skills row than the 5 November reading.
 Other plugins and skills sharing the listing can also push it over. To check, run
 `/context` and compare the Skills row with your window. To reserve more, set
 `skillListingBudgetFraction` in your Claude Code settings, for example
@@ -134,6 +148,42 @@ source inventory and rollback route.
 codex plugin marketplace add ryanduguid/australian-accounting-skills
 codex plugin add australian-accounting-skills@ryanduguid
 ```
+
+### Cursor plugin
+
+`.cursor-plugin/plugin.json` follows Cursor's
+[plugins reference](https://cursor.com/docs/reference/plugins) as read on
+12 November 2026. It has not been loaded in Cursor, so treat this route as
+untested. It declares the skills folder and no MCP server.
+
+Cursor's [plugins page](https://cursor.com/docs/plugins), read on
+12 November 2026, documents the Cursor Marketplace, which lists only plugins
+its team has reviewed, a team marketplace on a Teams or Enterprise plan, and a
+local plugins folder. This plugin is not in the Cursor Marketplace. The clone
+below installs the default branch, and a team marketplace installs the branch
+it tracks. Neither route has been tried here.
+
+For the local folder, which needs no team plan, put the plugin in its own
+folder under `~/.cursor/plugins/local`, for example with a clone of the default
+branch:
+
+```bash
+git clone --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git ~/.cursor/plugins/local/australian-accounting-skills
+```
+
+Then restart Cursor or run **Developer: Reload Window**, and confirm the skills
+under **Customize**. Cursor skips a symlink in that folder that points to a
+checkout elsewhere. On Enterprise, the admin setting **Allow Local Plugin
+Imports**, off by default, must be on. Cursor does not document how to update
+a local plugin.
+
+For a team marketplace, an admin opens **Dashboard -> Plugins & MCPs**, clicks
+**Add Marketplace**, uses **Import from Repo** with
+`https://github.com/ryanduguid/australian-accounting-skills` and adds the plugin
+with **Add to Marketplace**. To update it, click **Refresh**. Auto Refresh
+needs the Cursor GitHub App installed on this repository, which an importing
+team cannot do. Cursor's pages do not say whether a repository with one plugin
+and no `.cursor-plugin/marketplace.json` imports this way.
 
 ### Any agent, via the skills CLI
 
@@ -158,7 +208,8 @@ agents' copies were not opened in those agents.
 ### Development checkout
 
 v0.5.0 contains 76 skills, and the default `main` branch can be ahead of it.
-To try `main` in a separate project, clone it and install the local checkout:
+To try `main`, the default branch, in a separate project, clone it and install the
+local checkout:
 
 ```bash
 git clone --branch main https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-source
@@ -182,10 +233,13 @@ it does not establish fresh agent behaviour or validate current tax law.
 
 ### Manual copy
 
-Copy the skills you want into your project or user skills directory:
+Clone the published tag, review the checkout, then copy the skills you want into
+your project or user skills directory. Only the clone uses the network; the copy
+reads the local checkout and starts no MCP server. To install from a downloaded
+release archive instead, check it first with [Verify a downloaded release](https://github.com/ryanduguid/release-policy/blob/main/docs/verify-a-release.md).
 
 ```bash
-git clone https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
+git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git australian-accounting-skills
 mkdir -p ~/.claude/skills
 cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
 ```
@@ -193,7 +247,7 @@ cp -r australian-accounting-skills/.claude/skills/* ~/.claude/skills/
 PowerShell:
 
 ```powershell
-git clone https://github.com/ryanduguid/australian-accounting-skills australian-accounting-skills
+git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git australian-accounting-skills
 New-Item -ItemType Directory -Force "$HOME/.claude/skills"
 Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/skills/"
 ```

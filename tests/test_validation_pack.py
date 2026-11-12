@@ -525,6 +525,13 @@ class SafetyControlTests(unittest.TestCase):
                 "Card 4111111111111111.",
                 "4111111111111111, expiring",
                 "no.4111111111111111",
+                # Dot or comma grouping that is not thousands grouping.
+                "4111.1111.1111.1111",
+                "12345678,2",
+                "4750.00,4111111111111111",
+                "-4750.00,12345678,Transfer",
+                "4750.00,51824753556",
+                "062.000,12345678",
             ),
             "email address": ("worker&#64;example.test",),
             "BSB or bank account": ("B<!-- -->SB 123-456",),
@@ -555,7 +562,8 @@ class SafetyControlTests(unittest.TestCase):
             validator.check_sensitive_content("effective 1 **July** 2026")
 
     def test_money_amounts_pass_the_long_number_screen(self) -> None:
-        for content in ("$12345678.90", "0.123456789012", "12,345,678.90"):
+        for content in ("$12345678.90", "0.123456789012", "12,345,678.90", "1,234,567",
+                        "18450.00,4450.00,14000.00,10000.00"):
             with self.subTest(content=content):
                 validator.check_sensitive_content(content)
 
@@ -846,6 +854,14 @@ class RecordedRunTests(unittest.TestCase):
         ):
             with self.subTest(label), self.assertRaises(validator.ValidationError):
                 validator.check_result_file(name, text)
+
+    def test_run_date_is_only_the_extended_calendar_form(self) -> None:
+        # date.fromisoformat reads each of these as 31 January 2026.
+        for value in ("20260131", "2026-W05-6", "2026W056"):
+            with self.subTest(value), self.assertRaisesRegex(
+                validator.ValidationError, "run_date must be a real date, YYYY-MM-DD"
+            ):
+                validator.check_result_file(self.NAME, self.GOOD.replace("2026-01-31", value))
 
     def test_rejection_reasons_are_the_documented_ones(self) -> None:
         with self.assertRaisesRegex(validator.ValidationError, "match the file name"):

@@ -35,6 +35,7 @@ FIRST_YEAR = (
     "getting-it-right-compliance-in-the-first-year-of-payday-super"
 )
 SELF_BILLING = "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/"
+WITHDRAWAL_NOTICE = "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200010/NAT/ATO/00001"
 GN11 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote11_Use_of_Tax_Category_Codes.html"
 GN01 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote01_WETandLCT"
 CLIENT_FIELDS = "https://central.xero.com/s/article/Create-a-client-in-Practice-Manager-AU"
@@ -143,8 +144,10 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"\beven where wages for the year are expected to stay below its annual threshold\b")
         self.assert_sentence(step, r"`not run`", r"\bthe weekly totals a weekly amount needs\b")
         # Queensland's group member rule is a separate lead, not a threshold result.
-        self.assert_sentence(step, r"\bSeparately, where the entity is a group member and pays Queensland wages with no "
-                             r"Queensland registration recorded, list it whatever the thresholds show\b")
+        self.assert_sentence(step, r"\bSeparately, where the entity is a group member and pays or is liable to pay Queensland wages with no "
+                             r"Queensland registration recorded, list it whatever the thresholds show\b",
+                             # Wider than the rule on purpose: taxable wages are the owner step's call.
+                             r"\bthe rule turns on taxable wages, which that step settles and this screen does not\b")
         self.assert_sentence(step, r"\bwhere wages are paid and the total exceeds a threshold with no registration recorded\b",
                              affirmed=(r"\blist each jurisdiction\b",))
         self.assertNotRegex(step, r"\bwhose (monthly or year-to-date )?wages exceed its threshold\b")
@@ -161,12 +164,12 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assertIn("the payroll tax screen compares total Australian wages (group wages where grouped) with each "
                       "paying jurisdiction's monthly and annual thresholds and any weekly amount its registration "
                       "page sets", checks)
-        self.assertIn("and separately any Queensland group member paying Queensland wages with no registration "
+        self.assertIn("and separately any Queensland group member paying or liable to pay Queensland wages with no registration "
                       "recorded", checks)
         owner = workflow_step("au-payroll-tax-states", 3)
         self.assert_sentence(owner, r"\bmonthly and annually, and each week's total against any weekly amount its "
                              r"registration page sets \(Queensland's does\)")
-        self.assert_sentence(owner, r"\bSeparately, list each unregistered group member that paid Queensland taxable "
+        self.assert_sentence(owner, r"\bSeparately, list each unregistered group member that paid or was liable to pay Queensland taxable "
                              r"wages in a month, however small its or its group's wages\b",
                              r"\bss 52\(b\) and 53\(1\) of the \[Payroll Tax Act 1971 \(Qld\)\]",
                              r"\bwithin 7 days after the end of that month\b")
@@ -255,6 +258,21 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(step, r"\bApply every condition above to a Peppol RCTI as to any other\b",
                              r"\bdoes not show a written agreement\b")
         self.assert_pending("tax-invoice-review", SELF_BILLING)
+
+    def test_rcti_withdrawal_dates_stay_with_the_withdrawal_notice(self) -> None:
+        step = workflow_step("tax-invoice-review", 4)
+        # Each date bound to its event in the sentence that names the notice, so a swapped
+        # or unattributed date fails.
+        self.assert_sentence(step, r"\[GSTR 2000/10W withdrawal notice\]",
+                             r"\bwithdraws GSTR 2000/10 with effect from 29 July 2026\b",
+                             r"\bcontinues to apply to RCTIs issued on or before 14 June 2023\b",
+                             r"\bnot to RCTIs issued on or after 15 June 2023\b")
+        self.assertEqual(step.count("14 June 2023"), 1)
+        self.assert_pending("tax-invoice-review", WITHDRAWAL_NOTICE)
+        limitations = " ".join(str(records("tax-invoice-review")[WITHDRAWAL_NOTICE]["limitations"]).split())
+        self.assert_carries(limitations, "withdrawn with effect from 29 July 2026",
+                            "on or before 14 June 2023", "on or after 15 June 2023", "F2023L00785",
+                            "registered on 14 June 2023", "A reviewer must confirm both dates")
 
     # au-aml-ctf-client-coverage: R1019 and R1017
 

@@ -74,8 +74,15 @@ SENSITIVE_PATTERNS = {
         r"(?:number|no\.?|[:#-])?\s*\d",
         re.I,
     ),
+    # Eight or more digits, run together or grouped by spaces or hyphens, or
+    # grouped by dots or commas other than as amounts: thousands grouping with
+    # an optional decimal point, or a comma-separated list (such as a CSV row)
+    # whose amounts all have a decimal point.
     "unlabelled long numeric identifier": re.compile(
-        r"(?<!\d)(?<!\d[,.])\d(?:[ -]?\d){7,}(?![,.]?\d)"
+        r"(?<!\d)(?<!\d[,.])(?:\d(?:[ -]?\d){7,}(?![,.]?\d)"
+        r"|(?=(?:[,.]?\d){8})(?!(?:(?:\d{1,3}(?:,\d{3})+|\d+)\.\d+,)+"
+        r"(?:\d{1,3}(?:,\d{3})+|\d+)\.\d+(?![,.]?\d)"
+        r"|(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?(?![,.]?\d))\d+(?:[,.]\d+)+)"
     ),
     "BSB or bank account": re.compile(
         r"\b(?:BSB|bank\s+account)\s*(?:(?:number|no\.?|[:#-])\s*)?\d", re.I
@@ -534,11 +541,14 @@ def check_result_file(rel: str, text: str, known: frozenset[str] = CASE_IDS) -> 
                 f"{key} must be one line of at most {RESULT_FIELD_MAX_LENGTH} characters "
                 "with no pipe; an output, transcript or note does not belong in a result file"
             )
+    run_date = data["run_date"]
     try:
-        run_date = date.fromisoformat(data["run_date"])
+        # fromisoformat also reads 20260131 and ISO week dates; only YYYY-MM-DD is accepted.
+        if date.fromisoformat(run_date).isoformat() != run_date:
+            raise ValueError(run_date)
     except ValueError as error:
         raise ValidationError("run_date must be a real date, YYYY-MM-DD") from error
-    if run_date.isoformat() != match.group(1):
+    if run_date != match.group(1):
         raise ValidationError("run_date must match the file name")
     results = data["results"]
     status = "legacy"

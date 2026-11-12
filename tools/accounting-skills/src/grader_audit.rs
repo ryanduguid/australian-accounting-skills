@@ -5,8 +5,9 @@
 //! eval suite, a grader or a validation card. The graders sit inside the
 //! evaluated plugin copy, so a model that could have read its own rubric voids
 //! that card. Ported from the 4 November 2026 `audit_grader_reads.py`: the
-//! report is the same on well-formed traces, and the command fails when it
-//! flags or cannot read anything. An integer above the 64-bit range prints as
+//! report is the same on well-formed traces, except that a suspect folder
+//! ending a path, as in `{"path": "/copy/graders"}`, is also flagged. The
+//! command fails when it flags or cannot read anything. An integer above the 64-bit range prints as
 //! a float. Lines containing NaN, lone surrogate escapes or invalid UTF-8
 //! are reported as SKIP.
 use crate::{Result, platform_text};
@@ -24,7 +25,7 @@ use std::{
 // Python's re.I also matches dotless and dotted I (U+0131, U+0130) as `i`;
 // the regex crate's case folding does not, so `audit` maps them before matching.
 static SUSPECT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?i)(^|[\\/])(evals|graders|validation|held)([\\/]|$)|required-checks|restraint\.md|skill-fired|case\.yaml|rubric").unwrap()
+    Regex::new(r"(?i)(^|[\\/])(evals|graders|validation|held)([^\w.-]|$)|required-checks|restraint\.md|skill-fired|case\.yaml|rubric").unwrap()
 });
 
 /// Python's `json.dumps` spacing and float spelling, so the printed input and

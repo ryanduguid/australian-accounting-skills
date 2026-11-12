@@ -54,6 +54,19 @@ Primary sources (checked 20 August 2026):
 - SG rate and due-date regime cited per period (quarterly for FY2025-26 and earlier; per payday under payday super from FY2026-27); payment dates evidenced; for FY2026-27 onward, the payday-super STP field/code requirements verified at ato.gov.au
 - Exceptions list empty or explicitly accepted by the reviewer
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+| Reconciliation | Working | Result |
+| --- | --- | --- |
+| Register to GL wages | 52,000.00 + 38,500.00 = 90,500.00 (E-1, E-2) | Agrees to GL wages expense |
+| Register to STP in total | 49,500.00 + 41,000.00 = 90,500.00 (E-1, E-2 per the STP summary) | Agrees, which proves nothing by itself |
+| Register to STP by employee | E-1: 52,000.00 - 49,500.00 = 2,500.00; E-2: 38,500.00 - 41,000.00 = -2,500.00 (register less STP) | 2 exceptions the total hid |
+| PAYG withholding payable | 4,100.00 + 21,600.00 - 22,300.00 = 3,400.00 (opening, withheld for the year, payments) | Agrees to the closing GL payable |
+
+An equal and opposite pair suggests, but does not show, an amount reported against the wrong employee; an unfiled pay event or a post-filing adjustment would also explain it. Both stay on the exceptions list until resolved or accepted by the reviewer. No RFBA figures were supplied, so RFBA is an open item, not a zero. The finalisation declaration stays with the authorised person.
+
 ## Boundaries
 
 - The finalisation declaration is a legal declaration by the employer/agent. A human makes it.

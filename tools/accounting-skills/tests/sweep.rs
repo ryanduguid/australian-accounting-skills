@@ -32,19 +32,29 @@ fn status_and_counts_must_agree_and_unchecked_sources_remain_explicit() {
 }
 
 #[test]
-fn counts_preserve_unicode_decimal_and_large_integers() {
-    let counts = parse_report(&report("٢", "0"), START).unwrap();
+fn counts_are_ascii_digits_within_the_64_bit_range() {
+    let max = u64::MAX.to_string();
+    let counts = parse_report(&report(&max, "0"), START).unwrap();
     assert_eq!(
         decide(2, &counts).unwrap().comment,
-        "2 sources need an edit here."
+        format!("{max} sources need an edit here.")
     );
-    let huge = "9".repeat(120);
-    let counts = parse_report(&report(&huge, "0"), START).unwrap();
-    assert_eq!(
-        decide(2, &counts).unwrap().comment,
-        format!("{huge} sources need an edit here.")
+    for changed in ["\u{662}", "18446744073709551616"] {
+        assert!(
+            parse_report(&report(changed, "0"), START).is_err(),
+            "{changed}"
+        );
+    }
+    let unicode_records = report("0", "0").replace("Swept 1", "Swept \u{661}");
+    assert!(parse_report(&unicode_records, START).is_err());
+    let overflowing = report(&max, "0").replace("- missing: 0", "- missing: 1");
+    let counts = parse_report(&overflowing, START).unwrap();
+    assert!(
+        decide(2, &counts)
+            .unwrap_err()
+            .to_string()
+            .contains("exceeds the 64-bit range")
     );
-    assert!(parse_report(&report(&"9".repeat(4301), "0"), START).is_err());
 }
 
 #[test]
@@ -181,9 +191,9 @@ fn the_rendered_report_parses_to_its_counts() {
         "blocked",
         "unreachable",
     ] {
-        assert_eq!(counts[category], "1", "{category}");
+        assert_eq!(counts[category], 1, "{category}");
     }
-    assert_eq!(counts["records"], "10");
+    assert_eq!(counts["records"], 10);
     assert_eq!(
         decide(2, &counts).unwrap().comment,
         "5 sources need an edit here."

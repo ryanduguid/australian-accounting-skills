@@ -48,6 +48,20 @@ A rebuilt franking account roll-forward reconciled to the ATO account and ledger
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+The reviewed opening balance is 12,000.00. The franking credit on the distribution received and the credit allocated to the dividend paid are taken from the distribution statements, not worked out from a rate.
+
+| Roll-forward | Working | Result |
+| --- | --- | --- |
+| Rebuilt account | 12,000.00 + 3,000.00 + 450.00 - 4,500.00 - 600.00 = 10,350.00 (opening, instalments the ATO account allocates to the instalment liability, credit on a distribution received, debit on the dividend paid, income tax refund) | Rebuilt closing balance, conditional on the maximum-credit check |
+| Ledger difference | 11,950.00 - 10,350.00 = 1,600.00 (ledger, rebuilt) | Classified, not plugged |
+| Itemised | 1,000.00 + 600.00 = 1,600.00 (an instalment payment the ATO account allocated to another liability, a refund not debited) | Both carried as reconciling items |
+
+The 4,500.00 debit sits on the day the payment records show the dividend was paid, not the resolution date. The maximum franking credit and the benchmark need the imputation rate and its prior-year evidence, so they stay blank and `UNVERIFIED` here. Step 5 debits a stated credit only up to the maximum, so the 4,500.00 debit, the closing balance and the ledger difference stay conditional until the maximum is verified. Had the itemised differences come to less than 1,600.00, the rest would stay an unexplained reconciling item for the reviewer. The directors decide dividends and franking.
+
 ## Source and review boundary
 
 Before applying a rule, open the relevant primary authority for the work's period and jurisdiction. Record its title, direct URL, provision or paragraph, effective period, check date and the exact fact used. The adjacent `sources.json` records discovery, not current-law approval. Search snippets and prior-year instructions do not establish the applicable rule. If authority or evidence is unavailable, mark the affected result `UNVERIFIED`, leave dependent calculations blank and identify what the reviewer needs. Never supply rates, thresholds, labels or deadlines from memory.

@@ -1,7 +1,79 @@
 # v0.5.1 (unreleased)
 
-Together the changes below provide 101 skills, 207 validation cards and 116 routing
+Together the changes below provide 104 skills, 229 validation cards and 119 routing
 prompts. The added cards and prompts have no recorded model run.
+
+Three skills are new. `myob-exports` does for MYOB Business and AccountRight what
+`xero-exports` does for Xero: which report to request, an export manifest, checks for
+a partial, filtered or wrong-basis export, and control-account and GST tie-outs. A
+live read goes only through MYOB's own connector, because MYOB's API scopes cannot
+show that a connection is read-only, and the skill refuses every write.
+`au-client-meeting-note` turns a client meeting transcript or notes into a draft file
+note for the practitioner's review, with every line traced to the source. Missing
+consent to the recording or the AI tool is a prominent reviewer exception, and
+lawfulness is left to the practitioner. `marketplace-settlements` rebuilds a seller's
+marketplace or payment-platform settlements to each payout in exact cents, ties
+payouts to the bank and checks the clearing account against unsettled sales and
+reserves. It takes fee GST only from documents and keeps platform-collected tax as a
+lead for the registered agent. Each new skill has a routing prompt and 2 synthetic
+cards, 3 for `marketplace-settlements`.
+
+Thirteen skills now prepare the output a practitioner sends or files, where before
+they stopped at the working behind it. `au-crypto-tax`, `bas-preparation`,
+`au-bookkeeping`, `year-end-workpapers` and `au-individual-return` draft client
+requests for facts and records, each marked drafted and not sent and stating no tax
+treatment; `year-end-workpapers` also adds a 3-year analytical view when 2 prior
+years' signed statements are supplied. `au-depreciation-schedule` prepares an
+accounting depreciation schedule from the entity's documented policy, leaving a class
+blank and `UNVERIFIED` where the policy is silent. `month-end-close` adds a monthly
+management report with stated ratio formulas, trends and options for the owner, and
+`financial-modelling` a monthly three-way forecast whose `check_balance` and
+`check_cash` must be zero every month. `au-partnership-tax` abstracts the partnership
+agreement by clause and lists questions for the partners' solicitor.
+`au-tax-research` screens a set of Budget measures against the client's facts, giving
+status and routes only, and drafts a request for facts not yet established.
+`au-ato-penalties-interest` sets out what a draft remission request contains: only
+facts the evidence pack holds, unsigned, for the registered agent to review and send.
+`au-tax-agent-obligations` adds a row for each of the practice's own AML/CTF
+obligations, with no conclusion on compliance or designated services, and reconciles
+the practice's client list with the ATO's on a shared identifier without changing
+anything at the ATO. `au-trust-distributions` adds a resolution content schedule that
+never drafts wording. 14 synthetic cards cover these steps, and
+`docs/nagaris-comparison.md` records the 14 rows they change.
+
+The citation gate now resolves 1,693 of 1,693 citations to source records. Of 1,437 legislative sections, 1,197 are found in their Act's committed index, 3 are listed exceptions and 237 belong to an Act without an index. Missing sections fail the check, as do source records whose title contradicts the index header. The README gives the rebuild procedure. These structural checks do not establish the legal meaning or current application of a citation.
+
+`tax-invoice-review` attributes the RCTI withdrawal dates to the notice withdrawing
+GSTR 2000/10 and checks reused invoice numbers by supplier and number together, with
+a new card for 2 suppliers sharing a number. `statement-to-csv` explains a
+posting-date period break but leaves it open, since an issuer's terms may place a
+line outside the printed period. `bas-preparation` says why its payroll tax screen
+lists a Queensland group member on wages paid or already payable: taxable wages
+are settled in `au-payroll-tax-states`, not in the screen. The owner skill also
+includes wages the employer is liable to pay in its registration check.
+
+Five tie-out skills gain a worked example: `au-ato-account-reconciliation`,
+`au-franking-account`, `au-trust-distributions`, `bas-preparation` and
+`stp-finalisation`. A test now recomputes the arithmetic in validation cards and
+worked examples.
+
+`docs/installation.md` now opens with one table giving each install route's revision,
+MCP server, terminal need, recorded test and update path, and the manual copy clones
+the published tag. A Cursor plugin manifest follows Cursor's documented format but
+has not been loaded in Cursor; the guide covers Cursor's team marketplace and local
+plugin folder, both untested. New tests check every relative Markdown link and its
+heading offline, fail on another country's tax terms (HMRC, IRS, Form 1099 and sales
+tax) in skills and cards, and require every card to appear in the validation README's
+coverage table. `templates/entity-context.md.example` gives one placeholder file per
+entity, each field a lead to confirm against the period's records. `RELEASING.md` adds
+a README notice for corrections to the latest published release.
+
+Result files now accept `run_date` only as `YYYY-MM-DD`, and the identifier screen also
+flags long digit runs grouped by dots or commas whilst still passing amounts.
+`sweep-outcome` reads counts as 64-bit ASCII integers, and `audit-grader-reads` flags a
+grader folder that ends a path. `build-plugin-evals` refuses a root outside Git, flags
+an uncommitted copy as `dirty` and takes `--changed-since REV` to build only the cases
+for changed skills. Source indexes and passage snapshots now reject repeated JSON keys.
 
 Every skill that reads client documents, 96 of the 97, now records an instruction
 that tries to change or override the workflow, its output, the firm's instructions

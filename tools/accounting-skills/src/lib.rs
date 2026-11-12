@@ -120,6 +120,27 @@ pub fn replace_file(path: &Path, text: &str) -> Result<()> {
     Ok(written?)
 }
 
+/// Run git in `root` and return its trimmed standard output, failing when git does.
+pub(crate) fn git(root: &Path, args: &[&str]) -> Result<String> {
+    let output = std::process::Command::new("git")
+        .args(args)
+        .current_dir(root)
+        .output()
+        .map_err(|error| format!("cannot run git: {error}"))?;
+    if !output.status.success() {
+        return Err(format!(
+            "git {} failed: {}",
+            args.join(" "),
+            String::from_utf8_lossy(&output.stderr).trim()
+        )
+        .into());
+    }
+    Ok(String::from_utf8(output.stdout)
+        .map_err(|error| format!("git output is not UTF-8: {error}"))?
+        .trim()
+        .to_string())
+}
+
 pub fn read_text(path: &Path) -> Result<String> {
     Ok(fs::read_to_string(path)?
         .replace("\r\n", "\n")
@@ -385,7 +406,7 @@ pub fn source_evidence(root: &Path, skill: &str) -> Result<Sources> {
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(summary),
         Err(error) => return Err(error.into()),
     };
-    let payload: Value = serde_json::from_str(&read_text(&index)?)?;
+    let payload = validation::strict_json(&read_text(&index)?, &index.display().to_string())?;
     let object = payload
         .as_object()
         .ok_or("source index must be an object")?;

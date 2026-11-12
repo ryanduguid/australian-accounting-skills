@@ -395,6 +395,10 @@
   skill: xero-exports
   not: [contracting-exports, year-end-workpapers]
   prompt: I have downloaded the trial balance, aged receivables and account transactions reports from Xero at 30 June 2026. Check they are complete and the totals agree, and flag any old debtors.
+- id: accountright-year-end-exports
+  skill: myob-exports
+  not: [xero-exports, year-end-workpapers]
+  prompt: I exported the trial balance, aged payables and GST summary from our client's AccountRight file for 30 June 2026. Check they are complete, on the right basis and agree to the ledger before we start the year-end file.
 - id: thirteen-week-cash
   skill: cashflow-forecast-13week
   not: [financial-modelling]
@@ -469,3 +473,11 @@
   skill: au-share-buy-back
   not: [au-capital-gains, au-dssp]
   prompt: My client sold shares into a listed company's off-market tender buy-back this year. How do we work out her capital proceeds, and is any of the price a dividend?
+- id: client-meeting-transcript-file-note
+  skill: au-client-meeting-note
+  not: [au-tax-research, au-client-acceptance]
+  prompt: Here is the AI transcript of this morning's video call with a client and her husband. Write it up as a file note for the partner to review, including what we agreed to do and anything she asked us to take on.
+- id: marketplace-payouts-booked-as-sales
+  skill: marketplace-settlements
+  not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
+  prompt: A client sells homewares through an online marketplace and is paid every week after the platform takes its fees, refunds and a reserve. The bookkeeper has been recording each payout as sales. Rebuild the month from the settlement reports and tie the payouts to the bank before we do the BAS.

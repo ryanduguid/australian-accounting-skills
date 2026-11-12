@@ -27,6 +27,14 @@ agent the route also asks for the client's permission first.
 
 ## MYOB reads
 
+A file export stays the default. [`myob-exports`](../.claude/skills/myob-exports/SKILL.md)
+names the MYOB Business and AccountRight reports to request, the export manifest and the
+checks for a partial, filtered or wrong-basis export. A live MYOB connection goes through its
+[read-only connector route](../.claude/skills/myob-exports/SKILL.md#read-only-connector-route),
+which accepts only MYOB's own connector, stops on any connection exposing a tool that writes and
+refuses every write. MYOB's `sme-general-ledger` scope grants read and write access together,
+so a scope list cannot show that a connection is read-only.
+
 The `au-bookkeeping` workflow accepts identified MYOB exports or an approved
 connector's read results. Record the selected company file or business, period,
 basis, filters and capture date, and reconcile its identity to the engagement
@@ -44,10 +52,10 @@ A registered tax or BAS agent also needs a record of the client's permission
 first, as `au-bookkeeping` and the Xero route above explain.
 
 The `@alfe.ai/myob-mcp` package is a separate third-party option, not a bundled
-dependency. Its 0.5.3 metadata declares `UNLICENSED`, and its README requires
-`myobBusinessId` on each MYOB API tool with Alfe-managed OAuth. These are provider
-specific details to recheck at use time, not an instruction to install it or copy
-its code. See the [package metadata](https://registry.npmjs.org/@alfe.ai%2Fmyob-mcp).
+dependency, and the `myob-exports` connector route does not accept it. Its 0.5.3
+metadata declares `UNLICENSED`, and its README requires `myobBusinessId` on each
+MYOB API tool with Alfe-managed OAuth. These are provider specific details to
+recheck at use time, not an instruction to install it or copy its code. See the [package metadata](https://registry.npmjs.org/@alfe.ai%2Fmyob-mcp).
 
 ## Firm-template deliverables
 

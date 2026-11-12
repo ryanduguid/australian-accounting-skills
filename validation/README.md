@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 207 cards in `cases/` test workflow quality, provenance and restraint.
+The 229 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -246,6 +246,7 @@ law claim, unverified source or guess.
 | [A client's ATO statement that shows nothing owing when its own lines do not roll](cases/au-ato-account-reconciliation-altered-client-statement.md) | au-ato-account-reconciliation |
 | [Ordinary payment instructions on an invoice are not planted instructions](cases/tax-invoice-review-ordinary-payment-instructions.md) | tax-invoice-review |
 | [A bank difference fully explained by an unpresented cheque](cases/reconciliation-break-trace-explained-timing-difference.md) | reconciliation-break-trace |
+| [2 suppliers whose invoices happen to share a number](cases/tax-invoice-review-same-number-different-suppliers.md) | tax-invoice-review |
 
 | [SMSF member death with a reversionary pension and a once-witnessed nomination](cases/au-smsf-death-benefits-reversionary-and-nomination.md) | au-smsf-death-benefits |
 | [Proposed final dividend partly set off against a director's loan](cases/au-franking-account-dividend-preparation.md) | au-franking-account |
@@ -257,8 +258,29 @@ law claim, unverified source or guess.
 | [A private company buys back one shareholder's shares with part of the price set off against a loan](cases/au-share-buy-back-private-selective.md) | au-share-buy-back |
 | [A shareholder in a listed company's off-market tender buy-back that straddles 30 June](cases/au-share-buy-back-listed-tender-seller.md) | au-share-buy-back |
 | [A private company buys back shares after moving retained earnings into share capital](cases/au-share-buy-back-tainted-share-capital.md) | au-share-buy-back |
+| [A meeting transcript that tells the note writer what to leave out, with one attendee's consent unrecorded](cases/au-client-meeting-note-planted-instruction-unrecorded-consent.md) | au-client-meeting-note |
+| [A meeting that adds a new company's BAS, a hedged remark and a revenue figure heard 2 ways](cases/au-client-meeting-note-scope-change-and-tentative-remark.md) | au-client-meeting-note |
+| [AccountRight period-end exports with an aged listing, a wrong GST basis and an unconfirmed user role](cases/myob-exports-accountright-period-end-ties.md) | myob-exports |
+| [A MYOB connector answer, a third-party server with a write tool and a request to write off a debt](cases/myob-exports-connector-answer-and-write-request.md) | myob-exports |
+| [Three weekly marketplace settlements that tie to the cent](cases/marketplace-settlements-weekly-tie-out.md) | marketplace-settlements, bas-preparation |
+| [A short payout, sales booked net of fees, a reserve over month end and a late refund](cases/marketplace-settlements-planted-faults.md) | marketplace-settlements, reconciliation-break-trace, bas-preparation |
+| [A negative settlement carried forward and a month-end payout still in transit](cases/marketplace-settlements-transit-and-carried-balance.md) | marketplace-settlements |
+| [Draft GIC remission request with one unevidenced fact](cases/au-ato-penalties-interest-remission-request.md) | au-ato-penalties-interest |
+| [Client queries for bank lines with an unknown purpose](cases/au-bookkeeping-unknown-lines-queries.md) | au-bookkeeping |
+| [Crypto records checklist built before the exports arrive](cases/au-crypto-tax-records-request.md) | au-crypto-tax |
+| [Accounting depreciation schedule with the policy missing for one class](cases/au-depreciation-schedule-accounting-schedule.md) | au-depreciation-schedule |
+| [Partnership agreement abstract with an unsigned mid-year variation](cases/au-partnership-tax-agreement-questions.md) | au-partnership-tax |
+| [AML/CTF rows for a practice enrolled with AUSTRAC](cases/au-tax-agent-obligations-aml-program-rows.md) | au-tax-agent-obligations |
+| [Practice client list against the ATO client list](cases/au-tax-agent-obligations-ato-client-list.md) | au-tax-agent-obligations |
+| [Budget measure screen for one client](cases/au-tax-research-budget-screen.md) | au-tax-research |
+| [Resolution content schedule with an open deed question](cases/au-trust-distributions-resolution-content-schedule.md) | au-trust-distributions |
+| [Unexplained BAS movements turned into client questions](cases/bas-preparation-movement-client-questions.md) | bas-preparation |
+| [Three-way forecast on an opening balance sheet that does not balance](cases/financial-modelling-three-way.md) | financial-modelling |
+| [Management report with an unexplained revenue variance](cases/month-end-close-management-report.md) | month-end-close |
+| [Year-end records request and covering email built from last year](cases/year-end-workpapers-records-request.md) | year-end-workpapers, au-individual-return |
+| [Three-year analytical review with a related-party loan](cases/year-end-workpapers-three-year-review.md) | year-end-workpapers |
 
-Together the cards cover all 101 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 104 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -298,7 +320,17 @@ dividend preparation and a family trust election have no recorded run.
 
 The farm land GST and farm succession cards added on 11 November 2026 have no recorded run.
 
+The 2 client meeting file note cards added on 12 November 2026, one with a planted instruction and an
+unrecorded consent and one with a scope change and a hedged remark, have no recorded run.
+The 2 MYOB export cards added on 12 November 2026 have no recorded run.
+
 The 2 main residence cards and the 3 share buy-back cards added on 11 November 2026 have no recorded run.
+
+The 3 marketplace settlement cards added on 12 November 2026 have no recorded run.
+
+The 14 cards added on 12 November 2026 for steps that turn working into a draft request, a
+schedule, a report or a register row have no recorded run, nor does the positive control added
+that day for 2 suppliers whose invoices share a number.
 
 Three further cards check whether the model completes supported bank,
 trial-balance and payroll arithmetic whilst keeping professional decisions

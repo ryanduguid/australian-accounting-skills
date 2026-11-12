@@ -253,6 +253,17 @@ claude plugin eval . --ablation with-without --threshold 0.8 --no-publish --keep
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- audit-grader-reads KEPT-FOLDER
 ```
 
+To limit the billed eval to skills differing from a revision, add `--changed-since REV`
+(such as `--changed-since origin/main`) to `build-plugin-evals`: the copy then
+holds only the cases grading a skill with a file under `.claude/skills/<name>/`
+that differs from that revision, counting uncommitted edits to tracked files
+but not untracked files. A routing case counts when its expected skill or a
+neighbour it forbids changed. An unknown revision, or one that leaves no case,
+is an error, and the manifest records the revision's commit as `changed_since`.
+This compares against the revision itself, rather than its merge base with HEAD.
+Changes only to cards, shared rules or plugin metadata do not select cases;
+omit the flag to evaluate those changes with the full case set.
+
 `audit-grader-reads` searches each folder for `output.jsonl` traces and lists
 up to 5 tool calls per trace whose input has `evals`, `graders`, `validation` or `held` as
 a path part after a slash or backslash, or names a rubric, `required-checks`, `restraint.md`, `skill-fired`
@@ -300,7 +311,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 207 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 229 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -322,7 +333,16 @@ au-primary-production on 11 November 2026, and the concession conditions added t
 postdate every recorded run, and the 2 new cards have no recorded run.
 
 The 2 main residence cards and 3 share buy-back cards added on 11 November 2026 for the new
-au-main-residence and au-share-buy-back skills have no recorded run.
+au-main-residence and au-share-buy-back skills have no recorded run, nor do the 2 cards
+added on 12 November 2026 for the new myob-exports skill.
+
+The 2 cards and the routing prompt added on 12 November 2026 for the new au-client-meeting-note
+skill have no recorded run, nor do the 3 cards and the routing prompt added that day for the new
+marketplace-settlements skill.
+
+The 14 cards added on 12 November 2026 for steps that turn working into a draft request, a
+schedule, a report or a register row in 13 existing skills have no recorded run, nor does the
+positive control added that day for 2 suppliers whose invoices share a number.
 
 The FBT car valuation card added on 10 November 2026 has no recorded run.
 The line on planted instructions and altered or forged documents added to 96 skills on
@@ -345,8 +365,8 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 116 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-101 skills has at least one, and `tests/test_routing_cases.py` fails when a
+the 119 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+104 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
@@ -358,8 +378,9 @@ claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --ma
 ```
 
 The estimate for the earlier 107-case pack was about US$18, not a measurement.
-The 116-case pack has no measured cost; a run that reaches the US$30 cap stops
-with partial results. The 79 prompts added on 4 and 11 November 2026 have no recorded run.
+The 119-case pack has no measured cost; a run that reaches the US$30 cap stops
+with partial results. The 79 prompts added on 4 and 11 November 2026 and the 3 prompts added on 12 November 2026
+have no recorded run.
 
 On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4
 turns, MCP server not started) all 20 chose the expected skill and none of the
@@ -409,9 +430,65 @@ and regulations and 205 rulings and guidance. All 1,017 resolve. Before that
 day's records and corrections, under an earlier rule that let a section take
 the nearest Act named before it anywhere in the file, 658 of 1,016 resolved.
 
+A resolved section is then checked for existence where
+`tools/accounting-skills/section-index/` holds a list of its Act's sections.
+Each list covers one Commonwealth Act or instrument: the section numbers in the
+table of contents of the current compilation's EPUB, which the Federal
+Register of Legislation's API serves. Its header records the title, the
+register and compilation identifiers, the in-force date, the request, the
+retrieval date and the SHA-256 digest of the file read. The check drops
+subsection and paragraph suffixes (`s 43-10(4)` is checked as 43-10), and
+reads `ss 17A-18C` as a range when 17A and 18C are listed and the Act's list
+holds no hyphenated number. Where it does, as the ITAA 1936, TAA 1953 and
+Corporations Act lists do for their schedules, a hyphenated number must itself
+be listed, so a section of the ITAA 1997 attributed to one of them, such as
+`s 8-1 of the TAA 1953`, is absent rather than read as sections 8 to 1.
+A section missing from its Act's list fails by file and line unless the
+folder's `exceptions.txt` gives it with a reason, as for a provision a Bill
+proposes or a repealed one that still governs an earlier period; the report
+counts those apart, and an exception no cited section needs also fails. A
+section of an Act with no list is counted as not indexed, neither passing nor
+failing. A list's header also ties a Federal Register address to the
+instrument it holds: a record whose register identifier has a list must carry
+the list's title, and a record carrying a list's title must carry its
+identifier, or the record owns no citation and its citations fail. The
+register identifier itself shows only an Act's year, so for an instrument with
+no list, and for a record from the ATO legal database or a state register, the
+gate cannot tell a mis-titled record: a reviewer must.
+
+On 12 November 2026 the lists, retrieved that day, covered 12 Acts and 3
+instruments: the ITAA 1997, ITAA 1936, GST Act, Corporations Act, TAA 1953,
+SGAA, TASA, Fuel Tax Act, SIS Act, AML/CTF Act, FBTAA and Coal Mining Industry
+(Long Service Leave) Payroll Levy Collection Act 1992, the SIS Regulations
+1994, the Tax Agent Services (Code of Professional Conduct) Determination 2024
+and the AML/CTF Rules 2025. The tree then held
+1,593 citations, all resolved, including 1,352 sections. Of those, 1,115 sat in
+an indexed Act and 237 did not. Of the 1,115, 1,112 were listed (4 only as a
+hyphenated range) and 3 were listed exceptions: SGAA s 23A and ITAA 1997
+s 26-95, which the Treasury Laws Amendment (Payday Superannuation) Act 2025
+repealed and which the skill cites as the law for earlier quarters, and
+ITAA 1997 s 960-590, which Schedule 5 of the Treasury Laws Amendment (Tax
+Reform No. 3) Bill 2026 would insert. None was missing. The 237 not indexed
+belong to state and territory Acts (199, led by the Queensland BIF Act with
+48), 5 other Commonwealth instruments (21) and 6 other Commonwealth Acts (17).
+
+A section found on a list exists in the current compilation; that says nothing
+of whether it applied in the period the skill concerns or says what the skill
+claims. A list holds every numbered entry in the table of contents: the
+Corporations Act's small business guide items share the numbers of its first
+sections, and a schedule's entries count only when hyphenated, as sections of
+the schedules to the TAA 1953 and ITAA 1936 and of the Insolvency Practice
+Schedule are; unhyphenated schedule clauses are left out, so a clause cited
+as a section, such as 's 1 of Schedule 4 to the Corporations Act 2001', is
+checked against the body section with that number. The number of
+s 960-590 is the skill's: the Bill text was not checked, because the
+Parliament's document server answered with a bot challenge. A list goes stale
+when a later compilation adds or repeals a section, until someone rebuilds it.
+
 A resolved citation shows only that the skill's index names a source to open.
-It does not show that the section exists (a proposed section in a Bill
-resolves to the Act it would amend) or says what the skill claims. A state Act
+Where its Act has no section list, it does not show that the section exists (a
+proposed section in a Bill resolves to the Act it would amend). It never shows
+that the section says what the skill claims. A state Act
 cited without its jurisdiction can match another state's Act with the same
 title and year. Where a sentence's only Act sits right after its first section,
 the sentence's other sections are credited to that Act too, which can be

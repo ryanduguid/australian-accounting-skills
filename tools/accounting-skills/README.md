@@ -15,19 +15,24 @@ are retired:
 
 `last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
 `check-citations` is also new: it checks that every cited section and ruling
-has a record in its skill's `sources.json`.
+has a record in its skill's `sources.json`, and that a cited section exists
+where `section-index/` lists its Act's sections.
 
 `statement-check` is also new: the `statement-to-csv` skill runs it on statement lines transcribed
 to JSON. In exact cents it checks each printed running balance, brought-forward and
 carried-forward balance and closing balance, extracted gross credits and debits against printed
 totals, a sign taken from the running balance, line dates against the period, and continuity
-between statements. It prints one `BREAK` line per difference and one `OVERLAP` line per pair of
+between statements. The period check can flag a line the issuer legitimately placed on the
+statement, for example under its own posting cutoff, and never passes a line whose `posted` date
+falls outside the period. It prints one `BREAK` line per difference and one `OVERLAP` line per pair of
 overlapping periods, ends with a `PASS` line counting what it compared or a `FAIL` line, and exits
 0 when everything ties, 2 on any break and 1 on malformed input, including an empty one or a
 repeated reference. The input holds figures and line references only, never descriptions.
 
 `audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside
-this repository. It prints the same report on well-formed traces. It splits
+this repository. It prints the same report on well-formed traces, except that
+it also flags a suspect folder that ends a path, as in
+`{"path": "/copy/graders"}`, which the script missed. It splits
 traces only at newlines, so a raw U+2028 inside a tool input no longer hides
 that call, and it fails when it flags a call, finds no trace or cannot read a
 line. An integer above the 64-bit range prints as a float. Lines containing
@@ -156,8 +161,8 @@ accounting-skills sweep-outcome --status 0 --report sweep.md --started 2026-09-2
 
 This command preserves the report's 7 required counts, duplicate refusal,
 minute-level freshness, status agreement and distinction between actionable and
-unchecked sources. Counts use nonnegative decimal arithmetic rather than a fixed
-integer width, with Python's default 4,300-digit conversion ceiling. The outcome
+unchecked sources. Counts are ASCII digits read as 64-bit unsigned integers;
+a count or actionable total above that range fails. The outcome
 and comment go only to stdout. The command never writes to `GITHUB_OUTPUT`.
 
 The source sweep workflow builds this command and gives it the status and
@@ -197,10 +202,87 @@ right after it, right before it, or as the only one the sentence names apart
 from an amending Act and one named right after another section. An Act named
 on an earlier line or in an earlier sentence never owns a section. Sections of
 a professional standard such as APES 110, and cross-references such as
-"section 3 below", are not counted. Each unmatched
-citation prints as `file:line: citation: reason`, then a total line; the exit
-code is 2 when any citation is unmatched. A resolved citation shows only that a
-record exists, not that the section exists or says what the skill claims.
+"section 3 below", are not counted.
+
+A resolved section must also exist where `section-index/` in this directory
+lists its Act's sections. Each `REGISTER-ID.txt` there holds one Commonwealth
+Act's or instrument's section numbers, one per line, after `# key: value`
+lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
+`in-force-from`, `source`, `retrieved` and `sha256`. The numbers are every
+table of contents entry of the compilation's EPUB, fetched from the `source`
+request to the Federal Register's API, that starts with a provision number;
+after the first schedule heading only hyphenated numbers count, because a
+schedule's unhyphenated entries are clauses; a clause cited as a section is
+therefore checked against the body section with that number. The SHA-256 is of the EPUB.
+Subsection and paragraph suffixes are ignored. `ss 17A-18C` is a range when
+both ends are listed and the list holds no hyphenated number; in a list that
+does, such as the TAA 1953's with its Schedule 1 sections, a hyphenated number
+must itself be listed, so `s 8-1 of the TAA 1953` is absent. `section-index/exceptions.txt`
+lists, as `REGISTER-ID SECTION: reason`, a section a skill cites on purpose
+although its list lacks it, such as one a Bill proposes or one since repealed.
+A section of an Act with no list is counted as not indexed.
+
+A list's header is also the only offline evidence of which instrument a
+Federal Register address holds: the identifier is otherwise tied to the
+record's title by kind and, for an Act, year. A `sources.json` record whose
+register identifier has a list must carry a title matching the list's, and a
+record whose title matches a list's must carry its identifier. A record that
+fails either owns no citation, and each citation it would have resolved
+reports the record, both titles and both identifiers. A record of an
+instrument with no list, or from the ATO legal database or a state register,
+is not checked this way: a mis-titled one still resolves, and a reviewer must
+catch it.
+
+Each failure prints as `file:line: citation: reason`: an unmatched citation, a
+section absent from its Act's list, or an exception no cited section needs.
+Two total lines follow, the second counting the resolved sections found,
+listed as exceptions, absent and in an Act with no list. The exit code is 2 on
+any failure. A found section exists in the current compilation; the check does
+not show that it applied in the skill's period or says what the skill claims.
+No command rebuilds a list: the EPUB is a zip archive, and the crate has no
+decompression dependency.
+
+### Rebuilding a section list
+
+Rebuild a list when the register publishes a new compilation of its Act. Until
+then a correct citation of a section a later compilation added fails as absent,
+and a citation of a section it repealed still passes. To build or rebuild
+`section-index/REGISTER-ID.txt`, where `REGISTER-ID` is the Act's series
+identifier such as `C2004A05138`:
+
+1. Ask the register API for the current compilation, URL-encoding the filter:
+   `https://api.prod.legislation.gov.au/v1/versions?$filter=titleId eq 'REGISTER-ID' and isCurrent eq true&$select=titleId,name,start,compilationNumber,registerId`.
+   `registerId` is the compilation's identifier, `compilationNumber` its
+   number, `start` its in-force date and `name` the title.
+2. Ask for that compilation's EPUB:
+   `https://api.prod.legislation.gov.au/v1/documents?$filter=registerId eq 'COMPILATION' and format eq 'Epub' and type eq 'Primary'&$select=titleId,start,retrospectiveStart,rectificationVersionNumber,uniqueTypeNumber,volumeNumber`.
+   Where more than one row comes back, take the highest
+   `rectificationVersionNumber`. One EPUB (`volumeNumber` 0) holds every
+   volume.
+3. Download it from
+   `https://api.prod.legislation.gov.au/v1/documents(titleId='REGISTER-ID',start=START,retrospectiveStart=RETROSPECTIVE-START,rectificationVersionNumber=N,type='Primary',uniqueTypeNumber=U,volumeNumber=V,format='Epub')`,
+   writing the dates as the API returns them (`2026-10-01T00:00:00`, with no
+   time zone). This address is the `source` field. On 12 November 2026 the
+   EPUB address on www.legislation.gov.au refused clients other than browsers.
+4. Unzip the EPUB and read the table of contents, `OEBPS/document.ncx`. Take
+   the text of each `navLabel` in document order. A label is a section when
+   it starts with a number matching
+   `[0-9]+[A-Z]*(-[0-9]+[A-Z]*)?(\.[0-9]+[A-Z]*)?` followed by 2 spaces; the
+   number is the entry. Once a label starting with `Schedule` has appeared,
+   keep only hyphenated numbers, because a schedule's other entries are
+   clauses. Keep the first occurrence of a repeated number: the loader rejects
+   repeats, and the Corporations Act's small business guide repeats 11 body
+   section numbers.
+5. Write the file with LF line endings: the header lines `# title: ` (the
+   version's `name`), `# register-id: `, `# compilation: `,
+   `# compilation-number: `, `# in-force-from: ` (the date part of `start`),
+   `# source: `, `# retrieved: ` (the download date, as YYYY-MM-DD) and
+   `# sha256: ` (the SHA-256 of the EPUB's bytes in lower-case hex, from
+   `sha256sum` or PowerShell's `(Get-FileHash FILE).Hash.ToLower()`), then one
+   number per line in table of contents order.
+6. Run `check-citations`. Remove any exception it reports as unneeded, and
+   check each newly absent section against the compilation before changing a
+   skill or adding an exception.
 
 ## Validation pack
 
@@ -431,16 +513,21 @@ Its prompt carries every section except `Required checks`, `Must not do` and
 first two, and a `tool_used` grader requires a target skill to fire. Each entry
 in `validation/routing-cases.yaml` becomes a `route-` case whose graders require
 the expected skill and forbid its neighbours. `evals-manifest.json` records the
-commit, run count, card and routing-file digests and routing case names.
+commit, run count, card and routing-file digests and routing case names. Its
+`dirty` field is true when `git status` shows a changed, untracked or ignored
+file under the copied paths, since the copy then differs from that commit. A
+root that is not a Git checkout is refused before anything is written.
 
 Front matter uses double-quoted YAML scalars and flow lists, which YAML 1.1 and
 1.2 readers load to the values the retired Python builder wrote with PyYAML.
-Prompt and grader bodies, copied files and the manifest are byte-identical to
-its output. Every case is rendered before anything is written, so a malformed
+Prompt and grader bodies and copied files are byte-identical to its output;
+the manifest also has the `dirty` and `changed_since` fields. Every case is rendered before anything is written, so a malformed
 card or routing case leaves no partial copy. Routing case ids and skill names
 must be lowercase hyphenated slugs. The routing file is read with the card YAML
 subset, so aliases, anchors, tags and duplicate keys are refused where PyYAML
 accepted them. Links and Windows reparse points among the copied files are
 refused; the Python builder followed them. `--runs` and `--max-turns` take
-integers from 1 to 4,294,967,295 and default to 1 and 12. Success prints
+integers from 1 to 4,294,967,295 and default to 1 and 12. `--changed-since REV`
+builds only the cases grading a skill changed since that revision, as
+[docs/EVAL.md](../../docs/EVAL.md) describes. Success prints
 the case count, usage errors exit 2 and processing failures exit 1.

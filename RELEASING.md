@@ -23,9 +23,17 @@ Before tagging:
    citation bytes already captured by an immutable tag. Review the plugin's
    exact MCP pin and its documented Python requirement against the published
    server; never pin a package that has not been published.
-5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
+5. If the release corrects a figure that the latest published release stated,
+   list each correction under a `## Corrections since v<latest>` heading in
+   `RELEASE_NOTES.md` and put a short notice above the README's `## Install`
+   heading that links it. Add both in the change that first records the
+   correction: the test requires the notice only until step 4 adds the new
+   version to `RELEASED_INVENTORIES`. Remove the notice at the next release
+   that corrects nothing; no test checks the removal. Corrections to older
+   releases, such as v0.2.1, stay in the README's collapsed section.
+6. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns the repository tests, the fabricated-pack validator and the exact 101-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
+The workflow reruns the repository tests, the fabricated-pack validator and the exact 104-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final 4-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 

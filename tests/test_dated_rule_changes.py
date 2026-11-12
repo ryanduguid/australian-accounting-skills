@@ -18,6 +18,7 @@ import re
 import unittest
 
 from skill_prose import (
+    DO_NOT,
     ISO_DATE,
     NOT,
     PENDING,
@@ -247,6 +248,34 @@ class DatedRuleChangeTests(unittest.TestCase):
             "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/"
             "changes-to-beneficiary-tfn-reporting-for-closely-held-trusts",
         )
+
+    def test_trust_resolution_content_schedule_carries_content_never_wording(self) -> None:
+        step = workflow_step("au-trust-distributions", "1a")
+        self.assert_sentence(step, r"\btrustee and their lawyer\b", r"\bdeed abstract\b",
+                             r"\bresolution-readiness checklist\b", r"\bproposed distribution plan\b",
+                             affirmed=(r"\bprepare a schedule\b",))
+        # Each entry is required on its own.
+        self.assert_sentence(
+            step, r"\bfor each beneficiary\b", r"\bmeasure of income the deed uses\b", r"\bamount or share\b",
+            r"\bstreamed class\b", r"\bclause relied on\b", r"\bdeadline as the deed abstract records it\b",
+            r"\bnot ready\b", r"\bquestion for the lawyer\b",
+        )
+        self.assert_sentence(step, r"\btrust-law income\b", r"\bstep 2\b", NOT + r"spread\b",
+                             affirmed=(r"\blist (any|the) difference\b",))
+        self.assert_sentence(step, r"\bblank\b", r"`UNVERIFIED`", NOT + r"fill it from\b")
+        self.assert_sentence(step, r"\bschedule of content\b", NOT + r"resolution wording\b",
+                             DO_NOT + r"draft, date or sign a resolution\b")
+        self.assert_sentence(step, r"\bthe trustee and their lawyer settle the wording\b", r"\btrustee decides\b")
+        # The schedule carries the proposal as given and derives nothing from it.
+        self.assert_sentence(step, r"\bproposal as given\b", NOT + r"(convert|compute)\b",
+                             r"\bnothing the proposal does not state\b")
+        self.assert_sentence(step, r"\bshares apply before or after the streamed amounts\b",
+                             r"\bquestion for the trustee and their lawyer\b")
+        # Step 2's schedule exists before the comparison.
+        self.assert_sentence(step, r"\btrust-law income\b", r"\bprepared before this schedule\b")
+        self.assert_carries(section("au-trust-distributions", "Inputs"), "proposed distribution plan")
+        self.assert_sentence(section("au-trust-distributions", "Hand-off"), r"\bresolution content schedule\b",
+                             NOT + r"resolution wording\b")
 
     def test_trust_family_trust_screen_reads_the_fte_and_iee_report(self) -> None:
         step = workflow_step("au-trust-distributions", "4a")

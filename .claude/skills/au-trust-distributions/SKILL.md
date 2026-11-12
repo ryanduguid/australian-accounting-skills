@@ -1,17 +1,19 @@
 ---
 name: au-trust-distributions
-description: "Use when preparing Australian trust income, beneficiary entitlement and distribution reconciliation workpapers."
+description: "Use when preparing Australian trust income, beneficiary entitlement and distribution reconciliation workpapers, and a resolution content schedule for the trustee."
 ---
 
 # Trust distribution review pack
 
 ## Inputs
 
-Trust deed and amendments, trustee resolutions with execution evidence, accounts and tax schedules, beneficiary eligibility/residency and, for a closely held trust, beneficiary TFN quote records, income categories, payments and entitlements, family trust and interposed entity election records (including the specified individual and start income year) and, where the practice can access it, the family trust election and interposed entity election report from Online services for agents, other elections and prior-year balances.
+Trust deed and amendments, trustee resolutions with execution evidence, the proposed distribution plan with any proposed streaming, the deed abstract and resolution-readiness checklist from `au-trust-deed-review` where it has been run, accounts and tax schedules, beneficiary eligibility/residency and, for a closely held trust, beneficiary TFN quote records, income categories, payments and entitlements, family trust and interposed entity election records (including the specified individual and start income year) and, where the practice can access it, the family trust election and interposed entity election report from Online services for agents, other elections and prior-year balances.
 
 ## Workflow
 
 1. Compare proposed beneficiaries, powers and timing with the deed and verified law. A missing or late resolution remains an open legal question; never backdate or fabricate execution. Where `au-trust-deed-review` is installed, use its deed abstract and resolution-readiness checklist as the deed evidence for this step.
+
+1a. **Resolution content schedule.** Where the trustee proposes a distribution, prepare a schedule of the content the proposed resolution would carry, for the trustee and their lawyer, from the deed abstract, the resolution-readiness checklist and the proposed distribution plan. For each beneficiary, record the measure of income the deed uses, with its clause; the amount or share proposed; each streamed class, such as capital gains or franked distributions, with its amount and the clause relied on; the deed's resolution deadline as the deed abstract records it; and each checklist item marked not ready or a question for the lawyer. Carry the proposal as given: record shares as shares and amounts as amounts, do not convert one into the other and compute nothing the proposal does not state. Where the proposal sets both shares and streamed amounts, list whether the shares apply before or after the streamed amounts as a question for the trustee and their lawyer. Where the proposal states amounts, compare their total with trust-law income in the step 2 schedule, prepared before this schedule, and where it states shares, check that they total the whole; list any difference for the trustee and never spread it across the beneficiaries. Where there is no deed abstract, or it records no measure, clause or deadline, leave that entry blank and `UNVERIFIED`, and never fill it from the plan, a prior year's resolution or memory. This is a schedule of content, never resolution wording: do not draft, date or sign a resolution, and do not word any part of one. The trustee and their lawyer settle the wording, and the trustee decides and makes the resolution.
 
 2. Keep trust-law income, accounting profit, taxable net income and cash paid in separate schedules with a documented bridge.
 
@@ -33,9 +35,23 @@ Trust deed and amendments, trustee resolutions with execution evidence, accounts
 
 ## Hand-off and checks
 
-A deed/resolution evidence matrix, income bridge, beneficiary roll-forwards and, where an election applies, the family trust distribution tax screen. The trustee and adviser decide and execute distributions.
+A deed/resolution evidence matrix, income bridge, beneficiary roll-forwards, where an election applies the family trust distribution tax screen and, where a distribution is proposed, the resolution content schedule, which is never resolution wording. The trustee and adviser decide and execute distributions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
+
+## Worked example
+
+Fabricated from scratch for an invented entity, in AUD. It shows the shape of the result; no figure here is a rate, threshold or benchmark.
+
+An executed resolution is on file. Trust-law income of 48,000.00 comes from the accounts under the deed's definition; taxable net income stays in its own schedule. The distribution statement received shows a franked distribution of 6,400.00 with a franking credit of 1,900.00, which the resolution streams to beneficiary B.
+
+| Check | Working | Result |
+| --- | --- | --- |
+| Entitlements | 24,000.00 + 16,000.00 + 8,000.00 = 48,000.00 (A, B, C) | Agrees to trust-law income |
+| Franked component | B's statement carries 6,400.00 and 1,900.00; A's and C's carry none | Agrees to the trust schedule |
+| C's unpaid entitlement | 5,000.00 + 8,000.00 - 3,000.00 = 10,000.00 (opening, this year, paid) | Agrees to the ledger balance |
+
+C, a company, is owed 10,000.00; its treatment is not assumed and goes to specialist review under steps 4 and 4b. Had the resolution allocated only 47,000.00, the remaining 48,000.00 - 47,000.00 = 1,000.00 would have no supported entitlement: it stays unallocated for the reviewer, never spread across the beneficiaries or inferred from cash paid.
 
 ## Source and review boundary
 

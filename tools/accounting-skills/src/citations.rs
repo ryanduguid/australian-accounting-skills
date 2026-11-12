@@ -22,10 +22,17 @@
 //! no instrument, or more than one, or that is said to be of an instrument the
 //! text does not name in full ("of the Act", "of that Act", "of the
 //! Administration Act"), is reported; "section 3 below" is a cross-reference
-//! and is not counted. The check does not confirm that the section exists or
-//! says what the skill claims.
+//! and is not counted.
+//!
+//! Where `tools/accounting-skills/section-index/` holds the Act's section
+//! list, a resolved section must also appear in it, ignoring subsection and
+//! paragraph suffixes, or be listed with a reason in that folder's
+//! `exceptions.txt`. A section of an Act with no list is counted as not
+//! indexed. The check does not confirm that a section says what the skill
+//! claims.
 
 use crate::{Result, canonical_root, discover_skills, platform_text, read_text};
+use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
 use serde_json::Value;
 use std::{
@@ -263,7 +270,8 @@ struct Anchor {
     keys: Option<BTreeSet<Key>>,
 }
 
-/// A citation with no matching record.
+/// A citation with no matching record, a section absent from its Act's
+/// index, or an exception no cited section needs.
 #[derive(Debug, PartialEq, Eq)]
 pub struct Unmatched {
     pub file: String,
@@ -272,14 +280,184 @@ pub struct Unmatched {
     pub reason: String,
 }
 
-/// Counts over every Markdown file of every skill.
+/// Counts over every Markdown file of every skill. Each resolved section is
+/// counted once more: as existing, absent or a listed exception when its Act
+/// has a section index, otherwise as not indexed.
 #[derive(Debug, Default)]
 pub struct Report {
     pub rulings: usize,
     pub rulings_resolved: usize,
     pub sections: usize,
     pub sections_resolved: usize,
+    pub sections_exist: usize,
+    pub sections_absent: usize,
+    pub sections_excepted: usize,
+    pub sections_not_indexed: usize,
     pub unmatched: Vec<Unmatched>,
+}
+
+const SECTION_INDEX: &str = "tools/accounting-skills/section-index";
+const EXCEPTIONS: &str = "exceptions.txt";
+static SECTION_ID: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^\d+[A-Z]*(?:-\d+[A-Z]*)?(?:\.\d+[A-Z]*)?$").unwrap());
+static REGISTER_ID: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^[CF]\d{4}[A-Z]\d{5}$").unwrap());
+
+/// The sections of one Commonwealth Act or instrument, as its register
+/// compilation's table of contents lists them.
+struct SectionIndex {
+    register_id: String,
+    title: String,
+    compilation: String,
+    keys: BTreeSet<Key>,
+    sections: BTreeSet<String>,
+    /// Whether any listed section number holds a hyphen. Only in a list with
+    /// none does "ss 17A-18C" read as a range.
+    hyphenated: bool,
+}
+
+/// A cited section deliberately absent from its Act's index, such as one a
+/// Bill proposes or one since repealed.
+struct Exception {
+    line: usize,
+    register_id: String,
+    section: String,
+    used: bool,
+}
+
+fn section_index(path: &Path) -> Result<SectionIndex> {
+    let name = path.display();
+    let mut fields = std::collections::BTreeMap::new();
+    let mut sections = BTreeSet::new();
+    for (number, line) in read_text(path)?.lines().enumerate() {
+        if let Some(header) = line.strip_prefix("# ") {
+            let (key, value) = header
+                .split_once(": ")
+                .ok_or_else(|| format!("{name}:{}: expected '# key: value'", number + 1))?;
+            if fields.insert(key.to_string(), value.to_string()).is_some() {
+                return Err(format!("{name}:{}: repeated field {key}", number + 1).into());
+            }
+        } else if SECTION_ID.is_match(line)? {
+            if !sections.insert(line.to_string()) {
+                return Err(format!("{name}:{}: repeated section {line}", number + 1).into());
+            }
+        } else {
+            return Err(format!("{name}:{}: not a section number: {line}", number + 1).into());
+        }
+    }
+    let mut field = |key: &str| {
+        fields
+            .remove(key)
+            .filter(|value| !value.is_empty())
+            .ok_or_else(|| format!("{name}: missing field {key}"))
+    };
+    let title = field("title")?;
+    let register_id = field("register-id")?;
+    let compilation = field("compilation")?;
+    for provenance in ["compilation-number", "source"] {
+        field(provenance)?;
+    }
+    for date in ["in-force-from", "retrieved"] {
+        let value = field(date)?;
+        if value.len() != 10 || NaiveDate::parse_from_str(&value, "%Y-%m-%d").is_err() {
+            return Err(format!("{name}: {date} must be a date written YYYY-MM-DD").into());
+        }
+    }
+    let digest = field("sha256")?;
+    if digest.len() != 64
+        || !digest
+            .bytes()
+            .all(|byte| matches!(byte, b'0'..=b'9' | b'a'..=b'f'))
+    {
+        return Err(format!("{name}: sha256 must be 64 lower-case hexadecimal digits").into());
+    }
+    if let Some(key) = fields.keys().next() {
+        return Err(format!("{name}: unknown field {key}").into());
+    }
+    if !REGISTER_ID.is_match(&register_id)? || path.file_stem() != Some(register_id.as_ref()) {
+        return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
+    }
+    if title_parts(&title).is_none() {
+        return Err(format!("{name}: the title must end with its year").into());
+    }
+    Ok(SectionIndex {
+        keys: BTreeSet::from([
+            ("title", format!("{title} (Cth)")),
+            ("register", register_id.clone()),
+        ]),
+        register_id,
+        title,
+        compilation,
+        hyphenated: sections.iter().any(|section| section.contains('-')),
+        sections,
+    })
+}
+
+/// The section indexes under `root`, and the exceptions they allow.
+fn section_indexes(root: &Path) -> Result<(Vec<SectionIndex>, Vec<Exception>)> {
+    let folder = root.join(SECTION_INDEX);
+    let mut indexes = Vec::new();
+    let mut exceptions = Vec::new();
+    if !folder.is_dir() {
+        return Ok((indexes, exceptions));
+    }
+    let mut paths = fs::read_dir(&folder)?
+        .map(|entry| entry.map(|entry| entry.path()))
+        .collect::<io::Result<Vec<_>>>()?;
+    paths.sort();
+    for path in paths.iter().filter(|path| {
+        path.extension().is_some_and(|ext| ext == "txt")
+            && path.file_name() != Some(EXCEPTIONS.as_ref())
+    }) {
+        indexes.push(section_index(path)?);
+    }
+    let path = folder.join(EXCEPTIONS);
+    if !path.is_file() {
+        return Ok((indexes, exceptions));
+    }
+    for (number, line) in read_text(&path)?.lines().enumerate() {
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let malformed = || {
+            format!(
+                "{}:{}: expected 'REGISTER-ID SECTION: reason'",
+                path.display(),
+                number + 1
+            )
+        };
+        let (cited, reason) = line.split_once(": ").ok_or_else(malformed)?;
+        let (register_id, section) = cited.split_once(' ').ok_or_else(malformed)?;
+        if reason.trim().is_empty() || !SECTION_ID.is_match(section)? {
+            return Err(malformed().into());
+        }
+        if !indexes.iter().any(|index| index.register_id == register_id) {
+            return Err(format!(
+                "{}:{}: no section index for {register_id}",
+                path.display(),
+                number + 1
+            )
+            .into());
+        }
+        if let Some(earlier) = exceptions.iter().find(|exception: &&Exception| {
+            exception.register_id == register_id && exception.section == section
+        }) {
+            return Err(format!(
+                "{}:{}: repeats the exception on line {}",
+                path.display(),
+                number + 1,
+                earlier.line
+            )
+            .into());
+        }
+        exceptions.push(Exception {
+            line: number + 1,
+            register_id: register_id.to_string(),
+            section: section.to_string(),
+            used: false,
+        });
+    }
+    Ok((indexes, exceptions))
 }
 
 fn captures<'t>(regex: &Regex, text: &'t str) -> Result<Vec<Captures<'t, str>>> {
@@ -743,15 +921,49 @@ fn markdown_files(folder: &Path, files: &mut Vec<PathBuf>) -> Result<()> {
 /// sections, and a record whose register or identifier names another
 /// instrument than its title owns none. A record from anywhere else, such as
 /// an ATO web page or a ruling, may name an Act without holding its text, so it
-/// owns no section either.
-fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
+/// owns no section either. A Federal Register record that contradicts a
+/// section list's header (see `contradiction`) is returned apart, with why.
+type Records = (
+    BTreeSet<String>,
+    Vec<BTreeSet<Key>>,
+    Vec<(BTreeSet<Key>, String)>,
+);
+
+/// A named instrument whose Register addresses all agree on its identity.
+fn record_instrument(source: &serde_json::Map<String, Value>) -> Result<Option<BTreeSet<Key>>> {
+    let field = |name: &str| source.get(name).and_then(Value::as_str).unwrap_or("");
+    let Some(named) = anchors(&unescape(field("title")))?
+        .into_iter()
+        .next()
+        .and_then(|anchor| anchor.keys)
+    else {
+        return Ok(None);
+    };
+    let mut keys = BTreeSet::new();
+    let mut agrees = true;
+    for url in ["url", "final_url", "content_url"].map(field) {
+        if let Some(copy) = register_copy(url)? {
+            match copy_keys(&copy, &title(&named)) {
+                Some(copied) if keys.is_empty() || same_instrument(&copied, &keys) => {
+                    keys.extend(copied);
+                }
+                _ => agrees = false,
+            }
+        }
+    }
+    Ok((agrees && !keys.is_empty()).then_some(keys))
+}
+
+fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
     let mut instruments = Vec::new();
+    let mut rejected = Vec::new();
     if !index.is_file() {
-        return Ok((rulings, instruments));
+        return Ok((rulings, instruments, rejected));
     }
-    let payload: Value = serde_json::from_str(&read_text(&index)?)?;
+    let payload =
+        crate::validation::strict_json(&read_text(&index)?, &index.display().to_string())?;
     let sources = payload["sources"]
         .as_array()
         .ok_or_else(|| format!("{}: sources must be a list", index.display()))?;
@@ -769,32 +981,60 @@ fn records(folder: &Path) -> Result<(BTreeSet<String>, Vec<BTreeSet<Key>>)> {
             .collect::<Vec<_>>()
             .join(" ");
         rulings.extend(record_rulings(&text)?);
-        let field = |name: &str| source.get(name).and_then(Value::as_str).unwrap_or("");
-        let Some(named) = anchors(&unescape(field("title")))?
-            .into_iter()
-            .next()
-            .and_then(|anchor| anchor.keys)
-        else {
+        let Some(keys) = record_instrument(source)? else {
             continue;
         };
-        let mut keys = BTreeSet::new();
-        let mut agrees = true;
-        for url in ["url", "final_url", "content_url"].map(field) {
-            if let Some(copy) = register_copy(url)? {
-                match copy_keys(&copy, &title(&named)) {
-                    Some(copied) if keys.is_empty() || same_instrument(&copied, &keys) => {
-                        keys.extend(copied);
-                    }
-                    Some(_) => agrees = false,
-                    None => agrees = false,
-                }
-            }
-        }
-        if agrees && !keys.is_empty() {
+        let raw_title = source.get("title").and_then(Value::as_str).unwrap_or("");
+        if let Some(reason) = contradiction(&keys, raw_title, indexes) {
+            rejected.push((
+                keys,
+                format!("sources.json record {} {reason}", position + 1),
+            ));
+        } else {
             instruments.push(keys);
         }
     }
-    Ok((rulings, instruments))
+    Ok((rulings, instruments, rejected))
+}
+
+/// Why a record copied from the Federal Register contradicts a section list:
+/// its register identifier has a list whose title is not the record's, or its
+/// title is a list's but its identifier is not. The register identifier is
+/// otherwise tied to the title only by kind and, for an Act, year, so this is
+/// the only check that the address holds the instrument the title names.
+fn contradiction(
+    keys: &BTreeSet<Key>,
+    raw_title: &str,
+    indexes: &[SectionIndex],
+) -> Option<String> {
+    let only_titles = |keys: &BTreeSet<Key>| -> BTreeSet<Key> {
+        keys.iter()
+            .filter(|(kind, _)| *kind == "title")
+            .cloned()
+            .collect()
+    };
+    let ids: Vec<&str> = keys
+        .iter()
+        .filter(|(kind, _)| *kind == "register")
+        .map(|(_, id)| id.as_str())
+        .collect();
+    if ids.is_empty() {
+        return None;
+    }
+    indexes
+        .iter()
+        .find(|index| {
+            same_instrument(&only_titles(keys), &only_titles(&index.keys))
+                != ids.contains(&index.register_id.as_str())
+        })
+        .map(|index| {
+            format!(
+                "('{raw_title}' at {}) disagrees with the section list for {} ('{}')",
+                ids.join(", "),
+                index.register_id,
+                index.title
+            )
+        })
 }
 
 /// A paragraph's wrapped lines joined by spaces, or a heading, table row or
@@ -969,11 +1209,27 @@ fn owners(
 /// Check every skill under `root`.
 pub fn check(root: &Path) -> Result<Report> {
     let mut report = Report::default();
+    let (indexes, mut exceptions) = section_indexes(root)?;
     for skill in discover_skills(root)? {
         let folder = root.join(".claude/skills").join(&skill);
-        let (recorded_rulings, instruments) = records(&folder)?;
-        let recorded =
-            |keys: &BTreeSet<Key>| instruments.iter().any(|other| same_instrument(keys, other));
+        let (recorded_rulings, instruments, rejected) = records(&folder, &indexes)?;
+        // None when no record names the Act; otherwise the section index, if
+        // any, of the Act a matching record names. Matching the index through
+        // the record keeps a state Act cited without its jurisdiction from
+        // taking a Commonwealth Act's index.
+        let recorded = |keys: &BTreeSet<Key>| {
+            let matching: Vec<_> = instruments
+                .iter()
+                .filter(|other| same_instrument(keys, other))
+                .collect();
+            (!matching.is_empty()).then(|| {
+                matching.iter().find_map(|record| {
+                    indexes
+                        .iter()
+                        .find(|index| same_instrument(record, &index.keys))
+                })
+            })
+        };
         let mut files = Vec::new();
         markdown_files(&folder, &mut files)?;
         for path in files {
@@ -1020,7 +1276,13 @@ pub fn check(root: &Path) -> Result<Report> {
                     for (section, owner) in sections.iter().zip(owned) {
                         let resolution = match owner.map(|index| &named[index].keys) {
                             Ok(None) => continue,
-                            Ok(Some(keys)) => recorded(keys).then_some(()).ok_or_else(|| {
+                            Ok(Some(keys)) => recorded(keys).ok_or_else(|| {
+                                if let Some((_, reason)) = rejected
+                                    .iter()
+                                    .find(|(other, _)| same_instrument(keys, other))
+                                {
+                                    return reason.clone();
+                                }
                                 let names: Vec<_> =
                                     keys.iter().map(|(_, name)| name.as_str()).collect();
                                 format!("no record names its Act ({})", names.join("; "))
@@ -1029,13 +1291,51 @@ pub fn check(root: &Path) -> Result<Report> {
                         };
                         for number in section_numbers(section) {
                             report.sections += 1;
-                            match &resolution {
-                                Ok(()) => report.sections_resolved += 1,
-                                Err(reason) => missing.push((
-                                    range.start + span(section).0,
-                                    format!("{} {number}", group(section, 1)),
-                                    reason.clone(),
-                                )),
+                            let citation = format!("{} {number}", group(section, 1));
+                            let start = range.start + span(section).0;
+                            let index = match &resolution {
+                                Ok(index) => {
+                                    report.sections_resolved += 1;
+                                    index
+                                }
+                                Err(reason) => {
+                                    missing.push((start, citation, reason.clone()));
+                                    continue;
+                                }
+                            };
+                            let Some(index) = index else {
+                                report.sections_not_indexed += 1;
+                                continue;
+                            };
+                            let base = number
+                                .split_once('(')
+                                .map_or(number.as_str(), |(base, _)| base);
+                            // In an Act that numbers no section with a hyphen,
+                            // "ss 17A-18C" is a range when both ends are listed.
+                            let hyphen_range = !index.hyphenated
+                                && base.split_once('-').is_some_and(|(first, last)| {
+                                    index.sections.contains(first) && index.sections.contains(last)
+                                });
+                            if index.sections.contains(base) || hyphen_range {
+                                report.sections_exist += 1;
+                            } else if let Some(exception) =
+                                exceptions.iter_mut().find(|exception| {
+                                    exception.register_id == index.register_id
+                                        && exception.section == base
+                                })
+                            {
+                                exception.used = true;
+                                report.sections_excepted += 1;
+                            } else {
+                                report.sections_absent += 1;
+                                missing.push((
+                                    start,
+                                    citation,
+                                    format!(
+                                        "absent from the section index of {}, compilation {}",
+                                        index.title, index.compilation
+                                    ),
+                                ));
                             }
                         }
                     }
@@ -1052,10 +1352,18 @@ pub fn check(root: &Path) -> Result<Report> {
             }
         }
     }
+    for exception in exceptions.iter().filter(|exception| !exception.used) {
+        report.unmatched.push(Unmatched {
+            file: format!("{SECTION_INDEX}/{EXCEPTIONS}"),
+            line: exception.line,
+            citation: format!("{} {}", exception.register_id, exception.section),
+            reason: "no cited section absent from the index needs this exception".to_string(),
+        });
+    }
     Ok(report)
 }
 
-/// Render the report: one line per unmatched citation, then the totals.
+/// Render the report: one line per failure, then the totals.
 pub fn render(report: &Report) -> String {
     let mut text = String::new();
     for missing in &report.unmatched {
@@ -1071,10 +1379,21 @@ pub fn render(report: &Report) -> String {
          {} of {} rulings and guidance, {} of {} legislative sections.\n",
         report.rulings_resolved, report.rulings, report.sections_resolved, report.sections
     ));
+    text.push_str(&format!(
+        "{} of {} resolved sections checked against an index of their Act: \
+         {} found, {} listed exceptions, {} absent; {} in an Act with no index.\n",
+        report.sections_exist + report.sections_excepted + report.sections_absent,
+        report.sections_resolved,
+        report.sections_exist,
+        report.sections_excepted,
+        report.sections_absent,
+        report.sections_not_indexed
+    ));
     text
 }
 
-/// Runs the `check-citations` command. Exit 2 when any citation is unmatched.
+/// Runs the `check-citations` command. Exit 2 when any citation is unmatched,
+/// any section is absent from its Act's index or any exception is unused.
 pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     let mut args = args;
     let mut root = std::env::current_dir()?;

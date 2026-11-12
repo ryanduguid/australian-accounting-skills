@@ -43,7 +43,8 @@ def load_snapshot(path: Path) -> dict:
     if path.stat().st_size > 1024 * 1024:
         raise ValueError("Snapshot file exceeds 1 MiB.")
     # The local CLI accepts an operator-selected snapshot and checks its size and contents.
-    value = json.loads(path.read_text(encoding="utf-8"))  # NOSONAR
+    value = json.loads(path.read_text(encoding="utf-8"),  # NOSONAR
+                       object_pairs_hook=source_refresh.reject_duplicate_keys)
     if not isinstance(value, dict) or not isinstance(value.get("text"), str):
         raise ValueError("Malformed passage snapshot.")
     if len(value["text"]) > MAX_TEXT_CHARS or hashlib.sha256(value["text"].encode()).hexdigest() != value.get("text_sha256"):

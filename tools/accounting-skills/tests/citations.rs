@@ -42,6 +42,19 @@ fn missing(file: &str, line: usize, citation: &str, reason: &str) -> Unmatched {
 }
 
 #[test]
+fn duplicate_source_index_keys_are_refused() {
+    let root = tempfile::tempdir().unwrap();
+    for sources in [
+        r#"{"sources": [], "sources": []}"#,
+        r#"{"sources": [{"title": "One", "title": "Another"}]}"#,
+    ] {
+        skill(root.path(), "alpha", "No citation.\n", Some(sources));
+        let error = check(root.path()).unwrap_err().to_string();
+        assert!(error.contains("duplicate JSON key"), "{error}");
+    }
+}
+
+#[test]
 fn each_unrecorded_ruling_and_section_is_reported_by_file_and_line() {
     let root = tempfile::tempdir().unwrap();
     skill(
@@ -86,7 +99,9 @@ fn each_unrecorded_ruling_and_section_is_reported_by_file_and_line() {
     assert!(output.starts_with(".claude/skills/alpha/SKILL.md:2: s 43-10(4): names no Act\n"));
     assert!(output.ends_with(
         "2 of 7 citations resolve to a sources.json record: \
-         1 of 2 rulings and guidance, 1 of 5 legislative sections.\n"
+         1 of 2 rulings and guidance, 1 of 5 legislative sections.\n\
+         0 of 1 resolved sections checked against an index of their Act: \
+         0 found, 0 listed exceptions, 0 absent; 1 in an Act with no index.\n"
     ));
 }
 
@@ -107,7 +122,9 @@ fn a_tree_whose_citations_all_resolve_passes() {
     assert_eq!(
         output,
         "3 of 3 citations resolve to a sources.json record: \
-         1 of 1 rulings and guidance, 2 of 2 legislative sections.\n"
+         1 of 1 rulings and guidance, 2 of 2 legislative sections.\n\
+         0 of 2 resolved sections checked against an index of their Act: \
+         0 found, 0 listed exceptions, 0 absent; 2 in an Act with no index.\n"
     );
 }
 
@@ -650,4 +667,381 @@ fn a_section_inside_an_inferred_title_is_still_checked() {
     let report = check(root.path()).unwrap();
     assert_eq!((report.sections, report.sections_resolved), (1, 0));
     assert_eq!(report.unmatched[0].citation, "s 30-35");
+}
+
+/// Write the section index of a fabricated Commonwealth Act.
+fn index(root: &Path, register_id: &str, title: &str, sections: &[&str]) {
+    let folder = root.join("tools/accounting-skills/section-index");
+    fs::create_dir_all(&folder).unwrap();
+    fs::write(
+        folder.join(format!("{register_id}.txt")),
+        index_text(register_id, title, sections),
+    )
+    .unwrap();
+}
+
+fn index_text(register_id: &str, title: &str, sections: &[&str]) -> String {
+    format!(
+        "# title: {title}\n# register-id: {register_id}\n# compilation: C2099C00001\n\
+         # compilation-number: 1\n# in-force-from: 2099-01-01\n\
+         # source: https://example.invalid/{register_id}\n# retrieved: 2099-01-02\n\
+         # sha256: {}\n{}\n",
+        "0".repeat(64),
+        sections.join("\n")
+    )
+}
+
+fn exceptions(root: &Path, text: &str) {
+    fs::write(
+        root.join("tools/accounting-skills/section-index/exceptions.txt"),
+        text,
+    )
+    .unwrap();
+}
+
+const INDEXED: &str = r#"{"sources": [
+  {"title": "Fuel Tax Act 2006", "url": "https://www.legislation.gov.au/C2006A00072/latest/text"},
+  {"title": "Corporations Act 2001", "url": "https://www.legislation.gov.au/C2004A00818/latest/text"},
+  {"title": "Payroll Tax Act 2007 (NSW)", "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-021"}
+]}"#;
+
+#[test]
+fn a_section_absent_from_its_acts_index_fails_and_an_unindexed_act_does_not() {
+    let root = tempfile::tempdir().unwrap();
+    index(
+        root.path(),
+        "C2006A00072",
+        "Fuel Tax Act 2006",
+        &["41-5", "43-10"],
+    );
+    // A Commonwealth Act sharing the title and year of the state Act the
+    // skill cites without its jurisdiction: the record, not the index, owns it.
+    index(root.path(), "C2099A00001", "Payroll Tax Act 2007", &["1"]);
+    skill(
+        root.path(),
+        "alpha",
+        "Apply s 41-5 and s 43-10(4) of the Fuel Tax Act 2006.\n\
+         Then s 41-99 of the Fuel Tax Act 2006 applies.\n\
+         See s 180 of the Corporations Act 2001.\n\
+         See s 99 of the Payroll Tax Act 2007.\n",
+        Some(INDEXED),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (5, 5));
+    assert_eq!(
+        (
+            report.sections_exist,
+            report.sections_absent,
+            report.sections_excepted,
+            report.sections_not_indexed
+        ),
+        (2, 1, 0, 2)
+    );
+    assert_eq!(
+        report.unmatched,
+        [unmatched_in_alpha(
+            2,
+            "s 41-99",
+            "absent from the section index of Fuel Tax Act 2006, compilation C2099C00001"
+        )]
+    );
+    let (code, output) = run(root.path());
+    assert_eq!(code, 2);
+    assert!(output.ends_with(
+        "3 of 5 resolved sections checked against an index of their Act: \
+         2 found, 0 listed exceptions, 1 absent; 2 in an Act with no index.\n"
+    ));
+}
+
+#[test]
+fn a_listed_exception_is_counted_apart_and_an_unused_one_fails() {
+    let root = tempfile::tempdir().unwrap();
+    index(root.path(), "C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
+    skill(
+        root.path(),
+        "alpha",
+        "The Bill would insert s 41-77 of the Fuel Tax Act 2006.\n",
+        Some(FUEL),
+    );
+    exceptions(
+        root.path(),
+        "# Reasoned exceptions.\n\
+         C2006A00072 41-77: proposed by a Bill\n\
+         C2006A00072 41-5: the index has it\n",
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections_excepted, report.sections_absent), (1, 0));
+    assert_eq!(
+        report.unmatched,
+        [missing(
+            "tools/accounting-skills/section-index/exceptions.txt",
+            3,
+            "C2006A00072 41-5",
+            "no cited section absent from the index needs this exception"
+        )]
+    );
+    assert_eq!(run(root.path()).0, 2);
+
+    exceptions(root.path(), "C2006A00072 41-77: proposed by a Bill\n");
+    let (code, output) = run(root.path());
+    assert_eq!(code, 0);
+    assert!(output.ends_with(
+        "1 of 1 resolved sections checked against an index of their Act: \
+         0 found, 1 listed exceptions, 0 absent; 0 in an Act with no index.\n"
+    ));
+}
+
+#[test]
+fn a_hyphen_between_two_indexed_sections_reads_as_a_range() {
+    let root = tempfile::tempdir().unwrap();
+    index(
+        root.path(),
+        "C2004A04402",
+        "Superannuation Guarantee (Administration) Act 1992",
+        &["17A", "17B", "18C"],
+    );
+    skill(
+        root.path(),
+        "alpha",
+        "See SGAA ss 17A-18C, and ss 17A-19 of the SGAA.\n",
+        Some(&record(
+            "Superannuation Guarantee (Administration) Act 1992",
+            "https://www.legislation.gov.au/C2004A04402/latest/text",
+        )),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections_exist, report.sections_absent), (1, 1));
+    assert_eq!(report.unmatched[0].citation, "ss 17A-19");
+}
+
+// An Act whose list holds hyphenated schedule sections beside plain body
+// sections reads a hyphen as part of a section number, never as a range, so
+// a section of another Act cited against it is absent.
+#[test]
+fn a_hyphen_is_no_range_in_an_act_that_lists_hyphenated_sections() {
+    let root = tempfile::tempdir().unwrap();
+    index(
+        root.path(),
+        "C1953A00001",
+        "Taxation Administration Act 1953",
+        &["1", "8", "12-35"],
+    );
+    index(
+        root.path(),
+        "C1936A00027",
+        "Income Tax Assessment Act 1936",
+        &["45", "202", "265-5"],
+    );
+    index(
+        root.path(),
+        "C2004A00818",
+        "Corporations Act 2001",
+        &["5", "197", "90-15"],
+    );
+    index(
+        root.path(),
+        "C2004A04402",
+        "Superannuation Guarantee (Administration) Act 1992",
+        &["17B", "17D"],
+    );
+    skill(
+        root.path(),
+        "alpha",
+        "Apply s 8-1 of the TAA 1953.\n\
+         Apply s 202-45 of the ITAA 1936.\n\
+         Apply s 197-5 of the Corporations Act 2001.\n\
+         Apply s 12-35 of Schedule 1 to the TAA 1953.\n\
+         Apply SGAA ss 17B-17D.\n",
+        Some(
+            r#"{"sources": [
+  {"title": "Taxation Administration Act 1953", "url": "https://www.legislation.gov.au/C1953A00001/latest/text"},
+  {"title": "Income Tax Assessment Act 1936", "url": "https://www.legislation.gov.au/C1936A00027/latest/text"},
+  {"title": "Corporations Act 2001", "url": "https://www.legislation.gov.au/C2004A00818/latest/text"},
+  {"title": "Superannuation Guarantee (Administration) Act 1992", "url": "https://www.legislation.gov.au/C2004A04402/latest/text"}
+]}"#,
+        ),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections_exist, report.sections_absent), (2, 3));
+    let absent: Vec<_> = report
+        .unmatched
+        .iter()
+        .map(|missing| (missing.line, missing.citation.as_str()))
+        .collect();
+    assert_eq!(absent, [(1, "s 8-1"), (2, "s 202-45"), (3, "s 197-5")]);
+}
+
+#[test]
+fn a_malformed_section_index_or_exception_is_refused() {
+    let root = tempfile::tempdir().unwrap();
+    skill(
+        root.path(),
+        "alpha",
+        "s 41-5 of the Fuel Tax Act 2006.\n",
+        Some(FUEL),
+    );
+    index(root.path(), "C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
+    exceptions(root.path(), "C2099A00009 1: no index for this Act\n");
+    let error = check(root.path()).unwrap_err().to_string();
+    assert!(
+        error.ends_with("no section index for C2099A00009"),
+        "{error}"
+    );
+    exceptions(root.path(), "C2006A00072 41-6:  \n");
+    assert!(check(root.path()).is_err());
+    exceptions(root.path(), "");
+    index(
+        root.path(),
+        "C2006A00072",
+        "Fuel Tax Act 2006",
+        &["41-5", "s 41-6"],
+    );
+    let error = check(root.path()).unwrap_err().to_string();
+    assert!(error.ends_with("not a section number: s 41-6"), "{error}");
+    let folder = root.path().join("tools/accounting-skills/section-index");
+    fs::write(
+        folder.join("C2006A00072.txt"),
+        "# title: Fuel Tax Act 2006\n41-5\n",
+    )
+    .unwrap();
+    let error = check(root.path()).unwrap_err().to_string();
+    assert!(error.ends_with("missing field register-id"), "{error}");
+}
+
+// A Federal Register identifier with no year check ties a record to its
+// address only through a section list's header, in both directions.
+#[test]
+fn a_record_whose_title_and_register_id_disagree_with_a_section_list_owns_nothing() {
+    let sis = "Superannuation Industry (Supervision) Regulations 1994";
+    let root = tempfile::tempdir().unwrap();
+    index(root.path(), "F1996B00580", sis, &["8.02B"]);
+    skill(
+        root.path(),
+        "alpha",
+        "Apply reg 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n",
+        Some(&record(
+            sis,
+            "https://www.legislation.gov.au/F2018L01289/latest/text",
+        )),
+    );
+    skill(
+        root.path(),
+        "beta",
+        "Apply reg 8.02B of the Retirement Savings Accounts Regulations 1997.\n",
+        Some(&record(
+            "Retirement Savings Accounts Regulations 1997",
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        )),
+    );
+    skill(
+        root.path(),
+        "gamma",
+        "Apply reg 8.02B of the Superannuation Industry (Supervision) Regulations 1994.\n",
+        Some(&record(
+            sis,
+            "https://www.legislation.gov.au/F1996B00580/latest/text",
+        )),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (3, 1));
+    assert_eq!(report.sections_exist, 1);
+    assert_eq!(
+        report.unmatched,
+        [
+            missing(
+                ".claude/skills/alpha/SKILL.md",
+                1,
+                "reg 8.02B",
+                "sources.json record 1 ('Superannuation Industry (Supervision) Regulations 1994' \
+                 at F2018L01289) disagrees with the section list for F1996B00580 \
+                 ('Superannuation Industry (Supervision) Regulations 1994')"
+            ),
+            missing(
+                ".claude/skills/beta/SKILL.md",
+                1,
+                "reg 8.02B",
+                "sources.json record 1 ('Retirement Savings Accounts Regulations 1997' \
+                 at F1996B00580) disagrees with the section list for F1996B00580 \
+                 ('Superannuation Industry (Supervision) Regulations 1994')"
+            ),
+        ]
+    );
+    assert_eq!(run(root.path()).0, 2);
+}
+
+#[test]
+fn each_malformed_section_list_or_exception_is_refused() {
+    let valid = index_text("C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
+    let zeros = "0".repeat(64);
+    let cases = [
+        (
+            "C2006A00072.txt",
+            valid.replace("# source:", "# title: Fuel Tax Act 2006\n# source:"),
+            "",
+            "repeated field title",
+        ),
+        (
+            "C2006A00072.txt",
+            format!("{valid}41-5\n"),
+            "",
+            "repeated section 41-5",
+        ),
+        (
+            "C2006A00072.txt",
+            format!("# note: extra\n{valid}"),
+            "",
+            "unknown field note",
+        ),
+        (
+            "C2006A00073.txt",
+            valid.clone(),
+            "",
+            "the file must be named REGISTER-ID.txt",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("Fuel Tax Act 2006", "Fuel Tax Act"),
+            "",
+            "the title must end with its year",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace(&zeros, "00"),
+            "",
+            "sha256 must be 64 lower-case hexadecimal digits",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("2099-01-02", "2 January 2099"),
+            "",
+            "retrieved must be a date written YYYY-MM-DD",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.replace("2099-01-01", "2099-02-30"),
+            "",
+            "in-force-from must be a date written YYYY-MM-DD",
+        ),
+        (
+            "C2006A00072.txt",
+            valid.clone(),
+            "C2006A00072 41-77: proposed\nC2006A00072 41-77: again\n",
+            "exceptions.txt:2: repeats the exception on line 1",
+        ),
+    ];
+    for (file, text, exceptions, expected) in cases {
+        let root = tempfile::tempdir().unwrap();
+        skill(
+            root.path(),
+            "alpha",
+            "s 41-5 of the Fuel Tax Act 2006.\n",
+            Some(FUEL),
+        );
+        let folder = root.path().join("tools/accounting-skills/section-index");
+        fs::create_dir_all(&folder).unwrap();
+        fs::write(folder.join(file), text).unwrap();
+        fs::write(folder.join("exceptions.txt"), exceptions).unwrap();
+        let error = check(root.path()).map(|_| ()).unwrap_err().to_string();
+        assert!(error.ends_with(expected), "{expected}: {error}");
+    }
 }

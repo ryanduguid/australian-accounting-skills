@@ -22,75 +22,27 @@ const CATEGORIES: [&str; 7] = [
     "unreachable",
 ];
 static SWEPT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?m)^Swept (\d+) records over (\d+) distinct pages at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) UTC\.$").unwrap()
+    Regex::new(r"(?m)^Swept ([0-9]+) records over ([0-9]+) distinct pages at ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}) UTC\.$").unwrap()
 });
 static COUNT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?m)^- (changed|missing|unreadable|review-due|baseline-required|blocked|unreachable)[^:]*: (\d+)$").unwrap()
+    Regex::new(r"(?m)^- (changed|missing|unreadable|review-due|baseline-required|blocked|unreachable)[^:]*: ([0-9]+)$").unwrap()
 });
-static DIGIT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\d$").unwrap());
-
-// Nonnegative report counts need addition and zero checks only. Decimal strings
-// preserve Python's large-count semantics without a numeric runtime dependency.
-fn decimal(text: &str) -> Result<String> {
-    if text.chars().count() > 4300 {
-        return Err("report integer exceeds Python's 4300-digit limit".into());
-    }
-    let mut ascii = String::new();
-    for c in text.chars() {
-        if c.is_ascii_digit() {
-            ascii.push(c);
-            continue;
-        }
-        if !DIGIT.is_match(&c.to_string())? {
-            return Err("invalid decimal digit".into());
-        }
-        let mut start = c as u32;
-        while start > 0
-            && char::from_u32(start - 1)
-                .is_some_and(|prior| DIGIT.is_match(&prior.to_string()).unwrap_or(false))
-        {
-            start -= 1;
-        }
-        ascii.push(char::from(b'0' + ((c as u32 - start) % 10) as u8));
-    }
-    let normal = ascii.trim_start_matches('0');
-    Ok(if normal.is_empty() {
-        "0".to_owned()
-    } else {
-        normal.to_owned()
-    })
-}
-
-fn add(left: &str, right: &str) -> String {
-    let mut left = left.bytes().rev();
-    let mut right = right.bytes().rev();
-    let mut carry = 0;
-    let mut out = Vec::new();
-    loop {
-        let a = left.next();
-        let b = right.next();
-        if a.is_none() && b.is_none() && carry == 0 {
-            break;
-        }
-        let total = a.map_or(0, |v| v - b'0') + b.map_or(0, |v| v - b'0') + carry;
-        out.push(b'0' + total % 10);
-        carry = total / 10;
-    }
-    out.reverse();
-    String::from_utf8(out).unwrap()
+fn count(text: &str) -> Result<u64> {
+    text.parse()
+        .map_err(|_| format!("report count {text} exceeds the 64-bit range").into())
 }
 
 fn timestamp(text: &str, cli: bool) -> Result<[u16; 6]> {
     let pattern = if cli {
-        r"^(\d{4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})Z$"
+        r"^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})Z$"
     } else {
-        r"^(\d{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})$"
+        r"^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})$"
     };
     let regex = Regex::new(pattern)?;
     let captures = regex.captures(text)?.ok_or("invalid sweep timestamp")?;
     let mut parts = [0_u16; 6];
     for (index, part) in parts.iter_mut().enumerate().take(if cli { 6 } else { 5 }) {
-        *part = decimal(captures.get(index + 1).unwrap().as_str())?.parse()?;
+        *part = captures.get(index + 1).unwrap().as_str().parse()?;
     }
     let [year, month, day, hour, minute, second] = parts;
     let leap = year.is_multiple_of(4) && (!year.is_multiple_of(100) || year.is_multiple_of(400));
@@ -118,7 +70,7 @@ impl Outcome {
     }
 }
 
-pub fn parse_report(text: &str, started: &str) -> Result<BTreeMap<String, String>> {
+pub fn parse_report(text: &str, started: &str) -> Result<BTreeMap<String, u64>> {
     if !text.starts_with("# Primary source sweep\n") {
         return Err("the report does not start with the sweep header".into());
     }
@@ -140,7 +92,7 @@ pub fn parse_report(text: &str, started: &str) -> Result<BTreeMap<String, String
         if counts.contains_key(name) {
             return Err(format!("duplicate count for {name}").into());
         }
-        counts.insert(name.to_owned(), decimal(capture.get(2).unwrap().as_str())?);
+        counts.insert(name.to_owned(), count(capture.get(2).unwrap().as_str())?);
     }
     let missing: Vec<_> = CATEGORIES
         .iter()
@@ -150,24 +102,23 @@ pub fn parse_report(text: &str, started: &str) -> Result<BTreeMap<String, String
     if !missing.is_empty() {
         return Err(format!("the report has no count for {}", missing.join(", ")).into());
     }
-    let records = decimal(swept.get(1).unwrap().as_str())?;
-    if records == "0" {
+    let records = count(swept.get(1).unwrap().as_str())?;
+    if records == 0 {
         return Err("the report covers no records".into());
     }
     counts.insert("records".to_owned(), records);
     Ok(counts)
 }
 
-pub fn decide(status: i64, counts: &BTreeMap<String, String>) -> Result<Outcome> {
-    let mut actionable = "0".to_owned();
+pub fn decide(status: i64, counts: &BTreeMap<String, u64>) -> Result<Outcome> {
+    let mut actionable: u64 = 0;
     for category in &CATEGORIES[..5] {
-        actionable = add(&actionable, counts.get(*category).ok_or("missing count")?);
-    }
-    if actionable.len() > 4300 {
-        return Err("report integer exceeds Python's 4300-digit limit".into());
+        actionable = actionable
+            .checked_add(*counts.get(*category).ok_or("missing count")?)
+            .ok_or("the actionable source count exceeds the 64-bit range")?;
     }
     if status == 2 {
-        if actionable == "0" {
+        if actionable == 0 {
             return Err("exit 2 with a report that lists nothing actionable".into());
         }
         return Ok(Outcome {
@@ -178,7 +129,7 @@ pub fn decide(status: i64, counts: &BTreeMap<String, String>) -> Result<Outcome>
     if status != 0 {
         return Err(format!("source_refresh.py exited {status}").into());
     }
-    if actionable != "0" {
+    if actionable != 0 {
         return Err(
             format!("exit 0 with a report that lists {actionable} actionable sources").into(),
         );
@@ -187,7 +138,7 @@ pub fn decide(status: i64, counts: &BTreeMap<String, String>) -> Result<Outcome>
         .iter()
         .filter_map(|category| {
             let count = counts.get(*category)?;
-            (count != "0").then(|| format!("{count} {category}"))
+            (*count != 0).then(|| format!("{count} {category}"))
         })
         .collect();
     let comment = if unchecked.is_empty() {

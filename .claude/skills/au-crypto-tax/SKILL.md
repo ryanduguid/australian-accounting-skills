@@ -7,9 +7,11 @@ description: "Use when preparing Australian tax records from crypto exchange and
 
 ## Inputs
 
-Complete exchange and wallet transaction exports, opening and independently reported closing holdings, cost history, fiat cash statements, transaction identifiers, time zones, fees, AUD valuation evidence, ownership of wallets and purpose of activities. For each wrapping, unwrapping or bridge event, the contract address or counterparty; for each airdrop, the issuer and the basis on which the owner received it. A crypto tax software report, such as one from Koinly, if one is used, with the report name, date range, wallets and exchanges imported and its cost-basis settings. Never request private keys or seed phrases.
+Complete exchange and wallet transaction exports, opening and independently reported closing holdings, cost history, fiat cash statements, transaction identifiers, time zones, fees, AUD valuation evidence, ownership of wallets and purpose of activities. For each wrapping, unwrapping or bridge event, the contract address or counterparty; for each airdrop, the issuer and the basis on which the owner received it. A crypto tax software report, such as one from Koinly, if one is used, with the report name, date range, wallets and exchanges imported and its cost-basis settings. For a records request, the prior-year closing holdings and the exchanges and wallets already known. Never request private keys or seed phrases.
 
 ## Workflow
+
+0. Before step 1, where the exports are not yet held, draft a records checklist for the client from the prior-year closing holdings, the exchanges and wallets already known and the record types on the [ATO keeping crypto records](https://www.ato.gov.au/individuals-and-families/investments-and-assets/crypto-asset-investments/keeping-crypto-records) page, read at use time. List each exchange or wallet with the date range its export must cover, back to the earliest acquisition of each asset still held, then the opening holdings by asset and the fiat deposits and withdrawals at each on and off ramp, with the fiat cash statements that show them. Ask one question for each kind of activity (staking, airdrop, wrapping or unwrapping, bridge, NFT, other DeFi activity, or an exchange or wallet not on the list) and do not assume any of it occurred. Add a short cover note asking for these records. The checklist and note ask for facts and records only, and each states no tax treatment, position, conclusion or advice, and no rate, threshold or due date. Do not request private keys or seed phrases in either; ask for exports and statements. Mark both drafted and not sent: the practitioner reviews and sends them, and this skill never sends them.
 
 1. Inventory every supplied wallet and exchange and reconcile opening units plus inflows less outflows to closing units by asset.
 
@@ -31,7 +33,7 @@ Complete exchange and wallet transaction exports, opening and independently repo
 
 ## Hand-off and checks
 
-A holdings reconciliation, event register, valuation trail and unmatched-transaction list. Investment/business characterisation and complex protocol tax positions stay with the reviewer.
+A holdings reconciliation, event register, valuation trail and unmatched-transaction list, with the step 0 records checklist and cover note where it ran, drafted and not sent. Investment/business characterisation and complex protocol tax positions stay with the reviewer.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
