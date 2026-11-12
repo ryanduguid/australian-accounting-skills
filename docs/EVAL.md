@@ -461,7 +461,7 @@ instruments: the ITAA 1997, ITAA 1936, GST Act, Corporations Act, TAA 1953,
 SGAA, TASA, Fuel Tax Act, SIS Act, AML/CTF Act, FBTAA and Coal Mining Industry
 (Long Service Leave) Payroll Levy Collection Act 1992, the SIS Regulations
 1994, the Tax Agent Services (Code of Professional Conduct) Determination 2024
-and the AML/CTF Rules 2025. The tree then held
+and the AML/CTF Rules 2025. When the lists were added, the tree held
 1,593 citations, all resolved, including 1,352 sections. Of those, 1,115 sat in
 an indexed Act and 237 did not. Of the 1,115, 1,112 were listed (4 only as a
 hyphenated range) and 3 were listed exceptions: SGAA s 23A and ITAA 1997
@@ -471,6 +471,10 @@ ITAA 1997 s 960-590, which Schedule 5 of the Treasury Laws Amendment (Tax
 Reform No. 3) Bill 2026 would insert. None was missing. The 237 not indexed
 belong to state and territory Acts (199, led by the Queensland BIF Act with
 48), 5 other Commonwealth instruments (21) and 6 other Commonwealth Acts (17).
+With the skills merged into main later that day (#383), the check found 1,693
+citations, all resolved, including 1,437 sections: 1,200 in an indexed Act, of
+which 1,197 were listed and 3 were the same exceptions, and 237 not indexed.
+None was missing.
 
 A section found on a list exists in the current compilation; that says nothing
 of whether it applied in the period the skill concerns or says what the skill
