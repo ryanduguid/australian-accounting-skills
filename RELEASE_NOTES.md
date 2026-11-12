@@ -436,6 +436,17 @@ Both validation pack checkers ask Git once which sources `.gitignore` matches,
 not once per file, so the pre-commit check no longer starts a Git process for
 each of its 210 sources.
 
+A source check on 12 November 2026 read the 35 source records a sweep flagged
+and changed 5 skills, each marked for human review. `au-company-tax` gives the
+loss carry back conditions of Division 160 as Act No. 71 of 2026 substituted
+it, in place of a turnover threshold the ATO's summary had given;
+`au-short-stay-accommodation` adds the other s 40-27 cases; `au-client-acceptance`
+explains that section 29 of the AML/CTF Act allows delayed initial customer due
+diligence; `au-trust-distributions` drops a report field list whose ATO page was
+removed; and `au-return-amendment` links the ATO's amendment time limits page.
+`docs/source-review-2026-11-12.md` records each row. No person reviewed those
+sources.
+
 ## Corrections since v0.5.0
 
 Recorded 12 November 2026. Each passage below was wrong in v0.5.0 when it was
