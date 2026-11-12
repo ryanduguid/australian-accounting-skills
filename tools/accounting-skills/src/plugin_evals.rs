@@ -449,6 +449,18 @@ fn routing_cases(
     Ok(cases)
 }
 
+/// Reject duplicate names and an empty changed-skill selection before writing.
+fn validate_cases(cases: &Cases, changed_since: Option<&str>) -> Result<()> {
+    let mut names = BTreeSet::new();
+    if let Some((name, _)) = cases.iter().find(|(name, _)| !names.insert(name)) {
+        return Err(format!("duplicate eval case: {name}").into());
+    }
+    if let (Some(revision), true) = (changed_since, cases.is_empty()) {
+        return Err(format!("no case grades a skill changed since {revision}").into());
+    }
+    Ok(())
+}
+
 /// Write the plugin copy and its cases to a new `destination` outside `root`,
 /// and return the manifest. With `changed_since`, only the cases grading a
 /// skill changed since that revision are written.
@@ -483,13 +495,7 @@ pub fn build(
     let routing = routing_cases(&routing_bytes, runs, max_turns, changed.as_ref())?;
     let routes: Vec<_> = routing.iter().map(|(name, _)| name.clone()).collect();
     cases.extend(routing);
-    let mut names = BTreeSet::new();
-    if let Some((name, _)) = cases.iter().find(|(name, _)| !names.insert(name)) {
-        return Err(format!("duplicate eval case: {name}").into());
-    }
-    if let (Some(revision), true) = (changed_since, cases.is_empty()) {
-        return Err(format!("no case grades a skill changed since {revision}").into());
-    }
+    validate_cases(&cases, changed_since)?;
     write_copy(&canonical, &destination, &cases)?;
     let manifest = json!({
         "commit": commit,
