@@ -1,6 +1,6 @@
 ---
 name: au-tax-research
-description: "Use when researching an Australian tax question or announced measure for a file note, or screening a client against Budget measures: verify each primary source and its status and record alternative views."
+description: "Use when researching an Australian tax question or measure for a file note, or screening a client against Budget measures: sources, status, contrary views."
 ---
 
 # Tax research file note

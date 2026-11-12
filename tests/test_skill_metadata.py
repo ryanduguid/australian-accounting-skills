@@ -18,6 +18,7 @@ from test_markdown_links import slug
 REPOSITORY = Path(__file__).resolve().parents[1]
 SKILLS_DIRECTORY = REPOSITORY / ".claude" / "skills"
 ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
+DESCRIPTION_LIMIT = 160
 # Published releases and the skill inventory each one shipped. A version string
 # that already labels a release must never label a second, different inventory.
 RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19, "0.3.0": 63, "0.3.1": 65, "0.3.2": 65, "0.4.0": 65, "0.5.0": 76}
@@ -252,6 +253,15 @@ class SkillMetadataTests(unittest.TestCase):
                 self.assertTrue(metadata.get("description"))
                 self.assertNotIn(metadata["name"], declared_names)
                 declared_names.add(metadata["name"])
+
+    def test_descriptions_fit_the_skill_listing(self) -> None:
+        # Claude Code lists every description within a budget; docs/installation.md states this cap.
+        too_long = {
+            skill_file.parent.name: length
+            for skill_file in sorted(SKILLS_DIRECTORY.glob("*/SKILL.md"))
+            if (length := len(front_matter(skill_file)["description"])) > DESCRIPTION_LIMIT
+        }
+        self.assertEqual(too_long, {})
 
     def test_skill_directories_do_not_omit_the_entrypoint(self) -> None:
         directories = sorted(path for path in SKILLS_DIRECTORY.iterdir() if path.is_dir())

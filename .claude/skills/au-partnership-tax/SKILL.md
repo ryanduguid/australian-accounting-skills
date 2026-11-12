@@ -1,6 +1,6 @@
 ---
 name: au-partnership-tax
-description: "Use when preparing Australian partnership income, partner allocation and capital-account schedules, or abstracting a partnership agreement and listing questions for the partners' solicitor."
+description: "Use when preparing Australian partnership income, partner shares and capital accounts, or abstracting a partnership agreement with questions for a solicitor."
 ---
 
 # Partnership tax workpapers

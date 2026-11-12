@@ -1,6 +1,6 @@
 ---
 name: au-tax-agent-obligations
-description: "Use when a registered tax or BAS agent practice self-reviews its Tax Agent Services Act obligations: Code, PI insurance, CPE, TPB notices and breach reports, plus its own AML/CTF obligations and ATO client list."
+description: "Use when a tax or BAS agent practice reviews its TASA obligations: Code, PI insurance, CPE, TPB notices, breach reports, its own AML/CTF and ATO client list."
 ---
 
 # Registered agent obligations self-review

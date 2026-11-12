@@ -1,6 +1,6 @@
 ---
 name: au-smsf-death-benefits
-description: "Use when preparing an Australian SMSF's workpaper after a member dies: nominations and deed rules, who may be paid, lump sum or income stream, transfer balance cap, benefit components and the records each side needs."
+description: "Use when an SMSF member dies: nominations and deed rules, who may be paid, lump sum or income stream, transfer balance cap and benefit components."
 ---
 
 # SMSF death benefit workpaper

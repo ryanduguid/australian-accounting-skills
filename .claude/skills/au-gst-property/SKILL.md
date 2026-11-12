@@ -1,6 +1,6 @@
 ---
 name: au-gst-property
-description: "Use when preparing GST evidence for an Australian property acquisition, development or disposal, including going concerns, the margin scheme, GST-free farm land and settlement withholding."
+description: "Use when preparing GST evidence for a property purchase, development or sale: going concerns, the margin scheme, GST-free farm land and settlement withholding."
 ---
 
 # Property GST review pack

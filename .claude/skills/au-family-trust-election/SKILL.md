@@ -1,6 +1,6 @@
 ---
 name: au-family-trust-election
-description: "Use when preparing the evidence for an Australian trustee or entity deciding whether to make a family trust election or interposed entity election: test individual, family group, specified income year, losses and franking credits, revocation limits and family trust distribution tax."
+description: "Use when weighing a family trust or interposed entity election: test individual, family group, start year, losses, franking and family trust distribution tax."
 ---
 
 # Family trust and interposed entity election workpaper

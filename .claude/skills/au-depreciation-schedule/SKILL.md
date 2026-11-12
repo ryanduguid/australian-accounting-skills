@@ -1,6 +1,6 @@
 ---
 name: au-depreciation-schedule
-description: "Use when preparing an Australian fixed asset register and tax or accounting depreciation schedule: Division 40, pools, instant asset write-off, disposals and capital works."
+description: "Use when preparing a fixed asset register and tax or accounting depreciation schedule: Division 40, pools, instant asset write-off, disposals and capital works."
 ---
 
 # Fixed asset register and tax depreciation schedule

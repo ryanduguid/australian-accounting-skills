@@ -1,6 +1,6 @@
 ---
 name: au-primary-production
-description: "Use when preparing Australian primary producer workpapers: farm business tests, farm management deposits, income averaging, livestock, farm assets and the evidence for passing a farming business to the next generation."
+description: "Use when preparing primary producer workpapers: farm management deposits, income averaging, livestock, farm assets and passing a farm to the next generation."
 ---
 
 # Primary production workpapers

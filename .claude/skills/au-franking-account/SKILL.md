@@ -1,6 +1,6 @@
 ---
 name: au-franking-account
-description: "Use when rebuilding or reconciling a private company's franking account, preparing a proposed dividend's resolution evidence, franking and distribution statements, or checking its benchmark rule, distribution statements or franking deficit tax."
+description: "Use when rebuilding a company's franking account or preparing a dividend's resolution and distribution statements: benchmark rule and franking deficit tax."
 ---
 
 # Franking account and franked distribution workpapers
