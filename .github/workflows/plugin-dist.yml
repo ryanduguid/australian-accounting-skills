@@ -1,0 +1,113 @@
+name: Plugin branch
+
+# The Claude plugin directory refuses, from an unverified organisation, a local
+# MCP server and files other than Markdown, text, JSON, YAML and images. The
+# claude-plugin branch holds the skills-only plugin it reads, built from main by
+# `accounting-skills build-plugin-dist`. The install routes on main are unchanged.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  # The directory's own validator runs here, without write access, so the
+  # package it downloads never shares a job with the push token.
+  validate:
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 20
+    name: validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/accounting-skills
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install the pinned Rust toolchain
+        # rustup reads the version from rust-toolchain.toml in this directory.
+        run: rustup toolchain install
+
+      - name: Build the plugin
+        run: cargo run --locked -- build-plugin-dist "$RUNNER_TEMP/plugin" --root "$GITHUB_WORKSPACE"
+
+      - name: Validate the plugin as the directory does
+        run: npx --yes @anthropic-ai/claude-code@2.1.322 plugin validate --profile directory --strict "$RUNNER_TEMP/plugin"
+
+  publish:
+    needs: validate
+    # Only main is published, including on a manual run.
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 20
+    name: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Push the generated claude-plugin branch.
+    env:
+      BRANCH: claude-plugin
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install the pinned Rust toolchain
+        # rustup reads the version from rust-toolchain.toml in this directory.
+        working-directory: tools/accounting-skills
+        run: rustup toolchain install
+
+      - name: Build the plugin
+        # Run from the toolchain's directory, so rustup uses its pin.
+        working-directory: tools/accounting-skills
+        run: cargo run --locked -- build-plugin-dist "$RUNNER_TEMP/plugin" --root "$GITHUB_WORKSPACE"
+
+      # The token reaches only this step, after the build has run.
+      - name: Commit the plugin to its branch when it changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          export GIT_INDEX_FILE="$RUNNER_TEMP/plugin.index"
+          git -c core.autocrlf=false --git-dir="$GITHUB_WORKSPACE/.git" --work-tree="$RUNNER_TEMP/plugin" -C "$RUNNER_TEMP/plugin" add --all --force .
+          tree="$(git write-tree)"
+          parent=""
+          if git ls-remote --exit-code --heads origin "refs/heads/$BRANCH" > /dev/null; then
+            git fetch --no-tags --depth=1 origin "refs/heads/$BRANCH"
+            parent="$(git rev-parse FETCH_HEAD)"
+            if [ "$(git rev-parse "$parent^{tree}")" = "$tree" ]; then
+              echo "The plugin is unchanged on $BRANCH at $parent."
+              exit 0
+            fi
+            # Installs update only when the version rises, so a changed plugin
+            # waits for the release that raises it.
+            version="$(jq -r .version "$RUNNER_TEMP/plugin/.claude-plugin/plugin.json")"
+            published="$(git show "$parent:.claude-plugin/plugin.json" | jq -r .version)"
+            if [ "$version" = "$published" ] || [ "$(printf '%s\n%s\n' "$published" "$version" | sort -V | tail -n 1)" != "$version" ]; then
+              echo "::notice::The plugin changed but its version $version is not above $published, so $BRANCH stays at $parent."
+              exit 0
+            fi
+          fi
+          # A run for an older main commit must not publish over a newer one.
+          if [ "$(git ls-remote origin refs/heads/main | cut -f1)" != "$GITHUB_SHA" ]; then
+            echo "::notice::main has moved past $GITHUB_SHA; its own run publishes."
+            exit 0
+          fi
+          commit="$(git -c user.name='github-actions[bot]' \
+            -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit-tree "$tree" ${parent:+-p "$parent"} -m "Build the plugin from $GITHUB_SHA")"
+          # Not forced: a branch that moved since the fetch refuses the push.
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            push origin "$commit:refs/heads/$BRANCH"
+          echo "Pushed $commit to $BRANCH."
