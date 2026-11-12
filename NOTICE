@@ -72,7 +72,8 @@ adapted. The new workflow text is original; primary-source starting points
 and their retrieval limitations are recorded beside each skill.
 
 Additional intake and handoff gaps were identified by reviewing TaxMate
-Australia (nijanthan-dev/taxmate-australia), tree
+Australia (now varnikacreative-spec/taxmate-australia, then
+nijanthan-dev/taxmate-australia), tree
 42ba67d458439e7882a3e8e0d76bfa6efdecbad7, on 6 October 2026. The new workflow
 text is independently written for these skills. TaxMate runtime code,
 generated source text, cached ATO material and tax tables were not copied.
