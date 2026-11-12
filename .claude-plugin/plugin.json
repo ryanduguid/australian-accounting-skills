@@ -10,6 +10,8 @@
   "repository": "https://github.com/ryanduguid/australian-accounting-skills",
   "license": "LicenseRef-Duguid-Public-Attribution-1.0",
   "privacyPolicyUrl": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/PRIVACY.md",
+  "documentationUrl": "https://github.com/ryanduguid/australian-accounting-skills#guides",
+  "supportUrl": "https://github.com/ryanduguid/australian-accounting-skills/issues",
   "keywords": [
     "australian tax",
     "accounting",
