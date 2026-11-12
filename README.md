@@ -129,16 +129,30 @@ From 10 December 2026, Australian Privacy Principle (APP) 1.7 requires an APP en
 
 ## Alternatives
 
-Australian Accounting Skills is preparation-only and written for Australian practice. The
-[Ask Nagaris comparison](docs/nagaris-comparison.md) records topic-by-topic decisions as at
-2 November 2026. As read on 5 November 2026, these packs cover nearby ground:
+Australian Accounting Skills is preparation-only and written for Australian practice. As read on
+13 November 2026, these products and packs cover nearby ground:
 
+- [Ask Nagaris](https://nagaris.com/ask-nagaris-skills), part of Nagaris's hosted practice platform.
+  Its skills page lists 79 skills and says there are more than 80. The v0.6.0 release of this pack
+  has 107, counting each folder that holds a `SKILL.md` under `.claude/skills/`. The counts are not
+  like for like: one Nagaris skill can cover ground this pack splits across several. Ask Nagaris
+  runs its skills over the firm's own clients, jobs, emails and documents with no installation, and
+  acts with the firm's sign-off. This pack has no access to a firm's systems: it works only from the
+  files and read-only connections the operator gives the agent. The
+  [Ask Nagaris comparison](docs/nagaris-comparison.md) records topic-by-topic decisions as at
+  2 November 2026, rechecked on 11 and 12 November.
+- [Sapience](https://sapience.helpkit.so/built-in-agents--skills/8gqwdV5Z56nF2D2Hu7UJjG/finance-your-australian-tax--accounting-agent/8gqwdV5Z5bZeRszGdmmkLX)
+  offers an Australian Tax & Accounting Agent that answers questions on Australian tax and AASB
+  accounting. It installs with one click inside Sapience Pro, which costs $50 a month for one person.
 - [openaccountants/openaccountants](https://github.com/openaccountants/openaccountants): a broad
-  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes.
+  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes. Its
+  [site](https://www.openaccountants.com/) counts 2,204 skills in all, and its repository says it
+  works in ChatGPT, Claude, Cursor and any MCP client.
 - [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins): official
   finance and small-business plugins. The `small-business` plugin declares Xero and MYOB connectors. At
-  [commit d900840](https://github.com/anthropics/knowledge-work-plugins/blob/d900840/small-business/skills/tax-prep/SKILL.md),
-  its `tax-prep` skill documents US federal calculations, not BAS preparation.
+  [commit 84d8efd](https://github.com/anthropics/knowledge-work-plugins/blob/84d8efd/small-business/skills/tax-prep/SKILL.md),
+  its `tax-prep` skill does US federal calculations only; for a business outside the US it stops at a
+  closed-books packet for the accountant.
 - [darrentmorgan/au-accounting](https://github.com/darrentmorgan/au-accounting): MIT-licensed
   Australian calculators with refusal codes.
 - [adoptai/cpa-skills](https://github.com/adoptai/cpa-skills): US-framed skills that ship Python scripts.
