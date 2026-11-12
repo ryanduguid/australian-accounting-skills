@@ -464,12 +464,18 @@ class SkillMetadataTests(unittest.TestCase):
         plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         server = plugin["mcpServers"]["aus-accounting"]
         self.assertEqual(server["command"], "uvx")
-        (spec,) = server["args"]
-        name, _, version = spec.partition("==")
-        self.assertEqual(name, "aus-accounting-mcp")
-        self.assertRegex(version, r"^\d+\.\d+\.\d+$", "pin an exact release, never a range")
+        # The plugin directory refuses a PyPI version as a pin: a release can gain files.
+        flag, source, name = server["args"]
+        self.assertEqual((flag, name), ("--from", "aus-accounting-mcp"))
+        pin = re.fullmatch(
+            r"git\+https://github\.com/ryanduguid/australian-accounting@([0-9a-f]{40})"
+            r"#subdirectory=apps/aus-accounting-mcp",
+            source,
+        )
+        if pin is None:
+            self.fail("pin a full release commit, never a branch, tag or PyPI version")
         installation = (REPOSITORY / "docs" / "installation.md").read_text(encoding="utf-8")
-        self.assertIn(f"`{spec}`", installation)
+        self.assertIn(f"`{pin[1]}`", installation)
 
     def test_every_clone_installs_the_published_tag_or_says_it_does_not(self) -> None:
         """A clone without the tag installs whatever the default branch holds that day."""

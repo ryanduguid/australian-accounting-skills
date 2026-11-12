@@ -1892,12 +1892,13 @@ class DatedRuleChangeTests(unittest.TestCase):
         privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
         self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
         self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
-        audited = "aus-accounting-mcp==0.6.0"
+        audited = "f17bbb2f920e3c11dac9810060a533c64e0e3be8"  # aus-accounting-mcp v0.6.0
         plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(plugin["mcpServers"]["aus-accounting"]["args"], [audited])
+        self.assertIn(f"@{audited}#", plugin["mcpServers"]["aus-accounting"]["args"][1])
         self.assert_sentence(
             privacy,
-            rf"`{re.escape(audited)}`",
+            r"`aus-accounting-mcp` 0\.6\.0",
+            rf"/commit/{audited}\)",
             r"\bimport no network library apart from `asyncio`",
             r"\b0 socket and 0 connect calls\b",
             r"\b12 calculation tools\b",
