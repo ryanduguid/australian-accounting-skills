@@ -21,7 +21,7 @@ ALLOWED_FRONT_MATTER_FIELDS = {"name", "description"}
 DESCRIPTION_LIMIT = 160
 # Published releases and the skill inventory each one shipped. A version string
 # that already labels a release must never label a second, different inventory.
-RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19, "0.3.0": 63, "0.3.1": 65, "0.3.2": 65, "0.4.0": 65, "0.5.0": 76}
+RELEASED_INVENTORIES = {"0.1.5": 9, "0.2.0": 19, "0.2.1": 19, "0.3.0": 63, "0.3.1": 65, "0.3.2": 65, "0.4.0": 65, "0.5.0": 76, "0.6.0": 107}
 INVENTORY_WORDS = {9: "nine", 19: "nineteen", 50: "fifty", 51: "fifty-one", 52: "fifty-two", 53: "fifty-three", 54: "fifty-four", 55: "fifty-five", 56: "fifty-six", 57: "fifty-seven", 58: "fifty-eight", 59: "fifty-nine", 60: "sixty", 61: "sixty-one", 62: "sixty-two", 63: "sixty-three", 64: "sixty-four", 65: "sixty-five", 66: "sixty-six", 67: "sixty-seven", 68: "sixty-eight", 76: "seventy-six", 93: "ninety-three", 97: "ninety-seven", 99: "ninety-nine", 101: "one hundred and one", 102: "one hundred and two", 103: "one hundred and three", 104: "one hundred and four", 107: "one hundred and seven"}
 # The rows of the install table in docs/installation.md, in order, and the
 # sections of that page that describe no route of their own.

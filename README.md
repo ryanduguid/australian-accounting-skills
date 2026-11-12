@@ -29,32 +29,34 @@ Australian Accounting Skills is a set of agent skills for Australian accountants
 
 Each skill takes an agent through the workflow, sends it to current primary sources for anything that changes and ends in a review-ready workpaper. [Scope, limits and examples](https://duguid.com.au/tools/australian-tax-ai-agents/) are on the author's site.
 
+v0.6.0 corrects 4 passages in v0.5.0, including a withdrawn GST ruling that `tax-invoice-review` cited: see [Corrections since v0.5.0](RELEASE_NOTES.md#corrections-since-v050).
+
 ## Install
 
-Install the 76 workflows in the published release, [v0.5.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.5.0). Each command below was run on Linux on 11 November 2026.
+Install the 107 workflows in the published release, [v0.6.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.6.0). Each command below was run on Linux on 12 November 2026 against the files this release tags.
 
 Claude Code, as a plugin:
 
 ```bash
-claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.5.0
+claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.6.0
 claude plugin install australian-accounting-skills@ryanduguid
 ```
 
 Codex, as a plugin:
 
 ```bash
-codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.5.0
+codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.6.0
 codex plugin add australian-accounting-skills@ryanduguid
 ```
 
 Any agent that reads `SKILL.md`, from a separate project directory:
 
 ```bash
-git clone --branch v0.5.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone --branch v0.6.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 76 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone when run on Linux on 11 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
+That copies the 107 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone when run on Linux on 12 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included, and OpenCode has an install and discovery check only. None of this establishes testing in every agent runtime. The validation record under the fold gives the model runs and their limits.
 
@@ -162,18 +164,18 @@ A development installation tracks the default branch, and a citation names the p
 
 ### Development installation
 
-The marketplace added without a tag resolves the default branch, which can be ahead of v0.5.0. It is not a published release.
+The marketplace added without a tag resolves the default branch, which can be ahead of v0.6.0. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-The default branch prepares v0.5.1 with 107 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+At v0.6.0 the default branch holds the same 107 workflows; later changes land there first. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
-[CITATION.cff](CITATION.cff) identifies the published v0.5.0 release and its 76 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
+[CITATION.cff](CITATION.cff) identifies the published v0.6.0 release and its 107 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
-Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.5.0 pack.
+Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.6.0 pack.
 
 ## Guides
 

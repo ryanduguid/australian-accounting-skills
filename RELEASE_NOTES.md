@@ -1,4 +1,4 @@
-# v0.5.1 (unreleased)
+# v0.6.0
 
 Together the changes below provide 107 skills, 235 validation cards and 122 routing
 prompts. The added cards and prompts have no recorded model run.
@@ -435,6 +435,42 @@ is part of the installed skills.
 Both validation pack checkers ask Git once which sources `.gitignore` matches,
 not once per file, so the pre-commit check no longer starts a Git process for
 each of its 210 sources.
+
+A source check on 12 November 2026 read the 35 source records a sweep flagged
+and changed 5 skills, each marked for human review. `au-company-tax` gives the
+loss carry back conditions of Division 160 as Act No. 71 of 2026 substituted
+it, in place of a turnover threshold the ATO's summary had given;
+`au-short-stay-accommodation` adds the other s 40-27 cases; `au-client-acceptance`
+explains that section 29 of the AML/CTF Act allows delayed initial customer due
+diligence; `au-trust-distributions` drops a report field list whose ATO page was
+removed; and `au-return-amendment` links the ATO's amendment time limits page.
+`docs/source-review-2026-11-12.md` records each row. No person reviewed those
+sources.
+
+## Corrections since v0.5.0
+
+Recorded 12 November 2026. Each passage below was wrong in v0.5.0 when it was
+published and is corrected in v0.6.0. Anyone using v0.5.0 should check the
+passage against the corrected text before relying on it.
+
+- `tax-invoice-review` said to confirm the conditions for recipient-created tax
+  invoices in GSTR 2000/10. The ATO's withdrawal notice, dated 28 July 2026,
+  withdrew that ruling with effect from 29 July 2026. The skill now works from
+  the current RCTI determination as draft GSTR 2026/D2 explains it; an agent
+  read the notice and the draft, and human review is pending.
+- `au-company-tax` said the ATO summary limited the loss carry back tax
+  offset to corporate tax entities below a turnover threshold. Division 160
+  of the ITAA 1997, as the *Treasury Laws Amendment (Tax Reform No. 2) Act
+  2026* (made 26 August 2026) substituted it, tests whether the entity is a
+  significant global entity, not its turnover. The skill now gives the Act's
+  conditions; an agent read the Act and the ATO summary, and human review is
+  pending.
+- `docs/ai-register-entry.md` said recorded runs covered 72 of the 76
+  validation cards. v0.5.0 had 107 cards, so the figure was 72 of 107. It now
+  says human-confirmed model verdicts cover 95 of the 235 cards.
+- `tools/accounting-skills/README.md` said transport faults retry up to 3
+  times. The source fetch made at most 3 attempts, that is 2 retries. It now
+  says a fetch makes at most 3 attempts.
 
 # v0.5.0
 
