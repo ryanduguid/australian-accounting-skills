@@ -203,6 +203,12 @@ fn manifest_drops_only_the_mcp_servers_and_refuses_an_unknown_component() {
             format!("plugin.json key {key} is not one the directory build ships")
         );
     }
+    for source in [&br#"{"name": "n"}"#[..], br#"{"name": "n", "version": 1}"#] {
+        assert_eq!(
+            manifest(source).unwrap_err().to_string(),
+            "plugin.json has no version string"
+        );
+    }
 }
 
 fn files(entries: &[(&str, &[u8])]) -> Files {

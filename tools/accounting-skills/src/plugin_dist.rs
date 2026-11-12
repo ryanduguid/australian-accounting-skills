@@ -158,6 +158,10 @@ pub fn manifest(bytes: &[u8]) -> Result<Vec<u8>> {
     {
         return Err(format!("plugin.json key {key} is not one the directory build ships").into());
     }
+    // The workflow publishes only a higher version, so it must have one.
+    if !manifest.get("version").is_some_and(Value::is_string) {
+        return Err("plugin.json has no version string".into());
+    }
     manifest.insert("skills".to_owned(), Value::from("./skills"));
     let mut out = serde_json::to_vec_pretty(&manifest)?;
     out.push(b'\n');
