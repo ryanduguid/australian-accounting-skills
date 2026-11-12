@@ -97,11 +97,11 @@ fn folders(files: &Files) -> BTreeSet<String> {
         .collect()
 }
 
-/// The byte ranges of the Markdown link and image targets and the HTML `src`
-/// and `srcset` values in `text`, outside fenced code blocks.
-fn targets(text: &str) -> Vec<(usize, usize)> {
+/// The Markdown link and image targets and the HTML `src` and `srcset`
+/// values in `text`, outside fenced code blocks.
+fn targets(text: &str) -> Vec<&str> {
     let mut found = Vec::new();
-    let (mut offset, mut fenced) = (0, false);
+    let mut fenced = false;
     for line in text.split_inclusive('\n') {
         let trimmed = line.trim_start();
         if trimmed.starts_with("```") || trimmed.starts_with("~~~") {
@@ -114,12 +114,11 @@ fn targets(text: &str) -> Vec<(usize, usize)> {
                     let end = line[start..]
                         .find([')', '"', ' ', '\t', '\n'])
                         .map_or(line.len(), |length| start + length);
-                    found.push((offset + start, offset + end));
+                    found.push(&line[start..end]);
                     from = end;
                 }
             }
         }
-        offset += line.len();
     }
     found
 }
@@ -158,9 +157,21 @@ pub fn manifest(bytes: &[u8]) -> Result<Vec<u8>> {
     {
         return Err(format!("plugin.json key {key} is not one the directory build ships").into());
     }
-    // The workflow publishes only a higher version, so it must have one.
-    if !manifest.get("version").is_some_and(Value::is_string) {
-        return Err("plugin.json has no version string".into());
+    // The workflow publishes only a higher version, compared with `sort -V`,
+    // which orders a pre-release above its release; so only X.Y.Z ships.
+    let plain = |version: &str| {
+        let parts: Vec<&str> = version.split('.').collect();
+        parts.len() == 3
+            && parts
+                .iter()
+                .all(|part| !part.is_empty() && part.bytes().all(|byte| byte.is_ascii_digit()))
+    };
+    if !manifest
+        .get("version")
+        .and_then(Value::as_str)
+        .is_some_and(plain)
+    {
+        return Err("plugin.json version must be X.Y.Z".into());
     }
     manifest.insert("skills".to_owned(), Value::from("./skills"));
     let mut out = serde_json::to_vec_pretty(&manifest)?;
@@ -188,6 +199,9 @@ pub fn check(files: &Files) -> Result<usize> {
         if REFUSED_NAMES.contains(&name) {
             return Err(format!("{path} is a file the directory refuses").into());
         }
+        if bytes.starts_with(b"#!") {
+            return Err(format!("{path} starts with #!, which the directory refuses").into());
+        }
         let kind = extension(path);
         if IMAGES.contains(&kind.as_str()) {
             continue;
@@ -204,14 +218,13 @@ pub fn check(files: &Files) -> Result<usize> {
         }
         let text = std::str::from_utf8(bytes)
             .ok()
-            .filter(|text| !text.contains('\0') && !text.starts_with("#!"))
-            .ok_or_else(|| format!("{path} must be UTF-8 text without NUL bytes or a #! line"))?;
+            .filter(|text| !text.contains('\0'))
+            .ok_or_else(|| format!("{path} must be UTF-8 text without NUL bytes"))?;
         if kind != "md" {
             continue;
         }
         let base = path.rsplit_once('/').map_or("", |(folder, _)| folder);
-        for (start, end) in targets(text) {
-            let target = &text[start..end];
+        for target in targets(text) {
             let Some(target_path) = local(target) else {
                 continue;
             };

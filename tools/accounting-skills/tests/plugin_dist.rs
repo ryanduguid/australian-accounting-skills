@@ -203,12 +203,29 @@ fn manifest_drops_only_the_mcp_servers_and_refuses_an_unknown_component() {
             format!("plugin.json key {key} is not one the directory build ships")
         );
     }
-    for source in [&br#"{"name": "n"}"#[..], br#"{"name": "n", "version": 1}"#] {
+    // sort -V would order a pre-release above its release, so only X.Y.Z ships.
+    for version in [
+        "",
+        "1",
+        "\"\"",
+        "\"1.0\"",
+        "\"1.0.0-rc.1\"",
+        "\"1..0\"",
+        "\"1.0.0.0\"",
+        "\"v1.0.0\"",
+    ] {
+        let source = if version.is_empty() {
+            r#"{"name": "n"}"#.to_owned()
+        } else {
+            format!(r#"{{"name": "n", "version": {version}}}"#)
+        };
         assert_eq!(
-            manifest(source).unwrap_err().to_string(),
-            "plugin.json has no version string"
+            manifest(source.as_bytes()).unwrap_err().to_string(),
+            "plugin.json version must be X.Y.Z",
+            "{version}"
         );
     }
+    assert!(manifest(br#"{"name": "n", "version": "10.0.12"}"#).is_ok());
 }
 
 fn files(entries: &[(&str, &[u8])]) -> Files {
@@ -270,10 +287,17 @@ fn check_refuses_what_the_directory_would_refuse_or_a_link_that_leaves_the_plugi
     ] {
         assert_eq!(error(&files(&[(path, b"{}")])), message);
     }
-    for bytes in [&b"\xff"[..], b"a\0b", b"#!/bin/sh\n"] {
+    for bytes in [&b"\xff"[..], b"a\0b"] {
         assert_eq!(
             error(&files(&[("a.md", bytes)])),
-            "a.md must be UTF-8 text without NUL bytes or a #! line"
+            "a.md must be UTF-8 text without NUL bytes"
+        );
+    }
+    // The #! rule covers every file, images included.
+    for path in ["a.md", "skills/a/payload.png", "LICENSE"] {
+        assert_eq!(
+            error(&files(&[(path, b"#!/bin/sh\n")])),
+            format!("{path} starts with #!, which the directory refuses")
         );
     }
     let large = vec![b'a'; MAX_TEXT_BYTES + 1];
