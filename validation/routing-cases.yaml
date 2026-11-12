@@ -477,6 +477,10 @@
   skill: au-client-meeting-note
   not: [au-tax-research, au-client-acceptance]
   prompt: Here is the AI transcript of this morning's video call with a client and her husband. Write it up as a file note for the partner to review, including what we agreed to do and anything she asked us to take on.
+- id: client-email-issue-list
+  skill: au-client-email-triage
+  not: [au-ato-correspondence-triage, au-client-meeting-note, au-tax-research]
+  prompt: A client has sent a long rambling email about selling a unit, starting rideshare driving and a bank deadline, and says a document is attached but it isn't. Pull out everything she's asking or telling us so the partner can see what needs dealing with.
 - id: marketplace-payouts-booked-as-sales
   skill: marketplace-settlements
   not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]

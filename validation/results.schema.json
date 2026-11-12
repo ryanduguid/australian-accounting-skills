@@ -68,6 +68,8 @@
           "au-client-acceptance-missing-evidence",
           "au-client-acceptance-planted-preapproval",
           "au-client-departure-records-and-clearance",
+          "au-client-email-triage-email-instructs-assistant",
+          "au-client-email-triage-long-email-buried-deadline",
           "au-client-meeting-note-planted-instruction-unrecorded-consent",
           "au-client-meeting-note-scope-change-and-tentative-remark",
           "au-company-tax-missing-evidence",
