@@ -72,14 +72,22 @@
       "reverify_by": "2027-06-30",
       "fact": "Reviewed by Ryan Duguid on 24 September 2026: Rate 5.5%. Diminishing threshold between annual Australian taxable wages of $1 million and $7.5 million; no deduction at $7.5 million or more. Registration when monthly Australian taxable wages exceed $83,333 (from 1 July 2023).",
       "volatile": true,
-      "limitations": "Verify the complete page, applicable period and current status at use time.",
+      "limitations": "Verify the complete page, applicable period and current status at use time. An agent read the page on 12 November 2026 (last updated 2 June 2026): the 5.5% rate, the $1 million to $7.5 million diminishing threshold and the full-rate row at $7.5 million or more are still stated; the $83,333 monthly figure from 1 July 2023 appears here only as a table heading, and RevenueWA's registration page (last updated 14 March 2026) states it as the registration trigger. The changed passage was not located. Human review pending.",
       "final_url": "https://www.wa.gov.au/government/multi-step-guides/payroll-tax-employer-guide/calculation-payroll-tax-employer-guide",
       "http_status": 200,
-      "fetched_at": "2026-09-30",
+      "fetched_at": "2026-11-12",
       "content_hash": "1e4dada739d808e1168d9f5662095a531af62d9e0e25d0ba2b522b8e3bc854ac",
       "content_hash_covers": "html",
       "source_last_modified": "",
-      "content_url": "https://www.wa.gov.au/government/multi-step-guides/payroll-tax-employer-guide/calculation-payroll-tax-employer-guide"
+      "content_url": "https://www.wa.gov.au/government/multi-step-guides/payroll-tax-employer-guide/calculation-payroll-tax-employer-guide",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "fcf87dfd294e757c184ed592aaae4018c09b91999ce44b54dcae04799531436c",
+        "content_hash_covers": "html",
+        "content_url": "https://www.wa.gov.au/government/multi-step-guides/payroll-tax-employer-guide/calculation-payroll-tax-employer-guide",
+        "observed_at": "2026-11-12",
+        "source_last_modified": ""
+      }
     },
     {
       "title": "RevenueSA: Payroll tax rates and thresholds",
@@ -88,14 +96,22 @@
       "reverify_by": "2027-06-30",
       "fact": "Read 28 October 2026: From 1 January 2019, by annual Australia-wide taxable payroll: nil up to $1.5 million; a variable rate from 0% to 4.95% above $1.5 million up to $1.7 million; 4.95% above $1.7 million. Registration once Australia-wide wages exceed $1,500,000 a year ($125,000 a month). Maximum deduction $600,000 a year.",
       "volatile": true,
-      "limitations": "The page's rate table merges columns; the bands above follow its registration threshold and RevenueSA's calculator. Verify the complete page, applicable period and current status at use time. The 18 and 27 October 2026 sweeps reported a changed digest; the 20 and 28 October readings found the bands, threshold and maximum deduction as stated above; the changed passage was not located. The refresh is refused here (HTTP 403), so no candidate digest could be bound and the next sweep may report the change again.",
+      "limitations": "The page's rate table merges columns; the bands above follow its registration threshold and RevenueSA's calculator. Verify the complete page, applicable period and current status at use time. The 18 and 27 October 2026 sweeps reported a changed digest; the 20 and 28 October readings found the bands, threshold and maximum deduction as stated above; the changed passage was not located. The refresh is refused here (HTTP 403), so no candidate digest could be bound and the next sweep may report the change again. An agent read the page on 12 November 2026 (no visible last-updated date; published modification 8 July 2026): the bands from 1 January 2019, the $1,500,000 a year ($125,000 a month) registration threshold and the $600,000 maximum deduction are still stated. The page returned HTTP 200 to the refresh on 12 November 2026. The changed passage was not located. Human review pending.",
       "final_url": "https://revenuesa.sa.gov.au/payrolltax/rates-and-thresholds",
-      "http_status": 403,
-      "fetched_at": "2026-10-14",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
       "content_hash": "5f2449004279819f36550431528785143ad9db968befd6f9727efd146093d546",
       "content_hash_covers": "html",
       "source_last_modified": "2026-07-08",
-      "content_url": ""
+      "content_url": "",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "5c46eb60ad0982a9baa4deed769bd29000f4e672e326593237b52d86dc4bfb7d",
+        "content_hash_covers": "html",
+        "content_url": "https://revenuesa.sa.gov.au/payrolltax/rates-and-thresholds",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-07-08"
+      }
     },
     {
       "title": "SRO Tasmania: Payroll tax rates and thresholds",

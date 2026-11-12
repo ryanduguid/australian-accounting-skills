@@ -21,13 +21,22 @@
       "checked_at": "2026-10-14",
       "fact": "Read 26 September 2026 (page last updated 27 August 2026). States the measure is law: corporate tax entities with aggregated annual global turnover under $1 billion may carry back a revenue tax loss against tax paid in either or both of the 2 previous income years, limited by the franking account balance, for income years starting on or after 1 July 2026.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "ATO summary. Apply Division 160 of the ITAA 1997 as substituted, not this page.",
+      "limitations": "ATO summary. Apply Division 160 of the ITAA 1997 as substituted, not this page. An agent read the page on 12 November 2026 (last updated 3 November 2026): it now limits the offset to corporate tax entities that are not significant global entities, as s 160-5(1)(e) of the ITAA 1997 does as substituted by Act No. 71 of 2026, not the turnover test in the recorded fact, and says the offset is first claimed in 2026-27 returns. Human review pending.",
       "final_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-tax-loss-carry-back",
       "http_status": 200,
-      "fetched_at": "2026-09-26",
+      "fetched_at": "2026-11-12",
       "content_hash": "ccde2b043240f7d073b9d41640baf1a46c30721fbf2b416b8cc20be363ea581b",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-08-27"
+      "source_last_modified": "2026-11-03",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "5ce4c49ce238bc3d3f7a3bc501491c270ef96e98b353a4af881a464ea071fbd5",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/businesses/tax-reform-tax-loss-carry-back",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-03"
+      },
+      "content_url": ""
     },
     {
       "title": "Treasury Laws Amendment (Tax Reform No. 2) Act 2026",

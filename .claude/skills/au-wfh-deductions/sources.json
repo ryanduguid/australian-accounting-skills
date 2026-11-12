@@ -38,13 +38,22 @@
       "reverify_by": "2027-06-30",
       "fact": "Reviewed by Ryan Duguid on 24 September 2026 (page last updated 14 September 2026): From the 2026-27 income year, eligible Australian residents with assessable labour income receive a standard deduction of up to $1,000 (or total assessable labour income if lower). It is not available for 2025-26. Claimed work-related expenses, including working from home expenses, reduce it dollar for dollar. From 1 July 2026 the $300 work-related expense and $150 laundry record-keeping exceptions no longer apply. The page cites draft LCR 2026/D5.",
       "volatile": true,
-      "limitations": "The page relies on a draft Law Companion Ruling. Verify the complete page, the ruling's current status and the applicable income year at use time.",
+      "limitations": "The page relies on a draft Law Companion Ruling. Verify the complete page, the ruling's current status and the applicable income year at use time. An agent read the page on 12 November 2026 (last updated 2 November 2026): the recorded fact is still stated; the record keeping exceptions that will not apply from 1 July 2026 now also include the award transport expense exemption, and the page adds a laundry per-load approach and a low-value pool exclusion for assets mainly used to earn assessable labour income. LCR 2026/D5 was still a draft, with its comment period ended. Human review pending.",
       "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses",
       "http_status": 200,
-      "fetched_at": "2026-09-24",
+      "fetched_at": "2026-11-12",
       "content_hash": "9f8733fdf9efb8908a90d75e4f5b71c00b28507b8d5829f0cf1fa2e96a1e0aac",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-09-15"
+      "source_last_modified": "2026-11-02",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "2ea673d8ee05ade8558aa4a57ac724162a2f51ae98838ebbde792d49e8d38e67",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-02"
+      },
+      "content_url": ""
     },
     {
       "title": "LCR 2026/D5 The standard deduction for work-related expenses",

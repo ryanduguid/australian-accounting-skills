@@ -279,30 +279,20 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_trust_family_trust_screen_reads_the_fte_and_iee_report(self) -> None:
         step = workflow_step("au-trust-distributions", "4a")
-        self.assert_carries(step, "Online services for agents", "Human review pending", "4 November 2026", "20 April 2026")
+        self.assert_carries(step, "Online services for agents", "Human review pending", "12 November 2026", "19 October 2026")
         # The report is checked for the trust and for each entity interposed into its family group.
         self.assert_sentence(
             step, r"\bFTE\b", r"\bIEE\b", r"\bfor the trust\b", r"\beach entity with an IEE\b",
             affirmed=(r"\bcheck\b[^,;:]*\breport\b[^,;:]*\bOnline services for agents\b",),
         )
-        # What the report shows, each field on its own.
-        self.assert_sentence(
-            step, r"\bfor an FTE\b", r"\bincome year specified\b", r"\bcommencement date\b",
-            r"\bspecified individual\b", r"\bdate of birth\b",
-        )
-        self.assert_sentence(
-            step, r"\bdate the ATO received\b", r"\bform type\b", r"\belection, variation or revocation\b",
-            r"\bfor a revocation\b[^;]*\bend year and end date\b",
-        )
-        self.assert_sentence(
-            step, r"\bfor an IEE\b", r"\bincome year specified\b", r"\bfamily trusts' TFNs\b",
-            r"\bincome year and individual specified in the related FTE\b", r"\bdate received\b", r"\bform type\b",
-            r"\bfor a revocation\b[^;]*\bend year\b",
-        )
+        # The page that listed the report's fields is gone (HTTP 404 on 12 November 2026), so the
+        # skill states only what the ATO's live bulletin says: the report was enhanced from
+        # 18 April 2026 and shows the date each election was lodged.
+        self.assert_sentence(step, r"\bdisplays details about elections\b", r"\b18 April 2026\b", r"\bdate lodged\b")
         # The ATO gives no view on validity, and the record keeps no TFN or date of birth.
-        self.assert_sentence(step, r"\bno opinion\b", r"\bvalid FTE or IEE\b")
+        self.assert_sentence(step, r"\bno opinion\b", r"\bvalidity\b")
         self.assert_sentence(
-            step, r"\bform type\b", r"\bincome year\b", r"\bcommencement date\b", r"\bdate received\b",
+            step, r"\bform type\b", r"\bincome year\b", r"\bcommencement date\b", r"\bdate lodged\b",
             r"\b(not|never)\W+(any\W+)?TFN\b", r"\b(not|never)\W+(any\W+)?(TFN\W+or\W+)?date of birth\b", r"\bown copies\b",
             affirmed=(r"\brecord each election, variation and revocation\b", r"\bcompare\b"),
         )
@@ -315,7 +305,7 @@ class DatedRuleChangeTests(unittest.TestCase):
             affirmed=(r"\blist\b[^,;:]*\bspecialist review\b",),
         )
         self.assert_sentence(
-            step, r"\bfamily trusts page\b", r"\b20 October 2026\b", r"\bindividual other than its own specified individual\b",
+            step, r"\bfamily trusts page\b", r"\b10 November 2026\b", r"\bindividual other than its own specified individual\b",
             r"\bnarrows\b", r"\bcommon to both\b", r"\bdifferent specified individuals\b",
         )
         self.assert_sentence(step, r"\bcannot be accessed\b", affirmed=(r"\brecord\b[^,;:]*\bnot performed\b",))
@@ -325,8 +315,8 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_carries(section("au-trust-distributions", "Inputs"), "interposed entity election report")
         self.assert_cited_and_recorded(
             "au-trust-distributions",
-            "https://www.ato.gov.au/tax-and-super-professionals/for-tax-professionals/tax-professionals-newsroom/"
-            "increased-visibility-for-trust-elections",
+            "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/"
+            "extension-of-gic-remission-offer-for-ftdt-liabilities",
             "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
         )
 

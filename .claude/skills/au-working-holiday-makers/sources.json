@@ -88,14 +88,22 @@
       "reverify_by": "2027-09-29",
       "fact": "Reviewed on 29 September 2026 at Ryan Duguid's direction (page last updated 10 February 2023): payments to a working holiday maker use the WHM income type and need a country code, which for WHM is the country of nationality based on the working holiday maker visa, using ISO 3166-1 codes; 'na' means Namibia, not 'not applicable'. When the visa changes, amounts paid before the change stay against WHM and later amounts use the new income type.",
       "volatile": true,
-      "limitations": "Verify the complete page, applicable period and current status at use time.",
-      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/in-detail/single-touch-payroll-phase-2-employer-reporting-guidelines/reporting-the-amounts-you-have-paid/income-types",
+      "limitations": "Verify the complete page, applicable period and current status at use time. An agent read the page on 12 November 2026 (last updated 23 October 2026, now served at this address rather than the in-detail guideline address): the WHM income type for subclass 417 and 462 visas, the nationality-based country code, the ISO 3166-1 'na' warning and the split at a visa change are still stated. Human review pending.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/reporting-the-amounts-you-have-paid/income-types",
       "http_status": 200,
-      "fetched_at": "2026-09-29",
+      "fetched_at": "2026-11-12",
       "content_hash": "31564e09658429067c09ce36ee896156a7c63716ec00cbf4657a8a2bca581425",
       "content_hash_covers": "html",
       "content_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/in-detail/single-touch-payroll-phase-2-employer-reporting-guidelines/reporting-the-amounts-you-have-paid/income-types",
-      "source_last_modified": ""
+      "source_last_modified": "2026-11-05",
+      "review_required_since": "2026-11-12",
+      "pending_review": {
+        "content_hash": "cfc0ba783dd865b0ae7cc726417605403fa37e8914df0b5f2fd4654daf3cd466",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/reporting-the-amounts-you-have-paid/income-types",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-05"
+      }
     },
     {
       "title": "ATO: Working holiday makers",

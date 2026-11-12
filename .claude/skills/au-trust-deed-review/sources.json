@@ -122,14 +122,14 @@
       "checked_at": "2026-11-02",
       "fact": "Ryan Duguid accepted this reading on 2 November 2026 as a primary-source starting point for the skill; no current-law fact is recorded.",
       "verification_status": "indexed-source-discovery-only",
-      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 2 November 2026. Ryan Duguid accepted the 2 November 2026 reading without a recorded fact. Verify the complete authority, applicable period and facts at use time. An agent read the page on 12 November 2026 (last updated 10 November 2026): it still says a trust's name does not make it a family trust, that an FTE specifies one individual and that an FTE is generally in force from the start of the income year it specifies, as the skill records. Human review pending.",
       "final_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
       "http_status": 200,
-      "fetched_at": "2026-11-02",
-      "review_required_since": "2026-11-02",
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
       "content_hash": "307d8d7f7d76bda2272879461940057ab60f95f28f6959401b7a9e9af82caea4",
       "content_hash_covers": "html",
-      "source_last_modified": "2026-10-20",
+      "source_last_modified": "2026-11-10",
       "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
       "reviewed_content": {
         "content_hash": "307d8d7f7d76bda2272879461940057ab60f95f28f6959401b7a9e9af82caea4",
@@ -137,6 +137,13 @@
         "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
         "source_last_modified": "2026-10-20",
         "checked_at": "2026-11-02"
+      },
+      "pending_review": {
+        "content_hash": "e3512ee217029144b1768f9e9b0ac5a57508a517ab722445d681b5f89ff9603b",
+        "content_hash_covers": "html",
+        "content_url": "https://www.ato.gov.au/businesses-and-organisations/trusts/family-trusts",
+        "observed_at": "2026-11-12",
+        "source_last_modified": "2026-11-10"
       }
     },
     {
