@@ -9,7 +9,8 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Skills CLI from a release checkout](#tagged-107-workflow-release) | v0.6.0 tag | No | Yes | The README's command copied all 107 skills from the files this release tags, on Linux on 12 November 2026; install only, no model run | Not tested. Clone the new tag and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
 | [Claude Code plugin at the release tag](#tagged-107-workflow-release) | v0.6.0 tag | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 107 skills on Claude Code 2.1.316 from the files this release tags, on Linux on 12 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
 | [Codex plugin at the release tag](#tagged-107-workflow-release) | v0.6.0 tag | No | Yes | Delivered the 107 skills on Codex CLI 0.167.1 from the files this release tags, on Linux on 12 November 2026 | Not documented |
-| [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.6.0 tag (source ZIP) | No | No | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
+| [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.6.0 tag (source ZIP), or the default branch through [ZIPs built from a checkout](#upload-zips-built-from-a-checkout) | No | No for the upload; yes to build the ZIPs | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
+| [ChatGPT upload](#chatgpt-without-a-terminal) | Default branch, through ZIPs built from a checkout | No | No for the upload; yes to build the ZIPs | Not tested; steps follow OpenAI's article as read on 13 November 2026 | Not documented |
 | [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp` 0.8.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026; `claude mcp list` reported the 0.8.0 server connected on Linux on 13 November 2026 | Not documented |
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
 | [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
@@ -80,6 +81,44 @@ Uploaded skills carry no MCP server, so a skill's optional calculator cross-chec
 is not available. Skills that call on another skill work best when that skill is
 uploaded too. Client data rules still apply: check your firm's approval before
 putting client information into any cloud service.
+
+#### Upload ZIPs built from a checkout
+
+Someone with a checkout, Git and Rust 1.99 or later can build every skill's
+upload ZIP with one command, run from the checkout root:
+
+```bash
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-skill-zips ../skill-zips
+```
+
+It writes one `NAME.zip` per skill into the new folder `../skill-zips`, from
+the skills as committed at the checkout's HEAD. Each ZIP's only root entry is
+the skill's folder, holding one `SKILL.md` at its root: the shape Anthropic's
+article and OpenAI's [Skills in the API](https://developers.openai.com/cookbook/examples/skills_in_api)
+guide describe. Upload one at step 5 in place of a ZIP made by hand.
+
+These ZIPs are not attached to a release. The command is newer than v0.6.0, so
+they hold the default branch's skills, which can include changes made after
+that release. Anthropic's article says skill sharing works in both chat and
+Cowork; uploading a skill for Cowork has not been tested.
+
+### ChatGPT, without a terminal
+
+OpenAI's [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
+article, read on 13 November 2026, offers skills to eligible ChatGPT Business,
+Enterprise, Healthcare and Edu users, subject to workspace settings. This route
+has not been tested. The article does not state the upload's file format, so
+the ZIPs follow OpenAI's API guide.
+
+1. Get the skill's ZIP [built from a checkout](#upload-zips-built-from-a-checkout).
+2. In ChatGPT's sidebar, select **Plugins**, then the **Skills** tab.
+3. Select **Create**, then **Upload from your computer**, and upload the ZIP.
+4. ChatGPT scans an uploaded skill before it becomes available. It can mark one
+   **Needs Review** or **Blocked**.
+
+A workspace administrator decides whether members can upload skills. The same
+limits apply as for Claude: no MCP server, and check your firm's approval before
+putting client information into the service.
 
 ### Development installations
 

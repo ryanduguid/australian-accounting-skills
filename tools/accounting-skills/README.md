@@ -29,6 +29,14 @@ overlapping periods, ends with a `PASS` line counting what it compared or a `FAI
 0 when everything ties, 2 on any break and 1 on malformed input, including an empty one or a
 repeated reference. The input holds figures and line references only, never descriptions.
 
+`build-skill-zips DESTINATION` is also new: it writes one upload ZIP per skill,
+`NAME.zip`, into a new folder, from the skills committed at HEAD. Each ZIP's
+only root entry is the skill's folder, holding exactly one `SKILL.md` at its
+root, the shape Claude's and ChatGPT's skill uploads take. Entries are stored
+uncompressed, in path order, with fixed timestamps, so one commit always gives
+the same bytes. It refuses a skill with a second `SKILL.md` and an existing
+destination. `docs/installation.md` gives the upload steps.
+
 `audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside
 this repository. It prints the same report on well-formed traces, except that
 it also flags a suspect folder that ends a path, as in

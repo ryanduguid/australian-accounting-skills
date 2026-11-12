@@ -247,12 +247,12 @@ pub fn check(files: &Files) -> Result<usize> {
     Ok(entries)
 }
 
-/// The shipped files at HEAD, as stored in Git, at the paths they ship to.
-/// Anything other than a regular, non-executable file is refused, as is a
-/// missing source.
-fn committed(root: &Path) -> Result<Files> {
+/// The files under each `(source, destination)` path at HEAD, as stored in
+/// Git, at the paths they ship to. Anything other than a regular,
+/// non-executable file is refused, as is a missing source.
+pub(crate) fn committed(root: &Path, sources: &[(&str, &str)]) -> Result<Files> {
     let mut args = vec!["ls-tree", "-r", "-z", "--full-tree", "HEAD", "--"];
-    args.extend(SOURCES.map(|(source, _)| source));
+    args.extend(sources.iter().map(|(source, _)| *source));
     let listing = crate::git(root, &args)?;
     let mut entries = Vec::new();
     for record in listing.split('\0').filter(|record| !record.is_empty()) {
@@ -268,7 +268,7 @@ fn committed(root: &Path) -> Result<Files> {
                 format!("{path} must be a regular, non-executable file, not mode {mode}").into(),
             );
         }
-        let shipped = SOURCES
+        let shipped = sources
             .iter()
             .find_map(|(source, destination)| {
                 if path == *source {
@@ -281,7 +281,7 @@ fn committed(root: &Path) -> Result<Files> {
             .ok_or_else(|| format!("git ls-tree listed {path}, which the build does not ship"))?;
         entries.push((shipped, oid.to_owned()));
     }
-    for (source, destination) in SOURCES {
+    for &(source, destination) in sources {
         let prefix = format!("{destination}/");
         if !entries
             .iter()
@@ -339,7 +339,7 @@ fn blobs(root: &Path, oids: &[String]) -> Result<Vec<Vec<u8>>> {
 /// Write the plugin at HEAD of `root` into the new folder `destination` and
 /// return its counts of files and of files and folders.
 pub fn build(root: &Path, destination: &Path) -> Result<(usize, usize)> {
-    let mut files = committed(root)?;
+    let mut files = committed(root, &SOURCES)?;
     let generated = manifest(&files[MANIFEST])?;
     files.insert(MANIFEST.to_owned(), generated);
     let entries = check(&files)?;
