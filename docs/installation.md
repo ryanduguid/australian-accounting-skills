@@ -10,7 +10,7 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Claude Code plugin at the release tag](#tagged-107-workflow-release) | v0.6.0 tag | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 107 skills on Claude Code 2.1.316 from the files this release tags, on Linux on 12 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
 | [Codex plugin at the release tag](#tagged-107-workflow-release) | v0.6.0 tag | No | Yes | Delivered the 107 skills on Codex CLI 0.167.1 from the files this release tags, on Linux on 12 November 2026 | Not documented |
 | [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.6.0 tag (source ZIP) | No | No | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
-| [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp` 0.6.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026 | Not documented |
+| [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp` 0.8.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026; `claude mcp list` reported the 0.8.0 server connected on Linux on 13 November 2026 | Not documented |
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
 | [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
 | [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
@@ -99,7 +99,7 @@ present at the repository revision it installs under the stable namespace:
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
 The development plugin also starts the local [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)
-server, pinned to `aus-accounting-mcp` 0.6.0 by its release commit `f17bbb2f920e3c11dac9810060a533c64e0e3be8`
+server, pinned to `aus-accounting-mcp` 0.8.0 by its release commit `7b9b0e27d5cb3edae67854df1626feb4672b65e8`
 and launched with `uvx`, so it needs Python 3.14 or later, [uv](https://docs.astral.sh/uv/) and Git on the path.
 The first launch builds the package from that commit; tool calls then run locally and send nothing to the ATO or any other
 service. `div7a-compliance` and `contractor-super-tpar` use its Division 7A and

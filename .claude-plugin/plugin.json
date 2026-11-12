@@ -10,7 +10,7 @@
   "repository": "https://github.com/ryanduguid/australian-accounting-skills",
   "license": "LicenseRef-Duguid-Public-Attribution-1.0",
   "privacyPolicyUrl": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/PRIVACY.md",
-  "documentationUrl": "https://github.com/ryanduguid/australian-accounting-skills#guides",
+  "documentationUrl": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/docs/installation.md",
   "supportUrl": "https://github.com/ryanduguid/australian-accounting-skills/issues",
   "keywords": [
     "australian tax",
@@ -30,7 +30,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/ryanduguid/australian-accounting@f17bbb2f920e3c11dac9810060a533c64e0e3be8#subdirectory=apps/aus-accounting-mcp",
+        "git+https://github.com/ryanduguid/australian-accounting@7b9b0e27d5cb3edae67854df1626feb4672b65e8#subdirectory=apps/aus-accounting-mcp",
         "aus-accounting-mcp"
       ]
     }

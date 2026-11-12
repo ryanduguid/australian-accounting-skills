@@ -1892,17 +1892,15 @@ class DatedRuleChangeTests(unittest.TestCase):
         privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
         self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
         self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
-        audited = "f17bbb2f920e3c11dac9810060a533c64e0e3be8"  # aus-accounting-mcp v0.6.0
+        audited = "7b9b0e27d5cb3edae67854df1626feb4672b65e8"  # aus-accounting-mcp v0.8.0
         plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertIn(f"@{audited}#", plugin["mcpServers"]["aus-accounting"]["args"][1])
+        self.assert_sentence(privacy, r"\bdefault branch starts `aus-accounting-mcp` 0\.8\.0", rf"/commit/{audited}\)")
+        self.assert_sentence(privacy, r"\bAt 0\.8\.0\b", r"\bimport no network library apart from `asyncio`")
         self.assert_sentence(
-            privacy,
-            r"`aus-accounting-mcp` 0\.6\.0",
-            rf"/commit/{audited}\)",
-            r"\bimport no network library apart from `asyncio`",
-            r"\b0 socket and 0 connect calls\b",
-            r"\b12 calculation tools\b",
+            privacy, r"\btrace of 0\.6\.0\b", r"\b0 socket and 0 connect calls\b", r"\b12 calculation tools\b"
         )
+        self.assert_sentence(privacy, r"\btrace was not repeated for 0\.8\.0\b")
         self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
         self.assert_sentence(privacy, r"\btrace's method and output\b", r"\bnot published\b")
         self.assert_sentence(privacy, r"\bMCP SDK\b", r"\bnot pinned\b", r"\bdid not cover it\b")
