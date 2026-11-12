@@ -82,8 +82,10 @@ class ClientLetterTests(unittest.TestCase):
         self.assert_sentence(step, r"\bEvery sentence of the letter carries the reference of the advice passage \(A\) "
                              r"or template passage \(T\)")
         self.assert_sentence(step, r"\bWrite nothing from general knowledge\b", r"\bmodel's own understanding\b")
-        self.assert_sentence(step, r"\bcannot be traced to either source\b", r"\bis not kept silently\b",
-                             r"\bmark it `UNTRACED`", r"\breviewer exception\b")
+        self.assert_sentence(step, r"\bOnly connecting wording that carries no fact, figure, date, condition, "
+                             r"conclusion or advice\b", r"\bis not kept silently\b", r"\bmark it `UNTRACED`",
+                             r"\breviewer exception\b")
+        self.assert_sentence(step, DO_NOT + r"write any other sentence that cannot be traced to either source\b")
         self.assert_sentence(section(SKILL, "Hand-off and checks"), r"\bevery sentence traces to an advice or template "
                              r"passage, or is marked `UNTRACED`")
 

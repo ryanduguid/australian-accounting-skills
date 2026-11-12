@@ -139,7 +139,7 @@ These workflows are independently written from Australian primary sources; `NOTI
 
 ## Additions from 12 November 2026
 
-These workflows are independently written: `au-client-meeting-note` from Federal Register of Legislation, TPB and OAIC sources, with `NOTICE` recording where the topic came from, `myob-exports` from MYOB's own support and developer pages, `marketplace-settlements` from the GST Act and ATO pages, `au-client-letter` from TPB guidance, `au-client-email-triage` with no source, as it applies no rule, and `au-cpi-rent-review` from ABS pages and state and territory legislation registers.
+These workflows are independently written: `au-client-meeting-note` from Federal Register of Legislation, TPB and OAIC sources, with `NOTICE` recording where the topic came from, `myob-exports` from MYOB's own support and developer pages, `marketplace-settlements` from the GST Act and ATO pages, `au-client-letter` from TPB guidance, `au-client-email-triage` from the same TPB guidance, for client permission to use AI tools, and `au-cpi-rent-review` from ABS pages and state and territory legislation registers.
 
 | Skill | Use it for |
 | --- | --- |

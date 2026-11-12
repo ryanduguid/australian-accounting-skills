@@ -64,8 +64,9 @@ engagement letter for this advice were supplied.
   email date and $640,000 unchanged, and A5 with both the duty and land tax
   limitation and the reliance limitation.
 - Give every sentence a trace row naming its A or T passage, mark each sentence
-  reworded for warmth `reworded`, and mark any sentence with no source passage
-  `UNTRACED` as a reviewer exception.
+  reworded for warmth `reworded`, and mark any connecting wording with no
+  source passage `UNTRACED` as a reviewer exception; write no untraced fact,
+  figure, condition, conclusion or advice.
 - Bring T5 across as the template gives it.
 - Leave the status as `DRAFT_FOR_REVIEW` with `sent: no`.
 

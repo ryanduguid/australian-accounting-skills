@@ -1,5 +1,0 @@
-{
-  "skill": "au-client-email-triage",
-  "exempt": true,
-  "reason": "Method-only skill: it registers what a client email says and routes each issue to another skill. It applies no tax or accounting rule and states no rate, threshold, label or due date; each routed skill verifies its own primary sources at use time."
-}

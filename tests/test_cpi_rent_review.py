@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import re
 import unittest
-from decimal import Decimal
+from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 from skill_prose import (
@@ -118,7 +118,8 @@ class CpiRentReviewTests(unittest.TestCase):
                 item = re.search(rf"\*\*{re.escape(flag)}\.\*\*(.*?)\(owner: ([^)]*)\)", step)
                 assert item, f"step 7 has no '{flag}' flag with an owner"
                 self.assertEqual(item.group(2), owner)
-        self.assert_sentence(step, r"\bretail leases legislation may set the content or timing of a rent review notice\b")
+        self.assert_sentence(step, r"\bretail leases legislation may affect the review basis, any ratchet or "
+                             r"alternative review, and the content or timing of a rent review notice\b")
         self.assert_sentence(step, r"\bWhether it applies and what it requires is for the landlord's lawyer to confirm\b")
         self.assert_sentence(step, r"\bread no provision of it\b", r"\bstates no notice period, form or limit\b")
         self.assert_sentence(step, r"\bGST treatment of the rent\b", r"\bleft to the practitioner\b")
@@ -133,7 +134,11 @@ class CpiRentReviewTests(unittest.TestCase):
                              r"\breviewer exception\b")
         self.assert_sentence(step, r"\bsame GST basis as the lease states\b", DO_NOT + r"add, remove or calculate GST\b")
         limits = workflow_step(SKILL, 6)
-        self.assert_sentence(limits, r"\bWork out the index result and each limit separately in exact cents\b")
+        self.assert_sentence(limits, r"\bWork out the index result and each limit separately in exact decimals\b",
+                             r"\bleaving each limit unrounded\b")
+        self.assert_sentence(limits, r"\bNever round a limit's result past the limit\b")
+        self.assert_sentence(limits, r"\bcap result rounded down to the cent\b", r"\bcollar\b", r"\brounded up\b")
+        self.assert_sentence(limits, r"\bshow both and raise the difference as a reviewer exception\b")
         self.assert_sentence(limits, r"\bdoes not say the order\b", r"\bshow each reading's result\b")
         self.assert_sentence(limits, DO_NOT + r"assume a ratchet\b")
 
@@ -142,6 +147,10 @@ class CpiRentReviewTests(unittest.TestCase):
         self.assert_sentence(step, r"\bnever sends, signs, serves or lodges it\b", r"\bnever gives it to the tenant\b",
                              r"\bgives no legal advice\b")
         self.assert_sentence(step, r"\bWhere the calculation is open, leave the reviewed rent blank\b", r"`NOT READY`")
+        # An unverified figure must not reach a notice marked ready for the landlord to send.
+        self.assert_sentence(step, r"`READY FOR REVIEW` only where the calculation is `COMPLETE`",
+                             r"\bno index series or base quarter exception is open\b",
+                             r"\bcarry each `UNVERIFIED` marker from the workpaper into the notice\b")
         notice = fence("Draft notice template")
         self.assertTrue(notice.startswith("DRAFT FOR LANDLORD OR AGENT REVIEW. NOT SENT. NOT SIGNED."))
         self.assertIn("Signed: (left blank for the landlord or agent)", notice)
@@ -172,7 +181,8 @@ class CpiRentReviewTests(unittest.TestCase):
         self.assert_sentence(boundary, r"\*\*Human review pending:\*\*", r"\bnot a human review\b")
         self.assert_sentence(boundary, r"\bABS pages are not indexed in `sources.json` because their host is outside the reviewed fetch list\b")
         self.assert_sentence(boundary, r"\bno provision was read\b", r"\bwhether one applies\b")
-        self.assertIn("| New South Wales | Not read: the register returned a bot challenge |", text)
+        self.assertIn("| New South Wales | *Retail Leases Act 1994* (NSW), not read: the register returned a bot "
+                      "challenge |", text)
         # Only titles were confirmed, so the skill cites no section of any Act.
         self.assertNotRegex(text, r"\b(?:section|s)\s\d")
 
@@ -180,19 +190,27 @@ class CpiRentReviewTests(unittest.TestCase):
         equations = card_equations(CASES / f"{CAPPED}.md")
         stated = {f"{expression} = {result}" for expression, result, _ in equations}
         self.assertIn("84317.40 x 105.86 / 100.47 = 88840.85", stated)
-        self.assertIn("84317.40 x 1.035 = 87268.51", stated)
+        self.assertIn("84317.40 x 1.035 = 87268.509", stated)
         for expression, result, per_cent in equations:
             with self.subTest(expression=expression):
                 self.assertTrue(foots(expression, result, per_cent))
-        current, index_result, cap_result = Decimal("84317.40"), Decimal("88840.85"), Decimal("87268.51")
-        reviewed = max(min(index_result, cap_result), current)
-        self.assertEqual(reviewed, cap_result)
+        # Recompute from clause 7.2: the index result rounds to the cent, the cap may not be exceeded and the
+        # rent never falls.
+        current, cent = Decimal("84317.40"), Decimal("0.01")
+        index_result = (current * Decimal("105.86") / Decimal("100.47")).quantize(cent, rounding=ROUND_HALF_UP)
+        cap_result = current * Decimal("1.035")
+        self.assertEqual(cap_result, Decimal("87268.509"))
+        self.assertGreater(cap_result.quantize(cent, rounding=ROUND_HALF_UP), cap_result, "nearest cent breaches the cap")
+        reviewed = max(min(index_result, cap_result.quantize(cent, rounding=ROUND_DOWN)), current)
+        self.assertEqual(reviewed, Decimal("87268.50"))
         required = card_section(CAPPED, "Required checks")
-        self.assertIn("Show that the cap sets the reviewed rent at 87,268.51 a year", required)
+        self.assertIn("Show that the cap sets the reviewed rent at 87,268.50 a year", required)
+        self.assertIn("would give 87,268.51, which exceeds the cap", required)
+        self.assertIn("status `NOT READY`", required)
         self.assertIn("ratchet does not bind", required)
         self.assertIn("`UNVERIFIED`", required)
         prohibited = card_section(CAPPED, "Must not do")
-        self.assertIn("Do not set the rent at 88,840.85 or ignore the cap", prohibited)
+        self.assertIn("Do not set the rent at 88,840.85 or 87,268.51, or ignore the cap", prohibited)
         self.assertIn("Do not choose between the CPI review and a market review", prohibited)
 
     def test_the_rebased_card_produces_no_figure(self) -> None:

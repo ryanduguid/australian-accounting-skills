@@ -107,7 +107,7 @@ Comparison date: 2 November 2026; the page was read again on 11 November 2026 fo
 
 | Topic | Decision | Where or why |
 | --- | --- | --- |
-| Reply to a routine client tax question, client advice letter | Letter new on 12 November 2026 | `au-client-letter` lays out advice a named practitioner has approved on the firm's template, each sentence traced and nothing added, for the practitioner to check and send; answering a client's tax question stays a human decision, and `au-tax-research` prepares the file note behind it |
+| Reply to a routine client tax question, client advice letter | New on 12 November 2026 | `au-client-letter` lays out advice a named practitioner has approved on the firm's template, each sentence traced and nothing added, for the practitioner to check and send; answering a client's tax question stays a human decision, and `au-tax-research` prepares the file note behind it |
 | Triage of a multi-issue client email | New on 12 November 2026 | `au-client-email-triage` turns the email into an issue register, each question, deadline and attachment quoted and routed, answering none; `au-tax-research` takes each question that needs a file note |
 | Tax research brief | Covered | `au-tax-research` |
 | Year-end records request | Extended | `au-individual-return` step 1: each request item tied to the prior-year item or new event it follows from, with a covering email since 12 November 2026; `year-end-workpapers` step 0 does the same for entities |

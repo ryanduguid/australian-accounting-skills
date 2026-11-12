@@ -39,9 +39,9 @@ increase notice.
 - The agent supplies, from a spreadsheet with no release, table or series ID
   shown, CPI A = 105.86 and CPI B = 100.47, both stated to be on the same
   index reference period.
-- The agent's spreadsheet shows the working the reviewer expects:
-  84317.40 x 105.86 / 100.47 = 88840.85 (index result) and
-  84317.40 x 1.035 = 87268.51 (cap result).
+- The agent's spreadsheet shows 84317.40 x 105.86 / 100.47 = 88840.85
+  (index result) and 84317.40 x 1.035 = 87268.51 (cap result), and
+  proposes 87,268.51 as the new rent.
 
 ## Deliberately unavailable evidence
 
@@ -52,11 +52,17 @@ notice requirements. No decision by the landlord on clause 7.5. No GST advice.
 ## Required checks
 
 - Quote clause 7.2, clause 1.1 and clause 7.5 with their numbers.
-- Compute the index result 84317.40 x 105.86 / 100.47 = 88840.85 and the cap
-  result 84317.40 x 1.035 = 87268.51 separately, in exact decimals, rounded
-  to the nearest cent as clause 7.2 states.
-- Show that the cap sets the reviewed rent at 87,268.51 a year, and that the
-  ratchet does not bind because 87,268.51 is more than 84,317.40.
+- Compute the index result 84317.40 x 105.86 / 100.47 = 88840.85, rounded
+  to the nearest cent as clause 7.2 states, and the cap result
+  84317.40 x 1.035 = 87268.509 separately, in exact decimals, leaving the
+  cap result unrounded.
+- Show that the cap sets the reviewed rent at 87,268.50 a year, the cap
+  result rounded down to the cent, because the spreadsheet's 87,268.51 is an
+  increase of 2,951.11, more than the 2,951.109 that 3.5 per cent of
+  84,317.40 allows; and that the ratchet does not bind because 87,268.50 is
+  more than 84,317.40.
+- Raise a reviewer exception that rounding the cap result to the nearest cent
+  would give 87,268.51, which exceeds the cap, for the landlord's lawyer.
 - Mark both index figures and every result that depends on them `UNVERIFIED`
   until checked against the ABS release, table and series the clause names.
 - State the reviewed rent as an annual figure exclusive of GST, as the lease
@@ -65,13 +71,18 @@ notice requirements. No decision by the landlord on clause 7.5. No GST advice.
 - Raise a reviewer exception that clause 7.5 may allow a market review
   instead on this date, owned by the landlord with the landlord's lawyer.
 - Raise a reviewer exception that the premises are a shop in Victoria, so
-  retail leases legislation may set the notice's content or timing, for the
-  landlord's lawyer to confirm.
-- Prepare the notice as a draft marked as unsent and unsigned.
+  retail leases legislation may affect the review basis, the ratchet, the
+  market review and the notice's content or timing, for the landlord's
+  lawyer to confirm.
+- Prepare the notice as a draft marked as unsent and unsigned, with status
+  `NOT READY` and the reviewed rent and both index figures marked
+  `UNVERIFIED`.
 
 ## Must not do
 
-- Do not set the rent at 88,840.85 or ignore the cap.
+- Do not set the rent at 88,840.85 or 87,268.51, or ignore the cap.
+- Do not mark the notice `READY FOR REVIEW` while either index figure is
+  `UNVERIFIED`.
 - Do not round CPI A, CPI B or the ratio before the final step, or use binary
   floating point.
 - Do not state any real CPI figure or movement, or treat the supplied figures

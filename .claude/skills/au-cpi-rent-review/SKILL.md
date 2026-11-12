@@ -34,17 +34,17 @@ Prepares the annual CPI rent review for a landlord client's commercial or retail
 
 5. **Compute the reviewed rent exactly.** Follow the clause's formula and order of operations, such as current rent x new index / base index, using exact decimal arithmetic, never binary floating point. Carry full precision through each step and round only where and how the clause says. Where the clause does not state rounding, show the unrounded figure and the figure rounded half up to the cent, and raise the choice of rounding as a reviewer exception. Show every step as an equation with its inputs, so a reviewer can recompute it. State the reviewed rent for the same period and on the same GST basis as the lease states the current rent; do not add, remove or calculate GST.
 
-6. **Apply any cap, collar or ratchet as the clause states.** A cap limits the increase, a collar sets a minimum increase or a floor, and a ratchet stops the rent falling below an earlier rent; use the clause's own definitions where they differ. Work out the index result and each limit separately in exact cents, then show which one sets the reviewed rent and why. Where the clause does not say the order in which the limits apply, or how a fall in the index is treated, show each reading's result and raise it as a reviewer exception. Where the index fell and no ratchet applies, the result is a lower rent; show it and do not assume a ratchet.
+6. **Apply any cap, collar or ratchet as the clause states.** A cap limits the increase, a collar sets a minimum increase or a floor, and a ratchet stops the rent falling below an earlier rent; use the clause's own definitions where they differ. Work out the index result and each limit separately in exact decimals, leaving each limit unrounded, then show which one sets the reviewed rent and why. Never round a limit's result past the limit: where a cap sets the rent and its result is not a whole number of cents, state the reviewed rent as the cap result rounded down to the cent, and where a collar sets it, rounded up. Where the clause's rounding words would give the other figure, show both and raise the difference as a reviewer exception for the landlord's lawyer. Where the clause does not say the order in which the limits apply, or how a fall in the index is treated, show each reading's result and raise it as a reviewer exception. Where the index fell and no ratchet applies, the result is a lower rent; show it and do not assume a ratchet.
 
 7. **Raise the flags the reviewer must decide.** Record each as a reviewer exception with its owner, and conclude on none:
    - **Index series.** Any doubt from step 3 about the series, a rebase or a discontinued index (owner: landlord's lawyer).
    - **Base quarter.** A missing or unidentifiable base quarter or base figure (owner: landlord's lawyer).
-   - **Retail leases legislation.** Where the premises are or may be a retail shop, or the use is not stated, the state or territory retail leases legislation may set the content or timing of a rent review notice. Whether it applies and what it requires is for the landlord's lawyer to confirm. This skill read no provision of it and states no notice period, form or limit (owner: landlord's lawyer).
+   - **Retail leases legislation.** Where the premises are or may be a retail shop, or the use is not stated, the state or territory retail leases legislation may affect the review basis, any ratchet or alternative review, and the content or timing of a rent review notice. Whether it applies and what it requires is for the landlord's lawyer to confirm. This skill read no provision of it and states no notice period, form or limit (owner: landlord's lawyer).
    - **Market or other review.** Any clause allowing a market review or another review instead of the CPI review (owner: landlord, with the landlord's lawyer).
    - **GST.** The GST treatment of the rent and of the notice is left to the practitioner; this skill does not decide whether GST applies or how it is shown (owner: practitioner).
    - **Notice timing in the lease.** Quote any time limit the lease sets for giving the notice; do not work out a deadline from legislation (owner: landlord's lawyer).
 
-8. **Draft the notice.** Use the firm's template if supplied, otherwise the template below. The notice quotes the clause number, the review date, the current rent, the index figures with their sources and the reviewed rent as the workpaper shows it. Where the calculation is open, leave the reviewed rent blank and mark the notice `NOT READY`. The notice is a draft for the landlord or agent to review, sign and send; this skill never sends, signs, serves or lodges it, never gives it to the tenant and gives no legal advice about it.
+8. **Draft the notice.** Use the firm's template if supplied, otherwise the template below. The notice quotes the clause number, the review date, the current rent, the index figures with their sources and the reviewed rent as the workpaper shows it. Where the calculation is open, leave the reviewed rent blank and mark the notice `NOT READY`. Mark the notice `READY FOR REVIEW` only where the calculation is `COMPLETE` and no index series or base quarter exception is open; otherwise mark it `NOT READY`, list the open items and carry each `UNVERIFIED` marker from the workpaper into the notice beside the figure it applies to. The notice is a draft for the landlord or agent to review, sign and send; this skill never sends, signs, serves or lodges it, never gives it to the tenant and gives no legal advice about it.
 
 ## Workpaper template
 
@@ -97,10 +97,10 @@ Lease: (lease date or code), clause (number)
 Under clause (number) of the lease, the rent is reviewed on (review date).
 
 Current rent: (amount, period and GST basis as the lease states)
-Index figures: (series description and ID, period, value, ABS release and table) for each figure
+Index figures: (series description and ID, period, value, ABS release and table) for each figure, marked `UNVERIFIED` where not checked against the ABS release
 Calculation: (formula as the clause states, with figures)
 Limit applied: (cap, collar or ratchet, or none)
-Reviewed rent from (review date): (amount, period and GST basis as the lease states)
+Reviewed rent from (review date): (amount, period and GST basis as the lease states, marked `UNVERIFIED` while any figure it depends on is)
 
 [Notice content, timing and delivery: as the lease and any applicable retail leases legislation require, to be confirmed by the landlord's lawyer before sending.]
 [GST: treatment to be confirmed by the practitioner.]
@@ -137,7 +137,7 @@ Retail leases laws whose official register page an agent opened on 12 November 2
 
 | Jurisdiction | Law |
 | --- | --- |
-| New South Wales | Not read: the register returned a bot challenge |
+| New South Wales | *Retail Leases Act 1994* (NSW), not read: the register returned a bot challenge |
 | Victoria | [*Retail Leases Act 2003* (Vic)](https://www.legislation.vic.gov.au/in-force/acts/retail-leases-act-2003) |
 | Queensland | [*Retail Shop Leases Act 1994* (Qld)](https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-1994-047) |
 | South Australia | [*Retail and Commercial Leases Act 1995* (SA)](https://www.legislation.sa.gov.au/lz?path=/c/a/retail%20and%20commercial%20leases%20act%201995) |
@@ -150,6 +150,6 @@ Open the relevant current or historical version for the review date. This starti
 
 ## Fabricated acceptance example
 
-A lease of a fabricated shop says the rent rises on each review date by the movement in 'the CPI' from the quarter before the last review, capped, and never falls. The landlord's agent supplies 2 index figures in an email with no release or series. Quote the clause, flag that it does not say quarterly or monthly or which city, compute the index result and the cap result separately in exact cents from the supplied figures, mark both `UNVERIFIED` until checked against the ABS release, raise the retail leases and GST flags for their owners, and leave the draft notice unsent for the agent.
+A lease of a fabricated shop says the rent rises on each review date by the movement in 'the CPI' from the quarter before the last review, capped, and never falls. The landlord's agent supplies 2 index figures in an email with no release or series. Quote the clause, flag that it does not say quarterly or monthly or which city, compute the index result and the cap result separately in exact cents from the supplied figures, mark both `UNVERIFIED` until checked against the ABS release, raise the retail leases and GST flags for their owners, and leave the draft notice `NOT READY` and unsent for the agent, with the figures marked `UNVERIFIED`.
 
 Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.

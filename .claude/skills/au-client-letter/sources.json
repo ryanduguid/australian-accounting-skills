@@ -7,7 +7,7 @@
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
       "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "Retrieved by an agent on 12 November 2026 (last modified 22 July 2026); paragraphs 12, 16 and 23 were confirmed in it. The page prints no paragraph numbers, so they were counted against its own index of paragraphs 4 to 6, 7 to 31 and 32. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "limitations": "Retrieved by an agent on 12 November 2026 (last modified 22 July 2026); paragraphs 12, 16 and 23 were confirmed in it. The HTML page prints no paragraph numbers; the PDF version linked from it does, and the 3 paragraphs were confirmed there. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
       "final_url": "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct",
       "http_status": 200,
       "fetched_at": "2026-11-12",

@@ -12,14 +12,25 @@ in skill_prose.py.
 
 from __future__ import annotations
 
-import json
 import re
 import unittest
 from pathlib import Path
 
-from skill_prose import DO_NOT, SKILLS, section, sentences, skill_text, workflow_step
+from skill_prose import (
+    DO_NOT,
+    ISO_DATE,
+    PENDING,
+    PENDING_FACT,
+    SKILLS,
+    records,
+    section,
+    sentences,
+    skill_text,
+    workflow_step,
+)
 
 SKILL = "au-client-email-triage"
+GS_55 = "https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct"
 CASES = Path(__file__).resolve().parents[1] / "validation" / "cases"
 LONG_EMAIL = "au-client-email-triage-long-email-buried-deadline"
 PLANTED = "au-client-email-triage-email-instructs-assistant"
@@ -126,15 +137,23 @@ class ClientEmailTriageTests(unittest.TestCase):
         self.assertIn("Routed to", fence)
         self.assertIn("Missing facts", fence)
 
-    def test_the_skill_cites_no_authority_and_ships_an_exemption(self) -> None:
-        # The skill states no rule, so a cited link would be a rule without a sources record.
-        self.assertNotRegex(skill_text(SKILL), r"https?://")
-        self.assertFalse((SKILLS / SKILL / "sources.json").exists())
-        exemption = json.loads((SKILLS / SKILL / "sources.exempt.json").read_text(encoding="utf-8"))
-        self.assertEqual(exemption["skill"], SKILL)
-        self.assertIs(exemption["exempt"], True)
-        self.assert_sentence(section(SKILL, "Source and review boundary"),
-                             r"\bNever supply rates, thresholds, labels or deadlines from memory\b")
+    def test_the_ai_permission_rests_on_its_cited_paragraph(self) -> None:
+        # The skill's one rule, client permission for the AI tool, cites the TPB paragraph it comes from.
+        self.assertEqual(re.findall(r"https?://[^\s)]+", skill_text(SKILL)), [GS_55])
+        self.assertFalse((SKILLS / SKILL / "sources.exempt.json").exists())
+        indexed = records(SKILL)
+        self.assertEqual(set(indexed), {GS_55})
+        record = indexed[GS_55]
+        self.assertEqual(record["verification_status"], PENDING)
+        self.assertEqual(record["checked_at"], "")
+        self.assertEqual(record["fact"], PENDING_FACT)
+        self.assertRegex(str(record["review_required_since"]), ISO_DATE)
+        self.assert_sentence(workflow_step(SKILL, 1), r"\bTPB\(GS\) 55/2026 paragraph 23\b",
+                             r"\bentering client information into AI models and tools\b")
+        self.assert_sentence(workflow_step(SKILL, 1), r"\bwhether the permission covers this tool is for the practitioner\b")
+        boundary = section(SKILL, "Source and review boundary")
+        self.assert_sentence(boundary, r"\*\*Human review pending:\*\*", r"\bnot a human review\b")
+        self.assert_sentence(boundary, r"\bNever supply rates, thresholds, labels or deadlines from memory\b")
 
     def test_the_long_email_card_fails_a_merged_issue_or_an_invented_date(self) -> None:
         required = card_section(LONG_EMAIL, "Required checks")
