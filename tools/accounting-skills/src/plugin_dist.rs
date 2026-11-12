@@ -146,6 +146,19 @@ fn resolve(base: &str, path: &str) -> Option<String> {
     Some(parts.join("/"))
 }
 
+/// Whether `version` is X.Y.Z without leading zeros. The workflow publishes
+/// only a higher version, compared with `sort -V`, which orders a pre-release
+/// above its release and 0.6.00 above 0.6.0.
+fn plain_version(version: &str) -> bool {
+    let parts: Vec<&str> = version.split('.').collect();
+    let plain = |part: &&str| {
+        !part.is_empty()
+            && part.bytes().all(|byte| byte.is_ascii_digit())
+            && (*part == "0" || !part.starts_with('0'))
+    };
+    parts.len() == 3 && parts.iter().all(plain)
+}
+
 /// The manifest the directory reads: `main`'s, without its MCP servers and
 /// with the skills at `./skills`.
 pub fn manifest(bytes: &[u8]) -> Result<Vec<u8>> {
@@ -157,29 +170,47 @@ pub fn manifest(bytes: &[u8]) -> Result<Vec<u8>> {
     {
         return Err(format!("plugin.json key {key} is not one the directory build ships").into());
     }
-    // The workflow publishes only a higher version, compared with `sort -V`,
-    // which orders a pre-release above its release and 0.6.00 above 0.6.0; so
-    // only X.Y.Z without leading zeros ships.
-    let plain = |version: &str| {
-        let parts: Vec<&str> = version.split('.').collect();
-        parts.len() == 3
-            && parts.iter().all(|part| {
-                !part.is_empty()
-                    && part.bytes().all(|byte| byte.is_ascii_digit())
-                    && (*part == "0" || !part.starts_with('0'))
-            })
-    };
-    if !manifest
-        .get("version")
-        .and_then(Value::as_str)
-        .is_some_and(plain)
-    {
+    let version = manifest.get("version").and_then(Value::as_str);
+    if !version.is_some_and(plain_version) {
         return Err("plugin.json version must be X.Y.Z".into());
     }
     manifest.insert("skills".to_owned(), Value::from("./skills"));
     let mut out = serde_json::to_vec_pretty(&manifest)?;
     out.push(b'\n');
     Ok(out)
+}
+
+/// Refuse a file the directory would refuse, and say whether it is Markdown,
+/// whose links `check` then resolves.
+fn accept(path: &str, bytes: &[u8]) -> Result<bool> {
+    let parts: Vec<&str> = path.split('/').collect();
+    if parts.contains(&".claude") || parts[1..].contains(&".claude-plugin") {
+        return Err(format!("{path} is in a folder the directory refuses").into());
+    }
+    if REFUSED_NAMES.contains(&parts[parts.len() - 1]) {
+        return Err(format!("{path} is a file the directory refuses").into());
+    }
+    if bytes.starts_with(b"#!") {
+        return Err(format!("{path} starts with #!, which the directory refuses").into());
+    }
+    let kind = extension(path);
+    if IMAGES.contains(&kind.as_str()) {
+        return Ok(false);
+    }
+    if !TEXT.contains(&kind.as_str()) && !BARE_TEXT.contains(&path) {
+        return Err(format!("{path} is not a file type the directory accepts").into());
+    }
+    if bytes.len() > MAX_TEXT_BYTES {
+        return Err(format!(
+            "{path} has {} bytes; the directory accepts up to {MAX_TEXT_BYTES}",
+            bytes.len()
+        )
+        .into());
+    }
+    if std::str::from_utf8(bytes).is_err() || bytes.contains(&0) {
+        return Err(format!("{path} must be UTF-8 text without NUL bytes").into());
+    }
+    Ok(kind == "md")
 }
 
 /// Refuse a plugin the directory would refuse, or one whose Markdown links
@@ -194,38 +225,10 @@ pub fn check(files: &Files) -> Result<usize> {
         .into());
     }
     for (path, bytes) in files {
-        let parts: Vec<&str> = path.split('/').collect();
-        let name = parts[parts.len() - 1];
-        if parts.contains(&".claude") || parts[1..].contains(&".claude-plugin") {
-            return Err(format!("{path} is in a folder the directory refuses").into());
-        }
-        if REFUSED_NAMES.contains(&name) {
-            return Err(format!("{path} is a file the directory refuses").into());
-        }
-        if bytes.starts_with(b"#!") {
-            return Err(format!("{path} starts with #!, which the directory refuses").into());
-        }
-        let kind = extension(path);
-        if IMAGES.contains(&kind.as_str()) {
+        if !accept(path, bytes)? {
             continue;
         }
-        if !TEXT.contains(&kind.as_str()) && !BARE_TEXT.contains(&path.as_str()) {
-            return Err(format!("{path} is not a file type the directory accepts").into());
-        }
-        if bytes.len() > MAX_TEXT_BYTES {
-            return Err(format!(
-                "{path} has {} bytes; the directory accepts up to {MAX_TEXT_BYTES}",
-                bytes.len()
-            )
-            .into());
-        }
-        let text = std::str::from_utf8(bytes)
-            .ok()
-            .filter(|text| !text.contains('\0'))
-            .ok_or_else(|| format!("{path} must be UTF-8 text without NUL bytes"))?;
-        if kind != "md" {
-            continue;
-        }
+        let text = std::str::from_utf8(bytes)?;
         let base = path.rsplit_once('/').map_or("", |(folder, _)| folder);
         for target in targets(text) {
             let Some(target_path) = local(target) else {
