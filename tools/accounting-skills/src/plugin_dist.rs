@@ -158,13 +158,16 @@ pub fn manifest(bytes: &[u8]) -> Result<Vec<u8>> {
         return Err(format!("plugin.json key {key} is not one the directory build ships").into());
     }
     // The workflow publishes only a higher version, compared with `sort -V`,
-    // which orders a pre-release above its release; so only X.Y.Z ships.
+    // which orders a pre-release above its release and 0.6.00 above 0.6.0; so
+    // only X.Y.Z without leading zeros ships.
     let plain = |version: &str| {
         let parts: Vec<&str> = version.split('.').collect();
         parts.len() == 3
-            && parts
-                .iter()
-                .all(|part| !part.is_empty() && part.bytes().all(|byte| byte.is_ascii_digit()))
+            && parts.iter().all(|part| {
+                !part.is_empty()
+                    && part.bytes().all(|byte| byte.is_ascii_digit())
+                    && (*part == "0" || !part.starts_with('0'))
+            })
     };
     if !manifest
         .get("version")

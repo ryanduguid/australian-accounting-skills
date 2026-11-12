@@ -203,8 +203,11 @@ fn manifest_drops_only_the_mcp_servers_and_refuses_an_unknown_component() {
             format!("plugin.json key {key} is not one the directory build ships")
         );
     }
-    // sort -V would order a pre-release above its release, so only X.Y.Z ships.
+    // sort -V would order a pre-release above its release and 0.6.00 above
+    // 0.6.0, so only X.Y.Z without leading zeros ships.
     for version in [
+        "\"0.6.00\"",
+        "\"01.0.0\"",
         "",
         "1",
         "\"\"",
@@ -225,7 +228,10 @@ fn manifest_drops_only_the_mcp_servers_and_refuses_an_unknown_component() {
             "{version}"
         );
     }
-    assert!(manifest(br#"{"name": "n", "version": "10.0.12"}"#).is_ok());
+    for version in ["0.0.0", "0.6.0", "10.0.12"] {
+        let source = format!(r#"{{"name": "n", "version": "{version}"}}"#);
+        assert!(manifest(source.as_bytes()).is_ok(), "{version}");
+    }
 }
 
 fn files(entries: &[(&str, &[u8])]) -> Files {
