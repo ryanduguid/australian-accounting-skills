@@ -397,7 +397,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not decide whether a basis applies or extend it beyond its recorded scope", step)
         self.assertNotIn("Where the register lists no beneficial owner, record the basis it gives", step)
         self.assertIn("A screening or verification vendor's entity-level `complete` status is not this evidence", step)
-        self.assertIn("Section 111(3) of the Act requires records", step)
+        self.assertIn("Section 111(3) of the AML/CTF Act requires records", step)
         self.assertIn("remains responsible for complying with the Act and Rules", step)
         self.assertIn("Record the vendor status beside the per-owner result, never in place of it.", step)
 

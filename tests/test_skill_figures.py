@@ -59,6 +59,9 @@ KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
     ("au-trust-losses/SKILL.md", "50%"): (
         4, "the statutory name and conditions of the stake and pattern of distributions "
         "tests in Schedule 2F as read in C2026C00454; test_practice_workflows.py pins the wording"),
+    ("au-franking-account/SKILL.md", "100%"): (
+        1, "the franking percentage s 109RC(3)(b) of the Income Tax Assessment Act 1936 sets, as read in "
+        "C2026C00454; test_cgt_gap_workflows.py pins the wording"),
 }
 
 

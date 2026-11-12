@@ -3,25 +3,16 @@
 
 //! Writes the per-skill last-changed table from git history.
 
-use crate::{Result, discover_skills, platform_text, replace_file};
+use crate::{Result, discover_skills, git, platform_text, replace_file};
 use std::{
     ffi::OsString,
     io::{self, Write},
-    path::{Path, PathBuf},
-    process::Command,
+    path::PathBuf,
 };
 
 const OUTPUT: &str = "docs/skill-last-changed.md";
 const HISTORY: &str =
     "https://github.com/ryanduguid/australian-accounting-skills/commits/main/.claude/skills";
-
-fn git(root: &Path, args: &[&str]) -> Result<String> {
-    let output = Command::new("git").args(args).current_dir(root).output()?;
-    if !output.status.success() {
-        return Err(format!("git {} failed", args.join(" ")).into());
-    }
-    Ok(String::from_utf8(output.stdout)?.trim().to_string())
-}
 
 /// The table for `rows` of (skill, ISO date), or an error naming a skill with no date.
 pub fn render(commit: &str, rows: &[(String, String)]) -> Result<String> {
@@ -166,7 +157,7 @@ mod tests {
     fn refuses_a_folder_that_is_not_a_checkout() {
         let directory = tempdir().unwrap();
         let error = run(directory.path(), &[]).unwrap_err();
-        assert_eq!(error, "git rev-parse --show-prefix failed");
+        assert!(error.starts_with("git rev-parse --show-prefix failed:"));
     }
 
     #[test]

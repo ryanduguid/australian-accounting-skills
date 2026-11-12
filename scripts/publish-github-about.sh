@@ -7,7 +7,7 @@
 set -euo pipefail
 
 REPO="ryanduguid/australian-accounting-skills"
-DESCRIPTION="Australian accounting workflow skills for practice and contracting work: BAS, close, payroll and workpaper tie-outs. Prep and review aids. No lodgement or advice."
+DESCRIPTION="Australian tax and accounting agent skills for Claude Code and Codex: review-ready workpapers for BAS, FBT, Division 7A, trusts, payroll and practice compliance. No lodgement or advice."
 HOMEPAGE="https://duguid.com.au/tools/australian-tax-ai-agents/"
 TOPICS=(
   accounting
@@ -20,13 +20,14 @@ TOPICS=(
   australian-tax
   bas
   claude-code
+  claude-skills
   codex
-  construction-accounting
   division-7a
   fbt
   public-practice
   python
   stp
+  tax
   tax-prep
   xero
 )

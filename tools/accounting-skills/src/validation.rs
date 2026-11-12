@@ -528,78 +528,23 @@ fn valid_date(year: i32, month: i32, day: i32) -> bool {
     };
     (1..=9999).contains(&year) && day > 0 && day <= days
 }
-fn canonical_date(input: &str) -> Option<String> {
-    let compact = input.replace('-', "");
-    if compact.len() == 8 && compact.bytes().all(|b| b.is_ascii_digit()) {
-        let (y, m, d) = (
-            compact[..4].parse().ok()?,
-            compact[4..6].parse().ok()?,
-            compact[6..].parse().ok()?,
-        );
-        if input.len() != 8
-            && (input.len() != 10 || input.as_bytes()[4] != b'-' || input.as_bytes()[7] != b'-')
-        {
-            return None;
-        }
-        return valid_date(y, m, d).then(|| format!("{y:04}-{m:02}-{d:02}"));
-    }
-    // Python date.fromisoformat also accepts ISO week dates, including Monday defaults.
-    let (year, rest) = compact.split_once('W')?;
-    if year.len() != 4
-        || !(rest.len() == 2 || rest.len() == 3)
-        || !year.bytes().chain(rest.bytes()).all(|b| b.is_ascii_digit())
-    {
-        return None;
-    }
-    let compact_form = format!("{year}W{rest}");
-    let extended_form = if rest.len() == 3 {
-        format!("{year}-W{}-{}", &rest[..2], &rest[2..])
-    } else {
-        format!("{year}-W{rest}")
-    };
-    if input != compact_form && input != extended_form {
-        return None;
-    }
-    let year: i32 = year.parse().ok()?;
-    let week: i32 = rest[..2].parse().ok()?;
-    let day: i32 = if rest.len() == 2 {
-        1
-    } else {
-        rest[2..].parse().ok()?
-    };
-    if !(1..=9999).contains(&year) || !(1..=7).contains(&day) {
-        return None;
-    }
-    let jan4 = |y: i32| {
-        let prior = y - 1;
-        prior * 365 + prior / 4 - prior / 100 + prior / 400 + 4
-    };
-    let monday = |y| {
-        let n = jan4(y);
-        n - (n - 1) % 7
-    };
-    if week < 1 || week > (monday(year + 1) - monday(year)) / 7 {
-        return None;
-    }
-    let ordinal = monday(year) + (week - 1) * 7 + day - 1;
-    let mut y = year;
-    while ordinal < jan4(y) - 3 {
-        y -= 1;
-    }
-    while ordinal >= jan4(y + 1) - 3 {
-        y += 1;
-    }
-    let mut day = ordinal - (jan4(y) - 3) + 1;
-    let mut month = 1;
-    while !valid_date(y, month, day) && month <= 12 {
-        let mut days = 31;
-        while !valid_date(y, month, days) && days > 0 {
-            days -= 1;
-        }
-        day -= days;
-        month += 1;
-    }
-    valid_date(y, month, day).then(|| format!("{y:04}-{month:02}-{day:02}"))
+/// Whether `input` is written exactly as YYYY-MM-DD and names a real day.
+fn real_date(input: &str) -> bool {
+    let bytes = input.as_bytes();
+    let shaped = bytes.len() == 10
+        && bytes.iter().enumerate().all(|(i, b)| {
+            if i == 4 || i == 7 {
+                *b == b'-'
+            } else {
+                b.is_ascii_digit()
+            }
+        });
+    shaped
+        && valid_date(
+            input[..4].parse().unwrap_or(0),
+            input[5..7].parse().unwrap_or(0),
+            input[8..].parse().unwrap_or(0),
+        )
 }
 
 pub fn check_result_file(rel: &str, input: &str, known: &Names) -> Result<String> {
@@ -635,9 +580,11 @@ pub fn check_result_file(rel: &str, input: &str, known: &Names) -> Result<String
             return Err(format!("{key} must be one line of at most 120 characters with no pipe; an output, transcript or note does not belong in a result file").into());
         }
     }
-    let date = canonical_date(string(&data["run_date"]))
-        .ok_or("run_date must be a real date, YYYY-MM-DD")?;
-    if date != cap[1] {
+    let date = string(&data["run_date"]);
+    if !real_date(date) {
+        return Err("run_date must be a real date, YYYY-MM-DD".into());
+    }
+    if date != &cap[1] {
         return Err("run_date must match the file name".into());
     }
     let results = &data["results"];

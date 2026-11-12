@@ -204,6 +204,21 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "Xero Central: Set up your clients (Xero Partner Hub, Australia)",
+      "url": "https://central.xero.com/s/article/Create-a-client-in-Practice-Manager-AU",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Product documentation, not law. The client fields list sits in a collapsed section that a plain HTTP request does not show; confirm the field names in a fresh product inspection.",
+      "final_url": "https://central.xero.com/0/article/Set-up-and-manage-your-clients?userregion=true",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

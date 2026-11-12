@@ -89,6 +89,54 @@
       "content_hash_covers": "html",
       "source_last_modified": "",
       "content_url": "https://www.legislation.gov.au/C2025A00029/asmade/text"
+    },
+    {
+      "title": "PS LA 2011/19 Administration of the penalty for failure to lodge on time",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS201119/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS201119/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "PS LA 2011/12 Remission of general interest charge",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS201112/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 12 November 2026 on the ATO legal database; paragraphs 7 to 33 were read. The page shows a notice that the Practice Statement is being reviewed. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS201112/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "PS LA 2006/8 Remission of shortfall interest charge and general interest charge for shortfall periods",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS20068/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 12 November 2026 on the ATO legal database; paragraphs 11 to 15 were read. The page shows a notice that the Practice Statement is being reviewed. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=PSR/PS20068/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

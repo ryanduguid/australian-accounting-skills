@@ -112,6 +112,53 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "GSTR 2026/D2 Goods and services tax: recipient created tax invoices",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=DGS/GSTR2026D2/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 November 2026 on the ATO legal database; it is a draft for comment, not a final ruling. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=DGS/GSTR2026D2/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "GSTR 2000/10W Goods and services tax: recipient created tax invoices",
+      "url": "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200010/NAT/ATO/00001",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 11 and 12 November 2026 on the ATO legal database. The withdrawal notice, dated 28 July 2026, says GSTR 2000/10 is withdrawn with effect from 29 July 2026; paragraph 2 says the repealed determinations it explains only apply to RCTIs issued on or before 14 June 2023, and paragraph 3 says it continues to apply to RCTIs issued on or before 14 June 2023 but not to RCTIs issued on or after 15 June 2023. On 12 November 2026 the Federal Register of Legislation showed the Recipient Created Tax Invoice Determination 2023 (F2023L00785) in force, registered on 14 June 2023, commencing on the day after registration and repealing the earlier RCTI determinations in its Schedule 1; it has no record of its own here. A reviewer must confirm both dates in the notice's PDF, which the ATO names as its authorised version, and that the cut-off matches the determination's commencement. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200010/NAT/ATO/00001",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Peppol Authority: PINT A-NZ Self-billing business interoperability specification",
+      "url": "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time. Specification, not law: the RCTI determination and the ATO govern which documents are RCTIs.",
+      "final_url": "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

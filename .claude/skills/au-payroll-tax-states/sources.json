@@ -262,6 +262,21 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "Payroll Tax Act 1971 (Qld), in-force version (ss 9, 52 and 53)",
+      "url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-1971-037",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 11 November 2026 from the in-force version on the Queensland legislation site; ss 9, 52 and 53 and the dictionary's definitions of taxable wages and group member were read. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-1971-037",
+      "http_status": 200,
+      "fetched_at": "2026-11-11",
+      "review_required_since": "2026-11-11",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

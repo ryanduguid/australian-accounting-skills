@@ -78,6 +78,25 @@ fn snapshot_validation_checks_flags_digest_and_unicode_character_bounds() {
 }
 
 #[test]
+fn repeated_snapshot_keys_are_refused() {
+    let root = tempfile::tempdir().unwrap();
+    let skills = index(root.path());
+    let path = root.path().join("snapshot.json");
+    let text = value("a").to_string();
+    fs::write(
+        &path,
+        format!(r#"{}, "available": false}}"#, &text[..text.len() - 1]),
+    )
+    .unwrap();
+    assert!(
+        p::load_snapshot(&path, &skills)
+            .unwrap_err()
+            .to_string()
+            .contains("duplicate JSON key 'available'")
+    );
+}
+
+#[test]
 fn comparison_marks_all_truncation_causes_including_unshown_lines() {
     let old = value("a");
     for text in ["new\n".repeat(100), "𝄞".repeat(240), "a\n".repeat(401)] {

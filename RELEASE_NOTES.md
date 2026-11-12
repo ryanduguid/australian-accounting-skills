@@ -1,5 +1,208 @@
 # v0.5.1 (unreleased)
 
+Together the changes below provide 104 skills, 229 validation cards and 119 routing
+prompts. The added cards and prompts have no recorded model run.
+
+Three skills are new. `myob-exports` does for MYOB Business and AccountRight what
+`xero-exports` does for Xero: which report to request, an export manifest, checks for
+a partial, filtered or wrong-basis export, and control-account and GST tie-outs. A
+live read goes only through MYOB's own connector, because MYOB's API scopes cannot
+show that a connection is read-only, and the skill refuses every write.
+`au-client-meeting-note` turns a client meeting transcript or notes into a draft file
+note for the practitioner's review, with every line traced to the source. Missing
+consent to the recording or the AI tool is a prominent reviewer exception, and
+lawfulness is left to the practitioner. `marketplace-settlements` rebuilds a seller's
+marketplace or payment-platform settlements to each payout in exact cents, ties
+payouts to the bank and checks the clearing account against unsettled sales and
+reserves. It takes fee GST only from documents and keeps platform-collected tax as a
+lead for the registered agent. Each new skill has a routing prompt and 2 synthetic
+cards, 3 for `marketplace-settlements`.
+
+Thirteen skills now prepare the output a practitioner sends or files, where before
+they stopped at the working behind it. `au-crypto-tax`, `bas-preparation`,
+`au-bookkeeping`, `year-end-workpapers` and `au-individual-return` draft client
+requests for facts and records, each marked drafted and not sent and stating no tax
+treatment; `year-end-workpapers` also adds a 3-year analytical view when 2 prior
+years' signed statements are supplied. `au-depreciation-schedule` prepares an
+accounting depreciation schedule from the entity's documented policy, leaving a class
+blank and `UNVERIFIED` where the policy is silent. `month-end-close` adds a monthly
+management report with stated ratio formulas, trends and options for the owner, and
+`financial-modelling` a monthly three-way forecast whose `check_balance` and
+`check_cash` must be zero every month. `au-partnership-tax` abstracts the partnership
+agreement by clause and lists questions for the partners' solicitor.
+`au-tax-research` screens a set of Budget measures against the client's facts, giving
+status and routes only, and drafts a request for facts not yet established.
+`au-ato-penalties-interest` sets out what a draft remission request contains: only
+facts the evidence pack holds, unsigned, for the registered agent to review and send.
+`au-tax-agent-obligations` adds a row for each of the practice's own AML/CTF
+obligations, with no conclusion on compliance or designated services, and reconciles
+the practice's client list with the ATO's on a shared identifier without changing
+anything at the ATO. `au-trust-distributions` adds a resolution content schedule that
+never drafts wording. 14 synthetic cards cover these steps, and
+`docs/nagaris-comparison.md` records the 14 rows they change.
+
+The citation gate now resolves 1,693 of 1,693 citations to source records. Of 1,437 legislative sections, 1,197 are found in their Act's committed index, 3 are listed exceptions and 237 belong to an Act without an index. Missing sections fail the check, as do source records whose title contradicts the index header. The README gives the rebuild procedure. These structural checks do not establish the legal meaning or current application of a citation.
+
+`tax-invoice-review` attributes the RCTI withdrawal dates to the notice withdrawing
+GSTR 2000/10 and checks reused invoice numbers by supplier and number together, with
+a new card for 2 suppliers sharing a number. `statement-to-csv` explains a
+posting-date period break but leaves it open, since an issuer's terms may place a
+line outside the printed period. `bas-preparation` says why its payroll tax screen
+lists a Queensland group member on wages paid or already payable: taxable wages
+are settled in `au-payroll-tax-states`, not in the screen. The owner skill also
+includes wages the employer is liable to pay in its registration check.
+
+Five tie-out skills gain a worked example: `au-ato-account-reconciliation`,
+`au-franking-account`, `au-trust-distributions`, `bas-preparation` and
+`stp-finalisation`. A test now recomputes the arithmetic in validation cards and
+worked examples.
+
+`docs/installation.md` now opens with one table giving each install route's revision,
+MCP server, terminal need, recorded test and update path, and the manual copy clones
+the published tag. A Cursor plugin manifest follows Cursor's documented format but
+has not been loaded in Cursor; the guide covers Cursor's team marketplace and local
+plugin folder, both untested. New tests check every relative Markdown link and its
+heading offline, fail on another country's tax terms (HMRC, IRS, Form 1099 and sales
+tax) in skills and cards, and require every card to appear in the validation README's
+coverage table. `templates/entity-context.md.example` gives one placeholder file per
+entity, each field a lead to confirm against the period's records. `RELEASING.md` adds
+a README notice for corrections to the latest published release.
+
+Result files now accept `run_date` only as `YYYY-MM-DD`, and the identifier screen also
+flags long digit runs grouped by dots or commas whilst still passing amounts.
+`sweep-outcome` reads counts as 64-bit ASCII integers, and `audit-grader-reads` flags a
+grader folder that ends a path. `build-plugin-evals` refuses a root outside Git, flags
+an uncommitted copy as `dirty` and takes `--changed-since REV` to build only the cases
+for changed skills. Source indexes and passage snapshots now reject repeated JSON keys.
+
+Every skill that reads client documents, 96 of the 97, now records an instruction
+that tries to change or override the workflow, its output, the firm's instructions
+or the user's request, but not ordinary commercial terms, and any sign that a
+document may have been altered or forged that the records do not explain, as a
+reviewer exception without concluding why it differs. It keeps the item as printed,
+marks it `UNVERIFIED` and leaves it out of supported totals until the reviewer
+resolves it. The firm template carries the same rule. The skill left out,
+`au-tax-rates-verification`, reads only published authority and calculator output.
+16 synthetic cards bring the validation pack to 196: 7 plant instructions in a bank
+statement line, an invoice footer, a lease clause, an email claiming to be from the
+ATO, hidden PDF text, a spreadsheet comment and a client's attachment; 7 present an
+ABN that fails its check digits, invoice lines that do not foot, impossible logbook
+entries, a reused invoice number, an altered income statement, a BSB that belongs to
+a different bank and an ATO statement that does not roll; and 2 positive controls
+hold ordinary payment terms, including a note to the preparer, and a fully explained
+timing difference, neither of which may be flagged. They have no recorded model run,
+so the new test checks wording and card structure, not model behaviour.
+
+Every skill now has a routing prompt. Sixty-six synthetic prompts bring
+`validation/routing-cases.yaml` from 41 prompts for 35 skills to 107 for all
+97, each listing the 1 to 3 neighbouring skills a router could confuse with the
+expected one. A test now fails when a skill has no routing prompt. The new
+prompts have no recorded model run.
+
+`statement-to-csv` hands its tie-outs to a new `accounting-skills statement-check`
+command when it is installed, which checks running, page and closing balances,
+gross credits and debits against printed totals, and continuity between
+statements in exact cents. Without it, the skill ties out by hand to the same
+rules. Step 4 now fails omissions that cancel against printed totals, step 3
+accepts a sign from the running balance only when the balance change equals the
+amount and keeps card balances in the owed direction, and step 8 records Xero's
+100,000-row limit and its date-format prompt, read on 11 November 2026. One
+synthetic card brings the validation pack to 181, with no recorded model run for
+it, so the new tests check wording and the checker's arithmetic, not model
+behaviour. The 2 Xero source records still await human review: the source sweep
+extracts no text from those pages, so it records no digest for them.
+
+`accounting-skills statement-check` exits 0 when everything ties, 2 on any break
+and 1 on malformed input, which includes an empty input, a repeated statement id
+or a missing or repeated reference. It prints an `OVERLAP` line for each pair of
+overlapping periods and breaks a statement period wholly within another, an
+overlap it cannot place because the earlier lines lack posting dates or are not
+in posting-date order, a line posted outside its period, and a line dated outside
+it, with 31 days' allowance before the period for cards and other accounts in the
+owed direction.
+The `PASS` line counts the printed balances, printed totals and statement links
+it compared.
+
+Seven practice skills gain review steps. The transaction GST review in
+`bas-preparation` screens manual journals to a GST account and credits on
+government fees (GST Act Division 81 and the GST Regulations), and
+`bas-preparation` runs the payroll tax registration test from
+`au-payroll-tax-states` when payroll is in scope, comparing total Australian
+or group wages with each paying jurisdiction's monthly, annual and any weekly
+thresholds, and lists an unregistered Queensland group member separately.
+`au-super-guarantee-charge` records the PCG 2026/1 risk zone at a recorded
+as-at date for each first-year QE day with a shortfall, keeps a contribution
+never made apart from one with no receipt date, and records who confirmed the
+low-zone facts.
+`xero-exports` ties a connector total to the on-screen report before relying
+on a connection and runs completeness checks 1 and 3 on connector reads.
+`tax-invoice-review` checks Peppol tax category codes (Guidance Note 11),
+reads WET and LCT lines as Guidance Note 01 sets them out and holds a Peppol
+self-billed RCTI to the same conditions as any RCTI.
+`au-aml-ctf-client-coverage` names the practice system's code field, reports
+dual-code mismatches, tests a trust's beneficial owner evidence role by role
+and lists the trust, its representatives and identifiable beneficiaries for
+screening. `au-payroll-review` screens new employees for a stapled fund request,
+and `au-smsf-year-end` records each asset's market value basis and evidence.
+The new test checks wording, not model behaviour, and the 9 new source records
+await human review.
+
+Two skills bring the pack to 99. `au-smsf-death-benefits` prepares an SMSF's
+work after a member dies: each nomination tested against the deed, SIS and
+tax dependants in separate columns, the forms of payment each recipient can
+take, reversionary transfer balance credits, components and the untaxed
+element, the payment timeline and withholding, and the records the trustee,
+each recipient and the legal personal representative need.
+`au-family-trust-election` prepares the evidence for deciding on a family trust
+or interposed entity election: the reasons, each candidate test individual's
+family and family group, the family control test, the earliest specified income
+year, the FTDT that making the election would create, each interposed entity
+election, the limits on later variation and revocation, and a form data sheet.
+`au-franking-account` gains step 5a, which prepares a proposed private company
+dividend: dividend rights, the s 254T evidence, a resolution schedule, the
+benchmark position, draft distribution statements, the projected franking
+entries and the Division 7A set-off route. `au-smsf-year-end` routes a member's
+death to the new skill. Three synthetic cards bring the validation pack to 183 and
+3 routing prompts bring the routing set to 44, with no recorded model run for
+any of them. The new source records await human review.
+
+
+`au-gst-property` gains a farm land step. It tests a supply of farm land for
+farming (s 38-480) and subdivided farm land supplied to an associate
+(s 38-475) condition by condition, with the evidence each needs, and sets them
+beside the going concern path, the recipient's Division 135 adjustments, the
+margin scheme history for a later sale, settlement withholding with the
+credit (to a GST group's representative member or an insolvency
+representative where liable) or refund, and the
+supplier's notice. `au-primary-production` gains a farm succession step that
+prepares the asset and entity register, CGT events, small business concession
+and rollover evidence, trading stock and plant transfers, and the effect on
+farm management deposits and averaging, routes duty, land tax and GST to their
+skills and lists the family and legal decisions it leaves open. 2 synthetic
+cards bring the validation pack to 182, with no recorded model run for them,
+so the new test checks wording and card arithmetic, not model behaviour.
+`au-small-business-cgt` now states the basic conditions and each concession's
+extra conditions that the succession step routes to it, and notes that
+s 152-205(2) changes the basic conditions for the small business reduction
+from the income year that includes 1 July 2027. The 45 new source records
+await human review.
+
+Two skills fill gaps against the Ask Nagaris skill list. `au-main-residence`
+prepares the main residence exemption evidence from Subdivision 118-B: who can
+use it, the ownership period on contract and settlement dates, a period
+schedule with the moving, changing residence, absence, building, destruction,
+spouse and child rules, income use and the first income use rule, adjacent
+land and the partial exemption inputs. `au-share-buy-back` prepares a
+buy-back's workpapers under Division 16K and Part 2J.1: the tax and
+Corporations Act classifications, the share capital tainting test, the
+capital and dividend split beside the average capital per share, market
+value, franking debits including distributions funded by capital raising,
+Division 7A links and each seller's consideration and dividend.
+`au-capital-gains`, `au-franking-account`, `au-nonresident-cgt`,
+`au-rental-property` and `au-short-stay-accommodation` now route to them.
+Five synthetic cards bring the validation pack to 185, with no recorded model run for them, and the new
+source records await human review.
+
 The `xero-exports` connector route gains a fork row in its tool allowlist: the
 31 read tools `ryanduguid/xero-mcp-server` registers at commit `a115f18` with
 `XERO_READ_ONLY=true`. The row applies only once the running server is verified

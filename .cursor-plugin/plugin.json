@@ -1,0 +1,12 @@
+{
+  "name": "australian-accounting-skills",
+  "version": "0.5.1",
+  "description": "Australian accounting and tax preparation workflows with source checks and human review. Not tax advice.",
+  "author": {
+    "name": "Ryan Duguid"
+  },
+  "homepage": "https://duguid.com.au/tools/australian-tax-ai-agents/",
+  "repository": "https://github.com/ryanduguid/australian-accounting-skills",
+  "license": "LicenseRef-Duguid-Public-Attribution-1.0",
+  "skills": "./.claude/skills/"
+}

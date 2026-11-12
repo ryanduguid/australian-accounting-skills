@@ -23,9 +23,17 @@ Before tagging:
    citation bytes already captured by an immutable tag. Review the plugin's
    exact MCP pin and its documented Python requirement against the published
    server; never pin a package that has not been published.
-5. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
+5. If the release corrects a figure that the latest published release stated,
+   list each correction under a `## Corrections since v<latest>` heading in
+   `RELEASE_NOTES.md` and put a short notice above the README's `## Install`
+   heading that links it. Add both in the change that first records the
+   correction: the test requires the notice only until step 4 adds the new
+   version to `RELEASED_INVENTORIES`. Remove the notice at the next release
+   that corrects nothing; no test checks the removal. Corrections to older
+   releases, such as v0.2.1, stay in the README's collapsed section.
+6. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns the repository tests, the fabricated-pack validator and the exact 97-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
+The workflow reruns the repository tests, the fabricated-pack validator and the exact 104-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final 4-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
@@ -98,9 +106,10 @@ only direction is forward, so cut a new version rather than try to get behind it
 
 ## Preserved squash-boundary releases
 
-Six published tags point at pull-request-side commits that preceded their
-squash merges to `main`. They are intentional historical exceptions outside
-current `main` ancestry:
+Seven published tags point at pull-request-side commits that preceded their
+squash merges to `main`, outside current `main` ancestry. The first 6 are
+intentional historical exceptions. `v0.5.0`, tagged on 28 October 2026, breaks
+the rule below that a release tag must be reachable from `main`:
 
 | Release | Tag object | Peeled commit |
 | --- | --- | --- |
@@ -110,10 +119,12 @@ current `main` ancestry:
 | `v0.1.5` | `ba7496f613d552cb9fdbb49083848d3baf180c08` | `57f7bef712fa856db7f073fab65c4cf016885197` |
 | `v0.2.0` | `578e7f17669db807d8a43d08d10962e66f3274f0` | `1d6b9f12c6faed307018c524d76a3c6689db3f46` |
 | `v0.2.1` | `fcec4d6d4689ccbdd17372ee9150a72fa453cdd6` | `527b0a22c8be5ce10855f12f052cd3bda7b7b827` |
+| `v0.5.0` | `539590dba270141e4ca8cf39b6ee4a2dfb8de668` | `09743d381e260d7060426e0b4a5a71608cdd84b4` |
 
 The `v0.2.0` peeled commit carries the same tree as its squash merge
-`29475b9`, and the `v0.2.1` peeled commit the same tree as `2decdc5`, so the
-released files match `main` at those points exactly.
+`29475b9`, the `v0.2.1` peeled commit the same tree as `2decdc5`, and the
+`v0.5.0` peeled commit the same tree as `a838894` (#296), so the released
+files match `main` at those points exactly.
 
 Ancestry and release attestation are separate facts. `gh release verify`
 succeeds for `v0.1.5`. It returns `no attestations for tag` for `v0.1.1`,

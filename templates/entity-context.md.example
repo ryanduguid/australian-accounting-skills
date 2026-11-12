@@ -1,0 +1,11 @@
+# Entity context: {ENTITY CODE}
+
+Copy this file once per entity into {firm-approved secure location}, never into this repository or any other git repository, and replace every {PLACEHOLDER}. Each field is a lead to confirm against the period's records, never evidence.
+
+- Entity type: {individual / company / trust / partnership / SMSF / other}
+- Income year: {income year the work covers}
+- GST registration: {registered or not registered, and the effective date}
+- GST accounting basis: {cash / accruals}
+- Ledger file: {ledger and organisation or company file for this entity}
+- Balance date: {balance date}
+- Engagement scope: {services engaged, per the current engagement letter}

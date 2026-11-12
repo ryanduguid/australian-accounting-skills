@@ -55,6 +55,13 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
         "Card 4111111111111111.",
         "4111111111111111, expiring",
         "no.4111111111111111",
+        // Dot or comma grouping that is not thousands grouping.
+        "4111.1111.1111.1111",
+        "12345678,2",
+        "4750.00,4111111111111111",
+        "-4750.00,12345678,Transfer",
+        "4750.00,51824753556",
+        "062.000,12345678",
     ] {
         let error = v::check_sensitive_content(text, &[])
             .unwrap_err()
@@ -64,7 +71,13 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
             "{text}: {error}"
         );
     }
-    for text in ["$12345678.90", "0.123456789012", "12,345,678.90"] {
+    for text in [
+        "$12345678.90",
+        "0.123456789012",
+        "12,345,678.90",
+        "1,234,567",
+        "18450.00,4450.00,14000.00,10000.00",
+    ] {
         assert!(v::check_sensitive_content(text, &[]).is_ok(), "{text}");
     }
     assert!(
@@ -104,6 +117,27 @@ fn trial_provenance_does_not_upgrade_preparation_to_a_verdict() {
             .to_string()
             .contains("duplicate JSON key")
     );
+}
+
+#[test]
+fn run_date_is_only_the_extended_calendar_form() {
+    let known = BTreeSet::from(["test-card".to_owned()]);
+    let path = "validation/results/2026-01-31-fixture.json";
+    let mut record = json!({"model":"fixture","run_date":"2026-01-31","skills_version":"fixture","runner":"A Person","results":{"test-card":"pass"}});
+    assert_eq!(
+        v::check_result_file(path, &record.to_string(), &known).unwrap(),
+        "legacy"
+    );
+    for value in ["20260131", "2026-W05-6", "2026W056", "+026-01-31"] {
+        record["run_date"] = json!(value);
+        assert!(
+            v::check_result_file(path, &record.to_string(), &known)
+                .unwrap_err()
+                .to_string()
+                .contains("run_date must be a real date, YYYY-MM-DD"),
+            "{value}"
+        );
+    }
 }
 
 #[test]

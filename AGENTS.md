@@ -6,12 +6,12 @@ through [CLAUDE.md](./CLAUDE.md).
 
 ## What this repository is
 
-Ninety-seven agent skills for Australian public-practice and contracting-business
+One hundred and four agent skills for Australian public-practice and contracting-business
 accounting. The Australian topic expansion adds tax returns, investment and
 cross-border workpapers, state-tax evidence, financial statements and formation
 checklists.
 The original practice workflows cover BAS, close, workpapers, FBT,
-Division 7A, STP, Xero exports and cashflow. The consolidated contracting
+Division 7A, STP, Xero and MYOB exports and cashflow. The consolidated contracting
 workflows cover claims, retentions, WIP, contract costs, plant, fuel, payroll
 tax, contractor super, TPAR and Coal LSL. Each skill encodes the process and
 tie-outs, then sends the agent to current primary sources for mutable rules.
@@ -81,9 +81,10 @@ the credit line is the author's request. Never add either to a client deliverabl
 | `.claude-plugin/plugin.json` | Claude Code plugin manifest |
 | `.claude-plugin/marketplace.json` | Claude Code marketplace listing |
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
+| `.cursor-plugin/plugin.json` | Cursor plugin manifest, not yet loaded in Cursor |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |
 | `validation/` | Validation pack the tests exercise |
-| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, and a candidate port of the other `scripts/` |
+| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial and plugin-eval builders, the `statement-check` tie-out `statement-to-csv` runs, and a candidate port of the other `scripts/` |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip
@@ -110,14 +111,18 @@ python -m unittest discover -s tests -v
 python scripts/validate_validation.py
 python tests/verify_skills_cli.py
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
 git diff --check
 ```
 
-The 5 Python checks, ShellCheck, actionlint and the coverage check are the
-gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
+The 5 Python checks, ShellCheck, actionlint, the coverage check and the
+citation check are the gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
 actionlint 1.7.12 run in its `lint` job, then the 3 Python verification checks
-run on Python 3.14 and 3.15. The coverage check needs Rust 1.99 or newer; the
-`native` job runs the same command on Linux and Windows. A third job scans the
+run on Python 3.14 and 3.15. The coverage and citation checks need Rust 1.99
+or newer; the `native` job runs the same commands on Linux and Windows. The
+citation check reports, by file and line, each section, ruling, determination
+or practice statement a skill cites without a record in its `sources.json`, and
+each section missing from its Act's list in `tools/accounting-skills/section-index/`. A third job scans the
 full history with gitleaks against
 `.gitleaks.toml`, which carries client-identifier rules on top of the default
 credential rules.
@@ -150,7 +155,8 @@ including any source that published a change after its last review, and
 `tests/test_skill_metadata.py` enforces the layout: front matter carrying
 `name` and `description`, `name` matching the directory exactly, no duplicate
 names, one level deep, and a marketplace inventory that matches the discovered
-skills exactly.
+skills exactly. `tests/test_routing_cases.py` requires every skill to have at
+least one prompt in `validation/routing-cases.yaml`.
 
 ## Writing rules
 

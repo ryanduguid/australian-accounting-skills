@@ -1009,9 +1009,12 @@ class PreflightTests(unittest.TestCase):
     def test_accepting_reviewed_records_cannot_release_pending_import_gst_sources(self) -> None:
         """bas-preparation step 5 relies on 3 import GST records. While they are
         pending, accepting every other record must still leave the skill held."""
-        today = "2026-11-06"
         index = REPOSITORY / ".claude" / "skills" / "bas-preparation" / "sources.json"
         shipped = json.loads(index.read_text(encoding="utf-8"))["sources"]
+        # A human acceptance cannot predate a record's pending date, so accept
+        # on the latest one the shipped index carries.
+        today = max(["2026-11-06", *(str(record.get(source_refresh.REVIEW_REQUIRED_FIELD, ""))
+                                     for record in shipped)])
         international = (
             "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/"
             "in-detail/rules-for-specific-transactions/international-transactions/"

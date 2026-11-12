@@ -18,6 +18,7 @@ import re
 import unittest
 
 from skill_prose import (
+    DO_NOT,
     ISO_DATE,
     NOT,
     PENDING,
@@ -32,6 +33,29 @@ from skill_prose import (
     table_row,
     workflow_step,
 )
+
+# Links from a skill to the author's other repositories, and what each names.
+AUTHOR_LINK = re.compile(r"github\.com/ryanduguid/(?!australian-accounting-skills\b)[\w.-]+(?:/[^\s)\"'`>]*)?")
+LINKED_PROGRAMS = {
+    "/packages/review-ready-gate": "review-ready",
+    "/packages/monthly-close-control-plane": "close-control",
+    "/packages/xero-trial-balance-export": "xero-trial-balance-export",
+    "/tools/xero_aged_receivables.py": "xero_aged_receivables.py",
+    "/packages/the-wip-tally": "wip-tally",
+    "/packages/the-exchequer-tally": "the-exchequer-tally",
+    "/packages/solomons-sword": "solomons-sword",
+    "/packages/payday-super-checker": "payday-super-check",
+    "ryanduguid/PaulGoodman": "fadden",
+}
+NOT_PROGRAM_LINKS = (
+    r"/powerquery/",  # an adapter the skill describes; it does not tell the agent to run it
+    r"/samples/",  # fabricated sample data
+    r"ryanduguid/DrDebits/",  # a data file
+    r"ryanduguid/xero-mcp-server/",  # the ledger connector, which has its own Privacy bullet
+    r"ryanduguid/australian-accounting$",  # the repository in wip-tally's cargo install command
+)
+# Named without a link to its source.
+UNLINKED_PROGRAMS = ("aasb-corpus",)
 
 # 'Dutiable' and its faithful rewordings.
 DUTIABLE = r"(?:dutiable|subject to duty|liable to duty)\b"
@@ -224,6 +248,34 @@ class DatedRuleChangeTests(unittest.TestCase):
             "https://www.ato.gov.au/businesses-and-organisations/business-bulletins-newsroom/"
             "changes-to-beneficiary-tfn-reporting-for-closely-held-trusts",
         )
+
+    def test_trust_resolution_content_schedule_carries_content_never_wording(self) -> None:
+        step = workflow_step("au-trust-distributions", "1a")
+        self.assert_sentence(step, r"\btrustee and their lawyer\b", r"\bdeed abstract\b",
+                             r"\bresolution-readiness checklist\b", r"\bproposed distribution plan\b",
+                             affirmed=(r"\bprepare a schedule\b",))
+        # Each entry is required on its own.
+        self.assert_sentence(
+            step, r"\bfor each beneficiary\b", r"\bmeasure of income the deed uses\b", r"\bamount or share\b",
+            r"\bstreamed class\b", r"\bclause relied on\b", r"\bdeadline as the deed abstract records it\b",
+            r"\bnot ready\b", r"\bquestion for the lawyer\b",
+        )
+        self.assert_sentence(step, r"\btrust-law income\b", r"\bstep 2\b", NOT + r"spread\b",
+                             affirmed=(r"\blist (any|the) difference\b",))
+        self.assert_sentence(step, r"\bblank\b", r"`UNVERIFIED`", NOT + r"fill it from\b")
+        self.assert_sentence(step, r"\bschedule of content\b", NOT + r"resolution wording\b",
+                             DO_NOT + r"draft, date or sign a resolution\b")
+        self.assert_sentence(step, r"\bthe trustee and their lawyer settle the wording\b", r"\btrustee decides\b")
+        # The schedule carries the proposal as given and derives nothing from it.
+        self.assert_sentence(step, r"\bproposal as given\b", NOT + r"(convert|compute)\b",
+                             r"\bnothing the proposal does not state\b")
+        self.assert_sentence(step, r"\bshares apply before or after the streamed amounts\b",
+                             r"\bquestion for the trustee and their lawyer\b")
+        # Step 2's schedule exists before the comparison.
+        self.assert_sentence(step, r"\btrust-law income\b", r"\bprepared before this schedule\b")
+        self.assert_carries(section("au-trust-distributions", "Inputs"), "proposed distribution plan")
+        self.assert_sentence(section("au-trust-distributions", "Hand-off"), r"\bresolution content schedule\b",
+                             NOT + r"resolution wording\b")
 
     def test_trust_family_trust_screen_reads_the_fte_and_iee_report(self) -> None:
         step = workflow_step("au-trust-distributions", "4a")
@@ -1390,7 +1442,7 @@ class DatedRuleChangeTests(unittest.TestCase):
             step, r"\bno rate\b", r"\bthreshold\b", r"\btaxing date\b", r"\bdue date\b", r"\bfee\b",
             affirmed=(r"\bread each from the revenue office's current page\b",),
         )
-        self.assert_sentence(step, r"\blegislation register links\b", NOT + r"indexed\b", r"\boutside the reviewed fetch list\b")
+        self.assert_sentence(step, r"\blegislation register links\b", NOT + r"indexed\b", r"\byet\b")
         self.assert_sentence(step, affirmed=(r"\bconfirm each row\b[^.]*\bAct for the assessment year\b",))
         self.assert_sentence(step, r"\bdecides no liability, exemption or surcharge\b")
 
@@ -1856,17 +1908,45 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(
             privacy,
             rf"`{re.escape(audited)}`",
-            r"\bimport a network library\b",
+            r"\bimport no network library apart from `asyncio`",
             r"\b0 socket and 0 connect calls\b",
             r"\b12 calculation tools\b",
         )
         self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
+        self.assert_sentence(privacy, r"\btrace's method and output\b", r"\bnot published\b")
+        self.assert_sentence(privacy, r"\bMCP SDK\b", r"\bnot pinned\b", r"\bdid not cover it\b")
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
         self.assertIn("The skill folders hold Markdown and JSON files and no scripts", readme)
         suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
         self.assertLessEqual(suffixes, {".md", ".json"})
+
+    def test_readme_names_every_local_program_a_skill_names(self) -> None:
+        """A firm reads the Privacy section to decide what can leave the machine, so a
+        program a skill points the agent to must appear there. Programs are found from
+        the skills' links to the author's tool repositories; a link this test cannot
+        classify fails it until the README and the maps below name it."""
+        texts = [path.read_text(encoding="utf-8") for path in sorted(SKILLS.rglob("*.md"))]
+        found = set()
+        for link in sorted({m for text in texts for m in AUTHOR_LINK.findall(text)}):
+            programs = {name for part, name in LINKED_PROGRAMS.items() if part in link}
+            with self.subTest(link=link):
+                self.assertTrue(
+                    programs or any(re.search(pattern, link) for pattern in NOT_PROGRAM_LINKS),
+                    "name this program in the README's Privacy section and in LINKED_PROGRAMS",
+                )
+            found |= programs
+        self.assertEqual(found, set(LINKED_PROGRAMS.values()), "a mapped program is no longer linked")
+        for program in UNLINKED_PROGRAMS:
+            with self.subTest(program=program):
+                self.assertTrue(any(f"`{program}" in text for text in texts), "no skill names it any more")
+        readme = (SKILLS.parents[1] / "README.md").read_text(encoding="utf-8")
+        heading = "- **A local program a skill names**"
+        bullet = next((line for line in readme.splitlines() if line.startswith(heading)), "")
+        for program in sorted(found | set(UNLINKED_PROGRAMS)):
+            with self.subTest(program=program):
+                self.assertIn(f"`{program}`", bullet)
 
     def test_tracker_reports_are_intake_tied_to_source_records(self) -> None:
         cgt = " ".join(raw_section("au-capital-gains", "Inputs").split())

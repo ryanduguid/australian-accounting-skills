@@ -7,8 +7,8 @@
 #
 # Ruff, Pyright, ShellCheck and actionlint are pinned to the versions verify.yml
 # installs, so a hook that passes here cannot fail there on a version difference.
-# The coverage-matrix hook runs the native command in tools/accounting-skills,
-# so it needs Rust 1.99 or later; that directory's rust-toolchain.toml pins the
+# The coverage-matrix and citations hooks run native commands in
+# tools/accounting-skills, so they need Rust 1.99 or later; that directory's rust-toolchain.toml pins the
 # version CI uses.
 #
 #   pip install pre-commit && pre-commit install
@@ -78,6 +78,13 @@ repos:
         language: system
         pass_filenames: false
         files: ^(\.claude/skills/|validation/cases/|validation/results/|tests/|tools/accounting-skills/src/|coverage\.json|docs/skill-verification\.md)
+
+      - id: citations
+        name: every cited section and ruling has a sources.json record
+        entry: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
+        language: system
+        pass_filenames: false
+        files: ^(\.claude/skills/|tools/accounting-skills/src/)
 
       - id: whitespace
         name: git diff --cached --check

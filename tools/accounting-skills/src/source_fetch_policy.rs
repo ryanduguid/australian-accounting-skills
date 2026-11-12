@@ -49,6 +49,12 @@ pub const APPROVED_HOSTS: &[&str] = &[
     "community.owasp.org",
     "central.xero.com",
     "www.myob.com",
+    "www.legislation.vic.gov.au",
+    "www.legislation.wa.gov.au",
+    "www.legislation.sa.gov.au",
+    "www.legislation.tas.gov.au",
+    "www.legislation.act.gov.au",
+    "legislation.nt.gov.au",
 ];
 const MALFORMED: &str = "Malformed URL or port.";
 const UNSUPPORTED: &str = "Unsupported destination; an exact reviewed HTTPS host is required.";

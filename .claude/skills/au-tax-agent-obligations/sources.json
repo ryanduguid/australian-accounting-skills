@@ -190,7 +190,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "TPB(GS) 49/2024 Upholding and promoting the ethical standards of the tax profession",
+      "title": "TPB(GS) 49/2024 Upholding and promoting the ethical standards of the tax profession (formerly TPB(I) 44/2024)",
       "url": "https://www.tpb.gov.au/tpb-gs-49-2024-upholding-and-promoting-ethical-standards-tax-profession",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -205,7 +205,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "TPB(GS) 50/2024 False or misleading statements",
+      "title": "TPB(GS) 50/2024 False or misleading statements (formerly TPB(I) 45/2024)",
       "url": "https://www.tpb.gov.au/tpb-gs-50-2024-false-or-misleading-statements",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -220,7 +220,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "TPB(GS) 51/2024 Managing conflicts of interest when undertaking activities for government and maintaining confidentiality in dealings with government",
+      "title": "TPB(GS) 51/2024 Managing conflicts of interest when undertaking activities for government and maintaining confidentiality in dealings with government (formerly TPB(I) 46/2024)",
       "url": "https://www.tpb.gov.au/tpb-gs-51-2024-managing-conflicts-interest-when-undertaking-activities-government-and-maintaining-confidentiality-dealings-government",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -235,7 +235,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "TPB(GS) 52/2024 Obligation to keep proper client records of tax agent services provided",
+      "title": "TPB(GS) 52/2024 Obligation to keep proper client records of tax agent services provided (formerly TPB(I) 47/2024)",
       "url": "https://www.tpb.gov.au/tpb-gs-52-2024-obligation-keep-proper-client-records-tax-agent-services-provided",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -250,7 +250,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "TPB(GS) 53/2024 Supervision, competency and quality management under the Tax Agent Services Act 2009",
+      "title": "TPB(GS) 53/2024 Supervision, competency and quality management under the Tax Agent Services Act 2009 (formerly TPB(I) 48/2024)",
       "url": "https://www.tpb.gov.au/tpb-gs-53-2024-supervision-competency-and-quality-management-under-tax-agent-services-act-2009",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -265,7 +265,7 @@
       "source_last_modified": ""
     },
     {
-      "title": "TPB(GS) 54/2024 Keeping your clients informed",
+      "title": "TPB(GS) 54/2024 Keeping your clients informed (formerly TPB(I) 49/2024)",
       "url": "https://www.tpb.gov.au/tpb-gs-54-2024-keeping-your-clients-informed",
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
@@ -323,6 +323,70 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "Anti-Money Laundering and Counter-Terrorism Financing Act 2006",
+      "url": "https://www.legislation.gov.au/C2006A00169/latest",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 12 November 2026 from the Federal Register of Legislation API (compilation 63, C2026C00447); the page refused the agent's fetch. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2006A00169/latest",
+      "http_status": 0,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Anti-Money Laundering and Counter-Terrorism Financing Rules 2025",
+      "url": "https://www.legislation.gov.au/F2025L01026/latest",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 12 November 2026 from the Federal Register of Legislation API (compilation 1, F2026C00274); the page refused the agent's fetch. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/F2025L01026/latest",
+      "http_status": 0,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "AUSTRAC: Your obligations",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-obligations",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 12 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-obligations",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: Client list (Online services for agents)",
+      "url": "https://www.ato.gov.au/tax-and-super-professionals/digital-services/online-services-for-agents/client-list",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 12 November 2026. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/tax-and-super-professionals/digital-services/online-services-for-agents/client-list",
+      "http_status": 200,
+      "fetched_at": "2026-11-12",
+      "review_required_since": "2026-11-12",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
