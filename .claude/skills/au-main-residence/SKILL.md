@@ -1,6 +1,6 @@
 ---
 name: au-main-residence
-description: "Use when preparing evidence for the Australian CGT main residence exemption: ownership and use periods, absence and other choices, first income use, adjacent land and partial exemption inputs."
+description: "Use when preparing CGT main residence exemption evidence: use periods, absence and spouse choices, first income use, adjacent land and partial exemption."
 ---
 
 # Main residence exemption workpaper

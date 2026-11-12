@@ -1,6 +1,6 @@
 ---
 name: au-share-buy-back
-description: "Use when preparing Australian share buy-back workpapers: on-market or off-market type, capital and dividend components, market value, franking, Corporations Act steps and each seller's CGT and dividend position."
+description: "Use when preparing share buy-back workpapers: on- or off-market, capital and dividend components, market value, franking, Corporations Act steps and seller CGT."
 ---
 
 # Share buy-back workpaper

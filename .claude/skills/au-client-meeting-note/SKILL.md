@@ -1,6 +1,6 @@
 ---
 name: au-client-meeting-note
-description: "Use when turning an Australian client meeting transcript or notes into a draft file note for the practitioner's review, with every line traced to the transcript and consent gaps flagged."
+description: "Use when turning an Australian client meeting transcript or notes into a draft file note for review, each line traced to the source and consent gaps flagged."
 ---
 
 # Client meeting file note

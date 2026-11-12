@@ -1,6 +1,6 @@
 ---
 name: au-trust-distributions
-description: "Use when preparing Australian trust income, beneficiary entitlement and distribution reconciliation workpapers, and a resolution content schedule for the trustee."
+description: "Use when preparing trust income, beneficiary entitlement and distribution reconciliation workpapers, and a resolution content schedule for the trustee."
 ---
 
 # Trust distribution review pack

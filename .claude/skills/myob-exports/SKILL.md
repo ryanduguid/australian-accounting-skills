@@ -1,6 +1,6 @@
 ---
 name: myob-exports
-description: "Use when working with MYOB Business or MYOB AccountRight report exports (trial balance, general ledger, receivables and payables, GST, payroll) or a MYOB connector read: which report to request, completeness and tie-out checks and the read manifest."
+description: "Use when working with MYOB Business or AccountRight exports or a MYOB connector read: what to request, completeness and tie-out checks and the read manifest."
 ---
 
 # Working with MYOB exports
