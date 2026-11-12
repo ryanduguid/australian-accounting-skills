@@ -1,6 +1,6 @@
 # Source check, 12 November 2026
 
-An agent read the sources behind the 35 actionable rows of the source sweep run from a residential connection on 12 November 2026 (main `00e3b16`). This is not a human review. No `checked_at`, `fact`, `reviewed_content`, `reverify_by` or `manual_review` value on an existing record changed. Each record read carries a dated note in `limitations` ending 'Human review pending'. Each changed page's current reading is stored as a `pending_review` candidate by `python scripts/source_refresh.py --write`, for a person to accept under [source preflight](source-preflight.md). Skill text changed on the strength of these readings carries a visible 'Human review pending' flag.
+An agent read the sources behind the 35 actionable rows of the source sweep run from a residential connection on 12 November 2026 (main `00e3b16`). This is not a human review. No `checked_at`, `fact`, `reviewed_content`, `reverify_by` or `manual_review` value on an existing record changed. Each existing record whose source was read carries a dated note in `limitations` ending 'Human review pending'; the added and repointed records say instead, as new records do, that human source approval remains pending. Each changed page's current reading is stored as a `pending_review` candidate by `python scripts/source_refresh.py --write`, for a person to accept under [source preflight](source-preflight.md). Skill text changed on the strength of these readings carries a visible 'Human review pending' flag.
 
 ## Unreadable: 8 Xero Central pages
 
@@ -36,12 +36,13 @@ The sweep attributed these rows to a fault in `scripts/source_refresh.py`. That 
 | changed | `wip-over-under-billing` | ASIC large or small proprietary company | Thresholds unchanged; the page now notes a consultation on raising them, not yet in effect | Note only |
 | missing | `au-trust-distributions` | ATO: Increased visibility for trust elections | HTTP 404, no archived copy, and no live page lists the report's fields; the ATO bulletin extending GIC remission for FTDT describes the report's 18 April 2026 enhancement | Record repointed to the bulletin; step 4a states only what the bulletin says; test updated |
 | review-due | `au-client-acceptance` | TPB(GS) 54/2024 (last modified 22 July 2026) | Section 45 matters unchanged since the 29 September reading | Note only |
-| review-due | `au-client-acceptance` | AUSTRAC customer due diligence | Index unchanged; AUSTRAC calls the section 29 route delayed initial customer due diligence, not an exemption | Step 6 reworded and flagged |
+| review-due | `au-client-acceptance` | AUSTRAC customer due diligence | Index unchanged. Section 29 of the Act (compilation C2026C00447) is headed 'Exemptions from initial customer due diligence' but lets the service start before due diligence is complete, with due diligence to follow; AUSTRAC calls this delayed initial customer due diligence | Step 6 now says what section 29 allows, and is flagged |
 | unreadable | `au-aml-ctf-client-coverage`, `statement-to-csv` (2), `xero-exports` (5) | Xero Central | Script-built page shell, as above | Note on the 3 records that lacked one |
 
 ## For the reviewer
 
 - Accepting a candidate follows [source preflight](source-preflight.md): read the source, then update `fact`, `checked_at` and the review deadlines, bind the `pending_review` fields and remove the marker. The `au-company-tax` loss carry back fact still states the turnover test and needs correcting at that review.
 - The 2 `au-client-acceptance` records stay review-due until a person sets `checked_at` and `manual_review.next_review`.
+- The `au-gst-registration-review` record for registering for GST still has `verification_status` `unavailable-http-403` and a title saying direct access was unavailable, though the page now opens directly.
 - The old `au-return-amendment` content address is no longer linked from the skill; keep or remove it.
 - The ATO bulletin still links the removed trust elections page, so the ATO may republish it; recheck before relying on the repointed record.

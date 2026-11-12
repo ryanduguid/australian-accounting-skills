@@ -54,7 +54,7 @@
         "observed_at": "2026-11-12",
         "source_last_modified": ""
       },
-      "limitations": "An agent read the pinned page and the repository history on 12 November 2026: the pinned package tree (c92b312) cannot change and still states the recorded boundary, so the digest change is GitHub page furniture. The 4 later commits on main that touch the package change only the README disclaimer layout, copyright and licence headers, the licence and the fuzz harness; version 1.0.0 and Cargo.lock are unchanged. Human review pending."
+      "limitations": "An agent read the pinned page and the repository history on 12 November 2026: the pinned commit (a5a56e5, package tree c92b312) cannot change and still states the recorded boundary, so the digest change appears to be GitHub page furniture. The 4 later commits on main that touch the package change only the README disclaimer layout, copyright and licence headers, the licence and the fuzz harness; version 1.0.0 and Cargo.lock are unchanged. Human review pending."
     },
     {
       "title": "AASB 9 Financial Instruments",
