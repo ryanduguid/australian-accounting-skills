@@ -10,7 +10,7 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Claude Code plugin at the release tag](#tagged-107-workflow-release) | v0.6.0 tag | Yes, `aus-accounting-mcp==0.6.0` through `uvx`; needs Python 3.14 or later and uv | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 107 skills on Claude Code 2.1.316 from the files this release tags, on Linux on 12 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
 | [Codex plugin at the release tag](#tagged-107-workflow-release) | v0.6.0 tag | No | Yes | Delivered the 107 skills on Codex CLI 0.167.1 from the files this release tags, on Linux on 12 November 2026 | Not documented |
 | [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.6.0 tag (source ZIP), or the default branch through [ZIPs built from a checkout](#upload-zips-built-from-a-checkout) | No | No for the upload; yes to build the ZIPs | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
-| [ChatGPT upload](#chatgpt-without-a-terminal) | Default branch, through ZIPs built from a checkout | No | No for the upload; yes to build the ZIPs | Not tested; steps follow OpenAI's article as read on 13 November 2026 | Not documented |
+| [ChatGPT upload or workspace import](#chatgpt-without-a-terminal) | Default branch, through ZIPs built from a checkout; for a workspace import, the tag or branch the administrator enters | No | No for the upload or import; yes to build the ZIPs | Not tested: no workspace was available. Steps follow OpenAI's articles as read on 13 November 2026 | Workspace import: daily sync, documented by OpenAI; not tested. Upload: not documented |
 | [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp` 0.8.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026; `claude mcp list` reported the 0.8.0 server connected on Linux on 13 November 2026 | Not documented |
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
 | [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
@@ -119,6 +119,19 @@ the ZIPs follow OpenAI's API guide.
 A workspace administrator decides whether members can upload skills. The same
 limits apply as for Claude: no MCP server, and check your firm's approval before
 putting client information into the service.
+
+A ChatGPT workspace administrator can instead import this repository as a
+plugin marketplace from GitHub, following OpenAI's
+[Importing and syncing plugin marketplaces from GitHub](https://help.openai.com/en/articles/20001504-importing-and-syncing-plugin-marketplaces-from-github)
+article, read on 13 November 2026: in the Admin Console's **Plugins**, choose
+**Add**, then **Import marketplace**, enter
+`https://github.com/ryanduguid/australian-accounting-skills` and, optionally,
+the tag `v0.6.0`. The article accepts a Codex marketplace,
+`.agents/plugins/marketplace.json`, which here lists the Codex plugin: the
+skills without an MCP server. This repository also has a Claude-compatible
+`.claude-plugin/marketplace.json`, whose plugin declares the MCP server, and the
+article does not say which one an import reads when both are present. Not
+tested: no workspace was available.
 
 ### Development installations
 

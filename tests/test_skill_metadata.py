@@ -30,7 +30,7 @@ INSTALL_ROUTES = (
     "Claude Code plugin at the release tag",
     "Codex plugin at the release tag",
     "Claude.ai or desktop app upload",
-    "ChatGPT upload",
+    "ChatGPT upload or workspace import",
     "Claude Code plugin, development",
     "Codex plugin, development",
     "Cursor plugin, development",
