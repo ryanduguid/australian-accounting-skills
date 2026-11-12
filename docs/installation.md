@@ -56,7 +56,7 @@ codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.6.
 codex plugin add australian-accounting-skills@ryanduguid
 ```
 
-That plugin carries the v0.6.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
+The Claude Code plugin carries the v0.6.0 tag's own MCP pin, `aus-accounting-mcp==0.6.0`,
 launched with `uvx`, so it needs Python 3.14 or later and uv. To move to a later release, remove the marketplace with
 `/plugin marketplace remove ryanduguid` and add it again at the new tag.
 

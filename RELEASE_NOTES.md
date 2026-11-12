@@ -450,6 +450,9 @@ passage against the corrected text before relying on it.
 - `docs/ai-register-entry.md` said recorded runs covered 72 of the 76
   validation cards. v0.5.0 had 107 cards, so the figure was 72 of 107. It now
   says human-confirmed model verdicts cover 95 of the 235 cards.
+- `tools/accounting-skills/README.md` said transport faults retry up to 3
+  times. The source fetch made at most 3 attempts, that is 2 retries. It now
+  says a fetch makes at most 3 attempts.
 
 # v0.5.0
 
