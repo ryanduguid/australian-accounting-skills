@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 104 skills, 732 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 107 skills, 740 indexed primary sources of which 341 have a recorded human review, 6 skills exempt from source indexing, 17 skills with an unreachable source, 0 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -29,8 +29,11 @@ Totals: 104 skills, 732 indexed primary sources of which 341 have a recorded hum
 | [`au-car-expenses`](../.claude/skills/au-car-expenses/SKILL.md) | [2](../.claude/skills/au-car-expenses/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-client-acceptance`](../.claude/skills/au-client-acceptance/SKILL.md) | [11](../.claude/skills/au-client-acceptance/sources.json) | 2026-09-29 (6 of 11) | 1 | 0 | 2 | 1 | 0 | 0 |
 | [`au-client-departure`](../.claude/skills/au-client-departure/SKILL.md) | [9](../.claude/skills/au-client-departure/sources.json) | none (0 of 9) | 0 | 0 | 1 | 0 | 0 | 0 |
+| [`au-client-email-triage`](../.claude/skills/au-client-email-triage/SKILL.md) | exempt | none | 0 | 0 | 2 | 0 | 0 | 0 |
+| [`au-client-letter`](../.claude/skills/au-client-letter/SKILL.md) | [1](../.claude/skills/au-client-letter/sources.json) | none (0 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-client-meeting-note`](../.claude/skills/au-client-meeting-note/SKILL.md) | [6](../.claude/skills/au-client-meeting-note/sources.json) | none (0 of 6) | 3 | 0 | 2 | 0 | 0 | 0 |
 | [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | [3](../.claude/skills/au-company-tax/sources.json) | 2026-09-30 (3 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-cpi-rent-review`](../.claude/skills/au-cpi-rent-review/SKILL.md) | [7](../.claude/skills/au-cpi-rent-review/sources.json) | none (0 of 7) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) | [5](../.claude/skills/au-crypto-tax/sources.json) | 2026-10-14 (1 of 5) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | [4](../.claude/skills/au-deceased-estates/sources.json) | 2026-10-14 (1 of 4) | 1 | 0 | 1 | 1 | 0 | 0 |
 | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | [12](../.claude/skills/au-depreciation-schedule/sources.json) | 2026-11-02 (11 of 12) | 0 | 0 | 2 | 1 | 0 | 0 |

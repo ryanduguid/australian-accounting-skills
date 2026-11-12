@@ -311,7 +311,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 229 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 235 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -344,6 +344,9 @@ The 14 cards added on 12 November 2026 for steps that turn working into a draft 
 schedule, a report or a register row in 13 existing skills have no recorded run, nor does the
 positive control added that day for 2 suppliers whose invoices share a number.
 
+The 6 cards and 3 routing prompts added on 12 November 2026 for the new au-client-letter,
+au-client-email-triage and au-cpi-rent-review skills have no recorded run.
+
 The FBT car valuation card added on 10 November 2026 has no recorded run.
 The line on planted instructions and altered or forged documents added to 96 skills on
 11 November 2026 postdates every recorded run, and the 16 cards that test it have no recorded run.
@@ -365,8 +368,8 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 119 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-104 skills has at least one, and `tests/test_routing_cases.py` fails when a
+the 122 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+107 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
@@ -378,8 +381,8 @@ claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --ma
 ```
 
 The estimate for the earlier 107-case pack was about US$18, not a measurement.
-The 119-case pack has no measured cost; a run that reaches the US$30 cap stops
-with partial results. The 79 prompts added on 4 and 11 November 2026 and the 3 prompts added on 12 November 2026
+The 122-case pack has no measured cost; a run that reaches the US$30 cap stops
+with partial results. The 79 prompts added on 4 and 11 November 2026 and the 6 prompts added on 12 November 2026
 have no recorded run.
 
 On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4

@@ -1,9 +1,9 @@
 # v0.5.1 (unreleased)
 
-Together the changes below provide 104 skills, 229 validation cards and 119 routing
+Together the changes below provide 107 skills, 235 validation cards and 122 routing
 prompts. The added cards and prompts have no recorded model run.
 
-Three skills are new. `myob-exports` does for MYOB Business and AccountRight what
+Six skills are new. `myob-exports` does for MYOB Business and AccountRight what
 `xero-exports` does for Xero: which report to request, an export manifest, checks for
 a partial, filtered or wrong-basis export, and control-account and GST tie-outs. A
 live read goes only through MYOB's own connector, because MYOB's API scopes cannot
@@ -15,7 +15,15 @@ lawfulness is left to the practitioner. `marketplace-settlements` rebuilds a sel
 marketplace or payment-platform settlements to each payout in exact cents, ties
 payouts to the bank and checks the clearing account against unsettled sales and
 reserves. It takes fee GST only from documents and keeps platform-collected tax as a
-lead for the registered agent. Each new skill has a routing prompt and 2 synthetic
+lead for the registered agent. `au-client-letter` lays out advice a named practitioner
+has approved as a draft letter on the firm's template, each sentence traced to the
+approved text; it adds, removes and softens nothing, leaves gaps for the practitioner
+and stops when no approval is recorded. `au-client-email-triage` turns a client email
+into an issue register, each question, deadline and attachment quoted and routed, and
+answers none. `au-cpi-rent-review` works out a lease's reviewed rent in exact cents
+from its clause and the ABS CPI release, applies any cap, collar or ratchet, flags a
+rebased or ambiguous series and drafts the notice for the landlord to check and send.
+Each new skill has a routing prompt and 2 synthetic
 cards, 3 for `marketplace-settlements`.
 
 Thirteen skills now prepare the output a practitioner sends or files, where before
