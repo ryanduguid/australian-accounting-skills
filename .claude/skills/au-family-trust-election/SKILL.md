@@ -1,6 +1,6 @@
 ---
 name: au-family-trust-election
-description: "Use when weighing a family trust or interposed entity election: test individual, family group, start year, losses, franking and family trust distribution tax."
+description: "Use when preparing a trustee's evidence on a family trust or interposed entity election: test individual, family group, start year, losses, franking and FTDT."
 ---
 
 # Family trust and interposed entity election workpaper

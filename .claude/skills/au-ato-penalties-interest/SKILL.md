@@ -1,6 +1,6 @@
 ---
 name: au-ato-penalties-interest
-description: "Use when checking ATO general interest charge, shortfall interest or failure to lodge penalties, or preparing safe harbour evidence and a remission request."
+description: "Use when checking ATO general interest charge, shortfall interest or late lodgement penalties, or preparing a draft remission request or safe harbour evidence."
 ---
 
 # ATO penalties and interest workpapers
