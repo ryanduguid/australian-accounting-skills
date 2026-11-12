@@ -1,4 +1,4 @@
-# v0.5.1 (unreleased)
+# v0.6.0
 
 Together the changes below provide 107 skills, 235 validation cards and 122 routing
 prompts. The added cards and prompts have no recorded model run.
