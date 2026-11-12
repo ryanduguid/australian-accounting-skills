@@ -12,7 +12,7 @@ use std::{
     sync::LazyLock,
 };
 
-const CATEGORIES: [&str; 7] = [
+const CATEGORIES: [&str; 8] = [
     "changed",
     "missing",
     "unreadable",
@@ -20,12 +20,13 @@ const CATEGORIES: [&str; 7] = [
     "baseline-required",
     "blocked",
     "unreachable",
+    "client-rendered",
 ];
 static SWEPT: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?m)^Swept ([0-9]+) records over ([0-9]+) distinct pages at ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}) UTC\.$").unwrap()
 });
 static COUNT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?m)^- (changed|missing|unreadable|review-due|baseline-required|blocked|unreachable)[^:]*: ([0-9]+)$").unwrap()
+    Regex::new(r"(?m)^- (changed|missing|unreadable|review-due|baseline-required|blocked|unreachable|client-rendered)[^:]*: ([0-9]+)$").unwrap()
 });
 fn count(text: &str) -> Result<u64> {
     text.parse()
@@ -141,18 +142,21 @@ pub fn decide(status: i64, counts: &BTreeMap<String, u64>) -> Result<Outcome> {
             (*count != 0).then(|| format!("{count} {category}"))
         })
         .collect();
-    let comment = if unchecked.is_empty() {
-        "No actionable source findings were reported.".to_owned()
-    } else {
-        format!(
-            "No indexed source needs an edit here. {} sources could not be checked and are listed in the report.",
-            unchecked.join(" and ")
-        )
+    let comment = match unchecked.split_last() {
+        None => "No actionable source findings were reported.".to_owned(),
+        Some((last, [])) => unchecked_comment(last),
+        Some((last, rest)) => unchecked_comment(&format!("{} and {last}", rest.join(", "))),
     };
     Ok(Outcome {
         name: "clean",
         comment,
     })
+}
+
+fn unchecked_comment(list: &str) -> String {
+    format!(
+        "No indexed source needs an edit here. {list} sources could not be checked and are listed in the report."
+    )
 }
 
 pub(crate) fn resolve(path: &Path, links: usize) -> Result<PathBuf> {

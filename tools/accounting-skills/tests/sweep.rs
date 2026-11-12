@@ -6,7 +6,7 @@ use std::fs;
 
 fn report(changed: &str, blocked: &str) -> String {
     format!(
-        "# Primary source sweep\n\nSwept 1 records over 1 distinct pages at 2026-09-20 19:00 UTC.\n- changed: {changed}\n- missing: 0\n- unreadable: 0\n- review-due: 0\n- baseline-required: 0\n- blocked: {blocked}\n- unreachable: 0\n"
+        "# Primary source sweep\n\nSwept 1 records over 1 distinct pages at 2026-09-20 19:00 UTC.\n- changed: {changed}\n- missing: 0\n- unreadable: 0\n- review-due: 0\n- baseline-required: 0\n- blocked: {blocked}\n- unreachable: 0\n- client-rendered: 0\n"
     )
 }
 const START: &str = "2026-09-20T19:00:05Z";
@@ -190,15 +190,41 @@ fn the_rendered_report_parses_to_its_counts() {
         "baseline-required",
         "blocked",
         "unreachable",
+        "client-rendered",
     ] {
         assert_eq!(counts[category], 1, "{category}");
     }
-    assert_eq!(counts["records"], 10);
+    assert_eq!(counts["records"], 11);
     assert_eq!(
         decide(2, &counts).unwrap().comment,
         "5 sources need an edit here."
     );
     assert!(decide(0, &counts).is_err());
+}
+
+#[test]
+fn client_rendered_sources_are_listed_as_unchecked_not_actionable() {
+    let (root, report) = written(&rendered(
+        &[("client-rendered", 8), ("unchanged", 2)],
+        STAMP,
+    ));
+    let result = outcome(0, &report, START, root.path()).unwrap();
+    assert_eq!(result.name, "clean");
+    assert!(
+        result
+            .comment
+            .contains("8 client-rendered sources could not be checked")
+    );
+    assert!(outcome(2, &report, START, root.path()).is_err());
+    let all = rendered(
+        &[("blocked", 1), ("unreachable", 2), ("client-rendered", 3)],
+        STAMP,
+    );
+    let (root, report) = written(&all);
+    assert_eq!(
+        outcome(0, &report, START, root.path()).unwrap().comment,
+        "No indexed source needs an edit here. 1 blocked, 2 unreachable and 3 client-rendered sources could not be checked and are listed in the report."
+    );
 }
 
 #[test]

@@ -355,8 +355,8 @@ classification, pending candidate writes, reports and human readiness checks.
 `--write` preserves reviewed baselines, facts, human dates and review schedules.
 It records machine observations and pending candidates, which require explicit
 human acceptance. Preflight stays read only. Reports intentionally replace the
-operator-selected output path. An actionable check exits 2; blocked and unreachable
-sources are reported without failing the weekly check. Preparation and use still
+operator-selected output path. An actionable check exits 2; blocked, unreachable and
+client-rendered sources are reported without failing the weekly check. Preparation and use still
 require verification of each exact fact and effective period.
 
 ureq supplies synchronous HTTPS with platform certificate verification. Proxies,

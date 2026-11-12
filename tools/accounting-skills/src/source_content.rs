@@ -177,6 +177,22 @@ fn anchored<'a>(regex: &Regex, text: &'a str) -> Result<Option<fancy_regex::Capt
 }
 
 pub fn readable_text(body: &[u8], charset: Option<&str>) -> Result<String> {
+    Ok(parse(body, charset)?.0)
+}
+
+/// The root element of a Salesforce Lightning Web Runtime page. Every Xero
+/// Central article URL served it empty, with the article left to scripts, on
+/// 12 November 2026.
+const CLIENT_RENDERED_ROOT: &str = "webruntime-app";
+
+/// Whether markup is a client-rendered shell: no readable text and the LWR root element.
+pub fn client_rendered(body: &[u8], charset: Option<&str>) -> Result<bool> {
+    let (text, root) = parse(body, charset)?;
+    Ok(root && text.is_empty())
+}
+
+/// Readable text, and whether a `webruntime-app` start tag was seen.
+fn parse(body: &[u8], charset: Option<&str>) -> Result<(String, bool)> {
     static TAG: LazyLock<Regex> = LazyLock::new(|| Regex::new(rules::TAGFIND_TOLERANT).unwrap());
     static ATTR: LazyLock<Regex> = LazyLock::new(|| Regex::new(rules::ATTRFIND_TOLERANT).unwrap());
     static END: LazyLock<Regex> = LazyLock::new(|| Regex::new(rules::LOCATETAGEND).unwrap());
@@ -186,6 +202,7 @@ pub fn readable_text(body: &[u8], charset: Option<&str>) -> Result<String> {
     let main_seen = std::cell::Cell::new(false);
     let (mut skip, mut depth) = (0usize, 0usize);
     let (mut position, mut raw, mut escapable) = (0usize, None::<String>, true);
+    let mut root = false;
     let append = |value: &str,
                   escape: bool,
                   skip: usize,
@@ -329,6 +346,7 @@ pub fn readable_text(body: &[u8], charset: Option<&str>) -> Result<String> {
             raw = None;
             escapable = true;
         } else {
+            root |= tag == CLIENT_RENDERED_ROOT;
             if skipped {
                 skip += 1;
             } else if tag == "main" {
@@ -365,7 +383,7 @@ pub fn readable_text(body: &[u8], charset: Option<&str>) -> Result<String> {
         .filter(|s| !s.is_empty())
         .collect::<Vec<_>>()
         .join(" ");
-    Ok(collapsed.nfc().collect())
+    Ok((collapsed.nfc().collect(), root))
 }
 pub fn body_digest(body: &[u8], kind: &str, charset: Option<&str>) -> Result<(String, String)> {
     if ["text/html", "application/xhtml+xml"].contains(&kind) {

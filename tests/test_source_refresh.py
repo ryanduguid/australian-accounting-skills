@@ -30,6 +30,15 @@ import source_refresh  # noqa: E402
 
 HTML = "text/html"
 UNCHANGED_DIGEST = "a" * 64
+# A fabricated Salesforce Lightning Web Runtime shell, shaped like every Xero
+# Central article on 12 November 2026: markup inside scripts, a comment naming
+# the runtime, and an empty root element in the body.
+LWR_SHELL = (
+    b'<!DOCTYPE html><html lang="en-US"><head><meta charset="utf-8">'
+    b'<script>window.boot = {"footer": "<footer><p>Not page text</p></footer>"};</script>'
+    b"<style>body { margin: 0 }</style><!-- Generated for production environment, site: lwr -->"
+    b'</head><body><webruntime-app></webruntime-app><script src="/app.js"></script></body></html>'
+)
 
 
 def fetched(**overrides: object) -> source_refresh.Fetched:
@@ -70,6 +79,40 @@ class ReadableTextTests(unittest.TestCase):
     def test_a_main_region_excludes_the_page_furniture_around_it(self) -> None:
         markup = b"<html><body><nav>menu</nav><main><p>Content</p></main><footer>foot</footer></body></html>"
         self.assertEqual(source_refresh.readable_text(markup, "utf-8"), "Content")
+
+
+class ClientRenderedTests(unittest.TestCase):
+    """A page built by script in the browser is a fact about its host.
+
+    Every Xero Central URL serves an empty LWR shell, so no text extraction can
+    read it. Reporting that as a fault in this script sent reviewers to the wrong
+    place; the page needs a person reading it in a browser.
+    """
+
+    def test_a_lightning_web_runtime_shell_is_client_rendered(self) -> None:
+        self.assertEqual(source_refresh.readable_text(LWR_SHELL, "utf-8"), "")
+        for markup in (
+            LWR_SHELL,
+            LWR_SHELL.replace(b"webruntime-app", b"WebRuntime-App"),
+            b"<body><webruntime-app/></body>",
+            b'<body><webruntime-app class="x"></webruntime-app></body>',
+        ):
+            with self.subTest(markup=markup[-80:]):
+                self.assertTrue(source_refresh.client_rendered(markup, "utf-8"))
+
+    def test_only_the_named_shell_with_no_text_is_client_rendered(self) -> None:
+        for markup in (
+            b"<html><body></body></html>",
+            b"",
+            LWR_SHELL.replace(b"<head>", b"<head><title>Article</title>"),
+            LWR_SHELL.replace(b"</webruntime-app>", b"<p>Rendered on the server</p></webruntime-app>"),
+            b"<body><script>document.write('<webruntime-app>')</script><!-- <webruntime-app> --></body>",
+            b"<body><webruntime-application></webruntime-application></body>",
+            b"<body><x-webruntime-app></x-webruntime-app></body>",
+            b"<body></webruntime-app></body>",
+        ):
+            with self.subTest(markup=markup[-80:]):
+                self.assertFalse(source_refresh.client_rendered(markup, "utf-8"))
 
 
 class DigestTests(unittest.TestCase):
@@ -188,6 +231,16 @@ class ClassifyTests(unittest.TestCase):
                     source_refresh.CHANGED,
                 )
 
+    def test_a_client_rendered_page_needs_a_browser_read_not_a_script_fix(self) -> None:
+        outcome, detail = source_refresh.classify(
+            self.record(), fetched(digest="", client_rendered=True)
+        )
+        self.assertEqual(outcome, source_refresh.CLIENT_RENDERED)
+        self.assertIn("Read it in a browser", detail)
+        self.assertIn("not a fault in scripts/source_refresh.py", detail)
+        refused = fetched(status=403, digest="", error="HTTP 403", client_rendered=True)
+        self.assertEqual(source_refresh.classify(self.record(), refused)[0], source_refresh.BLOCKED)
+
     def test_a_readable_response_with_no_digest_is_a_fault_here(self) -> None:
         outcome, detail = source_refresh.classify(self.record(), fetched(digest=""))
         self.assertEqual(outcome, source_refresh.UNREADABLE)
@@ -245,7 +298,8 @@ class ClassifyTests(unittest.TestCase):
             {source_refresh.CHANGED, source_refresh.MISSING, source_refresh.UNREADABLE,
              source_refresh.REVIEW_DUE, source_refresh.BASELINE_REQUIRED},
         )
-        for outcome in (source_refresh.BLOCKED, source_refresh.UNREACHABLE):
+        for outcome in (source_refresh.BLOCKED, source_refresh.UNREACHABLE,
+                        source_refresh.CLIENT_RENDERED):
             with self.subTest(outcome=outcome):
                 self.assertNotIn(outcome, source_refresh.ACTIONABLE)
                 self.assertIn(
@@ -260,6 +314,7 @@ class ClassifyTests(unittest.TestCase):
             source_refresh.MISSING,
             source_refresh.BLOCKED,
             source_refresh.UNREACHABLE,
+            source_refresh.CLIENT_RENDERED,
             source_refresh.UNREADABLE,
         ):
             with self.subTest(outcome=outcome):
@@ -679,6 +734,14 @@ class ReverifyTests(unittest.TestCase):
         self.assertEqual(blocked.outcome, source_refresh.REVIEW_DUE)
         self.assertIn("Retrieval: HTTP 403", blocked.detail)
         self.assertTrue(blocked.actionable)
+
+    def test_a_client_rendered_page_is_listed_until_its_fact_expires(self) -> None:
+        current = self.sweep(self.record(), "2026-10-01", digest="", client_rendered=True)
+        self.assertEqual(current.outcome, source_refresh.CLIENT_RENDERED)
+        self.assertFalse(current.actionable)
+        late = self.sweep(self.record(), "2027-07-01", digest="", client_rendered=True)
+        self.assertEqual(late.outcome, source_refresh.REVIEW_DUE)
+        self.assertIn("Retrieval: The page is a Salesforce Lightning Web Runtime shell", late.detail)
 
     def test_an_expired_fact_on_a_hand_reviewed_source_is_due_before_its_schedule(self) -> None:
         record = self.record(manual_review={"cadence": "monthly", "next_review": "2027-07-26"})

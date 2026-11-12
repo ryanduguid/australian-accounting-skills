@@ -100,6 +100,23 @@ class SourceFetchPolicyTests(unittest.TestCase):
             self.assertFalse(result.readable)
             digest.assert_not_called()
 
+    def test_a_client_rendered_shell_is_reported_as_such_not_as_a_fault(self):
+        shell = (b"<html><head><script>boot()</script></head>"
+                 b"<body><webruntime-app></webruntime-app></body></html>")
+        result, _ = self.fetch([Response(shell)])
+        self.assertTrue(result.reachable)
+        self.assertEqual(result.digest, "")
+        self.assertTrue(result.client_rendered)
+        self.assertEqual(source_refresh.classify({}, result)[0], source_refresh.CLIENT_RENDERED)
+        result, _ = self.fetch([Response(b"<html><body></body></html>")])
+        self.assertFalse(result.client_rendered)
+        self.assertEqual(source_refresh.classify({}, result)[0], source_refresh.UNREADABLE)
+        plain = Response(shell)
+        plain.headers.replace_header("Content-Type", "text/plain; charset=utf-8")
+        result, _ = self.fetch([plain])
+        self.assertTrue(result.readable)
+        self.assertFalse(result.client_rendered)
+
     def test_redirect_limit_loop_and_cross_host_rejected_before_second_fetch(self):
         result, count = self.fetch([redirect(URL, "/next"), Response(url="https://www.ato.gov.au/next")])
         self.assertTrue(result.readable)

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
 //! Primary-source retrieval, pending candidates and independent human readiness.
-pub use crate::source_content::{body_digest, readable_text};
+pub use crate::source_content::{body_digest, client_rendered, readable_text};
 use crate::{Result, source_content as content};
 use chrono::{NaiveDate, Utc};
 use serde::{Deserialize, Serialize};
@@ -34,6 +34,8 @@ pub const MISSING: &str = "missing";
 pub const BLOCKED: &str = "blocked";
 pub const UNREACHABLE: &str = "unreachable";
 pub const UNREADABLE: &str = "unreadable";
+/// A page its browser builds by script: like `blocked`, a fact about the host.
+pub const CLIENT_RENDERED: &str = "client-rendered";
 pub const SCHEDULED: &str = "scheduled";
 pub const REVIEW_DUE: &str = "review-due";
 pub const OUTCOMES: &[&str] = &[
@@ -41,6 +43,7 @@ pub const OUTCOMES: &[&str] = &[
     MISSING,
     BLOCKED,
     UNREACHABLE,
+    CLIENT_RENDERED,
     UNREADABLE,
     REVIEW_DUE,
     BASELINE_REQUIRED,
@@ -63,6 +66,7 @@ pub struct Fetched {
     pub error: String,
     pub text: String,
     pub text_truncated: bool,
+    pub client_rendered: bool,
 }
 impl Fetched {
     pub fn reachable(&self) -> bool {
@@ -89,7 +93,8 @@ impl Outcome {
         ACTIONABLE.contains(&self.outcome.as_str())
     }
     pub fn needs_attention(&self) -> bool {
-        self.actionable() || [BLOCKED, UNREACHABLE].contains(&self.outcome.as_str())
+        self.actionable()
+            || [BLOCKED, UNREACHABLE, CLIENT_RENDERED].contains(&self.outcome.as_str())
     }
 }
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -213,6 +218,12 @@ pub fn classify(record: &Value, fetched: &Fetched) -> (String, String) {
         return pair(
             UNREADABLE,
             format!("{} Open the source for manual review.", fetched.error),
+        );
+    }
+    if fetched.reachable() && !fetched.readable() && fetched.client_rendered {
+        return pair(
+            CLIENT_RENDERED,
+            "The page is a Salesforce Lightning Web Runtime shell: its text is rendered by script in the browser, so the served HTML has none to digest. Read it in a browser and review it by hand; this is not a fault in scripts/source_refresh.py.".into(),
         );
     }
     if fetched.reachable() && !fetched.readable() {
@@ -527,7 +538,7 @@ pub fn refresh_with(
                     if [CHANGED, MISSING, UNREADABLE, BASELINE_REQUIRED].contains(&outcome.as_str())
                     {
                         detail = format!("{detail} {}", reverify_note(&passed));
-                    } else if [BLOCKED, UNREACHABLE].contains(&outcome.as_str()) {
+                    } else if [BLOCKED, UNREACHABLE, CLIENT_RENDERED].contains(&outcome.as_str()) {
                         outcome = REVIEW_DUE.into();
                         detail = format!("{} Retrieval: {detail}", reverify_note(&passed));
                     } else {
@@ -892,6 +903,10 @@ pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
             counts[UNREACHABLE]
         ),
         format!(
+            "- client-rendered (page text needs a browser, review by hand): {}",
+            counts[CLIENT_RENDERED]
+        ),
+        format!(
             "- review-due (manual review overdue or reverify_by passed): {}",
             counts[REVIEW_DUE]
         ),
@@ -919,9 +934,9 @@ pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
     } else {
         lines.extend(
             [
-                "A blocked or unreachable source is a fact about the network, not a",
-                "finding about this repository, so it is listed but does not fail a",
-                "--check run. Everything else asks for an edit here.",
+                "A blocked, unreachable or client-rendered source is a fact about the",
+                "host or network, not a finding about this repository, so it is listed",
+                "but does not fail a --check run. Everything else asks for an edit here.",
                 "",
                 "A digest change means the page's readable text moved. It does not",
                 "mean a rule changed, and it never changes `checked_at`: read the",

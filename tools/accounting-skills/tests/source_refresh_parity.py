@@ -66,6 +66,7 @@ original = {
     name: getattr(s, name)
     for name in [
         "readable_text",
+        "client_rendered",
         "body_digest",
         "content_digest",
         "iso_day",
@@ -151,6 +152,7 @@ def refresh(
 
 def install():
     s.readable_text = lambda body, charset: rpc("text", body=list(body), charset=charset)
+    s.client_rendered = lambda body, charset: rpc("shell", body=list(body), charset=charset)
     s.body_digest = lambda body, content_type, charset: tuple(
         rpc("digest", body=list(body), kind=content_type, charset=charset)
     )
@@ -293,6 +295,12 @@ def differential():
         "<textarea>&amp;<main>literal</textarea>after",
         "<plaintext>a<main>b",
         "<main><svg>x</svg>y</main>tail",
+        "<webruntime-app></webruntime-app>",
+        "<WEBRUNTIME-APP/>",
+        "<title></title><webruntime-app>",
+        "<webruntime-app x='&amp;'>",
+        "<webruntime-app unfinished",
+        "<webruntime-app-x></webruntime-app-x>",
     ]
     rng = random.Random(20261023)
     tags = [
@@ -312,6 +320,7 @@ def differential():
         "noframes",
         "plaintext",
         "a",
+        "webruntime-app",
     ]
     units = (
         snippets
@@ -327,6 +336,11 @@ def differential():
         except Exception as exc:
             expected = {"error": str(exc)}
         check("text", {"body": list(body), "charset": "utf-8"}, expected)
+        try:
+            expected = original["client_rendered"](body, "utf-8")
+        except Exception as exc:
+            expected = {"error": str(exc)}
+        check("shell", {"body": list(body), "charset": "utf-8"}, expected)
     for charset in [
         None,
         "",
