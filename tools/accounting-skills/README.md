@@ -32,9 +32,9 @@ repeated reference. The input holds figures and line references only, never desc
 `build-skill-zips DESTINATION` is also new: it writes one upload ZIP per skill,
 `NAME.zip`, into a new folder, from the skills committed at HEAD. Each ZIP's
 only root entry is the skill's folder, holding exactly one `SKILL.md` at its
-root, the shape Claude's and ChatGPT's skill uploads take. Entries are stored
-uncompressed, in path order, with fixed timestamps, so one commit always gives
-the same bytes. It refuses a skill with a second `SKILL.md` and an existing
+root, the shape Anthropic's article and OpenAI's Skills API guide describe.
+Entries are stored uncompressed, in path order, with fixed timestamps, so one
+commit always gives the same bytes. It refuses a skill with a second `SKILL.md` and an existing
 destination. `docs/installation.md` gives the upload steps.
 
 `audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside

@@ -1,9 +1,9 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-//! Build one upload ZIP per skill for hosts without a terminal. Claude's
-//! "Upload a skill" and OpenAI's skill upload both take a ZIP whose only root
-//! entry is the skill's folder, holding exactly one `SKILL.md`. Each ZIP holds
+//! Build one upload ZIP per skill for hosts without a terminal. Each ZIP's only
+//! root entry is the skill's folder, holding exactly one `SKILL.md`: the shape
+//! Anthropic's article and OpenAI's Skills API guide describe. Each ZIP holds
 //! the skill's files as committed at HEAD, in a fixed order with fixed
 //! timestamps, so the same commit always gives the same bytes.
 use crate::{Result, platform_text, plugin_dist::Files};

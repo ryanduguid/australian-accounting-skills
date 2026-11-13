@@ -174,10 +174,15 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
             ("README.md", b"Not a skill\n"),
         ],
     );
-    // An uncommitted edit does not reach the ZIP.
+    // An uncommitted edit or file does not reach the ZIP.
     fs::write(
         root.path().join(".claude/skills/beta/SKILL.md"),
         b"Edited\n",
+    )
+    .unwrap();
+    fs::write(
+        root.path().join(".claude/skills/alpha/untracked.md"),
+        b"Untracked\n",
     )
     .unwrap();
     let out = tempfile::tempdir().unwrap();

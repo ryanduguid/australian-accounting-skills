@@ -94,6 +94,7 @@ cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-s
 It writes one `NAME.zip` per skill into the new folder `../skill-zips`, from
 the skills as committed at the checkout's HEAD. Each ZIP's only root entry is
 the skill's folder, holding one `SKILL.md` at its root: the shape Anthropic's
+[How to create custom skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
 article and OpenAI's [Skills in the API](https://developers.openai.com/cookbook/examples/skills_in_api)
 guide describe. Upload one at step 5 in place of a ZIP made by hand.
 
