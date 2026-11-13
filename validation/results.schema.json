@@ -136,6 +136,8 @@
           "au-payroll-tax-states-group-designated-employer",
           "au-payroll-tax-states-missing-evidence",
           "au-payroll-tax-states-part-year-threshold-edges",
+          "au-payroll-tax-states-qld-cancelled-and-off-cycle-runs",
+          "au-payroll-tax-states-qld-restructure-items",
           "au-pre-lodgement-review-claim-calibration",
           "au-pre-lodgement-review-missing-evidence",
           "au-pre-lodgement-review-rating-not-clearance",

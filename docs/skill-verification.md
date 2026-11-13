@@ -63,7 +63,7 @@ Totals: 107 skills, 742 indexed primary sources of which 341 have a recorded hum
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | [3](../.claude/skills/au-partnership-tax/sources.json) | 2026-10-14 (1 of 3) | 1 | 0 | 2 | 1 | 0 | 0 |
 | [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | [3](../.claude/skills/au-payg-instalment-variation/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | [5](../.claude/skills/au-payroll-review/sources.json) | 2026-10-14 (2 of 5) | 0 | 0 | 5 | 3 | 0 | 0 |
-| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [18](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 18) | 1 | 0 | 8 | 1 | 0 | 0 |
+| [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | [18](../.claude/skills/au-payroll-tax-states/sources.json) | 2026-09-30 (9 of 18) | 1 | 0 | 10 | 1 | 0 | 0 |
 | [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | [12](../.claude/skills/au-pre-lodgement-review/sources.json) | 2026-10-15 (6 of 12) | 0 | 0 | 3 | 0 | 0 | 0 |
 | [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) | [29](../.claude/skills/au-primary-production/sources.json) | 2026-11-02 (13 of 29) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) | [6](../.claude/skills/au-private-ruling-application/sources.json) | 2026-11-02 (6 of 6) | 0 | 0 | 1 | 1 | 0 | 0 |
