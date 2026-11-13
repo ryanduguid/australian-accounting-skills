@@ -8,6 +8,7 @@ pub mod last_changed;
 mod passage_diff;
 pub mod plugin_dist;
 pub mod plugin_evals;
+pub mod skill_zips;
 mod source_codec_rules;
 mod source_content;
 mod source_date_rules;

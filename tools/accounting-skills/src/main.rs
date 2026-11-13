@@ -31,6 +31,9 @@ fn run() -> Result<u8> {
     if command.as_deref() == Some(std::ffi::OsStr::new("build-plugin-dist")) {
         return accounting_skills::plugin_dist::cli(args);
     }
+    if command.as_deref() == Some(std::ffi::OsStr::new("build-skill-zips")) {
+        return accounting_skills::skill_zips::cli(args);
+    }
     if command.as_deref() == Some(std::ffi::OsStr::new("build-plugin-evals")) {
         return accounting_skills::plugin_evals::cli(args);
     }
