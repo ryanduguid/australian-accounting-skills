@@ -1,3 +1,106 @@
+# v0.7.0
+
+Together the changes below provide 107 skills, 237 validation cards and 122 routing
+prompts. No skill is added; the 2 added cards have no recorded model run.
+
+The Claude Code plugin now starts `aus-accounting-mcp` 0.8.0 from its release commit,
+`7b9b0e2`, in place of `aus-accounting-mcp==0.6.0` from PyPI, because the Claude plugin
+directory refuses a PyPI version as a pin (#398, #402). The server has 25 tools, 5 more
+than 0.6.0: `get_lodgment_due_dates`, `get_data_freshness`, `get_reviewed_rate`,
+`validate_abn` and `validate_acn`. Its first start builds it from that commit, so the
+plugin now needs Git on the path as well as Python 3.14 or later and uv. The README's
+privacy note describes 0.8.0 with a fresh scan of its network imports; the 6 November
+socket trace of 0.6.0 was not repeated for it.
+
+`PRIVACY.md` states that the plugin itself collects and sends nothing and names what the
+model provider, the MCP server and web reads or connectors receive (#392, #399). The
+Claude manifest names it as `privacyPolicyUrl` and the Codex manifest's
+`privacyPolicyURL` now points at it instead of `SECURITY.md`. The Claude manifest also
+gains an icon and documentation and support links (#398, #399, #402). The Claude plugin
+directory refused v0.6.0: from an organisation it has not verified, it accepts no local
+MCP server, no skills outside `skills/` and only Markdown, text, JSON, YAML and images.
+On each push to `main`, a workflow now builds a skills-only plugin without the MCP
+server and publishes it to a generated `claude-plugin` branch only when that plugin
+changed and its version is higher than the branch's (#400). That branch holds 0.6.0, so this release's version is the
+first it can publish. The marketplace, Codex, Cursor and skills CLI routes still read
+the repository itself.
+
+`accounting-skills build-skill-zips DESTINATION` writes one upload ZIP per skill from the
+skills committed at the checkout's HEAD, for Claude.ai, the desktop app and ChatGPT
+(#405). Each ZIP's only root entry is the skill's folder, and one commit always gives the
+same bytes. The command refuses a skill with a second `SKILL.md`, an unsafe path and an
+existing destination before it writes anything. The ZIPs are not attached to the
+release: build them from a checkout of the `v0.7.0` tag, which needs Rust 1.99 or later.
+`docs/installation.md` adds the upload route from these ZIPs and a ChatGPT section for
+uploading a skill or importing this repository as a workspace marketplace. No upload of
+these ZIPs to Claude.ai or ChatGPT has been made, and the workspace import has not been
+tested. `build-skill-zips` and `build-plugin-dist` now share one argument parser, with
+no change in behaviour (#407).
+
+`check-citations` now prints each Act or instrument's resolved sections, most cited
+first, before its totals, and `docs/EVAL.md` quotes that summary, with a test that fails
+when the quote and the command's output differ (#403). It also checks cited sections of
+the Building Industry Fairness (Security of Payment) Act 2017 (Qld) against a committed
+list from the Queensland register's version in force from 28 April 2026, the current
+version on 13 November 2026 (#406); all 48 cited sections are on it. At this release
+1,707 of 1,707 citations resolve to source records. Of 1,443 legislative sections, 1,251
+are found in their Act's committed list, 3 are listed exceptions and 189 belong to an Act
+without a list. These structural checks do not establish the legal meaning or current
+application of a citation.
+
+Two synthetic `au-payroll-tax-states` cards test Queensland payroll tax edges the other
+cards do not reach (#408). One covers a cancelled pay run, its rerun and an off-cycle
+run, with June wages going through the annual liability; the other covers a
+restructure's termination payments, lapsed and expired options and grossed-up fringe
+benefits. `NOTICE` credits the dataset scenarios they adapt.
+
+`xero-exports`'s read-only gate now says that a connector holding each change in an
+approval queue still writes: its write tools fail the tool-list check, and approving a
+queued change is itself a write (#392). `NOTICE` and `docs/taxmate-adoptions.md` point
+their TaxMate links at `varnikacreative-spec/taxmate-australia`, which holds the same
+tree, since the old address returned 404 (#392).
+
+The source sweep now reports a page that a script builds in the browser, which every
+Xero Central article is, as `client-rendered` instead of as a fault in the sweep script
+(#391). Like `blocked`, it is listed in every report but does not fail `--check`, and it
+becomes `review-due` once the record's `reverify_by` passes. The sweep still cannot read
+the 8 Xero Central records, so they need reading in a browser and review by hand.
+
+The README's Alternatives are reread as at 13 November 2026 and add Ask Nagaris and
+Sapience (#401). CI no longer lets a later merge cancel an earlier merge's run on `main`
+(#409). The tooling's lockfile moves to `rustix` 1.1.6 for RUSTSEC-2026-0486 (#404), and
+#393 to #397 update CI actions, the tooling's `ureq` and development dependencies.
+
+## Corrections since v0.6.0
+
+Recorded 14 November 2026. The passage below was wrong in v0.6.0 when it was published
+and is corrected in v0.7.0.
+
+- The v0.6.0 notes said the citation gate resolved 1,693 of 1,693 citations and that,
+  of 1,437 legislative sections, 1,197 were found in their Act's index, 3 were listed
+  exceptions and 237 belonged to an Act without an index. `docs/EVAL.md` gives those as
+  the figures when #383 merged, before the rest of v0.6.0. Run on the v0.6.0 tree,
+  `check-citations` resolves 1,707 of 1,707 citations; of 1,443 sections, 1,203 are
+  found, 3 are listed exceptions and 237 belong to an Act without an index. No
+  citation failed to resolve. The figures above for v0.7.0 come from the command's
+  output.
+
+## Known issues
+
+These defects are known at this release and not fixed in it.
+
+- `retention-schedule` titles its source record for the Queensland BIF Act
+  'compilation from 28 May 2026'. The version the Queensland register gave as current
+  on 13 November 2026 is in force from 28 April 2026 (#406), so the title's date is
+  wrong. Confirm the version at the register before relying on the record.
+- The bundled `aus-accounting-mcp` 0.8.0 holds reviewed rate records for the 2025-26
+  and 2026-27 resident scales and the 2025-26 foreign resident scale only.
+  `get_reviewed_rate` therefore refuses the 2026-27 foreign resident scale, any working
+  holiday maker scale and any 2027-28 figure. Take those scales from the ATO.
+- `statement-to-csv` still leaves a posting-date period break open for the reviewer,
+  as v0.6.0 did: no issuer's terms have yet been shown to settle which period such a
+  line belongs to.
+
 # v0.6.0
 
 Together the changes below provide 107 skills, 235 validation cards and 122 routing

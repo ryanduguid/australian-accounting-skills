@@ -77,8 +77,8 @@ Releases cut after the specialised policy migration are signed by the policy's
 internal publication workflow. For the next release, update `tag` if the
 intended version changes and bind verification to the exact source and policy
 commit. Releases after `v0.5.0` are signed at the current policy pin,
-`ca5492bd09693be9e1fd47d980e2740ef8daf023`. The commands verify `v0.6.0`, signed at
-that pin; `v0.5.0` was signed at `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, `v0.4.0` at
+`ca5492bd09693be9e1fd47d980e2740ef8daf023`. The commands verify `v0.7.0`, signed at
+that pin like `v0.6.0`; `v0.5.0` was signed at `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, `v0.4.0` at
 `a601f1d8b143f92b0517f709216993660d21f480` and `v0.3.0` to `v0.3.2` at
 `87767ec809dc7f77bcd45808219adaf67841ae7b`, so verify each with its digest.
 Releases from `a601f1d` also carry the signed provenance
@@ -86,7 +86,7 @@ bundle `australian-accounting-skills-<version>.intoto.jsonl`, which the loop
 skips because it holds the attestation itself:
 
 ```bash
-tag=v0.6.0
+tag=v0.7.0
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
