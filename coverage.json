@@ -1479,12 +1479,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 8,
+        "cases": 10,
         "case_ids": [
           "au-payroll-tax-states-back-pay-across-year-end",
           "au-payroll-tax-states-group-designated-employer",
           "au-payroll-tax-states-missing-evidence",
           "au-payroll-tax-states-part-year-threshold-edges",
+          "au-payroll-tax-states-qld-cancelled-and-off-cycle-runs",
+          "au-payroll-tax-states-qld-restructure-items",
           "payroll-tax-nt-external-items",
           "payroll-tax-qld-mid-month-transfer",
           "payroll-tax-sa-group-registration",
