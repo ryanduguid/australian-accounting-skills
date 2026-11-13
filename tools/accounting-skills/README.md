@@ -84,8 +84,10 @@ and Windows, checks this tree with `validate-validation`, `build-coverage
 --check` and `check-citations`, then runs the comparison harnesses in `tests/*_parity.py` for the
 candidate ports. Those replay the original Python tests against the native code
 and compare fabricated inputs with the unchanged scripts, with no indexed source
-fetched. Run them on Python 3.14, as the job does: under Python 3.15 the
-validation and source_refresh harnesses stop at their Unicode 16.0
+fetched. On a pull request, the source_refresh, source_codecs, multibyte and
+gb18030 harnesses run only when it changes a file they read; pushes to `main`
+and the weekly and manual runs include them all. Run them on Python 3.14, as
+the job does: under Python 3.15 the validation and source_refresh harnesses stop at their Unicode 16.0
 qualification checks. To run one locally, build the debug examples first:
 
 ```sh

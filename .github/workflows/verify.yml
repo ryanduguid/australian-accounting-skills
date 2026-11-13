@@ -129,6 +129,9 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # A pull request's merge commit and its first parent, the base
+          # branch, show which files the pull request changes.
+          fetch-depth: 2
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
@@ -191,6 +194,10 @@ jobs:
           target/release/accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check > /dev/null
           target/release/accounting-skills check-citations --root "$GITHUB_WORKSPACE"
 
+      # On a pull request, the source_refresh, source_codecs, multibyte and
+      # gb18030 comparisons run only when it changes a file they read. Pushes
+      # to main and the weekly and manual runs always run them. Keep the path
+      # lists in step with what those harnesses read.
       - name: Compare with the original scripts
         env:
           RECORDS: ${{ runner.temp }}/native-comparisons
@@ -200,18 +207,33 @@ jobs:
           binary="target/debug/accounting-skills$exe"
           probes=target/debug/examples
           mkdir -p "$RECORDS"
+          crate=(.github/workflows/verify.yml tools/accounting-skills)
+          refresh=("${crate[@]}" scripts tests/test_source_refresh.py ':(glob).claude/skills/*/sources.json')
+          # True only on a pull request that changes none of the paths. A Git
+          # error counts as a change, so the comparison runs.
+          unchanged() {
+            [ "$GITHUB_EVENT_NAME" = pull_request ] && git -C "$GITHUB_WORKSPACE" diff --quiet HEAD^ HEAD -- "$@"
+          }
           for slice in validation source_refresh source_passages; do
+            if [ "$slice" = source_refresh ] && unchanged "${refresh[@]}"; then
+              echo "Skipping source_refresh: this pull request changes none of the files it reads."
+              continue
+            fi
             python -I "tests/${slice}_parity.py" --root "$GITHUB_WORKSPACE" --binary "$binary" \
               --probe "$probes/${slice}_probe$exe" --record "$RECORDS/$slice.json"
           done
           python -I tests/fetch_policy_parity.py --root "$GITHUB_WORKSPACE" \
             --probe "$probes/fetch_policy_probe$exe" --record "$RECORDS/fetch_policy.json"
-          for slice in source_codecs multibyte; do
-            python -I "tests/${slice}_parity.py" --root "$GITHUB_WORKSPACE" \
-              --probe "$probes/source_refresh_probe$exe" --record "$RECORDS/$slice.json"
-          done
-          python -I tests/gb18030_parity.py --root "$GITHUB_WORKSPACE" --probe "$probes/gb18030_probe$exe" \
-            --production-probe "$probes/source_refresh_probe$exe" --record "$RECORDS/gb18030.json"
+          if unchanged "${crate[@]}"; then
+            echo "Skipping source_codecs, multibyte and gb18030: this pull request changes none of the files they read."
+          else
+            for slice in source_codecs multibyte; do
+              python -I "tests/${slice}_parity.py" --root "$GITHUB_WORKSPACE" \
+                --probe "$probes/source_refresh_probe$exe" --record "$RECORDS/$slice.json"
+            done
+            python -I tests/gb18030_parity.py --root "$GITHUB_WORKSPACE" --probe "$probes/gb18030_probe$exe" \
+              --production-probe "$probes/source_refresh_probe$exe" --record "$RECORDS/gb18030.json"
+          fi
 
       # A candidate for local testing, not a release: no checksum, attestation
       # or signature covers it, and it expires after 7 days.
