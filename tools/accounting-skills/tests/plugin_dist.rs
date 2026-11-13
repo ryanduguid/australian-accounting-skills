@@ -37,6 +37,39 @@ fn git(root: &Path, args: &[&str]) -> Vec<u8> {
     output.stdout
 }
 
+#[test]
+fn both_build_commands_print_their_usage_for_help_and_for_bad_arguments() {
+    for command in ["build-plugin-dist", "build-skill-zips"] {
+        let usage = format!("usage: accounting-skills {command} DESTINATION [--root PATH]\n");
+        for (args, code) in [
+            (&["--help"][..], 0),
+            (&["-h"], 0),
+            (&[], 2),
+            (&["out", "--root"], 2),
+            (&["out", "--root", "-x"], 2),
+            (&["out", "other"], 2),
+            (&["--bogus"], 2),
+        ] {
+            let output = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+                .arg(command)
+                .args(args)
+                .output()
+                .unwrap();
+            assert_eq!(output.status.code(), Some(code), "{command} {args:?}");
+            let printed = if code == 0 {
+                output.stdout
+            } else {
+                output.stderr
+            };
+            assert_eq!(
+                String::from_utf8(printed).unwrap(),
+                usage,
+                "{command} {args:?}"
+            );
+        }
+    }
+}
+
 /// A committed repository holding a fabricated plugin and files it must not ship.
 fn fixture(root: &Path, skip: &str) {
     let files: [(&str, &[u8]); 14] = [
