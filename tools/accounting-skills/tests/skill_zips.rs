@@ -243,6 +243,86 @@ fn a_second_skill_manifest_inside_a_skill_is_refused() {
     assert!(!out.path().join("zips").exists());
 }
 
+/// The tree `git mktree` writes from `listing`.
+fn mktree(root: &Path, listing: &str) -> String {
+    use std::io::Write;
+    let mut child = Command::new("git")
+        .arg("mktree")
+        .current_dir(root)
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(listing.as_bytes())
+        .unwrap();
+    let output = child.wait_with_output().unwrap();
+    assert!(output.status.success(), "{output:?}");
+    String::from_utf8(output.stdout).unwrap().trim().to_owned()
+}
+
+#[test]
+fn a_path_that_could_leave_its_folder_is_refused() {
+    // Git on Windows refuses these names in the index, so the trees are
+    // written directly, as Git on Linux could commit them.
+    for name in ["..\\..\\outside.md", "..", "."] {
+        let root = tempfile::tempdir().unwrap();
+        fixture(
+            root.path(),
+            &[(".claude/skills/alpha/SKILL.md", b"Alpha\n")],
+        );
+        let blob = String::from_utf8(git(
+            root.path(),
+            &["rev-parse", "HEAD:.claude/skills/alpha/SKILL.md"],
+        ))
+        .unwrap()
+        .trim()
+        .to_owned();
+        let inner = mktree(root.path(), &format!("100644 blob {blob}\tSKILL.md\n"));
+        let entry = if name.contains('\\') {
+            format!("100644 blob {blob}\t{name}\n")
+        } else {
+            format!("040000 tree {inner}\t{name}\n")
+        };
+        let alpha = mktree(
+            root.path(),
+            &format!("100644 blob {blob}\tSKILL.md\n{entry}"),
+        );
+        let skills = mktree(root.path(), &format!("040000 tree {alpha}\talpha\n"));
+        let claude = mktree(root.path(), &format!("040000 tree {skills}\tskills\n"));
+        let top = mktree(root.path(), &format!("040000 tree {claude}\t.claude\n"));
+        let commit = String::from_utf8(git(
+            root.path(),
+            &[
+                "-c",
+                "user.name=Fixture",
+                "-c",
+                "user.email=fixture@example.invalid",
+                "commit-tree",
+                &top,
+                "-m",
+                "Unsafe name",
+            ],
+        ))
+        .unwrap()
+        .trim()
+        .to_owned();
+        git(root.path(), &["update-ref", "HEAD", &commit]);
+        let out = tempfile::tempdir().unwrap();
+        let error = build(root.path(), &out.path().join("zips"))
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("cannot be a ZIP entry name"),
+            "{name}: {error}"
+        );
+        assert!(!out.path().join("zips").exists(), "{name}");
+    }
+}
+
 #[test]
 fn the_command_builds_into_a_new_folder_and_refuses_a_missing_destination() {
     let root = tempfile::tempdir().unwrap();

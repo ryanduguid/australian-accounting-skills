@@ -32,6 +32,11 @@ const FOLDER: u32 = 0x10;
 pub fn skills(root: &Path) -> Result<BTreeMap<String, Files>> {
     let mut skills: BTreeMap<String, Files> = BTreeMap::new();
     for (path, bytes) in crate::plugin_dist::committed(root, &[(SKILLS, SKILLS)])? {
+        // Git on Linux accepts `\` in a name; an extractor that reads it as a
+        // separator could write outside its folder.
+        if path.contains('\\') || path.split('/').any(|part| matches!(part, "" | "." | "..")) {
+            return Err(format!("{path:?} cannot be a ZIP entry name").into());
+        }
         let inside = path
             .strip_prefix(&format!("{SKILLS}/"))
             .ok_or("git listed a path outside the skills folder")?;
