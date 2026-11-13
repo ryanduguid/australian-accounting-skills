@@ -439,7 +439,10 @@ Each list covers one Commonwealth Act or instrument: the section numbers in the
 table of contents of the current compilation's EPUB, which the Federal
 Register of Legislation's API serves. Its header records the title, the
 register and compilation identifiers, the in-force date, the request, the
-retrieval date and the SHA-256 digest of the file read. The check drops
+retrieval date and the SHA-256 digest of the file read. Since 13 November
+2026 one state Act has a list as well: the Queensland BIF Act, from the
+Queensland register's XML of the version in force from 28 April 2026, which
+leaves out the 32 sections that version marks repealed. The check drops
 subsection and paragraph suffixes (`s 43-10(4)` is checked as 43-10), and
 reads `ss 17A-18C` as a range when 17A and 18C are listed and the Act's list
 holds no hyphenated number. Where it does, as the ITAA 1936, TAA 1953 and
@@ -495,7 +498,7 @@ Taxation Administration Act 1953 (Cth): 82 sections, 82 found, 0 listed exceptio
 Superannuation Guarantee (Administration) Act 1992 (Cth): 79 sections, 78 found, 1 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 61 sections, 61 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (NSW): 53 sections, no index.
-Building Industry Fairness (Security of Payment) Act 2017 (Qld): 48 sections, no index.
+Building Industry Fairness (Security of Payment) Act 2017 (Qld): 48 sections, 48 found, 0 listed exceptions, 0 absent.
 Tax Agent Services Act 2009 (Cth): 42 sections, 42 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 39 sections, 39 found, 0 listed exceptions, 0 absent.
 Tax Agent Services (Code of Professional Conduct) Determination 2024 (Cth): 38 sections, 38 found, 0 listed exceptions, 0 absent.
@@ -528,7 +531,7 @@ Payroll Tax Act 2009 (SA): 1 section, no index.
 Personal Property Securities Act 2009 (Cth): 1 section, no index.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
 1707 of 1707 citations resolve to a sources.json record: 264 of 264 rulings and guidance, 1443 of 1443 legislative sections.
-1206 of 1443 resolved sections checked against an index of their Act: 1203 found, 3 listed exceptions, 0 absent; 237 in an Act with no index.
+1254 of 1443 resolved sections checked against an index of their Act: 1251 found, 3 listed exceptions, 0 absent; 189 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing

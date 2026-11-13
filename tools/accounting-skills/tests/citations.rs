@@ -992,6 +992,82 @@ fn a_record_whose_title_and_register_id_disagree_with_a_section_list_owns_nothin
     assert_eq!(run(root.path()).0, 2);
 }
 
+/// Write the section list of a fabricated Queensland Act, which has a version
+/// date but no compilation.
+fn queensland_index(root: &Path, register_id: &str, title: &str, sections: &[&str]) {
+    let folder = root.join("tools/accounting-skills/section-index");
+    fs::create_dir_all(&folder).unwrap();
+    fs::write(
+        folder.join(format!("{register_id}.txt")),
+        format!(
+            "# title: {title}\n# register-id: {register_id}\n# in-force-from: 2099-01-01\n\
+             # source: https://example.invalid/{register_id}\n# retrieved: 2099-01-02\n\
+             # sha256: {}\n{}\n",
+            "0".repeat(64),
+            sections.join("\n")
+        ),
+    )
+    .unwrap();
+}
+
+#[test]
+fn a_queensland_section_list_checks_its_acts_sections_and_records() {
+    let bif = "Building Industry Fairness (Security of Payment) Act 2017";
+    let qld = "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2017-043";
+    let root = tempfile::tempdir().unwrap();
+    queensland_index(root.path(), "qld-act-2017-043", bif, &["67", "75"]);
+    skill(
+        root.path(),
+        "alpha",
+        &format!("Apply s 67 and s 68 of the {bif}.\n"),
+        Some(&record(&format!("{bif} (Qld)"), qld)),
+    );
+    // A record whose address is the listed Act but whose title is another's
+    // owns nothing, as for a Commonwealth list.
+    skill(
+        root.path(),
+        "beta",
+        "Apply s 67 of the Example Contracts Act 2017.\n",
+        Some(&record("Example Contracts Act 2017 (Qld)", qld)),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (3, 2));
+    assert_eq!((report.sections_exist, report.sections_absent), (1, 1));
+    assert_eq!(
+        report.unmatched,
+        [
+            unmatched_in_alpha(
+                1,
+                "s 68",
+                &format!(
+                    "absent from the section index of {bif}, version in force from 2099-01-01"
+                )
+            ),
+            missing(
+                ".claude/skills/beta/SKILL.md",
+                1,
+                "s 67",
+                "sources.json record 1 ('Example Contracts Act 2017 (Qld)' \
+                 at qld act-2017-043) disagrees with the section list for qld-act-2017-043 \
+                 ('Building Industry Fairness (Security of Payment) Act 2017')"
+            ),
+        ]
+    );
+    let (code, output) = run(root.path());
+    assert_eq!(code, 2);
+    assert!(output.contains(&format!(
+        "\n{bif} (Qld): 2 sections, 1 found, 0 listed exceptions, 1 absent.\n"
+    )));
+
+    // An exception names the list as its file does.
+    exceptions(
+        root.path(),
+        "qld-act-2017-043 68: repealed after the skill's period\n",
+    );
+    fs::remove_dir_all(root.path().join(".claude/skills/beta")).unwrap();
+    assert_eq!(run(root.path()).0, 0);
+}
+
 #[test]
 fn each_malformed_section_list_or_exception_is_refused() {
     let valid = index_text("C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
