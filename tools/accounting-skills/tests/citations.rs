@@ -1,7 +1,7 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 
-use accounting_skills::citations::{Unmatched, check};
+use accounting_skills::citations::{ActCount, Unmatched, check, summary};
 use std::{fs, path::Path, process::Command};
 
 fn skill(root: &Path, name: &str, text: &str, sources: Option<&str>) {
@@ -121,7 +121,8 @@ fn a_tree_whose_citations_all_resolve_passes() {
     assert_eq!(code, 0);
     assert_eq!(
         output,
-        "3 of 3 citations resolve to a sources.json record: \
+        "Fuel Tax Act 2006 (Cth): 2 sections, no index.\n\
+         3 of 3 citations resolve to a sources.json record: \
          1 of 1 rulings and guidance, 2 of 2 legislative sections.\n\
          0 of 2 resolved sections checked against an index of their Act: \
          0 found, 0 listed exceptions, 0 absent; 2 in an Act with no index.\n"
@@ -737,6 +738,20 @@ fn a_section_absent_from_its_acts_index_fails_and_an_unindexed_act_does_not() {
         ),
         (2, 1, 0, 2)
     );
+    let count = |cited, found, absent| ActCount {
+        cited,
+        found,
+        excepted: 0,
+        absent,
+    };
+    assert_eq!(
+        report.acts.into_iter().collect::<Vec<_>>(),
+        [
+            ("Corporations Act 2001 (Cth)".to_string(), count(1, 0, 0)),
+            ("Fuel Tax Act 2006 (Cth)".to_string(), count(3, 2, 1)),
+            ("Payroll Tax Act 2007 (NSW)".to_string(), count(1, 0, 0)),
+        ]
+    );
     assert_eq!(
         report.unmatched,
         [unmatched_in_alpha(
@@ -747,6 +762,11 @@ fn a_section_absent_from_its_acts_index_fails_and_an_unindexed_act_does_not() {
     );
     let (code, output) = run(root.path());
     assert_eq!(code, 2);
+    assert!(output.contains(
+        "\nFuel Tax Act 2006 (Cth): 3 sections, 2 found, 0 listed exceptions, 1 absent.\n\
+         Corporations Act 2001 (Cth): 1 section, no index.\n\
+         Payroll Tax Act 2007 (NSW): 1 section, no index.\n"
+    ));
     assert!(output.ends_with(
         "3 of 5 resolved sections checked against an index of their Act: \
          2 found, 0 listed exceptions, 1 absent; 2 in an Act with no index.\n"
@@ -785,6 +805,9 @@ fn a_listed_exception_is_counted_apart_and_an_unused_one_fails() {
     exceptions(root.path(), "C2006A00072 41-77: proposed by a Bill\n");
     let (code, output) = run(root.path());
     assert_eq!(code, 0);
+    assert!(output.starts_with(
+        "Fuel Tax Act 2006 (Cth): 1 section, 0 found, 1 listed exceptions, 0 absent.\n"
+    ));
     assert!(output.ends_with(
         "1 of 1 resolved sections checked against an index of their Act: \
          0 found, 1 listed exceptions, 0 absent; 0 in an Act with no index.\n"
@@ -1044,4 +1067,22 @@ fn each_malformed_section_list_or_exception_is_refused() {
         let error = check(root.path()).map(|_| ()).unwrap_err().to_string();
         assert!(error.ends_with(expected), "{expected}: {error}");
     }
+}
+
+/// EVAL.md quotes the summary `check-citations` prints for this commit, so its
+/// citation figures cannot drift from the gate.
+#[test]
+fn eval_quotes_the_citation_summary_of_this_commit() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let expected = summary(&check(&root).unwrap());
+    let eval = fs::read_to_string(root.join("docs/EVAL.md")).unwrap();
+    let quoted = eval
+        .split_once("<!-- check-citations summary -->\n```text\n")
+        .and_then(|(_, rest)| rest.split_once("```\n"))
+        .map(|(block, _)| block);
+    assert_eq!(
+        quoted,
+        Some(expected.as_str()),
+        "copy the summary lines `check-citations` prints into the block in docs/EVAL.md"
+    );
 }

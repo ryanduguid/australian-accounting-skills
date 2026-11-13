@@ -479,6 +479,58 @@ citations, all resolved, including 1,437 sections: 1,200 in an indexed Act, of
 which 1,197 were listed and 3 were the same exceptions, and 237 not indexed.
 None was missing.
 
+The figures above are dated. The block below is what `check-citations` prints
+for the commit this file is in, after any failures: each Act or instrument's
+resolved sections, most cited first, then the totals. A test in
+`tools/accounting-skills/tests/citations.rs` fails when the block and the
+command's output differ, so a change to a skill's citations updates it.
+
+<!-- check-citations summary -->
+```text
+Income Tax Assessment Act 1997 (Cth): 415 sections, 413 found, 2 listed exceptions, 0 absent.
+Income Tax Assessment Act 1936 (Cth): 146 sections, 146 found, 0 listed exceptions, 0 absent.
+A New Tax System (Goods and Services Tax) Act 1999 (Cth): 116 sections, 116 found, 0 listed exceptions, 0 absent.
+Corporations Act 2001 (Cth): 91 sections, 91 found, 0 listed exceptions, 0 absent.
+Taxation Administration Act 1953 (Cth): 82 sections, 82 found, 0 listed exceptions, 0 absent.
+Superannuation Guarantee (Administration) Act 1992 (Cth): 79 sections, 78 found, 1 listed exceptions, 0 absent.
+Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 61 sections, 61 found, 0 listed exceptions, 0 absent.
+Payroll Tax Act 2007 (NSW): 53 sections, no index.
+Building Industry Fairness (Security of Payment) Act 2017 (Qld): 48 sections, no index.
+Tax Agent Services Act 2009 (Cth): 42 sections, 42 found, 0 listed exceptions, 0 absent.
+Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 39 sections, 39 found, 0 listed exceptions, 0 absent.
+Tax Agent Services (Code of Professional Conduct) Determination 2024 (Cth): 38 sections, 38 found, 0 listed exceptions, 0 absent.
+Coal Mining Industry (Long Service Leave) Payroll Levy Collection Act 1992 (Cth): 25 sections, 25 found, 0 listed exceptions, 0 absent.
+Fuel Tax Act 2006 (Cth): 24 sections, 24 found, 0 listed exceptions, 0 absent.
+Superannuation Industry (Supervision) Regulations 1994 (Cth): 23 sections, 23 found, 0 listed exceptions, 0 absent.
+Queensland Building and Construction Commission Act 1991 (Qld): 21 sections, no index.
+Superannuation Industry (Supervision) Act 1993 (Cth): 19 sections, 19 found, 0 listed exceptions, 0 absent.
+Building and Construction Industry Security of Payment Act 1999 (NSW): 16 sections, no index.
+Payroll Tax Act 1971 (Qld): 13 sections, no index.
+Payroll Tax Act 2011 (ACT): 11 sections, no index.
+Payroll Tax Act 2007 (Vic): 9 sections, no index.
+A New Tax System (Goods and Services Tax) Regulations 2019 (Cth): 8 sections, no index.
+Taxation Administration Regulations 2017 (Cth): 8 sections, no index.
+Payroll Tax Act 2008 (Tas): 7 sections, no index.
+Payroll Tax Act 2009 (NT): 7 sections, no index.
+Fringe Benefits Tax Assessment Act 1986 (Cth): 6 sections, 6 found, 0 listed exceptions, 0 absent.
+Coal Mining Industry (Long Service Leave) Administration Act 1992 (Cth): 5 sections, no index.
+Fair Work Act 2009 (Cth): 5 sections, no index.
+Pay-roll Tax Assessment Act 2002 (WA): 5 sections, no index.
+Stamp Duty Act 1978 (NT): 5 sections, no index.
+Income Tax Rates Act 1986 (Cth): 3 sections, no index.
+Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992 (Cth): 2 sections, no index.
+Duties Act 2000 (Vic): 2 sections, no index.
+Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 2 sections, no index.
+Superannuation Guarantee (Administration) Regulations 2018 (Cth): 2 sections, no index.
+Duties Act 2001 (Qld): 1 section, no index.
+Medicare Levy Act 1986 (Cth): 1 section, no index.
+Payroll Tax Act 2009 (SA): 1 section, no index.
+Personal Property Securities Act 2009 (Cth): 1 section, no index.
+Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
+1707 of 1707 citations resolve to a sources.json record: 264 of 264 rulings and guidance, 1443 of 1443 legislative sections.
+1206 of 1443 resolved sections checked against an index of their Act: 1203 found, 3 listed exceptions, 0 absent; 237 in an Act with no index.
+```
+
 A section found on a list exists in the current compilation; that says nothing
 of whether it applied in the period the skill concerns or says what the skill
 claims. A list holds every numbered entry in the table of contents: the
