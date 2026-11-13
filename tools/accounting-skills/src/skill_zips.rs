@@ -6,13 +6,16 @@
 //! Anthropic's article and OpenAI's Skills API guide describe. Each ZIP holds
 //! the skill's files as committed at HEAD, in a fixed order with fixed
 //! timestamps, so the same commit always gives the same bytes.
-use crate::{Result, platform_text, plugin_dist::Files};
+use crate::{
+    Result, platform_text,
+    plugin_dist::{Files, build_args},
+};
 use std::{
     collections::{BTreeMap, BTreeSet},
     ffi::OsString,
     fs,
     io::{self, Write},
-    path::{Path, PathBuf},
+    path::Path,
 };
 
 const SKILLS: &str = ".claude/skills";
@@ -178,40 +181,12 @@ pub fn build(root: &Path, destination: &Path) -> Result<usize> {
     Ok(skills.len())
 }
 
-pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
+pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     let usage = "usage: accounting-skills build-skill-zips DESTINATION [--root PATH]";
-    let mut destination = None;
-    let mut root = std::env::current_dir()?;
-    while let Some(arg) = args.next() {
-        match arg.to_str() {
-            Some("--help" | "-h") => {
-                println!("{usage}");
-                return Ok(0);
-            }
-            Some("--root") => match args
-                .next()
-                .filter(|value| !value.as_encoded_bytes().starts_with(b"-"))
-            {
-                Some(value) => root = value.into(),
-                None => {
-                    eprintln!("{usage}");
-                    return Ok(2);
-                }
-            },
-            Some(value) if !value.starts_with('-') && destination.is_none() => {
-                destination = Some(PathBuf::from(&arg));
-            }
-            _ => {
-                eprintln!("{usage}");
-                return Ok(2);
-            }
-        }
-    }
-    let Some(destination) = destination else {
-        eprintln!("{usage}");
-        return Ok(2);
+    let (root, destination) = match build_args(args, usage)? {
+        Ok(paths) => paths,
+        Err(code) => return Ok(code),
     };
-    let root = crate::canonical_root(&root)?;
     let count = build(&root, &destination)?;
     io::stdout().write_all(
         platform_text(&format!(

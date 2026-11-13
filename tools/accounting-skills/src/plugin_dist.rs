@@ -357,15 +357,20 @@ pub fn build(root: &Path, destination: &Path) -> Result<(usize, usize)> {
     Ok((files.len(), entries))
 }
 
-pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
-    let usage = "usage: accounting-skills build-plugin-dist DESTINATION [--root PATH]";
+/// Parse a build command's `DESTINATION [--root PATH]` into the canonical root
+/// and the destination. `Err` holds the exit code once `--help` or a bad
+/// argument has printed `usage`.
+pub(crate) fn build_args(
+    mut args: impl Iterator<Item = OsString>,
+    usage: &str,
+) -> Result<std::result::Result<(PathBuf, PathBuf), u8>> {
     let mut destination = None;
     let mut root = std::env::current_dir()?;
     while let Some(arg) = args.next() {
         match arg.to_str() {
             Some("--help" | "-h") => {
                 println!("{usage}");
-                return Ok(0);
+                return Ok(Err(0));
             }
             Some("--root") => match args
                 .next()
@@ -374,7 +379,7 @@ pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
                 Some(value) => root = value.into(),
                 None => {
                     eprintln!("{usage}");
-                    return Ok(2);
+                    return Ok(Err(2));
                 }
             },
             Some(value) if !value.starts_with('-') && destination.is_none() => {
@@ -382,15 +387,23 @@ pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
             }
             _ => {
                 eprintln!("{usage}");
-                return Ok(2);
+                return Ok(Err(2));
             }
         }
     }
     let Some(destination) = destination else {
         eprintln!("{usage}");
-        return Ok(2);
+        return Ok(Err(2));
     };
-    let root = crate::canonical_root(&root)?;
+    Ok(Ok((crate::canonical_root(&root)?, destination)))
+}
+
+pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
+    let usage = "usage: accounting-skills build-plugin-dist DESTINATION [--root PATH]";
+    let (root, destination) = match build_args(args, usage)? {
+        Ok(paths) => paths,
+        Err(code) => return Ok(code),
+    };
     let (count, entries) = build(&root, &destination)?;
     io::stdout().write_all(
         platform_text(&format!(
