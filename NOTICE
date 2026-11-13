@@ -58,8 +58,9 @@ Tim-Claessen/payrolltaxdatasets, commit
 8f7d9bb79578fc2b62c3885c54640695cb4355b7 (CC0-1.0), inspected on 5 November
 2026: https://github.com/Tim-Claessen/payrolltaxdatasets. The cards use newly
 fabricated amounts and no upstream rows, identifiers, rates or generator code.
-The remaining jurisdiction cards are original. Existing grouping, back-pay
-and threshold-edge cards already cover the S04, S06 and S10 topics. Two
+The remaining jurisdiction cards are original. Existing grouping and
+threshold-edge cards already cover the S04 and S10 topics, and the back-pay
+card covers the back-pay topic of S06. Two
 Queensland cards added on 13 November 2026 adapt the cancelled-run and
 off-cycle-run ideas of S06 and the fringe-benefit, share-scheme and
 redundancy ideas of S07 from the same commit, with newly fabricated amounts.
