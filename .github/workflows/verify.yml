@@ -207,7 +207,7 @@ jobs:
           binary="target/debug/accounting-skills$exe"
           probes=target/debug/examples
           mkdir -p "$RECORDS"
-          crate=(.github/workflows/verify.yml tools/accounting-skills)
+          crate=(.github/workflows/verify.yml .gitattributes tools/accounting-skills)
           refresh=("${crate[@]}" scripts tests/test_source_refresh.py ':(glob).claude/skills/*/sources.json')
           # True only on a pull request that changes none of the paths. A Git
           # error counts as a change, so the comparison runs.
