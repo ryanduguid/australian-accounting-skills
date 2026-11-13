@@ -29,26 +29,52 @@ jobs:
     defaults:
       run:
         working-directory: tools/accounting-skills
+    outputs:
+      build: ${{ steps.version.outputs.build }}
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
+      # The publish step keeps the branch unless the version rises, so a push
+      # that leaves the version at or below the branch's skips both builds.
+      # A manual run always builds and validates.
+      - name: Compare the version with the branch's
+        id: version
+        env:
+          BRANCH: claude-plugin
+        run: |
+          set -euo pipefail
+          build=true
+          if [ "$GITHUB_EVENT_NAME" = push ] && git ls-remote --exit-code --heads origin "refs/heads/$BRANCH" > /dev/null; then
+            git fetch --no-tags --depth=1 origin "refs/heads/$BRANCH"
+            version="$(jq -r .version "$GITHUB_WORKSPACE/.claude-plugin/plugin.json")"
+            published="$(git show "FETCH_HEAD:.claude-plugin/plugin.json" | jq -r .version)"
+            if [ "$version" = "$published" ] || [ "$(printf '%s\n%s\n' "$published" "$version" | sort -V | tail -n 1)" != "$version" ]; then
+              echo "::notice::The version $version is not above $published on $BRANCH, so the plugin is not built."
+              build=false
+            fi
+          fi
+          echo "build=$build" >> "$GITHUB_OUTPUT"
+
       - name: Install the pinned Rust toolchain
+        if: steps.version.outputs.build == 'true'
         # rustup reads the version from rust-toolchain.toml in this directory.
         run: rustup toolchain install
 
       - name: Build the plugin
+        if: steps.version.outputs.build == 'true'
         run: cargo run --locked -- build-plugin-dist "$RUNNER_TEMP/plugin" --root "$GITHUB_WORKSPACE"
 
       - name: Validate the plugin as the directory does
+        if: steps.version.outputs.build == 'true'
         run: npx --yes @anthropic-ai/claude-code@2.1.322 plugin validate --profile directory --strict "$RUNNER_TEMP/plugin"
 
   publish:
     needs: validate
     # Only main is published, including on a manual run.
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.validate.outputs.build == 'true'
     timeout-minutes: 20
     name: publish
     runs-on: ubuntu-latest
