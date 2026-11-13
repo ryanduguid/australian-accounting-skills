@@ -29,34 +29,34 @@ Australian Accounting Skills is a set of agent skills for Australian accountants
 
 Each skill takes an agent through the workflow, sends it to current primary sources for anything that changes and ends in a review-ready workpaper. [Scope, limits and examples](https://duguid.com.au/tools/australian-tax-ai-agents/) are on the author's site.
 
-v0.6.0 corrects 4 passages in v0.5.0, including a withdrawn GST ruling that `tax-invoice-review` cited: see [Corrections since v0.5.0](RELEASE_NOTES.md#corrections-since-v050).
+v0.7.0 corrects the citation counts that the v0.6.0 release notes gave: see [Corrections since v0.6.0](RELEASE_NOTES.md#corrections-since-v060).
 
 ## Install
 
-Install the 107 workflows in the published release, [v0.6.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.6.0). Each command below was run on Linux on 12 November 2026 against the files this release tags.
+Install the 107 workflows in the published release, [v0.7.0](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.7.0). Each command below was run on Linux on 12 November 2026 against the files v0.6.0 tags, not yet against v0.7.0.
 
 Claude Code, as a plugin:
 
 ```bash
-claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.6.0
+claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.7.0
 claude plugin install australian-accounting-skills@ryanduguid
 ```
 
 Codex, as a plugin:
 
 ```bash
-codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.6.0
+codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.7.0
 codex plugin add australian-accounting-skills@ryanduguid
 ```
 
 Any agent that reads `SKILL.md`, from a separate project directory:
 
 ```bash
-git clone --branch v0.6.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
+git clone --branch v0.7.0 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
 npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
 ```
 
-That copies the 107 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone when run on Linux on 12 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
+That copies the 107 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone from v0.6.0 when run on Linux on 12 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). [Installation](docs/installation.md) covers manual copying, removal and versioning.
 
 Claude Code is the tested runtime. Codex packaging and portable skill files are included, and OpenCode has an install and discovery check only. None of this establishes testing in every agent runtime. The validation record under the fold gives the model runs and their limits.
 
@@ -115,7 +115,7 @@ Skills specify the workflow and require current primary authority for mutable ra
 The skill folders hold Markdown and JSON files and no scripts, so the skills send nothing themselves. What leaves the machine depends on how you run them:
 
 - **Your agent host** decides where the prompts, files and tool results it reads go. With a cloud model they normally reach the model provider, under your account's terms, and a client file the agent opens goes the same way, so check your host's configuration.
-- **The bundled MCP server** ([`aus-accounting-mcp`](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)) runs over stdio. The v0.6.0 release starts `aus-accounting-mcp` 0.6.0 (release commit [`f17bbb2`](https://github.com/ryanduguid/australian-accounting/commit/f17bbb2f920e3c11dac9810060a533c64e0e3be8)); the default branch starts `aus-accounting-mcp` 0.8.0 (release commit [`7b9b0e2`](https://github.com/ryanduguid/australian-accounting/commit/7b9b0e27d5cb3edae67854df1626feb4672b65e8)). At 0.8.0, its own code and its 6 pinned engines import no network library apart from `asyncio`, which its demo uses only to run an event loop (a scan of their Python files on 13 November 2026). A Linux trace of 0.6.0 on 6 November 2026 saw 0 socket and 0 connect calls from its 12 calculation tools on fabricated valid arguments. That trace was not repeated for 0.8.0, which adds 5 tools: `get_lodgment_due_dates`, `get_data_freshness`, `get_reviewed_rate`, `validate_abn` and `validate_acn`. The MCP SDK it runs on is not pinned (`mcp>=2.3.0,<3`, 2.3.0 on 13 November) and depends on HTTP libraries, including `httpx2`, `starlette` and `uvicorn`; the scan did not cover it. Its 8 corpus tools were not traced on a corpus. The trace's method and output are not published, so it cannot be rerun from this repository. Your host handles its tool arguments and results as above. The plugin builds it with `uvx` from the pinned commit on first start; on 13 November 2026 a wheel built from that commit matched the PyPI 0.8.0 wheel in all 105 files, Claude Code started the server from the plugin and reported it connected, and a `tools/list` request to the server started by the plugin's command returned 25 tools.
+- **The bundled MCP server** ([`aus-accounting-mcp`](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)) runs over stdio. The v0.6.0 release starts `aus-accounting-mcp` 0.6.0 (release commit [`f17bbb2`](https://github.com/ryanduguid/australian-accounting/commit/f17bbb2f920e3c11dac9810060a533c64e0e3be8)); the default branch starts `aus-accounting-mcp` 0.8.0 (release commit [`7b9b0e2`](https://github.com/ryanduguid/australian-accounting/commit/7b9b0e27d5cb3edae67854df1626feb4672b65e8)), as does the v0.7.0 release. At 0.8.0, its own code and its 6 pinned engines import no network library apart from `asyncio`, which its demo uses only to run an event loop (a scan of their Python files on 13 November 2026). A Linux trace of 0.6.0 on 6 November 2026 saw 0 socket and 0 connect calls from its 12 calculation tools on fabricated valid arguments. That trace was not repeated for 0.8.0, which adds 5 tools: `get_lodgment_due_dates`, `get_data_freshness`, `get_reviewed_rate`, `validate_abn` and `validate_acn`. The MCP SDK it runs on is not pinned (`mcp>=2.3.0,<3`, 2.3.0 on 13 November) and depends on HTTP libraries, including `httpx2`, `starlette` and `uvicorn`; the scan did not cover it. Its 8 corpus tools were not traced on a corpus. The trace's method and output are not published, so it cannot be rerun from this repository. Your host handles its tool arguments and results as above. The plugin builds it with `uvx` from the pinned commit on first start; on 13 November 2026 a wheel built from that commit matched the PyPI 0.8.0 wheel in all 105 files, Claude Code started the server from the plugin and reported it connected, and a `tools/list` request to the server started by the plugin's command returned 25 tools.
 - **A local program a skill names** is installed separately and is not part of this repository. A skill tells the agent to run one only when it is already installed: `review-ready` in `bas-preparation`, `month-end-close`, `workpaper-tie-out` and `year-end-workpapers`; `close-control` in `month-end-close`; `aasb-corpus` in `au-financial-statements` and `wip-over-under-billing`; `wip-tally` in `wip-over-under-billing`; `fadden` in `au-tax-research`; and the `xero_aged_receivables.py` verifier in `xero-exports`. `solomons-sword` in `au-trust-distributions`, `the-exchequer-tally` in `au-franking-account` and `payday-super-check` in `stp-finalisation` are offered as optional checks without a condition that they be installed first. `xero-trial-balance-export` in `xero-exports`, for an operator who already has a Xero OAuth app, requests the trial balance from Xero's API. `month-end-close` gives the operator a `cargo install` command that builds `close-control` from a checkout, and `wip-over-under-billing` one that builds `wip-tally` from a pinned commit once installation is approved; both download crates. Each program's own code decides what it reads and sends.
 - **A ledger connector** adds whatever the vendor's service handles. Use the [read-only connector route](.claude/skills/xero-exports/SKILL.md#read-only-connector-route) for Xero.
 - **Installing** contacts GitHub and, with `npx skills`, the npm registry. That CLI collects anonymous usage data unless `DISABLE_TELEMETRY` or `DO_NOT_TRACK` is set.
@@ -168,6 +168,10 @@ The [evaluation guide](docs/EVAL.md) supplies the whole card, including its requ
 
 The other 142 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, 3 transaction-GST cases, 2 short-stay accommodation cases, 3 pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a formula-change case, 2 reconciliation break-trace cases, GST screening leads, lodged-figure drift, a close with prior review points, 2 close-control cases, a card statement in credit across a year end, an employee master-data screen, a family trust distribution tax screen, 13 payroll tax cases, an AASB 18 comparative-year case, 3 AML/CTF beneficial owner cases, 2 BAS import GST cases, a two-way workpaper tie-out case, 4 cases for the client departure, trust loss, ATO correspondence and ATO account workflows, 2 FBT cases covering the line register and car valuation records, a professional-body obligations case, 7 land tax cases, 8 transfer duty cases, 2 Xero connector cases, a tax invoice threshold case, 7 planted-instruction and 7 altered or forged document cases with 2 positive controls for ordinary payment terms and an explained timing difference, 3 cases for SMSF death benefits, private company dividend preparation and a family trust election, 2 farm land GST and farm succession cases, 2 main residence and 3 share buy-back cases, 2 client meeting file note cases, 2 MYOB export cases, 3 marketplace settlement cases, 2 client letter cases, 2 client email triage cases, 2 CPI rent review cases, 4 client request draft cases and a 3-year analytical review case, 3 cases for an accounting depreciation schedule, a management report and a three-way forecast, 3 cases for a partnership agreement abstract, a Budget measure screen and a draft remission request, 3 cases for a practice's AML/CTF rows, an ATO client list reconciliation and a trust resolution content schedule, a positive control for 2 suppliers sharing an invoice number, and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 107 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
 
+## Corrections to v0.5.0
+
+v0.6.0 corrects 4 passages in v0.5.0, including a withdrawn GST ruling that `tax-invoice-review` cited: see [Corrections since v0.5.0](RELEASE_NOTES.md#corrections-since-v050).
+
 ## Corrections to v0.2.1
 
 v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on v0.2.1.
@@ -178,18 +182,18 @@ A development installation tracks the default branch, and a citation names the p
 
 ### Development installation
 
-The marketplace added without a tag resolves the default branch, which can be ahead of v0.6.0. It is not a published release.
+The marketplace added without a tag resolves the default branch, which can be ahead of v0.7.0. It is not a published release.
 
 ```
 /plugin marketplace add ryanduguid/australian-accounting-skills
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-At v0.6.0 the default branch holds the same 107 workflows; later changes land there first. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+At v0.7.0 the default branch holds the same 107 workflows; later changes land there first. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
-[CITATION.cff](CITATION.cff) identifies the published v0.6.0 release and its 107 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
+[CITATION.cff](CITATION.cff) identifies the published v0.7.0 release and its 107 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
-Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.6.0 pack.
+Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.7.0 pack.
 
 ## Guides
 
