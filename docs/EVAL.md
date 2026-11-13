@@ -439,7 +439,10 @@ Each list covers one Commonwealth Act or instrument: the section numbers in the
 table of contents of the current compilation's EPUB, which the Federal
 Register of Legislation's API serves. Its header records the title, the
 register and compilation identifiers, the in-force date, the request, the
-retrieval date and the SHA-256 digest of the file read. The check drops
+retrieval date and the SHA-256 digest of the file read. Since 13 November
+2026 one state Act has a list as well: the Queensland BIF Act, from the
+Queensland register's XML of the version in force from 28 April 2026, which
+leaves out the 32 sections that version marks repealed. The check drops
 subsection and paragraph suffixes (`s 43-10(4)` is checked as 43-10), and
 reads `ss 17A-18C` as a range when 17A and 18C are listed and the Act's list
 holds no hyphenated number. Where it does, as the ITAA 1936, TAA 1953 and

@@ -208,7 +208,11 @@ A resolved section must also exist where `section-index/` in this directory
 lists its Act's sections. Each `REGISTER-ID.txt` there holds one Commonwealth
 Act's or instrument's section numbers, one per line, after `# key: value`
 lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
-`in-force-from`, `source`, `retrieved` and `sha256`. The numbers are every
+`in-force-from`, `source`, `retrieved` and `sha256`. A Queensland Act's list,
+`qld-act-YYYY-NNN.txt`, has the same lines apart from `compilation` and
+`compilation-number`; `in-force-from` names the register's version, and its
+sections are those the register's XML of that version holds, leaving out any
+marked repealed. The numbers are every
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
 after the first schedule heading only hyphenated numbers count, because a
@@ -234,8 +238,8 @@ register identifier has a list must carry a title matching the list's, and a
 record whose title matches a list's must carry its identifier. A record that
 fails either owns no citation, and each citation it would have resolved
 reports the record, both titles and both identifiers. A record of an
-instrument with no list, or from the ATO legal database or a state register,
-is not checked this way: a mis-titled one still resolves, and a reviewer must
+instrument with no list, or from the ATO legal database or a state register
+other than a listed Queensland Act's, is not checked this way: a mis-titled one still resolves, and a reviewer must
 catch it.
 
 Each failure prints as `file:line: citation: reason`: an unmatched citation, a
@@ -288,6 +292,24 @@ identifier such as `C2004A05138`:
 6. Run `check-citations`. Remove any exception it reports as unneeded, and
    check each newly absent section against the compilation before changing a
    skill or adding an exception.
+
+For a Queensland Act, `qld-act-YYYY-NNN.txt`, where `act-YYYY-NNN` is the
+Act's identifier on www.legislation.qld.gov.au:
+
+1. Open the Act's current version there and note its date, which the
+   version's own links carry as `inforce/YYYY-MM-DD/act-YYYY-NNN`.
+2. Download `https://www.legislation.qld.gov.au/view/whole/xml/inforce/YYYY-MM-DD/act-YYYY-NNN`.
+   This address is the `source` field. On 13 November 2026 it answered a plain
+   request, and 2 downloads had the same bytes; the HTML view does not, as it
+   embeds the time it was served.
+3. Delete each `<fragment>` element, which holds amending text quoted inside a
+   section, then take each `<clause id="sec.NUMBER">` in document order,
+   leaving out any whose `status` attribute is `repealed`.
+4. Write the header lines `# title: ` (the Act's short title without `(Qld)`),
+   `# register-id: qld-act-YYYY-NNN`, `# in-force-from: ` (the version date),
+   `# source: `, `# retrieved: ` and `# sha256: ` (of the XML's bytes), then
+   one number per line, with LF line endings.
+5. Run `check-citations`, as in step 6 above.
 
 ## Validation pack
 

@@ -315,13 +315,20 @@ static SECTION_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^\d+[A-Z]*(?:-\d+[A-Z]*)?(?:\.\d+[A-Z]*)?$").unwrap());
 static REGISTER_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[CF]\d{4}[A-Z]\d{5}$").unwrap());
+/// A Queensland Act's list name: `qld-` and the Act's register identifier.
+static QUEENSLAND_ID: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^qld-act-\d{4}-\d{3}$").unwrap());
 
 /// The sections of one Commonwealth Act or instrument, as its register
-/// compilation's table of contents lists them.
+/// compilation's table of contents lists them, or of one Queensland Act, as
+/// its register's XML of a version lists them.
 struct SectionIndex {
     register_id: String,
     title: String,
-    compilation: String,
+    /// The jurisdiction, as a record's title states it.
+    place: &'static str,
+    /// The compilation or version the list was taken from, for diagnostics.
+    version: String,
     keys: BTreeSet<Key>,
     sections: BTreeSet<String>,
     /// Whether any listed section number holds a hyphen. Only in a list with
@@ -366,14 +373,24 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     };
     let title = field("title")?;
     let register_id = field("register-id")?;
-    let compilation = field("compilation")?;
-    for provenance in ["compilation-number", "source"] {
-        field(provenance)?;
-    }
+    // A Queensland version has a date but no compilation number.
+    let queensland = QUEENSLAND_ID.is_match(&register_id)?;
+    let compilation = if queensland {
+        None
+    } else {
+        let compilation = field("compilation")?;
+        field("compilation-number")?;
+        Some(compilation)
+    };
+    field("source")?;
+    let mut in_force = String::new();
     for date in ["in-force-from", "retrieved"] {
         let value = field(date)?;
         if value.len() != 10 || NaiveDate::parse_from_str(&value, "%Y-%m-%d").is_err() {
             return Err(format!("{name}: {date} must be a date written YYYY-MM-DD").into());
+        }
+        if date == "in-force-from" {
+            in_force = value;
         }
     }
     let digest = field("sha256")?;
@@ -387,20 +404,34 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     if let Some(key) = fields.keys().next() {
         return Err(format!("{name}: unknown field {key}").into());
     }
-    if !REGISTER_ID.is_match(&register_id)? || path.file_stem() != Some(register_id.as_ref()) {
+    if !(queensland || REGISTER_ID.is_match(&register_id)?)
+        || path.file_stem() != Some(register_id.as_ref())
+    {
         return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
     }
     if title_parts(&title).is_none() {
         return Err(format!("{name}: the title must end with its year").into());
     }
-    Ok(SectionIndex {
-        keys: BTreeSet::from([
-            ("title", format!("{title} (Cth)")),
+    // The register key matches the one `register_copy` gives an address of
+    // the same document.
+    let (place, copy, version) = match compilation {
+        Some(compilation) => (
+            "Cth",
             ("register", register_id.clone()),
-        ]),
+            format!("compilation {compilation}"),
+        ),
+        None => (
+            "Qld",
+            ("state", register_id.replacen('-', " ", 1)),
+            format!("version in force from {in_force}"),
+        ),
+    };
+    Ok(SectionIndex {
+        keys: BTreeSet::from([("title", format!("{title} ({place})")), copy]),
         register_id,
         title,
-        compilation,
+        place,
+        version,
         hyphenated: sections.iter().any(|section| section.contains('-')),
         sections,
     })
@@ -1026,11 +1057,14 @@ fn contradiction(
             .cloned()
             .collect()
     };
-    let ids: Vec<&str> = keys
-        .iter()
-        .filter(|(kind, _)| *kind == "register")
-        .map(|(_, id)| id.as_str())
-        .collect();
+    let copies = |keys: &BTreeSet<Key>| -> BTreeSet<Key> {
+        keys.iter()
+            .filter(|(kind, _)| ["register", "state"].contains(kind))
+            .cloned()
+            .collect()
+    };
+    let cited = copies(keys);
+    let ids: Vec<&str> = cited.iter().map(|(_, id)| id.as_str()).collect();
     if ids.is_empty() {
         return None;
     }
@@ -1038,7 +1072,7 @@ fn contradiction(
         .iter()
         .find(|index| {
             same_instrument(&only_titles(keys), &only_titles(&index.keys))
-                != ids.contains(&index.register_id.as_str())
+                != !cited.is_disjoint(&copies(&index.keys))
         })
         .map(|index| {
             format!(
@@ -1241,7 +1275,7 @@ pub fn check(root: &Path) -> Result<Report> {
                     .find(|index| same_instrument(record, &index.keys))
             });
             let name = match index {
-                Some(index) => format!("{} (Cth)", index.title),
+                Some(index) => format!("{} ({})", index.title, index.place),
                 None => title(matching.first()?),
             };
             Some((name, index))
@@ -1353,8 +1387,8 @@ pub fn check(root: &Path) -> Result<Report> {
                                     start,
                                     citation,
                                     format!(
-                                        "absent from the section index of {}, compilation {}",
-                                        index.title, index.compilation
+                                        "absent from the section index of {}, {}",
+                                        index.title, index.version
                                     ),
                                 ));
                             }
