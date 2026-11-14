@@ -117,33 +117,7 @@ impl Server {
         if method == "initialize" {
             return self.initialize(params);
         }
-        let meta = params.get("_meta").and_then(Value::as_object);
-        match meta.and_then(|meta| meta.get(VERSION_KEY)) {
-            Some(version) => {
-                let version = version.as_str().unwrap_or_default();
-                if !STATELESS.contains(&version) {
-                    return Err(Fault(
-                        -32022,
-                        "Unsupported protocol version".into(),
-                        Some(json!({"supported": STATELESS, "requested": version})),
-                    ));
-                }
-                let declared = meta
-                    .and_then(|meta| meta.get(CAPABILITIES_KEY))
-                    .is_some_and(Value::is_object);
-                if method != "server/discover" && !declared {
-                    return Err(invalid_params(format!(
-                        "_meta must carry {CAPABILITIES_KEY}"
-                    )));
-                }
-            }
-            None if method == "server/discover" || self.handshake.is_some() => {}
-            None => {
-                return Err(invalid_params(format!(
-                    "_meta must carry {VERSION_KEY}, or the client must send initialize first"
-                )));
-            }
-        }
+        self.check_version(method, params)?;
         match method {
             "server/discover" => Ok(complete(json!({
                 "supportedVersions": STATELESS,
@@ -159,6 +133,42 @@ impl Server {
             "tools/call" => self.call(params),
             _ => Err(Fault(-32601, format!("Method not found: {method}"), None)),
         }
+    }
+
+    /// Refuse a request that names an unsupported version in `_meta`, or
+    /// names none when no `initialize` came first. `server/discover` needs no
+    /// version.
+    fn check_version(
+        &self,
+        method: &str,
+        params: &Map<String, Value>,
+    ) -> std::result::Result<(), Fault> {
+        let meta = params.get("_meta").and_then(Value::as_object);
+        let Some(version) = meta.and_then(|meta| meta.get(VERSION_KEY)) else {
+            if method == "server/discover" || self.handshake.is_some() {
+                return Ok(());
+            }
+            return Err(invalid_params(format!(
+                "_meta must carry {VERSION_KEY}, or the client must send initialize first"
+            )));
+        };
+        let version = version.as_str().unwrap_or_default();
+        if !STATELESS.contains(&version) {
+            return Err(Fault(
+                -32022,
+                "Unsupported protocol version".into(),
+                Some(json!({"supported": STATELESS, "requested": version})),
+            ));
+        }
+        let declared = meta
+            .and_then(|meta| meta.get(CAPABILITIES_KEY))
+            .is_some_and(Value::is_object);
+        if method != "server/discover" && !declared {
+            return Err(invalid_params(format!(
+                "_meta must carry {CAPABILITIES_KEY}"
+            )));
+        }
+        Ok(())
     }
 
     fn initialize(&mut self, params: &Map<String, Value>) -> std::result::Result<Value, Fault> {
@@ -277,29 +287,41 @@ impl Server {
             }
         }
         let mut references = Vec::new();
-        let folder = within_root(&self.skills, &Path::new(skill).join("references"))
-            .map_err(|error| format!("{skill}/references: {error}"))?;
-        if fs::symlink_metadata(&folder).is_ok_and(|metadata| metadata.is_dir()) {
-            let mut names = Vec::new();
-            for entry in fs::read_dir(&folder)? {
-                names.push(
-                    entry?.file_name().into_string().map_err(|_| {
-                        format!("{skill}/references holds a name that is not Unicode")
-                    })?,
-                );
-            }
-            names.sort();
-            for name in names {
-                let path = format!("references/{name}");
-                let body = self
-                    .read(skill, &path)?
-                    .ok_or_else(|| format!("{skill}/{path} disappeared"))?;
-                content.push(text(&body));
-                references.push(json!({"path": path, "text": body}));
-            }
+        for (path, body) in self.references(skill)? {
+            content.push(text(&body));
+            references.push(json!({"path": path, "text": body}));
         }
         structured["references"] = json!(references);
         Ok((Value::Array(content), structured))
+    }
+
+    /// Each file in the skill's `references` folder, by name, as
+    /// (`references/NAME`, text).
+    fn references(&self, skill: &str) -> Result<Vec<(String, String)>> {
+        let folder = within_root(&self.skills, &Path::new(skill).join("references"))
+            .map_err(|error| format!("{skill}/references: {error}"))?;
+        if !fs::symlink_metadata(&folder).is_ok_and(|metadata| metadata.is_dir()) {
+            return Ok(Vec::new());
+        }
+        let mut names = Vec::new();
+        for entry in fs::read_dir(&folder)? {
+            names.push(
+                entry?
+                    .file_name()
+                    .into_string()
+                    .map_err(|_| format!("{skill}/references holds a name that is not Unicode"))?,
+            );
+        }
+        names.sort();
+        let mut files = Vec::new();
+        for name in names {
+            let path = format!("references/{name}");
+            let body = self
+                .read(skill, &path)?
+                .ok_or_else(|| format!("{skill}/{path} disappeared"))?;
+            files.push((path, body));
+        }
+        Ok(files)
     }
 
     /// The text of `file` in the skill folder, or `None` when it does not
