@@ -16,6 +16,7 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
 | [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
 | [Skills CLI from a development checkout](#development-checkout) | Default branch | No | Yes | A checkout at `63967e8` produced 50 skills in each target directory on 8 September 2026 | Not tested. Pull the checkout and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
+| [Any MCP client, through a local server](#any-mcp-client-through-a-local-server) | Default branch checkout | No; this route is itself an MCP server, serving the skills | Yes | TESTED-PLACEHOLDER | `git pull` in the checkout; the server reads the files on each call |
 | [Manual copy](#manual-copy) | v0.7.0 tag | No | Yes | None recorded | Copy again from a checkout of the new tag; not tested |
 
 ### Tagged 107-workflow release
@@ -288,7 +289,8 @@ it does not establish fresh agent behaviour or validate current tax law.
 ### Any MCP client, through a local server
 
 `accounting-skills serve-mcp` serves the skills in a checkout to any MCP client that can
-start a local server over stdio. It is on `main`, not in v0.7.0. It has 3 read-only tools:
+start a local server over stdio. It installs from the default branch: v0.7.0 does not have it.
+It has 3 read-only tools:
 
 - `list_skills`: each skill's name and description.
 - `search_skills`: the skills whose name, description or `SKILL.md` contains every word of

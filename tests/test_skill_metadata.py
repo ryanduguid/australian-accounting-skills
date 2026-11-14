@@ -36,6 +36,7 @@ INSTALL_ROUTES = (
     "Cursor plugin, development",
     "Skills CLI from GitHub",
     "Skills CLI from a development checkout",
+    "Any MCP client, through a local server",
     "Manual copy",
 )
 INSTALL_NON_ROUTE_SECTIONS = {"Development installations", "Versioning"}
