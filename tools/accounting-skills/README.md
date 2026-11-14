@@ -37,6 +37,15 @@ Entries are stored uncompressed, in path order, with fixed timestamps, so one
 commit always gives the same bytes. It refuses a skill with a second `SKILL.md` and an existing
 destination. `docs/installation.md` gives the upload steps.
 
+`serve-mcp [--root PATH]` is also new: a read-only MCP server over stdio with 3 tools,
+`list_skills`, `search_skills` and `get_skill`, that serves the skills under the root's
+`.claude/skills` to any MCP client. It speaks the 2026-07-28 revision, where each request
+names its version in `_meta`, and answers `initialize` for clients of 2024-11-05 to
+2025-11-25. It reads only regular files inside `.claude/skills`, refuses a skill name
+`list_skills` did not return and a link that leads out of that folder, writes nothing and
+opens no network connection. [Installation](../../docs/installation.md#any-mcp-client-through-a-local-server)
+gives the client set-up and its limits.
+
 `audit-grader-reads` replaces `audit_grader_reads.py`, a script kept outside
 this repository. It prints the same report on well-formed traces, except that
 it also flags a suspect folder that ends a path, as in

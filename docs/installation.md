@@ -285,6 +285,53 @@ GitHub verification run 34200334270 for that commit passed lint, shared conforma
 3.10, 3.12 and 3.13. Installation proves the files are delivered correctly;
 it does not establish fresh agent behaviour or validate current tax law.
 
+### Any MCP client, through a local server
+
+`accounting-skills serve-mcp` serves the skills in a checkout to any MCP client that can
+start a local server over stdio. It is on `main`, not in v0.7.0. It has 3 read-only tools:
+
+- `list_skills`: each skill's name and description.
+- `search_skills`: the skills whose name, description or `SKILL.md` contains every word of
+  a query, ignoring case, with name and description matches first.
+- `get_skill`: a skill's `SKILL.md`, then its `sources.json` (or `sources.exempt.json`) and
+  each file in its `references` folder, exactly as they are in the checkout.
+
+Build it once with Rust 1.99 or later, then give your client the checkout's absolute path:
+
+```bash
+git clone --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-source
+cargo install --locked --path accounting-skills-source/tools/accounting-skills
+claude mcp add accounting-skills -- accounting-skills serve-mcp --root "$PWD/accounting-skills-source"
+codex mcp add accounting-skills -- accounting-skills serve-mcp --root "$PWD/accounting-skills-source"
+```
+
+The last 2 lines add it to Claude Code and Codex; use the one for your client. A client
+configured through a JSON `mcpServers` entry takes the same command and arguments:
+
+```json
+{
+  "mcpServers": {
+    "accounting-skills": {
+      "command": "accounting-skills",
+      "args": ["serve-mcp", "--root", "/absolute/path/to/accounting-skills-source"]
+    }
+  }
+}
+```
+
+The server reads the files on each call, so `git pull` in the checkout updates what it
+serves without a restart. What it does not do:
+
+- It reads only regular files inside the checkout's `.claude/skills` folder. It refuses a
+  name `list_skills` did not return, and a link that leads out of that folder. It writes
+  nothing and opens no network connection, though your client still sends what it reads to
+  the model provider.
+- It runs only on your machine, over stdio. It has no remote (HTTP) transport, so a host
+  that connects only to a remote server, such as a ChatGPT or claude.ai connector, cannot
+  use it.
+- It is not listed in the MCP Registry or any client's directory.
+- It does not start the [Aus Accounting MCP](#claude-code-plugin) calculator server.
+
 ### Manual copy
 
 Clone the published tag, review the checkout, then copy the skills you want into

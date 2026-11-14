@@ -166,7 +166,8 @@ impl Server {
             .get("protocolVersion")
             .and_then(Value::as_str)
             .ok_or_else(|| invalid_params("initialize needs protocolVersion"))?;
-        // A client asking for a revision this server lacks is offered the newest.
+        // Speak, friend, and enter: a client asking for a revision this server
+        // lacks is offered the newest.
         let agreed = HANDSHAKE
             .iter()
             .copied()
@@ -249,7 +250,9 @@ impl Server {
         Ok((json!([text(&structured.to_string())]), structured))
     }
 
-    /// A skill's `SKILL.md` and its sources file, each exactly as on disk.
+    /// A skill's `SKILL.md`, its sources file and the files in its
+    /// `references` folder, which its `SKILL.md` tells the agent to read, each
+    /// exactly as on disk.
     fn get(&self, skill: &str) -> Result<(Value, Value)> {
         // Only a name list_skills returns is read, so a path, `..` or a
         // different spelling never reaches the file system.
@@ -273,6 +276,29 @@ impl Server {
                 break;
             }
         }
+        let mut references = Vec::new();
+        let folder = within_root(&self.skills, &Path::new(skill).join("references"))
+            .map_err(|error| format!("{skill}/references: {error}"))?;
+        if fs::symlink_metadata(&folder).is_ok_and(|metadata| metadata.is_dir()) {
+            let mut names = Vec::new();
+            for entry in fs::read_dir(&folder)? {
+                names.push(
+                    entry?.file_name().into_string().map_err(|_| {
+                        format!("{skill}/references holds a name that is not Unicode")
+                    })?,
+                );
+            }
+            names.sort();
+            for name in names {
+                let path = format!("references/{name}");
+                let body = self
+                    .read(skill, &path)?
+                    .ok_or_else(|| format!("{skill}/{path} disappeared"))?;
+                content.push(text(&body));
+                references.push(json!({"path": path, "text": body}));
+            }
+        }
+        structured["references"] = json!(references);
         Ok((Value::Array(content), structured))
     }
 
@@ -353,7 +379,7 @@ fn tools() -> Value {
         },
         {
             "name": "get_skill",
-            "description": "Return a skill's SKILL.md, then its sources.json (or sources.exempt.json), exactly as in the pack. Follow the SKILL.md.",
+            "description": "Return a skill's SKILL.md, then its sources.json (or sources.exempt.json), then each file in its references folder, exactly as in the pack. Follow the SKILL.md.",
             "inputSchema": {
                 "type": "object",
                 "properties": {"name": string("A name list_skills returns, such as 'bas-preparation'.")},

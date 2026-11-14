@@ -174,6 +174,40 @@ fn a_client_lists_every_skill_and_gets_each_one_byte_for_byte() {
             sources,
             "{name}"
         );
+        let mut references: Vec<PathBuf> = fs::read_dir(folder.join("references"))
+            .map(|entries| entries.map(|entry| entry.unwrap().path()).collect())
+            .unwrap_or_default();
+        references.sort();
+        let served = result["structuredContent"]["references"]
+            .as_array()
+            .unwrap();
+        assert_eq!(served.len(), references.len(), "{name}");
+        assert_eq!(
+            result["content"].as_array().unwrap().len(),
+            2 + references.len(),
+            "{name}"
+        );
+        for (index, path) in references.iter().enumerate() {
+            let bytes = fs::read(path).unwrap();
+            let relative = format!("references/{}", path.file_name().unwrap().to_str().unwrap());
+            assert_eq!(served[index]["path"], relative.as_str(), "{name}");
+            assert_eq!(
+                served[index]["text"].as_str().unwrap().as_bytes(),
+                bytes,
+                "{name}"
+            );
+            assert_eq!(
+                result["content"][2 + index]["text"]
+                    .as_str()
+                    .unwrap()
+                    .as_bytes(),
+                bytes,
+                "{name}"
+            );
+        }
+        if name == "bas-preparation" {
+            assert_eq!(served[0]["path"], "references/transaction-gst-review.md");
+        }
     }
 }
 
@@ -407,6 +441,7 @@ fn links_that_leave_the_skills_folder_are_refused() {
     for (link, target) in [
         (".claude/skills/linked", "outside"),
         (".claude/skills/a/sources.json", "secret.txt"),
+        (".claude/skills/a/references", "outside"),
     ] {
         let root = fixture();
         symlink(root.path().join(target), root.path().join(link)).unwrap();
