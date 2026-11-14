@@ -9,20 +9,26 @@
 //! It speaks the stateless 2026-07-28 revision, where each request carries its
 //! protocol version in `_meta`, and answers `initialize` for clients of the
 //! handshake revisions listed in `HANDSHAKE`.
+//!
+//! A request line may hold at most `MAX_LINE` bytes. One request reads at
+//! most `MAX_REPLY` bytes of files, and no reply line is longer than that.
 use crate::{Result, canonical_root, discover_skills, strict_yaml::card_mapping, within_root};
 use serde_json::{Map, Value, json};
 use std::{
     ffi::OsString,
-    fs,
-    io::{self, BufRead, Write},
+    fs::{self, File},
+    io::{self, BufRead, Read, Write},
     path::{Path, PathBuf},
 };
 
 /// The revision a request names in `_meta`.
 const STATELESS: &[&str] = &["2026-07-28"];
 /// Revisions that begin with `initialize`, newest first. The messages this
-/// server sends have the same shape in each.
-const HANDSHAKE: &[&str] = &["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05"];
+/// server sends have the same shape in each. 2025-03-26 is left out: it
+/// requires a server to accept JSON-RPC batches, which this one refuses.
+const HANDSHAKE: &[&str] = &["2025-11-25", "2025-06-18", "2024-11-05"];
+const MAX_LINE: usize = 1 << 20;
+const MAX_REPLY: usize = 16 << 20;
 const VERSION_KEY: &str = "io.modelcontextprotocol/protocolVersion";
 const CAPABILITIES_KEY: &str = "io.modelcontextprotocol/clientCapabilities";
 const SERVER_INFO_KEY: &str = "io.modelcontextprotocol/serverInfo";
@@ -49,6 +55,9 @@ impl Server {
         let skills = root.join(".claude/skills");
         if !skills.is_dir() {
             return Err(format!("{} holds no .claude/skills folder", root.display()).into());
+        }
+        if !fs::canonicalize(&skills)?.starts_with(&root) {
+            return Err(format!("{} leads out of {}", skills.display(), root.display()).into());
         }
         Ok(Self {
             root,
@@ -117,7 +126,7 @@ impl Server {
         if method == "initialize" {
             return self.initialize(params);
         }
-        self.check_version(method, params)?;
+        let stateless = self.check_version(method, params)?;
         match method {
             "server/discover" => Ok(complete(json!({
                 "supportedVersions": STATELESS,
@@ -126,7 +135,8 @@ impl Server {
                 "ttlMs": 0,
                 "cacheScope": "public",
             }))),
-            "ping" => Ok(complete(json!({}))),
+            // 2026-07-28 removed ping; the handshake revisions keep it.
+            "ping" if !stateless => Ok(complete(json!({}))),
             "tools/list" => Ok(complete(
                 json!({"tools": tools(), "ttlMs": 0, "cacheScope": "public"}),
             )),
@@ -135,18 +145,18 @@ impl Server {
         }
     }
 
-    /// Refuse a request that names an unsupported version in `_meta`, or
-    /// names none when no `initialize` came first. `server/discover` needs no
-    /// version.
+    /// Whether the request names a stateless revision in `_meta`. Refuses a
+    /// request that names an unsupported version there, or names none when no
+    /// `initialize` came first. `server/discover` needs no version.
     fn check_version(
         &self,
         method: &str,
         params: &Map<String, Value>,
-    ) -> std::result::Result<(), Fault> {
+    ) -> std::result::Result<bool, Fault> {
         let meta = params.get("_meta").and_then(Value::as_object);
         let Some(version) = meta.and_then(|meta| meta.get(VERSION_KEY)) else {
             if method == "server/discover" || self.handshake.is_some() {
-                return Ok(());
+                return Ok(false);
             }
             return Err(invalid_params(format!(
                 "_meta must carry {VERSION_KEY}, or the client must send initialize first"
@@ -168,7 +178,7 @@ impl Server {
                 "_meta must carry {CAPABILITIES_KEY}"
             )));
         }
-        Ok(())
+        Ok(true)
     }
 
     fn initialize(&mut self, params: &Map<String, Value>) -> std::result::Result<Value, Fault> {
@@ -228,9 +238,10 @@ impl Server {
             return Err("query must contain a word".into());
         }
         let mut found = Vec::new();
+        let mut room = MAX_REPLY;
         for skill in discover_skills(&self.root)? {
             let body = self
-                .read(&skill, "SKILL.md")?
+                .read(&skill, "SKILL.md", &mut room)?
                 .ok_or_else(|| format!("{skill}/SKILL.md is missing"))?;
             let description =
                 description(&body).map_err(|error| format!("{skill}/SKILL.md: {error}"))?;
@@ -272,14 +283,15 @@ impl Server {
         {
             return Err(format!("no skill is named {skill:?}; list_skills gives the names").into());
         }
+        let mut room = MAX_REPLY;
         let body = self
-            .read(skill, "SKILL.md")?
+            .read(skill, "SKILL.md", &mut room)?
             .ok_or_else(|| format!("{skill}/SKILL.md is missing"))?;
         let mut content = vec![text(&body)];
         let mut structured =
             json!({"name": skill, "skill_md": body, "sources_file": null, "sources": null});
         for file in ["sources.json", "sources.exempt.json"] {
-            if let Some(sources) = self.read(skill, file)? {
+            if let Some(sources) = self.read(skill, file, &mut room)? {
                 content.push(text(&sources));
                 structured["sources_file"] = json!(file);
                 structured["sources"] = json!(sources);
@@ -287,7 +299,7 @@ impl Server {
             }
         }
         let mut references = Vec::new();
-        for (path, body) in self.references(skill)? {
+        for (path, body) in self.references(skill, &mut room)? {
             content.push(text(&body));
             references.push(json!({"path": path, "text": body}));
         }
@@ -297,7 +309,7 @@ impl Server {
 
     /// Each file in the skill's `references` folder, by name, as
     /// (`references/NAME`, text).
-    fn references(&self, skill: &str) -> Result<Vec<(String, String)>> {
+    fn references(&self, skill: &str, room: &mut usize) -> Result<Vec<(String, String)>> {
         let folder = within_root(&self.skills, &Path::new(skill).join("references"))
             .map_err(|error| format!("{skill}/references: {error}"))?;
         if !fs::symlink_metadata(&folder).is_ok_and(|metadata| metadata.is_dir()) {
@@ -317,7 +329,7 @@ impl Server {
         for name in names {
             let path = format!("references/{name}");
             let body = self
-                .read(skill, &path)?
+                .read(skill, &path, room)?
                 .ok_or_else(|| format!("{skill}/{path} disappeared"))?;
             files.push((path, body));
         }
@@ -325,16 +337,28 @@ impl Server {
     }
 
     /// The text of `file` in the skill folder, or `None` when it does not
-    /// exist. Refuses a path, or a link along it, that leaves `.claude/skills`,
-    /// and a file that is not UTF-8.
-    fn read(&self, skill: &str, file: &str) -> Result<Option<String>> {
+    /// exist, taking its length from `room`. Refuses a path, or a link along
+    /// it, that leaves `.claude/skills`, a file longer than `room` and a file
+    /// that is not UTF-8.
+    fn read(&self, skill: &str, file: &str, room: &mut usize) -> Result<Option<String>> {
         let path = within_root(&self.skills, &Path::new(skill).join(file))
             .map_err(|error| format!("{skill}/{file}: {error}"))?;
         match fs::symlink_metadata(&path) {
-            Ok(metadata) if metadata.is_file() => Ok(Some(
-                String::from_utf8(fs::read(&path)?)
-                    .map_err(|_| format!("{skill}/{file} is not UTF-8"))?,
-            )),
+            Ok(metadata) if metadata.is_file() => {
+                let mut bytes = Vec::new();
+                File::open(&path)?
+                    .take(*room as u64 + 1)
+                    .read_to_end(&mut bytes)?;
+                *room = room.checked_sub(bytes.len()).ok_or_else(|| {
+                    format!(
+                        "{skill}/{file} would take the reply past {} MiB",
+                        MAX_REPLY >> 20
+                    )
+                })?;
+                Ok(Some(
+                    String::from_utf8(bytes).map_err(|_| format!("{skill}/{file} is not UTF-8"))?,
+                ))
+            }
             Ok(_) => Err(format!("{skill}/{file} is not a regular file").into()),
             Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(None),
             Err(error) => Err(error.into()),
@@ -428,22 +452,87 @@ fn description(body: &str) -> Result<String> {
 }
 
 /// Answer each line of `input` on `output` until `input` ends.
-fn serve(root: &Path, input: impl BufRead, mut output: impl Write) -> Result<()> {
+fn serve(root: &Path, mut input: impl BufRead, mut output: impl Write) -> Result<()> {
     let mut server = Server::new(root)?;
-    for line in input.split(b'\n') {
-        let line = line?;
-        let line = line.strip_suffix(b"\r").unwrap_or(&line);
+    let mut line = Vec::new();
+    loop {
+        line.clear();
+        if (&mut input)
+            .take(MAX_LINE as u64 + 1)
+            .read_until(b'\n', &mut line)?
+            == 0
+        {
+            return Ok(());
+        }
+        if line.len() > MAX_LINE && line.last() != Some(&b'\n') {
+            skip_line(&mut input)?;
+            let message = format!("a request line may hold at most {} MiB", MAX_LINE >> 20);
+            write_reply(
+                &mut output,
+                &reply(Value::Null, Err(Fault(-32600, message, None))),
+            )?;
+            continue;
+        }
+        let line = line.strip_suffix(b"\n").unwrap_or(&line);
+        let line = line.strip_suffix(b"\r").unwrap_or(line);
         if line.iter().all(u8::is_ascii_whitespace) {
             continue;
         }
-        if let Some(reply) = server.handle(line) {
-            // serde_json escapes every newline inside a string, so one reply is one line.
-            serde_json::to_writer(&mut output, &reply)?;
-            output.write_all(b"\n")?;
-            output.flush()?;
+        if let Some(answer) = server.handle(line) {
+            write_reply(&mut output, &answer)?;
         }
     }
+}
+
+/// Discard `input` up to and including the next newline.
+fn skip_line(input: &mut impl BufRead) -> io::Result<()> {
+    loop {
+        let buffer = input.fill_buf()?;
+        if buffer.is_empty() {
+            return Ok(());
+        }
+        if let Some(end) = buffer.iter().position(|byte| *byte == b'\n') {
+            input.consume(end + 1);
+            return Ok(());
+        }
+        let length = buffer.len();
+        input.consume(length);
+    }
+}
+
+/// Write `answer` as one line, or an internal error in its place when it
+/// would pass `MAX_REPLY`.
+fn write_reply(output: &mut impl Write, answer: &Value) -> Result<()> {
+    let mut line = Capped(Vec::new());
+    // serde_json escapes every newline inside a string, so one reply is one line.
+    if serde_json::to_writer(&mut line, answer).is_err() {
+        let message = format!("the reply would pass {} MiB", MAX_REPLY >> 20);
+        line.0 = serde_json::to_vec(&reply(
+            answer["id"].clone(),
+            Err(Fault(-32603, message, None)),
+        ))?;
+    }
+    line.0.push(b'\n');
+    output.write_all(&line.0)?;
+    output.flush()?;
     Ok(())
+}
+
+/// A buffer that refuses to grow past `MAX_REPLY`.
+struct Capped(Vec<u8>);
+
+impl Write for Capped {
+    fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+        if self.0.len() + bytes.len() > MAX_REPLY {
+            return Err(io::Error::other("reply too long"));
+        }
+        self.0.extend_from_slice(bytes);
+        Ok(bytes.len())
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        Ok(())
+    }
 }
 
 pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
