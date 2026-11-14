@@ -349,6 +349,20 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assertIn("a stapled fund screen result", section("au-payroll-review", "Hand-off and checks"))
         self.assert_pending("au-payroll-review", STAPLED, SGAA, SGA_REGULATIONS)
 
+    def test_payroll_review_reperforms_withholding_with_the_calculator(self) -> None:
+        step = workflow_step("au-payroll-review", "5a")
+        self.assert_sentence(step, DO_NOT + r"work PAYG withholding from the annual income tax rates\b",
+                             r"\bfrom memory\b", r"\bSchedule 1 statement of formulas \(NAT 1004\)",
+                             r"\bSchedule 8 \(NAT 3539\)")
+        self.assert_sentence(step, r"\bIf the `aus-accounting` MCP tools are available\b",
+                             r"`calculate_tax_worksheet`", r"`payg_withholding`", r"`study_loan_withholding`")
+        self.assert_sentence(step, r"\bversion and every refusal\b", r"\bpayroll register's withholding\b")
+        self.assert_sentence(step, r"\brefuses or does not cover\b", r"\bunverified with an owner\b")
+        self.assert_sentence(step, r"\bIf the tools are not available, open the schedule for the payday at the ATO\b",
+                             r"\bcoefficients applied\b", r"`UNVERIFIED`")
+        self.assert_sentence(step, DO_NOT + r"change withholding settings\b")
+        self.assertIn("a withholding reperformance result", section("au-payroll-review", "Hand-off and checks"))
+
     # au-smsf-year-end: R0678
 
     def test_smsf_year_end_records_each_assets_market_value_basis_and_evidence(self) -> None:

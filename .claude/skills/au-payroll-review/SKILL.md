@@ -25,9 +25,11 @@ Pay period and payday, employment arrangements and jurisdiction, award/agreement
 
 5. Verify current withholding, super and reporting requirements for the payday. Prepare exceptions for the authorised payroll officer; use the existing STP workflow for year-end reporting where installed.
 
+5a. **Withholding reperformance.** Never work PAYG withholding from the annual income tax rates, and never quote withholding coefficients or thresholds from memory: a pay's withholding follows the ATO's Schedule 1 statement of formulas (NAT 1004) for the payday and, for a payee who declared a study and training support loan debt, Schedule 8 (NAT 3539). If the `aus-accounting` MCP tools are available in this session, reperform each regular weekly, fortnightly or monthly pay on an established scale with `calculate_tax_worksheet`: the `payg_withholding` worksheet, or `study_loan_withholding` for a payee who declared a loan debt. Record what it consumed and returned, including its version and every refusal, and list each difference from the payroll register's withholding as an exception with the pay runs it affected. A pay the worksheet refuses or does not cover, such as scale 4, tax offsets, a Medicare levy variation or a bonus, stays unverified with an owner and next action. If the tools are not available, open the schedule for the payday at the ATO, record its title, URL, effective period, check date and the coefficients applied, and reperform from it; if it cannot be opened, mark the withholding `UNVERIFIED` for the payroll officer. Do not change withholding settings.
+
 ## Hand-off and checks
 
-A pay-run exception list, a pay-item settings review listing each mismatch with the runs it affected, a master-data screen result, a stapled fund screen result for new employees, a gross-to-net tie-out and a liability roll-forward. An authorised payroll officer approves, pays, reports and changes payroll settings.
+A pay-run exception list, a pay-item settings review listing each mismatch with the runs it affected, a master-data screen result, a stapled fund screen result for new employees, a withholding reperformance result, a gross-to-net tie-out and a liability roll-forward. An authorised payroll officer approves, pays, reports and changes payroll settings.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
