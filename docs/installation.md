@@ -6,12 +6,12 @@ tested. The sections below give the commands. The MCP server is the optional
 
 | Route | Revision | MCP server | Terminal | Tested | Update |
 | --- | --- | --- | --- | --- | --- |
-| [Skills CLI from a release checkout](#tagged-107-workflow-release) | v0.7.0 tag | No | Yes | Not yet run on v0.7.0. The README's command copied all 107 skills from the files v0.6.0 tags, on Linux on 12 November 2026; install only, no model run | Not tested. Clone the new tag and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
-| [Claude Code plugin at the release tag](#tagged-107-workflow-release) | v0.7.0 tag | Yes, `aus-accounting-mcp` 0.8.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | Not yet run on v0.7.0. `claude plugin` delivered the 107 skills on Claude Code 2.1.316 from the files v0.6.0 tags, on Linux on 12 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
-| [Codex plugin at the release tag](#tagged-107-workflow-release) | v0.7.0 tag | No | Yes | Not yet run on v0.7.0. Delivered the 107 skills on Codex CLI 0.167.1 from the files v0.6.0 tags, on Linux on 12 November 2026 | Not documented |
+| [Skills CLI from a release checkout](#tagged-107-workflow-release) | v0.7.0 tag | No | Yes | The README's command copied all 107 skills from the v0.7.0 tag, on Linux on 15 November 2026; install only, no model run | Not tested. Clone the new tag and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
+| [Claude Code plugin at the release tag](#tagged-107-workflow-release) | v0.7.0 tag | Yes, `aus-accounting-mcp` 0.8.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `claude plugin` delivered the 107 skills on Claude Code 2.1.316 from the v0.7.0 tag, on Linux on 15 November 2026 | Remove the marketplace with `/plugin marketplace remove ryanduguid` and add it again at the new tag; not tested |
+| [Codex plugin at the release tag](#tagged-107-workflow-release) | v0.7.0 tag | No | Yes | Delivered the 107 skills on Codex CLI 0.169.0 from the v0.7.0 tag, on Linux on 15 November 2026 | Not documented |
 | [Claude.ai or desktop app upload](#claudeai-or-the-claude-desktop-app-without-a-terminal) | v0.7.0 tag (source ZIP), or the same tag or the default branch through [ZIPs built from a checkout](#upload-zips-built-from-a-checkout) | No | No for the upload; yes to build the ZIPs | Not separately tested; steps follow Anthropic's article as read on 31 October 2026 | Not documented |
 | [ChatGPT upload or workspace import](#chatgpt-without-a-terminal) | Default branch, through ZIPs built from a checkout; for a workspace import, the tag or branch the administrator enters | No | No for the upload or import; yes to build the ZIPs | Not tested: no workspace was available. Steps follow OpenAI's articles as read on 13 November 2026 | Workspace import: daily sync, documented by OpenAI; not tested. Upload: not documented |
-| [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp` 0.8.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026; `claude mcp list` reported the 0.8.0 server connected on Linux on 13 November 2026 | Not documented |
+| [Claude Code plugin, development](#claude-code-plugin) | Default branch | Yes, `aus-accounting-mcp` 0.9.0 from its release commit through `uvx`; needs Python 3.14 or later, uv and Git | No for `/plugin` in a session; yes for `claude plugin` | `/context` measured the 97-skill listing at commit 472112e on 5 November 2026; `claude mcp list` reported the 0.9.0 server connected on Linux on 15 November 2026 | Not documented |
 | [Codex plugin, development](#codex-plugin) | Default branch | No | Yes | None recorded | Not documented |
 | [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
 | [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
@@ -41,16 +41,16 @@ its tag, inside a session:
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-Or from a terminal, which delivered v0.6.0's 107 skills on Claude Code 2.1.316 on
-12 November 2026 and has not yet been run on v0.7.0:
+Or from a terminal, which delivered v0.7.0's 107 skills on Claude Code 2.1.316 on
+15 November 2026:
 
 ```bash
 claude plugin marketplace add ryanduguid/australian-accounting-skills#v0.7.0
 claude plugin install australian-accounting-skills@ryanduguid
 ```
 
-For the same release in Codex, which delivered v0.6.0's 107 skills on Codex CLI 0.167.1
-the same day and has not yet been run on v0.7.0:
+For the same release in Codex, which delivered v0.7.0's 107 skills on Codex CLI 0.169.0
+the same day:
 
 ```bash
 codex plugin marketplace add ryanduguid/australian-accounting-skills --ref v0.7.0
@@ -153,7 +153,7 @@ present at the repository revision it installs under the stable namespace:
 The skills then register as `australian-accounting-skills:bas-preparation` and so on.
 
 The development plugin also starts the local [Aus Accounting MCP](https://github.com/ryanduguid/australian-accounting/tree/main/apps/aus-accounting-mcp)
-server, pinned to `aus-accounting-mcp` 0.8.0 by its release commit `7b9b0e27d5cb3edae67854df1626feb4672b65e8`
+server, pinned to `aus-accounting-mcp` 0.9.0 by its release commit `faac6c57d6b4034647dc3953553295e87559af9c`
 and launched with `uvx`, so it needs Python 3.14 or later, [uv](https://docs.astral.sh/uv/) and Git on the path.
 The first launch builds the package from that commit; tool calls then run locally and send nothing to the ATO or any other
 service. `div7a-compliance` and `contractor-super-tpar` use its Division 7A and
@@ -161,7 +161,7 @@ Payday Super tools, when available, to cross-check their own calculations;
 the current primary-source checks in each skill still run. To run the skills without the server, disable it with
 `/mcp` in Claude Code. The `npx skills` and Codex routes do not start it.
 
-The v0.7.0 Skills tag carries the same 0.8.0 pin. The immutable v0.6.0 and v0.5.0 Skills tags retain their MCP 0.6.0 plugin pin, and v0.4.0 its original 0.2.7 pin.
+The v0.7.0 Skills tag carries the 0.8.0 pin, by its release commit `7b9b0e27d5cb3edae67854df1626feb4672b65e8`. The immutable v0.6.0 and v0.5.0 Skills tags retain their MCP 0.6.0 plugin pin, and v0.4.0 its original 0.2.7 pin.
 Installing only its skill files with the tagged command above does not launch
 that server. The development plugin's pin does not change the tagged archive.
 
