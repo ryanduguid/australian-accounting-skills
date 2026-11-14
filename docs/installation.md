@@ -289,7 +289,8 @@ it does not establish fresh agent behaviour or validate current tax law.
 ### Any MCP client, through a local server
 
 `accounting-skills serve-mcp` serves the skills in a checkout to any MCP client that can
-start a local server over stdio. It installs from the default branch: v0.7.0 does not have it.
+start a local server over stdio. It installs from the default branch: v0.7.0 does not have it, and the next release is the
+first that will.
 It has 3 read-only tools:
 
 - `list_skills`: each skill's name and description.
@@ -325,9 +326,14 @@ The server reads the files on each call, so `git pull` in the checkout updates w
 serves without a restart. What it does not do:
 
 - It reads only regular files inside the checkout's `.claude/skills` folder. It refuses a
-  name `list_skills` did not return, and a link that leads out of that folder. It writes
-  nothing and opens no network connection, though your client still sends what it reads to
-  the model provider.
+  name `list_skills` did not return, and a link that leads out of that folder or out of the
+  checkout. It writes nothing and opens no network connection, though your client still
+  sends what it reads to the model provider.
+- It trusts whoever can write to the checkout. A hard link there is served as the file it
+  is, and the link checks run just before each read, so they do not stop someone who
+  changes the folder whilst the server reads it.
+- It refuses a request line over 1 MiB and a reply that would pass 16 MiB; the largest
+  skill, with its references, is under 70 KB.
 - It runs only on your machine, over stdio. It has no remote (HTTP) transport, so a host
   that connects only to a remote server, such as a ChatGPT or claude.ai connector, cannot
   use it.
