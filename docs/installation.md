@@ -16,6 +16,7 @@ tested. The sections below give the commands. The MCP server is the optional
 | [Cursor plugin, development](#cursor-plugin) | Default branch in the local plugins folder; the tracked branch in a team marketplace | No | Yes for the local folder; no for a team marketplace | Not tested; the manifest has not been loaded in Cursor | Team marketplace: **Refresh** in the dashboard, documented by Cursor; not tested. Local folder: not documented |
 | [Skills CLI from GitHub](#any-agent-via-the-skills-cli) | Default branch | No | Yes | `--agent opencode` copied all 97 skills from `main` at 472112e on 5 November 2026; install and discovery only, on Linux | `npx --yes skills@1.5.22 update`, documented in the skills CLI README at v1.5.22; not tested |
 | [Skills CLI from a development checkout](#development-checkout) | Default branch | No | Yes | A checkout at `63967e8` produced 50 skills in each target directory on 8 September 2026 | Not tested. Pull the checkout and run `add` again; the skills CLI README at v1.5.22 does not say whether `add` overwrites |
+| [Any MCP client, through a local server](#any-mcp-client-through-a-local-server) | Default branch checkout | No; this route is itself an MCP server, serving the skills | Yes | On Linux on 15 November 2026, through the commands below: the MCP Python SDK 2.3.0 client listed all 107 skills and got `bas-preparation` byte for byte, `claude mcp list` on Claude Code 2.1.316 reported the server connected, and Codex CLI 0.169.0 registered it; no model run | `git pull` in the checkout; the server reads the files on each call |
 | [Manual copy](#manual-copy) | v0.7.0 tag | No | Yes | None recorded | Copy again from a checkout of the new tag; not tested |
 
 ### Tagged 107-workflow release
@@ -284,6 +285,60 @@ because it attempted to clone it as a branch. Use the checkout method above.
 GitHub verification run 34200334270 for that commit passed lint, shared conformance and verification on Python
 3.10, 3.12 and 3.13. Installation proves the files are delivered correctly;
 it does not establish fresh agent behaviour or validate current tax law.
+
+### Any MCP client, through a local server
+
+`accounting-skills serve-mcp` serves the skills in a checkout to any MCP client that can
+start a local server over stdio. It installs from the default branch: v0.7.0 does not have it, and the next release is the
+first that will.
+It has 3 read-only tools:
+
+- `list_skills`: each skill's name and description.
+- `search_skills`: the skills whose name, description or `SKILL.md` contains every word of
+  a query, ignoring case, with name and description matches first.
+- `get_skill`: a skill's `SKILL.md`, then its `sources.json` (or `sources.exempt.json`) and
+  each file in its `references` folder, exactly as they are in the checkout.
+
+Build it once with Rust 1.99 or later, then give your client the checkout's absolute path:
+
+```bash
+git clone --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-source
+cargo install --locked --path accounting-skills-source/tools/accounting-skills
+claude mcp add accounting-skills -- accounting-skills serve-mcp --root "$PWD/accounting-skills-source"
+codex mcp add accounting-skills -- accounting-skills serve-mcp --root "$PWD/accounting-skills-source"
+```
+
+The last 2 lines add it to Claude Code and Codex; use the one for your client. A client
+configured through a JSON `mcpServers` entry takes the same command and arguments:
+
+```json
+{
+  "mcpServers": {
+    "accounting-skills": {
+      "command": "accounting-skills",
+      "args": ["serve-mcp", "--root", "/absolute/path/to/accounting-skills-source"]
+    }
+  }
+}
+```
+
+The server reads the files on each call, so `git pull` in the checkout updates what it
+serves without a restart. What it does not do:
+
+- It reads only regular files inside the checkout's `.claude/skills` folder. It refuses a
+  name `list_skills` did not return, and a link that leads out of that folder or out of the
+  checkout. It writes nothing and opens no network connection, though your client still
+  sends what it reads to the model provider.
+- It trusts whoever can write to the checkout. A hard link there is served as the file it
+  is, and the link checks run just before each read, so they do not stop someone who
+  changes the folder whilst the server reads it.
+- It refuses a request line over 1 MiB and a reply that would pass 16 MiB; the largest
+  skill, with its references, is under 70 KB.
+- It runs only on your machine, over stdio. It has no remote (HTTP) transport, so a host
+  that connects only to a remote server, such as a ChatGPT or claude.ai connector, cannot
+  use it.
+- It is not listed in the MCP Registry or any client's directory.
+- It does not start the [Aus Accounting MCP](#claude-code-plugin) calculator server.
 
 ### Manual copy
 

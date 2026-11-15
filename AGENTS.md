@@ -86,7 +86,7 @@ the credit line is the author's request. Never add either to a client deliverabl
 | `claude-plugin` branch | The skills-only plugin the Claude plugin directory reads, generated from `main`; change it through `main` and the build (see [RELEASING.md](RELEASING.md#plugin-directory-branch)) |
 | `docs/plugin-directory-readme.md` | The README that branch ships |
 | `validation/` | Validation pack the tests exercise |
-| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial, plugin-eval and plugin-branch builders, the `statement-check` tie-out `statement-to-csv` runs, and a candidate port of the other `scripts/` |
+| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial, plugin-eval and plugin-branch builders, the `statement-check` tie-out `statement-to-csv` runs, the `serve-mcp` read-only MCP server, and a candidate port of the other `scripts/` |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip
