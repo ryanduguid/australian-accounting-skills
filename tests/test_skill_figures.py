@@ -24,7 +24,13 @@ FENCED = re.compile(r"^(```|~~~).*?^\1", re.MULTILINE | re.DOTALL)
 INLINE_CODE = re.compile(r"`[^`\n]*`")
 LINK_TARGET = re.compile(r"\]\([^)\s]*\)")
 BARE_URL = re.compile(r"https?://\S+")
-FIGURE = re.compile(r"\$\s?\d[\d,]*(?:\.\d+)?|\b\d+(?:\.\d+)?\s?(?:%|per\s?cent\b)", re.IGNORECASE)
+FIGURE = re.compile(
+    r"(?:\$|\b(?:AUD|USD)\s?)\s?\d[\d,]*(?:\.\d+)?|\b\d+(?:\.\d+)?\s?(?:%|per\s?cent\b)", re.IGNORECASE
+)
+# Claude Code reads `$` and a digit in a SKILL.md body as an argument placeholder
+# (`$0` is the first argument), and OpenCode blanks one, so a skill body writes
+# an amount as AUD 75, never with a dollar sign straight before the digit.
+DOLLAR_PLACEHOLDER = re.compile(r"\$\d")
 
 # The only figures allowed in skill prose, by file and exact text, with the
 # number of occurrences and the reason each stays. Every other figure was
@@ -42,15 +48,15 @@ KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
     ("contractor-super-tpar/SKILL.md", "10%"): (
         1, "the turnover condition of determination F2019L00864 as read; "
         "test_legal_source_gates.py pins the condition wording"),
-    ("tax-invoice-review/SKILL.md", "$75"): (
+    ("tax-invoice-review/SKILL.md", "AUD 75"): (
         2, "the amount s 29-80.01 of the GST Regulations 2019 specifies for s 29-80(1) of the GST Act; "
         "test_legal_source_gates.py pins the wording"),
-    ("tax-invoice-review/SKILL.md", "$82.50"): (
+    ("tax-invoice-review/SKILL.md", "AUD 82.50"): (
         2, "the price GSTR 2013/1 footnotes 39 and 44 give for that value; "
         "test_legal_source_gates.py pins the wording"),
-    ("au-bookkeeping/SKILL.md", "$75"): (
+    ("au-bookkeeping/SKILL.md", "AUD 75"): (
         1, "the same specified amount; test_legal_source_gates.py pins the wording"),
-    ("au-bookkeeping/SKILL.md", "$82.50"): (
+    ("au-bookkeeping/SKILL.md", "AUD 82.50"): (
         1, "the same corresponding price; test_legal_source_gates.py pins the wording"),
     ("bas-preparation/references/transaction-gst-review.md", "$75"): (
         1, "the same specified amount; test_legal_source_gates.py pins the wording"),
@@ -106,12 +112,23 @@ class SkillFigureTests(unittest.TestCase):
         stale = {key: count for key, (count, _) in KEPT_FIGURES.items() if found[key] < count}
         self.assertEqual(stale, {})
 
+    def test_skill_bodies_have_no_dollar_digit(self) -> None:
+        """Code spans are not exempt: Claude Code substitutes inside them too."""
+        found = [
+            f"{path.relative_to(SKILLS_DIRECTORY).as_posix()}:{number}"
+            for path in sorted(SKILLS_DIRECTORY.rglob("SKILL.md"))
+            for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1)
+            if DOLLAR_PLACEHOLDER.search(line)
+        ]
+        self.assertEqual(found, [], "write the amount as AUD 75, not with $ before the digit")
+
     def test_every_kept_figure_has_a_reason(self) -> None:
         self.assertEqual([key for key, (_, reason) in KEPT_FIGURES.items() if not reason.strip()], [])
 
     def test_detection_ignores_code_and_urls_but_not_prose(self) -> None:
         self.assertEqual(figures_in("Apply the $1,234.50 cap and a 9.5% rate."), ["$1,234.50", "9.5%"])
         self.assertEqual(figures_in("A 12 per cent loading."), ["12 per cent"])
+        self.assertEqual(figures_in("Over AUD 75 or USD 1,000.50."), ["AUD 75", "USD 1,000.50"])
         self.assertEqual(figures_in("Run `pay --rate 11%`."), [])
         self.assertEqual(figures_in("```\n$500\n```\nNo figure."), [])
         self.assertEqual(figures_in("[ruling](https://x.test/view?docid=TXR%2FTR20223)"), [])

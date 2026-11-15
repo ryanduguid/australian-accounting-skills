@@ -505,10 +505,12 @@ class LegalSourceGateTests(unittest.TestCase):
         }
         for skill, text in surfaces.items():
             with self.subTest(skill=skill):
-                self.assertIn("$75", text)
-                self.assertIn("$82.50", text)
-                self.assertRegex(text, r"\$75,? excluding GST|does not exceed \$75")
-                self.assertRegex(text, r"\$82\.50 including GST")
+                # SKILL.md bodies write AUD 75 (test_skill_figures.py says why); the reference keeps $75.
+                aud = r"\$" if skill == "bas-preparation" else "AUD "
+                self.assertRegex(text, aud + r"75\b")
+                self.assertRegex(text, aud + r"82\.50")
+                self.assertRegex(text, aud + r"75,? excluding GST|does not exceed " + aud + "75")
+                self.assertRegex(text, aud + r"82\.50 including GST")
                 self.assertIn("for most supplies", text)
                 self.assertIn("aggregate value", text)
                 self.assertIn("taxable part", text)
@@ -516,8 +518,8 @@ class LegalSourceGateTests(unittest.TestCase):
                 self.assertIn("s 29-80(1)", text)
                 self.assertIn("s 29-80.01", text)
                 self.assertRegex(text, r"[Hh]uman review pending")
-                self.assertNotIn("$82.50 threshold", text)
-                self.assertNotRegex(text, r"\$82\.50 excluding GST|\$75 including GST")
+                self.assertNotRegex(text, aud + r"82\.50 threshold")
+                self.assertNotRegex(text, aud + r"82\.50 excluding GST|" + aud + "75 including GST")
                 recorded = {
                     s["url"]
                     for s in json.loads((SKILLS / skill / "sources.json").read_text(encoding="utf-8"))["sources"]
