@@ -1171,7 +1171,10 @@ fn an_index_or_skill_folder_linked_outside_the_root_is_refused() {
         skill(root.path(), "alpha", "No citation.\n", Some(SOURCES));
         index(root.path(), "C2006A00072", "Fuel Tax Act 2006", &["1"]);
         check(root.path()).unwrap();
-        let link = root.path().join(moved);
+        // mklink needs native separators.
+        let link = moved
+            .split('/')
+            .fold(root.path().to_path_buf(), |path, part| path.join(part));
         let target = outside.path().join("moved");
         fs::rename(&link, &target).unwrap();
         link_folder(&target, &link);
