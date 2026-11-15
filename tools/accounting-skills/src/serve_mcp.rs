@@ -52,12 +52,19 @@ impl Server {
     /// A server for the tree at `root`, which must hold `.claude/skills`.
     fn new(root: &Path) -> Result<Self> {
         let root = canonical_root(root)?;
-        let skills = root.join(".claude/skills");
-        if !skills.is_dir() {
-            return Err(format!("{} holds no .claude/skills folder", root.display()).into());
+        let spelled = root.join(".claude/skills");
+        let missing = || format!("{} holds no .claude/skills folder", root.display());
+        // The real path is checked against the root before anything else uses it.
+        let skills = match fs::canonicalize(&spelled) {
+            Ok(skills) => skills,
+            Err(error) if error.kind() == io::ErrorKind::NotFound => return Err(missing().into()),
+            Err(error) => return Err(error.into()),
+        };
+        if !skills.starts_with(&root) {
+            return Err(format!("{} leads out of {}", spelled.display(), root.display()).into());
         }
-        if !fs::canonicalize(&skills)?.starts_with(&root) {
-            return Err(format!("{} leads out of {}", skills.display(), root.display()).into());
+        if !skills.is_dir() {
+            return Err(missing().into());
         }
         Ok(Self {
             root,
