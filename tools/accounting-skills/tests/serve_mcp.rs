@@ -301,6 +301,7 @@ fn version_and_message_errors_follow_the_specification() {
         "not json".to_owned(),
         "[]".to_owned(),
         json!([{"jsonrpc": "2.0", "id": 12, "method": "ping"}]).to_string(),
+        json!({"jsonrpc": "1.0", "method": "tools/list"}).to_string(),
         json!({"id": 4, "method": "ping"}).to_string(),
         request(5, "resources/list", stateless(json!({}))),
         request(
@@ -346,8 +347,8 @@ fn version_and_message_errors_follow_the_specification() {
         .collect();
     assert_eq!(
         unaddressed,
-        [-32700, -32600, -32600],
-        "a batch is refused whole"
+        [-32700, -32600, -32600, -32600],
+        "a batch is refused whole, and a message with no id but the wrong jsonrpc is not a notification"
     );
     assert_eq!(code(4), -32600, "jsonrpc must be 2.0");
     assert_eq!(code(5), -32601);
@@ -357,7 +358,7 @@ fn version_and_message_errors_follow_the_specification() {
     }
     assert_eq!(code(9), -32602);
     assert_eq!(code(11), -32602);
-    assert_eq!(replies.len(), 13, "the client's own response gets no reply");
+    assert_eq!(replies.len(), 14, "the client's own response gets no reply");
 }
 
 #[test]
@@ -665,6 +666,28 @@ fn a_reply_never_passes_16_mib() {
     assert_eq!(escaped["code"], -32603, "the escaped reply is refused");
     assert!(escaped["message"].as_str().unwrap().contains("16 MiB"));
     assert_eq!(reply(&replies, 3)["result"]["isError"], false);
+}
+
+#[test]
+fn a_references_entry_that_is_not_a_folder_is_reported() {
+    let root = fixture();
+    fs::write(root.path().join(".claude/skills/a/references"), "a file").unwrap();
+    let replies = session(
+        root.path(),
+        &[
+            initialize("2025-11-25"),
+            call(2, "get_skill", json!({"name": "a"})),
+        ],
+    );
+    let result = &reply(&replies, 2)["result"];
+    assert_eq!(result["isError"], true, "{result}");
+    assert!(
+        result["content"][0]["text"]
+            .as_str()
+            .unwrap()
+            .contains("references is not a folder"),
+        "{result}"
+    );
 }
 
 #[test]

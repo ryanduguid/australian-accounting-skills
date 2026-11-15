@@ -81,29 +81,22 @@ impl Server {
                 Err(Fault(-32600, "Invalid Request".into(), None)),
             ));
         };
-        let id = request.get("id");
         let method = request.get("method").and_then(Value::as_str);
         if method.is_none() && (request.contains_key("result") || request.contains_key("error")) {
             return None;
         }
-        if method.is_some() && id.is_none() {
-            return None;
-        }
-        let (Some(method), Some(id)) = (
-            method,
-            id.filter(|id| id.is_string() || id.is_i64() || id.is_u64()),
-        ) else {
+        let id = request.get("id");
+        let readable_id = id.filter(|id| id.is_string() || id.is_i64() || id.is_u64());
+        let well_formed =
+            request.get("jsonrpc") == Some(&json!("2.0")) && id.is_none() == readable_id.is_none();
+        let (Some(method), true) = (method, well_formed) else {
             return Some(reply(
-                Value::Null,
+                readable_id.cloned().unwrap_or(Value::Null),
                 Err(Fault(-32600, "Invalid Request".into(), None)),
             ));
         };
-        if request.get("jsonrpc") != Some(&json!("2.0")) {
-            return Some(reply(
-                id.clone(),
-                Err(Fault(-32600, "Invalid Request".into(), None)),
-            ));
-        }
+        // A well-formed request without an id is a notification: no reply.
+        let id = readable_id?;
         let empty = Map::new();
         let params = match request.get("params") {
             None => &empty,
@@ -312,8 +305,11 @@ impl Server {
     fn references(&self, skill: &str, room: &mut usize) -> Result<Vec<(String, String)>> {
         let folder = within_root(&self.skills, &Path::new(skill).join("references"))
             .map_err(|error| format!("{skill}/references: {error}"))?;
-        if !fs::symlink_metadata(&folder).is_ok_and(|metadata| metadata.is_dir()) {
-            return Ok(Vec::new());
+        match fs::symlink_metadata(&folder) {
+            Ok(metadata) if metadata.is_dir() => {}
+            Ok(_) => return Err(format!("{skill}/references is not a folder").into()),
+            Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(Vec::new()),
+            Err(error) => return Err(error.into()),
         }
         let mut names = Vec::new();
         for entry in fs::read_dir(&folder)? {
