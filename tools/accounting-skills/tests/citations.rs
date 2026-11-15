@@ -1162,3 +1162,42 @@ fn eval_quotes_the_citation_summary_of_this_commit() {
         "copy the summary lines `check-citations` prints into the block in docs/EVAL.md"
     );
 }
+
+#[test]
+fn an_index_or_skill_folder_linked_outside_the_root_is_refused() {
+    for moved in ["tools/accounting-skills/section-index", ".claude"] {
+        let root = tempfile::tempdir().unwrap();
+        let outside = tempfile::tempdir().unwrap();
+        skill(root.path(), "alpha", "No citation.\n", Some(SOURCES));
+        index(root.path(), "C2006A00072", "Fuel Tax Act 2006", &["1"]);
+        check(root.path()).unwrap();
+        let link = root.path().join(moved);
+        let target = outside.path().join("moved");
+        fs::rename(&link, &target).unwrap();
+        link_folder(&target, &link);
+        let error = check(root.path()).unwrap_err().to_string();
+        assert!(
+            error.contains("unsafe or missing expected path"),
+            "{moved}: {error}"
+        );
+        #[cfg(windows)]
+        fs::remove_dir(link).unwrap();
+    }
+}
+
+/// A symbolic link on Unix and a junction on Windows, which needs no privilege.
+fn link_folder(target: &Path, link: &Path) {
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(target, link).unwrap();
+    #[cfg(windows)]
+    assert!(
+        Command::new("cmd")
+            .args(["/c", "mklink", "/J"])
+            .arg(link)
+            .arg(target)
+            .output()
+            .unwrap()
+            .status
+            .success()
+    );
+}

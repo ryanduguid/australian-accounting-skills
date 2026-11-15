@@ -357,6 +357,7 @@ fn card_cases(
             .and_then(|stem| stem.to_str())
             .ok_or("filename is not Unicode")?
             .to_owned();
+        validation::check_expected_path(&path, canonical)?;
         let data = fs::read(&path)?;
         let text = std::str::from_utf8(&data)?;
         let files = build_case(text, &stem, runs, max_turns)?;
@@ -491,7 +492,9 @@ pub fn build(
     // Every case is rendered before anything is created, so a malformed card or
     // routing case leaves no partial copy behind.
     let (mut cases, digests) = card_cases(&canonical, runs, max_turns, changed.as_ref())?;
-    let routing_bytes = fs::read(canonical.join(ROUTING_CASES))?;
+    let routing_path = canonical.join(ROUTING_CASES);
+    validation::check_expected_path(&routing_path, &canonical)?;
+    let routing_bytes = fs::read(routing_path)?;
     let routing = routing_cases(&routing_bytes, runs, max_turns, changed.as_ref())?;
     let routes: Vec<_> = routing.iter().map(|(name, _)| name.clone()).collect();
     cases.extend(routing);
