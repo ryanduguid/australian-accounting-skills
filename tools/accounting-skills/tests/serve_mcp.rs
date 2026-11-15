@@ -668,6 +668,36 @@ fn a_reply_never_passes_16_mib() {
     assert_eq!(reply(&replies, 3)["result"]["isError"], false);
 }
 
+/// 68,000 empty references with 250-byte names: 17 MB of names and no file
+/// bytes. Unix only, as making 68,000 files on Windows takes minutes.
+#[cfg(unix)]
+#[test]
+fn reference_names_count_towards_the_reply_cap() {
+    let root = fixture();
+    let folder = root.path().join(".claude/skills/a/references");
+    fs::create_dir(&folder).unwrap();
+    for index in 0..68_000 {
+        fs::File::create(folder.join(format!("{index:06}{}", "x".repeat(244)))).unwrap();
+    }
+    let replies = session(
+        root.path(),
+        &[
+            initialize("2025-11-25"),
+            call(2, "get_skill", json!({"name": "a"})),
+            call(3, "list_skills", json!({})),
+        ],
+    );
+    let result = &reply(&replies, 2)["result"];
+    assert_eq!(result["isError"], true, "{}", replies[1]["error"]);
+    assert!(
+        result["content"][0]["text"]
+            .as_str()
+            .unwrap()
+            .contains("a/references would take the reply past 16 MiB")
+    );
+    assert_eq!(reply(&replies, 3)["result"]["isError"], false);
+}
+
 #[test]
 fn a_references_entry_that_is_not_a_folder_is_reported() {
     let root = fixture();

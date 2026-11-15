@@ -313,12 +313,15 @@ impl Server {
         }
         let mut names = Vec::new();
         for entry in fs::read_dir(&folder)? {
-            names.push(
-                entry?
-                    .file_name()
-                    .into_string()
-                    .map_err(|_| format!("{skill}/references holds a name that is not Unicode"))?,
-            );
+            let name = entry?
+                .file_name()
+                .into_string()
+                .map_err(|_| format!("{skill}/references holds a name that is not Unicode"))?;
+            // The reply carries each name too, so names take from `room`.
+            *room = room
+                .checked_sub(name.len())
+                .ok_or_else(|| past_cap(&format!("{skill}/references")))?;
+            names.push(name);
         }
         names.sort();
         let mut files = Vec::new();
@@ -345,12 +348,9 @@ impl Server {
                 File::open(&path)?
                     .take(*room as u64 + 1)
                     .read_to_end(&mut bytes)?;
-                *room = room.checked_sub(bytes.len()).ok_or_else(|| {
-                    format!(
-                        "{skill}/{file} would take the reply past {} MiB",
-                        MAX_REPLY >> 20
-                    )
-                })?;
+                *room = room
+                    .checked_sub(bytes.len())
+                    .ok_or_else(|| past_cap(&format!("{skill}/{file}")))?;
                 Ok(Some(
                     String::from_utf8(bytes).map_err(|_| format!("{skill}/{file} is not UTF-8"))?,
                 ))
@@ -360,6 +360,10 @@ impl Server {
             Err(error) => Err(error.into()),
         }
     }
+}
+
+fn past_cap(path: &str) -> String {
+    format!("{path} would take the reply past {} MiB", MAX_REPLY >> 20)
 }
 
 fn reply(id: Value, outcome: std::result::Result<Value, Fault>) -> Value {
