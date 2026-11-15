@@ -321,9 +321,16 @@ pub fn front_matter(path: &Path) -> Result<String> {
     Ok(lines[1..end].join("\n"))
 }
 
+/// The names of the skill folders under `.claude/skills`, in order. A symbolic
+/// link or Windows junction is skipped and named on stderr, because it could
+/// lead out of the tree.
 pub fn discover_skills(root: &Path) -> Result<Vec<String>> {
     let mut skills = Vec::new();
     for directory in entries(&root.join(".claude/skills"))? {
+        if validation::is_reparse_point(&directory)? {
+            eprintln!("skipped {}: a link is not followed", directory.display());
+            continue;
+        }
         if directory.is_dir() && fs::symlink_metadata(directory.join("SKILL.md")).is_ok() {
             skills.push(name(&directory)?);
         }

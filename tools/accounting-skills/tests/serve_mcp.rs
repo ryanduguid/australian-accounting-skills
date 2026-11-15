@@ -18,6 +18,11 @@ fn repository() -> PathBuf {
 /// Send `lines` to a server for `root`, close its input and return each
 /// reply line, parsed.
 fn session(root: &Path, lines: &[String]) -> Vec<Value> {
+    session_with_log(root, lines).0
+}
+
+/// As `session`, with what the server wrote to stderr.
+fn session_with_log(root: &Path, lines: &[String]) -> (Vec<Value>, String) {
     let mut child = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
         .args(["serve-mcp", "--root"])
         .arg(root)
@@ -34,11 +39,12 @@ fn session(root: &Path, lines: &[String]) -> Vec<Value> {
     drop(input);
     let output = child.wait_with_output().unwrap();
     assert!(output.status.success(), "{output:?}");
-    String::from_utf8(output.stdout)
+    let replies = String::from_utf8(output.stdout)
         .unwrap()
         .lines()
         .map(|line| serde_json::from_str(line).unwrap())
-        .collect()
+        .collect();
+    (replies, String::from_utf8(output.stderr).unwrap())
 }
 
 fn request(id: u64, method: &str, params: Value) -> String {
@@ -468,6 +474,20 @@ fn get_skill_refuses_any_name_that_is_not_a_listed_skill() {
     );
 }
 
+/// `list_skills` leaves out the skill folder `linked`, a link, and names it
+/// on stderr; `get_skill` refuses that name and still serves `a`.
+fn assert_linked_folder_skipped(replies: &[Value], log: &str) {
+    let list = &reply(replies, 2)["result"];
+    assert_eq!(
+        list["structuredContent"]["skills"],
+        json!([{"name": "a", "description": "Fixture."}]),
+        "{list}"
+    );
+    assert!(log.contains("linked: a link is not followed"), "{log}");
+    assert_refused(replies, 3);
+    assert_eq!(reply(replies, 4)["result"]["isError"], false);
+}
+
 #[cfg(unix)]
 #[test]
 fn links_that_leave_the_skills_folder_are_refused() {
@@ -479,7 +499,7 @@ fn links_that_leave_the_skills_folder_are_refused() {
     ] {
         let root = fixture();
         symlink(root.path().join(target), root.path().join(link)).unwrap();
-        let replies = session(
+        let (replies, log) = session_with_log(
             root.path(),
             &[
                 initialize("2025-11-25"),
@@ -489,9 +509,7 @@ fn links_that_leave_the_skills_folder_are_refused() {
             ],
         );
         if link.ends_with("linked") {
-            assert_refused(&replies, 2);
-            assert_refused(&replies, 3);
-            assert_eq!(reply(&replies, 4)["result"]["isError"], false);
+            assert_linked_folder_skipped(&replies, &log);
         } else {
             assert_eq!(reply(&replies, 2)["result"]["isError"], false);
             assert_refused(&replies, 4);
@@ -525,7 +543,7 @@ fn junctions_that_leave_the_skills_folder_are_refused() {
     ] {
         let root = fixture();
         junction(root.path(), link, target);
-        let replies = session(
+        let (replies, log) = session_with_log(
             root.path(),
             &[
                 initialize("2025-11-25"),
@@ -535,9 +553,7 @@ fn junctions_that_leave_the_skills_folder_are_refused() {
             ],
         );
         if link.ends_with("linked") {
-            assert_refused(&replies, 2);
-            assert_refused(&replies, 3);
-            assert_eq!(reply(&replies, 4)["result"]["isError"], false);
+            assert_linked_folder_skipped(&replies, &log);
         } else {
             assert_eq!(reply(&replies, 2)["result"]["isError"], false);
             assert_refused(&replies, 4);
@@ -722,10 +738,21 @@ fn a_references_entry_that_is_not_a_folder_is_reported() {
 
 #[test]
 fn a_tree_without_skills_is_refused_at_start() {
+    assert_no_skills_at_start(tempfile::tempdir().unwrap().path());
+}
+
+#[test]
+fn a_regular_file_at_the_skills_path_is_refused_at_start() {
     let root = tempfile::tempdir().unwrap();
+    fs::create_dir(root.path().join(".claude")).unwrap();
+    fs::write(root.path().join(".claude/skills"), "a file").unwrap();
+    assert_no_skills_at_start(root.path());
+}
+
+fn assert_no_skills_at_start(root: &Path) {
     let output = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
         .args(["serve-mcp", "--root"])
-        .arg(root.path())
+        .arg(root)
         .stdin(Stdio::null())
         .output()
         .unwrap();
