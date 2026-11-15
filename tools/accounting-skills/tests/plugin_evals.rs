@@ -535,6 +535,50 @@ fn a_linked_folder_above_a_plugin_path_is_refused() {
     fs::remove_dir(link).unwrap();
 }
 
+#[test]
+fn cards_read_through_a_link_out_of_the_root_are_refused() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    fixture(root.path());
+    let moved = outside.path().join("cases");
+    fs::rename(root.path().join("validation/cases"), &moved).unwrap();
+    // mklink needs native separators.
+    let link = root.path().join("validation").join("cases");
+    link_folder(&moved, &link);
+    let target = outside.path().join("plugin");
+    let error = build(&target, 1, 12, root.path(), None).unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("unsafe or missing expected path"),
+        "{error}"
+    );
+    assert!(!target.exists());
+    #[cfg(windows)]
+    fs::remove_dir(link).unwrap();
+}
+
+#[cfg(unix)]
+#[test]
+fn routing_cases_read_through_a_link_are_refused() {
+    let root = tempfile::tempdir().unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    fixture(root.path());
+    let routing = root.path().join("validation/routing-cases.yaml");
+    let moved = outside.path().join("routing-cases.yaml");
+    fs::rename(&routing, &moved).unwrap();
+    std::os::unix::fs::symlink(&moved, &routing).unwrap();
+    let target = outside.path().join("plugin");
+    let error = build(&target, 1, 12, root.path(), None).unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("unsafe or missing expected path"),
+        "{error}"
+    );
+    assert!(!target.exists());
+}
+
 /// A symbolic link on Unix and a junction on Windows, which needs no privilege.
 fn link_folder(target: &Path, link: &Path) {
     #[cfg(unix)]

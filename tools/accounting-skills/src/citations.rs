@@ -31,7 +31,10 @@
 //! indexed. The check does not confirm that a section says what the skill
 //! claims.
 
-use crate::{Result, canonical_root, discover_skills, platform_text, read_text};
+use crate::{
+    Result, canonical_root, discover_skills, platform_text, read_text,
+    validation::check_expected_path,
+};
 use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
 use serde_json::Value;
@@ -453,12 +456,14 @@ fn section_indexes(root: &Path) -> Result<(Vec<SectionIndex>, Vec<Exception>)> {
         path.extension().is_some_and(|ext| ext == "txt")
             && path.file_name() != Some(EXCEPTIONS.as_ref())
     }) {
+        check_expected_path(path, root)?;
         indexes.push(section_index(path)?);
     }
     let path = folder.join(EXCEPTIONS);
     if !path.is_file() {
         return Ok((indexes, exceptions));
     }
+    check_expected_path(&path, root)?;
     for (number, line) in read_text(&path)?.lines().enumerate() {
         if line.is_empty() || line.starts_with('#') {
             continue;
@@ -998,7 +1003,7 @@ fn record_instrument(source: &serde_json::Map<String, Value>) -> Result<Option<B
     Ok((agrees && !keys.is_empty()).then_some(keys))
 }
 
-fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
+fn records(root: &Path, folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     let index = folder.join("sources.json");
     let mut rulings = BTreeSet::new();
     let mut instruments = Vec::new();
@@ -1006,6 +1011,7 @@ fn records(folder: &Path, indexes: &[SectionIndex]) -> Result<Records> {
     if !index.is_file() {
         return Ok((rulings, instruments, rejected));
     }
+    check_expected_path(&index, root)?;
     let payload =
         crate::validation::strict_json(&read_text(&index)?, &index.display().to_string())?;
     let sources = payload["sources"]
@@ -1259,7 +1265,7 @@ pub fn check(root: &Path) -> Result<Report> {
     let (indexes, mut exceptions) = section_indexes(root)?;
     for skill in discover_skills(root)? {
         let folder = root.join(".claude/skills").join(&skill);
-        let (recorded_rulings, instruments, rejected) = records(&folder, &indexes)?;
+        let (recorded_rulings, instruments, rejected) = records(root, &folder, &indexes)?;
         // None when no record names the Act; otherwise the Act's name and the
         // section index, if any, of the Act a matching record names. Matching
         // the index through the record keeps a state Act cited without its
@@ -1287,6 +1293,7 @@ pub fn check(root: &Path) -> Result<Report> {
                 .strip_prefix(root)?
                 .to_string_lossy()
                 .replace('\\', "/");
+            check_expected_path(&path, root)?;
             for block in blocks(&read_text(&path)?)? {
                 let mut missing = Vec::new();
                 for (start, citation, key) in rulings(&block.text)? {

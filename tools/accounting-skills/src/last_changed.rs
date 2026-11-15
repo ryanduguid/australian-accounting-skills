@@ -3,11 +3,11 @@
 
 //! Writes the per-skill last-changed table from git history.
 
-use crate::{Result, discover_skills, git, platform_text, replace_file};
+use crate::{Result, discover_skills, git, platform_text, replace_file, within_root};
 use std::{
     ffi::OsString,
     io::{self, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 const OUTPUT: &str = "docs/skill-last-changed.md";
@@ -68,7 +68,10 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     let commit = git(&root, &["rev-parse", "--short", "HEAD"])?;
     let text = render(&commit, &rows)?;
     if write {
-        replace_file(&root.join(OUTPUT), &platform_text(&text))?;
+        replace_file(
+            &within_root(&root, Path::new(OUTPUT))?,
+            &platform_text(&text),
+        )?;
     } else {
         io::stdout().write_all(platform_text(&text).as_bytes())?;
     }
@@ -194,6 +197,18 @@ mod tests {
             "| [`bas-preparation`](https://github.com/ryanduguid/australian-accounting-skills\
              /commits/main/.claude/skills/bas-preparation) | 2026-11-05 |\n"
         ));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn write_refuses_a_docs_folder_linked_outside_the_checkout() {
+        let directory = checkout();
+        let outside = tempdir().unwrap();
+        fs::remove_dir(directory.path().join("docs")).unwrap();
+        std::os::unix::fs::symlink(outside.path(), directory.path().join("docs")).unwrap();
+        let error = run(directory.path(), &["--write"]).unwrap_err();
+        assert!(error.contains("escapes"), "{error}");
+        assert_eq!(fs::read_dir(outside.path()).unwrap().count(), 0);
     }
 
     #[test]
