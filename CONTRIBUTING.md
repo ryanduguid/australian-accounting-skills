@@ -43,7 +43,8 @@ checks run on Python 3.14 and 3.15, and the coverage and citation checks run
 in its `native` job.
 `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
-A third job scans the full history with gitleaks.
+A third job scans with betterleaks the commits a push or pull request adds,
+and the full history weekly or when run by hand.
 That job builds and tests the Rust tooling in `tools/accounting-skills/` and
 compares it with the scripts it ports. Apart from the coverage check, it runs
 in CI only, with no pre-commit hook; its README lists the local commands.
