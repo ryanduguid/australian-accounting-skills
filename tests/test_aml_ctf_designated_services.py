@@ -23,6 +23,7 @@ from skill_prose import (
     ISO_DATE,
     PENDING,
     PENDING_FACT,
+    affirms,
     records,
     section,
     sentences,
@@ -40,11 +41,10 @@ TRANSITIONAL_RULES = "https://www.legislation.gov.au/F2026L00393/latest"
 
 class DesignatedServicesTests(unittest.TestCase):
     def assert_sentence(self, text: str, *patterns: str) -> None:
-        """One sentence of `text` matches every pattern."""
+        """One sentence of `text` affirms every pattern: each matches with no negator directly before it."""
         with self.subTest(patterns=patterns):
             self.assertTrue(
-                any(all(re.search(pattern, sentence, re.IGNORECASE) for pattern in patterns)
-                    for sentence in sentences(text)),
+                any(all(affirms(sentence, pattern) for pattern in patterns) for sentence in sentences(text)),
                 f"no sentence matches all of {patterns}",
             )
 
@@ -77,6 +77,9 @@ class DesignatedServicesTests(unittest.TestCase):
         # The incidental payments circumstance cannot clear item 3 while another service is open.
         self.assert_sentence(step, r"\bWhile any other service is `UNDETERMINED`, s 6\(5C\)\(b\) of the AML/CTF Act "
                                    r"cannot be relied on\b", r"\balso `UNDETERMINED`")
+        # Review round 3: s 6(5C)(b)(i) bars a designated service in any table, and this skill tests table 6 only.
+        self.assert_sentence(step, r"\bs 6\(5C\)\(b\)\(i\) of the AML/CTF Act\b", r"\bany table in s 6\b",
+                             r"\bconditional on the AML/CTF compliance officer's view of every other table\b")
 
     def test_austrac_guidance_is_the_regulators_view_not_the_law(self) -> None:
         step = workflow_step(SKILL, 4)
@@ -123,8 +126,14 @@ class DesignatedServicesTests(unittest.TestCase):
         self.assert_sentence(item_3_text, r"\bAsk what money or other property the practice deals with\b",
                              r"\bwhether its dealing directly advances that transaction\b")
         self.assert_sentence(item_3_text, r"\bmaterially change who is paid or what is transferred\b")
-        self.assert_sentence(item_3_text, r"\bitem 3 stays `UNDETERMINED`", r"\brecord item 3\b",
+        self.assert_sentence(item_3_text, r"\bitem 3 stays `UNDETERMINED`")
+        # Review round 3: known facts that fail an element rule item 3 out; they do not record it.
+        self.assert_sentence(item_3_text, r"\bRecord item 3 only where the facts meet each element\b",
                              r"\bdirect-advancement test as the regulator's view\b")
+        self.assert_sentence(item_3_text, r"\bonly influences the transaction\b",
+                             r"\bname that element as ruled out, labelled as AUSTRAC's view\b")
+        self.assert_sentence(item_3_text, r"\bmanaging is less likely, not ruled out\b", r"\bstep 6\b")
+        self.assertNotRegex(item_3_text, r"\bonce the facts establish them\b")
 
     def test_each_service_gets_one_of_3_results_and_a_grey_area_is_not_decided(self) -> None:
         step = workflow_step(SKILL, 6)
@@ -156,8 +165,11 @@ class DesignatedServicesTests(unittest.TestCase):
         # Review round 2: item 12 also covers item 2 of table 2 and table 5, which this skill does not test.
         self.assert_sentence(step, r"\bitem 12 of that Schedule\b",
                              r"\bcovered by item 2 of table 2, or an item of table 5 or 6, in s 6 of the AML/CTF Act\b")
-        self.assert_sentence(step, r"\bmay fall under item 2 of table 2 or table 5\b",
-                             r"\benrolment date as conditional on the AML/CTF compliance officer's view\b")
+        # Review round 3: item 12(1)(b) bars another designated service in any table, so the date is conditional
+        # on every other table, not only item 2 of table 2 and table 5.
+        self.assert_sentence(step, r"\b29 July 2026 date as conditional on the AML/CTF compliance officer's view of "
+                                   r"every other table in s 6\b", r"\bitem 2 of table 2 or table 5\b",
+                             r"\bunder any other table\b")
         # Review round 2: s 26F(8) bars commencing a designated service to a customer, in the Act's words.
         self.assert_sentence(step, r"\bmust not commence to provide a designated service to a customer\b",
                              r"\(s 26F\(8\) of the AML/CTF Act\)")
@@ -171,7 +183,8 @@ class DesignatedServicesTests(unittest.TestCase):
                           r"s 41 ", r"s 43 ", r"s 47 ", r"ss 107 and 108", r"s 111 ", r"s 116 "):
             with self.subTest(provision=provision):
                 self.assertRegex(step, rf"\({provision}[^)]*of the AML/CTF Act\)")
-        self.assert_sentence(step, r"\bs 9-9 of the AML/CTF Rules\b")
+        # Review round 3: rule 9-9 sets periods for compliance reports, not for ss 41 and 43.
+        self.assert_sentence(step, r"\bs 9-9 of the AML/CTF Rules apply to AML/CTF compliance reports only\b")
         self.assert_sentence(step, r"\bpre-commencement customer rules in s 36 of the AML/CTF Act\b")
         self.assert_sentence(step, r"\blist them as conditional on that result\b")
         self.assert_sentence(step, r"`au-tax-agent-obligations` step 8a", r"`au-aml-ctf-client-coverage`", r"`au-client-acceptance`")
@@ -185,6 +198,18 @@ class DesignatedServicesTests(unittest.TestCase):
                              r"\bnot covered by any skill in this pack\b")
         self.assert_sentence(step, r"\bclient email or engagement template\b", r"\breliance on another entity's customer due diligence\b",
                              r"\bnot covered\b")
+
+    def test_the_example_classifies_recorded_steps_not_service_names(self) -> None:
+        # Review round 3: step 1 forbids a result from a name, so each service in the example carries its steps.
+        example = " ".join(section(SKILL, "Fabricated acceptance example").split())
+        self.assert_sentence(example, r"\beach recorded with its steps\b")
+        for service, steps in (("tax returns", r"holds no client money and takes no part in any sale, financing or "
+                                               r"restructure"),
+                               ("trust setup", r"drafts a new trust's deed and arranges its execution"),
+                               ("bill paying", r"receives clients' money into its own bank account"),
+                               ("address", r"makes its office address available")):
+            with self.subTest(service=service):
+                self.assertRegex(example, rf"{service}[^;]*{steps}")
 
     def test_the_advice_note_appears_once(self) -> None:
         self.assertEqual(skill_text(SKILL).count("It is not tax, legal or financial advice."), 1)
