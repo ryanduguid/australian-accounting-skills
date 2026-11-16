@@ -152,23 +152,41 @@ class ContributorCheckTests(unittest.TestCase):
         """A mapping left behind after a gate is removed is a false assurance."""
         self.assertEqual(set(GATE_HOOKS), set(ci_gate_commands()))
 
-    def test_secret_scanning_runs_locally_and_in_ci(self) -> None:
-        """Gitleaks is not a `run:` step, so the gate map cannot reach it."""
+    def test_secret_scanning_uses_the_repository_rules_locally_and_in_ci(self) -> None:
+        """The secrets job is outside the gate map, so this pairs its scan by hand.
+
+        betterleaks loads no repository config it is not named. A scan without
+        `--config .gitleaks.toml` still passes with the default credential rules
+        alone, and so passes a commit carrying a client's TFN.
+        """
         workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
-        actions = [
-            step.get("uses", "")
-            for job in workflow["jobs"].values()
-            if isinstance(job, dict)
-            for step in job.get("steps", [])
-        ]
-        self.assertTrue(
-            any("gitleaks" in action for action in actions),
-            "verify.yml must scan for secrets and client identifiers",
+        script = " ".join(
+            " ".join(step["run"].split())
+            for step in workflow["jobs"]["secrets"]["steps"]
+            if "run" in step
+        )
+        scans = script.count("betterleaks git ")
+        self.assertGreaterEqual(scans, 1, "verify.yml must scan for secrets and client identifiers")
+        self.assertEqual(
+            script.count("betterleaks git . --config .gitleaks.toml "),
+            scans,
+            "every betterleaks scan in verify.yml must name .gitleaks.toml",
         )
 
         config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
-        hook_ids = {hook["id"] for repo in config["repos"] for hook in repo["hooks"]}
-        self.assertIn("gitleaks", hook_ids)
+        hooks = [
+            hook
+            for repo in config["repos"]
+            for hook in repo["hooks"]
+            if hook["id"] == "betterleaks"
+        ]
+        self.assertEqual(len(hooks), 1, "a second betterleaks hook could run without the rules")
+        args = hooks[0].get("args", [])
+        self.assertIn(
+            ("--config", ".gitleaks.toml"),
+            list(zip(args, args[1:])),
+            "the betterleaks hook must name .gitleaks.toml",
+        )
         self.assertTrue((REPOSITORY / ".gitleaks.toml").is_file())
 
 

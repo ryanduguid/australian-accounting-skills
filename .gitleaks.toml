@@ -1,6 +1,6 @@
 # Secret and client-identifier scanning.
 #
-# The default gitleaks rules cover credentials. They know nothing about the
+# The default betterleaks rules cover credentials. They know nothing about the
 # boundary this repository actually has to hold: AGENTS.md and
 # .claude/rules/accounting-safety.md forbid real client data, and a tax file
 # number, ABN or bank detail is the shape that breach takes here. A credential
@@ -47,7 +47,39 @@ description = "Medicare number beside its label"
 regex = '''(?i)(?:\b|_)medicare[\s_-]*(?:number|no\.?|card)(?:\b|_)[^0-9\n]{0,20}(\d{4}[ -]?\d{5}[ -]?\d{1,2})\b'''
 tags = ["client-data", "australia"]
 
-[allowlist]
+# betterleaks reports each credential below only beside its companion value:
+# an AWS key ID within 5 lines of its secret key, say, or an Azure client
+# secret near its tenant and client IDs. gitleaks reported each by itself.
+# Clearing the components keeps that, so one committed alone still fails.
+[[rules]]
+id = "algolia-api-key"
+components = []
+
+[[rules]]
+id = "artifactory-api-key"
+components = []
+
+[[rules]]
+id = "artifactory-reference-token"
+components = []
+
+[[rules]]
+id = "aws-access-token"
+components = []
+
+[[rules]]
+id = "azure-ad-client-secret"
+components = []
+
+[[rules]]
+id = "clickhouse-cloud-api-secret-key"
+components = []
+
+[[rules]]
+id = "planetscale-api-token"
+components = []
+
+[[allowlists]]
 description = "Paths that cannot carry a live secret or a client identifier"
 paths = [
   # The scanner's own rules quote the patterns they match.
@@ -70,4 +102,17 @@ regexes = [
   '''^12345678$''',
   '''(?i)^(?:xxx|nnn|000)[ -]?(?:xxx|nnn|000)[ -]?(?:xxx|nnn|000)$''',
   '''(?i)^<(?:tfn|abn|bsb|account[ -]?number|medicare[ -]?number)>$''',
+]
+
+[[allowlists]]
+description = "The placeholder password in a URL the source URL policy must refuse"
+targetRules = ["generic-credential-uri"]
+condition = "AND"
+paths = [
+  '''^tests/test_source_fetch_policy\.py$''',
+]
+regexes = [
+  # https://user:password@www.ato.gov.au/, one of the URLs the policy rejects
+  # because it carries credentials.
+  '''^password$''',
 ]
