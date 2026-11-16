@@ -59,7 +59,13 @@ class TaxReformNo3StatusTests(unittest.TestCase):
             note,
         )
         self.assertIn("report was due on 13 November 2026", note)
-        self.assertIn("the income year that includes 1 July 2028", note)
+        self.assertIn(
+            "Schedule 1, item 21 of the Tax Reform No. 3 Bill as introduced (read 16 November 2026) "
+            "would apply the minimum tax in relation to assessments for income years starting on "
+            "or after 1 July 2028",
+            note,
+        )
+        self.assertNotIn("includes 1 July 2028", note)
         self.assertIn("Check each Bill's stage on its Parliament of Australia page at use time", note)
         self.assertIn("Do not apply an announced measure in a current-law calculation", note)
         self.assertIn(f"]({RATES_BILL_PAGE})", text)
