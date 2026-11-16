@@ -93,6 +93,7 @@ law claim, unverified source or guess.
 | [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
 | [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
 | [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
+| [A service list with a settled service, a grey area and a name with no steps](cases/au-aml-ctf-designated-services-grey-area-services.md) | au-aml-ctf-designated-services |
 | [A vendor's complete status without evidence for each beneficial owner](cases/au-aml-ctf-client-coverage-beneficial-owner-evidence.md) | au-aml-ctf-client-coverage |
 | [Known beneficial owners under a recorded Rules exception](cases/au-aml-ctf-client-coverage-recorded-exception-scope.md) | au-aml-ctf-client-coverage |
 | [A simplified due diligence basis resting on contradictory KYC](cases/au-aml-ctf-client-coverage-contradictory-kyc-basis.md) | au-aml-ctf-client-coverage |
@@ -288,7 +289,7 @@ law claim, unverified source or guess.
 | [Year-end records request and covering email built from last year](cases/year-end-workpapers-records-request.md) | year-end-workpapers, au-individual-return |
 | [Three-year analytical review with a related-party loan](cases/year-end-workpapers-three-year-review.md) | year-end-workpapers |
 
-Together the cards cover all 107 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 108 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then

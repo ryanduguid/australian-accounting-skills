@@ -368,8 +368,8 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 122 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-107 skills has at least one, and `tests/test_routing_cases.py` fails when a
+the 123 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+108 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
@@ -381,8 +381,8 @@ claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --ma
 ```
 
 The estimate for the earlier 107-case pack was about US$18, not a measurement.
-The 122-case pack has no measured cost; a run that reaches the US$30 cap stops
-with partial results. The 79 prompts added on 4 and 11 November 2026 and the 6 prompts added on 12 November 2026
+The 123-case pack has no measured cost; a run that reaches the US$30 cap stops
+with partial results. The 79 prompts added on 4 and 11 November 2026, the 6 prompts added on 12 November 2026 and the prompt added on 16 November 2026
 have no recorded run.
 
 On 1 November 2026 (Claude Code 2.1.312, default model, 1 run per case, 4
@@ -496,11 +496,10 @@ Corporations Act 2001 (Cth): 124 sections, 124 found, 0 listed exceptions, 0 abs
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 116 sections, 116 found, 0 listed exceptions, 0 absent.
 Taxation Administration Act 1953 (Cth): 82 sections, 82 found, 0 listed exceptions, 0 absent.
 Superannuation Guarantee (Administration) Act 1992 (Cth): 79 sections, 78 found, 1 listed exceptions, 0 absent.
-Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 61 sections, 61 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (NSW): 53 sections, no index.
 Building Industry Fairness (Security of Payment) Act 2017 (Qld): 48 sections, 48 found, 0 listed exceptions, 0 absent.
 Tax Agent Services Act 2009 (Cth): 42 sections, 42 found, 0 listed exceptions, 0 absent.
-Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 39 sections, 39 found, 0 listed exceptions, 0 absent.
+Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 40 sections, 40 found, 0 listed exceptions, 0 absent.
 Tax Agent Services (Code of Professional Conduct) Determination 2024 (Cth): 38 sections, 38 found, 0 listed exceptions, 0 absent.
 Coal Mining Industry (Long Service Leave) Payroll Levy Collection Act 1992 (Cth): 25 sections, 25 found, 0 listed exceptions, 0 absent.
 Fuel Tax Act 2006 (Cth): 24 sections, 24 found, 0 listed exceptions, 0 absent.
@@ -525,6 +524,7 @@ Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992 (Cth): 2 section
 Duties Act 2000 (Vic): 2 sections, no index.
 Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 2 sections, no index.
 Superannuation Guarantee (Administration) Regulations 2018 (Cth): 2 sections, no index.
+Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 1 section, no index.
 Duties Act 2001 (Qld): 1 section, no index.
 Medicare Levy Act 1986 (Cth): 1 section, no index.
 Payroll Tax Act 2009 (SA): 1 section, no index.

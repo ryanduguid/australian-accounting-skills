@@ -11,8 +11,8 @@ abstract: >-
   and contracting workflows, with source verification, reconciliation
   checks and human review boundaries. This record identifies the published
   v0.7.0 release under the Ryan Duguid Public Attribution Licence 1.0. The
-  development branch can be ahead of it; cite its exact commit when using later
-  changes. Earlier releases
+  development branch is ahead of it with one hundred and eight skills; cite its
+  exact commit when using later changes. Earlier releases
   retain their original citation records and licences in their tagged revisions.
 version: 0.7.0
 date-released: 2026-11-14
