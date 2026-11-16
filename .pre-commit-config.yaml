@@ -30,10 +30,16 @@ repos:
         # The same Node.js wheel verify.yml installs, so the hook needs no download.
         additional_dependencies: ["nodejs-wheel-binaries==24.19.0"]
 
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.30.1
+  - repo: https://github.com/betterleaks/betterleaks
+    rev: v1.10.1
     hooks:
-      - id: gitleaks
+      - id: betterleaks
+        # betterleaks loads no repository config unless named, and without
+        # this one it checks credentials only, not client identifiers.
+        # The hook scans the contributor's own checkout, so its git config is
+        # trusted: betterleaks' isolation of it fails every scan on Windows
+        # (betterleaks/betterleaks#388).
+        args: ["--config", ".gitleaks.toml", "--trust-local-git-config"]
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.11.0.1

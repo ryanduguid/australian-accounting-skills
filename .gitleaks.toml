@@ -1,6 +1,6 @@
 # Secret and client-identifier scanning.
 #
-# The default gitleaks rules cover credentials. They know nothing about the
+# The default betterleaks rules cover credentials. They know nothing about the
 # boundary this repository actually has to hold: AGENTS.md and
 # .claude/rules/accounting-safety.md forbid real client data, and a tax file
 # number, ABN or bank detail is the shape that breach takes here. A credential
@@ -47,7 +47,7 @@ description = "Medicare number beside its label"
 regex = '''(?i)(?:\b|_)medicare[\s_-]*(?:number|no\.?|card)(?:\b|_)[^0-9\n]{0,20}(\d{4}[ -]?\d{5}[ -]?\d{1,2})\b'''
 tags = ["client-data", "australia"]
 
-[allowlist]
+[[allowlists]]
 description = "Paths that cannot carry a live secret or a client identifier"
 paths = [
   # The scanner's own rules quote the patterns they match.
@@ -70,4 +70,13 @@ regexes = [
   '''^12345678$''',
   '''(?i)^(?:xxx|nnn|000)[ -]?(?:xxx|nnn|000)[ -]?(?:xxx|nnn|000)$''',
   '''(?i)^<(?:tfn|abn|bsb|account[ -]?number|medicare[ -]?number)>$''',
+]
+
+[[allowlists]]
+description = "The placeholder password in a URL the source URL policy must refuse"
+targetRules = ["generic-credential-uri"]
+regexes = [
+  # https://user:password@www.ato.gov.au/ in tests/test_source_fetch_policy.py,
+  # one of the URLs the policy rejects because it carries credentials.
+  '''^password$''',
 ]
