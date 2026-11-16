@@ -107,8 +107,12 @@ regexes = [
 [[allowlists]]
 description = "The placeholder password in a URL the source URL policy must refuse"
 targetRules = ["generic-credential-uri"]
+condition = "AND"
+paths = [
+  '''^tests/test_source_fetch_policy\.py$''',
+]
 regexes = [
-  # https://user:password@www.ato.gov.au/ in tests/test_source_fetch_policy.py,
-  # one of the URLs the policy rejects because it carries credentials.
+  # https://user:password@www.ato.gov.au/, one of the URLs the policy rejects
+  # because it carries credentials.
   '''^password$''',
 ]
