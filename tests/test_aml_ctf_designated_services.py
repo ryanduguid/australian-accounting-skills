@@ -91,7 +91,9 @@ class DesignatedServicesTests(unittest.TestCase):
                                ("Item 6", r"Ask whether the work creates an entity or changes its legal form"),
                                ("Item 3", r"Ask whether the money passes through an account the practice holds"),
                                ("Item 7", r"Ask who holds each position, on whose behalf"),
-                               ("Item 9", r"Ask whether the client entity operates from the address")):
+                               ("Item 9", r"Ask whether the address is made available for that use, now or for an "
+                                          r"entity not yet registered, and whether the client entity operates from the "
+                                          r"address")):
             with self.subTest(item=item):
                 self.assertRegex(step, rf"- {item}: (?:(?!- Item).)*{question}")
         # Advice alone is not ruled out: AUSTRAC treats advice complete enough to act on as item 6.
@@ -103,6 +105,14 @@ class DesignatedServicesTests(unittest.TestCase):
         self.assert_sentence(step, r"\bmoney passes through an account the practice holds and the practice pays it out\b",
                              r"\blikely to be receiving, holding and controlling even where the client instructs each "
                              r"payment\b", r"\bwhich goes to managing\b")
+        # Review round 1: none of these may be ruled out on a narrower test than the source states.
+        self.assert_sentence(step, r"\bFor item 1\b", r"\bneed not be identified by name, agree the price\b",
+                             r"\bauction that meets its reserve succeeds\b",
+                             DO_NOT + r"rule item 1 out because no buyer is named\b")
+        self.assert_sentence(step, r"\bredirect funds, substitute a party or materially vary the purpose of a dealing\b")
+        self.assert_sentence(step, r"\bmade available for an entity to use, or intend to use, as its registered office\b",
+                             r"\bfrom the time it is made available\b")
+        self.assertRegex(workflow_step(SKILL, 3), r"- item 3: [^;]*securities and securities accounts")
 
     def test_each_service_gets_one_of_3_results_and_a_grey_area_is_not_decided(self) -> None:
         step = workflow_step(SKILL, 6)
@@ -127,7 +137,9 @@ class DesignatedServicesTests(unittest.TestCase):
         self.assert_sentence(step, r"\bItem 11 of that Schedule\b", r"\bPart 1A\b", r"\bPart 2\b", r"\bPart 3\b",
                              r"\bDivisions 2 to 6 of Part 10\b", r"\buntil 1 July 2026\b")
         self.assert_sentence(step, r"\bwithin 28 days after first providing a designated service \(s 51B\(1\) of the AML/CTF Act\)")
-        self.assert_sentence(step, r"\bbefore 1 July 2026\b", r"\bno other designated service\b",
+        # Item 12 also excludes a practice that had commenced, but not yet provided, another service.
+        self.assert_sentence(step, r"\bbefore 1 July 2026\b",
+                             r"\bneither provided nor had commenced to provide any other designated service\b",
                              r"\bitem 12 of that Schedule sets the date as 29 July 2026\b")
         self.assertRegex(step, r"s 26M\(1\) of the AML/CTF Act\), which s 19 of the \*Anti-Money Laundering and "
                                r"Counter-Terrorism Financing Transitional Rules 2026\*")
