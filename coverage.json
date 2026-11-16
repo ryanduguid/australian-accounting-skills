@@ -1032,6 +1032,7 @@
         "behavioural": [
           "test_cgt_gap_workflows.py",
           "test_entity_super_workflows.py",
+          "test_practice_review_steps.py",
           "test_worked_examples.py"
         ],
         "inventory": []
