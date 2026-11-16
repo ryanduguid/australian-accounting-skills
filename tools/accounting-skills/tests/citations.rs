@@ -1188,6 +1188,57 @@ fn an_index_or_skill_folder_linked_outside_the_root_is_refused() {
     }
 }
 
+/// An optional file that is present must be a regular file inside the root
+/// with no link on the way; a dangling link counts as absent.
+#[test]
+fn an_optional_file_linked_or_not_a_file_is_refused() {
+    for linked in [
+        "tools/accounting-skills/section-index/exceptions.txt",
+        ".claude/skills/alpha/sources.json",
+    ] {
+        for (case, refusal) in [
+            ("outside", Some("unsafe or missing expected path")),
+            ("inside", Some("symlink or reparse point is not permitted")),
+            ("folder", Some("expected regular file")),
+            ("dangling", None),
+        ] {
+            let root = tempfile::tempdir().unwrap();
+            let outside = tempfile::tempdir().unwrap();
+            skill(root.path(), "alpha", "No citation.\n", None);
+            index(root.path(), "C2006A00072", "Fuel Tax Act 2006", &["1"]);
+            check(root.path()).unwrap();
+            // mklink needs native separators.
+            let link = linked
+                .split('/')
+                .fold(root.path().to_path_buf(), |path, part| path.join(part));
+            let target = match case {
+                "outside" => outside.path().to_path_buf(),
+                "inside" => root.path().join("folder"),
+                _ => outside.path().join("gone"),
+            };
+            if case == "folder" {
+                fs::create_dir(&link).unwrap();
+            } else {
+                fs::create_dir_all(&target).unwrap();
+                link_folder(&target, &link);
+            }
+            if case == "dangling" {
+                fs::remove_dir(&target).unwrap();
+            }
+            let result = check(root.path());
+            match refusal {
+                Some(refusal) => {
+                    let error = result.unwrap_err().to_string();
+                    assert!(error.contains(refusal), "{linked} {case}: {error}");
+                }
+                None => assert!(result.is_ok(), "{linked} {case}: {result:?}"),
+            }
+            #[cfg(windows)]
+            fs::remove_dir(link).unwrap();
+        }
+    }
+}
+
 /// A symbolic link on Unix and a junction on Windows, which needs no privilege.
 fn link_folder(target: &Path, link: &Path) {
     #[cfg(unix)]

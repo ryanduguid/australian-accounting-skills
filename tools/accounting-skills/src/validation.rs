@@ -253,11 +253,25 @@ pub fn is_reparse_point(path: &Path) -> Result<bool> {
     }
 }
 pub fn check_expected_path(path: &Path, root: &Path) -> Result<()> {
-    let safe = fs::canonicalize(path)
-        .and_then(|p| fs::canonicalize(root).map(|r| p.starts_with(r)))
-        .unwrap_or(false);
-    if !safe {
-        return Err(format!("unsafe or missing expected path: {}", path.display()).into());
+    match present_expected_path(path, root)? {
+        Some(_) => Ok(()),
+        None => Err(format!("unsafe or missing expected path: {}", path.display()).into()),
+    }
+}
+
+/// The canonical target of `path`, a regular file inside `root` with no link
+/// between them, or `None` when nothing is at `path`. Use the file through the
+/// returned target, the path the containment check tested.
+pub(crate) fn present_expected_path(path: &Path, root: &Path) -> Result<Option<PathBuf>> {
+    let refused = || format!("unsafe or missing expected path: {}", path.display());
+    let target = match fs::canonicalize(path) {
+        Ok(target) => target,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(_) => return Err(refused().into()),
+    };
+    let root_target = fs::canonicalize(root).map_err(|_| refused())?;
+    if !target.starts_with(root_target) {
+        return Err(refused().into());
     }
     let mut current = path;
     while current != root {
@@ -270,10 +284,10 @@ pub fn check_expected_path(path: &Path, root: &Path) -> Result<()> {
         }
         current = current.parent().ok_or("expected path is not under root")?;
     }
-    if !path.is_file() {
+    if !target.is_file() {
         return Err(format!("expected regular file: {}", path.display()).into());
     }
-    Ok(())
+    Ok(Some(target))
 }
 fn relative(path: &Path, root: &Path) -> Result<String> {
     let relative = path
