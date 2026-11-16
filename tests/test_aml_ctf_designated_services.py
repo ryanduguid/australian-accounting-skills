@@ -74,6 +74,9 @@ class DesignatedServicesTests(unittest.TestCase):
         self.assertNotRegex(step, r"- item 10:")
         self.assert_sentence(step, r"\bs 6\(5C\)\(b\) of the AML/CTF Act\b", r"\bno designated service other than item 3\b",
                              r"\btest item 3 last\b")
+        # The incidental payments circumstance cannot clear item 3 while another service is open.
+        self.assert_sentence(step, r"\bWhile any other service is `UNDETERMINED`, s 6\(5C\)\(b\) of the AML/CTF Act "
+                                   r"cannot be relied on\b", r"\balso `UNDETERMINED`")
 
     def test_austrac_guidance_is_the_regulators_view_not_the_law(self) -> None:
         step = workflow_step(SKILL, 4)
@@ -86,16 +89,29 @@ class DesignatedServicesTests(unittest.TestCase):
         # Each grey area asks for the facts that decide it.
         for item, question in (("Items 1, 2, 4 and 6", r"Ask whether the practice is instructed to act"),
                                ("Item 6", r"Ask whether the work creates an entity or changes its legal form"),
-                               ("Item 3", r"Ask whether money passes through an account the practice controls"),
+                               ("Item 3", r"Ask whether the money passes through an account the practice holds"),
                                ("Item 7", r"Ask who holds each position, on whose behalf"),
                                ("Item 9", r"Ask whether the client entity operates from the address")):
             with self.subTest(item=item):
                 self.assertRegex(step, rf"- {item}: (?:(?!- Item).)*{question}")
+        # Advice alone is not ruled out: AUSTRAC treats advice complete enough to act on as item 6.
+        self.assert_sentence(step, r"\bcomplete enough for the client to create it without further professional help\b",
+                             r"\bassisting under item 6\b")
+        self.assert_sentence(step, r"\bwhere the practice only advises, ask whether its advice is that complete\b")
+        # Money through the practice's own account is receiving, holding and controlling whatever the
+        # client instructs; discretion goes only to managing.
+        self.assert_sentence(step, r"\bmoney passes through an account the practice holds and the practice pays it out\b",
+                             r"\blikely to be receiving, holding and controlling even where the client instructs each "
+                             r"payment\b", r"\bwhich goes to managing\b")
 
     def test_each_service_gets_one_of_3_results_and_a_grey_area_is_not_decided(self) -> None:
         step = workflow_step(SKILL, 6)
         self.assert_sentence(step, r"`item N`", r"\bmeet every element of the item\b")
         self.assert_sentence(step, r"`none`", r"\brule out an element of every item\b")
+        # A wrong none is the costly error: guidance that leaves a fact open cannot rule an element out.
+        self.assert_sentence(step, r"\bAn element is not ruled out while AUSTRAC's guidance makes it depend on a fact "
+                                   r"still missing\b", r"\bonly on AUSTRAC's view, not the Act's words, is labelled as "
+                                   r"the regulator's view\b")
         self.assert_sentence(step, r"`UNDETERMINED`: a fact is missing\b", r"\bthe facts recorded do not settle it\b")
         self.assert_sentence(step, r"\bName the missing fact or the professional view needed, and who should form it\b")
         self.assert_sentence(step, r"\bWhere the facts leave a grey area unsettled, return `UNDETERMINED`",
@@ -126,6 +142,9 @@ class DesignatedServicesTests(unittest.TestCase):
 
     def test_what_the_skill_leaves_out_is_named(self) -> None:
         step = workflow_step(SKILL, 8)
+        self.assert_sentence(step, r"\btests table 6 only\b",
+                             r"`none` means no table 6 item, not that the practice provides no designated service\b",
+                             r"\banother table in s 6 of the AML/CTF Act\b")
         self.assert_sentence(step, r"\bclient's ML/TF risk\b", r"\bcontent of the AML/CTF program\b",
                              r"\bnot covered by any skill in this pack\b")
         self.assert_sentence(step, r"\bclient email or engagement template\b", r"\breliance on another entity's customer due diligence\b",
@@ -154,6 +173,8 @@ class DesignatedServicesTests(unittest.TestCase):
         card = " ".join(CARD.read_text(encoding="utf-8").split())
         self.assertIn(f"  - {SKILL}\n", CARD.read_text(encoding="utf-8"))
         self.assertIn("Record S3 as undetermined", card)
+        # S3 is grey only while it is unknown whose account the money passes through.
+        self.assertIn("name the missing facts on whose account the money passes through and on discretion", card)
         self.assertIn("Do not record S3 as not designated because the partner says so", card)
         self.assertIn("Record S4 as undetermined until its steps are recorded", card)
         cases = yaml.safe_load((REPOSITORY / "validation" / "routing-cases.yaml").read_text(encoding="utf-8"))

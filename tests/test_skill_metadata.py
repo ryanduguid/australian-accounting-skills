@@ -662,6 +662,8 @@ class SkillMetadataTests(unittest.TestCase):
             for path in (REPOSITORY / "validation" / "results").glob("*.json")
         ]
         judged = set().union(*runs)
+        skills = len(list(SKILLS_DIRECTORY.glob("*/SKILL.md")))
+        self.assertIn(f"Static checks cover all {skills} skills", readme)
         if len(judged) == cards:
             self.assertIn(f"Human-confirmed model verdicts cover all {cards}", readme)
             return

@@ -27,10 +27,10 @@ obligation list for the practice's AML/CTF compliance officer.
   any sale, financing or restructure.
 - S2, trust setup: on a client's instructions the practice drafts the deed of a
   new discretionary trust and arranges its execution.
-- S3, bill paying: 4 clients transfer money to the practice's own bank account
-  and the practice pays their suppliers and their ATO activity statements on
-  instruction. The records do not say whether the practice chooses when, whom
-  or how much to pay.
+- S3, bill paying: the practice pays 4 clients' suppliers and their ATO
+  activity statements. The records do not say whether the money passes through
+  the practice's own bank account or is paid from each client's account, or
+  whether the practice chooses when, whom or how much to pay.
 - S4, 'company secretarial': listed on the service sheet with a fee and no
   description of the work.
 - The practice first provided trust setup in March 2026 and provided no other
@@ -38,19 +38,20 @@ obligation list for the practice's AML/CTF compliance officer.
 
 ## Deliberately unavailable evidence
 
-What S4 involves, whether the practice has discretion over any S3 payment, the
-date the practice first provided S3, and the name of an AML/CTF compliance
-officer are unavailable. No legal advice, AUSTRAC correspondence or approval is
+What S4 involves, whose account the S3 payments come from, whether the
+practice has discretion over any S3 payment, the date the practice first
+provided S3, and the name of an AML/CTF compliance officer are unavailable. No legal advice, AUSTRAC correspondence or approval is
 supplied.
 
 ## Required checks
 
 - Record S2 as item 6 of table 6, from the drafting of the deed on instructions.
 - Record S1 as none, naming for each item the element the facts rule out.
-- Record S3 as undetermined: name the missing facts on discretion and on which
-  payments go to a government body such as the ATO, note that S2 leaves the
-  incidental payments circumstance unavailable, and say that a professional
-  view is needed if the facts do not settle it.
+- Record S3 as undetermined: name the missing facts on whose account the money
+  passes through and on discretion, record the ATO payments as outside item 3
+  as payments to a government body, note that S2 leaves the incidental
+  payments circumstance unavailable, and say that a professional view is
+  needed if the facts do not settle it.
 - Record S4 as undetermined until its steps are recorded.
 - Label each piece of AUSTRAC guidance relied on as the regulator's view with
   its last updated date, separate from the provisions of the Act.
