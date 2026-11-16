@@ -174,9 +174,14 @@ class ContributorCheckTests(unittest.TestCase):
         )
 
         config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
-        hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
-        self.assertIn("betterleaks", hooks)
-        args = hooks["betterleaks"].get("args", [])
+        hooks = [
+            hook
+            for repo in config["repos"]
+            for hook in repo["hooks"]
+            if hook["id"] == "betterleaks"
+        ]
+        self.assertEqual(len(hooks), 1, "a second betterleaks hook could run without the rules")
+        args = hooks[0].get("args", [])
         self.assertIn(
             ("--config", ".gitleaks.toml"),
             list(zip(args, args[1:])),
