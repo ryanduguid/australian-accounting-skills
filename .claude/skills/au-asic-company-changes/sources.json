@@ -230,6 +230,36 @@
         "source_last_modified": "",
         "checked_at": "2026-11-02"
       }
+    },
+    {
+      "title": "ASIC: Reduction in share capital",
+      "url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/reduction-in-share-capital",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 16 November 2026 over plain HTTP; the page shows no update date. Forms 2560 and 2205, the 22-day and 14-day lodgement statements and the 28-day change of company details statement were read in it. ASIC guidance, not law. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/reduction-in-share-capital",
+      "http_status": 200,
+      "fetched_at": "2026-11-16",
+      "review_required_since": "2026-11-16",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ASIC: Cancel company shares",
+      "url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/cancel-company-shares",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 16 November 2026 over plain HTTP; the page shows no update date. The 1-month cancellation notice through the change of company details transaction was read in it. ASIC guidance, not law. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/cancel-company-shares",
+      "http_status": 200,
+      "fetched_at": "2026-11-16",
+      "review_required_since": "2026-11-16",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
