@@ -41,8 +41,11 @@ concurrency:
 jobs:
   sweep:
     name: sweep
-    # Sweeps in October and November 2026 took up to 23 minutes; the build adds a few.
-    timeout-minutes: 40
+    # The sweep reads one page at a time, and a host that times out costs up
+    # to 102 seconds a page. The 1 November 2026 sweep of 187 pages took 22
+    # minutes; by 16 November the index held 581 pages, about 80 minutes at
+    # that rate, and the 15 November run hit the old 40-minute limit.
+    timeout-minutes: 180
     runs-on: ubuntu-latest
     permissions:
       contents: read
