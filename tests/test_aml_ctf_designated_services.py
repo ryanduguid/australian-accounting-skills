@@ -134,6 +134,14 @@ class DesignatedServicesTests(unittest.TestCase):
                              r"\bname that element as ruled out, labelled as AUSTRAC's view\b")
         self.assert_sentence(item_3_text, r"\bmanaging is less likely, not ruled out\b", r"\bstep 6\b")
         self.assertNotRegex(item_3_text, r"\bonce the facts establish them\b")
+        # Review round 3: s 6(5C)(b) has a second limb, payments reasonably incidental to a service that is not
+        # designated, and a result resting on it stays open until both limbs are recorded as met.
+        self.assert_sentence(item_3_text, r"\bs 6\(5C\)\(b\)\(ii\) of the AML/CTF Act\b",
+                             r"\bwhich service that is not a designated service the payments support\b",
+                             r"\bonly for payments reasonably incidental to that service\b")
+        self.assert_sentence(item_3_text, r"\bde facto bank account\b", r"\blabelled as AUSTRAC's view\b")
+        self.assert_sentence(item_3_text, r"\bUntil both limbs of s 6\(5C\)\(b\) of the AML/CTF Act are recorded as "
+                                          r"met\b", r"\bstays `UNDETERMINED`")
 
     def test_each_service_gets_one_of_3_results_and_a_grey_area_is_not_decided(self) -> None:
         step = workflow_step(SKILL, 6)
