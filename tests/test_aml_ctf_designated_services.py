@@ -113,6 +113,18 @@ class DesignatedServicesTests(unittest.TestCase):
         self.assert_sentence(step, r"\bmade available for an entity to use, or intend to use, as its registered office\b",
                              r"\bfrom the time it is made available\b")
         self.assertRegex(workflow_step(SKILL, 3), r"- item 3: [^;]*securities and securities accounts")
+        # Review round 2: item 3 asks AUSTRAC's direct-advancement and what-is-transferred questions for all
+        # covered property, and stays undetermined until they are answered.
+        item_3 = re.search(r"- Item 3: .*", step)
+        self.assertIsNotNone(item_3)
+        item_3_text = item_3.group(0) if item_3 else ""
+        self.assert_sentence(item_3_text, r"\bsecurities and securities accounts, virtual assets or other property\b",
+                             r"\bdirectly advances a transaction rather than merely influencing it\b")
+        self.assert_sentence(item_3_text, r"\bAsk what money or other property the practice deals with\b",
+                             r"\bwhether its dealing directly advances that transaction\b")
+        self.assert_sentence(item_3_text, r"\bmaterially change who is paid or what is transferred\b")
+        self.assert_sentence(item_3_text, r"\bitem 3 stays `UNDETERMINED`", r"\brecord item 3\b",
+                             r"\bdirect-advancement test as the regulator's view\b")
 
     def test_each_service_gets_one_of_3_results_and_a_grey_area_is_not_decided(self) -> None:
         step = workflow_step(SKILL, 6)
@@ -141,9 +153,21 @@ class DesignatedServicesTests(unittest.TestCase):
         self.assert_sentence(step, r"\bbefore 1 July 2026\b",
                              r"\bneither provided nor had commenced to provide any other designated service\b",
                              r"\bitem 12 of that Schedule sets the date as 29 July 2026\b")
+        # Review round 2: item 12 also covers item 2 of table 2 and table 5, which this skill does not test.
+        self.assert_sentence(step, r"\bitem 12 of that Schedule\b",
+                             r"\bcovered by item 2 of table 2, or an item of table 5 or 6, in s 6 of the AML/CTF Act\b")
+        self.assert_sentence(step, r"\bmay fall under item 2 of table 2 or table 5\b",
+                             r"\benrolment date as conditional on the AML/CTF compliance officer's view\b")
+        # Review round 2: s 26F(8) bars commencing a designated service to a customer, in the Act's words.
+        self.assert_sentence(step, r"\bmust not commence to provide a designated service to a customer\b",
+                             r"\(s 26F\(8\) of the AML/CTF Act\)")
+        self.assertNotRegex(step, r"\bbegins to provide designated services\b")
+        # Documenting the program (s 26N) and approving the assessment and policies (s 26P) are separate duties.
+        self.assert_sentence(step, r"\bprogram documented \(s 26N of the AML/CTF Act\)",
+                             r"\bapproved by a senior manager \(s 26P of the AML/CTF Act\)")
         self.assertRegex(step, r"s 26M\(1\) of the AML/CTF Act\), which s 19 of the \*Anti-Money Laundering and "
                                r"Counter-Terrorism Financing Transitional Rules 2026\*")
-        for provision in (r"ss 26C to 26E", r"s 26F\(8\)", r"ss 26J and 26K", r"ss 26N and 26P", r"s 28 ", r"s 30 ",
+        for provision in (r"ss 26C to 26E", r"s 26F\(8\)", r"ss 26J and 26K", r"s 26N ", r"s 26P ", r"s 28 ", r"s 30 ",
                           r"s 41 ", r"s 43 ", r"s 47 ", r"ss 107 and 108", r"s 111 ", r"s 116 "):
             with self.subTest(provision=provision):
                 self.assertRegex(step, rf"\({provision}[^)]*of the AML/CTF Act\)")
