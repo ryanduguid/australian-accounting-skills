@@ -33,7 +33,7 @@
 
 use crate::{
     Result, canonical_root, discover_skills, platform_text, read_text,
-    validation::check_expected_path,
+    validation::{check_expected_path, present_expected_path},
 };
 use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
@@ -460,11 +460,10 @@ fn section_indexes(root: &Path) -> Result<(Vec<SectionIndex>, Vec<Exception>)> {
         indexes.push(section_index(path)?);
     }
     let path = folder.join(EXCEPTIONS);
-    if !path.is_file() {
+    let Some(file) = present_expected_path(&path, root)? else {
         return Ok((indexes, exceptions));
-    }
-    check_expected_path(&path, root)?;
-    for (number, line) in read_text(&path)?.lines().enumerate() {
+    };
+    for (number, line) in read_text(&file)?.lines().enumerate() {
         if line.is_empty() || line.starts_with('#') {
             continue;
         }
@@ -1008,12 +1007,10 @@ fn records(root: &Path, folder: &Path, indexes: &[SectionIndex]) -> Result<Recor
     let mut rulings = BTreeSet::new();
     let mut instruments = Vec::new();
     let mut rejected = Vec::new();
-    if !index.is_file() {
+    let Some(file) = present_expected_path(&index, root)? else {
         return Ok((rulings, instruments, rejected));
-    }
-    check_expected_path(&index, root)?;
-    let payload =
-        crate::validation::strict_json(&read_text(&index)?, &index.display().to_string())?;
+    };
+    let payload = crate::validation::strict_json(&read_text(&file)?, &index.display().to_string())?;
     let sources = payload["sources"]
         .as_array()
         .ok_or_else(|| format!("{}: sources must be a list", index.display()))?;

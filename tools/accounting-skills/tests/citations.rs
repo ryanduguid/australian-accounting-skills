@@ -1188,6 +1188,32 @@ fn an_index_or_skill_folder_linked_outside_the_root_is_refused() {
     }
 }
 
+#[test]
+fn an_optional_file_linked_to_a_folder_outside_the_root_is_refused() {
+    for linked in [
+        "tools/accounting-skills/section-index/exceptions.txt",
+        ".claude/skills/alpha/sources.json",
+    ] {
+        let root = tempfile::tempdir().unwrap();
+        let outside = tempfile::tempdir().unwrap();
+        skill(root.path(), "alpha", "No citation.\n", None);
+        index(root.path(), "C2006A00072", "Fuel Tax Act 2006", &["1"]);
+        check(root.path()).unwrap();
+        // mklink needs native separators.
+        let link = linked
+            .split('/')
+            .fold(root.path().to_path_buf(), |path, part| path.join(part));
+        link_folder(outside.path(), &link);
+        let error = check(root.path()).unwrap_err().to_string();
+        assert!(
+            error.contains("unsafe or missing expected path"),
+            "{linked}: {error}"
+        );
+        #[cfg(windows)]
+        fs::remove_dir(link).unwrap();
+    }
+}
+
 /// A symbolic link on Unix and a junction on Windows, which needs no privilege.
 fn link_folder(target: &Path, link: &Path) {
     #[cfg(unix)]
