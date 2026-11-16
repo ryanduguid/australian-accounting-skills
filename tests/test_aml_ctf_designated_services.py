@@ -168,7 +168,7 @@ class DesignatedServicesTests(unittest.TestCase):
         # Review round 3: item 12(1)(b) bars another designated service in any table, so the date is conditional
         # on every other table, not only item 2 of table 2 and table 5.
         self.assert_sentence(step, r"\b29 July 2026 date as conditional on the AML/CTF compliance officer's view of "
-                                   r"every other table in s 6\b", r"\bitem 2 of table 2 or table 5\b",
+                                   r"every other table in s 6 of the AML/CTF Act\b", r"\bitem 2 of table 2 or table 5\b",
                              r"\bunder any other table\b")
         # Review round 2: s 26F(8) bars commencing a designated service to a customer, in the Act's words.
         self.assert_sentence(step, r"\bmust not commence to provide a designated service to a customer\b",
