@@ -412,7 +412,9 @@ class PracticeReviewStepTests(unittest.TestCase):
         step = workflow_step("au-asic-company-changes", "5a")
         self.assert_sentence(step, r"\bSection 256B\(1\) of the Corporations Act\b", r"\bfair and reasonable\b",
                              r"\bnot to materially prejudice the company's ability to pay its creditors\b",
-                             r"\bdoes not apply to a cancellation of a share for no consideration\b")
+                             r"\bdoes not apply to a cancellation of a share for no consideration\b",
+                             r"\bpartly-paid share is taken to be for consideration \(section 256B\(1A\) of the "
+                             r"Corporations Act\)")
         self.assert_sentence(step, r"\brecord that the directors considered it, which directors, the date and the "
                              r"information they used\b", r"\bleave the conclusion to them\b",
                              DO_NOT + r"decide either condition or draft a finding on it\b")
@@ -432,7 +434,8 @@ class PracticeReviewStepTests(unittest.TestCase):
                              r"\bsection 256C\(2\) of the Corporations Act\b")
         # Single holder, all members signing, and short notice with the agreement s 249H(2)(b) sets.
         self.assert_sentence(step, r"\bone member\b", r"\bsection 249B of the Corporations Act\b",
-                             r"\bno notice of meeting, no meeting and no lodgement before the resolution is passed\b")
+                             r"\bno notice of meeting, no meeting and no lodgement before the resolution is passed\b",
+                             r"\blodging it with the resolution passed \(section 249B\(2\) of the Corporations Act\)")
         self.assert_sentence(step, r"\bevery member entitled to vote signs \(section 249A of the Corporations Act\)",
                              r"\bsection 249A\(5\) of the Corporations Act\b")
         self.assert_sentence(step, r"\bat least 21 days' notice\b", r"\bsection 249H\(1\) of the Corporations Act\b",
@@ -454,8 +457,13 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(step, r"\bwithin 28 days after reducing the share capital\b",
                              r"\brecord each period with its source and diary the earlier\b")
         self.assert_sentence(step, r"`au-capital-gains`")
-        self.assert_sentence(step, r"\bdividend for income tax is not covered by any skill in this pack\b",
-                             r"\bquestion for the tax adviser\b")
+        # au-franking-account step 8 screens a capital reduction, so the step routes there rather than
+        # saying no skill covers it; the dividend question itself stays with the tax adviser.
+        self.assert_sentence(step, r"`au-franking-account` step 8\b", r"\bhands it to a specialist\b")
+        self.assert_sentence(step, r"\bno skill in this pack decides whether any part of a reduction is a dividend "
+                                   r"for income tax\b", r"\bquestion for the tax adviser\b")
+        self.assertIn("Treat a capital return or capital reduction only as a screen",
+                      workflow_step("au-franking-account", 8))
         self.assert_pending(
             "au-asic-company-changes",
             "https://www.asic.gov.au/for-business-and-companies/companies/company-share-and-shareholder-rules-and-changes/reduction-in-share-capital",
