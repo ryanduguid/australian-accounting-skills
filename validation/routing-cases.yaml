@@ -351,6 +351,10 @@
   skill: au-aml-ctf-client-coverage
   not: [au-client-acceptance, au-tax-agent-obligations]
   prompt: Our practice has 240 active clients and a spreadsheet recording the identity checks we ran under the anti-money laundering rules. Match the 2 lists and show which clients have no check, an incomplete check or an overdue one, including the beneficial owners of our company and trust clients.
+- id: practice-designated-services
+  skill: au-aml-ctf-designated-services
+  not: [au-aml-ctf-client-coverage, au-tax-agent-obligations]
+  prompt: We do tax returns, set up companies and trusts, pay some clients' bills from our office account and let a few companies use our address as their registered office. Which of these bring us under the anti-money laundering laws, and what would we then have to do?
 - id: new-company-registrations
   skill: au-business-formation
   not: [au-asic-company-changes, au-gst-registration-review]
