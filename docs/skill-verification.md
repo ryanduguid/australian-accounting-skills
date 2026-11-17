@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 108 skills, 751 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 108 skills, 752 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -105,7 +105,7 @@ Totals: 108 skills, 751 indexed primary sources of which 341 have a recorded hum
 | [`contracting-exports`](../.claude/skills/contracting-exports/SKILL.md) | exempt | none | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md) | [14](../.claude/skills/contractor-super-tpar/sources.json) | 2026-09-30 (3 of 14) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`div7a-compliance`](../.claude/skills/div7a-compliance/SKILL.md) | [4](../.claude/skills/div7a-compliance/sources.json) | none (0 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | [7](../.claude/skills/fbt-annual-workflow/sources.json) | none (0 of 7) | 0 | 0 | 3 | 1 | 0 | 0 |
+| [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | [8](../.claude/skills/fbt-annual-workflow/sources.json) | none (0 of 8) | 0 | 0 | 3 | 1 | 0 | 0 |
 | [`financial-modelling`](../.claude/skills/financial-modelling/SKILL.md) | exempt | none | 0 | 0 | 3 | 1 | 0 | 0 |
 | [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) | [12](../.claude/skills/fuel-tax-credits/sources.json) | 2026-09-30 (2 of 12) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`marketplace-settlements`](../.claude/skills/marketplace-settlements/SKILL.md) | [3](../.claude/skills/marketplace-settlements/sources.json) | none (0 of 3) | 1 | 0 | 3 | 0 | 0 | 0 |
