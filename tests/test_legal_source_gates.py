@@ -343,6 +343,44 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
+    def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
+        text = " ".join(skill_text("fbt-annual-workflow").split())
+        revision = "e18d60b0df6ef6e9a4170b3f0d8c87957a2fad9d"
+        url = f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/australian-tax-calculators"
+
+        self.assertIn(url, text)
+        records = json.loads((SKILLS / "fbt-annual-workflow" / "sources.json").read_text(encoding="utf-8"))["sources"]
+        record = next((record for record in records if record["url"] == url), {})
+        self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
+        # The classifier is on main, not in a release, so installers build the pinned commit.
+        self.assertIn(
+            f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} australian-tax-calculators",
+            text,
+        )
+        self.assertIn("must show `australian-tax-calculators v1.0.0` with that commit in its source", text)
+        self.assertIn("never one found on `PATH`", text)
+        self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
+        # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
+        self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
+        self.assertIn("shows the minor benefits exemption only as possible", text)
+        self.assertIn("Carry each undetermined line or class and each possible minor benefit to the reviewer", text)
+        self.assertIn("record the refusal and its code as an open item, and do not change the facts to get past it", text)
+        self.assertIn("Send only the line facts above, amounts and head counts, never employee names or identifiers", text)
+        # The classifier's scope also requires GST registration and facts the operator must establish.
+        self.assertIn("Where the employer is registered for GST and not exempt from income tax", text)
+        self.assertIn("set `scope_confirmed` only once each of those and each line's facts are evidenced", text)
+        self.assertIn("every attendee on a `travel_meal` line is travelling for work", text)
+        self.assertIn("carry the affected lines to the reviewer unclassified", text)
+        # Review round 1: a plain refusal prints no code; the 12 week register needs its percentage; a
+        # reimbursed employee's share must be its own line, or the benefit type stays composite.
+        self.assertIn("pass `--refusal-json` after the command so a refusal (exit 2) prints its code", text)
+        self.assertIn("`income_tax_register_percentage` where that method is `12_week_register`", text)
+        self.assertIn("give the reimbursed employee's share as its own classifier line", text)
+        self.assertIn("never as the reviewer's decision on a position", text)
+        # Review round 3: a remote calculator also needs fabricated or firm-approved inputs (shared rule 7).
+        self.assertIn("explicitly permitted that call for this question, on fabricated or firm-approved inputs", text)
+        self.assertIn("Without the classifier, classify each line from the primary sources", text)
+
     def test_aml_coverage_routes_firm_address_matches_to_the_compliance_officer(self) -> None:
         text = skill_text("au-aml-ctf-client-coverage")
 

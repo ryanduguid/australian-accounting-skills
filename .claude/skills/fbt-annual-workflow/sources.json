@@ -106,6 +106,22 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators entertainment classifier",
+      "url": "https://github.com/ryanduguid/australian-accounting/tree/e18d60b0df6ef6e9a4170b3f0d8c87957a2fad9d/packages/australian-tax-calculators",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "An agent read the pinned commit's README and the classifier's source on 18 November 2026. The classifier is unreleased; the pinned commit cannot change. It classifies the facts it is given and decides no position. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/tree/e18d60b0df6ef6e9a4170b3f0d8c87957a2fad9d/packages/australian-tax-calculators",
+      "http_status": 200,
+      "fetched_at": "2026-11-18",
+      "review_required_since": "2026-11-18",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

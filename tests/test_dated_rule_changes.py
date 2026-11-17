@@ -42,6 +42,7 @@ LINKED_PROGRAMS = {
     "/packages/xero-trial-balance-export": "xero-trial-balance-export",
     "/tools/xero_aged_receivables.py": "xero_aged_receivables.py",
     "/packages/the-wip-tally": "wip-tally",
+    "/packages/australian-tax-calculators": "australian-tax-calculators",
     "/packages/the-exchequer-tally": "the-exchequer-tally",
     "/packages/solomons-sword": "solomons-sword",
     "/packages/payday-super-checker": "payday-super-check",
