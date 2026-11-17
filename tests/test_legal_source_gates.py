@@ -350,7 +350,8 @@ class LegalSourceGateTests(unittest.TestCase):
 
         self.assertIn(url, text)
         records = json.loads((SKILLS / "fbt-annual-workflow" / "sources.json").read_text(encoding="utf-8"))["sources"]
-        self.assertIn(url, {record["url"] for record in records})
+        record = next((record for record in records if record["url"] == url), {})
+        self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
         # The classifier is on main, not in a release, so installers build the pinned commit.
         self.assertIn(
             f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} australian-tax-calculators",
@@ -364,10 +365,17 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("shows the minor benefits exemption only as possible", text)
         self.assertIn("Carry each undetermined line or class and each possible minor benefit to the reviewer", text)
         self.assertIn("record the refusal and its code as an open item, and do not change the facts to get past it", text)
-        self.assertIn("Send amounts and head counts only, never employee names or identifiers", text)
+        self.assertIn("Send only the line facts above, amounts and head counts, never employee names or identifiers", text)
         # The classifier's scope also requires GST registration and facts the operator must establish.
         self.assertIn("Where the employer is registered for GST and not exempt from income tax", text)
         self.assertIn("set `scope_confirmed` only once each of those and each line's facts are evidenced", text)
+        self.assertIn("every attendee on a `travel_meal` line is travelling for work", text)
+        self.assertIn("carry the affected lines to the reviewer unclassified", text)
+        # Review round 1: a plain refusal prints no code; the 12 week register needs its percentage; a
+        # reimbursed employee's share must be its own line, or the benefit type stays composite.
+        self.assertIn("pass `--refusal-json` after the command so a refusal (exit 2) prints its code", text)
+        self.assertIn("`income_tax_register_percentage` where that method is `12_week_register`", text)
+        self.assertIn("give the reimbursed employee's share as its own classifier line", text)
         self.assertIn("never as the reviewer's decision on a position", text)
         self.assertIn("Without the classifier, classify each line from the primary sources", text)
 
