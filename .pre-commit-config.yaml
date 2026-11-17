@@ -90,7 +90,7 @@ repos:
         entry: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
         language: system
         pass_filenames: false
-        files: ^(\.claude/skills/|tools/accounting-skills/src/)
+        files: ^(\.claude/skills/|tools/accounting-skills/src/|tools/accounting-skills/section-index/)
 
       - id: whitespace
         name: git diff --cached --check
