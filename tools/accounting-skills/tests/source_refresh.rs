@@ -106,8 +106,16 @@ fn published_dates_keep_calendar_boundaries() {
         ("1 Jul 69 00:00 GMT", "1969-07-01"),
         ("31 Dec 9999 00:00 GMT", "9999-12-31"),
         ("1 Jan 10000 00:00 GMT", ""),
+        ("1 Jan x 12:30 -1900", "0100-01-01"),
+        ("1 Jan x 12:30 -2100", ""),
     ] {
         assert_eq!(s::iso_day(value), day, "{value}");
+    }
+}
+#[test]
+fn review_dates_refuse_signed_years() {
+    for value in ["-999-01-01", "-001-12-31", "+999-01-01"] {
+        assert_eq!(s::review_date(&json!({"next_review":value})), "", "{value}");
     }
 }
 #[test]

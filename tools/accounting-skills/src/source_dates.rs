@@ -49,9 +49,9 @@ fn integer(value: &str) -> Option<i64> {
     Some(number.clamp(i64::MIN as i128, i64::MAX as i128) as i64)
 }
 
+/// The date written YYYY-MM-DD, for years 0001 to 9999.
 fn day(date: Date) -> Option<String> {
-    let text = date.strftime("%Y-%m-%d").to_string();
-    (text.len() == 10 && !text.starts_with("0000")).then_some(text)
+    (date.year() > 0).then(|| date.strftime("%Y-%m-%d").to_string())
 }
 fn time(value: &str) -> Option<(u32, u32, u32)> {
     static TIME: LazyLock<Regex> = LazyLock::new(|| {

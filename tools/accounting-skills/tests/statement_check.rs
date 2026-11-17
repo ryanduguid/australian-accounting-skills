@@ -199,6 +199,19 @@ fn dates_must_be_days_written_year_month_day() {
     }
 }
 
+/// Only years 0000 to 9999 are read; a sign is refused.
+#[test]
+fn dates_with_a_signed_year_are_refused() {
+    for bad in ["-020-01-01", "-0020-01-01", "+10000-01-01"] {
+        let mut statement = january("S1");
+        statement["period_start"] = json!(bad);
+        assert_refused(
+            &run(&deposit(vec![statement])),
+            &format!("S1 period_start: {bad:?} is not a date in the form 2026-01-31"),
+        );
+    }
+}
+
 #[test]
 fn periods_that_abut_across_month_and_year_ends_link() {
     for (end, start) in [

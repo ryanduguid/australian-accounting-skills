@@ -135,7 +135,7 @@ fn printed_total(parts: Option<&[String]>, at: &str) -> Result<Option<i128>> {
 fn date(text: &str, at: &str) -> Result<Date> {
     Date::strptime("%Y-%m-%d", text)
         .ok()
-        .filter(|parsed| parsed.strftime("%Y-%m-%d").to_string() == text)
+        .filter(|parsed| parsed.year() >= 0 && parsed.strftime("%Y-%m-%d").to_string() == text)
         .ok_or_else(|| format!("{at}: {text:?} is not a date in the form 2026-01-31").into())
 }
 
