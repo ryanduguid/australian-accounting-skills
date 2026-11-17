@@ -365,6 +365,9 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Carry each undetermined line or class and each possible minor benefit to the reviewer", text)
         self.assertIn("record the refusal and its code as an open item, and do not change the facts to get past it", text)
         self.assertIn("Send amounts and head counts only, never employee names or identifiers", text)
+        # The classifier's scope also requires GST registration and facts the operator must establish.
+        self.assertIn("Where the employer is registered for GST and not exempt from income tax", text)
+        self.assertIn("set `scope_confirmed` only once each of those and each line's facts are evidenced", text)
         self.assertIn("never as the reviewer's decision on a position", text)
         self.assertIn("Without the classifier, classify each line from the primary sources", text)
 
