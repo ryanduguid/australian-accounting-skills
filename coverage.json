@@ -62,9 +62,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-aml-ctf-designated-services-grey-area-services"
+          "au-aml-ctf-designated-services-grey-area-services",
+          "au-aml-ctf-designated-services-incidental-payments-purpose"
         ],
         "only_seeded_case": false,
         "confirmed_pass": [],
