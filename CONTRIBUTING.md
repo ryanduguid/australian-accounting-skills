@@ -37,20 +37,40 @@ cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-c
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
 ```
 
-Those 9 checks are the gates `.github/workflows/verify.yml` runs. Ruff,
-Pyright, ShellCheck and actionlint run in its `lint` job, then 3 verification
-checks run on Python 3.14 and 3.15, and the coverage and citation checks run
-in its `native` job.
+Those 9 checks are the gates `.github/workflows/verify.yml` runs in its
+`lint`, `verify` and `native` jobs. Ruff, Pyright, ShellCheck and actionlint
+run in its `lint` job, then 3 verification checks run on Python 3.14 and 3.15,
+and the coverage and citation checks run in its `native` job.
 `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
-A third job scans with betterleaks the commits a push or pull request adds,
-and the full history weekly or when run by hand.
-That job builds and tests the Rust tooling in `tools/accounting-skills/` and
-compares it with the scripts it ports. Apart from the coverage check, it runs
-in CI only, with no pre-commit hook; its README lists the local commands.
 
-`pip install pre-commit && pre-commit install` runs all of it before the commit
-lands. `.pre-commit-config.yaml` pins Ruff, Pyright, ShellCheck and actionlint
+`verify-gates`, the one check from that workflow that branch protection requires, also needs these jobs to pass:
+
+- The `native` job builds and tests the Rust tooling in `tools/accounting-skills/`,
+  holds its line coverage at the floor of 73% with cargo-llvm-cov 0.9.1, and
+  compares it with the scripts it ports. Apart from the coverage and citation
+  checks, it runs in CI only, with no pre-commit hook; its README lists the
+  local commands. The coverage floor, from `tools/accounting-skills/`:
+
+  ```bash
+  cargo llvm-cov --locked --all-targets --fail-under-lines 73
+  ```
+
+- The `coverage` job holds the unit tests' branch coverage of `scripts/` at 100%:
+
+  ```bash
+  python -m pip install --require-hashes --no-deps --only-binary=coverage,pyyaml --requirement requirements-coverage.txt
+  python -m coverage run --branch --source=scripts -m unittest discover -s tests
+  python -m coverage report --fail-under=100
+  ```
+
+- The `secrets` job scans with betterleaks the commits a push or pull request
+  adds, and the full history weekly or when run by hand.
+- The `shared-conformance` job runs the shared `verify-skills.yml` workflow
+  from `ryanduguid/release-policy`.
+
+`pip install pre-commit && pre-commit install` runs the 9 checks, the betterleaks hook
+and `git diff --cached --check` before the commit lands. `.pre-commit-config.yaml` pins Ruff, Pyright, ShellCheck and actionlint
 to the versions CI installs, so a hook that passes locally cannot fail on a
 version difference.
 

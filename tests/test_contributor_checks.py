@@ -148,6 +148,26 @@ class ContributorCheckTests(unittest.TestCase):
                 for guide in CONTRIBUTOR_GUIDES:
                     self.assertIn(local, (REPOSITORY / guide).read_text(encoding="utf-8"), guide)
 
+    def test_the_citations_hook_runs_when_a_section_list_changes(self) -> None:
+        """check-citations reads the section lists, so a commit touching only one must still run it."""
+        config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
+        hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
+        section_list = next((REPOSITORY / "tools" / "accounting-skills" / "section-index").glob("*.txt"))
+        self.assertRegex(section_list.relative_to(REPOSITORY).as_posix(), hooks["citations"]["files"])
+
+    def test_contributing_gives_the_coverage_floors_verify_gates_needs(self) -> None:
+        """verify-gates needs the native and coverage jobs, so their floors are gates a contributor must meet too."""
+        workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
+        runs = [" ".join(step["run"].split()) for job in ("native", "coverage")
+                for step in workflow["jobs"][job]["steps"] if "run" in step]
+        contributing = (REPOSITORY / "CONTRIBUTING.md").read_text(encoding="utf-8")
+        for floor in ("cargo llvm-cov --locked --all-targets --fail-under-lines 73",
+                      "python -m coverage run --branch --source=scripts -m unittest discover -s tests",
+                      "python -m coverage report --fail-under=100"):
+            with self.subTest(floor=floor):
+                self.assertIn(floor, runs)
+                self.assertIn(floor, contributing)
+
     def test_the_gate_map_describes_gates_that_still_exist(self) -> None:
         """A mapping left behind after a gate is removed is a false assurance."""
         self.assertEqual(set(GATE_HOOKS), set(ci_gate_commands()))
