@@ -4,7 +4,7 @@
 //! Primary-source retrieval, pending candidates and independent human readiness.
 pub use crate::source_content::{body_digest, client_rendered, readable_text};
 use crate::{Result, source_content as content};
-use chrono::{NaiveDate, Utc};
+use jiff::civil::Date;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::{
@@ -152,8 +152,8 @@ pub fn review_date(schedule: &Value) -> String {
     if due.len() == 10
         && due.is_ascii()
         && !due.starts_with("0000-")
-        && NaiveDate::parse_from_str(&due, "%Y-%m-%d")
-            .is_ok_and(|d| d.format("%Y-%m-%d").to_string() == due)
+        && Date::strptime("%Y-%m-%d", &due)
+            .is_ok_and(|d| d.strftime("%Y-%m-%d").to_string() == due)
     {
         due
     } else {
@@ -418,9 +418,9 @@ impl Default for Options {
 }
 fn today(value: &str) -> String {
     if value.is_empty() {
-        chrono::Local::now()
-            .date_naive()
-            .format("%Y-%m-%d")
+        jiff::ZonedDateTime::now()
+            .date()
+            .strftime("%Y-%m-%d")
             .to_string()
     } else {
         value.into()
@@ -631,9 +631,9 @@ pub fn human_readiness(record: &Value, today: &str) -> (String, String) {
     if volatile {
         let due = review_date(&json!({"next_review":field(record,REVERIFY_FIELD)}));
         if let (Ok(d), Ok(c)) = (
-            NaiveDate::parse_from_str(&due, "%Y-%m-%d"),
-            NaiveDate::parse_from_str(&checked, "%Y-%m-%d"),
-        ) && d.signed_duration_since(c).num_days() > 400
+            Date::strptime("%Y-%m-%d", &due),
+            Date::strptime("%Y-%m-%d", &checked),
+        ) && (d - c).get_days() > 400
         {
             return fail(
                 checked,
@@ -979,7 +979,9 @@ pub fn render(report: &Report, write: bool) -> String {
     render_at(
         report,
         write,
-        &Utc::now().format("%Y-%m-%d %H:%M UTC").to_string(),
+        &jiff::Timestamp::now()
+            .strftime("%Y-%m-%d %H:%M UTC")
+            .to_string(),
     )
 }
 pub fn preflight_with(

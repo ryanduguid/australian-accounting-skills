@@ -83,6 +83,49 @@ fn human_dates_refuse_year_zero_even_with_matching_acceptance() {
     }
 }
 #[test]
+fn published_dates_keep_calendar_boundaries() {
+    // Each expected day is what Python's datetime.fromisoformat or email.utils.parsedate_tz gives.
+    for (value, day) in [
+        ("2024-02-29", "2024-02-29"),
+        ("2023-02-29", ""),
+        ("20240229", "2024-02-29"),
+        ("2026-04-31", ""),
+        ("2026-06-30T23:59:59+10:00", "2026-06-30"),
+        ("2026-07-01T00:00:00Z", "2026-07-01"),
+        ("0000-12-31", ""),
+        ("2026-W01-1", "2025-12-29"),
+        ("2020-W53-7", "2021-01-03"),
+        ("2026W537", "2027-01-03"),
+        ("2025-W53", ""),
+        ("0001-W01-1", "0001-01-01"),
+        ("9999-W52-5", "9999-12-31"),
+        ("9999-W52-6", ""),
+        ("Thu, 29 Feb 2024 23:59:59 +1100", "2024-02-29"),
+        ("29 Feb 2023 12:00 GMT", ""),
+        ("30 Jun 26 23:59 GMT", "2026-06-30"),
+        ("1 Jul 69 00:00 GMT", "1969-07-01"),
+        ("31 Dec 9999 00:00 GMT", "9999-12-31"),
+        ("1 Jan 10000 00:00 GMT", ""),
+    ] {
+        assert_eq!(s::iso_day(value), day, "{value}");
+    }
+}
+#[test]
+fn a_volatile_fact_may_be_due_400_days_after_its_check_and_no_later() {
+    // 2024-02-29 to 2025-04-04 is 400 days.
+    let record = |due: &str| {
+        json!({"checked_at":"2024-02-29","fact":"fixture","volatile":true,"reverify_by":due})
+    };
+    assert_eq!(
+        s::human_readiness(&record("2025-04-04"), "2024-03-01"),
+        ("2024-02-29".to_owned(), String::new())
+    );
+    assert_eq!(
+        s::human_readiness(&record("2025-04-05"), "2024-03-01").1,
+        "The volatile fact exceeds the existing 400-day review bound."
+    );
+}
+#[test]
 fn repeated_index_keys_are_refused_at_any_depth() {
     let temp = tempfile::tempdir().unwrap();
     let skills = temp.path().join(".claude/skills");
