@@ -34,6 +34,7 @@ from skill_prose import (
 SKILL = "au-aml-ctf-designated-services"
 REPOSITORY = Path(__file__).resolve().parents[1]
 CARD = REPOSITORY / "validation" / "cases" / f"{SKILL}-grey-area-services.md"
+INCIDENTAL_CARD = REPOSITORY / "validation" / "cases" / f"{SKILL}-incidental-payments-purpose.md"
 AUSTRAC_PDS = "https://www.austrac.gov.au/new-austrac/designated-services-newly-regulated-entities/professional-designated-services"
 AMENDING_ACT = "https://www.legislation.gov.au/C2024A00110/asmade"
 TRANSITIONAL_RULES = "https://www.legislation.gov.au/F2026L00393/latest"
@@ -134,14 +135,30 @@ class DesignatedServicesTests(unittest.TestCase):
                              r"\bname that element as ruled out, labelled as AUSTRAC's view\b")
         self.assert_sentence(item_3_text, r"\bmanaging is less likely, not ruled out\b", r"\bstep 6\b")
         self.assertNotRegex(item_3_text, r"\bonce the facts establish them\b")
+
+    def test_the_second_limb_of_s_6_5c_b_holds_item_3_open_once_the_first_is_met(self) -> None:
         # Review round 3: s 6(5C)(b) has a second limb, payments reasonably incidental to a service that is not
         # designated, and a result resting on it stays open until both limbs are recorded as met.
+        item_3 = re.search(r"- Item 3: .*", workflow_step(SKILL, 4))
+        self.assertIsNotNone(item_3)
+        item_3_text = item_3.group(0) if item_3 else ""
         self.assert_sentence(item_3_text, r"\bs 6\(5C\)\(b\)\(ii\) of the AML/CTF Act\b",
                              r"\bwhich service that is not a designated service the payments support\b",
                              r"\bonly for payments reasonably incidental to that service\b")
         self.assert_sentence(item_3_text, r"\bde facto bank account\b", r"\blabelled as AUSTRAC's view\b")
         self.assert_sentence(item_3_text, r"\bUntil both limbs of s 6\(5C\)\(b\) of the AML/CTF Act are recorded as "
                                           r"met\b", r"\bstays `UNDETERMINED`")
+        # Review round 4: the grey-area card's S2 defeats the first limb, so a separate card meets it and leaves
+        # only the second open.
+        raw = INCIDENTAL_CARD.read_text(encoding="utf-8")
+        self.assertIn(f"  - {SKILL}\n", raw)
+        card = " ".join(raw.split())
+        self.assertIn("The AML/CTF compliance officer has recorded that the practice provides no designated service "
+                      "in any table in s 6 of the AML/CTF Act other than item 3 of table 6.", card)
+        self.assertIn("Which service that is not a designated service, if any, the S2 payments support", card)
+        self.assertIn("Record S2 as undetermined: name the missing fact on which service that is not a designated "
+                      "service the payments support", card)
+        self.assertIn("Do not clear S2 under s 6(5C)(b) on the first limb alone", card)
 
     def test_each_service_gets_one_of_3_results_and_a_grey_area_is_not_decided(self) -> None:
         step = workflow_step(SKILL, 6)
