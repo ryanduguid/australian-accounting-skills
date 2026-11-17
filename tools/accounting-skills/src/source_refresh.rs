@@ -152,8 +152,7 @@ pub fn review_date(schedule: &Value) -> String {
     if due.len() == 10
         && due.is_ascii()
         && !due.starts_with("0000-")
-        && Date::strptime("%Y-%m-%d", &due)
-            .is_ok_and(|d| d.strftime("%Y-%m-%d").to_string() == due)
+        && Date::strptime("%Y-%m-%d", &due).is_ok_and(|d| d.strftime("%Y-%m-%d").to_string() == due)
     {
         due
     } else {

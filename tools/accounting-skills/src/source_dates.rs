@@ -1,6 +1,6 @@
 //! Day extraction follows datetime.fromisoformat and email._parseaddr (PSF-2.0).
-use jiff::civil::{Date, ISOWeekDate, Weekday};
 use fancy_regex::Regex;
+use jiff::civil::{Date, ISOWeekDate, Weekday};
 use std::sync::LazyLock;
 
 fn digit(c: char) -> Option<u8> {

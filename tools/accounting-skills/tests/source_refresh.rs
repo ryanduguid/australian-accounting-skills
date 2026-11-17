@@ -113,9 +113,7 @@ fn published_dates_keep_calendar_boundaries() {
 #[test]
 fn a_volatile_fact_may_be_due_400_days_after_its_check_and_no_later() {
     // 2024-02-29 to 2025-04-04 is 400 days.
-    let record = |due: &str| {
-        json!({"checked_at":"2024-02-29","fact":"fixture","volatile":true,"reverify_by":due})
-    };
+    let record = |due: &str| json!({"checked_at":"2024-02-29","fact":"fixture","volatile":true,"reverify_by":due});
     assert_eq!(
         s::human_readiness(&record("2025-04-04"), "2024-03-01"),
         ("2024-02-29".to_owned(), String::new())
