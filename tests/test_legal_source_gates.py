@@ -377,6 +377,8 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("`income_tax_register_percentage` where that method is `12_week_register`", text)
         self.assertIn("give the reimbursed employee's share as its own classifier line", text)
         self.assertIn("never as the reviewer's decision on a position", text)
+        # Review round 3: a remote calculator also needs fabricated or firm-approved inputs (shared rule 7).
+        self.assertIn("explicitly permitted that call for this question, on fabricated or firm-approved inputs", text)
         self.assertIn("Without the classifier, classify each line from the primary sources", text)
 
     def test_aml_coverage_routes_firm_address_matches_to_the_compliance_officer(self) -> None:
