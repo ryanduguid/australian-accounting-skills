@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 237 cards in `cases/` test workflow quality, provenance and restraint.
+The 239 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -94,6 +94,7 @@ law claim, unverified source or guess.
 | [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
 | [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
 | [A service list with a settled service, a grey area and a name with no steps](cases/au-aml-ctf-designated-services-grey-area-services.md) | au-aml-ctf-designated-services |
+| [Client payments with no other designated service but no recorded purpose](cases/au-aml-ctf-designated-services-incidental-payments-purpose.md) | au-aml-ctf-designated-services |
 | [A vendor's complete status without evidence for each beneficial owner](cases/au-aml-ctf-client-coverage-beneficial-owner-evidence.md) | au-aml-ctf-client-coverage |
 | [Known beneficial owners under a recorded Rules exception](cases/au-aml-ctf-client-coverage-recorded-exception-scope.md) | au-aml-ctf-client-coverage |
 | [A simplified due diligence basis resting on contradictory KYC](cases/au-aml-ctf-client-coverage-contradictory-kyc-basis.md) | au-aml-ctf-client-coverage |
