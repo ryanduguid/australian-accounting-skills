@@ -343,6 +343,31 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
+    def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
+        text = " ".join(skill_text("fbt-annual-workflow").split())
+        revision = "e18d60b0df6ef6e9a4170b3f0d8c87957a2fad9d"
+        url = f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/australian-tax-calculators"
+
+        self.assertIn(url, text)
+        records = json.loads((SKILLS / "fbt-annual-workflow" / "sources.json").read_text(encoding="utf-8"))["sources"]
+        self.assertIn(url, {record["url"] for record in records})
+        # The classifier is on main, not in a release, so installers build the pinned commit.
+        self.assertIn(
+            f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} australian-tax-calculators",
+            text,
+        )
+        self.assertIn("must show `australian-tax-calculators v1.0.0` with that commit in its source", text)
+        self.assertIn("never one found on `PATH`", text)
+        self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
+        # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
+        self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
+        self.assertIn("shows the minor benefits exemption only as possible", text)
+        self.assertIn("Carry each undetermined line or class and each possible minor benefit to the reviewer", text)
+        self.assertIn("record the refusal and its code as an open item, and do not change the facts to get past it", text)
+        self.assertIn("Send amounts and head counts only, never employee names or identifiers", text)
+        self.assertIn("never as the reviewer's decision on a position", text)
+        self.assertIn("Without the classifier, classify each line from the primary sources", text)
+
     def test_aml_coverage_routes_firm_address_matches_to_the_compliance_officer(self) -> None:
         text = skill_text("au-aml-ctf-client-coverage")
 
