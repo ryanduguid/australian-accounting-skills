@@ -1068,6 +1068,44 @@ fn a_queensland_section_list_checks_its_acts_sections_and_records() {
     assert_eq!(run(root.path()).0, 0);
 }
 
+/// A section list's dates are real days with an unsigned year and no whitespace.
+#[test]
+fn section_list_dates_are_real_days_with_an_unsigned_year() {
+    let refusal = "in-force-from must be a date written YYYY-MM-DD";
+    for (date, refused) in [
+        ("2024-02-29", false),
+        ("2023-02-29", true),
+        ("2026-06-31", true),
+        ("-099-01-01", true),
+        ("+099-01-01", true),
+        // chrono skipped any whitespace before a number; these are 10 bytes long.
+        ("\u{a0}2026-1-1", true),
+        ("\u{b}2026-01-1", true),
+    ] {
+        let root = tempfile::tempdir().unwrap();
+        skill(
+            root.path(),
+            "alpha",
+            "s 41-5 of the Fuel Tax Act 2006.\n",
+            Some(FUEL),
+        );
+        let text = index_text("C2006A00072", "Fuel Tax Act 2006", &["41-5"]);
+        let folder = root.path().join("tools/accounting-skills/section-index");
+        fs::create_dir_all(&folder).unwrap();
+        fs::write(
+            folder.join("C2006A00072.txt"),
+            text.replace("2099-01-01", date),
+        )
+        .unwrap();
+        let result = check(root.path()).map(|_| ()).map_err(|e| e.to_string());
+        assert_eq!(
+            result.is_err_and(|e| e.ends_with(refusal)),
+            refused,
+            "{date}"
+        );
+    }
+}
+
 #[test]
 fn each_malformed_section_list_or_exception_is_refused() {
     let valid = index_text("C2006A00072", "Fuel Tax Act 2006", &["41-5"]);

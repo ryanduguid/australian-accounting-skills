@@ -1,6 +1,6 @@
 //! Day extraction follows datetime.fromisoformat and email._parseaddr (PSF-2.0).
-use chrono::{NaiveDate, Weekday};
 use fancy_regex::Regex;
+use jiff::civil::{Date, ISOWeekDate, Weekday};
 use std::sync::LazyLock;
 
 fn digit(c: char) -> Option<u8> {
@@ -49,9 +49,9 @@ fn integer(value: &str) -> Option<i64> {
     Some(number.clamp(i64::MIN as i128, i64::MAX as i128) as i64)
 }
 
-fn day(date: NaiveDate) -> Option<String> {
-    let text = date.format("%Y-%m-%d").to_string();
-    (text.len() == 10 && !text.starts_with("0000")).then_some(text)
+/// The date written YYYY-MM-DD, for years 0001 to 9999.
+fn day(date: Date) -> Option<String> {
+    (date.year() > 0).then(|| date.strftime("%Y-%m-%d").to_string())
 }
 fn time(value: &str) -> Option<(u32, u32, u32)> {
     static TIME: LazyLock<Regex> = LazyLock::new(|| {
@@ -88,24 +88,24 @@ fn iso(value: &str) -> Option<String> {
         let year = pieces[..4].parse().ok()?;
         let week = pieces[5..7].parse().ok()?;
         let weekday = match pieces.as_bytes().get(7).copied().unwrap_or(b'1') {
-            b'1' => Weekday::Mon,
-            b'2' => Weekday::Tue,
-            b'3' => Weekday::Wed,
-            b'4' => Weekday::Thu,
-            b'5' => Weekday::Fri,
-            b'6' => Weekday::Sat,
-            b'7' => Weekday::Sun,
+            b'1' => Weekday::Monday,
+            b'2' => Weekday::Tuesday,
+            b'3' => Weekday::Wednesday,
+            b'4' => Weekday::Thursday,
+            b'5' => Weekday::Friday,
+            b'6' => Weekday::Saturday,
+            b'7' => Weekday::Sunday,
             _ => return None,
         };
-        NaiveDate::from_isoywd_opt(year, week, weekday)?
+        ISOWeekDate::new(year, week, weekday).ok()?.date()
     } else {
-        NaiveDate::parse_from_str(
-            date,
+        Date::strptime(
             if date.contains('-') {
                 "%Y-%m-%d"
             } else {
                 "%Y%m%d"
             },
+            date,
         )
         .ok()?
     };
@@ -202,7 +202,7 @@ fn email(value: &str) -> Option<String> {
         mm = dd.to_lowercase();
         dd = old;
     }
-    let month = (months.iter().position(|&m| m == mm)? % 12 + 1) as u32;
+    let month = (months.iter().position(|&m| m == mm)? % 12 + 1) as i8;
     dd = dd.strip_suffix(',').unwrap_or(&dd).into();
     if yy.find(':').is_some_and(|i| i > 0) {
         std::mem::swap(&mut yy, &mut tm);
@@ -236,11 +236,7 @@ fn email(value: &str) -> Option<String> {
     if year < 100 {
         year += if year > 68 { 1900 } else { 2000 };
     }
-    day(NaiveDate::from_ymd_opt(
-        year.try_into().ok()?,
-        month,
-        integer(&dd)?.try_into().ok()?,
-    )?)
+    day(Date::new(year.try_into().ok()?, month, integer(&dd)?.try_into().ok()?).ok()?)
 }
 pub fn iso_day(value: &str) -> String {
     let value = value.trim_matches(super::source_content::space);

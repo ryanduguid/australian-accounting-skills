@@ -172,6 +172,90 @@ fn an_empty_input_is_refused() {
     assert_refused(&run(&deposit(vec![])), "no statements");
 }
 
+/// A statement with no lines, its balance unchanged at 0.00.
+fn empty(id: &str, start: &str, end: &str) -> Value {
+    json!({"id": id, "period_start": start, "period_end": end,
+        "opening": "0.00", "closing": "0.00", "pages": []})
+}
+
+#[test]
+fn dates_must_be_days_written_year_month_day() {
+    for bad in [
+        "2026-1-31",
+        "26-01-31",
+        " 2026-01-31",
+        "+2026-01-31",
+        "2026-01-31T00:00",
+        "2026-02-29",
+        "2026-06-31",
+        "2026-13-01",
+    ] {
+        let mut statement = january("S1");
+        statement["period_end"] = json!(bad);
+        assert_refused(
+            &run(&deposit(vec![statement])),
+            &format!("S1 period_end: {bad:?} is not a date in the form 2026-01-31"),
+        );
+    }
+}
+
+/// Only years 0000 to 9999 are read; a sign is refused.
+#[test]
+fn dates_with_a_signed_year_are_refused() {
+    for bad in ["-020-01-01", "-0020-01-01", "+10000-01-01"] {
+        let mut statement = january("S1");
+        statement["period_start"] = json!(bad);
+        assert_refused(
+            &run(&deposit(vec![statement])),
+            &format!("S1 period_start: {bad:?} is not a date in the form 2026-01-31"),
+        );
+    }
+}
+
+#[test]
+fn periods_that_abut_across_month_and_year_ends_link() {
+    for (end, start) in [
+        ("2024-02-29", "2024-03-01"),
+        ("2026-02-28", "2026-03-01"),
+        ("2026-04-30", "2026-05-01"),
+        ("2026-06-30", "2026-07-01"),
+        ("2026-12-31", "2027-01-01"),
+    ] {
+        let run = run(&deposit(vec![
+            empty("S1", "2000-01-01", end),
+            empty("S2", start, "2099-12-31"),
+        ]));
+        assert_eq!(run.code, Some(0), "{end}: {:?}", run.stdout);
+    }
+    let run = run(&deposit(vec![
+        empty("S1", "2024-02-01", "2024-02-28"),
+        empty("S2", "2024-03-01", "2024-03-31"),
+    ]));
+    assert_eq!(
+        run.stdout,
+        [
+            "BREAK S1 to S2: gap, S1 ends 2024-02-28 and S2 starts 2024-03-01",
+            "FAIL 1 breaks",
+        ]
+    );
+}
+
+#[test]
+fn a_period_ending_on_the_last_date_has_no_gap_after_it() {
+    let run = run(&deposit(vec![
+        empty("S1", "9999-12-01", "9999-12-31"),
+        empty("S2", "9999-12-31", "9999-12-31"),
+    ]));
+    assert_eq!(
+        run.stdout,
+        [
+            "BREAK S1 and S2: one period lies wholly within the other",
+            "OVERLAP S1 and S2: 9999-12-31 to 9999-12-31",
+            "FAIL 1 breaks",
+        ]
+    );
+}
+
 #[test]
 fn a_repeated_statement_is_refused_or_broken() {
     assert_refused(
