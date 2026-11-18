@@ -98,6 +98,10 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
             with self.subTest(provision=provision, item=item):
                 self.assert_sentence(step, rf"\b{provision} of the AML/CTF Rules\b", rf"\b{item}\b")
         self.assert_sentence(step, r"\bList each item missing for the customer's type as a missing element\b")
+        # Finisher review: s 6-2(4) asks for the nature of the business, and an individual has no list in the Rules.
+        self.assert_sentence(step, r"\bs 6-2 of the AML/CTF Rules\b", r"\bnature of its business or operations\b")
+        self.assert_sentence(step, r"\bindividual not in business\b", r"\bsets no minimum list\b",
+                             r"\bs 28\(3\)\(a\) of the AML/CTF Act\b")
 
     def test_beneficial_owners_reuse_the_owner_by_owner_test(self) -> None:
         step = workflow_step(SKILL, 2)
@@ -116,7 +120,10 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                                    r"does not apply\b",
                              r"\(s 31 of the AML/CTF Act\)")
         self.assert_sentence(step, r"\beach circumstance in s 32 of the AML/CTF Act\b", r"\bquestion for the AML/CTF "
-                                   r"compliance officer on enhanced due diligence\b")
+                                   r"compliance officer on enhanced due diligence\b", r"\(s 6-20 of the AML/CTF Rules\)")
+        self.assert_sentence(step, r"\bs 6-16 of the AML/CTF Rules requires the practice's AML/CTF policies to deal with\b")
+        self.assert_sentence(step, r"\bs 32\(a\), \(b\) or \(d\) of the AML/CTF Act\b", r"\bs 6-21 of the AML/CTF Rules\b",
+                             r"\bsource of the client's wealth and funds\b")
         self.assert_sentence(step, r"\bs 6-23 of the AML/CTF Rules adds the source of that person's wealth and funds\b",
                              r"\bs 5-5\(1\) of the AML/CTF Rules\b", r"\bsenior manager's approval before the service "
                                                                      r"starts\b")
@@ -140,6 +147,10 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         self.assert_sentence(step, r"\bs 6-32 of the AML/CTF Rules\b", DO_NOT + r"apply s 6-12 to it\b")
         self.assert_sentence(step, r"\bs 7 of the \*Anti-Money Laundering and Counter-Terrorism Financing Transitional "
                                    r"Rules 2026\*", r"\bceases to have effect on 31 March 2029\b")
+        # Finisher review: a client on the transitional procedure is outside s 6-12 (Transitional Rules s 7(4), s 8(2)).
+        self.assert_sentence(step, r"\bs 7\(4\) of those Transitional Rules disapplies\b",
+                             r"\bs 6-12 of the AML/CTF Rules does not set the conditions\b",
+                             r"\bs 33 of the AML/CTF Act as in force on 30 March 2026\b")
 
     def test_reliance_covers_collection_and_verification_only(self) -> None:
         step = workflow_step(SKILL, 5)
@@ -147,6 +158,8 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                                    r"s 28\(3\)\(c\) or \(d\)", r"\bPart 10 is excluded\b")
         self.assert_sentence(step, r"\bstill identifies the client's ML/TF risk itself \(s 28\(3\)\(b\)",
                              r"\benhanced due diligence where s 32 requires it\b", r"\bkeeps its own records\b")
+        # Finisher review: this view is on the case-by-case and arrangement pages, not the overview.
+        self.assert_sentence(step, re.escape(RELIANCE + "reliance-case-case-basis"), r"\bmay not match the practice's own\b")
         self.assert_sentence(step, r"\brecord each condition as " + STATUSES)
 
     def test_an_agent_or_provider_is_not_reliance(self) -> None:
@@ -184,7 +197,7 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         self.assertIsNotNone(case)
         text = case.group(0) if case else ""
         self.assert_sentence(text, r"\bs 6-31 of the AML/CTF Rules\b", r"\bdocumented reasons\b",
-                             r"\(s 6-31\(e\) of the AML/CTF Rules\)")
+                             r"\(s 6-31\(e\) of the AML/CTF Rules\)", r"\(s 38\(d\) of the AML/CTF Act\)")
         self.assert_sentence(text, r"\bAUSTRAC enrolment of the other person shows its status only, not the other "
                                    r"conditions\b")
         self.assert_sentence(text, r"\bWhere any reason is not documented, list it as missing\b")
