@@ -10,6 +10,7 @@ import yaml
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 VERIFY_WORKFLOW = REPOSITORY / ".github" / "workflows" / "verify.yml"
+SECRETS_WORKFLOW = REPOSITORY / ".github" / "workflows" / "secrets.yml"
 PRE_COMMIT_CONFIG = REPOSITORY / ".pre-commit-config.yaml"
 CONTRIBUTOR_GUIDES = ("AGENTS.md", "CONTRIBUTING.md")
 
@@ -180,13 +181,13 @@ class ContributorCheckTests(unittest.TestCase):
         alone, and so passes a commit carrying a client's TFN. In CI the shared
         action names the config; a step beside it could scan without.
         """
-        workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
+        workflow = yaml.safe_load(SECRETS_WORKFLOW.read_text(encoding="utf-8"))
         steps = workflow["jobs"]["secrets"]["steps"]
         self.assertEqual(len(steps), 1, "the shared action is the whole secrets job")
         self.assertRegex(
             steps[0].get("uses", ""),
             r"^ryanduguid/release-policy/\.github/actions/secrets-scan@[0-9a-f]{40}$",
-            "verify.yml must run the shared secrets scan at a full commit",
+            "secrets.yml must run the shared secrets scan at a full commit",
         )
         self.assertNotIn("with", steps[0], "the shared secrets scan takes no inputs")
         self.assertIn(
