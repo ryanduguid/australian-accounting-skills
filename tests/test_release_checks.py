@@ -13,7 +13,7 @@ REQUIRED = {
     "release.yml": [
         ".github/workflows/no-ai-attribution.yml: Attribution policy / Attribution policy runner",
         ".github/workflows/verify.yml: lint",
-        ".github/workflows/verify.yml: secrets",
+        ".github/workflows/secrets.yml: secrets",
         ".github/workflows/verify.yml: shared conformance / verify skill-pack consumer",
         ".github/workflows/verify.yml: verify (3.14)",
         ".github/workflows/verify.yml: verify-gates",

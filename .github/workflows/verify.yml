@@ -250,20 +250,10 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  secrets:
-    name: secrets
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      # The whole scan lives in the shared action: it checks out the full
-      # history, installs a pinned betterleaks and scans with the shared rules
-      # and this repository's .gitleaks.toml. A push scans the commits it adds
-      # and a scheduled or manual run the full history. A pull request is
-      # scanned twice, the second time with the base's .gitleaks.toml and
-      # .gitleaksignore and with inline allow comments ignored, so it cannot
-      # allowlist what it adds.
-      - name: Scan for secrets and client identifiers
-        uses: ryanduguid/release-policy/.github/actions/secrets-scan@d7039efe6d8c441f1f213c674902909e80535599 # v0.5.0
+# The secrets scan runs in secrets.yml, on pull_request_target for pull
+# requests, so a pull request cannot edit its own scan away. Main requires
+# its secrets check directly.
+# removed-jobs: secrets
 
   shared-conformance:
     name: shared conformance
@@ -362,7 +352,7 @@ jobs:
     # unless every job it needs succeeded, when a job in this file is missing
     # from needs, or when a pull request removes a job without adding a
     # "# removed-jobs: <job>" comment to this file.
-    needs: [lint, verify, native, secrets, shared-conformance, coverage]
+    needs: [lint, verify, native, shared-conformance, coverage]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
