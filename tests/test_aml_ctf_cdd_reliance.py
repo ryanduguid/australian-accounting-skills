@@ -206,6 +206,10 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         step = workflow_step(SKILL, 5)
         self.assert_sentence(step, r"\bs 6-27 of the AML/CTF Rules\b", r"\bss 107, 108, 111 and 114 of the AML/CTF Act\b")
         self.assert_sentence(step, r"\bongoing due diligence under s 30 of the AML/CTF Act still applies\b")
+        # Finisher review: a prior practice may have kept no Part 10 record, and s 6-28 covers its pre-commencement clients.
+        self.assert_sentence(step, r"\bpre-commencement customer of the prior entity\b", r"\bs 6-28 of the AML/CTF Rules\b")
+        self.assert_sentence(step, r"\bkept no record under one of those sections, list it as missing\b",
+                             r"\bwhether s 6-27 applies is for the AML/CTF compliance officer\b")
         self.assert_sentence(step, r"\bWhether reliance is appropriate\b", r"\bare for the AML/CTF compliance officer and "
                                                                           r"a senior manager\b")
 
