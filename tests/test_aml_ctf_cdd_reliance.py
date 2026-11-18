@@ -65,14 +65,14 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         self.assert_sentence(step, r"\bno later compilation of the Act or the AML/CTF Rules\b",
                              r"\blisted no open consultation\b", r"\bclosed on 20 February 2026\b")
         self.assert_sentence(step, r"\bThis skill cites no draft instrument\b")
-        self.assert_sentence(step, r"\bs 28\(2\)\(g\) of the AML/CTF Act\b", r"\bs 29\(a\), \(c\)\(ii\) and \(f\)",
+        self.assert_sentence(step, r"\bs 28\(2\)\(g\) of the AML/CTF Act\b", r"\bs 29\(a\), s 29\(c\)\(ii\) and s 29\(f\)",
                              r"\bss 37A\(1\)\(b\), 37A\(2\)\(e\), 37B\(1\) and 38\(e\)", r"\bopen the Rules in force\b")
 
     def test_a_pre_commencement_customer_is_routed_not_decided(self) -> None:
         step = workflow_step(SKILL, 1)
         self.assert_sentence(step, r"\bs 36\(1\)\(b\) of the AML/CTF Act\b", r"\bas at the start of 1 July 2026\b")
         self.assert_sentence(step, r"\bSection 36\(3\) of the AML/CTF Act disapplies s 28\(1\)",
-                             r"\bs 36\(4\) applies it again\b", r"\bsuspicious matter reporting obligation\b",
+                             r"\bs 36\(4\) of the AML/CTF Act applies it again\b", r"\bsuspicious matter reporting obligation\b",
                              r"\bmedium or high\b")
         self.assert_sentence(step, r"\bWhether the client is a pre-commencement customer is for that officer\b")
 
@@ -112,7 +112,8 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                              r"\bbefore the service starts\b")
         self.assert_sentence(step, r"\bwhere no rating is recorded, list it as missing\b",
                              DO_NOT + r"assign or estimate one\b")
-        self.assert_sentence(step, r"\bSimplified measures are available only where the risk is low, s 32 does not apply\b",
+        self.assert_sentence(step, r"\bSimplified measures are available only where the risk is low, s 32 of the AML/CTF Act "
+                                   r"does not apply\b",
                              r"\(s 31 of the AML/CTF Act\)")
         self.assert_sentence(step, r"\beach circumstance in s 32 of the AML/CTF Act\b", r"\bquestion for the AML/CTF "
                                    r"compliance officer on enhanced due diligence\b")
@@ -128,7 +129,7 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                              r"\bessential to avoid interrupting the ordinary course of business\b",
                              r"\badditional risk is low\b", r"\bas soon as reasonably practicable\b")
         self.assert_sentence(step, r"\bs 6-12 of the AML/CTF Rules requires, before the service starts\b",
-                             r"\bs 28\(2\)\(a\) and \(c\) established\b",
+                             r"\bs 28\(2\)\(a\) and \(c\) of the AML/CTF Act established\b",
                              r"\bmoney, property or virtual assets\b", r"\bending 20 business days after the service "
                                                                        r"starts\b")
         # The day count needs the practice's business days; it is never worked out from memory.
@@ -164,7 +165,8 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                              r"\bsenior manager approved it before the practice entered into it \(s 5-5\(1\)\(f\)")
         for condition in (r"reporting entity or a person regulated under foreign laws giving effect to the FATF "
                           r"Recommendations", r"measures to comply", r"appropriate to the practice's ML/TF risks",
-                          r"obtain all the KYC information collected before the service starts or within the s 29 period",
+                          r"obtain all the KYC information collected before the service starts or within the period under s 29 of "
+                          r"the AML/CTF Act",
                           r"copies of the verification data immediately or as soon as practicable on request",
                           r"documents each party's responsibilities, including record keeping"):
             with self.subTest(condition=condition):
@@ -181,7 +183,8 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         case = re.search(r"- Case by case \(s 38 of the AML/CTF Act\): .*?(?= - Client taken over)", step)
         self.assertIsNotNone(case)
         text = case.group(0) if case else ""
-        self.assert_sentence(text, r"\bs 6-31 of the AML/CTF Rules\b", r"\bdocumented reasons\b", r"\(s 6-31\(e\)\)")
+        self.assert_sentence(text, r"\bs 6-31 of the AML/CTF Rules\b", r"\bdocumented reasons\b",
+                             r"\(s 6-31\(e\) of the AML/CTF Rules\)")
         self.assert_sentence(text, r"\bAUSTRAC enrolment of the other person shows its status only, not the other "
                                    r"conditions\b")
         self.assert_sentence(text, r"\bWhere any reason is not documented, list it as missing\b")
