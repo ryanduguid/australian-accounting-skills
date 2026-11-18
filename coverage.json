@@ -1093,7 +1093,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_farm_land_and_succession.py"
+          "test_farm_land_and_succession.py",
+          "test_gst_margin_scheme.py"
         ],
         "inventory": []
       }

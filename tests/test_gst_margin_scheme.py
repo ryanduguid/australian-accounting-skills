@@ -1,8 +1,10 @@
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
 """The margin scheme calculation in au-gst-property: its conditions and its worked figures."""
 
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
@@ -17,13 +19,24 @@ def section() -> str:
     return text[start : text.index("\n## ", start + 1)]
 
 
+def worksheet() -> dict[str, list[str]]:
+    """Each row of the worked figures block: its label and its 3 columns."""
+    block = section().split("**Worked figures (fabricated).**", 1)[1].split("```text\n", 1)[1].split("\n```", 1)[0]
+    rows = {}
+    for line in block.splitlines():
+        cells = re.split(r"\s{2,}", line.strip())
+        if len(cells) == 4 and re.fullmatch(r"[\d,.]+", cells[1].rstrip(".")):
+            rows[cells[0]] = cells[1:]
+    return rows
+
+
 def money(text: str) -> Decimal:
-    return Decimal(text.replace("$", "").replace(",", ""))
+    return Decimal(text.replace(",", ""))
 
 
-def gst_on(margin: Decimal) -> Decimal:
-    """1/11 of the margin (GST Act s 75-10(1)), rounded as s 9-90 rounds: to the cent, 0.5 up."""
-    return (margin / 11).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+def gst_on(amount: Decimal) -> Decimal:
+    """1/11 (GST Act s 75-10(1)), rounded as s 9-90 rounds: to the cent, 0.5 cents up."""
+    return (amount / 11).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
 class MarginSchemeTests(unittest.TestCase):
@@ -45,7 +58,7 @@ class MarginSchemeTests(unittest.TestCase):
         ):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
-        # The skill states no figure from memory: each rule above has a record read that day.
+        # Each rule above has a source record read that day.
         records = {r["url"] for r in json.loads((SKILL / "sources.json").read_text(encoding="utf-8"))["sources"]}
         for provision in ("9-90", "75-5", "75-10", "75-15", "75-20", "75-35"):
             with self.subTest(provision=provision):
@@ -53,27 +66,20 @@ class MarginSchemeTests(unittest.TestCase):
         self.assertIn("https://www.legislation.gov.au/F2020L00346/latest/text", records)
 
     def test_worked_figures_follow_from_their_facts(self) -> None:
-        rows = {}
-        for line in section().splitlines():
-            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-            if line.startswith("| ") and len(cells) == 4:
-                rows[cells[0]] = cells[1:]
-        consideration = [money(cell.split(" = ")[-1]) for cell in rows["Consideration for the supply"]]
-        deducted = [money(cell.split(" ")[0]) for cell in rows["Deducted"]]
-        margins = [money(cell) for cell in rows["Margin"]]
-        self.assertEqual(consideration, [Decimal("1101320"), Decimal("990000"), Decimal("990000")])
-        # The rates adjustment is part of the consideration; stamp duty and legal fees are not deducted.
-        self.assertEqual(consideration[0], Decimal("1100000") + Decimal("1320"))
-        self.assertEqual(deducted, [Decimal("480000"), Decimal("350000"), Decimal("95000")])
-        for column, (supply, cost, margin, gst, full) in enumerate(
-            zip(consideration, deducted, margins, rows["GST, 1/11 of the margin"], rows["GST on the full consideration"])
-        ):
-            with self.subTest(column=column):
-                self.assertEqual(margin, supply - cost)
-                self.assertEqual(money(gst.split(" rounded to ")[1]), gst_on(margin))
-                self.assertEqual(money(full), gst_on(supply))
-        # Rounding is visible: the exact 1/11 is shown before the rounded cent.
-        self.assertIn("$56,483.636..., rounded to $56,483.64", section())
+        rows = worksheet()
+        supply = [money(cell) for cell in rows["Consideration for the supply"]]
+        less = [money(cell) for cell in rows["Less acquisition or valuation"]]
+        # A: the rates adjustment is part of the consideration; stamp duty and legal fees are not deducted.
+        self.assertEqual(supply, [Decimal("1100000") + Decimal("1320"), Decimal("990000"), Decimal("990000")])
+        self.assertEqual(less, [Decimal("480000"), Decimal("350000"), Decimal("95000")])
+        for column in range(3):
+            with self.subTest(column="ABC"[column]):
+                margin = money(rows["Margin"][column])
+                self.assertEqual(margin, supply[column] - less[column])
+                exact = rows["GST, 1/11 of the margin, exact"][column]
+                self.assertTrue(str(margin / 11).startswith(exact.removesuffix("...").replace(",", "")))
+                self.assertEqual(money(rows["GST, rounded to the cent"][column]), gst_on(margin))
+                self.assertEqual(money(rows["GST on the full consideration"][column]), gst_on(supply[column]))
 
 
 if __name__ == "__main__":

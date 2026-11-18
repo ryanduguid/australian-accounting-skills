@@ -53,18 +53,31 @@ Contract and variations, property use/history, vendor and purchaser capacity, en
 
 4. **GST and reporting.** Work 1/11 of the margin exactly, then round. The note to s 75-10 of the GST Act says s 9-90 of the GST Act can apply, which rounds a fraction of a cent to the nearest cent, 0.5 cents upwards, for a taxable supply that is the only one on its invoice. Show the GST on the full consideration beside it for the reviewer. The ATO's worked examples report the margin at G1 and the GST at 1A for the period the sale occurred; confirm the labels against the current activity statement instructions. The recipient's acquisition is not a creditable acquisition (s 75-20 of the GST Act), so record no input tax credit for it; the supplier's construction and other costs stay under Division 11 (step 4).
 
-**Worked figures (fabricated).**
+**Worked figures (fabricated).** Amounts are in AUD, kept in a block so no figure reads as a current rate or threshold.
 
-| | Consideration method | Valuation method | Consideration method, same land |
-| --- | --- | --- | --- |
-| Facts | A GST-registered builder bought vacant land on 3 March 2024 for $480,000 from a vendor not registered for GST, paying $26,000 stamp duty and $1,650 legal fees. It sells the completed house and land for $1,100,000, with a $1,320 settlement adjustment in its favour for rates paid in advance; the contract's margin scheme clause is signed by both parties and identifies the lot. | An entity bought land in May 1998 for $95,000 and registered for GST with effect from 1 October 2004, having applied on 20 September 2004. It sells the land for $990,000 under a signed margin scheme agreement, holding a professional valuer's approved valuation of $350,000 as at 20 September 2004, made before its activity statement due date. | The same sale as the valuation column, worked from the 1998 purchase price instead. |
-| Consideration for the supply | $1,100,000 + $1,320 = $1,101,320 | $990,000 | $990,000 |
-| Deducted | $480,000 (stamp duty, legal fees and construction excluded) | $350,000 (item 2: the application day, which is earlier than the date of effect) | $95,000 |
-| Margin | $621,320 | $640,000 | $895,000 |
-| GST, 1/11 of the margin | $56,483.636..., rounded to $56,483.64 | $58,181.818..., rounded to $58,181.82 | $81,363.636..., rounded to $81,363.64 |
-| GST on the full consideration | $100,120.00 | $90,000.00 | $90,000.00 |
+```text
+Facts
+  A  A GST-registered builder bought vacant land on 3 March 2024 for 480,000.00 from a vendor not
+     registered for GST, paying 26,000.00 stamp duty and 1,650.00 legal fees. It sells the completed
+     house and land for 1,100,000.00 plus a 1,320.00 settlement adjustment in its favour for rates
+     paid in advance. The contract's margin scheme clause is signed by both parties and identifies the lot.
+  B  An entity bought land in May 1998 for 95,000.00 and registered for GST with effect from
+     1 October 2004, having applied on 20 September 2004. It sells the land for 990,000.00 under a
+     signed margin scheme agreement, holding a professional valuer's approved valuation of 350,000.00
+     as at 20 September 2004 (item 2: the application day, earlier than the date of effect), made
+     before its activity statement due date.
+  C  Sale B worked from the 1998 purchase price instead.
 
-The builder's land came from a vendor not registered for GST, so it was not acquired through a taxable supply and s 75-5(3)(a) of the GST Act does not bar the scheme. Had the builder bought the land from a registered developer in a taxable sale with GST worked out without the margin scheme, s 75-5(2) of the GST Act would bar it, and the GST would be 1/11 of the full consideration. For the land held since 1998, the valuation and consideration methods give different margins; the supplier chooses, and once it relies on the approved valuation held by the due date it cannot switch. In each case the purchaser claims no input tax credit for the land (s 75-20 of the GST Act).
+                                   A (consideration)    B (valuation)    C (consideration)
+Consideration for the supply           1,101,320.00        990,000.00          990,000.00
+Less acquisition or valuation            480,000.00        350,000.00           95,000.00
+Margin                                   621,320.00        640,000.00          895,000.00
+GST, 1/11 of the margin, exact           56,483.636...     58,181.818...       81,363.636...
+GST, rounded to the cent                  56,483.64         58,181.82           81,363.64
+GST on the full consideration            100,120.00         90,000.00           90,000.00
+```
+
+In A the consideration includes the rates adjustment, and the stamp duty, legal fees and construction are not deducted. The builder's land came from a vendor not registered for GST, so it was not acquired through a taxable supply and s 75-5(3)(a) of the GST Act does not bar the scheme. Had the builder bought the land from a registered developer in a taxable sale with GST worked out without the margin scheme, s 75-5(2) of the GST Act would bar it, and the GST would be 1/11 of the full consideration. For the land held since 1998, the valuation and consideration methods give different margins; the supplier chooses, and once it relies on the approved valuation held by the due date it cannot switch. In each case the purchaser claims no input tax credit for the land (s 75-20 of the GST Act).
 
 ## Hand-off and checks
 
