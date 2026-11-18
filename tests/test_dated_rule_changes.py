@@ -43,6 +43,7 @@ LINKED_PROGRAMS = {
     "/tools/xero_aged_receivables.py": "xero_aged_receivables.py",
     "/packages/the-wip-tally": "wip-tally",
     "/packages/australian-tax-calculators": "australian-tax-calculators",
+    "/releases/tag/australian-tax-calculators/": "australian-tax-calculators",
     "/packages/the-exchequer-tally": "the-exchequer-tally",
     "/packages/solomons-sword": "solomons-sword",
     "/packages/payday-super-checker": "payday-super-check",
@@ -1893,15 +1894,17 @@ class DatedRuleChangeTests(unittest.TestCase):
         privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
         self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
         self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
-        audited = "faac6c57d6b4034647dc3953553295e87559af9c"  # aus-accounting-mcp v0.9.0
+        audited = "fd110b9bfa7da874a508534d2bd497d522e9ef91"  # aus-accounting-mcp v0.10.0
         plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertIn(f"@{audited}#", plugin["mcpServers"]["aus-accounting"]["args"][1])
-        self.assert_sentence(privacy, r"\bdefault branch starts `aus-accounting-mcp` 0\.9\.0", rf"/commit/{audited}\)")
-        self.assert_sentence(privacy, r"\bAt 0\.9\.0\b", r"\bimport no network library apart from `asyncio`")
+        self.assert_sentence(privacy, r"\bdefault branch starts `aus-accounting-mcp` 0\.10\.0", rf"/commit/{audited}\)")
+        self.assert_sentence(privacy, r"\bAt 0\.10\.0\b", r"\bimport no network library apart from `asyncio`")
+        # 0.10.0 runs the calculators executable, so the README must say what it runs and how.
+        self.assert_sentence(privacy, r"\bimports `subprocess`", r"`calculate_tax_worksheet` runs\b", r"\bseparately installed\b")
         self.assert_sentence(
             privacy, r"\btrace of 0\.6\.0\b", r"\b0 socket and 0 connect calls\b", r"\b12 calculation tools\b"
         )
-        self.assert_sentence(privacy, r"\btrace was not repeated for 0\.8\.0 or 0\.9\.0\b")
+        self.assert_sentence(privacy, r"\btrace was not repeated for 0\.8\.0, 0\.9\.0 or 0\.10\.0\b")
         self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
         self.assert_sentence(privacy, r"\btrace's method and output\b", r"\bnot published\b")
         self.assert_sentence(privacy, r"\bMCP SDK\b", r"\bnot pinned\b", r"\bdid not cover it\b")
