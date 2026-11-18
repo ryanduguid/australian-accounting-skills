@@ -1,0 +1,27 @@
+# title: Medicare Levy Act 1986
+# register-id: C2004A03351
+# compilation: C2026C00295
+# compilation-number: 53
+# in-force-from: 2026-07-01
+# source: https://api.prod.legislation.gov.au/v1/documents(titleId='C2004A03351',start=2026-07-01T00:00:00,retrospectiveStart=2026-07-01T00:00:00,rectificationVersionNumber=0,type='Primary',uniqueTypeNumber=0,volumeNumber=0,format='Epub')
+# retrieved: 2026-11-19
+# sha256: d100f58e20a0719aad38112e3cce660bb1f9a0ad3faf85d1eae99eed903e283d
+1
+2
+3
+3A
+4
+5
+6
+7
+8
+8B
+8C
+8D
+8E
+8F
+8G
+9
+9A
+10
+11
