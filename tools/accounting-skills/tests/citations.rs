@@ -1068,7 +1068,7 @@ fn a_queensland_section_list_checks_its_acts_sections_and_records() {
     assert_eq!(run(root.path()).0, 0);
 }
 
-/// A section list's dates are real days with an unsigned year.
+/// A section list's dates are real days with an unsigned year and no whitespace.
 #[test]
 fn section_list_dates_are_real_days_with_an_unsigned_year() {
     let refusal = "in-force-from must be a date written YYYY-MM-DD";
@@ -1078,6 +1078,9 @@ fn section_list_dates_are_real_days_with_an_unsigned_year() {
         ("2026-06-31", true),
         ("-099-01-01", true),
         ("+099-01-01", true),
+        // chrono skipped any whitespace before a number; these are 10 bytes long.
+        ("\u{a0}2026-1-1", true),
+        ("\u{b}2026-01-1", true),
     ] {
         let root = tempfile::tempdir().unwrap();
         skill(
