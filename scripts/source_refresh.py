@@ -425,6 +425,13 @@ def _interpret_response(response, target: str, include_text: bool) -> Fetched:
         )
 
 
+def _timed_out(error: Exception) -> bool:
+    """Whether a request hit TIMEOUT, reading the response or, wrapped by urllib, connecting."""
+    return isinstance(error, TimeoutError) or (
+        isinstance(error, urllib.error.URLError) and isinstance(error.reason, TimeoutError)
+    )
+
+
 def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY,
           include_text: bool = False) -> Fetched:
     """Retrieve one source. A blocked or missing page is data, not a failure.
@@ -458,6 +465,11 @@ def fetch(url: str, *, tries: int = TRIES, delay: float = RETRY_DELAY,
                 )
         except Exception as error:  # noqa: BLE001 - every transport fault is reportable
             last_error = f"{type(error).__name__}: {error}"
+            # On 16 November 2026 none of the 38 pages that timed out answered
+            # a second or third try, and those tries took about 65 of the
+            # sweep's 80 minutes.
+            if _timed_out(error):
+                break
             if attempt < tries:
                 time.sleep(delay)
     return Fetched(

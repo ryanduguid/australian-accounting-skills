@@ -8,6 +8,7 @@ import os
 import sys
 import tempfile
 import unittest
+import urllib.error
 from contextlib import redirect_stdout
 from io import StringIO
 from pathlib import Path
@@ -100,6 +101,21 @@ class FetchRetryTests(unittest.TestCase):
         self.assertEqual(result.error, "OSError: connection reset")
         self.assertEqual(build.return_value.open.call_count, 2)
         sleep.assert_called_once_with(0.1)
+
+    def test_a_timeout_is_reported_without_a_retry(self) -> None:
+        """A read timeout, and a connect timeout urllib wraps, each cost one try of 30 seconds."""
+        for fault in (TimeoutError("The read operation timed out"),
+                      urllib.error.URLError(TimeoutError("timed out"))):
+            with self.subTest(fault=fault), \
+                    mock.patch.object(source_refresh.urllib.request, "build_opener") as build, \
+                    mock.patch.object(source_refresh, "check_public_resolution"), \
+                    mock.patch.object(source_refresh.time, "sleep") as sleep:
+                build.return_value.open.side_effect = fault
+                result = source_refresh.fetch("https://www.ato.gov.au/page", tries=3, delay=0.1)
+            self.assertEqual(result.status, 0)
+            self.assertEqual(result.error, f"{type(fault).__name__}: {fault}")
+            self.assertEqual(build.return_value.open.call_count, 1)
+            sleep.assert_not_called()
 
 
 class UpstreamDateTests(unittest.TestCase):
