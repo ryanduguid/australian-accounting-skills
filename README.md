@@ -58,6 +58,8 @@ npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-cod
 
 That copies the 107 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone from v0.7.0 when run on Linux on 15 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). Any MCP client that starts a local server can reach the skills through [`accounting-skills serve-mcp`](docs/installation.md#any-mcp-client-through-a-local-server), installed with `cargo install` from the default branch; v0.7.0 does not have it, and it reaches a tagged release only with the next one. [Installation](docs/installation.md) covers manual copying, removal and versioning.
 
+Claude Code keeps its skill listing within 1% of the model's context window by default and drops the least-used skills' descriptions past that. With every skill installed, a 200,000 token window is too small for all of them, so those skills are chosen less often; [the Claude Code plugin notes](docs/installation.md#claude-code-plugin) say how to check with `/context` and raise the budget.
+
 Claude Code is the tested runtime. Codex packaging and portable skill files are included, and OpenCode has an install and discovery check only. None of this establishes testing in every agent runtime. The validation record under the fold gives the model runs and their limits.
 
 ## Start here
