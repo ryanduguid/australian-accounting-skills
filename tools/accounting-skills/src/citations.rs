@@ -35,8 +35,8 @@ use crate::{
     Result, canonical_root, discover_skills, platform_text, read_text,
     validation::{check_expected_path, present_expected_path},
 };
-use chrono::NaiveDate;
 use fancy_regex::{Captures, Regex};
+use jiff::civil::Date;
 use serde_json::Value;
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -389,7 +389,10 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     let mut in_force = String::new();
     for date in ["in-force-from", "retrieved"] {
         let value = field(date)?;
-        if value.len() != 10 || NaiveDate::parse_from_str(&value, "%Y-%m-%d").is_err() {
+        if value.len() != 10
+            || value.trim_start().starts_with(['+', '-'])
+            || Date::strptime("%Y-%m-%d", &value).is_err()
+        {
             return Err(format!("{name}: {date} must be a date written YYYY-MM-DD").into());
         }
         if date == "in-force-from" {

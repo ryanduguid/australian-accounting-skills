@@ -6,7 +6,7 @@
 //! The input carries amounts, balances and line references only, never descriptions,
 //! so nothing this command prints can quote statement text.
 use crate::{Result, platform_text, read_text};
-use chrono::{Days, NaiveDate};
+use jiff::{Span, civil::Date};
 use serde::Deserialize;
 use std::{
     collections::BTreeSet,
@@ -19,7 +19,7 @@ const USAGE: &str = "usage: accounting-skills statement-check FILE";
 /// How many days before its period a line on an account in the owed direction may be dated:
 /// a card prints the transaction date of a purchase it posts within the period. A deposit
 /// account's lines must fall within the period.
-const EARLY_DAYS: u64 = 31;
+const EARLY_DAYS: i64 = 31;
 
 #[derive(Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
@@ -132,10 +132,10 @@ fn printed_total(parts: Option<&[String]>, at: &str) -> Result<Option<i128>> {
     Ok(Some(total))
 }
 
-fn date(text: &str, at: &str) -> Result<NaiveDate> {
-    NaiveDate::parse_from_str(text, "%Y-%m-%d")
+fn date(text: &str, at: &str) -> Result<Date> {
+    Date::strptime("%Y-%m-%d", text)
         .ok()
-        .filter(|parsed| parsed.format("%Y-%m-%d").to_string() == text)
+        .filter(|parsed| parsed.year() >= 0 && parsed.strftime("%Y-%m-%d").to_string() == text)
         .ok_or_else(|| format!("{at}: {text:?} is not a date in the form 2026-01-31").into())
 }
 
@@ -161,12 +161,12 @@ fn money(value: i128) -> String {
 
 /// One statement after its own checks: the figures continuity needs.
 struct Checked {
-    start: NaiveDate,
-    end: NaiveDate,
+    start: Date,
+    end: Date,
     opening: i128,
     closing: i128,
     /// The running balance after each line, with its posting date where given, in statement order.
-    after: Vec<(Option<NaiveDate>, i128)>,
+    after: Vec<(Option<Date>, i128)>,
 }
 
 #[derive(Default)]
@@ -217,14 +217,14 @@ struct Running {
     /// Whether the balance was just set from a printed figure, which a sign taken from the
     /// balance needs on the line before.
     printed_before: bool,
-    after: Vec<(Option<NaiveDate>, i128)>,
+    after: Vec<(Option<Date>, i128)>,
 }
 
 /// The statement a page belongs to, as its lines need it.
 struct Period<'a> {
     id: &'a str,
-    start: NaiveDate,
-    end: NaiveDate,
+    start: Date,
+    end: Date,
     direction: Direction,
 }
 
@@ -248,7 +248,7 @@ fn check_page(
         Direction::Owed => EARLY_DAYS,
         Direction::Deposit => 0,
     };
-    let earliest = period.start.checked_sub_days(Days::new(allowance));
+    let earliest = period.start.checked_sub(Span::new().days(allowance)).ok();
     let (mut credits, mut debits) = (0_i128, 0_i128);
     let mut seen = BTreeSet::new();
     for line in &page.lines {
@@ -386,8 +386,10 @@ fn check_statement(
 /// periods abut, or its running balance before the overlap where they overlap.
 fn check_continuity(ids: (&str, &str), before: &Checked, next: &Checked, report: &mut Report) {
     let at = format!("{} to {}", ids.0, ids.1);
-    let following = before.end.checked_add_days(Days::new(1));
-    if Some(next.start) > following {
+    // 9999-12-31, the last date there is, has no following day, so no period can start
+    // after it.
+    let following = before.end.tomorrow().ok();
+    if following.is_some_and(|following| next.start > following) {
         report.breaks.push(format!(
             "BREAK {at}: gap, {} ends {} and {} starts {}",
             ids.0, before.end, ids.1, next.start
