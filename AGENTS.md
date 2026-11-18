@@ -124,11 +124,14 @@ run on Python 3.14 and 3.15. The coverage and citation checks need Rust 1.99
 or newer; the `native` job runs the same commands on Linux and Windows. The
 citation check reports, by file and line, each section, ruling, determination
 or practice statement a skill cites without a record in its `sources.json`, and
-each section missing from its Act's list in `tools/accounting-skills/section-index/`. A third job scans
-with betterleaks, against
-`.gitleaks.toml`, the commits a push or pull request adds and the full history
-weekly or when run by hand. `.gitleaks.toml` carries client-identifier rules on
-top of the default credential rules.
+each section missing from its Act's list in `tools/accounting-skills/section-index/`. A third job runs
+the shared secrets scan from `ryanduguid/release-policy`: betterleaks over the
+commits a push or pull request adds and the full history weekly or when run by
+hand. `.gitleaks.toml` holds this repository's allowlists and extends
+`.github/secrets-rules.toml`, a copy of the shared client-identifier rules that
+the scan checks against its own. A pull request is also scanned with the base
+branch's `.gitleaks.toml`, so an allowlist entry cannot arrive with what it
+allows.
 
 `pre-commit install` runs the same gates before a commit lands rather than
 after a push. `tests/test_contributor_checks.py` fails when a CI gate has no

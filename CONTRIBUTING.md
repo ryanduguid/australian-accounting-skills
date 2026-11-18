@@ -64,8 +64,11 @@ reported skill names from the CLI with the skill directories in the current tree
   python -m coverage report --fail-under=100
   ```
 
-- The `secrets` job scans with betterleaks the commits a push or pull request
-  adds, and the full history weekly or when run by hand.
+- The `secrets` job runs the shared secrets scan from `ryanduguid/release-policy`:
+  betterleaks over the commits a push or pull request adds, and the full
+  history weekly or when run by hand. It scans a pull request a second time
+  with the base branch's `.gitleaks.toml`, so add an allowlist entry in its own
+  pull request, before the change that needs it.
 - The `shared-conformance` job runs the shared `verify-skills.yml` workflow
   from `ryanduguid/release-policy`.
 

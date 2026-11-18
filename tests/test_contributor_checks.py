@@ -177,21 +177,24 @@ class ContributorCheckTests(unittest.TestCase):
 
         betterleaks loads no repository config it is not named. A scan without
         `--config .gitleaks.toml` still passes with the default credential rules
-        alone, and so passes a commit carrying a client's TFN.
+        alone, and so passes a commit carrying a client's TFN. In CI the shared
+        action names the config; a step beside it could scan without.
         """
         workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
-        script = " ".join(
-            " ".join(step["run"].split())
-            for step in workflow["jobs"]["secrets"]["steps"]
-            if "run" in step
+        steps = workflow["jobs"]["secrets"]["steps"]
+        self.assertEqual(len(steps), 1, "the shared action is the whole secrets job")
+        self.assertRegex(
+            steps[0].get("uses", ""),
+            r"^ryanduguid/release-policy/\.github/actions/secrets-scan@[0-9a-f]{40}$",
+            "verify.yml must run the shared secrets scan at a full commit",
         )
-        scans = script.count("betterleaks git ")
-        self.assertGreaterEqual(scans, 1, "verify.yml must scan for secrets and client identifiers")
-        self.assertEqual(
-            script.count("betterleaks git . --config .gitleaks.toml "),
-            scans,
-            "every betterleaks scan in verify.yml must name .gitleaks.toml",
+        self.assertNotIn("with", steps[0], "the shared secrets scan takes no inputs")
+        self.assertIn(
+            'path = ".github/secrets-rules.toml"',
+            (REPOSITORY / ".gitleaks.toml").read_text(encoding="utf-8").splitlines(),
+            ".gitleaks.toml must extend the shared rules",
         )
+        self.assertTrue((REPOSITORY / ".github/secrets-rules.toml").is_file())
 
         config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
         hooks = [
