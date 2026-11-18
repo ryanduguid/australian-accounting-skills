@@ -369,7 +369,18 @@ class LegalSourceGateTests(unittest.TestCase):
         # The classifier's scope also requires GST registration and facts the operator must establish.
         self.assertIn("Where the employer is registered for GST and not exempt from income tax", text)
         self.assertIn("set `scope_confirmed` only once each of those and each line's facts are evidenced", text)
-        self.assertIn("every attendee on a `travel_meal` line is travelling for work", text)
+        # Each condition the pinned scope statement (src/texts.rs at that commit) says the operator establishes.
+        for condition in (
+            "covers only an employer registered for GST and not exempt from income tax",
+            "every attendee on a `travel_meal` line is travelling for work",
+            "nothing is provided under a salary packaging arrangement",
+            "as an in-house benefit",
+            "by an associate of the employer",
+            "none of the exceptions it names applies",
+            "Record the evidence for each condition it lists",
+        ):
+            with self.subTest(condition=condition):
+                self.assertIn(condition, text)
         self.assertIn("carry the affected lines to the reviewer unclassified", text)
         # Review round 1: a plain refusal prints no code; the 12 week register needs its percentage; a
         # reimbursed employee's share must be its own line, or the benefit type stays composite.
