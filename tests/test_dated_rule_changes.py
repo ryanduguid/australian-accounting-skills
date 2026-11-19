@@ -1899,6 +1899,9 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assertIn(f"@{audited}#", plugin["mcpServers"]["aus-accounting"]["args"][1])
         self.assert_sentence(privacy, r"\bdefault branch starts `aus-accounting-mcp` 0\.10\.0", rf"/commit/{audited}\)")
         self.assert_sentence(privacy, r"\bAt 0\.10\.0\b", r"\bimport no network library apart from `asyncio`")
+        # 0.10.0 dropped the Python australian-tax-calculators engine: 4 engines from PyPI and lodgment-calendar.
+        self.assert_sentence(privacy, r"\bthe 5 engines the plugin's command installs\b")
+        self.assert_sentence(privacy, r"\btakes 4 engines from PyPI\b", r"\bbuilds the fifth, `lodgment-calendar`")
         # 0.10.0 runs the calculators executable, so the README must say what it runs and how.
         self.assert_sentence(privacy, r"\bimports `subprocess`", r"`calculate_tax_worksheet` runs\b", r"\bseparately installed\b")
         self.assert_sentence(
