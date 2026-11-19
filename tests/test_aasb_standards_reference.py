@@ -68,6 +68,8 @@ class AasbStandardsReferenceTests(unittest.TestCase):
             "The portal holds the versions for periods beginning on or after 1 July 2021. For a period beginning before that date, use the archived Browse for Pronouncements search",
             "A URL, version label or download date does not select a version: the application paragraph does.",
             "Statements prepared under Tier 2 do not comply with IFRS Standards",
+            # AASB 1057's insurance exceptions and elections sit outside paragraphs 5 and 6.
+            "For insurance contracts, read paragraphs 5A and 6A too",
         ):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, workflow)
