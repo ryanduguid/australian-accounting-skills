@@ -79,6 +79,19 @@ class WorkersCompensationPremiumTests(unittest.TestCase):
             step(1),
         )
 
+    def test_the_tie_out_reverses_what_payroll_does_not_hold(self) -> None:
+        # Superannuation, fringe benefits and deemed workers' payments are added from outside gross pay,
+        # so scheme wages tie to payroll only once those additions are taken back out.
+        self.assertIn(
+            "the schemes' wages, less the amounts added from outside gross pay, plus the excluded items and the "
+            "gross pay of the workers excluded (each with its reason), equal the gross pay",
+            step(4),
+        )
+        # icare's per capita classifications are priced per unit, not on wages.
+        self.assertIn(
+            "a per capita classification is priced on its own unit and left to the insurer", step(5)
+        )
+
     def test_gst_and_levies_stay_separate_and_route_to_the_bas(self) -> None:
         lines = step(7)
         self.assertIn("ReturnToWorkSA's work health and safety fee does not", lines)
