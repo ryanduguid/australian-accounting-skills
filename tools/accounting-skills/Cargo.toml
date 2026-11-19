@@ -9,13 +9,13 @@ description = "Native tooling for the accounting skill repository"
 publish = false
 
 [dependencies]
-fancy-regex = "=0.20.0"
+fancy-regex = "=0.20.2"
 # The system time zone, read from the zoneinfo files or, on Windows, a bundled copy.
 jiff = { version = "=1.0.0", default-features = false, features = ["std", "tz-system", "tzdb-bundle-platform", "tzdb-zoneinfo"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "=1.0.154", features = ["float_roundtrip", "preserve_order"] }
 sha2 = "=0.11.1"
-ureq = { version = "=3.5.1", default-features = false, features = ["rustls", "platform-verifier"] }
+ureq = { version = "=3.5.2", default-features = false, features = ["rustls", "platform-verifier"] }
 unicode-normalization = "=0.1.24"
 yaml-rust2 = { version = "=0.13.0", default-features = false }
 
