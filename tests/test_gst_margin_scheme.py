@@ -6,7 +6,7 @@ from __future__ import annotations
 import json
 import re
 import unittest
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -58,12 +58,21 @@ class MarginSchemeTests(unittest.TestCase):
             "is not a creditable acquisition (s 75-20 of the GST Act)",
             "s 75-11 of the GST Act can set the margin from the earlier history instead",
             "use the corresponding proportion of the acquisition consideration or valuation (s 75-15 of the GST Act)",
+            "Method 2 is not available in the item 4 case where the land has improvements on the day of the supply",
+            "not contrary to the professional standards recognised in Australia for real property valuations",
+            "A valuation the Commissioner obtains under method 4",
+            "a vendor's lack of registration alone does not establish that it was not required to be registered",
+            "property purchased or contracted for purchase on or after 9 December 2008",
+            "no written agreement is needed for a sale made before 29 June 2005",
+            "still unpaid at the time of the supply is taken out of it (s 75-12 of the GST Act)",
+            "takes the GST inclusive market value as its consideration, whether or not it was for consideration (s 75-13 of the GST Act)",
+            "only to the extent the supply is connected to that acquisition (s 75-16 of the GST Act)",
         ):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
         # Each rule above has a source record read that day.
         records = {r["url"] for r in json.loads((SKILL / "sources.json").read_text(encoding="utf-8"))["sources"]}
-        for provision in ("9-90", "75-5", "75-10", "75-15", "75-20", "75-35"):
+        for provision in ("9-5", "9-90", "75-5", "75-10", "75-12", "75-13", "75-15", "75-16", "75-20", "75-35"):
             with self.subTest(provision=provision):
                 self.assertIn(f"https://www.ato.gov.au/law/view/document?docid=PAC/19990055/{provision}", records)
         self.assertIn("https://www.legislation.gov.au/F2020L00346/latest/text", records)
@@ -75,12 +84,26 @@ class MarginSchemeTests(unittest.TestCase):
         # A: the rates adjustment is part of the consideration; stamp duty and legal fees are not deducted.
         self.assertEqual(supply, [Decimal("1100000") + Decimal("1320"), Decimal("990000"), Decimal("990000")])
         self.assertEqual(less, [Decimal("480000"), Decimal("350000"), Decimal("95000")])
+        # The table's inputs are the ones the facts state.
+        facts = " ".join(section().split("```text\n", 1)[1].split("\n\n", 1)[0].split())
+        for stated in (
+            "bought vacant land on 3 March 2024 for 480,000.00, paid in full",
+            "for 1,100,000.00 plus a 1,320.00 settlement adjustment in its favour",
+            "bought land in May 1998 for 95,000.00",
+            "for 990,000.00 under a signed margin scheme agreement",
+            "approved valuation of 350,000.00 as at 20 September 2004",
+        ):
+            with self.subTest(stated=stated):
+                self.assertIn(stated, facts)
         for column in range(3):
             with self.subTest(column="ABC"[column]):
                 margin = money(rows["Margin"][column])
                 self.assertEqual(margin, supply[column] - less[column])
                 exact = rows["GST, 1/11 of the margin, exact"][column]
-                self.assertTrue(str(margin / 11).startswith(exact.removesuffix("...").replace(",", "")))
+                # The exact display is 1/11 of the margin cut to 3 places, then an ellipsis.
+                self.assertEqual(
+                    exact, f"{(margin / 11).quantize(Decimal('0.001'), rounding=ROUND_DOWN):,}..."
+                )
                 self.assertEqual(money(rows["GST, rounded to the cent"][column]), gst_on(margin))
                 self.assertEqual(money(rows["GST on the full consideration"][column]), gst_on(supply[column]))
 
