@@ -395,6 +395,10 @@
   skill: au-financial-statements
   not: [year-end-workpapers, workpaper-tie-out]
   prompt: From this final trial balance for a large proprietary company, prepare the draft annual accounts and check the notes its reporting framework requires.
+- id: lease-standard-and-version
+  skill: au-aasb-standards-reference
+  not: [au-financial-statements, plant-and-equipment-costing]
+  prompt: Our client has a 30 June year and has just signed an equipment lease. Which Australian accounting standard covers it, which version applies to the year starting 1 July 2026, and how does it differ from the international one? Give me the paragraph references so I can read them.
 - id: xero-year-end-exports
   skill: xero-exports
   not: [contracting-exports, year-end-workpapers]

@@ -55,6 +55,7 @@ pub const APPROVED_HOSTS: &[&str] = &[
     "www.legislation.tas.gov.au",
     "www.legislation.act.gov.au",
     "legislation.nt.gov.au",
+    "www.aasb.gov.au",
 ];
 const MALFORMED: &str = "Malformed URL or port.";
 const UNSUPPORTED: &str = "Unsupported destination; an exact reviewed HTTPS host is required.";
