@@ -392,6 +392,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-880", step)
         self.assertIn("in equal proportions over 5 income years starting in the year it is incurred (s 40-880(2) of the ITAA 1997)", step)
         self.assertIn("a start-up expense that meets s 40-880(2A)", step)
+        self.assertIn("proposed to be carried on within a reasonable time (s 40-880(7))", step)
         self.assertIn("are reviewer decisions: record the evidence for each, not a conclusion", step)
         self.assertIn("refuses an outlay that forms part of a depreciating asset's cost (s 40-880(5)(a) of the ITAA 1997)", step)
         self.assertIn("so it refuses until the executable in [Tax calculators](#tax-calculators) is on `PATH`", depreciation)
