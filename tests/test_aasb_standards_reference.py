@@ -70,7 +70,7 @@ class AasbStandardsReferenceTests(unittest.TestCase):
             "Statements prepared under Tier 2 do not comply with IFRS Standards",
             # AASB 1057's insurance exceptions and elections sit outside paragraphs 5 and 6.
             "For insurance contracts, read paragraphs 5A and 6A too",
-            "paragraph 5A applies AASB 4 to a public sector entity for annual periods beginning before 1 July 2026",
+            "paragraph 5A applies AASB 4, for annual periods beginning before 1 July 2026, to the general purpose financial statements of each public sector reporting entity",
             "instead of both AASB 4 and AASB 1023",
         ):
             with self.subTest(phrase=phrase):
