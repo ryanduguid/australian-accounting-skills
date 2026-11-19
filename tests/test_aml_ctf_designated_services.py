@@ -221,8 +221,10 @@ class DesignatedServicesTests(unittest.TestCase):
                              r"\banother table in s 6 of the AML/CTF Act\b")
         self.assert_sentence(step, r"\bclient's ML/TF risk\b", r"\bcontent of the AML/CTF program\b",
                              r"\bnot covered by any skill in this pack\b")
-        self.assert_sentence(step, r"\bclient email or engagement template\b", r"\breliance on another entity's customer due diligence\b",
-                             r"\bnot covered\b")
+        self.assert_sentence(step, r"\bclient email or engagement template\b", r"\bnot covered\b")
+        # Reliance has its own skill since 19 November 2026, so step 8 routes it there.
+        self.assert_sentence(step, r"\breliance on another entity's customer due diligence\b",
+                             r"\bprepared with `au-aml-ctf-cdd-reliance`")
 
     def test_the_example_classifies_recorded_steps_not_service_names(self) -> None:
         # Review round 3: step 1 forbids a result from a name, so each service in the example carries its steps.
