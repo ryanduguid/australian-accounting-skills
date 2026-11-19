@@ -491,8 +491,9 @@ Regulations 2021, SGA Regulations 2018 and AML/CTF Transitional Rules 2026)
 and 3 Queensland Acts (the QBCC Act 1991, Payroll Tax Act 1971 and Duties Act
 2001). All 72 sections they newly checked were found, and the sections in an
 Act with no list fell from 199 to 127. 3 Commonwealth sources still have no list:
-the Taxation Administration Regulations 2017, whose current version on the
-register has no compilation yet; the Coal Mining Industry (Long Service Leave)
+the Taxation Administration Regulations 2017, whose current version had no
+compilation on the register when these lists were built (compilation 18,
+F2026C01210, in force from 14 November 2026, appeared later that day); the Coal Mining Industry (Long Service Leave)
 Payroll Levy Act 1992, whose current compilation has no number; and the Taxable
 Payments Reporting System - Reporting Exemptions for Certain Entities
 Determination 2019, whose EPUB lists no sections. The other 116 sections
