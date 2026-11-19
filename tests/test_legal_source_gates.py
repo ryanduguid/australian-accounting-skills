@@ -395,6 +395,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("are reviewer decisions: record the evidence for each, not a conclusion", step)
         self.assertIn("refuses an outlay that forms part of a depreciating asset's cost (s 40-880(5)(a) of the ITAA 1997)", step)
         self.assertIn("so it refuses until the executable in [Tax calculators](#tax-calculators) is on `PATH`", depreciation)
+        self.assertIn("Prefer the variable, naming the executable verified as that section describes", depreciation)
 
         cars = self.assert_released_calculators("au-car-expenses", "balancing-adjustment")
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-370", cars)
