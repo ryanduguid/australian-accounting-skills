@@ -30,7 +30,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/ryanduguid/australian-accounting@faac6c57d6b4034647dc3953553295e87559af9c#subdirectory=apps/aus-accounting-mcp",
+        "git+https://github.com/ryanduguid/australian-accounting@fd110b9bfa7da874a508534d2bd497d522e9ef91#subdirectory=apps/aus-accounting-mcp",
         "aus-accounting-mcp"
       ]
     }
