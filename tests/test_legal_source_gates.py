@@ -409,6 +409,41 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the statutory result's `taxable_value_before_exemption` as `statutory_formula_taxable_value`", fbt)
         self.assertIn("Their results are taxable values before gross-up, and neither applies the reportable fringe benefits threshold", fbt)
 
+    def test_rental_skill_spreads_borrowing_expenses_under_s_25_25_and_routes_to_the_released_calculator(self) -> None:
+        text = self.assert_released_calculators("au-rental-property", "borrowing-expenses")
+        step = text[text.index("2a. Borrowing expenses:") : text.index("3. Trace borrowed funds")]
+        self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/25-25", step)
+        # s 25-25(5) as read on 19 November 2026: the shortest of the 3 periods.
+        self.assertIn(
+            "the shortest of the period in the original loan contract, the period from the first day the money was "
+            "borrowed to the day the loan is repaid, and 5 years from that first day (s 25-25(5) of the ITAA 1997)",
+            step,
+        )
+        self.assertIn("the method statement in s 25-25(4) of the ITAA 1997", step)
+        self.assertIn("the amount s 25-25(6) of the ITAA 1997 sets", step)
+        self.assertIn("record the use of refinanced or redrawn money as a reviewer question", step)
+        # 1.0.0's borrowing-expenses: one loan, one year, 2024-25 to 2026-27, and its scope conditions.
+        self.assertIn("one loan's deduction for one income year from 2024-25 to 2026-27", text)
+        self.assertIn("all the expenditure to be incurred in the income year the loan began and one income-producing share throughout the loan", text)
+        self.assertIn("a loan first drawn on 29 February and every income year from 2027-28", text)
+
+    def test_fuel_skill_sets_out_the_small_claimant_methods_without_their_figures(self) -> None:
+        text = " ".join(skill_text("fuel-tax-credits").split())
+        step = text[text.index("7a. **Use a small claimant method") : text.index("8. **Price litres")]
+        # PCG 2016/2 para 11 limits Method 2 to an indexation change; the ATO page omits the condition.
+        self.assertIn("changes within a tax period because of indexation", step)
+        self.assertIn("the guideline does not cover it: price each litre by acquisition date under step 8", step)
+        # Method 1 prices come from AIP's current retail page, which is read at use time, not stored.
+        self.assertIn("](https://aip.com.au/pricing/pump-prices-retail)", step)
+        self.assertIn("so Method 1 cannot be used for that fuel", step)
+        self.assertIn("it is not indexed in `sources.json`", step)
+        # PCG 2021/2 paras 9 to 12, with the ceiling and the derived percentage left to the guideline.
+        self.assertIn("by the percentage para 9 sets", step)
+        self.assertIn("never with the PCG 2016/11 percentages (para 12)", step)
+        self.assertIn("No released version of `australian-tax-calculators`, including 1.0.0", step)
+        records = json.loads((SKILLS / "fuel-tax-credits" / "sources.json").read_text(encoding="utf-8"))["sources"]
+        self.assertFalse([record["url"] for record in records if "aip.com.au" in record["url"]])
+
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
         text = " ".join(skill_text("div7a-compliance").split())
         self.assertIn("The plugin pins `aus-accounting-mcp` 0.10.0, whose `review_div7a_loan` refuses, with no figure", text)
