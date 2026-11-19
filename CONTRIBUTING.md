@@ -64,13 +64,15 @@ reported skill names from the CLI with the skill directories in the current tree
   python -m coverage report --fail-under=100
   ```
 
-- The `secrets` job runs the shared secrets scan from `ryanduguid/release-policy`:
-  betterleaks over the commits a push or pull request adds, and the full
-  history weekly or when run by hand. It scans a pull request a second time
-  with the base branch's `.gitleaks.toml`, so add an allowlist entry in its own
-  pull request, before the change that needs it.
 - The `shared-conformance` job runs the shared `verify-skills.yml` workflow
   from `ryanduguid/release-policy`.
+
+Branch protection also requires the `secrets` job of `.github/workflows/secrets.yml`.
+It runs the shared secrets scan from `ryanduguid/release-policy`:
+betterleaks over the commits a push or pull request adds, and the full
+history weekly or when run by hand. It scans a pull request a second time
+with the base branch's `.gitleaks.toml`, so add an allowlist entry in its own
+pull request, before the change that needs it.
 
 `pip install pre-commit && pre-commit install` runs the 9 checks, the betterleaks hook
 and `git diff --cached --check` before the commit lands. `.pre-commit-config.yaml` pins Ruff, Pyright, ShellCheck and actionlint
