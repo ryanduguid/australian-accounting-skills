@@ -403,6 +403,10 @@
   skill: au-aasb-standards-reference
   not: [au-financial-statements, plant-and-equipment-costing]
   prompt: Our client has a 30 June year and has just signed an equipment lease. Which Australian accounting standard covers it, which version applies to the year starting 1 July 2026, and how does it differ from the international one? Give me the paragraph references so I can read them.
+- id: workers-comp-wages-declaration
+  skill: workers-compensation-premium
+  not: [au-payroll-tax-states, stp-finalisation, au-payroll-review]
+  prompt: Our client's workers insurance renewal has arrived and it has staff in New South Wales and Queensland. Work out what wages to declare to each insurer for the year from the payroll reports, check the renewal notice and tell us whether last year's estimate means an extra bill.
 - id: xero-year-end-exports
   skill: xero-exports
   not: [contracting-exports, year-end-workpapers]

@@ -56,6 +56,15 @@ pub const APPROVED_HOSTS: &[&str] = &[
     "www.legislation.act.gov.au",
     "legislation.nt.gov.au",
     "www.aasb.gov.au",
+    "www.safeworkaustralia.gov.au",
+    "www.icare.nsw.gov.au",
+    "www.worksafe.vic.gov.au",
+    "www.workcoverqld.com.au",
+    "www.workcover.wa.gov.au",
+    "www.rtwsa.com",
+    "worksafe.tas.gov.au",
+    "www.worksafe.act.gov.au",
+    "worksafe.nt.gov.au",
 ];
 const MALFORMED: &str = "Malformed URL or port.";
 const UNSUPPORTED: &str = "Unsupported destination; an exact reviewed HTTPS host is required.";

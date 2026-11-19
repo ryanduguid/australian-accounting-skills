@@ -25,6 +25,7 @@
 | `payroll-tax-contractors` | Test contractor payments with detailed NSW relevant-contract and employment-agency steps, and separate Act and revenue-office routes for the other 7 jurisdictions |
 | `contractor-super-tpar` | Prepare contractor super, TPAR and no-ABN review workpapers |
 | `coal-lsl-levy` | Prepare Coal LSL coverage, levy, reimbursement and payroll tie-outs |
+| [`workers-compensation-premium`](../.claude/skills/workers-compensation-premium/SKILL.md) | Workers compensation wages for each state and territory scheme from payroll, the premium notice check and the estimate against actual reconciliation |
 | `contracting-exports` | Validate the job, claim, plant, payroll and subcontractor exports the contracting skills consume |
 
 ## Australian topic additions

@@ -15,7 +15,9 @@ MAX_REDIRECTS = 3
 # South Australian, Tasmanian, ACT and Northern Territory legislation registers,
 # the official sources for their Acts, added 11 November 2026. The AASB's main site,
 # which holds its copyright notice and the archive of earlier Standards, added
-# 19 November 2026. An index cannot authorise itself.
+# 19 November 2026, as were Safe Work Australia's site and the 8 workers
+# compensation regulators' and insurers' sites, which publish each scheme's wages
+# definition. An index cannot authorise itself.
 APPROVED_HOSTS = frozenset({
     "www.austrac.gov.au", "www.legislation.gov.au", "www.ato.gov.au", "www.asic.gov.au",
     "apesb.org.au", "www.tpb.gov.au", "standards.aasb.gov.au", "www.revenue.nsw.gov.au",
@@ -29,6 +31,8 @@ APPROVED_HOSTS = frozenset({
     "www.legislation.vic.gov.au", "www.legislation.wa.gov.au", "www.legislation.sa.gov.au",
     "www.legislation.tas.gov.au", "www.legislation.act.gov.au", "legislation.nt.gov.au",
     "www.aasb.gov.au",
+    "www.safeworkaustralia.gov.au", "www.icare.nsw.gov.au", "www.worksafe.vic.gov.au", "www.workcoverqld.com.au",
+    "www.workcover.wa.gov.au", "www.rtwsa.com", "worksafe.tas.gov.au", "www.worksafe.act.gov.au", "worksafe.nt.gov.au",
 })
 APPROVED_REDIRECT_EDGES: frozenset[tuple[str, str]] = frozenset()
 
