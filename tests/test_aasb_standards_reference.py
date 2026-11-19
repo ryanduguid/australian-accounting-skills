@@ -64,7 +64,8 @@ class AasbStandardsReferenceTests(unittest.TestCase):
         for phrase in (
             "use the By Reporting Period function with the period's own start and end dates",
             "the Future Periods tab and the Standard's Amended By list",
-            "For periods beginning before 1 January 2025, use the archived Browse for Pronouncements search",
+            # The portal holds every version from 1 July 2021; the archive only matters before that.
+            "The portal holds the versions for periods beginning on or after 1 July 2021. For a period beginning before that date, use the archived Browse for Pronouncements search",
             "A URL, version label or download date does not select a version: the application paragraph does.",
             "Statements prepared under Tier 2 do not comply with IFRS Standards",
         ):
