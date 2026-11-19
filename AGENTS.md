@@ -119,13 +119,25 @@ git diff --check
 
 The 5 Python checks, ShellCheck, actionlint, the coverage check and the
 citation check are the gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
-actionlint 1.7.12 run in its `lint` job, then the 3 Python verification checks
-run on Python 3.14 and 3.15. The coverage and citation checks need Rust 1.99
+actionlint 1.7.12 run in its `lint` job, then its `verify` job runs the 3
+Python verification checks on Python 3.14 and 3.15. The coverage and citation checks need Rust 1.99
 or newer; the `native` job runs the same commands on Linux and Windows. The
 citation check reports, by file and line, each section, ruling, determination
 or practice statement a skill cites without a record in its `sources.json`, and
-each section missing from its Act's list in `tools/accounting-skills/section-index/`. A third job runs
-the shared secrets scan from `ryanduguid/release-policy`: betterleaks over the
+each section missing from its Act's list in `tools/accounting-skills/section-index/`.
+
+`verify-gates`, the one check from that workflow that branch protection
+requires, also needs its `native`, `coverage` and `shared-conformance` jobs.
+The `native` job builds and tests the Rust tooling and holds its line
+coverage at 73%, from `tools/accounting-skills/`:
+`cargo llvm-cov --locked --all-targets --fail-under-lines 73`. The `coverage`
+job holds the unit tests' branch coverage of `scripts/` at 100%:
+`python -m coverage run --branch --source=scripts -m unittest discover -s tests`,
+then `python -m coverage report --fail-under=100`. The `shared-conformance`
+job runs the shared `verify-skills.yml` workflow from `ryanduguid/release-policy`.
+
+Branch protection also requires the `secrets` job of
+`.github/workflows/secrets.yml`. It runs the shared secrets scan from `ryanduguid/release-policy`: betterleaks over the
 commits a push or pull request adds and the full history weekly or when run by
 hand. `.gitleaks.toml` holds this repository's allowlists and extends
 `.github/secrets-rules.toml`, a copy of the shared client-identifier rules that

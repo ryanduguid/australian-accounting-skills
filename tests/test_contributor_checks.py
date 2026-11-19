@@ -156,18 +156,22 @@ class ContributorCheckTests(unittest.TestCase):
         section_list = next((REPOSITORY / "tools" / "accounting-skills" / "section-index").glob("*.txt"))
         self.assertRegex(section_list.relative_to(REPOSITORY).as_posix(), hooks["citations"]["files"])
 
-    def test_contributing_gives_the_coverage_floors_verify_gates_needs(self) -> None:
-        """verify-gates needs the native and coverage jobs, so their floors are gates a contributor must meet too."""
+    def test_every_guide_gives_the_jobs_and_floors_verify_gates_needs(self) -> None:
+        """verify-gates needs these jobs, so their floors are gates a contributor must meet too."""
         workflow = yaml.safe_load(VERIFY_WORKFLOW.read_text(encoding="utf-8"))
         runs = [" ".join(step["run"].split()) for job in ("native", "coverage")
                 for step in workflow["jobs"][job]["steps"] if "run" in step]
-        contributing = (REPOSITORY / "CONTRIBUTING.md").read_text(encoding="utf-8")
-        for floor in ("cargo llvm-cov --locked --all-targets --fail-under-lines 73",
-                      "python -m coverage run --branch --source=scripts -m unittest discover -s tests",
-                      "python -m coverage report --fail-under=100"):
-            with self.subTest(floor=floor):
-                self.assertIn(floor, runs)
-                self.assertIn(floor, contributing)
+        for guide in CONTRIBUTOR_GUIDES:
+            text = " ".join((REPOSITORY / guide).read_text(encoding="utf-8").split())
+            for job in workflow["jobs"]["verify-gates"]["needs"]:
+                with self.subTest(guide=guide, job=job):
+                    self.assertIn(f"`{job}`", text)
+            for floor in ("cargo llvm-cov --locked --all-targets --fail-under-lines 73",
+                          "python -m coverage run --branch --source=scripts -m unittest discover -s tests",
+                          "python -m coverage report --fail-under=100"):
+                with self.subTest(guide=guide, floor=floor):
+                    self.assertIn(floor, runs)
+                    self.assertIn(floor, text)
 
     def test_the_gate_map_describes_gates_that_still_exist(self) -> None:
         """A mapping left behind after a gate is removed is a false assurance."""
