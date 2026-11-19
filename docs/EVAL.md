@@ -311,7 +311,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
 [8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 241 cards. The 4 and 5 November 2026 changes to
+now cover 95 of the 242 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -368,8 +368,8 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 125 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-110 skills has at least one, and `tests/test_routing_cases.py` fails when a
+the 126 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+111 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
@@ -381,7 +381,7 @@ claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --ma
 ```
 
 The estimate for the earlier 107-case pack was about US$18, not a measurement.
-The 125-case pack has no measured cost; a run that reaches the US$30 cap stops
+The 126-case pack has no measured cost; a run that reaches the US$30 cap stops
 with partial results. The 79 prompts added on 4 and 11 November 2026, the 6 prompts added on 12 November 2026 and the prompts added on 16 and 19 November 2026
 have no recorded run.
 
@@ -509,7 +509,7 @@ command's output differ, so a change to a skill's citations updates it.
 ```text
 Income Tax Assessment Act 1997 (Cth): 431 sections, 429 found, 2 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 179 sections, 177 found, 2 listed exceptions, 0 absent.
-A New Tax System (Goods and Services Tax) Act 1999 (Cth): 157 sections, 157 found, 0 listed exceptions, 0 absent.
+A New Tax System (Goods and Services Tax) Act 1999 (Cth): 159 sections, 159 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment Act 1936 (Cth): 146 sections, 146 found, 0 listed exceptions, 0 absent.
 Corporations Act 2001 (Cth): 124 sections, 124 found, 0 listed exceptions, 0 absent.
 Taxation Administration Act 1953 (Cth): 82 sections, 82 found, 0 listed exceptions, 0 absent.
@@ -548,8 +548,8 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, no index.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
-1968 of 1968 citations resolve to a sources.json record: 266 of 266 rulings and guidance, 1702 of 1702 legislative sections.
-1575 of 1702 resolved sections checked against an index of their Act: 1570 found, 5 listed exceptions, 0 absent; 127 in an Act with no index.
+1970 of 1970 citations resolve to a sources.json record: 266 of 266 rulings and guidance, 1704 of 1704 legislative sections.
+1577 of 1704 resolved sections checked against an index of their Act: 1572 found, 5 listed exceptions, 0 absent; 127 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 241 cards in `cases/` test workflow quality, provenance and restraint.
+The 242 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -74,6 +74,7 @@ law claim, unverified source or guess.
 | [WIP cost-to-complete gap](cases/wip-cost-to-complete-gap.md) | wip-over-under-billing |
 | [Unallocated plant cost](cases/contract-cost-unallocated-plant.md) | contract-cost-tracking, plant-and-equipment-costing |
 | [Fuel tax credits missing docket](cases/fuel-tax-credits-missing-docket.md) | fuel-tax-credits |
+| [Wages for 2 schemes in one payroll total, a leave payout and a subcontractor](cases/workers-compensation-premium-two-schemes.md) | workers-compensation-premium |
 | [Coal LSL levy unverified rate](cases/coal-lsl-levy-unverified-rate.md) | coal-lsl-levy |
 | [Payroll-tax contractor characterisation](cases/payroll-tax-contractor-characterisation.md) | payroll-tax-contractors, contractor-super-tpar |
 | [NSW on-hire chain before contractor exemptions](cases/payroll-tax-nsw-on-hire-screen.md) | payroll-tax-contractors |
@@ -292,7 +293,7 @@ law claim, unverified source or guess.
 | [Year-end records request and covering email built from last year](cases/year-end-workpapers-records-request.md) | year-end-workpapers, au-individual-return |
 | [Three-year analytical review with a related-party loan](cases/year-end-workpapers-three-year-review.md) | year-end-workpapers |
 
-Together the cards cover all 110 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 111 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
