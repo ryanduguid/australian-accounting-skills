@@ -151,18 +151,21 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                              r"\botherwise record that date as `UNVERIFIED`")
         self.assert_sentence(step, r"\binconvenience\b", r"\bnot a sufficient reason\b",
                              r"\bregulator's view, not the law\b")
-        # Alcuin round 1 (S1): s 6-12(2) also gives way to ss 6-13 and 6-14, whose periods differ.
-        self.assert_sentence(step, r"\bs 6-13\b", r"\bs 6-14\b", r"\bs 6-32\b", r"\bits own conditions and period\b",
+        # Alcuin round 1 (S1): s 6-12(2) also gives way to ss 6-13 and 6-14. Round 2 (S8): s 6-13 sets no period.
+        self.assert_sentence(step, r"\bs 6-13\b", r"\bs 6-14\b", r"\bs 6-32\b", r"\bits own conditions and any period it "
+                                                                                 r"specifies\b",
                              DO_NOT + r"apply s 6-12 to it\b")
         # Alcuin round 1 (S3): a late procedure keeps s 8(1) only if it then met old s 34.
-        self.assert_sentence(step, r"\bs 8\(3\) of those Transitional Rules stops s 8\(1\) treating the matters\b",
+        transitional = r"of the \*Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026\*"
+        self.assert_sentence(step, rf"\bs 8\(3\) {transitional} stops s 8\(1\) {transitional} treating the matters\b",
                              r"\bs 34 of the AML/CTF Act as in force on 30 March 2026\b")
-        self.assert_sentence(step, r"\bwhether the practice may use s 7 at all\b", r"\bis for the AML/CTF compliance officer\b")
-        self.assert_sentence(step, r"\bs 7 of the \*Anti-Money Laundering and Counter-Terrorism Financing Transitional "
-                                   r"Rules 2026\*", r"\bceases to have effect on 31 March 2029\b")
+        self.assert_sentence(step, rf"\bwhether the practice may use s 7 {transitional} at all\b",
+                             r"\bis for the AML/CTF compliance officer\b")
+        self.assert_sentence(step, rf"\bs 7 {transitional}", r"\bceases to have effect on 31 March 2029\b")
         # Finisher review: a client on the transitional procedure is outside s 6-12 (Transitional Rules s 7(4), s 8(2)).
-        self.assert_sentence(step, r"\bs 7\(4\) of those Transitional Rules disapplies\b",
-                             r"\bs 6-12 of the AML/CTF Rules does not set the conditions\b",
+        self.assert_sentence(step, rf"\bs 7\(4\) {transitional} disapplies\b",
+                             r"\bs 6-12 of the AML/CTF Rules does not set the conditions\b")
+        self.assert_sentence(step, rf"\bSection 8\(2\) {transitional} permits starting before the procedure\b",
                              r"\bs 33 of the AML/CTF Act as in force on 30 March 2026\b")
 
     def test_reliance_covers_collection_and_verification_only(self) -> None:
@@ -228,7 +231,7 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         # Finisher review: a prior practice may have kept no Part 10 record, and s 6-28 covers its pre-commencement clients.
         self.assert_sentence(step, r"\bpre-commencement customer of the prior entity\b", r"\bs 6-28 of the AML/CTF Rules\b")
         self.assert_sentence(step, r"\bkept no record under one of those sections, list it as missing\b",
-                             r"\bwhether s 6-27 applies is for the AML/CTF compliance officer\b")
+                             r"\bwhether s 6-27 of the AML/CTF Rules applies is for the AML/CTF compliance officer\b")
         self.assert_sentence(step, r"\bWhether reliance is appropriate\b", r"\bare for the AML/CTF compliance officer and "
                                                                           r"a senior manager\b")
 

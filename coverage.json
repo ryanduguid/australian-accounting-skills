@@ -474,6 +474,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_aml_ctf_cdd_reliance.py",
           "test_client_acceptance.py"
         ],
         "inventory": []
