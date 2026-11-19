@@ -98,6 +98,11 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
             with self.subTest(provision=provision, item=item):
                 self.assert_sentence(step, rf"\b{provision} of the AML/CTF Rules\b", rf"\b{item}\b")
         self.assert_sentence(step, r"\bList each item missing for the customer's type as a missing element\b")
+        # Alcuin round 1 (S4, S6): the business identifier comes first, and s 6-5 asks only for identity information.
+        self.assert_sentence(step, r"\bunique identifier for the business or, if none has been given, any unique identifier "
+                                   r"given to the customer\b")
+        self.assert_sentence(step, r"\bs 6-5 of the AML/CTF Rules requires at least the identity information in s 6-2\(2\), "
+                                   r"s 6-3\(2\) or s 6-4\(2\)", r"\bnot the rest of those sections\b")
         # Finisher review: s 6-2(4) asks for the nature of the business, and an individual has no list in the Rules.
         self.assert_sentence(step, r"\bs 6-2 of the AML/CTF Rules\b", r"\bnature of its business or operations\b")
         self.assert_sentence(step, r"\bindividual not in business\b", r"\bsets no minimum list\b",
@@ -124,6 +129,8 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         self.assert_sentence(step, r"\bs 6-16 of the AML/CTF Rules requires the practice's AML/CTF policies to deal with\b")
         self.assert_sentence(step, r"\bs 32\(a\), \(b\) or \(d\) of the AML/CTF Act\b", r"\bs 6-21 of the AML/CTF Rules\b",
                              r"\bsource of the client's wealth and funds\b")
+        # Alcuin round 1 (S5): ss 6-23 and 5-5(1) do not reach a person acting only on the client's behalf.
+        self.assert_sentence(step, r"\bnot a person acting only on its behalf\b", r"\bs 6-23 of the AML/CTF Rules\b")
         self.assert_sentence(step, r"\bs 6-23 of the AML/CTF Rules adds the source of that person's wealth and funds\b",
                              r"\bs 5-5\(1\) of the AML/CTF Rules\b", r"\bsenior manager's approval before the service "
                                                                      r"starts\b")
@@ -144,7 +151,13 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
                              r"\botherwise record that date as `UNVERIFIED`")
         self.assert_sentence(step, r"\binconvenience\b", r"\bnot a sufficient reason\b",
                              r"\bregulator's view, not the law\b")
-        self.assert_sentence(step, r"\bs 6-32 of the AML/CTF Rules\b", DO_NOT + r"apply s 6-12 to it\b")
+        # Alcuin round 1 (S1): s 6-12(2) also gives way to ss 6-13 and 6-14, whose periods differ.
+        self.assert_sentence(step, r"\bs 6-13\b", r"\bs 6-14\b", r"\bs 6-32\b", r"\bits own conditions and period\b",
+                             DO_NOT + r"apply s 6-12 to it\b")
+        # Alcuin round 1 (S3): a late procedure keeps s 8(1) only if it then met old s 34.
+        self.assert_sentence(step, r"\bs 8\(3\) of those Transitional Rules stops s 8\(1\) treating the matters\b",
+                             r"\bs 34 of the AML/CTF Act as in force on 30 March 2026\b")
+        self.assert_sentence(step, r"\bwhether the practice may use s 7 at all\b", r"\bis for the AML/CTF compliance officer\b")
         self.assert_sentence(step, r"\bs 7 of the \*Anti-Money Laundering and Counter-Terrorism Financing Transitional "
                                    r"Rules 2026\*", r"\bceases to have effect on 31 March 2029\b")
         # Finisher review: a client on the transitional procedure is outside s 6-12 (Transitional Rules s 7(4), s 8(2)).
@@ -185,6 +198,9 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
             with self.subTest(condition=condition):
                 self.assert_sentence(text, r"\bs 6-29\(1\) of the AML/CTF Rules\b", rf"\b{condition}")
         self.assert_sentence(text, r"\bs 37A\(2\)\(d\) of the AML/CTF Act\b")
+        # Alcuin round 1 (S2): the arrangement must be in force, and the grounds at entry recorded.
+        self.assert_sentence(text, r"\bthat it is in force \(s 37A\(2\)\(a\) of the AML/CTF Act\)",
+                             r"\breasonable grounds, when it entered into the arrangement\b", r"\(s 37A\(1\)\(b\) of the AML/CTF Act\)")
         self.assert_sentence(text, r"\bs 6-30 of the AML/CTF Rules\b", r"\bnot more than 2 years\b",
                              r"\bsignificant change in circumstances\b", r"\bwithin 10 business days after completing\b")
         self.assert_sentence(text, r"\bs 37A\(3\) of the AML/CTF Act removes the reliance for procedures carried out "
@@ -198,6 +214,9 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         text = case.group(0) if case else ""
         self.assert_sentence(text, r"\bs 6-31 of the AML/CTF Rules\b", r"\bdocumented reasons\b",
                              r"\(s 6-31\(e\) of the AML/CTF Rules\)", r"\(s 38\(d\) of the AML/CTF Act\)")
+        # Alcuin round 1 (S2): s 38(b) needs the other person's compliance with s 28(3)(c) or (d), not just a collection.
+        self.assert_sentence(text, r"\bother person complied with s 28\(3\)\(c\) or \(d\) of the AML/CTF Act\b",
+                             r"\(s 38\(b\) of the AML/CTF Act\)")
         self.assert_sentence(text, r"\bAUSTRAC enrolment of the other person shows its status only, not the other "
                                    r"conditions\b")
         self.assert_sentence(text, r"\bWhere any reason is not documented, list it as missing\b")
@@ -228,6 +247,9 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
 
     def test_the_hand_off_names_what_the_skill_does_not_decide(self) -> None:
         hand_off = section(SKILL, "Hand-off and checks")
+        # Alcuin round 1 (S7): a `missing` row keeps the file incomplete, as the card expects.
+        self.assert_sentence(hand_off, r"`ready for the AML/CTF compliance officer` when no row is `missing`",
+                             r"`incomplete` otherwise\b")
         self.assert_sentence(hand_off, r"`ready for the AML/CTF compliance officer`", r"`incomplete` otherwise\b",
                              r"\bit is never `complete`")
         self.assert_sentence(hand_off, r"\bThis skill does not decide whether a matter is established on reasonable "
@@ -271,6 +293,9 @@ class CustomerDueDiligenceRelianceTests(unittest.TestCase):
         self.assertEqual(len(routed), 1)
         self.assertNotIn(SKILL, routed[0]["prompt"])
         self.assertIn("au-aml-ctf-client-coverage", routed[0]["not"])
+        # Alcuin round 1 (I1): client acceptance keeps both hand-offs.
+        self.assert_sentence(workflow_step("au-client-acceptance", 6), r"`au-aml-ctf-client-coverage` to check the register\b",
+                             r"`au-aml-ctf-cdd-reliance` to prepare the client's customer due diligence file\b")
 
 
 if __name__ == "__main__":
