@@ -442,8 +442,8 @@ register and compilation identifiers, the in-force date, the request, the
 retrieval date and the SHA-256 digest of the file read. Since 13 November
 2026 a Queensland Act can have a list as well, from the Queensland register's
 XML of its version in force, leaving out the sections that version marks
-repealed: the BIF Act's first, from the version in force from 28 April 2026,
-which leaves out 32. The check drops
+repealed, expired or uncommenced: the BIF Act's first, from the version in
+force from 28 April 2026, which leaves out 36. The check drops
 subsection and paragraph suffixes (`s 43-10(4)` is checked as 43-10), and
 reads `ss 17A-18C` as a range when 17A and 18C are listed and the Act's list
 holds no hyphenated number. Where it does, as the ITAA 1936, TAA 1953 and
@@ -491,9 +491,8 @@ Regulations 2021, SGA Regulations 2018 and AML/CTF Transitional Rules 2026)
 and 3 Queensland Acts (the QBCC Act 1991, Payroll Tax Act 1971 and Duties Act
 2001). All 72 sections they newly checked were found, and the sections in an
 Act with no list fell from 199 to 127. 3 Commonwealth sources still have no list:
-the Taxation Administration Regulations 2017, whose current version had no
-compilation on the register when these lists were built (compilation 18,
-F2026C01210, in force from 14 November 2026, appeared later that day); the Coal Mining Industry (Long Service Leave)
+the Taxation Administration Regulations 2017, whose compilation 18
+(F2026C01210, in force from 14 November 2026) has no list yet; the Coal Mining Industry (Long Service Leave)
 Payroll Levy Act 1992, whose current compilation has no number; and the Taxable
 Payments Reporting System - Reporting Exemptions for Certain Entities
 Determination 2019, whose EPUB lists no sections. The other 116 sections

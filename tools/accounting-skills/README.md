@@ -232,7 +232,7 @@ lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
 `qld-act-YYYY-NNN.txt`, has the same lines apart from `compilation` and
 `compilation-number`; `in-force-from` names the register's version, and its
 sections are those the register's XML of that version holds, leaving out any
-marked repealed. The numbers are every
+it marks repealed, expired or uncommenced. The numbers are every
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
 after the first schedule heading only hyphenated numbers count, because a
@@ -324,7 +324,8 @@ Act's identifier on www.legislation.qld.gov.au:
    embeds the time it was served.
 3. Delete each `<fragment>` element, which holds amending text quoted inside a
    section, then take each `<clause id="sec.NUMBER">` in document order,
-   leaving out any whose `status` attribute is `repealed`.
+   leaving out any with a `status` attribute: the register marks a repealed,
+   expired or uncommenced section with `repealed`, `expired` or `uncommenced`.
 4. Write the header lines `# title: ` (the Act's short title without `(Qld)`),
    `# register-id: qld-act-YYYY-NNN`, `# in-force-from: ` (the version date),
    `# source: `, `# retrieved: ` and `# sha256: ` (of the XML's bytes), then
