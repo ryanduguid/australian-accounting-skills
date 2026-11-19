@@ -28,6 +28,7 @@
       "source": "./",
       "strict": true,
       "skills": [
+        "./.claude/skills/au-aasb-standards-reference",
         "./.claude/skills/au-aml-ctf-cdd-reliance",
         "./.claude/skills/au-aml-ctf-client-coverage",
         "./.claude/skills/au-aml-ctf-designated-services",
