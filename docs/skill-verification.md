@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 111 skills, 817 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 111 skills, 823 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -74,7 +74,7 @@ Totals: 111 skills, 817 indexed primary sources of which 341 have a recorded hum
 | [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md) | [7](../.claude/skills/au-property-development-income/sources.json) | 2026-11-02 (6 of 7) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | [4](../.claude/skills/au-psi-review/sources.json) | 2026-10-14 (2 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | [2](../.claude/skills/au-rd-incentive/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | [7](../.claude/skills/au-rental-property/sources.json) | 2026-09-30 (3 of 7) | 1 | 0 | 3 | 1 | 0 | 0 |
+| [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | [11](../.claude/skills/au-rental-property/sources.json) | 2026-09-30 (3 of 11) | 1 | 0 | 3 | 1 | 0 | 0 |
 | [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [13](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 13) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [2](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 2) | 0 | 2 | 1 | 1 | 0 | 0 |
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | [3](../.claude/skills/au-sapto/sources.json) | 2026-11-02 (2 of 3) | 0 | 0 | 2 | 0 | 0 | 0 |
@@ -109,7 +109,7 @@ Totals: 111 skills, 817 indexed primary sources of which 341 have a recorded hum
 | [`div7a-compliance`](../.claude/skills/div7a-compliance/SKILL.md) | [4](../.claude/skills/div7a-compliance/sources.json) | none (0 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | [9](../.claude/skills/fbt-annual-workflow/sources.json) | none (0 of 9) | 0 | 0 | 3 | 1 | 0 | 0 |
 | [`financial-modelling`](../.claude/skills/financial-modelling/SKILL.md) | exempt | none | 0 | 0 | 3 | 1 | 0 | 0 |
-| [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) | [12](../.claude/skills/fuel-tax-credits/sources.json) | 2026-09-30 (2 of 12) | 0 | 0 | 2 | 2 | 0 | 0 |
+| [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) | [14](../.claude/skills/fuel-tax-credits/sources.json) | 2026-09-30 (2 of 14) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`marketplace-settlements`](../.claude/skills/marketplace-settlements/SKILL.md) | [3](../.claude/skills/marketplace-settlements/sources.json) | none (0 of 3) | 1 | 0 | 3 | 0 | 0 | 0 |
 | [`month-end-close`](../.claude/skills/month-end-close/SKILL.md) | [6](../.claude/skills/month-end-close/sources.json) | 2026-09-30 (5 of 6) | 1 | 0 | 11 | 4 | 0 | 0 |
 | [`myob-exports`](../.claude/skills/myob-exports/SKILL.md) | [13](../.claude/skills/myob-exports/sources.json) | none (0 of 13) | 0 | 0 | 2 | 0 | 0 | 0 |

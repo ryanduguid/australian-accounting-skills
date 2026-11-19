@@ -190,6 +190,38 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "ATO: Simplified fuel tax credits",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/fuel-schemes/fuel-tax-credits-business/working-out-your-fuel-tax-credits/simplified-fuel-tax-credits",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 19 November 2026 (QC48520, last updated 6 July 2021): the simplified methods for small claimants and the methods for all claimants. Its description of the end-of-period rate omits the 'because of indexation' condition in PCG 2016/2 para 11. Human review pending.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/fuel-schemes/fuel-tax-credits-business/working-out-your-fuel-tax-credits/simplified-fuel-tax-credits",
+      "http_status": 200,
+      "fetched_at": "2026-11-19",
+      "review_required_since": "2026-11-19",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "ATO: Basic method for heavy vehicles",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/fuel-schemes/fuel-tax-credits-business/working-out-your-fuel-tax-credits/basic-method-for-heavy-vehicles",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 19 November 2026 (QC64655, last updated 2 June 2021): the 3 steps, Table 1 consumption rates for rigid trucks and the worked example. Articulated combinations are in Schedule 1 of PCG 2021/2. Human review pending.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/incentives-and-concessions/fuel-schemes/fuel-tax-credits-business/working-out-your-fuel-tax-credits/basic-method-for-heavy-vehicles",
+      "http_status": 200,
+      "fetched_at": "2026-11-19",
+      "review_required_since": "2026-11-19",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
