@@ -375,6 +375,8 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("A calculator's figure checks the written method, which is always completed", text)
         self.assertIn("record the difference for the reviewer and adopt neither", text)
         self.assertIn("Without the executable, follow the written method.", text)
+        # 1.0.0 refuses `kind` on balancing-adjustment, trade-in, business-capital-expenditure and the classifier.
+        self.assertIn("without the `kind` field that only `periods` takes", text)
         self.assertNotIn("e18d60b", text)
         for command in commands:
             with self.subTest(skill=name, command=command):
