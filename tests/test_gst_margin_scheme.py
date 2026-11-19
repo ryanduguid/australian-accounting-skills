@@ -64,7 +64,9 @@ class MarginSchemeTests(unittest.TestCase):
             "a vendor's lack of registration alone does not establish that it was not required to be registered",
             "property purchased or contracted for purchase on or after 9 December 2008",
             "no written agreement is needed for a sale made before 29 June 2005",
-            "still unpaid at the time of the supply is taken out of it (s 75-12 of the GST Act)",
+            "for the last supply into the group, is taken out of it (s 75-12 of the GST Act)",
+            "bars the scheme only when all of its own conditions are met",
+            "A sale by a creditor in satisfaction of a debt can be a taxable supply through the debtor's status instead (s 105-5 of the GST Act)",
             "takes the GST inclusive market value as its consideration, whether or not it was for consideration (s 75-13 of the GST Act)",
             "only to the extent the supply is connected to that acquisition (s 75-16 of the GST Act)",
         ):
@@ -72,7 +74,7 @@ class MarginSchemeTests(unittest.TestCase):
                 self.assertIn(phrase, text)
         # Each rule above has a source record read that day.
         records = {r["url"] for r in json.loads((SKILL / "sources.json").read_text(encoding="utf-8"))["sources"]}
-        for provision in ("9-5", "9-90", "75-5", "75-10", "75-12", "75-13", "75-15", "75-16", "75-20", "75-35"):
+        for provision in ("9-5", "9-90", "105-5", "75-5", "75-10", "75-12", "75-13", "75-15", "75-16", "75-20", "75-35"):
             with self.subTest(provision=provision):
                 self.assertIn(f"https://www.ato.gov.au/law/view/document?docid=PAC/19990055/{provision}", records)
         self.assertIn("https://www.legislation.gov.au/F2020L00346/latest/text", records)
@@ -89,7 +91,7 @@ class MarginSchemeTests(unittest.TestCase):
         for stated in (
             "bought vacant land on 3 March 2024 for 480,000.00, paid in full",
             "for 1,100,000.00 plus a 1,320.00 settlement adjustment in its favour",
-            "bought land in May 1998 for 95,000.00",
+            "bought land in May 1998 for 95,000.00, was neither registered nor required to be registered on 1 July 2000",
             "for 990,000.00 under a signed margin scheme agreement",
             "approved valuation of 350,000.00 as at 20 September 2004",
         ):
