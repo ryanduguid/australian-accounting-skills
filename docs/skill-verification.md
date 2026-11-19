@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 108 skills, 760 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 109 skills, 772 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -15,6 +15,7 @@ Totals: 108 skills, 760 indexed primary sources of which 341 have a recorded hum
 
 | Skill | Sources | Earliest review | Unreachable | Changed since review | Cards | Confirmed pass | Confirmed fail | Non-current digest |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [`au-aml-ctf-cdd-reliance`](../.claude/skills/au-aml-ctf-cdd-reliance/SKILL.md) | [12](../.claude/skills/au-aml-ctf-cdd-reliance/sources.json) | none (0 of 12) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-aml-ctf-client-coverage`](../.claude/skills/au-aml-ctf-client-coverage/SKILL.md) | [13](../.claude/skills/au-aml-ctf-client-coverage/sources.json) | 2026-10-14 (6 of 13) | 4 | 0 | 4 | 1 | 0 | 0 |
 | [`au-aml-ctf-designated-services`](../.claude/skills/au-aml-ctf-designated-services/SKILL.md) | [7](../.claude/skills/au-aml-ctf-designated-services/sources.json) | none (0 of 7) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-asic-company-changes`](../.claude/skills/au-asic-company-changes/SKILL.md) | [12](../.claude/skills/au-asic-company-changes/sources.json) | 2026-11-02 (10 of 12) | 0 | 0 | 1 | 1 | 0 | 0 |
