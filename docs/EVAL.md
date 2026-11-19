@@ -440,9 +440,10 @@ table of contents of the current compilation's EPUB, which the Federal
 Register of Legislation's API serves. Its header records the title, the
 register and compilation identifiers, the in-force date, the request, the
 retrieval date and the SHA-256 digest of the file read. Since 13 November
-2026 one state Act has a list as well: the Queensland BIF Act, from the
-Queensland register's XML of the version in force from 28 April 2026, which
-leaves out the 32 sections that version marks repealed. The check drops
+2026 a Queensland Act can have a list as well, from the Queensland register's
+XML of its version in force, leaving out the sections that version marks
+repealed, expired or uncommenced: the BIF Act's first, from the version in
+force from 28 April 2026, which leaves out 36. The check drops
 subsection and paragraph suffixes (`s 43-10(4)` is checked as 43-10), and
 reads `ss 17A-18C` as a range when 17A and 18C are listed and the Act's list
 holds no hyphenated number. Where it does, as the ITAA 1936, TAA 1953 and
@@ -482,6 +483,22 @@ citations, all resolved, including 1,437 sections: 1,200 in an indexed Act, of
 which 1,197 were listed and 3 were the same exceptions, and 237 not indexed.
 None was missing.
 
+On 19 November 2026 lists retrieved that day were added for 5 more
+Commonwealth Acts (the Fair Work Act, Income Tax Rates Act, Medicare Levy Act,
+Personal Property Securities Act and Coal Mining Industry (Long Service Leave)
+Administration Act 1992), 4 instruments (the GST Regulations 2019, ITAA 1997
+Regulations 2021, SGA Regulations 2018 and AML/CTF Transitional Rules 2026)
+and 3 Queensland Acts (the QBCC Act 1991, Payroll Tax Act 1971 and Duties Act
+2001). All 72 sections they newly checked were found, and the sections in an
+Act with no list fell from 199 to 127. 3 Commonwealth sources still have no list:
+the Taxation Administration Regulations 2017, whose compilation 18
+(F2026C01210, in force from 14 November 2026) has no list yet; the Coal Mining Industry (Long Service Leave)
+Payroll Levy Act 1992, whose current compilation has no number; and the Taxable
+Payments Reporting System - Reporting Exemptions for Certain Entities
+Determination 2019, whose EPUB lists no sections. The other 116 sections
+belong to Acts of the other 7 states and territories; no list has yet been
+built from their registers.
+
 The figures above are dated. The block below is what `check-citations` prints
 for the commit this file is in, after any failures: each Act or instrument's
 resolved sections, most cited first, then the totals. A test in
@@ -505,34 +522,34 @@ Tax Agent Services (Code of Professional Conduct) Determination 2024 (Cth): 38 s
 Coal Mining Industry (Long Service Leave) Payroll Levy Collection Act 1992 (Cth): 25 sections, 25 found, 0 listed exceptions, 0 absent.
 Fuel Tax Act 2006 (Cth): 24 sections, 24 found, 0 listed exceptions, 0 absent.
 Superannuation Industry (Supervision) Regulations 1994 (Cth): 23 sections, 23 found, 0 listed exceptions, 0 absent.
-Queensland Building and Construction Commission Act 1991 (Qld): 21 sections, no index.
+Queensland Building and Construction Commission Act 1991 (Qld): 21 sections, 21 found, 0 listed exceptions, 0 absent.
 Superannuation Industry (Supervision) Act 1993 (Cth): 19 sections, 19 found, 0 listed exceptions, 0 absent.
 Building and Construction Industry Security of Payment Act 1999 (NSW): 16 sections, no index.
-Payroll Tax Act 1971 (Qld): 13 sections, no index.
+Payroll Tax Act 1971 (Qld): 13 sections, 13 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2011 (ACT): 11 sections, no index.
-Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, no index.
+Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (Vic): 9 sections, no index.
-A New Tax System (Goods and Services Tax) Regulations 2019 (Cth): 8 sections, no index.
+A New Tax System (Goods and Services Tax) Regulations 2019 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
 Taxation Administration Regulations 2017 (Cth): 8 sections, no index.
 Payroll Tax Act 2008 (Tas): 7 sections, no index.
 Payroll Tax Act 2009 (NT): 7 sections, no index.
 Fringe Benefits Tax Assessment Act 1986 (Cth): 6 sections, 6 found, 0 listed exceptions, 0 absent.
-Coal Mining Industry (Long Service Leave) Administration Act 1992 (Cth): 5 sections, no index.
-Fair Work Act 2009 (Cth): 5 sections, no index.
+Coal Mining Industry (Long Service Leave) Administration Act 1992 (Cth): 5 sections, 5 found, 0 listed exceptions, 0 absent.
+Fair Work Act 2009 (Cth): 5 sections, 5 found, 0 listed exceptions, 0 absent.
 Pay-roll Tax Assessment Act 2002 (WA): 5 sections, no index.
 Stamp Duty Act 1978 (NT): 5 sections, no index.
-Income Tax Rates Act 1986 (Cth): 3 sections, no index.
+Income Tax Rates Act 1986 (Cth): 3 sections, 3 found, 0 listed exceptions, 0 absent.
 Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992 (Cth): 2 sections, no index.
 Duties Act 2000 (Vic): 2 sections, no index.
-Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 2 sections, no index.
-Superannuation Guarantee (Administration) Regulations 2018 (Cth): 2 sections, no index.
-Duties Act 2001 (Qld): 1 section, no index.
-Medicare Levy Act 1986 (Cth): 1 section, no index.
+Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
+Superannuation Guarantee (Administration) Regulations 2018 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
+Duties Act 2001 (Qld): 1 section, 1 found, 0 listed exceptions, 0 absent.
+Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, no index.
-Personal Property Securities Act 2009 (Cth): 1 section, no index.
+Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
 1968 of 1968 citations resolve to a sources.json record: 266 of 266 rulings and guidance, 1702 of 1702 legislative sections.
-1503 of 1702 resolved sections checked against an index of their Act: 1498 found, 5 listed exceptions, 0 absent; 199 in an Act with no index.
+1575 of 1702 resolved sections checked against an index of their Act: 1570 found, 5 listed exceptions, 0 absent; 127 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing

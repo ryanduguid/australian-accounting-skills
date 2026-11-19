@@ -2,7 +2,7 @@
 # register-id: qld-act-2017-043
 # in-force-from: 2026-04-28
 # source: https://www.legislation.qld.gov.au/view/whole/xml/inforce/2026-04-28/act-2017-043
-# retrieved: 2026-11-13
+# retrieved: 2026-11-19
 # sha256: 18b8da2c94b789932a8a1b1e4782183b711a67d2e88061e7e95f9e494777565b
 1
 2
@@ -298,7 +298,6 @@
 208
 209
 210
-211
 211A
 211B
 211C
@@ -316,6 +315,3 @@
 215G
 215H
 215I
-216
-217
-218

@@ -1,0 +1,92 @@
+# title: Coal Mining Industry (Long Service Leave) Administration Act 1992
+# register-id: C2004A04351
+# compilation: C2026C00370
+# compilation-number: 25
+# in-force-from: 2026-09-01
+# source: https://api.prod.legislation.gov.au/v1/documents(titleId='C2004A04351',start=2026-09-01T00:00:00,retrospectiveStart=2026-09-01T00:00:00,rectificationVersionNumber=0,type='Primary',uniqueTypeNumber=0,volumeNumber=0,format='Epub')
+# retrieved: 2026-11-19
+# sha256: 9f4902455338ee355e09aa8d316b7af4af319b2d726217f2cf079fe34db2ae53
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+23
+24
+25
+26
+27
+28
+29
+31
+32
+33
+34
+35
+36
+37
+38
+39
+39A
+39AA
+39AB
+39AC
+39AD
+39AE
+39B
+39BA
+39BB
+39BC
+39BD
+39BE
+39C
+39CA
+39CB
+39CC
+39CD
+39CE
+39D
+39DA
+39DB
+39E
+39EA
+39EB
+39F
+39G
+40
+41
+42
+43
+44
+45
+47
+48
+49
+49A
+49CE
+49CF
+50
+51
+52
+52A
+52B
+52C
+52D
+54
+55

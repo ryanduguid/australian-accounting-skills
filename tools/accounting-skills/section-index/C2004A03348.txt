@@ -1,0 +1,36 @@
+# title: Income Tax Rates Act 1986
+# register-id: C2004A03348
+# compilation: C2026C00300
+# compilation-number: 66
+# in-force-from: 2026-07-01
+# source: https://api.prod.legislation.gov.au/v1/documents(titleId='C2004A03348',start=2026-07-01T00:00:00,retrospectiveStart=2026-07-01T00:00:00,rectificationVersionNumber=0,type='Primary',uniqueTypeNumber=0,volumeNumber=0,format='Epub')
+# retrieved: 2026-11-19
+# sha256: ab7b3aac2e7972f4d8af7a1384687438007c6136202464e2c39022e4ce545534
+1
+2
+3
+3A
+4
+5
+12
+12AA
+12A
+13
+14
+15
+16
+18
+20
+21
+23
+23AA
+23AB
+23A
+25
+26
+27
+27A
+28
+28A
+29
+30
