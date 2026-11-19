@@ -3,11 +3,11 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
     "skills": 109,
-    "sources_indexed": 778,
+    "sources_indexed": 786,
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 17,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 73,
+    "skills_with_behavioural_gate": 74,
     "skills_with_only_the_seeded_case": 21,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -422,7 +422,7 @@
     {
       "skill": "au-car-expenses",
       "sources": {
-        "indexed": 2,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -444,7 +444,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -719,7 +721,7 @@
     {
       "skill": "au-depreciation-schedule",
       "sources": {
-        "indexed": 12,
+        "indexed": 16,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 11,
@@ -742,6 +744,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_management_reporting.py"
         ],
         "inventory": []
@@ -2831,7 +2834,7 @@
     {
       "skill": "fbt-annual-workflow",
       "sources": {
-        "indexed": 8,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "",
         "reviewed_count": 0,
