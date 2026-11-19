@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 109 skills, 762 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 110 skills, 788 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -16,6 +16,7 @@ Totals: 109 skills, 762 indexed primary sources of which 341 have a recorded hum
 | Skill | Sources | Earliest review | Unreachable | Changed since review | Cards | Confirmed pass | Confirmed fail | Non-current digest |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`au-aasb-standards-reference`](../.claude/skills/au-aasb-standards-reference/SKILL.md) | [10](../.claude/skills/au-aasb-standards-reference/sources.json) | none (0 of 10) | 0 | 0 | 1 | 0 | 0 | 0 |
+| [`au-aml-ctf-cdd-reliance`](../.claude/skills/au-aml-ctf-cdd-reliance/SKILL.md) | [12](../.claude/skills/au-aml-ctf-cdd-reliance/sources.json) | none (0 of 12) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-aml-ctf-client-coverage`](../.claude/skills/au-aml-ctf-client-coverage/SKILL.md) | [13](../.claude/skills/au-aml-ctf-client-coverage/sources.json) | 2026-10-14 (6 of 13) | 4 | 0 | 4 | 1 | 0 | 0 |
 | [`au-aml-ctf-designated-services`](../.claude/skills/au-aml-ctf-designated-services/SKILL.md) | [7](../.claude/skills/au-aml-ctf-designated-services/sources.json) | none (0 of 7) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-asic-company-changes`](../.claude/skills/au-asic-company-changes/SKILL.md) | [12](../.claude/skills/au-asic-company-changes/sources.json) | 2026-11-02 (10 of 12) | 0 | 0 | 1 | 1 | 0 | 0 |
@@ -51,7 +52,7 @@ Totals: 109 skills, 762 indexed primary sources of which 341 have a recorded hum
 | [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) | [1](../.claude/skills/au-foreign-pensions/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | [1](../.claude/skills/au-forex-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | [18](../.claude/skills/au-franking-account/sources.json) | 2026-11-02 (15 of 18) | 0 | 0 | 2 | 1 | 0 | 0 |
-| [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | [22](../.claude/skills/au-gst-property/sources.json) | 2026-09-30 (2 of 22) | 0 | 0 | 2 | 1 | 0 | 0 |
+| [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | [36](../.claude/skills/au-gst-property/sources.json) | 2026-09-30 (2 of 36) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | [2](../.claude/skills/au-gst-registration-review/sources.json) | 2026-10-14 (1 of 2) | 0 | 1 | 2 | 1 | 0 | 0 |
 | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | [7](../.claude/skills/au-individual-return/sources.json) | 2026-10-14 (2 of 7) | 2 | 0 | 6 | 3 | 0 | 0 |
 | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | [12](../.claude/skills/au-land-tax/sources.json) | 2026-09-30 (3 of 12) | 0 | 0 | 9 | 2 | 0 | 0 |

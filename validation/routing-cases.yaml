@@ -351,6 +351,10 @@
   skill: au-aml-ctf-client-coverage
   not: [au-client-acceptance, au-tax-agent-obligations]
   prompt: Our practice has 240 active clients and a spreadsheet recording the identity checks we ran under the anti-money laundering rules. Match the 2 lists and show which clients have no check, an incomplete check or an overdue one, including the beneficial owners of our company and trust clients.
+- id: referred-client-identity-checks
+  skill: au-aml-ctf-cdd-reliance
+  not: [au-aml-ctf-client-coverage, au-client-acceptance]
+  prompt: A law firm has referred a new company client to us for a restructure and says it has already checked the director's identity, so we can rely on its checks. What do we need on our anti-money laundering file for this client before we start, and can we use the law firm's checks?
 - id: practice-designated-services
   skill: au-aml-ctf-designated-services
   not: [au-aml-ctf-client-coverage, au-tax-agent-obligations]

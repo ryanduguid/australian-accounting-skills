@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 240 cards in `cases/` test workflow quality, provenance and restraint.
+The 241 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -93,6 +93,7 @@ law claim, unverified source or guess.
 | [ATO penalties and interest workpapers: missing evidence](cases/au-ato-penalties-interest-missing-evidence.md) | au-ato-penalties-interest |
 | [ATO interest deductibility split](cases/au-ato-penalties-interest-deductibility-split.md) | au-ato-penalties-interest |
 | [A lease question with a portal version for the wrong period and a request to paste the Standard](cases/au-aasb-standards-reference-version-and-quotation.md) | au-aasb-standards-reference |
+| [A referrer's identity checks offered for reliance with no recorded reasons](cases/au-aml-ctf-cdd-reliance-referrer-checks.md) | au-aml-ctf-cdd-reliance |
 | [AML/CTF client coverage review: missing evidence](cases/au-aml-ctf-client-coverage-missing-evidence.md) | au-aml-ctf-client-coverage |
 | [A service list with a settled service, a grey area and a name with no steps](cases/au-aml-ctf-designated-services-grey-area-services.md) | au-aml-ctf-designated-services |
 | [Client payments with no other designated service but no recorded purpose](cases/au-aml-ctf-designated-services-incidental-payments-purpose.md) | au-aml-ctf-designated-services |
@@ -291,7 +292,7 @@ law claim, unverified source or guess.
 | [Year-end records request and covering email built from last year](cases/year-end-workpapers-records-request.md) | year-end-workpapers, au-individual-return |
 | [Three-year analytical review with a related-party loan](cases/year-end-workpapers-three-year-review.md) | year-end-workpapers |
 
-Together the cards cover all 109 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 110 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then

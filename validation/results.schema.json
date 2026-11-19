@@ -39,6 +39,7 @@
       "propertyNames": {
         "enum": [
           "au-aasb-standards-reference-version-and-quotation",
+          "au-aml-ctf-cdd-reliance-referrer-checks",
           "au-aml-ctf-client-coverage-beneficial-owner-evidence",
           "au-aml-ctf-client-coverage-contradictory-kyc-basis",
           "au-aml-ctf-client-coverage-missing-evidence",
