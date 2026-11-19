@@ -493,7 +493,7 @@ and 3 Queensland Acts (the QBCC Act 1991, Payroll Tax Act 1971 and Duties Act
 Act with no list fell from 199 to 127. 3 Commonwealth sources still have no list:
 the Taxation Administration Regulations 2017, whose current version on the
 register has no compilation yet; the Coal Mining Industry (Long Service Leave)
-Payroll Levy Act 1992, whose only compilation has no number; and the Taxable
+Payroll Levy Act 1992, whose current compilation has no number; and the Taxable
 Payments Reporting System - Reporting Exemptions for Certain Entities
 Determination 2019, whose EPUB lists no sections. The other 116 sections
 belong to Acts of the other 7 states and territories; no list has yet been
