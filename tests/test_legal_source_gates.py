@@ -343,22 +343,79 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
-    def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
-        text = " ".join(skill_text("fbt-annual-workflow").split())
-        revision = "e18d60b0df6ef6e9a4170b3f0d8c87957a2fad9d"
-        url = f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/australian-tax-calculators"
-
-        self.assertIn(url, text)
-        records = json.loads((SKILLS / "fbt-annual-workflow" / "sources.json").read_text(encoding="utf-8"))["sources"]
-        record = next((record for record in records if record["url"] == url), {})
-        self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
-        # The classifier is on main, not in a release, so installers build the pinned commit.
+    def assert_released_calculators(self, name: str, *commands: str) -> str:
+        """The skill pins australian-tax-calculators 1.0.0, the release aus-accounting-mcp 0.10.0
+        runs, verifies it before use and keeps the written method as the result."""
+        text = " ".join(skill_text(name).split())
+        revision = "6ac566682829731d52a1b4456708a0b9d29b5695"  # tag australian-tax-calculators/v1.0.0
+        release = "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.0.0"
+        tree = f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/australian-tax-calculators"
+        records = json.loads((SKILLS / name / "sources.json").read_text(encoding="utf-8"))["sources"]
+        for url in (release, tree):
+            with self.subTest(skill=name, url=url):
+                self.assertIn(url, text)
+                record = next((record for record in records if record["url"] == url), {})
+                self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
+        # A downloaded archive is trusted only after its provenance and checksum, both pinned to the tag.
+        pins = (
+            "--repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.0.0 "
+            f"--source-digest {revision} --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml"
+        )
+        self.assertIn(f"gh attestation verify SHA256SUMS {pins}", text)
+        self.assertIn("sha256sum --check --ignore-missing SHA256SUMS", text)
+        self.assertIn(f"gh attestation verify <archive> {pins}", text)
+        self.assertIn("Stop if any of the 4 fails.", text)
         self.assertIn(
             f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} australian-tax-calculators",
             text,
         )
         self.assertIn("must show `australian-tax-calculators v1.0.0` with that commit in its source", text)
         self.assertIn("never one found on `PATH`", text)
+        self.assertIn("check that `--version` prints exactly `australian-tax-calculators 1.0.0`", text)
+        self.assertIn("A calculator's figure checks the written method, which is always completed", text)
+        self.assertIn("record the difference for the reviewer and adopt neither", text)
+        self.assertIn("Without the executable, follow the written method.", text)
+        # 1.0.0 refuses `kind` on balancing-adjustment, trade-in, business-capital-expenditure and the classifier.
+        self.assertIn("without the `kind` field that only `periods` takes", text)
+        self.assertNotIn("e18d60b", text)
+        for command in commands:
+            with self.subTest(skill=name, command=command):
+                self.assertIn(f"`{command}`", text)
+        return text
+
+    def test_skills_route_business_costs_and_cars_to_the_released_calculators(self) -> None:
+        depreciation = self.assert_released_calculators(
+            "au-depreciation-schedule", "business-capital-expenditure", "balancing-adjustment", "trade-in"
+        )
+        # s 40-880: the 5 year rule and the start-up exception from the Act; the judgements stay the reviewer's.
+        step = depreciation[depreciation.index("6a. **Business capital expenditure.**") : depreciation.index("7. Keep capital works")]
+        self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-880", step)
+        self.assertIn("in equal proportions over 5 income years starting in the year it is incurred (s 40-880(2) of the ITAA 1997)", step)
+        self.assertIn("a start-up expense that meets s 40-880(2A)", step)
+        self.assertIn("having regard to any relevant circumstances, it is reasonable to conclude that it is proposed to be carried on within a reasonable time (s 40-880(7))", step)
+        self.assertIn("the reasonable time test in s 40-880(7) of the ITAA 1997 and the entity tests in s 40-880(2A) and (2B) of the ITAA 1997 are reviewer decisions", step)
+        self.assertIn("are reviewer decisions: record the evidence for each, not a conclusion", step)
+        self.assertIn("refuses an outlay that forms part of a depreciating asset's cost (s 40-880(5)(a) of the ITAA 1997)", step)
+        self.assertIn("so it refuses until the executable in [Tax calculators](#tax-calculators) is on `PATH`", depreciation)
+        self.assertIn("Prefer the variable, naming the executable verified as that section describes", depreciation)
+
+        cars = self.assert_released_calculators("au-car-expenses", "balancing-adjustment")
+        self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-370", cars)
+        self.assertIn("a car claimed only by the cents per kilometre method has nothing assessable or deductible (s 40-370(1) Note 2)", cars)
+        self.assertIn("give `asset` as `car`, one row per income year held with its `method` and `days_held`", cars)
+
+        fbt = self.assert_released_calculators("fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost")
+        self.assertIn("used only where a valid logbook supports the operating cost method", fbt)
+        self.assertIn("the statutory result's `taxable_value_before_exemption` as `statutory_formula_taxable_value`", fbt)
+        self.assertIn("Their results are taxable values before gross-up, and neither applies the reportable fringe benefits threshold", fbt)
+
+    def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
+        text = " ".join(skill_text("div7a-compliance").split())
+        self.assertIn("The plugin pins `aus-accounting-mcp` 0.10.0, whose `review_div7a_loan` refuses, with no figure", text)
+        self.assertIn("Record the refusal and its code as an exception", text)
+
+    def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
+        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier")
         self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
         # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
         self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
