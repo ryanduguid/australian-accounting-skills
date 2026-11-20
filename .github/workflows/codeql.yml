@@ -46,12 +46,14 @@ jobs:
           # variables and files as untrusted; keep those local sources.
           # Tests and fuzz targets run this checkout's builds and probes with
           # argument lists by design; with local sources they only raise
-          # command-injection alerts that get dismissed by hand.
+          # command-injection alerts that get dismissed by hand. The examples
+          # are the parity probes those tests drive over stdin.
           config: |
             threat-models: local
             paths-ignore:
               - "**/tests/**"
               - fuzz
+              - tools/accounting-skills/examples
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
