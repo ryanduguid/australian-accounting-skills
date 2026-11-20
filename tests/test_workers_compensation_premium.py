@@ -42,10 +42,18 @@ class WorkersCompensationPremiumTests(unittest.TestCase):
             "never use payroll tax wages in place of these: route payroll tax to `au-payroll-tax-states`",
             mapping,
         )
-        # The differences read on 19 November 2026 that a single payroll treatment would get wrong.
         self.assertIn(
-            "icare includes employer superannuation contributions, fringe benefits at their grossed-up value "
-            "and lump sum termination payments for leave, and leaves out the GST in a payment",
+            "includes employer superannuation contributions and lump sum termination payments for unused leave",
+            mapping,
+        )
+        self.assertIn("excludes the GST component of payments to workers", mapping)
+        self.assertIn(
+            "Apply the Type 2 gross-up rate to the combined taxable values of Type 1 and Type 2 fringe benefits",
+            mapping,
+        )
+        self.assertIn(
+            "For charities, churches, public benevolent institutions and rebatable employers, include the portion "
+            "below the applicable threshold at actual value and gross up the portion above it",
             mapping,
         )
         self.assertIn(
