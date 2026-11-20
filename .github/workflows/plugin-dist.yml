@@ -38,9 +38,12 @@ jobs:
         working-directory: tools/accounting-skills
     outputs:
       build: ${{ steps.version.outputs.build }}
+      release_tag: ${{ steps.release.outputs.tag }}
+      release_commit: ${{ steps.release.outputs.commit }}
     steps:
       - name: Verify the immutable release
         if: github.event_name == 'workflow_run'
+        id: release
         working-directory: .
         env:
           GH_TOKEN: ${{ github.token }}
@@ -56,13 +59,18 @@ jobs:
           gh api "$repository/releases/tags/$RELEASE_TAG" |
             jq -e --arg tag "$RELEASE_TAG" '.tag_name == $tag and .immutable == true and .draft == false and .prerelease == false and .published_at != null' > /dev/null
           tag_object="$(gh api "$repository/git/ref/tags/$RELEASE_TAG" | jq -er '.object | select(.type == "tag") | .sha')"
-          gh api "$repository/git/tags/$tag_object" |
-            jq -e --arg tag "$RELEASE_TAG" --arg commit "$SOURCE_SHA" '.tag == $tag and .object.type == "commit" and .object.sha == $commit and .verification.verified == true' > /dev/null
+          commit="$(gh api "$repository/git/tags/$tag_object" |
+            jq -er --arg tag "$RELEASE_TAG" 'select(.tag == $tag and .object.type == "commit" and .verification.verified == true) | .object.sha')"
+          if [ "$commit" != "$SOURCE_SHA" ]; then
+            echo "::error::The signed tag points to a different commit from the release run."
+            exit 1
+          fi
+          printf 'tag=%s\ncommit=%s\n' "$RELEASE_TAG" "$commit" >> "$GITHUB_OUTPUT"
 
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ steps.release.outputs.commit || github.sha }}
           persist-credentials: false
 
       # A release whose version is already on the branch skips both builds.
@@ -71,7 +79,7 @@ jobs:
         id: version
         env:
           BRANCH: claude-plugin
-          RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
           set -euo pipefail
           build=true
@@ -107,7 +115,9 @@ jobs:
 
   publish:
     needs: validate
-    if: github.event_name == 'workflow_run' && needs.validate.outputs.build == 'true'
+    if: >-
+      github.event_name == 'workflow_run' && needs.validate.outputs.build == 'true'
+      && needs.validate.outputs.release_commit != ''
     timeout-minutes: 20
     name: publish
     runs-on: ubuntu-latest
@@ -120,7 +130,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ needs.validate.outputs.release_commit }}
 
       - name: Install the pinned Rust toolchain
         # rustup reads the version from rust-toolchain.toml in this directory.
@@ -136,8 +146,8 @@ jobs:
       - name: Commit the plugin to its branch when it changed
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
-          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_TAG: ${{ needs.validate.outputs.release_tag }}
+          SOURCE_SHA: ${{ needs.validate.outputs.release_commit }}
         run: |
           set -euo pipefail
           export GIT_INDEX_FILE="$RUNNER_TEMP/plugin.index"
