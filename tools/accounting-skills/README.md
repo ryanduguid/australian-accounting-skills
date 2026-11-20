@@ -228,10 +228,9 @@ A resolved section must also exist where `section-index/` in this directory
 lists its Act's sections. Each `REGISTER-ID.txt` there holds one Commonwealth
 Act's or instrument's section numbers, one per line, after `# key: value`
 lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
-`in-force-from`, `source`, `retrieved` and `sha256`. State lists use the
-register version date and omit the compilation fields. Their numbers come
-from the register's XML for Queensland, the contents listing for NSW or the
-authorised PDF for Victoria.
+`in-force-from`, `source`, `retrieved` and `sha256`. State and territory
+lists use the register version date and omit the compilation fields. Their
+numbers come from register XML, published contents or an official PDF.
 For Commonwealth lists, the numbers are every
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
@@ -281,6 +280,7 @@ identifier such as `C2004A05138`:
    `https://api.prod.legislation.gov.au/v1/versions?$filter=titleId eq 'REGISTER-ID' and isCurrent eq true&$select=titleId,name,start,compilationNumber,registerId`.
    `registerId` is the compilation's identifier, `compilationNumber` its
    number, `start` its in-force date and `name` the title.
+   Write `unnumbered` if the register gives a null compilation number.
 2. Ask for that compilation's EPUB:
    `https://api.prod.legislation.gov.au/v1/documents?$filter=registerId eq 'COMPILATION' and format eq 'Epub' and type eq 'Primary'&$select=titleId,start,retrospectiveStart,rectificationVersionNumber,uniqueTypeNumber,volumeNumber`.
    Where more than one row comes back, take the highest
@@ -300,6 +300,10 @@ identifier such as `C2004A05138`:
    clauses. Keep the first occurrence of a repeated number: the loader rejects
    repeats, and the Corporations Act's small business guide repeats 11 body
    section numbers.
+   For the Taxable Payments Reporting System determination F2019L00864,
+   the EPUB's navigation gives only the title. Take its numbered section
+   headings from the EPUB body. Unnumbered headings and subsection lists
+   are outside the section index.
 5. Write the file with LF line endings: the header lines `# title: ` (the
    version's `name`), `# register-id: `, `# compilation: `,
    `# compilation-number: `, `# in-force-from: ` (the date part of `start`),
@@ -347,6 +351,24 @@ section numbers from its table of provisions up to the schedules. Use
 the same header fields as for Queensland, with the Victorian identifier,
 the authorised PDF URL and the SHA-256 of that file. Record the in-force
 date shown on the official version page. Run `check-citations`, as in step 6
+above.
+
+Use the following register identifiers for the other state and territory lists.
+
+| Register | File name | Source for section numbers |
+| --- | --- | --- |
+| ACT | `act-YYYY-NN.txt` from `/a/YYYY-NN/` | Authorised republication PDF, body of the contents |
+| NT | `nt-SLUG.txt` from `/Legislation/SLUG`, lower case | Current reprint PDF, body of the table of provisions |
+| SA | `sa-SLUG.txt` from the Act's name in the register path, lower case with hyphens for spaces | Current authorised PDF, body of the contents |
+| Tasmania | `tas-act-YYYY-NNN.txt` | Dated register XML, `BODY/SECTION` and its nested parts and divisions |
+| WA | `wa-law_aNNNN.txt` from `law_aNNNN.html` | Official current consolidation PDF, body of the contents |
+
+For each PDF, record the version date, official download URL and PDF
+digest. Take the section-number column in reading order, pairing each
+number with its title. Stop before the first schedule. For Tasmania, take
+the `SECNO` values in document order from `SECTION` elements under `BODY`
+that have `OMITTED="NOOMIT"` and are current. Record `FIRST.VALID.DATE`,
+the dated XML address and its digest. Run `check-citations`, as in step 6
 above.
 
 ## Validation pack

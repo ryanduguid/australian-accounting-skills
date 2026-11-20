@@ -1,0 +1,13 @@
+# title: Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019
+# register-id: F2019L00864
+# compilation: F2019L00864
+# compilation-number: 0
+# in-force-from: 2019-06-24
+# source: https://api.prod.legislation.gov.au/v1/documents(titleId='F2019L00864',start=2019-06-24T00:00:00,retrospectiveStart=2019-06-24T00:00:00,rectificationVersionNumber=0,type='Primary',uniqueTypeNumber=0,volumeNumber=0,format='Epub')
+# retrieved: 2026-11-20
+# sha256: f5d682f76a2c5af30990283c9f2e9a03ae16a2b73273671e97c85d73b756c80d
+1
+2
+3
+4
+5
