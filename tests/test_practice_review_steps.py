@@ -64,6 +64,14 @@ def screen_row(name: str) -> str:
 
 
 class PracticeReviewStepTests(unittest.TestCase):
+    def test_wet_and_lct_require_separate_period_workpapers(self) -> None:
+        step = workflow_step("bas-preparation", 2)
+        self.assert_carries(
+            step, "wine equalisation tax", "luxury car tax",
+            "same reporting period", "1C and 1D", "1E and 1F",
+            "payable and refundable amounts separately", "UNVERIFIED",
+        )
+
     def assert_carries(self, text: str, *terms: str) -> None:
         folded = text.casefold()
         for term in terms:
