@@ -318,9 +318,11 @@ static SECTION_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^\d+[A-Z]*(?:-\d+[A-Z]*)?(?:\.\d+[A-Z]*)?$").unwrap());
 static REGISTER_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[CF]\d{4}[A-Z]\d{5}$").unwrap());
-/// A supported state Act's list name, with its jurisdiction followed by its register identifier.
+/// List names for the numbered Acts of NSW and Queensland.
 static STATE_INDEX_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^(nsw|qld)-act-\d{4}-\d{3}$").unwrap());
+static VICTORIA_INDEX_ID: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^vic-([a-z0-9]+(?:-[a-z0-9]+)*-\d{4})$").unwrap());
 
 /// The sections of one Commonwealth Act or instrument, as its register
 /// compilation's table of contents lists them, or of one state Act, as
@@ -376,17 +378,23 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     };
     let title = field("title")?;
     let register_id = field("register-id")?;
-    // State versions have dates but no compilation numbers.
-    let state = STATE_INDEX_ID
-        .captures(register_id.as_str())?
-        .map(|id| if group(&id, 1) == "nsw" { "NSW" } else { "Qld" });
-    let compilation = if state.is_some() {
-        None
-    } else {
-        let compilation = field("compilation")?;
-        field("compilation-number")?;
-        Some(compilation)
-    };
+    // State versions have dates but no compilation numbers. Use the same
+    // register key as a sources.json address for this Act.
+    let (place, copy, compilation) =
+        if let Some(id) = STATE_INDEX_ID.captures(register_id.as_str())? {
+            let place = if group(&id, 1) == "nsw" { "NSW" } else { "Qld" };
+            let copy = ("state", register_id.replacen('-', " ", 1));
+            (place, copy, None)
+        } else if let Some(id) = VICTORIA_INDEX_ID.captures(register_id.as_str())? {
+            let copy = ("state", format!("vic /acts/{}", group(&id, 1)));
+            ("Vic", copy, None)
+        } else if REGISTER_ID.is_match(&register_id)? {
+            let compilation = field("compilation")?;
+            field("compilation-number")?;
+            ("Cth", ("register", register_id.clone()), Some(compilation))
+        } else {
+            return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
+        };
     field("source")?;
     let mut in_force = String::new();
     for date in ["in-force-from", "retrieved"] {
@@ -412,26 +420,15 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     if let Some(key) = fields.keys().next() {
         return Err(format!("{name}: unknown field {key}").into());
     }
-    if !(state.is_some() || REGISTER_ID.is_match(&register_id)?)
-        || path.file_stem() != Some(register_id.as_ref())
-    {
+    if path.file_stem() != Some(register_id.as_ref()) {
         return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
     }
     if title_parts(&title).is_none() {
         return Err(format!("{name}: the title must end with its year").into());
     }
-    // The register key matches the one `register_copy` gives an address of
-    // the same document.
-    let place = state.unwrap_or("Cth");
-    let (copy, version) = match compilation {
-        Some(compilation) => (
-            ("register", register_id.clone()),
-            format!("compilation {compilation}"),
-        ),
-        None => (
-            ("state", register_id.replacen('-', " ", 1)),
-            format!("version in force from {in_force}"),
-        ),
+    let version = match compilation {
+        Some(compilation) => format!("compilation {compilation}"),
+        None => format!("version in force from {in_force}"),
     };
     Ok(SectionIndex {
         keys: BTreeSet::from([("title", format!("{title} ({place})")), copy]),

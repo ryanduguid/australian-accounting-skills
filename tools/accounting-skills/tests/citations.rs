@@ -1115,6 +1115,32 @@ fn a_new_south_wales_section_list_checks_its_acts_sections_and_records() {
 
 /// A section list's dates are real days with an unsigned year and no whitespace.
 #[test]
+fn a_victorian_index_binds_the_register_slug_across_versions() {
+    let root = tempfile::tempdir().unwrap();
+    let act = "Example Duties Act 2000";
+    let url = "https://www.legislation.vic.gov.au/in-force/acts/example-duties-act-2000/001";
+    state_index(root.path(), "vic-example-duties-act-2000", act, &["10"]);
+    skill(
+        root.path(),
+        "alpha",
+        &format!("Apply s 10 and s 11 of the {act}.\n"),
+        Some(&record(&format!("{act} (Vic)"), url)),
+    );
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (2, 2));
+    assert_eq!((report.sections_exist, report.sections_absent), (1, 1));
+    assert_eq!(
+        report.unmatched,
+        [unmatched_in_alpha(
+            1,
+            "s 11",
+            &format!("absent from the section index of {act}, version in force from 2099-01-01")
+        )]
+    );
+    assert_eq!(run(root.path()).0, 2);
+}
+
+#[test]
 fn section_list_dates_are_real_days_with_an_unsigned_year() {
     let refusal = "in-force-from must be a date written YYYY-MM-DD";
     for (date, refused) in [
