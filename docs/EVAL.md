@@ -511,7 +511,7 @@ Income Tax Assessment Act 1997 (Cth): 440 sections, 438 found, 2 listed exceptio
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 179 sections, 177 found, 2 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 159 sections, 159 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment Act 1936 (Cth): 146 sections, 146 found, 0 listed exceptions, 0 absent.
-Corporations Act 2001 (Cth): 124 sections, 124 found, 0 listed exceptions, 0 absent.
+Corporations Act 2001 (Cth): 125 sections, 125 found, 0 listed exceptions, 0 absent.
 Taxation Administration Act 1953 (Cth): 82 sections, 82 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 80 sections, 80 found, 0 listed exceptions, 0 absent.
 Superannuation Guarantee (Administration) Act 1992 (Cth): 79 sections, 78 found, 1 listed exceptions, 0 absent.
@@ -548,8 +548,8 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, no index.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
-1983 of 1983 citations resolve to a sources.json record: 269 of 269 rulings and guidance, 1714 of 1714 legislative sections.
-1587 of 1714 resolved sections checked against an index of their Act: 1582 found, 5 listed exceptions, 0 absent; 127 in an Act with no index.
+1985 of 1985 citations resolve to a sources.json record: 270 of 270 rulings and guidance, 1715 of 1715 legislative sections.
+1588 of 1715 resolved sections checked against an index of their Act: 1583 found, 5 listed exceptions, 0 absent; 127 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing
