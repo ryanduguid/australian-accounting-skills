@@ -318,13 +318,13 @@ static SECTION_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^\d+[A-Z]*(?:-\d+[A-Z]*)?(?:\.\d+[A-Z]*)?$").unwrap());
 static REGISTER_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[CF]\d{4}[A-Z]\d{5}$").unwrap());
-/// A Queensland Act's list name: `qld-` and the Act's register identifier.
-static QUEENSLAND_ID: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^qld-act-\d{4}-\d{3}$").unwrap());
+/// A supported state Act's list name, with its jurisdiction followed by its register identifier.
+static STATE_INDEX_ID: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^(nsw|qld)-act-\d{4}-\d{3}$").unwrap());
 
 /// The sections of one Commonwealth Act or instrument, as its register
-/// compilation's table of contents lists them, or of one Queensland Act, as
-/// its register's XML of a version lists them.
+/// compilation's table of contents lists them, or of one state Act, as
+/// its register lists them for a version.
 struct SectionIndex {
     register_id: String,
     title: String,
@@ -376,9 +376,11 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     };
     let title = field("title")?;
     let register_id = field("register-id")?;
-    // A Queensland version has a date but no compilation number.
-    let queensland = QUEENSLAND_ID.is_match(&register_id)?;
-    let compilation = if queensland {
+    // State versions have dates but no compilation numbers.
+    let state = STATE_INDEX_ID
+        .captures(register_id.as_str())?
+        .map(|id| if group(&id, 1) == "nsw" { "NSW" } else { "Qld" });
+    let compilation = if state.is_some() {
         None
     } else {
         let compilation = field("compilation")?;
@@ -410,7 +412,7 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     if let Some(key) = fields.keys().next() {
         return Err(format!("{name}: unknown field {key}").into());
     }
-    if !(queensland || REGISTER_ID.is_match(&register_id)?)
+    if !(state.is_some() || REGISTER_ID.is_match(&register_id)?)
         || path.file_stem() != Some(register_id.as_ref())
     {
         return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
@@ -420,14 +422,13 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     }
     // The register key matches the one `register_copy` gives an address of
     // the same document.
-    let (place, copy, version) = match compilation {
+    let place = state.unwrap_or("Cth");
+    let (copy, version) = match compilation {
         Some(compilation) => (
-            "Cth",
             ("register", register_id.clone()),
             format!("compilation {compilation}"),
         ),
         None => (
-            "Qld",
             ("state", register_id.replacen('-', " ", 1)),
             format!("version in force from {in_force}"),
         ),

@@ -992,9 +992,9 @@ fn a_record_whose_title_and_register_id_disagree_with_a_section_list_owns_nothin
     assert_eq!(run(root.path()).0, 2);
 }
 
-/// Write the section list of a fabricated Queensland Act, which has a version
+/// Write the section list of a fabricated state Act, which has a version
 /// date but no compilation.
-fn queensland_index(root: &Path, register_id: &str, title: &str, sections: &[&str]) {
+fn state_index(root: &Path, register_id: &str, title: &str, sections: &[&str]) {
     let folder = root.join("tools/accounting-skills/section-index");
     fs::create_dir_all(&folder).unwrap();
     fs::write(
@@ -1015,7 +1015,7 @@ fn a_queensland_section_list_checks_its_acts_sections_and_records() {
     let bif = "Building Industry Fairness (Security of Payment) Act 2017";
     let qld = "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2017-043";
     let root = tempfile::tempdir().unwrap();
-    queensland_index(root.path(), "qld-act-2017-043", bif, &["67", "75"]);
+    state_index(root.path(), "qld-act-2017-043", bif, &["67", "75"]);
     skill(
         root.path(),
         "alpha",
@@ -1066,6 +1066,51 @@ fn a_queensland_section_list_checks_its_acts_sections_and_records() {
     );
     fs::remove_dir_all(root.path().join(".claude/skills/beta")).unwrap();
     assert_eq!(run(root.path()).0, 0);
+}
+
+#[test]
+fn a_new_south_wales_section_list_checks_its_acts_sections_and_records() {
+    let root = tempfile::tempdir().unwrap();
+    let title = "Example Payroll Tax Act 2007";
+    let nsw = "https://legislation.nsw.gov.au/view/whole/html/inforce/current/act-2007-021";
+    state_index(root.path(), "nsw-act-2007-021", title, &["6"]);
+    skill(
+        root.path(),
+        "alpha",
+        &format!("Apply s 6 and s 25 of the {title}.\n"),
+        Some(&record(&format!("{title} (NSW)"), nsw)),
+    );
+    skill(
+        root.path(),
+        "beta",
+        "Apply s 6 of the Example Contracts Act 2007.\n",
+        Some(&record("Example Contracts Act 2007 (NSW)", nsw)),
+    );
+
+    let report = check(root.path()).unwrap();
+    assert_eq!((report.sections, report.sections_resolved), (3, 2));
+    assert_eq!((report.sections_exist, report.sections_absent), (1, 1));
+    assert_eq!(
+        report.unmatched,
+        [
+            unmatched_in_alpha(
+                1,
+                "s 25",
+                &format!(
+                    "absent from the section index of {title}, version in force from 2099-01-01"
+                )
+            ),
+            missing(
+                ".claude/skills/beta/SKILL.md",
+                1,
+                "s 6",
+                "sources.json record 1 ('Example Contracts Act 2007 (NSW)' \
+                 at nsw act-2007-021) disagrees with the section list for nsw-act-2007-021 \
+                 ('Example Payroll Tax Act 2007')"
+            ),
+        ]
+    );
+    assert_eq!(run(root.path()).0, 2);
 }
 
 /// A section list's dates are real days with an unsigned year and no whitespace.

@@ -228,11 +228,11 @@ A resolved section must also exist where `section-index/` in this directory
 lists its Act's sections. Each `REGISTER-ID.txt` there holds one Commonwealth
 Act's or instrument's section numbers, one per line, after `# key: value`
 lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
-`in-force-from`, `source`, `retrieved` and `sha256`. A Queensland Act's list,
-`qld-act-YYYY-NNN.txt`, has the same lines apart from `compilation` and
-`compilation-number`; `in-force-from` names the register's version, and its
-sections are those the register's XML of that version holds, leaving out any
-it marks repealed, expired or uncommenced. The numbers are every
+`in-force-from`, `source`, `retrieved` and `sha256`. Queensland and New South
+Wales lists use `qld-act-YYYY-NNN.txt` and `nsw-act-YYYY-NNN.txt`. They use the
+register version date and omit the compilation fields. Their numbers come
+from the register's XML for Queensland or the contents listing for NSW.
+For Commonwealth lists, the numbers are every
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
 after the first schedule heading only hyphenated numbers count, because a
@@ -257,10 +257,8 @@ record's title by kind and, for an Act, year. A `sources.json` record whose
 register identifier has a list must carry a title matching the list's, and a
 record whose title matches a list's must carry its identifier. A record that
 fails either owns no citation, and each citation it would have resolved
-reports the record, both titles and both identifiers. A record of an
-instrument with no list, or from the ATO legal database or a state register
-other than a listed Queensland Act's, is not checked this way: a mis-titled one still resolves, and a reviewer must
-catch it.
+reports the record, both titles and both identifiers. These title and
+identifier checks apply to records for indexed instruments.
 
 Each failure prints as `file:line: citation: reason`: an unmatched citation, a
 section absent from its Act's list, or an exception no cited section needs.
@@ -331,6 +329,16 @@ Act's identifier on www.legislation.qld.gov.au:
    `# source: `, `# retrieved: ` and `# sha256: ` (of the XML's bytes), then
    one number per line, with LF line endings.
 5. Run `check-citations`, as in step 6 above.
+
+For a New South Wales Act, `nsw-act-YYYY-NNN.txt`, use the official whole
+text at `https://legislation.nsw.gov.au/view/whole/html/inforce/YYYY-MM-DD/act-YYYY-NNN`.
+Take the contents links ending in `#sec.NUMBER` in order, omitting entries
+marked repealed, expired, uncommenced or omitted. Check that every contents
+section has a corresponding section in the whole text. Use the Queensland
+header fields with the NSW identifier, title and version date. Compute
+`sha256` over the admitted numbers, one per line with LF line endings and a
+final LF. The HTML includes the access time, so its full bytes can vary.
+Run `check-citations`, as in step 6 above.
 
 ## Validation pack
 

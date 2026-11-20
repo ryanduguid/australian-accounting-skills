@@ -1,0 +1,75 @@
+# title: Building and Construction Industry Security of Payment Act 1999
+# register-id: nsw-act-1999-046
+# in-force-from: 2024-08-20
+# source: https://legislation.nsw.gov.au/view/whole/html/inforce/2024-08-20/act-1999-046
+# retrieved: 2026-11-20
+# sha256: a3e2657ad1eab496d74848018ed578fd1e8bf03ad93df467ddfcbe272f49dfc6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+12A
+13
+14
+15
+16
+17
+17A
+18
+19
+20
+21
+22
+23
+24
+25
+26
+26A
+26B
+26C
+26D
+26E
+26F
+27
+28
+28A
+29
+30
+31
+32
+32A
+32B
+32C
+32D
+32E
+32F
+32G
+32H
+32I
+32J
+32K
+32L
+32M
+32N
+32O
+32P
+32Q
+33
+34
+34A
+34B
+34C
+34D
+35
+36
+36A
+37
+38
