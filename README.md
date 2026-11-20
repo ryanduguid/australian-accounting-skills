@@ -123,7 +123,7 @@ The skill folders hold Markdown and JSON files and no scripts, so the skills sen
 - **Installing** contacts GitHub and, with `npx skills`, the npm registry. That CLI collects anonymous usage data unless `DISABLE_TELEMETRY` or `DO_NOT_TRACK` is set.
 - **The source preflight** fetches public pages from its allowlisted hosts and sends no client data.
 
-**Human review pending:** an agent read the sources below on 6 November 2026, not a human review.
+**Human review:** Ryan Duguid reviewed the sources below on 20 November 2026.
 
 A registered tax or BAS agent must not disclose a client's information to a third party without the client's permission unless there is a legal duty. [TPB(GS) 55/2026](https://www.tpb.gov.au/tpbgs-552026-use-artificial-intelligence-and-code-professional-conduct) says that entering client information into an AI tool can be such a disclosure, depending on how the tool is configured and used, and that each client's permission is needed first (paragraph 23).
 

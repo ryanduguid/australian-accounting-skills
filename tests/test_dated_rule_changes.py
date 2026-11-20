@@ -1866,7 +1866,8 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assertIn(f"[TPB(GS) 55/2026]({gs55})", readme)
         self.assertIn("unless there is a legal duty", readme)
         self.assertIn("depending on how the tool is configured and used", readme)
-        self.assertIn("**Human review pending:**", readme.split("## Privacy")[1].split("## Alternatives")[0])
+        privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
+        self.assertIn("**Human review:** Ryan Duguid reviewed the sources below on 20 November 2026.", privacy)
 
     def test_readme_keeps_the_automated_decision_duty_conditional(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
