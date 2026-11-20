@@ -318,11 +318,12 @@ static SECTION_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^\d+[A-Z]*(?:-\d+[A-Z]*)?(?:\.\d+[A-Z]*)?$").unwrap());
 static REGISTER_ID: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[CF]\d{4}[A-Z]\d{5}$").unwrap());
-/// List names for the numbered Acts of NSW and Queensland.
-static STATE_INDEX_ID: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^(nsw|qld)-act-\d{4}-\d{3}$").unwrap());
-static VICTORIA_INDEX_ID: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^vic-([a-z0-9]+(?:-[a-z0-9]+)*-\d{4})$").unwrap());
+static NUMBERED_STATE_ACT: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^act-\d{4}-\d{3}$").unwrap());
+static ACT_REGISTER_NUMBER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\d{4}-\d+$").unwrap());
+static STATE_ACT_SLUG: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^[a-z0-9]+(?:-[a-z0-9]+)*-\d{4}$").unwrap());
+static WA_REGISTER_NUMBER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^law_a\d+$").unwrap());
 
 /// The sections of one Commonwealth Act or instrument, as its register
 /// compilation's table of contents lists them, or of one state Act, as
@@ -348,6 +349,28 @@ struct Exception {
     register_id: String,
     section: String,
     used: bool,
+}
+
+/// Match a state or territory index to the document key used for register URLs.
+fn state_index_copy(register_id: &str) -> Result<Option<(&'static str, Key)>> {
+    let Some((register, document)) = register_id.split_once('-') else {
+        return Ok(None);
+    };
+    let path = match register {
+        "nsw" | "qld" | "tas" if NUMBERED_STATE_ACT.is_match(document)? => document.to_string(),
+        "act" if ACT_REGISTER_NUMBER.is_match(document)? => format!("/a/{document}"),
+        "vic" if STATE_ACT_SLUG.is_match(document)? => format!("/acts/{document}"),
+        "nt" if STATE_ACT_SLUG.is_match(document)? => format!("/legislation/{document}"),
+        "sa" if STATE_ACT_SLUG.is_match(document)? => {
+            format!("path=/c/a/{}", document.replace('-', " "))
+        }
+        "wa" if WA_REGISTER_NUMBER.is_match(document)? => document.to_string(),
+        _ => return Ok(None),
+    };
+    Ok(Some((
+        state_place(register),
+        ("state", format!("{register} {path}")),
+    )))
 }
 
 fn section_index(path: &Path) -> Result<SectionIndex> {
@@ -380,21 +403,15 @@ fn section_index(path: &Path) -> Result<SectionIndex> {
     let register_id = field("register-id")?;
     // State versions have dates but no compilation numbers. Use the same
     // register key as a sources.json address for this Act.
-    let (place, copy, compilation) =
-        if let Some(id) = STATE_INDEX_ID.captures(register_id.as_str())? {
-            let place = if group(&id, 1) == "nsw" { "NSW" } else { "Qld" };
-            let copy = ("state", register_id.replacen('-', " ", 1));
-            (place, copy, None)
-        } else if let Some(id) = VICTORIA_INDEX_ID.captures(register_id.as_str())? {
-            let copy = ("state", format!("vic /acts/{}", group(&id, 1)));
-            ("Vic", copy, None)
-        } else if REGISTER_ID.is_match(&register_id)? {
-            let compilation = field("compilation")?;
-            field("compilation-number")?;
-            ("Cth", ("register", register_id.clone()), Some(compilation))
-        } else {
-            return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
-        };
+    let (place, copy, compilation) = if let Some((place, copy)) = state_index_copy(&register_id)? {
+        (place, copy, None)
+    } else if REGISTER_ID.is_match(&register_id)? {
+        let compilation = field("compilation")?;
+        field("compilation-number")?;
+        ("Cth", ("register", register_id.clone()), Some(compilation))
+    } else {
+        return Err(format!("{name}: the file must be named REGISTER-ID.txt").into());
+    };
     field("source")?;
     let mut in_force = String::new();
     for date in ["in-force-from", "retrieved"] {
@@ -736,16 +753,7 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
     else {
         return Ok(None);
     };
-    let place = match register.as_str() {
-        "nsw" => "NSW",
-        "qld" => "Qld",
-        "vic" => "Vic",
-        "sa" => "SA",
-        "wa" => "WA",
-        "tas" => "Tas",
-        "act" => "ACT",
-        _ => "NT",
-    };
+    let place = state_place(&register);
     let year = YEAR
         .find(id.as_str())?
         .map(|year| (year.as_str().to_string(), false));
@@ -765,6 +773,19 @@ fn register_copy(url: &str) -> Result<Option<RegisterCopy>> {
         year,
         act,
     }))
+}
+
+fn state_place(register: &str) -> &'static str {
+    match register {
+        "nsw" => "NSW",
+        "qld" => "Qld",
+        "vic" => "Vic",
+        "sa" => "SA",
+        "wa" => "WA",
+        "tas" => "Tas",
+        "act" => "ACT",
+        _ => "NT",
+    }
 }
 
 /// The keys of the instrument `copy` holds, named by `title`, or `None` when

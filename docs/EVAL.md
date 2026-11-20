@@ -511,6 +511,13 @@ Victoria's authorised PDFs cover 9 Payroll Tax Act 2007 citations and
 2 Duties Act 2000 citations. All 11 match, leaving 39 citations to unindexed
 sections.
 
+Indexes from the remaining state, territory and Commonwealth registers
+cover the final 34 legislative citations. Five notes cited the NSW
+common-law wages provision by number whilst explaining its absence in
+other jurisdictions. The notes now identify the NSW screen by name.
+The citation check compares all 1,710 legislative citations against
+section lists. It finds 1,705 and records 5 existing exceptions.
+
 The figures above are dated. The block below is what `check-citations` prints
 for the commit this file is in, after any failures: each Act or instrument's
 resolved sections, most cited first, then the totals. A test in
@@ -538,30 +545,30 @@ Queensland Building and Construction Commission Act 1991 (Qld): 21 sections, 21 
 Superannuation Industry (Supervision) Act 1993 (Cth): 19 sections, 19 found, 0 listed exceptions, 0 absent.
 Building and Construction Industry Security of Payment Act 1999 (NSW): 16 sections, 16 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 1971 (Qld): 13 sections, 13 found, 0 listed exceptions, 0 absent.
-Payroll Tax Act 2011 (ACT): 11 sections, no index.
 Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
+Payroll Tax Act 2011 (ACT): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (Vic): 9 sections, 9 found, 0 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Regulations 2019 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
 Taxation Administration Regulations 2017 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
-Payroll Tax Act 2008 (Tas): 7 sections, no index.
-Payroll Tax Act 2009 (NT): 7 sections, no index.
 Fringe Benefits Tax Assessment Act 1986 (Cth): 6 sections, 6 found, 0 listed exceptions, 0 absent.
 Coal Mining Industry (Long Service Leave) Administration Act 1992 (Cth): 5 sections, 5 found, 0 listed exceptions, 0 absent.
 Fair Work Act 2009 (Cth): 5 sections, 5 found, 0 listed exceptions, 0 absent.
-Pay-roll Tax Assessment Act 2002 (WA): 5 sections, no index.
-Stamp Duty Act 1978 (NT): 5 sections, no index.
+Pay-roll Tax Assessment Act 2002 (WA): 5 sections, 5 found, 0 listed exceptions, 0 absent.
+Payroll Tax Act 2008 (Tas): 5 sections, 5 found, 0 listed exceptions, 0 absent.
+Payroll Tax Act 2009 (NT): 5 sections, 5 found, 0 listed exceptions, 0 absent.
+Stamp Duty Act 1978 (NT): 5 sections, 5 found, 0 listed exceptions, 0 absent.
 Income Tax Rates Act 1986 (Cth): 3 sections, 3 found, 0 listed exceptions, 0 absent.
-Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992 (Cth): 2 sections, no index.
+Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Duties Act 2000 (Vic): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Superannuation Guarantee (Administration) Regulations 2018 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Duties Act 2001 (Qld): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-Payroll Tax Act 2009 (SA): 1 section, no index.
+Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
-1985 of 1985 citations resolve to a sources.json record: 270 of 270 rulings and guidance, 1715 of 1715 legislative sections.
-1676 of 1715 resolved sections checked against an index of their Act: 1671 found, 5 listed exceptions, 0 absent; 39 in an Act with no index.
+Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
+1980 of 1980 citations resolve to a sources.json record: 270 of 270 rulings and guidance, 1710 of 1710 legislative sections.
+1710 of 1710 resolved sections checked against an index of their Act: 1705 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing

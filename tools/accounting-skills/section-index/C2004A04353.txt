@@ -1,0 +1,15 @@
+# title: Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992
+# register-id: C2004A04353
+# compilation: C2012C00097
+# compilation-number: unnumbered
+# in-force-from: 2012-01-01
+# source: https://api.prod.legislation.gov.au/v1/documents(titleId='C2004A04353',start=2012-01-01T00:00:00,retrospectiveStart=2012-01-01T00:00:00,rectificationVersionNumber=0,type='Primary',uniqueTypeNumber=0,volumeNumber=0,format='Epub')
+# retrieved: 2026-11-20
+# sha256: a83ca476eaf402ea98faa925b12817562800110044de3285c301dc526ac3566f
+1
+2
+3
+4
+5
+6
+8

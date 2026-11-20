@@ -83,7 +83,8 @@ class PayrollJurisdictionTests(unittest.TestCase):
         for name in ("Tasmania", "Northern Territory"):
             row = prose.table_row("payroll-tax-contractors", "Other states and territories", name)
             self.assertIn("ss 37 to 42", row[2])
-            self.assert_sentence(row[3], r"\bhas no s 36A\b", r"\bno counterpart\b")
+            self.assert_sentence(row[3], r"\bDivision 8 begins with the employment-agent definitions\b")
+            self.assert_sentence(row[3], r"\bNSW common-law wages screen\b", r"\bhas no counterpart\b")
 
     def test_new_guidance_records_remain_discovery_only(self) -> None:
         for skill, heading in (("au-payroll-tax-states", "Primary-source starting point"),

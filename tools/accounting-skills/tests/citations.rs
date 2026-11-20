@@ -1113,6 +1113,94 @@ fn a_new_south_wales_section_list_checks_its_acts_sections_and_records() {
     assert_eq!(run(root.path()).0, 2);
 }
 
+#[test]
+fn state_indexes_identify_each_registers_document_paths() {
+    let cases = [
+        (
+            "act-2011-18",
+            "Payroll Tax Act 2011",
+            "ACT",
+            "https://www.legislation.act.gov.au/a/2011-18/",
+            "act /a/2011-18",
+        ),
+        (
+            "tas-act-2008-016",
+            "Payroll Tax Act 2008",
+            "Tas",
+            "https://www.legislation.tas.gov.au/view/html/inforce/current/act-2008-016",
+            "tas act-2008-016",
+        ),
+        (
+            "nt-payroll-tax-act-2009",
+            "Payroll Tax Act 2009",
+            "NT",
+            "https://legislation.nt.gov.au/Legislation/PAYROLL-TAX-ACT-2009",
+            "nt /legislation/payroll-tax-act-2009",
+        ),
+        (
+            "sa-payroll-tax-act-2009",
+            "Payroll Tax Act 2009",
+            "SA",
+            "https://www.legislation.sa.gov.au/lz?path=/c/a/payroll%20tax%20act%202009",
+            "sa path=/c/a/payroll tax act 2009",
+        ),
+        (
+            "wa-law_a6335",
+            "Pay-roll Tax Assessment Act 2002",
+            "WA",
+            "https://www.legislation.wa.gov.au/legislation/statutes.nsf/law_a6335.html",
+            "wa law_a6335",
+        ),
+    ];
+    for (id, act, place, url, key) in cases {
+        let root = tempfile::tempdir().unwrap();
+        let title = format!("{act} ({place})");
+        let year = act.rsplit_once(' ').unwrap().1;
+        let wrong_title = format!("Example Contracts Act {year} ({place})");
+        state_index(root.path(), id, act, &["6"]);
+        skill(
+            root.path(),
+            "alpha",
+            &format!("Apply s 6 and s 7 of the {title}.\n"),
+            Some(&record(&title, url)),
+        );
+        skill(
+            root.path(),
+            "beta",
+            &format!("Apply s 6 of the {wrong_title}.\n"),
+            Some(&record(&wrong_title, url)),
+        );
+        let report = check(root.path()).unwrap();
+        assert_eq!((report.sections, report.sections_resolved), (3, 2), "{id}");
+        assert_eq!(
+            (report.sections_exist, report.sections_absent),
+            (1, 1),
+            "{id}"
+        );
+        assert_eq!(
+            report.unmatched,
+            [
+                unmatched_in_alpha(
+                    1,
+                    "s 7",
+                    &format!(
+                        "absent from the section index of {act}, version in force from 2099-01-01"
+                    )
+                ),
+                missing(
+                    ".claude/skills/beta/SKILL.md",
+                    1,
+                    "s 6",
+                    &format!(
+                        "sources.json record 1 ('{wrong_title}' at {key}) disagrees with the section list for {id} ('{act}')"
+                    )
+                ),
+            ],
+            "{id}",
+        );
+    }
+}
+
 /// A section list's dates are real days with an unsigned year and no whitespace.
 #[test]
 fn a_victorian_index_binds_the_register_slug_across_versions() {
