@@ -2,27 +2,34 @@ name: Plugin branch
 
 # The Claude plugin directory refuses, from an unverified organisation, a local
 # MCP server and files other than Markdown, text, JSON, YAML and images. The
-# claude-plugin branch holds the skills-only plugin it reads, built from main by
+# claude-plugin branch holds the skills-only plugin it reads, built from a release by
 # `accounting-skills build-plugin-dist`. The install routes on main are unchanged.
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - Release
+    types: [completed]
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.event_name }}
   cancel-in-progress: false
 
 jobs:
   # The directory's own validator runs here, without write access, so the
   # package it downloads never shares a job with the push token.
   validate:
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      || (github.event_name == 'workflow_run'
+          && github.event.workflow_run.conclusion == 'success'
+          && github.event.workflow_run.event == 'push'
+          && github.event.workflow_run.head_repository.full_name == github.repository
+          && github.event.workflow_run.path == '.github/workflows/release.yml')
     timeout-minutes: 20
     name: validate
     runs-on: ubuntu-latest
@@ -32,28 +39,55 @@ jobs:
     outputs:
       build: ${{ steps.version.outputs.build }}
     steps:
+      - name: Verify the immutable release
+        if: github.event_name == 'workflow_run'
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ || ! "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::The release run lacks a version tag or source commit."
+            exit 1
+          fi
+          repository="repos/$GITHUB_REPOSITORY"
+          gh api "$repository/releases/tags/$RELEASE_TAG" |
+            jq -e --arg tag "$RELEASE_TAG" '.tag_name == $tag and .immutable == true and .draft == false and .prerelease == false and .published_at != null' > /dev/null
+          tag_object="$(gh api "$repository/git/ref/tags/$RELEASE_TAG" | jq -er '.object | select(.type == "tag") | .sha')"
+          gh api "$repository/git/tags/$tag_object" |
+            jq -e --arg tag "$RELEASE_TAG" --arg commit "$SOURCE_SHA" '.tag == $tag and .object.type == "commit" and .object.sha == $commit and .verification.verified == true' > /dev/null
+
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
           persist-credentials: false
 
-      # The publish step keeps the branch unless the version rises, so a push
-      # that leaves the version at or below the branch's skips both builds.
-      # A manual run always builds and validates.
+      # A release whose version is already on the branch skips both builds.
+      # A manual run builds and validates without publishing.
       - name: Compare the version with the branch's
         id: version
         env:
           BRANCH: claude-plugin
+          RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
         run: |
           set -euo pipefail
           build=true
-          if [ "$GITHUB_EVENT_NAME" = push ] && git ls-remote --exit-code --heads origin "refs/heads/$BRANCH" > /dev/null; then
-            git fetch --no-tags --depth=1 origin "refs/heads/$BRANCH"
+          if [ "$GITHUB_EVENT_NAME" = workflow_run ]; then
             version="$(jq -r .version "$GITHUB_WORKSPACE/.claude-plugin/plugin.json")"
-            published="$(git show "FETCH_HEAD:.claude-plugin/plugin.json" | jq -r .version)"
-            if [ "$version" = "$published" ] || [ "$(printf '%s\n%s\n' "$published" "$version" | sort -V | tail -n 1)" != "$version" ]; then
-              echo "::notice::The version $version is not above $published on $BRANCH, so the plugin is not built."
-              build=false
+            if [ "v$version" != "$RELEASE_TAG" ]; then
+              echo "::error::The plugin manifest version differs from the release tag."
+              exit 1
+            fi
+            if git ls-remote --exit-code --heads origin "refs/heads/$BRANCH" > /dev/null; then
+              git fetch --no-tags --depth=1 origin "refs/heads/$BRANCH"
+              published="$(git show "FETCH_HEAD:.claude-plugin/plugin.json" | jq -r .version)"
+              if [ "$version" = "$published" ] || [ "$(printf '%s\n%s\n' "$published" "$version" | sort -V | tail -n 1)" != "$version" ]; then
+                echo "::notice::The version $version is not above $published on $BRANCH, so the plugin is not built."
+                build=false
+              fi
             fi
           fi
           echo "build=$build" >> "$GITHUB_OUTPUT"
@@ -73,8 +107,7 @@ jobs:
 
   publish:
     needs: validate
-    # Only main is published, including on a manual run.
-    if: github.ref == 'refs/heads/main' && needs.validate.outputs.build == 'true'
+    if: github.event_name == 'workflow_run' && needs.validate.outputs.build == 'true'
     timeout-minutes: 20
     name: publish
     runs-on: ubuntu-latest
@@ -87,6 +120,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Install the pinned Rust toolchain
         # rustup reads the version from rust-toolchain.toml in this directory.
@@ -102,6 +136,8 @@ jobs:
       - name: Commit the plugin to its branch when it changed
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
           export GIT_INDEX_FILE="$RUNNER_TEMP/plugin.index"
@@ -124,14 +160,13 @@ jobs:
               exit 0
             fi
           fi
-          # A run for an older main commit must not publish over a newer one.
-          if [ "$(git ls-remote origin refs/heads/main | cut -f1)" != "$GITHUB_SHA" ]; then
-            echo "::notice::main has moved past $GITHUB_SHA; its own run publishes."
-            exit 0
+          if [ "$(git ls-remote origin "refs/tags/$RELEASE_TAG^{}" | cut -f1)" != "$SOURCE_SHA" ]; then
+            echo "::error::The release tag no longer resolves to the verified source commit."
+            exit 1
           fi
           commit="$(git -c user.name='github-actions[bot]' \
             -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-            commit-tree "$tree" ${parent:+-p "$parent"} -m "Build the plugin from $GITHUB_SHA")"
+            commit-tree "$tree" ${parent:+-p "$parent"} -m "Build the plugin from $SOURCE_SHA ($RELEASE_TAG)")"
           # Not forced: a branch that moved since the fetch refuses the push.
           auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
           git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
