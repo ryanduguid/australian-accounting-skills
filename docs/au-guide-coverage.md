@@ -1,92 +1,85 @@
 # Australian guide topic coverage
 
-The pack contains 111 skills: the original 19, 31 new preparation workflows, a later tax invoice review, a working from home deduction workflow and an ATO penalties, interest workflow, a Division 293 tax workflow, a Division 296 tax workflow, a super contribution caps workflow, a PAYG instalment variation workflow and a termination payment, redundancy workflow, a multi-state payroll tax workflow, a work-related car expense workflow, a financial modelling workflow, an AML/CTF client coverage workflow, a client acceptance and engagement terms workflow, a tax research file-note workflow, a working holiday maker workflow, a short-stay accommodation workflow, a pre-lodgement review workflow, a reconciliation break-trace workflow, 8 niche tax workflows listed below and 17 workflows added on 2 November 2026, which the [Ask Nagaris comparison](nagaris-comparison.md) records, and 4 practice workflows added on 4 November 2026 for client departure, trust losses, ATO correspondence triage and ATO account reconciliation, and 4 workflows added on 11 November 2026 for SMSF death benefits, family trust and interposed entity elections, the main residence exemption and share buy-backs, and 6 workflows added on 12 November 2026 for client meeting file notes, MYOB exports, marketplace settlements, client letters from approved advice, client email triage and CPI rent reviews, an AML/CTF designated services workflow added on 16 November 2026 and an AML/CTF customer due diligence and reliance workflow and an AASB standards reference workflow and a workers compensation premium workflow added on 19 November 2026.
-This map accounts for all 38 guide filenames in the [OpenAccountants Australian folder](https://github.com/openaccountants/openaccountants/tree/66912a14e86095f150c2b0c37703d195938f8f1d/skills/international/australia), inspected on 8 September 2026. The additional `references.md` is a bibliography, not a separate workflow.
+Use this map to find an Australian Accounting Skills workpaper for an OpenAccountants topic. A topic match shows where to start. Rule coverage, calculator results and professional review status need separate verification.
 
-This is a topic-to-workflow mapping. It does not claim identical coverage of each Guide's body or validate its tax content. Six topics reuse existing skills; 2 residency topics share one new skill. The new workflows identify evidence, reconciliations and decisions for qualified review. They do not encode complete tax engines.
+The 21 November 2026 snapshot has 71 guides in the [canonical Australian source tree](https://github.com/openaccountants/openaccountants/tree/d5f956217b4bf67b29910cdae6052ef80fe2a32a/skills/australia) and 61 in the [fork's country tree](https://github.com/ryanduguid/openaccountants/tree/79d0aa2e0470faeca2c3b00d9f6949ebc591a69c/skills/international/australia) and [Australian orchestrators](https://github.com/ryanduguid/openaccountants/tree/79d0aa2e0470faeca2c3b00d9f6949ebc591a69c/skills/orchestrator). The counts exclude each tree's bibliography and include both orchestrators. The 74 distinct filenames are mapped below. Where a topic has multiple guide versions, use the source and year applicable to the work.
 
-## Coverage
+## Guide to workpaper
 
-| Upstream topic | Skill | Delivery | Scope |
-| --- | --- | --- | --- |
-| `au-amending-individual-income-tax-return-period` | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-capital-gains` | [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-company-tax` | [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-crypto-tax` | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-deceased-estates` | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-div7a` | [`div7a-compliance`](../.claude/skills/div7a-compliance/SKILL.md) | Existing | Loan agreements, repayments and exposure review already exist. |
-| `au-fbt` | [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | Existing | Benefit, declaration, calculation and payable workpapers already exist. |
-| `au-fbt-year` | [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) | Existing | The existing workflow uses the FBT year and verifies applicable deadlines. |
-| `au-foreign-currency-forex-realisation-gains-and` | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-foreign-income` | [`au-foreign-income`](../.claude/skills/au-foreign-income/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-gst-bas` | [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | Existing | BAS mapping and control-account reconciliation already exist. |
-| `au-gst-property` | [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-individual-return` | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-land-tax` | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-medicare-levy` | [`au-medicare-review`](../.claude/skills/au-medicare-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-nonresident-cgt` | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-not-for-profit` | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-partnerships` | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-payg-instalments` | [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | Existing | The existing BAS workflow handles instalment amount/rate mapping and documented variations. |
-| `au-psi` | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-rates-2026-27` | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-rd-incentive` | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-rental-property` | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-small-business-cgt` | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-smsf` | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-sole-trader-schedule` | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-stamp-duty` | [`au-transfer-duty`](../.claude/skills/au-transfer-duty/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-super-guarantee` | [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md) | Existing | Existing STP and contractor-super-tpar workflows cover SG evidence and timing review; final SGC advice is outside the pack. |
-| `au-tax-residency` | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-trust-distributions` | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-bookkeeping` | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-financial-statements` | [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-formation` | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-gst` | [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-payroll` | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-tax-optimization` | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `australia-transfer-pricing` | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `leaving-australia-tax-residency-cgt` | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | New | Shares the residency skill's arrival/departure workflow. |
+| OpenAccountants guide | Australian Accounting Skills | Scope |
+| --- | --- | --- |
+| `au-freelance-intake`, `au-return-assembly` | [`au-client-acceptance`](../.claude/skills/au-client-acceptance/SKILL.md), [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md), [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md), [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md), [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | Separate intake, workpaper and review skills. The OpenAccountants end-to-end orchestrator has no single equivalent. |
+| `au-amending-individual-income-tax-return-period`, `amending-an-individual-income-tax-return-in-australia` | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) |  |
+| `au-bas-preparation`, `au-gst-bas`, `australia-gst` | [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md), [`tax-invoice-review`](../.claude/skills/tax-invoice-review/SKILL.md), [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) |  |
+| `au-capital-gains`, `au-capital-gains-2` | [`au-capital-gains`](../.claude/skills/au-capital-gains/SKILL.md), [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) |  |
+| `au-coal-lsl-levy` | [`coal-lsl-levy`](../.claude/skills/coal-lsl-levy/SKILL.md) |  |
+| `au-company-tax` | [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md), [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) |  |
+| `au-crypto-tax`, `au-crypto-tax-2` | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) |  |
+| `au-deceased-estates` | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) |  |
+| `au-deductions-offsets` | [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md), [`au-car-expenses`](../.claude/skills/au-car-expenses/SKILL.md), [`au-travel-expenses`](../.claude/skills/au-travel-expenses/SKILL.md), [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md), [`au-sapto`](../.claude/skills/au-sapto/SKILL.md), [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) |  |
+| `au-depreciating-assets` | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md), [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | Fork only. |
+| `au-director-penalties` | [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) |  |
+| `au-div7a` | [`div7a-compliance`](../.claude/skills/div7a-compliance/SKILL.md) |  |
+| `au-dssp` | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) |  |
+| `au-employee-share-schemes` | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) |  |
+| `au-employment-termination-payments` | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) |  |
+| `au-fbt`, `au-fbt-year` | [`fbt-annual-workflow`](../.claude/skills/fbt-annual-workflow/SKILL.md) |  |
+| `au-foreign-income` | [`au-foreign-income`](../.claude/skills/au-foreign-income/SKILL.md), [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) |  |
+| `au-forex-gains-losses`, `au-foreign-currency-forex-realisation-gains-and`, `foreign-currency-forex-realisation-gains-and-losses-under-division-775` | [`au-forex-review`](../.claude/skills/au-forex-review/SKILL.md) |  |
+| `au-fuel-tax-credits` | [`fuel-tax-credits`](../.claude/skills/fuel-tax-credits/SKILL.md) |  |
+| `au-gst-property` | [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) |  |
+| `au-individual-return` | [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md), [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) |  |
+| `au-land-tax` | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) |  |
+| `au-lodgment-deadlines-penalties` | [`au-ato-penalties-interest`](../.claude/skills/au-ato-penalties-interest/SKILL.md), [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md), [`au-pre-lodgement-review`](../.claude/skills/au-pre-lodgement-review/SKILL.md) | For date calculation, see the linked lodgment calendar below. |
+| `au-luxury-car-tax`, `au-wine-equalisation-tax` | [`tax-invoice-review`](../.claude/skills/tax-invoice-review/SKILL.md), [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | Fork only. The invoice check covers presentation. Use the Australian Accounting calculators for the separate LCT and WET computations. |
+| `au-managed-funds-amit` | [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) |  |
+| `au-medicare-levy` | [`au-medicare-review`](../.claude/skills/au-medicare-review/SKILL.md) |  |
+| `au-nonresident-cgt`, `au-nonresident-cgt-2` | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md), [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) |  |
+| `au-not-for-profit` | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) |  |
+| `au-objections` | [`au-ato-objection`](../.claude/skills/au-ato-objection/SKILL.md) |  |
+| `au-partnerships` | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) |  |
+| `au-payg-instalments`, `au-payg-instalments-2` | [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md), [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) |  |
+| `au-payroll-tax` | [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md), [`payroll-tax-contractors`](../.claude/skills/payroll-tax-contractors/SKILL.md) |  |
+| `au-primary-production` | [`au-primary-production`](../.claude/skills/au-primary-production/SKILL.md) |  |
+| `au-private-rulings` | [`au-private-ruling-application`](../.claude/skills/au-private-ruling-application/SKILL.md) |  |
+| `au-property-development` | [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md), [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) |  |
+| `au-psi` | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) |  |
+| `au-rates-2026-27` | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Verify rates for the relevant period from the primary source. |
+| `au-rd-incentive` | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) |  |
+| `au-rental-property`, `au-rental-property-2` | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md), [`au-short-stay-accommodation`](../.claude/skills/au-short-stay-accommodation/SKILL.md) |  |
+| `au-restructure-rollovers` | [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) |  |
+| `au-small-business-cgt` | [`au-small-business-cgt`](../.claude/skills/au-small-business-cgt/SKILL.md) |  |
+| `au-smsf` | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md), [`au-smsf-death-benefits`](../.claude/skills/au-smsf-death-benefits/SKILL.md) |  |
+| `au-sole-trader-schedule` | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md), [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) |  |
+| `au-stamp-duty` | [`au-transfer-duty`](../.claude/skills/au-transfer-duty/SKILL.md) |  |
+| `au-super-guarantee` | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md), [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md), [`au-super-guarantee-charge`](../.claude/skills/au-super-guarantee-charge/SKILL.md), [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) |  |
+| `au-tax-residency`, `au-tax-residency-2`, `leaving-australia-tax-residency-cgt`, `leaving-australia-residency-the-cgt-departure-choice-and-what-follows-you` | [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md), [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) |  |
+| `au-tpar` | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md) |  |
+| `au-trust-distributions` | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md), [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md), [`au-family-trust-election`](../.claude/skills/au-family-trust-election/SKILL.md), [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) |  |
+| `au-working-holiday-makers` | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) |  |
+| `australia-bookkeeping` | [`au-bookkeeping`](../.claude/skills/au-bookkeeping/SKILL.md), [`month-end-close`](../.claude/skills/month-end-close/SKILL.md) |  |
+| `australia-financial-statements`, `australia-financial-statements-2` | [`au-financial-statements`](../.claude/skills/au-financial-statements/SKILL.md), [`au-aasb-standards-reference`](../.claude/skills/au-aasb-standards-reference/SKILL.md) |  |
+| `australia-formation`, `australia-formation-2` | [`au-business-formation`](../.claude/skills/au-business-formation/SKILL.md), [`au-asic-company-changes`](../.claude/skills/au-asic-company-changes/SKILL.md) |  |
+| `australia-payroll` | [`au-payroll-review`](../.claude/skills/au-payroll-review/SKILL.md), [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md), [`au-award-underpayment-review`](../.claude/skills/au-award-underpayment-review/SKILL.md) |  |
+| `australia-tax-optimization`, `australia-tax-optimization-2` | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) |  |
+| `australia-transfer-pricing` | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) |  |
 
-## Guides added upstream after 8 September
+The fork's Australian bundle exports the intake as [australia-guided-intake.md](https://github.com/ryanduguid/openaccountants/blob/79d0aa2e0470faeca2c3b00d9f6949ebc591a69c/packages/australia/australia-guided-intake.md) and the assembly as [australia-return-assembly.md](https://github.com/ryanduguid/openaccountants/blob/79d0aa2e0470faeca2c3b00d9f6949ebc591a69c/packages/australia/australia-return-assembly.md). The fork's separate [TASA Code disclosure guide](https://github.com/ryanduguid/openaccountants/blob/79d0aa2e0470faeca2c3b00d9f6949ebc591a69c/skills/foundation/au-tasa-code-disclosure.md) maps to [the tax agent obligations skill](../.claude/skills/au-tax-agent-obligations/SKILL.md) and [the client acceptance skill](../.claude/skills/au-client-acceptance/SKILL.md).
 
-Read on 29 September 2026 at [commit ada1fae](https://github.com/openaccountants/openaccountants/tree/ada1faee45be23b0506caf9997c9ef7e652b23a4/packages/australia), where the Australian guides now sit under `packages/australia`. The table above keeps its 8 September scope.
+## Calculators and workflow hand-offs
 
-| Upstream topic | Skill | Delivery | Scope |
-| --- | --- | --- | --- |
-| `au-employment-termination-payments` | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | Existing | Termination payment classification, caps and withholding already exist. |
-| `au-payroll-tax` | [`au-payroll-tax-states`](../.claude/skills/au-payroll-tax-states/SKILL.md) | Existing | Multi-state thresholds, rates, grouping and apportionment already exist. |
-| `au-tpar` | [`contractor-super-tpar`](../.claude/skills/contractor-super-tpar/SKILL.md) | Existing | TPAR pathways and periods already exist. |
-| `au-working-holiday-makers` | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | New | Original preparation workflow; no Guide body copied. |
-| `au-rates-2026-27` | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | Existing | A list of rates rather than a workflow; the skill records which period's rates apply and where each comes from. |
-
-## Niche tax preparation coverage added on 21 October 2026
-
-The own pack adds the following workflows independently of upstream publication. The existing `au-psi-review` now names the individual-by-individual test sequence, source concentration, determination scope and attribution dependencies. This is preparation coverage, not a complete tax engine or professional approval.
-
-| Topic | Skill |
+| OpenAccountants calculator | Australian Accounting component |
 | --- | --- |
-| DSSP, DRP and bonus-share parcel workpapers | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) |
-| Employee share scheme workpapers | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) |
-| Foreign pension and annuity workpapers | [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) |
-| Lump sum payments in arrears workpapers | [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) |
-| Managed fund and AMIT member workpapers | [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) |
-| Non-commercial business-loss workpapers | [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) |
-| Seniors and pensioners tax offset workpapers | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) |
-| Small business income tax offset workpapers | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) |
+| ATO benchmarks | [ATO benchmark compare](https://github.com/ryanduguid/australian-accounting/tree/376ceb2f074ff2939cd0c10488e8fb3a04c22be5/packages/ato-benchmark-compare) |
+| Division 7A repayments | [Division 7A loan review](https://github.com/ryanduguid/australian-accounting/tree/376ceb2f074ff2939cd0c10488e8fb3a04c22be5/packages/div7a-loan-review) |
+| Lodgment dates | [Lodgment calendar](https://github.com/ryanduguid/australian-accounting/tree/376ceb2f074ff2939cd0c10488e8fb3a04c22be5/packages/lodgment-calendar) |
+| Payday Super timing | [Payday Super checker](https://github.com/ryanduguid/australian-accounting/tree/376ceb2f074ff2939cd0c10488e8fb3a04c22be5/packages/payday-super-checker) |
+| Base rate entity, contribution caps, Division 293, Division 296, FBT car taxable value, FHSS, PAYG withholding and super guarantee charge | [Australian tax calculators](https://github.com/ryanduguid/australian-accounting/tree/376ceb2f074ff2939cd0c10488e8fb3a04c22be5/packages/australian-tax-calculators) |
 
-Each addition has an indexed ATO starting point and a fabricated card that combines supported reconciliation with missing evidence. New source records leave the human review date blank and remain discovery-only. Historical pension instructions require the applicable period's authority. Neither a successful HTTP retrieval nor static checks establish current-law approval, a confirmed model verdict or qualified technical review. The original topic-mapping dates above remain unchanged.
+The [fork's 12 Australian calculator directories](https://github.com/ryanduguid/openaccountants/tree/79d0aa2e0470faeca2c3b00d9f6949ebc591a69c/calculators) include PAYG withholding and FHSS from [PR #590](https://github.com/ryanduguid/openaccountants/pull/590), alongside rate, deduction, PAYG, CGT, GST and FBT guide updates. The [canonical calculator tree](https://github.com/openaccountants/openaccountants/tree/d5f956217b4bf67b29910cdae6052ef80fe2a32a/calculators) has the Australian Division 7A repayment calculator. Each implementation's scope and tests govern its supported cases.
 
-## Provenance and reuse
+## Provenance and verification
 
-The OpenAccountants topic names helped identify gaps. Its Guide bodies were not imported or adapted. The new workflow text was written independently, using primary-source discovery and the pack's existing preparation/review conventions.
+The Australian Accounting Skills workflows were written from primary-source discovery and the pack's preparation and review conventions. This map links to OpenAccountants as a reference. Its [Skills License v2.0](https://github.com/openaccountants/openaccountants/blob/d5f956217b4bf67b29910cdae6052ef80fe2a32a/LICENSES/LicenseRef-OA-Guide-License-2.0.txt) governs source content and restricts bulk extraction and redistribution of the collection. The Australian Accounting Skills workflows use the [Ryan Duguid Public Attribution Licence 1.0](../LICENSE).
 
-The current [OpenAccountants Guide licence](https://github.com/openaccountants/openaccountants/blob/66912a14e86095f150c2b0c37703d195938f8f1d/LICENSES/LicenseRef-OA-Guide-License-1.0.txt) treats bulk extraction separately from permitted reference use. These additions do not relicense or redistribute that collection. The pack itself is licensed under the [Ryan Duguid Public Attribution Licence 1.0](../LICENSE), the FSL-1.1-ALv2 text with a public attribution condition.
-
-Ryan's OpenAccountants fork already exists. Its Australian folder has 36 guide files plus references; the 2 absent filenames are `au-amending-individual-income-tax-return-period.md` and `au-foreign-currency-forex-realisation-gains-and.md`. This build neither synchronises that diverged fork nor changes website drafts.
-
-## Verification limits
-
-Each new skill has a source-discovery record and a fabricated acceptance case. Indexed material includes historical documents. Direct retrieval of the ATO rates, bookkeeping and GST registration pages returned HTTP 403. No discovery record is current-law approval: the executing agent must verify the complete applicable authority, period and facts before relying on a rule.
-
-The existing recorded agent run relates to the original validation cards and version. It does not establish behaviour of the new skills. Metadata, packaging and static card validation can be tested automatically; a fresh agent evaluation and qualified technical review of the new workflows remain separate checks. State-specific skills require the named jurisdiction's authority, and NSW examples must not be applied nationally.
+Open the applicable primary source before using a rule. Discovery, static checks, a model assessment and a qualified practitioner's review are separate evidence. See the [skill verification register](skill-verification.md) for the current evidence for each workflow.

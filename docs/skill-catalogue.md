@@ -30,8 +30,7 @@
 
 ## Australian topic additions
 
-The [coverage map](au-guide-coverage.md) explains which of the 38 upstream
-topics reuse existing skills and which have original new workflows.
+The [coverage map](au-guide-coverage.md) links Australian OpenAccountants guides and calculators to the relevant preparation workflows and tools.
 
 | Skill | Use it for |
 | --- | --- |
