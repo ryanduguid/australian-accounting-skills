@@ -228,10 +228,10 @@ A resolved section must also exist where `section-index/` in this directory
 lists its Act's sections. Each `REGISTER-ID.txt` there holds one Commonwealth
 Act's or instrument's section numbers, one per line, after `# key: value`
 lines giving its `title`, `register-id`, `compilation`, `compilation-number`,
-`in-force-from`, `source`, `retrieved` and `sha256`. Queensland and New South
-Wales lists use `qld-act-YYYY-NNN.txt` and `nsw-act-YYYY-NNN.txt`. They use the
+`in-force-from`, `source`, `retrieved` and `sha256`. State lists use the
 register version date and omit the compilation fields. Their numbers come
-from the register's XML for Queensland or the contents listing for NSW.
+from the register's XML for Queensland, the contents listing for NSW or the
+authorised PDF for Victoria.
 For Commonwealth lists, the numbers are every
 table of contents entry of the compilation's EPUB, fetched from the `source`
 request to the Federal Register's API, that starts with a provision number;
@@ -339,6 +339,15 @@ header fields with the NSW identifier, title and version date. Compute
 `sha256` over the admitted numbers, one per line with LF line endings and a
 final LF. The HTML includes the access time, so its full bytes can vary.
 Run `check-citations`, as in step 6 above.
+
+For a Victorian Act, use `vic-SLUG.txt`, where `SLUG` is the part of the
+register address after `/in-force/acts/` and before the version number.
+Open the current version and download its authorised PDF. Take the body
+section numbers from its table of provisions up to the schedules. Use
+the same header fields as for Queensland, with the Victorian identifier,
+the authorised PDF URL and the SHA-256 of that file. Record the in-force
+date shown on the official version page. Run `check-citations`, as in step 6
+above.
 
 ## Validation pack
 
