@@ -499,6 +499,10 @@ Determination 2019, whose EPUB lists no sections. The other 116 sections
 belong to Acts of the other 7 states and territories; no list has yet been
 built from their registers.
 
+On 20 November 2026 a section index was added for the Taxation Administration
+Regulations 2017 from compilation 18 (F2026C01210). The citation check now finds
+all 8 regulation citations, leaving 119 citations to unindexed sections.
+
 The figures above are dated. The block below is what `check-citations` prints
 for the commit this file is in, after any failures: each Act or instrument's
 resolved sections, most cited first, then the totals. A test in
@@ -530,7 +534,7 @@ Payroll Tax Act 2011 (ACT): 11 sections, no index.
 Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (Vic): 9 sections, no index.
 A New Tax System (Goods and Services Tax) Regulations 2019 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
-Taxation Administration Regulations 2017 (Cth): 8 sections, no index.
+Taxation Administration Regulations 2017 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2008 (Tas): 7 sections, no index.
 Payroll Tax Act 2009 (NT): 7 sections, no index.
 Fringe Benefits Tax Assessment Act 1986 (Cth): 6 sections, 6 found, 0 listed exceptions, 0 absent.
@@ -549,7 +553,7 @@ Payroll Tax Act 2009 (SA): 1 section, no index.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, no index.
 1985 of 1985 citations resolve to a sources.json record: 270 of 270 rulings and guidance, 1715 of 1715 legislative sections.
-1588 of 1715 resolved sections checked against an index of their Act: 1583 found, 5 listed exceptions, 0 absent; 127 in an Act with no index.
+1596 of 1715 resolved sections checked against an index of their Act: 1591 found, 5 listed exceptions, 0 absent; 119 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing
