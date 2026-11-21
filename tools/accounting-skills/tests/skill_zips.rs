@@ -166,6 +166,8 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
                 b"---\nname: alpha\n---\nAlpha\n",
             ),
             (".claude/skills/alpha/references/guide.md", b"Guide\n"),
+            (".claude/skills/alpha/LICENSE", b"Fixture licence\n"),
+            (".claude/skills/alpha/NOTICE", b"Fixture notice\n"),
             (".claude/skills/alpha/references/deep/table.json", b"{}\n"),
             (
                 ".claude/skills/beta/SKILL.md",

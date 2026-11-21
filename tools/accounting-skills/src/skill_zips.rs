@@ -179,14 +179,15 @@ pub fn build(root: &Path, destination: &Path) -> Result<usize> {
     }
     for (skill, files) in &mut skills {
         for (name, bytes) in &licences {
-            if files.keys().any(|path| {
+            if files.iter().any(|(path, existing)| {
                 path.split('/')
                     .next()
                     .is_some_and(|component| component.eq_ignore_ascii_case(name))
+                    && (path != name || existing != bytes)
             }) {
                 return Err(format!("{SKILLS}/{skill} already has an entry named {name}").into());
             }
-            files.insert(name.clone(), bytes.clone());
+            files.entry(name.clone()).or_insert_with(|| bytes.clone());
         }
     }
     fs::create_dir_all(destination.parent().ok_or("destination has no parent")?)?;

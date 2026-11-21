@@ -32,6 +32,12 @@ class AttributionTests(unittest.TestCase):
             with self.subTest(path=path.relative_to(ROOT).as_posix()):
                 self.assertTrue(path.read_text(encoding="utf-8").endswith("\n\n" + PROSE_NOTICE))
 
+    def test_every_individually_installed_skill_carries_the_root_notices(self) -> None:
+        for manifest in ROOT.glob(".claude/skills/*/SKILL.md"):
+            for name in ("LICENSE", "NOTICE"):
+                with self.subTest(skill=manifest.parent.name, file=name):
+                    self.assertEqual((manifest.parent / name).read_bytes(), (ROOT / name).read_bytes())
+
     def test_every_script_and_test_opens_with_the_notice(self) -> None:
         paths = [*ROOT.glob("scripts/*.py"), *ROOT.glob("tests/*.py")]
         self.assertGreaterEqual(len(paths), 2)
