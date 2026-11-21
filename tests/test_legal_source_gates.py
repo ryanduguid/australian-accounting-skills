@@ -521,7 +521,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("it never says a payment is deductible", dgr)
         self.assertIn("send the recipient's details only, never the donor's", dgr)
         fbt = " ".join(skill_text("fbt-annual-workflow").split())
-        self.assertIn("use labels such as `E1`, never names", fbt)
+        self.assertIn("use labels such as `Employer` and `E1`, never names", fbt)
         self.assertIn("A rebatable or exempt employer is outside both", fbt)
 
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
