@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The client request drafts added on 12 November 2026 ask for facts and are never sent.
 
 Each draft asks the client for facts or records, is prepared for the practitioner

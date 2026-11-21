@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Flags tool calls in kept `claude plugin eval` traces whose input names the
 //! eval suite, a grader or a validation card. The graders sit inside the

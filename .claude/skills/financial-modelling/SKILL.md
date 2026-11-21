@@ -148,4 +148,4 @@ locations or repository configuration without explicit approval.
 - Not tax, legal or financial advice. Outputs are preparation aids for review
   by a qualified professional.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

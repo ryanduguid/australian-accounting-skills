@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """A skill's worked example must be fabricated, rate-free and add up.
 
 A validation card's working must add up too.

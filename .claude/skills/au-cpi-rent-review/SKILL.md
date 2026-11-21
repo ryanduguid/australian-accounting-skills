@@ -152,4 +152,4 @@ Open the relevant current or historical version for the review date. This starti
 
 A lease of a fabricated shop says the rent rises on each review date by the movement in 'the CPI' from the quarter before the last review, capped, and never falls. The landlord's agent supplies 2 index figures in an email with no release or series. Quote the clause, flag that it does not say quarterly or monthly or which city, compute the index result and the cap result separately in exact cents from the supplied figures, mark both `UNVERIFIED` until checked against the ABS release, raise the retail leases and GST flags for their owners, and leave the draft notice `NOT READY` and unsent for the agent, with the figures marked `UNVERIFIED`.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

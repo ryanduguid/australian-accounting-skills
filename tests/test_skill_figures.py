@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Skill prose must not hard-code dollar amounts or percentages.
 
 CONTRIBUTING.md sends the agent to the primary source for anything that

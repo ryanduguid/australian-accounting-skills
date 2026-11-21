@@ -30,7 +30,9 @@ npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-cod
 ```
 
 This copies all 107 released workflows into the current project's Codex
-and Claude Code directories. It leaves global installations unchanged. A tag
+and Claude Code directories. It leaves global installations unchanged.
+Keep the v0.7.0 checkout's licence and notice with any v0.7.0 skill
+folder you redistribute. A tag
 fixes the installed revision; it does not certify model outputs. The
 [evaluation guide](EVAL.md) records the tested revisions and limitations.
 
@@ -98,6 +100,8 @@ the skill's folder, holding one `SKILL.md` at its root: the shape Anthropic's
 [How to create custom skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
 article and OpenAI's [Skills in the API](https://developers.openai.com/cookbook/examples/skills_in_api)
 guide describe. Upload one at step 5 in place of a ZIP made by hand.
+Each skill folder also includes the repository's `LICENSE` and `NOTICE` from
+the same commit.
 
 These ZIPs are not attached to a release. They hold the skills of whatever the
 checkout has checked out: a checkout of the `v0.7.0` tag gives that release's
@@ -258,6 +262,8 @@ That asks which skills and agents to install, so it needs a terminal, and it ins
 into the current project. It resolves the default branch, not the tagged release. Add
 `-g` to install globally, `-a claude-code` to target one agent, `-l` to list the skills
 without installing anything, and `--skill '*' --yes --copy` to skip the questions.
+Each skill folder copied from `main` includes `LICENSE` and `NOTICE`.
+Keep both files when redistributing the folder.
 
 Skills CLI 1.5.22 puts OpenCode, Gemini CLI and Cursor installs in `./.agents/skills/`.
 On 5 November 2026 `--agent opencode` copied all 76 skills from v0.5.0 and all 97 from
@@ -366,7 +372,7 @@ New-Item -ItemType Directory -Force "$HOME/.claude/skills"
 Copy-Item -Recurse australian-accounting-skills/.claude/skills/* "$HOME/.claude/skills/"
 ```
 
-Or copy individual skill folders into `<project>/.claude/skills/`. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best. For a firm repository, adapt [`templates/firm-CLAUDE.md.example`](../templates/firm-CLAUDE.md.example) to its actual policy; this repository's [`CLAUDE.md`](../CLAUDE.md) is contributor guidance, not a substitute for firm controls.
+Or copy individual skill folders into `<project>/.claude/skills/`. Folders on `main` carry their own `LICENSE` and `NOTICE`. When redistributing a folder from an earlier tag, include that tag's licence and notice from its checkout. The skills cross-reference each other (`bas-preparation`, `stp-finalisation`, `workpaper-tie-out`, `fbt-annual-workflow` and `xero-exports` are shared dependencies), so installing the full set works best. For a firm repository, adapt [`templates/firm-CLAUDE.md.example`](../templates/firm-CLAUDE.md.example) to its actual policy; this repository's [`CLAUDE.md`](../CLAUDE.md) is contributor guidance, not a substitute for firm controls.
 
 ### Versioning
 

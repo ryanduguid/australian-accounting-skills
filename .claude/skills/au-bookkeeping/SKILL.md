@@ -71,4 +71,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 The same purchase appears through both a bill payment and a bank-feed expense. Flag possible duplication and trace the source before proposing reversal.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

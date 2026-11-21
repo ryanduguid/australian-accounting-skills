@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Keep payroll source routes and statutory differences with their jurisdictions."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The review steps added on 11 November 2026 keep their sources, conditions and limits.
 
 Each test reads one step, screen or table row and checks what it must carry: the

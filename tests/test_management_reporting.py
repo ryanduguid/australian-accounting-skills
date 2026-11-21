@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The accounting depreciation schedule and the monthly management report keep their limits.
 
 `au-depreciation-schedule` step 8a works only from the entity's documented accounting

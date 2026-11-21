@@ -10,6 +10,10 @@ These skills describe how an agent should work through an Australian accounting 
 
 ## Writing a skill
 
+Include byte-identical copies of the root `LICENSE` and `NOTICE` in each
+skill folder so individual installs carry their terms. Refresh the copies
+when editing either root file.
+
 - Send the agent to the primary source for anything that changes: rates, thresholds, benchmark interest, label numbers, lodgement dates. Hardcode a current-year figure and the skill goes wrong next year without saying so.
 - Reach every step from the inputs the skill asks for. A step that needs a payroll report, a balance sheet or a payment history the skill never requested is broken rather than thorough.
 - Keep the scope fence visible. State what the skill declines to decide, and where a human signs off.

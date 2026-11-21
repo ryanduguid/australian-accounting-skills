@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Ties out bank and card statement lines in exact cents, so no model does the arithmetic.
 //!

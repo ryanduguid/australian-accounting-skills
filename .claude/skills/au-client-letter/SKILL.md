@@ -87,4 +87,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 The approved advice compares holding a new property personally or through the client's trust, says the trust route is 'likely' to suit 'subject to the trust deed', and states that duty was not considered. The firm's template has an 'Our recommendation' heading and a fee line, and the practitioner asks for a friendlier letter. Reword for tone, keep 'likely', the deed condition and the duty limitation, write `[PRACTITIONER TO SUPPLY: recommendation]` and `[PRACTITIONER TO SUPPLY: fee]`, and list both as reviewer exceptions.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

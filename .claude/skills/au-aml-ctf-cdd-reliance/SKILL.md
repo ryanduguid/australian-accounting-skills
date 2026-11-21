@@ -78,4 +78,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A law firm refers a new company client for a restructure and sends the director's identity details with a note that the practice can rely on its checks. The file holds the law firm's AUSTRAC enrolment, no written arrangement, no documented reasons for relying on it and no ML/TF risk rating. Record the route as case-by-case reliance under s 38 of the AML/CTF Act, list each missing reason under s 6-31 of the AML/CTF Rules and the missing risk rating, and record that the practice must still identify the client's ML/TF risk itself, rather than marking the file ready because the referrer is enrolled.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

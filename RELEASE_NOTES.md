@@ -1,3 +1,7 @@
+# Unreleased
+
+- Relicensed Ryan Duguid's original work under Apache-2.0. Earlier releases keep their original terms.
+
 # v0.7.0
 
 Together the changes below provide 107 skills, 237 validation cards and 122 routing

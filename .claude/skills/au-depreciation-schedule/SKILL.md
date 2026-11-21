@@ -89,4 +89,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A small business entity opted out of simplified depreciation in an earlier year that the file does not identify. Keep the instant asset write-off and pool treatment conditional until the opt-out year and the lock-out rules for the actual income year are verified; do not assume re-entry.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

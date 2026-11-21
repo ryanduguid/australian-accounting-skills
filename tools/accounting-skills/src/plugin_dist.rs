@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Build the plugin as the Claude plugin directory reads it. The directory
 //! refuses, from an organisation it has not verified, a local MCP server, a
@@ -340,6 +340,21 @@ fn blobs(root: &Path, oids: &[String]) -> Result<Vec<Vec<u8>>> {
 /// return its counts of files and of files and folders.
 pub fn build(root: &Path, destination: &Path) -> Result<(usize, usize)> {
     let mut files = committed(root, &SOURCES)?;
+    let root_notices = BARE_TEXT.map(|name| (name, files.get(name).cloned()));
+    // The whole plugin distributes the root notices once. Standalone skills
+    // carry their own copies.
+    files.retain(|path, bytes| {
+        let Some((folder, name)) = path.rsplit_once('/') else {
+            return true;
+        };
+        let skill_root = folder
+            .strip_prefix("skills/")
+            .is_some_and(|skill| !skill.is_empty() && !skill.contains('/'));
+        !skill_root
+            || !root_notices
+                .iter()
+                .any(|(notice, root_bytes)| *notice == name && root_bytes.as_ref() == Some(bytes))
+    });
     let generated = manifest(&files[MANIFEST])?;
     files.insert(MANIFEST.to_owned(), generated);
     let entries = check(&files)?;

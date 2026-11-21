@@ -63,4 +63,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A member dies with a pension the deed makes reversionary to the spouse and an accumulation account whose binding nomination names an adult, financially independent child, witnessed once. Test the nomination against the deed, record the child as a SIS dependant and, in the death benefits dependant column, as not meeting s 302-195(1)(b) or (d) of the ITAA 1997 but `UNVERIFIED` under s 302-195(1)(c) of the ITAA 1997 until the facts of any interdependency relationship are evidenced, date the spouse's transfer balance credit 12 months after the death and leave the payment decision with the trustee.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

@@ -93,4 +93,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A client's email asks whether a new rental's repairs are deductible, says the client's partner moved out in March, mentions 'the lease I've attached' with no file supplied and asks for the return 'before the bank meeting on the 20th'. Register 5 lines, each quoting its span: the question unanswered and routed to `au-tax-research`, the partner's move as a change in circumstances for a decision, the lease as `NOT SUPPLIED`, and the request for the return and its deadline as 2 lines quoting the same span, the deadline in the client's words with no calendar date. Send no reply.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

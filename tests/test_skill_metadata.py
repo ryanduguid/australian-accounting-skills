@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Offline integrity checks for distributable accounting skills."""
 
 from __future__ import annotations
@@ -648,9 +648,9 @@ class SkillMetadataTests(unittest.TestCase):
         self.assertIn(f"v{cited}", abstract)
         self.assertIn(INVENTORY_WORDS[RELEASED_INVENTORIES[cited]], abstract.lower())
         plugin = json.loads((REPOSITORY / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(plugin["license"], "LicenseRef-Duguid-Public-Attribution-1.0")
+        self.assertEqual(plugin["license"], "Apache-2.0")
         # The citation describes the published release, which keeps the
-        # licence it shipped with; main has since moved to LicenseRef-Duguid-Public-Attribution-1.0.
+        # licence it shipped with; main now uses Apache-2.0.
         self.assertEqual(citation.get("license"), {"0.4.0": "Apache-2.0"}.get(cited))
 
     def test_readme_evaluation_counts_match_the_recorded_runs(self) -> None:

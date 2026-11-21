@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The customer due diligence and reliance skill added on 19 November 2026 prepares a file and decides nothing.
 
 Each test reads one step, the sources or the card and checks the rule a reader

@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! `serve-mcp` driven as an MCP client drives it: JSON-RPC lines over the
 //! child process's stdin and stdout.

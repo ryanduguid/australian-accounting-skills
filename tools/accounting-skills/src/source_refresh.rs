@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Primary-source retrieval, pending candidates and independent human readiness.
 pub use crate::source_content::{body_digest, client_rendered, readable_text};
