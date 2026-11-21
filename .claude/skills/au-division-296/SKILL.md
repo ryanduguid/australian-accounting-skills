@@ -29,6 +29,29 @@ Income year, the individual's total superannuation balance (TSB) reported for ea
 
 9. SMSF: check whether the fund made, or can still make, the irrevocable cost base election for assets held at the end of 30 June 2026 before its 2026-27 return is due. Prepare the facts for the trustee; the election is theirs.
 
+## Tax calculators
+
+The `division-296` command comes from the released [`australian-tax-calculators` 1.1.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.1.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/c4a716a25f065ccc957c5db83dec711251cb4121/packages/australian-tax-calculators)), the executable `aus-accounting-mcp` 0.11.0 also runs for its tax worksheets. It is installed separately, and `pip` does not install it. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS`, and verify both before extracting anything:
+
+```text
+gh release download australian-tax-calculators/v1.1.0 --repo ryanduguid/australian-accounting --pattern SHA256SUMS --pattern <archive>
+gh attestation verify SHA256SUMS --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.1.0 --source-digest c4a716a25f065ccc957c5db83dec711251cb4121 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+sha256sum --check --ignore-missing SHA256SUMS
+gh attestation verify <archive> --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.1.0 --source-digest c4a716a25f065ccc957c5db83dec711251cb4121 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+```
+
+Stop if any of the 4 fails. On another platform, build the tagged commit from its lock file with Rust 1.99 or later, into a tool directory of its own; `cargo install --list --root <tool-dir>` must show `australian-tax-calculators v1.1.0` with that commit in its source:
+
+```text
+cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev c4a716a25f065ccc957c5db83dec711251cb4121 australian-tax-calculators
+```
+
+Run it by its full path, the extracted `australian-tax-calculators` or `<tool-dir>/bin/australian-tax-calculators` (`.exe` on Windows), never one found on `PATH`, as other builds also report 1.1.0; check that `--version` prints exactly `australian-tax-calculators 1.1.0`, and pass `--refusal-json` after the command so a refusal (exit 2) prints its code. Use this local executable; a remote calculator is used only where the user has explicitly permitted that call for this question, on fabricated or firm-approved inputs, and never as a fallback when a local tool refuses. Send `{}` to its `worksheet-catalogue` command for each worksheet's scope statement and its required and optional inputs. Before running a command, send its worksheet name, the command's name with underscores, to its `periods` command, such as `{"kind": "division_296"}`, and confirm it supports the reporting month or income year in question rather than merely accepting the year; if it does not, say so and follow the written method. Each command reads one JSON object on stdin, without the `kind` field that only `periods` takes, with amounts as decimal strings and a `scope_confirmed` flag: set it only once each condition in the scope statement the command returns is evidenced, and where one is not, follow the written method for that item. Send only amounts, dates and the established facts the command takes, never a client's name, address, TFN, ABN or other identifier. Record what it consumed: the release, the engine version, the exact input, the output with the scope statement, sources and source-check date it returns, and the run date. Record a refusal and its code as an open item, and do not change the facts to get past it. Keep the calculator's own labels as its own, reported beside the facts it was given, never as the reviewer's decision on a position. A calculator's figure checks the written method, which is always completed: where they differ, record the difference for the reviewer and adopt neither. Without the executable, follow the written method.
+
+`division-296` estimates one individual's Division 296 tax for the 2026-27 income year, its first, from the total superannuation balance and total superannuation earnings the operator establishes. Working out the balance, fund earnings and their attribution, defined benefit interests and other interests whose earnings follow a different rule, temporary residents who depart Australia, and assessment and payment are outside it; its estimate is not the Commissioner's assessment.
+
+A person can compare a result with the site's [Division 296 tax calculator](https://duguid.com.au/tools/business-calculators/division-296/) page, which runs in the browser; it is not a substitute for the executable and is not used when the executable refuses.
+
 ## Hand-off and checks
 
 A TSB schedule by interest and date, an earnings schedule by fund, the proportion and component calculations with rounding shown, a deferred amount for defined benefit or prescribed interests, and a reconciliation to any notice. Every earnings figure agrees to a fund report or is marked missing. Elections, objections and payment choices are reviewer and trustee decisions.

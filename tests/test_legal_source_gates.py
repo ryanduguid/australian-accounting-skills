@@ -343,12 +343,19 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
-    def assert_released_calculators(self, name: str, *commands: str) -> str:
-        """The skill pins australian-tax-calculators 1.0.0, the release aus-accounting-mcp 0.10.0
-        runs, verifies it before use and keeps the written method as the result."""
+    #: Each pinned australian-tax-calculators release, its tagged commit and the
+    #: aus-accounting-mcp release that runs it.
+    RELEASES = {
+        "1.0.0": ("6ac566682829731d52a1b4456708a0b9d29b5695", "0.10.0"),
+        "1.1.0": ("c4a716a25f065ccc957c5db83dec711251cb4121", "0.11.0"),
+    }
+
+    def assert_released_calculators(self, name: str, *commands: str, version: str = "1.0.0") -> str:
+        """The skill pins an australian-tax-calculators release, names the aus-accounting-mcp
+        release that runs it, verifies it before use and keeps the written method as the result."""
         text = " ".join(skill_text(name).split())
-        revision = "6ac566682829731d52a1b4456708a0b9d29b5695"  # tag australian-tax-calculators/v1.0.0
-        release = "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.0.0"
+        revision, server = self.RELEASES[version]
+        release = f"https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v{version}"
         tree = f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/australian-tax-calculators"
         records = json.loads((SKILLS / name / "sources.json").read_text(encoding="utf-8"))["sources"]
         for url in (release, tree):
@@ -358,7 +365,7 @@ class LegalSourceGateTests(unittest.TestCase):
                 self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
         # A downloaded archive is trusted only after its provenance and checksum, both pinned to the tag.
         pins = (
-            "--repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.0.0 "
+            f"--repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v{version} "
             f"--source-digest {revision} --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml"
         )
         self.assertIn(f"gh attestation verify SHA256SUMS {pins}", text)
@@ -369,9 +376,14 @@ class LegalSourceGateTests(unittest.TestCase):
             f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} australian-tax-calculators",
             text,
         )
-        self.assertIn("must show `australian-tax-calculators v1.0.0` with that commit in its source", text)
+        self.assertIn(f"must show `australian-tax-calculators v{version}` with that commit in its source", text)
         self.assertIn("never one found on `PATH`", text)
-        self.assertIn("check that `--version` prints exactly `australian-tax-calculators 1.0.0`", text)
+        self.assertIn(f"check that `--version` prints exactly `australian-tax-calculators {version}`", text)
+        self.assertIn(f"the executable `aus-accounting-mcp` {server} also runs for its tax worksheets", text)
+        # A skill pins one release: a second tag would leave a reader two executables to verify.
+        for other in self.RELEASES:
+            if other != version:
+                self.assertNotIn(f"australian-tax-calculators/v{other}", text)
         self.assertIn("A calculator's figure checks the written method, which is always completed", text)
         self.assertIn("record the difference for the reviewer and adopt neither", text)
         self.assertIn("Without the executable, follow the written method.", text)
@@ -404,13 +416,17 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("a car claimed only by the cents per kilometre method has nothing assessable or deductible (s 40-370(1) Note 2)", cars)
         self.assertIn("give `asset` as `car`, one row per income year held with its `method` and `days_held`", cars)
 
-        fbt = self.assert_released_calculators("fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost")
+        fbt = self.assert_released_calculators(
+            "fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost", version="1.1.0"
+        )
         self.assertIn("used only where a valid logbook supports the operating cost method", fbt)
         self.assertIn("the statutory result's `taxable_value_before_exemption` as `statutory_formula_taxable_value`", fbt)
         self.assertIn("Their results are taxable values before gross-up, and neither applies the reportable fringe benefits threshold", fbt)
 
     def test_rental_skill_spreads_borrowing_expenses_under_s_25_25_and_routes_to_the_released_calculator(self) -> None:
-        text = self.assert_released_calculators("au-rental-property", "borrowing-expenses")
+        text = self.assert_released_calculators(
+            "au-rental-property", "borrowing-expenses", "borrowing-expenses-schedule", version="1.1.0"
+        )
         step = text[text.index("2a. Borrowing expenses:") : text.index("3. Trace borrowed funds")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/25-25", step)
         # s 25-25(5) as read on 19 November 2026: the shortest of the 3 periods.
@@ -422,10 +438,14 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the method statement in s 25-25(4) of the ITAA 1997", step)
         self.assertIn("the amount s 25-25(6) of the ITAA 1997 sets", step)
         self.assertIn("record the use of refinanced or redrawn money as a reviewer question", step)
-        # 1.0.0's borrowing-expenses: one loan, one year, 2024-25 to 2026-27, and its scope conditions.
-        self.assertIn("one loan's deduction for one income year from 2024-25 to 2026-27", text)
+        # 1.1.0's borrowing-expenses: one loan, one year, 2017-18 to 2027-28, and its scope conditions.
+        self.assertIn("one loan's deduction for one income year from 2017-18 to 2027-28", text)
         self.assertIn("all the expenditure to be incurred in the income year the loan began and one income-producing share throughout the loan", text)
-        self.assertIn("a loan first drawn on 29 February and every income year from 2027-28", text)
+        self.assertIn("and every income year after 2027-28; for 2027-28 it flags the result for the s 26-155 check", text)
+        self.assertNotIn("29 February", text)
+        # The schedule spreads several loans, refinancing included, and leaves the money's use to the reviewer.
+        self.assertIn("for a loan that refinances an earlier one, which loan it repaid", text)
+        self.assertIn("Which costs are borrowing expenses, the money's use and the tracing of redraws stay with steps 2a and 3", text)
 
     def test_fuel_skill_sets_out_the_small_claimant_methods_without_their_figures(self) -> None:
         text = " ".join(skill_text("fuel-tax-credits").split())
@@ -440,9 +460,69 @@ class LegalSourceGateTests(unittest.TestCase):
         # PCG 2021/2 paras 9 to 12, with the ceiling and the derived percentage left to the guideline.
         self.assertIn("by the percentage para 9 sets", step)
         self.assertIn("never with the PCG 2016/11 percentages (para 12)", step)
-        self.assertIn("No released version of `australian-tax-calculators`, including 1.0.0", step)
+        self.assertIn("Where the released `fuel-tax-credits` command in [Tax calculators](#tax-calculators) is installed", step)
         records = json.loads((SKILLS / "fuel-tax-credits" / "sources.json").read_text(encoding="utf-8"))["sources"]
         self.assertFalse([record["url"] for record in records if "aip.com.au" in record["url"]])
+
+    #: Skills routed on 22 November 2026 to commands first released in, or
+    #: otherwise unrouted before, australian-tax-calculators 1.1.0.
+    ROUTES_1_1_0 = {
+        "fuel-tax-credits": ("fuel-tax-credits",),
+        "au-payroll-tax-states": ("payroll-tax",),
+        "au-small-business-cgt": ("sb-cgt-concessions",),
+        "au-capital-gains": ("cgt-parcels", "capital-gains"),
+        "au-main-residence": ("main-residence",),
+        "au-working-holiday-makers": ("working-holiday-maker-withholding", "dasp-tax"),
+        "bas-preparation": ("gst", "wine-equalisation-tax", "luxury-car-tax"),
+        "au-gst-property": ("gst-margin-scheme",),
+        "au-individual-return": (
+            "resident-tax", "foreign-resident-tax", "low-income-tax-offset", "study-loan-repayment",
+            "personal-tax-estimate",
+        ),
+        "au-etp-redundancy": ("termination-payment", "etp-tax-free-component", "unused-leave-payment"),
+        "au-medicare-review": ("medicare-levy", "medicare-levy-surcharge", "income-tests"),
+        "au-sapto": ("seniors-pensioners-tax-offset",),
+        "au-lump-sum-arrears": ("lump-sum-arrears-tax-offset",),
+        "au-division-293": ("division-293",),
+        "au-division-296": ("division-296",),
+        "au-payroll-review": (
+            "payg-gross-up", "schedule-5-method-a", "schedule-5-method-b-i", "schedule-5-method-b-ii",
+            "seniors-pensioners-withholding",
+        ),
+        "au-not-for-profit": ("dgr-check",),
+        "plant-and-equipment-costing": ("hire-purchase-schedule", "chattel-mortgage-schedule", "loan-transactions"),
+        "fbt-annual-workflow": (
+            "fbt", "fbt-return", "fbt-loan", "fbt-meal-entertainment", "fbt-car-parking", "fbt-debt-waiver",
+            "fbt-expense-payment", "fbt-property", "fbt-residual", "fbt-housing", "fbt-lafha", "fbt-board",
+            "fbt-tax-exempt-body-entertainment", "fbt-ev-exemption-check", "fbt-meal-entertainment-register",
+            "fbt-minor-benefit-check",
+        ),
+    }
+
+    def test_skills_route_the_1_1_0_commands_to_the_pinned_release(self) -> None:
+        for name, commands in self.ROUTES_1_1_0.items():
+            with self.subTest(skill=name):
+                text = self.assert_released_calculators(name, *commands, version="1.1.0")
+                # The route reads each worksheet's own scope and keeps the client out of the input.
+                self.assertIn("`worksheet-catalogue` command", text)
+                identifiers = (
+                    "never employee names" if name == "fbt-annual-workflow"
+                    else "never a client's name, address, TFN, ABN or other identifier"
+                )
+                self.assertIn(identifiers, text)
+        # A refusal is stated in the command's own terms, not the figure behind it.
+        fuel = " ".join(skill_text("fuel-tax-credits").split())
+        self.assertIn("a simplified method without the small claimant statement", fuel)
+        sb = " ".join(skill_text("au-small-business-cgt").split())
+        self.assertIn("refuses an active-day total that falls on the boundary of the active asset test's period", sb)
+        gst = " ".join(skill_text("au-gst-property").split())
+        self.assertIn("Release 1.1.0 takes the valuation date as given", gst)
+        dgr = " ".join(skill_text("au-not-for-profit").split())
+        self.assertIn("it never says a payment is deductible", dgr)
+        self.assertIn("send the recipient's details only, never the donor's", dgr)
+        fbt = " ".join(skill_text("fbt-annual-workflow").split())
+        self.assertIn("use labels such as `E1`, never names", fbt)
+        self.assertIn("A rebatable or exempt employer is outside both", fbt)
 
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
         text = " ".join(skill_text("div7a-compliance").split())
@@ -450,7 +530,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Record the refusal and its code as an exception", text)
 
     def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
-        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier")
+        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.1.0")
         self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
         # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
         self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
