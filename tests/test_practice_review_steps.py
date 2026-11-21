@@ -38,6 +38,8 @@ SELF_BILLING = "https://docs.peppol.eu/poac/aunz/pint-aunz-sb/bis/"
 WITHDRAWAL_NOTICE = "https://www.ato.gov.au/law/view/document?DocID=GST/GSTR200010/NAT/ATO/00001"
 GN11 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote11_Use_of_Tax_Category_Codes.html"
 GN01 = "https://a-nz-peppol.github.io/Guidance-documents/GuidanceNote01_WETandLCT"
+ASIC_COMPANIES = "https://www.asic.gov.au/online-services/search-asic-registers/company-and-organisation-registers"
+ASIC_BUSINESS_NAMES = "https://www.asic.gov.au/online-services/search-asic-registers/business-names-register"
 CLIENT_FIELDS = "https://central.xero.com/s/article/Create-a-client-in-Practice-Manager-AU"
 STAPLED = (
     "https://www.ato.gov.au/businesses-and-organisations/super-for-employers/setting-up-super-for-your-business/"
@@ -281,6 +283,27 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_carries(limitations, "withdrawn with effect from 29 July 2026",
                             "on or before 14 June 2023", "on or after 15 June 2023", "F2023L00785",
                             "registered on 14 June 2023", "A reviewer must confirm both dates")
+
+    def test_register_lookups_are_dated_and_state_what_they_do_not_cover(self) -> None:
+        route = section("tax-invoice-review", "Register lookups")
+        self.assert_sentence(route, r"\bHuman review pending\b|\bon 22 November 2026, not a human review\b")
+        self.assert_sentence(route, r"\bcheck digit test first\b", r"`validate_abn`", r"`validate_acn`")
+        self.assert_sentence(route, r"\bA pass shows only\b", r"\bregister search still follows\b")
+        self.assert_sentence(route, r"\[ABN Lookup\]\(https://abr\.business\.gov\.au/\)")
+        self.assert_sentence(route, r"\bdoes not show a street address or the people behind the entity\b")
+        self.assert_sentence(route, r"'Search within: Organisation & Business names'")
+        self.assert_sentence(route, r"\bdoes not show officeholders\b", r"\bpaid company extract\b")
+        self.assert_sentence(route, r"'Search within: Business names index'")
+        self.assert_sentence(route, r"\bwhether the registration is current\b")
+        self.assert_sentence(route, r"\brecord it `not run`", r"\bdo not substitute a lookup from another provider\b")
+        self.assert_sentence(route, r"\bABN Lookup web services\b", r"\bGUID\b", r"\bcommercial or bulk access\b",
+                             r"\bpaid company and business name extracts\b", r"\bPPSR searches\b",
+                             r"`au-business-acquisition-review`")
+        self.assert_sentence(route, DO_NOT + r"register, order or pay\b")
+        self.assert_pending("tax-invoice-review", ASIC_COMPANIES, ASIC_BUSINESS_NAMES)
+        for skill in ("au-business-acquisition-review", "au-aml-ctf-cdd-reliance"):
+            with self.subTest(skill=skill):
+                self.assertIn("'Register lookups' section of `tax-invoice-review`", skill_text(skill))
 
     # au-aml-ctf-client-coverage: R1019 and R1017
 
