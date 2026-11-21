@@ -74,7 +74,7 @@ Totals: 111 skills, 823 indexed primary sources of which 341 have a recorded hum
 | [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md) | [7](../.claude/skills/au-property-development-income/sources.json) | 2026-11-02 (6 of 7) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | [4](../.claude/skills/au-psi-review/sources.json) | 2026-10-14 (2 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | [2](../.claude/skills/au-rd-incentive/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | [11](../.claude/skills/au-rental-property/sources.json) | 2026-09-30 (3 of 11) | 1 | 0 | 3 | 1 | 0 | 0 |
+| [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | [11](../.claude/skills/au-rental-property/sources.json) | 2026-09-30 (3 of 11) | 1 | 0 | 4 | 1 | 0 | 0 |
 | [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [13](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 13) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [2](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 2) | 0 | 2 | 1 | 1 | 0 | 0 |
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | [3](../.claude/skills/au-sapto/sources.json) | 2026-11-02 (2 of 3) | 0 | 0 | 2 | 0 | 0 | 0 |
