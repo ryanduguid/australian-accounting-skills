@@ -121,4 +121,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A transcript of a video meeting shows the practitioner saying 'that could probably go through the company, but let me look at it' about a client's new side business, and the client asking the firm to start doing the business's BAS, which the engagement letter does not cover. No record shows the client's partner, who also spoke, agreed to the recording. Record the remark in part (c) as said, with its hedge, list the BAS request in part (e) for `au-client-acceptance`, route the structure question to `au-tax-research` unanswered, and put the partner's missing consent at the top as a reviewer exception.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

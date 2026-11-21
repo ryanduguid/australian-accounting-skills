@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The myob-exports skill keeps its export controls, connector gate and pending sources.
 
 Each test reads one section or table row and checks what it must carry: the MYOB

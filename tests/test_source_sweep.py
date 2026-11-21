@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """What the source sweep workflow relies on from source_refresh.py.
 
 The workflow hands the exit status and report of `source_refresh.py --check`

@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! `accounting-skills serve-mcp`: a read-only Model Context Protocol server
 //! over stdio. Its 3 tools list, search and return the skills under

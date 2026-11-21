@@ -67,4 +67,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A private company buys back one shareholder's shares off-market, debits less to share capital than the average capital per share after a transfer into share capital from retained earnings, has no market valuation and sets part of the price off against the shareholder's loan account. Record the transfer and any untainting choice, keep the split `UNVERIFIED` beside the average until the reviewer settles tainting, keep the market value and the frankable part `UNVERIFIED`, route the set-off to `div7a-compliance`, list the selective buy-back approvals still to evidence, and leave each tax position to the reviewer.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

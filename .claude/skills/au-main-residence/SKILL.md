@@ -74,4 +74,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 An owner lived in a house, moved interstate and let it for 7 years, then sold it after buying and moving into a new home. Schedule the 2 homes' periods, show the absence choice up to its 6-year limit against the new home it would displace, record the first income use date and the missing valuation for it as `UNVERIFIED`, and leave the choice to the owner and the exemption to the reviewer.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

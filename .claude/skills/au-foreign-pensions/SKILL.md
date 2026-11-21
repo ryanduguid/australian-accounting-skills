@@ -45,4 +45,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 The net bank receipt and foreign tax are known, but personal-contribution history and an arrears breakdown are absent. Reconcile the known gross amount and leave UPP and arrears relief unresolved.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

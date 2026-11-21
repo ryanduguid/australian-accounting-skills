@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Read-only checks for the repository's fabricated regression pack.
 use crate::{Result, strict_yaml, validation_text as text};

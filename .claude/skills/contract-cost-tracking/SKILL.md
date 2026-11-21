@@ -70,4 +70,4 @@ The cost to complete is the project manager's estimate, and the 500.00 is not sp
 - The AASB 15 paragraph numbers cited here come from the compilation current when this skill was written. Confirm the compilation operative for the period being costed at standards.aasb.gov.au before relying on a paragraph reference, because compilations are remade and renumbered.
 - Tax does not follow the contract accounting, and the ATO position on long-term construction contracts must be confirmed at ato.gov.au rather than assumed. This is workflow support, not tax advice.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

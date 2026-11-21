@@ -7,6 +7,6 @@
   },
   "homepage": "https://duguid.com.au/tools/australian-tax-ai-agents/",
   "repository": "https://github.com/ryanduguid/australian-accounting-skills",
-  "license": "LicenseRef-Duguid-Public-Attribution-1.0",
+  "license": "Apache-2.0",
   "skills": "./.claude/skills/"
 }

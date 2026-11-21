@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 use accounting_skills::{Result, source_fetch_policy as policy, source_refresh as s};
 use s::transport::{Response, Transport};

@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Every distributed file keeps the copyright notice LICENSE requires redistributors to keep."""
 
 from __future__ import annotations
@@ -10,14 +10,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROSE_NOTICE = (
     "Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, "
-    "Ryan Duguid Public Attribution Licence 1.0. "
-    "Copies and adaptations of this file must keep this notice. "
+    "Apache-2.0. "
+    "Keep this notice when redistributing this file or an adaptation. "
     "It does not belong in client work.\n"
 )
 CODE_NOTICE = (
-    "# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0\n"
+    "# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0\n"
 )
-CREDIT_LINE = "Based on australian-accounting-skills by Ryan Duguid"
+CREDIT_LINE = "This product includes work by Ryan Duguid"
 
 
 class AttributionTests(unittest.TestCase):

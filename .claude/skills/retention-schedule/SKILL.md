@@ -80,4 +80,4 @@ The NSW trust-account corrections above were checked on 15 August 2026 against:
 
 Recheck the in-force compilation at the time of use. The 14-day notice wording on the NSW Government page conflicted with the 10-business-day requirement in cl 9(3) when checked, so this skill deliberately preserves the discrepancy for review.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

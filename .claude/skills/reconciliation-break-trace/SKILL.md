@@ -64,4 +64,4 @@ Explained: 1,200.00 + 450.00 - 240.00 = 1,410.00. Remainder: 1,430.00 - 1,410.00
 - Client data: follow the firm's CLAUDE.md privacy rules; exclude TFNs, full bank account numbers and any identifier the task does not need; keep exports and generated output outside every version-control checkout, not merely ignored by one.
 - This is not an audit or assurance conclusion. Not tax, legal or assurance advice. Outputs are preparation aids for review by a qualified professional.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

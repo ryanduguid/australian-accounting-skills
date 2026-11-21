@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The main residence and share buy-back workflows added on 11 November 2026 keep their key rules.
 
 Each test reads one numbered workflow step and checks the provisions, conditions and

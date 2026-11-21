@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Build the plugin as the Claude plugin directory reads it. The directory
 //! refuses, from an organisation it has not verified, a local MCP server, a

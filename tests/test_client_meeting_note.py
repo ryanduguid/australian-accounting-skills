@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The client meeting file note added on 12 November 2026 keeps its exceptions and limits.
 
 Each test reads one step, the template or a card and checks the rule a reader

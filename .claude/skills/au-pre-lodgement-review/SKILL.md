@@ -62,4 +62,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A draft employee return claims work-related expenses with receipts for only some items, and no occupation is recorded. List the missing records as items and report the occupation comparison as not performed until the occupation is supplied.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

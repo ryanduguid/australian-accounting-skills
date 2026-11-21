@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 use accounting_skills::plugin_evals::{
     CaseFiles, WITHHELD_SECTIONS, build, build_case, build_routing_case,

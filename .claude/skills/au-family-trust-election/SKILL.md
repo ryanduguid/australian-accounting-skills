@@ -57,4 +57,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A discretionary trust wants an election specifying an earlier year to use an old loss, but in that year it paid a cousin of the proposed individual, and a company that would need an interposed entity election has an unrelated minority shareholder. Record that the earlier year fails s 272-80(4A) of the ITAA 1936, list the cousin's distribution as outside the family group and the company's dividends to the minority shareholder as an FTDT exposure, and leave the choice to the trustee.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

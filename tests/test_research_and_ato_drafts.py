@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The research and ATO draft steps added on 12 November 2026 keep their limits.
 
 The partnership agreement abstract lists questions for a solicitor and decides

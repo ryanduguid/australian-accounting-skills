@@ -77,4 +77,4 @@ An equal and opposite pair suggests, but does not show, an amount reported again
 - Not tax, legal or assurance advice. Outputs are preparation aids for review by a qualified professional. See [DISCLAIMER.md](https://github.com/ryanduguid/australian-accounting-skills/blob/main/DISCLAIMER.md) in the repository root.
 - Provenance for the mutable ATO and Treasury facts this skill currently relies on is in `sources.json` next to this file. Re-verify each URL at use time; a checked-at date is not a live confirmation. A record in it that carries a `reverify_by` date expires after that date: do not use it even as a cross-check, and mark results that depend on it `UNVERIFIED` until the live source has been read.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

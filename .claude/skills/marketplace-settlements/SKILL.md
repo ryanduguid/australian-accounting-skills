@@ -61,4 +61,4 @@ Open the relevant current or historical version for the work's actual period. Th
 
 A seller's bookkeeper recorded each weekly marketplace payout as sales, one payout is short in the bank, a reserve is held over the month end and a refund lands a settlement after its sale. Rebuild each settlement's gross sales, fees, refunds and reserve to its payout in exact cents, list the bank difference, the net-of-fees sales and the reserve in the period-end check as open items, and plug nothing.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.

@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Build one upload ZIP per skill for hosts without a terminal. Each ZIP's only
 //! root entry is the skill's folder, holding exactly one `SKILL.md`: the shape

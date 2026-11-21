@@ -159,4 +159,4 @@ was not run and obtain current primary authority through the authorised retrieva
 route. For broader export details use `xero-exports` when installed; the essential
 population and evidence controls above still apply when it is unavailable.
 
-Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Ryan Duguid Public Attribution Licence 1.0. Copies and adaptations of this file must keep this notice. It does not belong in client work.
+Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, Apache-2.0. Keep this notice when redistributing this file or an adaptation. It does not belong in client work.
