@@ -520,6 +520,10 @@ class LegalSourceGateTests(unittest.TestCase):
         dgr = " ".join(skill_text("au-not-for-profit").split())
         self.assertIn("it never says a payment is deductible", dgr)
         self.assertIn("send the recipient's details only, never the donor's", dgr)
+        # dgr-check refuses scope_confirmed, and its data holds no ended endorsement.
+        self.assertIn("`dgr-check` takes no `scope_confirmed` flag", dgr)
+        self.assertNotIn("a `scope_confirmed` flag: set it", dgr)
+        self.assertIn("confirm every finding you rely on at ABN Lookup", dgr)
         fbt = " ".join(skill_text("fbt-annual-workflow").split())
         self.assertIn("use labels such as `Employer` and `E1`, never names", fbt)
         self.assertIn("A rebatable or exempt employer is outside both", fbt)
