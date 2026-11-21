@@ -452,6 +452,15 @@ class SafetyControlTests(unittest.TestCase):
         self.assertIn("re-export affected trial balances", close)
         self.assertIn("period-lock action is recorded as pending or complete", close)
 
+    def test_rental_repayment_uses_prior_maximum_before_apportioning(self) -> None:
+        rental = (
+            REPOSITORY / ".claude" / "skills" / "au-rental-property" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn(
+            "reduce the original expenditure by the earlier years' maximum deductions before apportionment",
+            rental,
+        )
+
     def test_close_control_step_reports_exit_2_and_quotes_exceptions(self) -> None:
         close = (
             REPOSITORY / ".claude" / "skills" / "month-end-close" / "SKILL.md"

@@ -1818,9 +1818,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
           "au-rental-property-agent-balance-bridge",
+          "au-rental-property-borrowing-early-repayment",
           "au-rental-property-missing-evidence",
           "au-rental-property-planted-lease-clause"
         ],
@@ -1837,6 +1838,7 @@
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
           "test_tax_reform_no_3_status.py",
+          "test_validation_pack.py",
           "test_worked_examples.py"
         ],
         "inventory": []

@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 242 cards in `cases/` test workflow quality, provenance and restraint.
+The 243 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -147,6 +147,7 @@ law claim, unverified source or guess.
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
 | [Rental agent funds and duplicate expense evidence](cases/au-rental-property-agent-balance-bridge.md) | au-rental-property |
+| [Mixed-use rental loan repaid early](cases/au-rental-property-borrowing-early-repayment.md) | au-rental-property |
 | [Individual return amendment review: missing evidence](cases/au-return-amendment-missing-evidence.md) | au-return-amendment |
 | [Short-stay accommodation workpapers: missing evidence](cases/au-short-stay-accommodation-missing-evidence.md) | au-short-stay-accommodation |
 | [Platform income and a GST registration question](cases/au-short-stay-accommodation-platform-gst-registration.md) | au-short-stay-accommodation, au-gst-registration-review |

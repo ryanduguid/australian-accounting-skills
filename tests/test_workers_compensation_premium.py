@@ -95,6 +95,12 @@ class WorkersCompensationPremiumTests(unittest.TestCase):
             "gross pay of the workers excluded (each with its reason), equal the gross pay",
             step(4),
         )
+        hand_off = text().split("## Hand-off and checks", 1)[1]
+        self.assertIn(
+            "the schemes' wages, less the amounts added from outside gross pay and plus the excluded items "
+            "and workers, tie to payroll",
+            hand_off,
+        )
         # icare's per capita classifications are priced per unit, not on wages.
         self.assertIn(
             "a per capita classification is priced on its own unit and left to the insurer", step(5)
