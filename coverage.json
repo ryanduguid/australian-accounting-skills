@@ -3,11 +3,11 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
     "skills": 111,
-    "sources_indexed": 823,
+    "sources_indexed": 859,
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 17,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 77,
+    "skills_with_behavioural_gate": 85,
     "skills_with_only_the_seeded_case": 21,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -416,7 +416,7 @@
     {
       "skill": "au-capital-gains",
       "sources": {
-        "indexed": 8,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 7,
@@ -442,7 +442,8 @@
       "gates": {
         "behavioural": [
           "test_cgt_gap_workflows.py",
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -811,7 +812,7 @@
     {
       "skill": "au-division-293",
       "sources": {
-        "indexed": 2,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -832,14 +833,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-division-296",
       "sources": {
-        "indexed": 4,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
@@ -862,7 +865,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -922,7 +927,7 @@
     {
       "skill": "au-etp-redundancy",
       "sources": {
-        "indexed": 3,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 3,
@@ -943,7 +948,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1131,7 +1138,7 @@
     {
       "skill": "au-gst-property",
       "sources": {
-        "indexed": 36,
+        "indexed": 38,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 2,
@@ -1155,7 +1162,8 @@
       "gates": {
         "behavioural": [
           "test_farm_land_and_succession.py",
-          "test_gst_margin_scheme.py"
+          "test_gst_margin_scheme.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1194,7 +1202,7 @@
     {
       "skill": "au-individual-return",
       "sources": {
-        "indexed": 7,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1224,7 +1232,8 @@
       "gates": {
         "behavioural": [
           "test_client_request_drafts.py",
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1271,7 +1280,7 @@
     {
       "skill": "au-lump-sum-arrears",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 1,
@@ -1290,14 +1299,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-main-residence",
       "sources": {
-        "indexed": 15,
+        "indexed": 17,
         "exempt": false,
         "reviewed": "",
         "reviewed_count": 0,
@@ -1318,7 +1329,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_cgt_gap_workflows.py"
+          "test_cgt_gap_workflows.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1355,7 +1367,7 @@
     {
       "skill": "au-medicare-review",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
@@ -1376,7 +1388,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1440,7 +1454,7 @@
     {
       "skill": "au-not-for-profit",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
@@ -1461,7 +1475,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1527,7 +1543,7 @@
     {
       "skill": "au-payroll-review",
       "sources": {
-        "indexed": 5,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1555,6 +1571,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_practice_review_steps.py",
           "test_worked_examples.py"
         ],
@@ -1564,7 +1581,7 @@
     {
       "skill": "au-payroll-tax-states",
       "sources": {
-        "indexed": 18,
+        "indexed": 20,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 9,
@@ -1595,6 +1612,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_payroll_jurisdictions.py",
           "test_practice_review_steps.py"
         ],
@@ -1908,7 +1926,7 @@
     {
       "skill": "au-sapto",
       "sources": {
-        "indexed": 3,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 2,
@@ -1929,6 +1947,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1998,7 +2017,7 @@
     {
       "skill": "au-small-business-cgt",
       "sources": {
-        "indexed": 13,
+        "indexed": 15,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
@@ -2021,7 +2040,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_farm_land_and_succession.py"
+          "test_farm_land_and_succession.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -2589,7 +2609,7 @@
     {
       "skill": "au-working-holiday-makers",
       "sources": {
-        "indexed": 12,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-09-29",
         "reviewed_count": 12,
@@ -2612,14 +2632,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "bas-preparation",
       "sources": {
-        "indexed": 19,
+        "indexed": 21,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 5,
@@ -2932,7 +2954,7 @@
     {
       "skill": "fuel-tax-credits",
       "sources": {
-        "indexed": 14,
+        "indexed": 16,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 2,
@@ -3108,7 +3130,7 @@
     {
       "skill": "plant-and-equipment-costing",
       "sources": {
-        "indexed": 6,
+        "indexed": 8,
         "exempt": false,
         "reviewed": "2026-10-29",
         "reviewed_count": 2,
@@ -3131,7 +3153,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
