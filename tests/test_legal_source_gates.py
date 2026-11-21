@@ -490,6 +490,7 @@ class LegalSourceGateTests(unittest.TestCase):
             "seniors-pensioners-withholding",
         ),
         "au-not-for-profit": ("dgr-check",),
+        "au-super-contribution-caps": ("fhss",),
         "plant-and-equipment-costing": ("hire-purchase-schedule", "chattel-mortgage-schedule", "loan-transactions"),
         "fbt-annual-workflow": (
             "fbt", "fbt-return", "fbt-loan", "fbt-meal-entertainment", "fbt-car-parking", "fbt-debt-waiver",
@@ -526,6 +527,13 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("confirm every finding you rely on at ABN Lookup", dgr)
         fbt = " ".join(skill_text("fbt-annual-workflow").split())
         self.assertIn("use labels such as `Employer` and `E1`, never names", fbt)
+        # The FHSS route leaves the figure to the determination and states the cutoff the release refuses past.
+        fhss = " ".join(skill_text("au-super-contribution-caps").split())
+        self.assertIn("The Commissioner's determination governs", fhss)
+        self.assertIn("its associated earnings are labelled `estimate`", fhss)
+        self.assertIn("after 31 December 2026, the last quarter whose shortfall interest charge rate", fhss)
+        self.assertIn("(`fhss.contribution_kind_invalid`)", fhss)
+        self.assertIn("do not request, release or notify anything", fhss)
         self.assertIn("A rebatable or exempt employer is outside both", fbt)
 
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:

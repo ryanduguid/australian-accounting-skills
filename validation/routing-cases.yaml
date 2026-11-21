@@ -283,6 +283,10 @@
   skill: au-super-contribution-caps
   not: [au-division-293, au-payroll-review]
   prompt: An employee wants to salary sacrifice more of her pay into super before 30 June 2026, and her employer's contributions reach the fund about a month after each payday. How much more can she sacrifice in 2025-26 without going over?
+- id: fhss-release
+  skill: au-super-contribution-caps
+  not: [au-individual-return, au-smsf-year-end]
+  prompt: A client salary sacrificed extra into super over 3 years to save a home deposit and has just received her ATO first home super saver determination. Work out what the release will pay her, the tax withheld and what is added to her assessable income.
 - id: smsf-annual-accounts
   skill: au-smsf-year-end
   not: [au-financial-statements, au-super-contribution-caps]
