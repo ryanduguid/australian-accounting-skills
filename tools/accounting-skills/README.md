@@ -13,7 +13,10 @@ are retired:
 | `prepare-trial` | `prepare_trial.py` |
 | `build-plugin-evals` | `build_plugin_evals.py` |
 
-`last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
+`last-changed --write` refreshes `docs/skill-last-changed.md` from Git history.
+`last-changed --check` exits 2 when its dates need a refresh. Both need a full
+clone. Verify checks the report on main and warns when it needs a refresh.
+Run the refresh from main to use the actual squash commit dates.
 `check-citations` is also new: it checks that every cited section and ruling
 has a record in its skill's `sources.json`, and that a cited section exists
 where `section-index/` lists its Act's sections.
