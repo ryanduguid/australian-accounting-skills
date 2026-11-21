@@ -172,6 +172,8 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
                 b"---\nname: beta\n---\nBeta\n",
             ),
             ("README.md", b"Not a skill\n"),
+            ("LICENSE", b"Fixture licence\n"),
+            ("NOTICE", b"Fixture notice\n"),
         ],
     );
     // An uncommitted edit or file does not reach the ZIP.
@@ -185,6 +187,7 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
         b"Untracked\n",
     )
     .unwrap();
+    fs::write(root.path().join("NOTICE"), b"Uncommitted notice\n").unwrap();
     let out = tempfile::tempdir().unwrap();
     assert_eq!(build(root.path(), &out.path().join("first")).unwrap(), 2);
     let names: Vec<String> = fs::read_dir(out.path().join("first"))
@@ -199,6 +202,8 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
     assert_upload_shape("alpha", &alpha);
     let expected: BTreeMap<String, Vec<u8>> = [
         ("alpha/", &b""[..]),
+        ("alpha/LICENSE", b"Fixture licence\n"),
+        ("alpha/NOTICE", b"Fixture notice\n"),
         ("alpha/SKILL.md", b"---\nname: alpha\n---\nAlpha\n"),
         ("alpha/references/", b""),
         ("alpha/references/deep/", b""),
@@ -212,6 +217,8 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
     let beta = unzip(&fs::read(out.path().join("first/beta.zip")).unwrap());
     assert_upload_shape("beta", &beta);
     assert_eq!(beta["beta/SKILL.md"], b"---\nname: beta\n---\nBeta\n");
+    assert_eq!(beta["beta/LICENSE"], b"Fixture licence\n");
+    assert_eq!(beta["beta/NOTICE"], b"Fixture notice\n");
 
     // The same commit gives the same bytes.
     build(root.path(), &out.path().join("second")).unwrap();
@@ -223,6 +230,28 @@ fn each_skill_becomes_one_upload_zip_of_its_committed_files() {
     }
     // An existing destination is refused.
     assert!(build(root.path(), &out.path().join("first")).is_err());
+}
+
+#[test]
+fn a_skill_cannot_shadow_a_repository_licence_file() {
+    let root = tempfile::tempdir().unwrap();
+    fixture(
+        root.path(),
+        &[
+            (".claude/skills/alpha/SKILL.md", b"Alpha\n"),
+            (".claude/skills/alpha/notice/other.md", b"Nested\n"),
+            ("LICENSE", b"Fixture licence\n"),
+            ("NOTICE", b"Fixture notice\n"),
+        ],
+    );
+    let out = tempfile::tempdir().unwrap();
+    let destination = out.path().join("zips");
+    let error = build(root.path(), &destination).unwrap_err().to_string();
+    assert!(
+        error.contains("already has an entry named NOTICE"),
+        "{error}"
+    );
+    assert!(!destination.exists());
 }
 
 #[test]
@@ -328,7 +357,11 @@ fn the_command_builds_into_a_new_folder_and_refuses_a_missing_destination() {
     let root = tempfile::tempdir().unwrap();
     fixture(
         root.path(),
-        &[(".claude/skills/alpha/SKILL.md", b"Alpha\n")],
+        &[
+            (".claude/skills/alpha/SKILL.md", b"Alpha\n"),
+            ("LICENSE", b"Fixture licence\n"),
+            ("NOTICE", b"Fixture notice\n"),
+        ],
     );
     let out = tempfile::tempdir().unwrap();
     let destination = out.path().join("zips");
@@ -376,8 +409,12 @@ fn every_skill_in_the_repository_builds_an_upload_zip() {
         build(&root, &out.path().join("zips")).unwrap(),
         skills.len()
     );
+    let licence = git(&root, &["show", "HEAD:LICENSE"]);
+    let notice = git(&root, &["show", "HEAD:NOTICE"]);
     for skill in skills {
         let entries = unzip(&fs::read(out.path().join(format!("zips/{skill}.zip"))).unwrap());
         assert_upload_shape(skill, &entries);
+        assert_eq!(entries[&format!("{skill}/LICENSE")], licence);
+        assert_eq!(entries[&format!("{skill}/NOTICE")], notice);
     }
 }

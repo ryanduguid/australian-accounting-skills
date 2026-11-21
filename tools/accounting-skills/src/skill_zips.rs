@@ -4,8 +4,8 @@
 //! Build one upload ZIP per skill for hosts without a terminal. Each ZIP's only
 //! root entry is the skill's folder, holding exactly one `SKILL.md`: the shape
 //! Anthropic's article and OpenAI's Skills API guide describe. Each ZIP holds
-//! the skill's files as committed at HEAD, in a fixed order with fixed
-//! timestamps, so the same commit always gives the same bytes.
+//! the skill's files and the repository's licence and notice as committed at
+//! HEAD, in a fixed order with fixed timestamps.
 use crate::{
     Result, platform_text,
     plugin_dist::{Files, build_args},
@@ -19,6 +19,7 @@ use std::{
 };
 
 const SKILLS: &str = ".claude/skills";
+const LICENCE_FILES: [(&str, &str); 2] = [("LICENSE", "LICENSE"), ("NOTICE", "NOTICE")];
 /// 1 January 1980 at midnight in MS-DOS date and time fields, the earliest a
 /// ZIP can record.
 const DOS_TIME: u16 = 0;
@@ -168,7 +169,26 @@ pub fn skill_zip(skill: &str, files: &Files) -> Result<Vec<u8>> {
 /// Write `NAME.zip` for each skill at HEAD of `root` into the new folder
 /// `destination`, and return how many were written.
 pub fn build(root: &Path, destination: &Path) -> Result<usize> {
-    let skills = skills(root)?;
+    let mut skills = skills(root)?;
+    let licences = crate::plugin_dist::committed(root, &LICENCE_FILES)?;
+    if !LICENCE_FILES
+        .iter()
+        .all(|(_, name)| licences.contains_key(*name))
+    {
+        return Err("LICENSE and NOTICE must be files".into());
+    }
+    for (skill, files) in &mut skills {
+        for (name, bytes) in &licences {
+            if files.keys().any(|path| {
+                path.split('/')
+                    .next()
+                    .is_some_and(|component| component.eq_ignore_ascii_case(name))
+            }) {
+                return Err(format!("{SKILLS}/{skill} already has an entry named {name}").into());
+            }
+            files.insert(name.clone(), bytes.clone());
+        }
+    }
     fs::create_dir_all(destination.parent().ok_or("destination has no parent")?)?;
     fs::create_dir(destination)?;
     for (skill, files) in &skills {

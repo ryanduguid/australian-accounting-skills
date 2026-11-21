@@ -98,6 +98,8 @@ the skill's folder, holding one `SKILL.md` at its root: the shape Anthropic's
 [How to create custom skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
 article and OpenAI's [Skills in the API](https://developers.openai.com/cookbook/examples/skills_in_api)
 guide describe. Upload one at step 5 in place of a ZIP made by hand.
+Each skill folder also includes the repository's `LICENSE` and `NOTICE` from
+the same commit.
 
 These ZIPs are not attached to a release. They hold the skills of whatever the
 checkout has checked out: a checkout of the `v0.7.0` tag gives that release's
