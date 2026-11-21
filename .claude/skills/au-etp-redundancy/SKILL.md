@@ -50,7 +50,7 @@ Run it by its full path, the extracted `australian-tax-calculators` or `<tool-di
 
 `unused-leave-payment` works out the Schedule 7 withholding from the unused annual leave, leave loading and unused long service leave paid in 2026-27 because one employee's employment ended, with each part's assessable share, tax offset and income statement label. The entitlement amounts and their periods of service are the operator's to establish from the employment records, as step 6 requires.
 
-A person can compare a result with the site's [Redundancy and ETP withholding calculator](https://duguid.com.au/tools/business-calculators/termination-payment/) and [Unused leave on termination withholding calculator](https://duguid.com.au/tools/business-calculators/unused-leave/) pages, which run in the browser; it is not a substitute for the executable and is not used when the executable refuses.
+A person can compare a result with the site's [Redundancy and ETP withholding calculator](https://duguid.com.au/tools/business-calculators/termination-payment/) and [Unused leave on termination withholding calculator](https://duguid.com.au/tools/business-calculators/unused-leave/) pages, which run in the browser; they are not a substitute for the executable and are not used when the executable refuses.
 
 ## Hand-off and checks
 

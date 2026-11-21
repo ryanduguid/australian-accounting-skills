@@ -64,7 +64,7 @@ Run it by its full path, the extracted `australian-tax-calculators` or `<tool-di
 
 `personal-tax-estimate` composes one full-year resident's or full-year foreign resident's income tax and levies for a year from those commands and the Medicare levy, surcharge, seniors and pensioners tax offset and Division 293 commands, without working any part out itself; confirming its scope confirms the scope each part states. It has no worksheet name: check each part's `periods` instead. A foreign resident's low income tax offset, Medicare levy and surcharge lines are nil, and it refuses the inputs for them. Its estimate checks the return's arithmetic; it is not the assessment.
 
-A person can compare a result with the site's [Income tax and refund calculator](https://duguid.com.au/tools/individual-tax/income-tax/) and [HELP repayment calculator](https://duguid.com.au/tools/individual-tax/study-loan/) pages, which run in the browser; it is not a substitute for the executable and is not used when the executable refuses.
+A person can compare a result with the site's [Income tax and refund calculator](https://duguid.com.au/tools/individual-tax/income-tax/) and [HELP repayment calculator](https://duguid.com.au/tools/individual-tax/study-loan/) pages, which run in the browser; they are not a substitute for the executable and are not used when the executable refuses.
 
 ## Hand-off and checks
 
