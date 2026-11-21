@@ -166,8 +166,9 @@ Payday Super tools, when available, to cross-check their own calculations;
 the current primary-source checks in each skill still run. From 0.10.0 its `calculate_tax_worksheet` tool runs the
 [`australian-tax-calculators` 1.0.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.0.0)
 executable, which the plugin does not install: without it on the path, or named by its absolute path in
-`AUS_TAX_CALCULATORS_BIN`, that tool refuses and names the release, and the other tools work. `fbt-annual-workflow`,
-`au-depreciation-schedule` and `au-car-expenses` say how to download and verify it, and run its commands directly.
+`AUS_TAX_CALCULATORS_BIN`, that tool refuses and names the release, and the other tools work. `au-depreciation-schedule`
+and `au-car-expenses` say how to download and verify it, and run its commands directly; `fbt-annual-workflow` and the
+other skills with a Tax calculators section do the same for the 1.1.0 release.
 To run the skills without the server, disable it with
 `/mcp` in Claude Code. The `npx skills` and Codex routes do not start it.
 
