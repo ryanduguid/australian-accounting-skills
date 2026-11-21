@@ -1915,9 +1915,11 @@ class DatedRuleChangeTests(unittest.TestCase):
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
-        self.assertIn("The skill folders hold Markdown and JSON files and no scripts", readme)
-        suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
-        self.assertLessEqual(suffixes, {".md", ".json"})
+        self.assertIn("Each skill folder contains Markdown, JSON and its licence and notice", readme)
+        for path in SKILLS.rglob("*"):
+            if path.is_file() and path.suffix not in {".md", ".json"}:
+                self.assertEqual(path.parent.parent, SKILLS, path)
+                self.assertIn(path.name, {"LICENSE", "NOTICE"}, path)
 
     def test_readme_names_every_local_program_a_skill_names(self) -> None:
         """A firm reads the Privacy section to decide what can leave the machine, so a
