@@ -914,6 +914,15 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("do not decide whether to request an amendment or object", text)
         self.assertIn("trustee resolutions, accounting records and later dealings with the entitlement", text)
 
+    def test_super_lump_sum_route_leaves_components_and_dependency_to_the_workflow(self) -> None:
+        text = " ".join(skill_text("au-smsf-death-benefits").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/super-benefit-tax/", text)
+        # The page takes the components and dependency as given and gives ceilings, not the tax payable.
+        self.assertIn("paid from 1 July 2020 to 30 June 2027", text)
+        self.assertIn("you state those, so step 6 stays as written", text)
+        self.assertIn("death benefits paid to a deceased estate", text)
+        self.assertIn("The fund's payment summary and the recipient's assessment, not the page, settle the tax", text)
+
     def test_gic_payment_plan_route_leaves_the_debt_and_the_plan_to_step_2_and_the_ato(self) -> None:
         text = " ".join(skill_text("au-ato-penalties-interest").split())
         self.assertIn("https://duguid.com.au/tools/business-calculators/gic-payment-plan/", text)
