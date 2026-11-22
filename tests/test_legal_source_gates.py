@@ -486,7 +486,6 @@ class LegalSourceGateTests(unittest.TestCase):
         "fuel-tax-credits": ("fuel-tax-credits",),
         "au-payroll-tax-states": ("payroll-tax",),
         "au-small-business-cgt": ("sb-cgt-concessions",),
-        "au-capital-gains": ("cgt-parcels", "capital-gains"),
         "au-main-residence": ("main-residence",),
         "au-working-holiday-makers": ("working-holiday-maker-withholding", "dasp-tax"),
         "bas-preparation": ("gst", "wine-equalisation-tax", "luxury-car-tax"),
@@ -515,6 +514,18 @@ class LegalSourceGateTests(unittest.TestCase):
             "fbt-minor-benefit-check",
         ),
     }
+
+    def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
+        text = self.assert_released_calculators(
+            "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.2.0"
+        )
+        self.assertIn("`worksheet-catalogue` command", text)
+        self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # 1.2.0's cost base adjustments: its years, events and refusals; the amounts stay with the records.
+        self.assertIn("from 1 July 2018 to the end of an income year from 2018-19 to 2026-27", text)
+        self.assertIn("It refuses events before 1 July 2018 or after the year, a demerger it does not carry", text)
+        self.assertIn("come from the statements and records in step 2", text)
+        self.assertIn("the command does not work them out", text)
 
     def test_skills_route_the_1_1_0_commands_to_the_pinned_release(self) -> None:
         for name, commands in self.ROUTES_1_1_0.items():

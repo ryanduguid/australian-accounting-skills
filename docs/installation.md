@@ -168,7 +168,7 @@ the current primary-source checks in each skill still run. From 0.10.0 its `calc
 executable, which the plugin does not install: without it on the path, or named by its absolute path in
 `AUS_TAX_CALCULATORS_BIN`, that tool refuses and names the release, and the other tools work. `au-depreciation-schedule`
 and `au-car-expenses` say how to download and verify it, and run its commands directly; `fbt-annual-workflow` and the
-other skills with a Tax calculators section do the same for the 1.1.0 release, and `au-rental-property` for the 1.2.0 release.
+other skills with a Tax calculators section do the same for the 1.1.0 release, and `au-rental-property` and `au-capital-gains` for the 1.2.0 release.
 To run the skills without the server, disable it with
 `/mcp` in Claude Code. The `npx skills` and Codex routes do not start it.
 
