@@ -534,6 +534,10 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("after 31 December 2026, the last quarter whose shortfall interest charge rate", fhss)
         self.assertIn("(`fhss.contribution_kind_invalid`)", fhss)
         self.assertIn("do not request, release or notify anything", fhss)
+        self.assertIn("do not rely on its `fhss_tax_if_not_used` or `recontribution_required`", fhss)
+        self.assertIn("the maximum release amount when none is given, as the amount released", fhss)
+        individual = " ".join(skill_text("au-individual-return").split())
+        self.assertIn("`au-super-contribution-caps` for a first home super saver (FHSS) release", individual)
         self.assertIn("A rebatable or exempt employer is outside both", fbt)
 
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:

@@ -212,6 +212,38 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "ATO: Step 4, receiving your FHSS amount",
+      "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/withdrawing-and-using-your-super/early-access-to-super/first-home-super-saver-scheme/when-you-want-to-release-your-fhss-amount/step-4-receiving-your-fhss-amount",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 22 November 2026 (page published 8 July 2026). Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/withdrawing-and-using-your-super/early-access-to-super/first-home-super-saver-scheme/when-you-want-to-release-your-fhss-amount/step-4-receiving-your-fhss-amount",
+      "http_status": 200,
+      "fetched_at": "2026-11-22",
+      "review_required_since": "2026-11-22",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Treasury Laws Amendment (2023 Measures No. 3) Act 2023",
+      "url": "https://www.legislation.gov.au/C2023A00075/asmade/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Schedule 4 items 28 and 30 read by an agent on 22 November 2026 in the as-made text. Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2023A00075/asmade/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-22",
+      "review_required_since": "2026-11-22",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
