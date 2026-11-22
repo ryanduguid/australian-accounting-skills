@@ -535,6 +535,9 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("(`fhss.contribution_kind_invalid`)", fhss)
         self.assertIn("do not request, release or notify anything", fhss)
         self.assertIn("do not rely on its `fhss_tax_if_not_used` or `recontribution_required`", fhss)
+        # Item 30(4) exempts only what relates to or results from a qualifying item 30(1) action.
+        self.assertIn("relating to, or resulting from, directly or indirectly, a transitional action", fhss)
+        self.assertIn("A later release unrelated to such an action keeps those rules.", fhss)
         self.assertIn("the maximum release amount when none is given, as the amount released", fhss)
         individual = " ".join(skill_text("au-individual-return").split())
         self.assertIn("`au-super-contribution-caps` for a first home super saver (FHSS) release", individual)
