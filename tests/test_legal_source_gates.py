@@ -530,6 +530,22 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("a tax treaty's tie-breaker may then apply; that question stays with the workflow above", residency)
         self.assertIn("It refuses 2026-27, as no instrument for that year was on the register on 22 November 2026", residency)
 
+    def test_super_and_penalty_skills_route_their_1_2_0_commands(self) -> None:
+        sup = self.assert_released_calculators(
+            "au-smsf-death-benefits", "super-benefit-tax", "super-withholding", version="1.2.0"
+        )
+        pen = self.assert_released_calculators("au-ato-penalties-interest", "ato-interest-penalties", version="1.2.0")
+        for text in (sup, pen):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals; dependency, the schedule read and culpability stay with the skill.
+        self.assertIn("each part can bear in 2020-21 to 2026-27", sup)
+        self.assertIn("never replaces step 6's record of the provision that governs each recipient", sup)
+        self.assertIn("paid from 13 October 2020 to 30 June 2027", sup)
+        self.assertIn("Step 7 still reads the current withholding schedule at use time", sup)
+        self.assertIn("for an income year from 2020-21 to 2027-28", pen)
+        self.assertIn("the culpability and any remission request stay with the workflow above", pen)
+
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
             "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.2.0"
