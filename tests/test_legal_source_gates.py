@@ -579,7 +579,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("It does not decide whether private use was minor, infrequent and irregular", fbt)
         self.assertIn("evidence for the exemption decision in step 2, which stays the reviewer's", fbt)
         for text in (div7a, car, fbt):
-            self.assertIn("Record the page, the date run, the inputs and the result", text)
+            self.assertIn("Record what it consumed: the page, the date run, the inputs", text)
 
     def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
         text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.1.0")
