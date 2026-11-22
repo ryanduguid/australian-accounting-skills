@@ -526,7 +526,7 @@ command's output differ, so a change to a skill's citations updates it.
 
 <!-- check-citations summary -->
 ```text
-Income Tax Assessment Act 1997 (Cth): 449 sections, 447 found, 2 listed exceptions, 0 absent.
+Income Tax Assessment Act 1997 (Cth): 450 sections, 448 found, 2 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 179 sections, 177 found, 2 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 159 sections, 159 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment Act 1936 (Cth): 146 sections, 146 found, 0 listed exceptions, 0 absent.
@@ -567,8 +567,8 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-1996 of 1996 citations resolve to a sources.json record: 271 of 271 rulings and guidance, 1725 of 1725 legislative sections.
-1725 of 1725 resolved sections checked against an index of their Act: 1720 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
+1997 of 1997 citations resolve to a sources.json record: 271 of 271 rulings and guidance, 1726 of 1726 legislative sections.
+1726 of 1726 resolved sections checked against an index of their Act: 1721 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing
