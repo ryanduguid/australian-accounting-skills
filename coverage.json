@@ -2100,7 +2100,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_entity_super_workflows.py"
+          "test_entity_super_workflows.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
