@@ -843,6 +843,15 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("do not decide whether to request an amendment or object", text)
         self.assertIn("trustee resolutions, accounting records and later dealings with the entitlement", text)
 
+    def test_gic_payment_plan_route_leaves_the_debt_and_the_plan_to_step_2_and_the_ato(self) -> None:
+        text = " ".join(skill_text("au-ato-penalties-interest").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/gic-payment-plan/", text)
+        # The page projects a plan; the accrued GIC and the real instalments are not its to give.
+        self.assertIn("It does not work out the debt, its due date or GIC that accrued before the plan starts", text)
+        self.assertIn("mark a result that relies on an assumed rate as an estimate", text)
+        self.assertIn("the page's figure is an estimate for the reviewer, never the amount payable", text)
+        self.assertIn("never the taxpayer's name or reference", text)
+
 
 if __name__ == "__main__":
     unittest.main()
