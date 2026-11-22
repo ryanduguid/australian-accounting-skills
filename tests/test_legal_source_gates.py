@@ -852,6 +852,15 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the page's figure is an estimate for the reviewer, never the amount payable", text)
         self.assertIn("never the taxpayer's name or reference", text)
 
+    def test_asic_fees_route_leaves_due_dates_and_payment_to_asic_and_the_officeholder(self) -> None:
+        text = " ".join(skill_text("au-asic-company-changes").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/asic-fees/", text)
+        # The page holds one fee year and works out no due date, so those stay with ASIC's records.
+        self.assertIn("it takes due and received dates from 1 July 2026 to 30 June 2027 only", text)
+        self.assertIn("It does not work out a due date, move one for a weekend or public holiday", text)
+        self.assertIn("Check every amount against ASIC's invoice or fee table", text)
+        self.assertIn("never the company's name, ACN or officeholders", text)
+
 
 if __name__ == "__main__":
     unittest.main()

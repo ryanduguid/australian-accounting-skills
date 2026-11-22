@@ -162,6 +162,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
