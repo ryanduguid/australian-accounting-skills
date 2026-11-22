@@ -19,6 +19,29 @@ Travel chronology, accommodation and family ties, employment/business arrangemen
 
 4. Prepare supported alternatives for any departure choice, with affected assets, valuation gaps and future consequences. Do not make an election or infer that every departure triggers CGT.
 
+## Tax calculators
+
+The `residency-tests` and `lodgment-required` commands come from the released [`australian-tax-calculators` 1.2.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators)). `aus-accounting-mcp` 0.11.0 runs the earlier 1.1.0 release for its tax worksheets, so use this executable for these commands. It is installed separately, and `pip` does not install it. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS`, and verify both before extracting anything:
+
+```text
+gh release download australian-tax-calculators/v1.2.0 --repo ryanduguid/australian-accounting --pattern SHA256SUMS --pattern <archive>
+gh attestation verify SHA256SUMS --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.2.0 --source-digest 31ecb4022aa0127ae9f672798d1d9fbfe6388e85 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+sha256sum --check --ignore-missing SHA256SUMS
+gh attestation verify <archive> --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.2.0 --source-digest 31ecb4022aa0127ae9f672798d1d9fbfe6388e85 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+```
+
+Stop if any of the 4 fails. On another platform, build the tagged commit from its lock file with Rust 1.99 or later, into a tool directory of its own; `cargo install --list --root <tool-dir>` must show `australian-tax-calculators v1.2.0` with that commit in its source:
+
+```text
+cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev 31ecb4022aa0127ae9f672798d1d9fbfe6388e85 australian-tax-calculators
+```
+
+Run it by its full path, the extracted `australian-tax-calculators` or `<tool-dir>/bin/australian-tax-calculators` (`.exe` on Windows), never one found on `PATH`, as other builds also report 1.2.0; check that `--version` prints exactly `australian-tax-calculators 1.2.0`, and pass `--refusal-json` after the command so a refusal (exit 2) prints its code. Use this local executable; a remote calculator is used only where the user has explicitly permitted that call for this question, on fabricated or firm-approved inputs, and never as a fallback when a local tool refuses. Send `{}` to its `worksheet-catalogue` command for each worksheet's scope statement and its required and optional inputs. Before running a command, send its worksheet name, the command's name with underscores, to its `periods` command, such as `{"kind": "residency_tests"}`, and confirm it supports the reporting month or income year in question rather than merely accepting the year; if it does not, say so and follow the written method. Each command reads one JSON object on stdin, without the `kind` field that only `periods` takes, with amounts as decimal strings and a `scope_confirmed` flag: set it only once each condition in the scope statement the command returns is evidenced, and where one is not, follow the written method for that item. Send only amounts, dates and the established facts the command takes, never a client's name, address, TFN, ABN or other identifier. Record what it consumed: the release, the engine version, the exact input, the output with the scope statement, sources and source-check date it returns, and the run date. Record a refusal and its code as an open item, and do not change the facts to get past it. Keep the calculator's own labels as its own, reported beside the facts it was given, never as the reviewer's decision on a position. A calculator's figure checks the written method, which is always completed: where they differ, record the difference for the reviewer and adopt neither. Without the executable, follow the written method.
+
+`residency-tests` says whether an individual was a resident of Australia for an income year from 2020-21 to 2026-27 under each of the 4 statutory residency tests, counting the days in Australia from the periods given. Residing, domicile, the places of abode and intention are never inferred from the dates or anything else: the operator gives them from the evidence in Inputs. It does not set when residency began or ended or pro-rate the tax-free threshold, and it refuses a resident who is also a resident of another country under its law, as a tax treaty's tie-breaker may then apply; that question stays with the workflow above.
+
+`lodgment-required` says whether an individual must lodge their own income tax return for an income year from 2020-21 to 2025-26 under that year's lodgment instrument, and when a required return is due. It refuses 2026-27, as no instrument for that year was on the register on 22 November 2026, and a parent liable for or entitled to child support whom the instrument does not require to lodge, as a separate instrument may. The conditions it takes and the person's residency are the operator's answers, the residency from `residency-tests` or the workflow above.
+
 ## Hand-off and checks
 
 A facts-and-tests matrix, dated income/asset transition schedule and decision list. A qualified adviser determines residency, treaty treatment and elections.

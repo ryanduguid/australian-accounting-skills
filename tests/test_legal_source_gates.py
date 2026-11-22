@@ -515,6 +515,21 @@ class LegalSourceGateTests(unittest.TestCase):
         ),
     }
 
+    def test_rd_and_residency_skills_route_their_1_2_0_commands(self) -> None:
+        rd = self.assert_released_calculators("au-rd-incentive", "rd-tax-offset", version="1.2.0")
+        residency = self.assert_released_calculators(
+            "au-tax-residency", "residency-tests", "lodgment-required", version="1.2.0"
+        )
+        for text in (rd, residency):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals; registration, residency facts and treaty questions stay with the skill.
+        self.assertIn("for an income year from 2021-22 to 2026-27. It refuses earlier years", rd)
+        self.assertIn("registration and eligibility stay with the workflow above", rd)
+        self.assertIn("never inferred from the dates or anything else", residency)
+        self.assertIn("a tax treaty's tie-breaker may then apply; that question stays with the workflow above", residency)
+        self.assertIn("It refuses 2026-27, as no instrument for that year was on the register on 22 November 2026", residency)
+
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
             "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.2.0"
