@@ -876,6 +876,24 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("do not decide whether to request an amendment or object", text)
         self.assertIn("trustee resolutions, accounting records and later dealings with the entitlement", text)
 
+    def test_gic_payment_plan_route_leaves_the_debt_and_the_plan_to_step_2_and_the_ato(self) -> None:
+        text = " ".join(skill_text("au-ato-penalties-interest").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/gic-payment-plan/", text)
+        # The page projects a plan; the accrued GIC and the real instalments are not its to give.
+        self.assertIn("It does not work out the debt, its due date or GIC that accrued before the plan starts", text)
+        self.assertIn("mark a result that relies on an assumed rate as an estimate", text)
+        self.assertIn("the page's figure is an estimate for the reviewer, never the amount payable", text)
+        self.assertIn("never the taxpayer's name or reference", text)
+
+    def test_asic_fees_route_leaves_due_dates_and_payment_to_asic_and_the_officeholder(self) -> None:
+        text = " ".join(skill_text("au-asic-company-changes").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/asic-fees/", text)
+        # The page holds one fee year and works out no due date, so those stay with ASIC's records.
+        self.assertIn("it takes due and received dates from 1 July 2026 to 30 June 2027 only", text)
+        self.assertIn("It does not work out a due date, move one for a weekend or public holiday", text)
+        self.assertIn("Check every amount against ASIC's invoice or fee table", text)
+        self.assertIn("never the company's name, ACN or officeholders", text)
+
 
 if __name__ == "__main__":
     unittest.main()
