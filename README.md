@@ -168,13 +168,11 @@ Human-confirmed model verdicts cover 95 of the 243 [validation cards](validation
 
 The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. Most confirmed verdicts also predate the current skill wording: on 11 November 2026, for 73 of the 95 cards, the `SKILL.md` or references of a skill the card names in its `target_skills` had changed beyond copyright and licence lines between the commit its confirmed run recorded and `main`, so those verdicts describe the earlier wording.
 
-The other 148 cards have no confirmed model verdict: the duplicate-export, mismatched-period, stale-workpaper, debtor-summary, source-quotation, receipt-conflict, statement-revision, completion-evidence, 3 transaction-GST cases, 2 short-stay accommodation cases, 3 pre-lodgement review cases, a CGT contract-timing case, business selection, template output, a rental-agent balance bridge, a mixed-use borrowing expense case, a formula-change case, 2 reconciliation break-trace cases, GST screening leads, lodged-figure drift, a close with prior review points, 2 close-control cases, a card statement in credit across a year end, an employee master-data screen, a family trust distribution tax screen, 13 payroll tax cases, an AASB 18 comparative-year case, an AASB version and quotation case, a workers compensation wages declaration case, 3 AML/CTF beneficial owner cases, 2 BAS import GST cases, a two-way workpaper tie-out case, 4 cases for the client departure, trust loss, ATO correspondence and ATO account workflows, 2 FBT cases covering the line register and car valuation records, a professional-body obligations case, 7 land tax cases, 8 transfer duty cases, 2 Xero connector cases, a tax invoice threshold case, 7 planted-instruction and 7 altered or forged document cases with 2 positive controls for ordinary payment terms and an explained timing difference, 3 cases for SMSF death benefits, private company dividend preparation and a family trust election, 2 farm land GST and farm succession cases, 2 main residence and 3 share buy-back cases, 2 client meeting file note cases, 2 MYOB export cases, 3 marketplace settlement cases, 2 client letter cases, 2 client email triage cases, 2 CPI rent review cases, 4 client request draft cases and a 3-year analytical review case, 3 cases for an accounting depreciation schedule, a management report and a three-way forecast, 3 cases for a partnership agreement abstract, a Budget measure screen and a draft remission request, 3 cases for a practice's AML/CTF rows, 2 AML/CTF designated services cases, an AML/CTF reliance case, an ATO client list reconciliation and a trust resolution content schedule, a positive control for 2 suppliers sharing an invoice number, and 12 niche tax cases covering PSI/PSB, SAPTO, DSSP/DRP, ESS, AMIT, non-commercial losses, foreign pensions, arrears and the small business income offset. Static checks cover all 111 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
+The other 148 cards have no confirmed model verdict: the [validation pack](validation/README.md) lists every card and [validation/results](validation/results/) the confirmed runs. Static checks cover all 111 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
 
-## Corrections to v0.5.0
+## Corrections to earlier releases
 
 v0.6.0 corrects 4 passages in v0.5.0, including a withdrawn GST ruling that `tax-invoice-review` cited: see [Corrections since v0.5.0](RELEASE_NOTES.md#corrections-since-v050).
-
-## Corrections to v0.2.1
 
 v0.3.0 corrects passages that v0.2.1 carried in `bas-preparation`, `fuel-tax-credits`, `coal-lsl-levy`, `plant-and-equipment-costing`, `contractor-super-tpar`, `payroll-tax-contractors`, `progress-claim-preparation`, `retention-schedule`, `xero-exports` and `wip-over-under-billing`, and unsourced statements in `cashflow-forecast-13week` and `stp-finalisation`. [Corrections since v0.2.1](RELEASE_NOTES.md#corrections-since-v021) lists each with its pull request. Check an affected passage against it before relying on v0.2.1.
 
@@ -191,15 +189,13 @@ The marketplace added without a tag resolves the default branch, which can be ah
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-The default branch prepares v0.7.1 with 111 workflows. It is not a published release. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The default branch prepares v0.7.1 with 111 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) identifies the published v0.7.0 release and its 107 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
 Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, the original 9-skill practice pack released on 23 August 2026 under MIT. Use this citation only for that historical version: https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.1.5. Its tagged source predates CITATION.cff. The default citation above identifies the published v0.7.0 pack.
 
 ## Guides
-
-The Australian Accounting Skills guides are grouped as get started, how-to and reference pages.
 
 **Get started**
 
