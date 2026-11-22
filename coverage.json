@@ -7,7 +7,7 @@
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 17,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 86,
+    "skills_with_behavioural_gate": 87,
     "skills_with_only_the_seeded_case": 21,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -2608,7 +2608,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
