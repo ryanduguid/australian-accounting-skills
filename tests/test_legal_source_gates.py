@@ -344,10 +344,11 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
     #: Each pinned australian-tax-calculators release, its tagged commit and the
-    #: aus-accounting-mcp release that runs it.
+    #: aus-accounting-mcp release that runs it, or None where no server release runs it yet.
     RELEASES = {
         "1.0.0": ("6ac566682829731d52a1b4456708a0b9d29b5695", "0.10.0"),
         "1.1.0": ("c4a716a25f065ccc957c5db83dec711251cb4121", "0.11.0"),
+        "1.2.0": ("31ecb4022aa0127ae9f672798d1d9fbfe6388e85", None),
     }
 
     def assert_released_calculators(self, name: str, *commands: str, version: str = "1.0.0") -> str:
@@ -379,7 +380,11 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn(f"must show `australian-tax-calculators v{version}` with that commit in its source", text)
         self.assertIn("never one found on `PATH`", text)
         self.assertIn(f"check that `--version` prints exactly `australian-tax-calculators {version}`", text)
-        self.assertIn(f"the executable `aus-accounting-mcp` {server} also runs for its tax worksheets", text)
+        if server:
+            self.assertIn(f"the executable `aus-accounting-mcp` {server} also runs for its tax worksheets", text)
+        else:
+            # The newest server runs an earlier release, so the skill must not send its commands there.
+            self.assertIn("`aus-accounting-mcp` 0.11.0 runs the earlier 1.1.0 release for its tax worksheets, so use this executable", text)
         # A skill pins one release: a second tag would leave a reader two executables to verify.
         for other in self.RELEASES:
             if other != version:
@@ -425,7 +430,12 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_rental_skill_spreads_borrowing_expenses_under_s_25_25_and_routes_to_the_released_calculator(self) -> None:
         text = self.assert_released_calculators(
-            "au-rental-property", "borrowing-expenses", "borrowing-expenses-schedule", version="1.1.0"
+            "au-rental-property",
+            "borrowing-expenses",
+            "borrowing-expenses-schedule",
+            "rental-property",
+            "capital-works",
+            version="1.2.0",
         )
         step = text[text.index("2a. Borrowing expenses:") : text.index("3. Trace borrowed funds")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/25-25", step)
@@ -438,7 +448,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the method statement in s 25-25(4) of the ITAA 1997", step)
         self.assertIn("the amount s 25-25(6) of the ITAA 1997 sets", step)
         self.assertIn("record the use of refinanced or redrawn money as a reviewer question", step)
-        # 1.1.0's borrowing-expenses: one loan, one year, 2017-18 to 2027-28, and its scope conditions.
+        # borrowing-expenses, unchanged in 1.2.0: one loan, one year, 2017-18 to 2027-28, and its scope conditions.
         self.assertIn("one loan's deduction for one income year from 2017-18 to 2027-28", text)
         self.assertIn("all the expenditure to be incurred in the income year the loan began and one income-producing share throughout the loan", text)
         self.assertIn("and every income year after 2027-28; for 2027-28 it flags the result for the s 26-155 check", text)
@@ -446,6 +456,12 @@ class LegalSourceGateTests(unittest.TestCase):
         # The schedule spreads several loans, refinancing included, and leaves the money's use to the reviewer.
         self.assertIn("for a loan that refinances an earlier one, which loan it repaid", text)
         self.assertIn("Which costs are borrowing expenses, the money's use and the tracing of redraws stay with steps 2a and 3", text)
+        # 1.2.0's rental-property and capital-works: their years, scope and refusals; the facts stay with the steps.
+        self.assertIn("one owner and income year from 2020-21 to 2026-27", text)
+        self.assertIn("it does not support 2027-28, from which s 26-155 of the ITAA 1997 can quarantine rental deductions", text)
+        self.assertIn("the use of borrowed money and each asset's decline in value stay with steps 1 to 4", text)
+        self.assertIn("It refuses works begun before 16 September 1987, the higher rate for works begun before 27 February 1992", text)
+        self.assertIn("which it does not carry forward, stay with step 2", text)
 
     def test_fuel_skill_sets_out_the_small_claimant_methods_without_their_figures(self) -> None:
         text = " ".join(skill_text("fuel-tax-credits").split())
