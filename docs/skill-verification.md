@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 111 skills, 868 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 111 skills, 872 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -73,7 +73,7 @@ Totals: 111 skills, 868 indexed primary sources of which 341 have a recorded hum
 | [`au-professional-firm-profits`](../.claude/skills/au-professional-firm-profits/SKILL.md) | [2](../.claude/skills/au-professional-firm-profits/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-property-development-income`](../.claude/skills/au-property-development-income/SKILL.md) | [7](../.claude/skills/au-property-development-income/sources.json) | 2026-11-02 (6 of 7) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-psi-review`](../.claude/skills/au-psi-review/SKILL.md) | [4](../.claude/skills/au-psi-review/sources.json) | 2026-10-14 (2 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
-| [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | [2](../.claude/skills/au-rd-incentive/sources.json) | 2026-10-14 (2 of 2) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-rd-incentive`](../.claude/skills/au-rd-incentive/SKILL.md) | [4](../.claude/skills/au-rd-incentive/sources.json) | 2026-10-14 (2 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-rental-property`](../.claude/skills/au-rental-property/SKILL.md) | [11](../.claude/skills/au-rental-property/sources.json) | 2026-09-30 (3 of 11) | 1 | 0 | 4 | 1 | 0 | 0 |
 | [`au-restructure-rollovers`](../.claude/skills/au-restructure-rollovers/SKILL.md) | [13](../.claude/skills/au-restructure-rollovers/sources.json) | 2026-11-02 (12 of 13) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-return-amendment`](../.claude/skills/au-return-amendment/SKILL.md) | [2](../.claude/skills/au-return-amendment/sources.json) | 2026-10-14 (1 of 2) | 0 | 2 | 1 | 1 | 0 | 0 |
@@ -91,7 +91,7 @@ Totals: 111 skills, 868 indexed primary sources of which 341 have a recorded hum
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | [1](../.claude/skills/au-tax-planning-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | [1](../.claude/skills/au-tax-rates-verification/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-tax-research`](../.claude/skills/au-tax-research/SKILL.md) | [12](../.claude/skills/au-tax-research/sources.json) | 2026-09-30 (9 of 12) | 7 | 0 | 4 | 2 | 0 | 0 |
-| [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | [1](../.claude/skills/au-tax-residency/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-tax-residency`](../.claude/skills/au-tax-residency/SKILL.md) | [3](../.claude/skills/au-tax-residency/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-transfer-duty`](../.claude/skills/au-transfer-duty/SKILL.md) | [16](../.claude/skills/au-transfer-duty/sources.json) | 2026-09-30 (1 of 16) | 0 | 0 | 9 | 1 | 0 | 0 |
 | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | [1](../.claude/skills/au-transfer-pricing/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-travel-expenses`](../.claude/skills/au-travel-expenses/SKILL.md) | [12](../.claude/skills/au-travel-expenses/sources.json) | 2026-11-02 (9 of 12) | 0 | 1 | 1 | 1 | 0 | 0 |
