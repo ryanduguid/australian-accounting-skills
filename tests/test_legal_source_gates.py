@@ -894,6 +894,17 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Check every amount against ASIC's invoice or fee table", text)
         self.assertIn("never the company's name, ACN or officeholders", text)
 
+    def test_wet_and_lct_routes_leave_the_labels_to_the_workpapers(self) -> None:
+        text = " ".join(skill_text("bas-preparation").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/wine-equalisation-tax/", text)
+        self.assertIn("https://duguid.com.au/tools/business-calculators/luxury-car-tax/", text)
+        # Each page holds its own years and leaves the tax period and classification to the preparer.
+        self.assertIn("a financial year from 2023-24 to 2027-28", text)
+        self.assertIn("a tax period in a financial year from 2019-20 to 2026-27", text)
+        self.assertIn("flags rebates claimed above the cap without working out the excess", text)
+        self.assertIn("Neither page decides which tax period a dealing or line belongs to", text)
+        self.assertIn("Take labels 1C, 1D, 1E and 1F from the supported workpapers, never from the page", text)
+
 
 if __name__ == "__main__":
     unittest.main()
