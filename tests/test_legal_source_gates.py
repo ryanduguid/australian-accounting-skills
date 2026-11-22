@@ -488,7 +488,6 @@ class LegalSourceGateTests(unittest.TestCase):
         "au-small-business-cgt": ("sb-cgt-concessions",),
         "au-main-residence": ("main-residence",),
         "au-working-holiday-makers": ("working-holiday-maker-withholding", "dasp-tax"),
-        "bas-preparation": ("gst", "wine-equalisation-tax", "luxury-car-tax"),
         "au-gst-property": ("gst-margin-scheme",),
         "au-individual-return": (
             "resident-tax", "foreign-resident-tax", "low-income-tax-offset", "study-loan-repayment",
@@ -545,6 +544,19 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Step 7 still reads the current withholding schedule at use time", sup)
         self.assertIn("for an income year from 2020-21 to 2027-28", pen)
         self.assertIn("the culpability and any remission request stay with the workflow above", pen)
+
+    def test_bas_skill_routes_the_gst_adjustment_commands_to_the_1_2_0_release(self) -> None:
+        text = self.assert_released_calculators(
+            "bas-preparation", "gst", "wine-equalisation-tax", "luxury-car-tax", "gst-creditable-purpose-change",
+            "gst-annual-apportionment", "gst-financial-acquisitions-threshold", "gst-going-concern",
+            "gst-second-hand-goods", "gst-bad-debt", version="1.2.0",
+        )
+        self.assertIn("`worksheet-catalogue` command", text)
+        self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # The adjustment commands' years and refusals; the adjustment, its period and the labels stay with the skill.
+        self.assertIn("and the financial acquisitions threshold tests, each for 2020-21 to 2026-27", text)
+        self.assertIn("goods divided for resupply, goods leased before sale and valuable metal", text)
+        self.assertIn("the BAS labels come from the supported workpapers, never from the command", text)
 
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
