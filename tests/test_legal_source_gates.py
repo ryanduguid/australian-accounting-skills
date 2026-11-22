@@ -538,6 +538,19 @@ class LegalSourceGateTests(unittest.TestCase):
         # Item 30(4) exempts only what relates to or results from a qualifying item 30(1) action.
         self.assertIn("relating to, or resulting from, directly or indirectly, a transitional action", fhss)
         self.assertIn("A later release unrelated to such an action keeps those rules.", fhss)
+        # Each of item 30(1)'s 4 conditions must hold.
+        self.assertIn("a determination was made from 1 July 2018 to 14 September 2024", fhss)
+        self.assertIn(
+            "after it, the individual began holding an interest in real property or land of a kind "
+            "TAA 1953 Sch 1 s 138-10(2)(a) mentions",
+            fhss,
+        )
+        self.assertIn(
+            "from 15 September 2024 to 14 September 2027 the individual applied to amend that determination, "
+            "amended the valid release request or applied to vary a release authority for it",
+            fhss,
+        )
+        self.assertIn("when that action was taken the Commissioner had not begun treating any FHSS credit", fhss)
         self.assertIn("the maximum release amount when none is given, as the amount released", fhss)
         individual = " ".join(skill_text("au-individual-return").split())
         self.assertIn("`au-super-contribution-caps` for a first home super saver (FHSS) release", individual)
@@ -547,6 +560,26 @@ class LegalSourceGateTests(unittest.TestCase):
         text = " ".join(skill_text("div7a-compliance").split())
         self.assertIn("The plugin pins `aus-accounting-mcp` 0.10.0, whose `review_div7a_loan` refuses, with no figure", text)
         self.assertIn("Record the refusal and its code as an exception", text)
+
+    def test_site_vehicle_and_div7a_routes_keep_the_decision_with_the_reviewer(self) -> None:
+        site = "https://duguid.com.au/tools/business-calculators/"
+        div7a = " ".join(skill_text("div7a-compliance").split())
+        self.assertIn(f"{site}div7a/", div7a)
+        self.assertIn(f"{site}div7a-schedule/", div7a)
+        # The pages read the site's rate table, so the ato.gov.au rate from step 3 comes first.
+        self.assertIn("only where the page's rate for the year matches the ato.gov.au rate", div7a)
+        self.assertIn("a page's figure is a cross-check, never the assessed repayment", div7a)
+        car = " ".join(skill_text("au-car-expenses").split())
+        self.assertIn(f"{site}vehicle-class/", car)
+        self.assertIn("It leaves the car limit undecided for a dual cab, a single cab ute and a panel van", car)
+        self.assertIn("stop the car methods for that vehicle and carry the question to the reviewer", car)
+        fbt = " ".join(skill_text("fbt-annual-workflow").split())
+        self.assertIn(f"{site}vehicle-class/", fbt)
+        self.assertIn(f"{site}fbt-car/", fbt)
+        self.assertIn("It does not decide whether private use was minor, infrequent and irregular", fbt)
+        self.assertIn("evidence for the exemption decision in step 2, which stays the reviewer's", fbt)
+        for text in (div7a, car, fbt):
+            self.assertIn("Record the page, the date run, the inputs and the result", text)
 
     def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
         text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.1.0")
