@@ -855,6 +855,28 @@ class LegalSourceGateTests(unittest.TestCase):
         ):
             self.assertIn(finding, card_text)
 
+    def test_depreciation_pools_route_leaves_pool_entry_and_taxable_use_to_the_schedule(self) -> None:
+        text = " ".join(skill_text("au-depreciation-schedule").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/depreciation-pools/", text)
+        # The page takes amounts after the preparer's choices, so those choices stay in the schedule.
+        self.assertIn("an income year from 2020-21 to 2026-27", text)
+        self.assertIn("it does not decide which assets may go into a pool", text)
+        self.assertIn("refuses works begun before 16 September 1987", text)
+        self.assertIn("never the client's name, an asset serial number or a property address", text)
+
+    def test_work_expenses_route_leaves_evidence_and_occupancy_to_the_workpaper(self) -> None:
+        url = "https://duguid.com.au/tools/individual-tax/work-expenses/"
+        wfh = " ".join(skill_text("au-wfh-deductions").split())
+        car = " ".join(skill_text("au-car-expenses").split())
+        self.assertIn(url, wfh)
+        self.assertIn(url, car)
+        # The page compares methods; the rate read, the hours evidence and occupancy stay with the skill.
+        self.assertIn("read the year's rate from the ATO page in step 1 regardless", wfh)
+        self.assertIn("step 5 and the hours and evidence of step 2 stay as written", wfh)
+        self.assertIn("never the person's name or TFN", wfh)
+        self.assertIn("It refuses a car the person did not own or lease", car)
+        self.assertIn("so step 4 stays as written", car)
+
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
 
