@@ -662,6 +662,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_legal_source_gates.py",
           "test_return_qa_matrix.py"
         ],
@@ -2575,6 +2576,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py",
           "test_return_qa_matrix.py",
           "test_tax_reform_no_3_status.py",
