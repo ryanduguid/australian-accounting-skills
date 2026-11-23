@@ -23,6 +23,10 @@ The instalment notice or activity statement showing the option used (amount at T
 
 6. For a later quarter, reconcile the running position to the latest actuals and flag whether a further variation is warranted.
 
+## Site calculator
+
+The site's [PAYG instalments calculator](https://duguid.com.au/tools/business-calculators/payg-instalments/) (published and last checked 15 November 2026, read 23 November 2026) works out one quarterly instalment by the method on the activity statement: option 1's notified amount, or a varied instalment from the estimated tax for the year less the instalments already made, adding back credits for earlier instalments, with a negative result a credit to claim at 5B. It runs in the browser and sends no inputs to a server. Before relying on it, confirm it supports the reporting month or income year in question; use it as a cross-check of step 4 only, never as a fallback when a local tool refuses. It does not work out instalment income, the tax on it or whether either option may be chosen, so steps 2 and 3 stay as written. It does not cover monthly, twice-yearly or annual instalments or consolidated groups, or estimate general interest charge on a variation that proves too low, so step 5 stays as written, and it does not check whether a credit may be claimed or when an instalment is due. It refuses a credit entered for the first or second instalment of the year. Enter only amounts, never the client's name, TFN or ABN. Record what it consumed: the page, the date run, the inputs and the result. Keep the page's own labels as its own, beside those inputs. Where the page and the workpaper differ, record the difference for the reviewer and adopt neither.
+
 ## Hand-off and checks
 
 An instalment history tied to the ATO account, an instalment income and tax estimate with documented assumptions, the varied amount or rate workings, any credit claimed, and the shortfall-test comparison with its section reference. Whether to vary, and the figures lodged, are decisions for the client and reviewer.
