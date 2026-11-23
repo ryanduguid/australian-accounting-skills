@@ -176,7 +176,7 @@ fn cmd_render(args: impl Iterator<Item = String>) -> Result<u8, String> {
         write_atomic_no_symlink(path, &docx::render_docx(&wp)?)?;
     }
     if let Some(path) = &opts.pdf_out {
-        write_atomic_no_symlink(path, &pdf::render_pdf(&wp))?;
+        write_atomic_no_symlink(path, &pdf::render_pdf(&wp)?)?;
     }
     emit_report(&report, opts.report_out.as_deref())?;
     Ok(u8::from(!report.ok))
@@ -204,6 +204,8 @@ fn cmd_verify_xlsx(mut args: impl Iterator<Item = String>) -> Result<u8, String>
 }
 
 fn run() -> Result<u8, String> {
+    // Subcommand dispatch only; never used for authentication or privilege checks.
+    // nosemgrep: rust.lang.security.args.args
     let mut args = std::env::args().skip(1);
     match args.next().as_deref() {
         Some("render") => cmd_render(args),

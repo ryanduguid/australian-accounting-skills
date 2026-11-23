@@ -1,9 +1,9 @@
 // Copyright 2026 Ryan Duguid
 // SPDX-License-Identifier: Apache-2.0
 
-//! Pure-Rust PDF 1.4 workpaper renderer with A4 pages, multi-page pagination,
-//! running `DRAFT FOR HUMAN REVIEW` header, page-numbered footer, wrapped
-//! paragraphs, bullet lists and structured tables.
+//! Pure-Rust PDF 1.4 workpaper renderer with A4 pages, WinAnsiEncoding support,
+//! explicit rejection of unrepresentable Unicode characters, multi-page
+//! pagination, running `DRAFT FOR HUMAN REVIEW` header and page-numbered footer.
 
 use crate::model::{DRAFT_BANNER, Workpaper};
 
@@ -13,35 +13,52 @@ const MARGIN_X: f32 = 50.0;
 const TOP_Y: f32 = 775.0;
 const BOTTOM_Y: f32 = 60.0;
 
-fn pdf_escape(text: &str) -> String {
+fn winansi_byte(ch: char) -> Option<u8> {
+    match ch {
+        '\t' | '\n' | '\r' => Some(b' '),
+        c if (0x20..=0x7E).contains(&(c as u32)) => Some(c as u8),
+        c if (0xA0..=0xFF).contains(&(c as u32)) => Some(c as u8),
+        '\u{20AC}' => Some(0x80), // €
+        '\u{2018}' => Some(0x91), // ‘
+        '\u{2019}' => Some(0x92), // ’
+        '\u{201C}' => Some(0x93), // “
+        '\u{201D}' => Some(0x94), // ”
+        '\u{2022}' => Some(0x95), // •
+        '\u{2013}' => Some(0x96), // –
+        '\u{2014}' => Some(0x97), // —
+        _ => None,
+    }
+}
+
+fn pdf_encode(text: &str) -> Result<String, String> {
     let mut out = String::with_capacity(text.len());
     for ch in text.chars() {
-        let mapped = match ch {
-            '\u{2013}' | '\u{2014}' => '-',
-            '\u{2018}' | '\u{2019}' => '\'',
-            '\u{201C}' | '\u{201D}' => '"',
-            '\u{2022}' => '*',
-            c if c.is_ascii() && (c as u32) >= 0x20 => c,
-            '\t' => ' ',
-            _ => '?',
+        let Some(byte) = winansi_byte(ch) else {
+            return Err(format!(
+                "PDF renderer cannot represent character '{ch}' (U+{:04X}) in WinAnsiEncoding; use --docx or --xlsx for full Unicode",
+                ch as u32
+            ));
         };
-        match mapped {
-            '\\' => out.push_str("\\\\"),
-            '(' => out.push_str("\\("),
-            ')' => out.push_str("\\)"),
-            c => out.push(c),
+        match byte {
+            b'\\' => out.push_str("\\\\"),
+            b'(' => out.push_str("\\("),
+            b')' => out.push_str("\\)"),
+            0x20..=0x7E => out.push(byte as char),
+            high => out.push_str(&format!("\\{high:03o}")),
         }
     }
-    out
+    Ok(out)
 }
 
 fn wrap_text(text: &str, max_chars: usize) -> Vec<String> {
     let mut lines = Vec::new();
     let mut current = String::new();
     for word in text.split_whitespace() {
+        let word_len = word.chars().count();
+        let cur_len = current.chars().count();
         if current.is_empty() {
             current.push_str(word);
-        } else if current.len() + 1 + word.len() <= max_chars {
+        } else if cur_len + 1 + word_len <= max_chars {
             current.push(' ');
             current.push_str(word);
         } else {
@@ -103,58 +120,76 @@ impl PdfBuilder {
         }
     }
 
-    fn write_line(&mut self, text: &str, font: &str, size: f32, rgb: (f32, f32, f32)) {
+    fn write_line(
+        &mut self,
+        text: &str,
+        font: &str,
+        size: f32,
+        rgb: (f32, f32, f32),
+    ) -> Result<(), String> {
+        let encoded = pdf_encode(text)?;
         let step = size + 4.0;
         self.ensure_space(step);
         self.current.push_str(&format!(
-            "BT /{font} {size:.1} Tf {:.2} {:.2} {:.2} rg {MARGIN_X:.1} {:.1} Td ({}) Tj ET\n",
-            rgb.0,
-            rgb.1,
-            rgb.2,
-            self.y,
-            pdf_escape(text)
+            "BT /{font} {size:.1} Tf {:.2} {:.2} {:.2} rg {MARGIN_X:.1} {:.1} Td ({encoded}) Tj ET\n",
+            rgb.0, rgb.1, rgb.2, self.y
         ));
         self.y -= step;
+        Ok(())
     }
 
-    fn write_wrapped(&mut self, text: &str, font: &str, size: f32, max_chars: usize) {
+    fn write_wrapped(
+        &mut self,
+        text: &str,
+        font: &str,
+        size: f32,
+        max_chars: usize,
+    ) -> Result<(), String> {
         for line in wrap_text(text, max_chars) {
-            self.write_line(&line, font, size, (0.12, 0.16, 0.22));
+            self.write_line(&line, font, size, (0.12, 0.16, 0.22))?;
         }
+        Ok(())
     }
 
-    fn write_table(&mut self, headers: &[String], rows: &[Vec<String>]) {
+    fn write_table(&mut self, headers: &[String], rows: &[Vec<String>]) -> Result<(), String> {
         if !headers.is_empty() {
-            self.write_line(&headers.join(" | "), "F2", 9.5, (0.11, 0.21, 0.36));
+            self.write_line(&headers.join(" | "), "F2", 9.5, (0.11, 0.21, 0.36))?;
         }
         for row in rows {
             for wrapped in wrap_text(&row.join(" | "), 92) {
-                self.write_line(&wrapped, "F1", 9.0, (0.12, 0.16, 0.22));
+                self.write_line(&wrapped, "F1", 9.0, (0.12, 0.16, 0.22))?;
             }
         }
         self.y -= 6.0;
+        Ok(())
     }
 
-    fn build_objects(&self, title: &str) -> Vec<String> {
+    fn build_objects(&self, title: &str) -> Result<Vec<String>, String> {
         let total = self.pages.len();
+        let banner = pdf_encode(DRAFT_BANNER)?;
+        let encoded_title = pdf_encode(title)?;
         let mut objects = Vec::with_capacity(4 + total * 2);
         objects.push("<< /Type /Catalog /Pages 2 0 R >>".to_owned());
         let kids: String = (0..total).map(|i| format!("{} 0 R ", 5 + i * 2)).collect();
         objects.push(format!("<< /Type /Pages /Kids [ {kids}] /Count {total} >>"));
-        objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>".to_owned());
-        objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>".to_owned());
+        objects.push(
+            "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>"
+                .to_owned(),
+        );
+        objects.push(
+            "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>"
+                .to_owned(),
+        );
         for (idx, body) in self.pages.iter().enumerate() {
             let content_obj = 6 + idx * 2;
             let header = format!(
                 "0.99 0.95 0.78 rg {MARGIN_X:.1} 800.0 {:.1} 20.0 re f\n\
-                 BT /F2 8.5 Tf 0.57 0.25 0.05 rg {:.1} 807.0 Td ({}) Tj ET\n",
+                 BT /F2 8.5 Tf 0.57 0.25 0.05 rg {:.1} 807.0 Td ({banner}) Tj ET\n",
                 PAGE_WIDTH - 2.0 * MARGIN_X,
-                MARGIN_X + 6.0,
-                pdf_escape(DRAFT_BANNER)
+                MARGIN_X + 6.0
             );
             let footer = format!(
-                "BT /F1 8.0 Tf 0.40 0.45 0.55 rg {MARGIN_X:.1} 30.0 Td ({} - Page {} of {total}) Tj ET\n",
-                pdf_escape(title),
+                "BT /F1 8.0 Tf 0.40 0.45 0.55 rg {MARGIN_X:.1} 30.0 Td ({encoded_title} - Page {} of {total}) Tj ET\n",
                 idx + 1
             );
             let stream = format!("{header}{body}{footer}");
@@ -167,27 +202,27 @@ impl PdfBuilder {
                 stream.len()
             ));
         }
-        objects
+        Ok(objects)
     }
 
-    fn finish(mut self, title: &str) -> Vec<u8> {
+    fn finish(mut self, title: &str) -> Result<Vec<u8>, String> {
         if !self.current.is_empty() || self.pages.is_empty() {
             self.pages.push(std::mem::take(&mut self.current));
         }
-        assemble_pdf(&self.build_objects(title))
+        Ok(assemble_pdf(&self.build_objects(title)?))
     }
 }
 
-fn write_exceptions(pdf: &mut PdfBuilder, wp: &Workpaper) {
+fn write_exceptions(pdf: &mut PdfBuilder, wp: &Workpaper) -> Result<(), String> {
     if wp.exceptions.is_empty() {
-        return;
+        return Ok(());
     }
     pdf.write_line(
         "Reviewer exception register",
         "F2",
         12.0,
         (0.11, 0.21, 0.36),
-    );
+    )?;
     let rows: Vec<Vec<String>> = wp
         .exceptions
         .iter()
@@ -210,14 +245,14 @@ fn write_exceptions(pdf: &mut PdfBuilder, wp: &Workpaper) {
     let headers = ["ID", "Item", "Status", "Evidence needed", "Owner"]
         .map(str::to_owned)
         .to_vec();
-    pdf.write_table(&headers, &rows);
+    pdf.write_table(&headers, &rows)
 }
 
-fn write_sources(pdf: &mut PdfBuilder, wp: &Workpaper) {
+fn write_sources(pdf: &mut PdfBuilder, wp: &Workpaper) -> Result<(), String> {
     if wp.sources.is_empty() {
-        return;
+        return Ok(());
     }
-    pdf.write_line("Primary sources checked", "F2", 12.0, (0.11, 0.21, 0.36));
+    pdf.write_line("Primary sources checked", "F2", 12.0, (0.11, 0.21, 0.36))?;
     let rows: Vec<Vec<String>> = wp
         .sources
         .iter()
@@ -233,17 +268,12 @@ fn write_sources(pdf: &mut PdfBuilder, wp: &Workpaper) {
     let headers = ["Source", "Reference", "Checked on", "Status"]
         .map(str::to_owned)
         .to_vec();
-    pdf.write_table(&headers, &rows);
+    pdf.write_table(&headers, &rows)
 }
 
-fn write_registers(pdf: &mut PdfBuilder, wp: &Workpaper) {
-    write_exceptions(pdf, wp);
-    write_sources(pdf, wp);
-}
-
-pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
+pub fn render_pdf(wp: &Workpaper) -> Result<Vec<u8>, String> {
     let mut pdf = PdfBuilder::new();
-    pdf.write_line(&wp.title, "F2", 16.0, (0.11, 0.21, 0.36));
+    pdf.write_line(&wp.title, "F2", 16.0, (0.11, 0.21, 0.36))?;
     pdf.y -= 4.0;
     pdf.write_line(
         &format!(
@@ -253,7 +283,7 @@ pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
         "F1",
         9.5,
         (0.25, 0.30, 0.38),
-    );
+    )?;
     let unverified = wp.unverified_mentions();
     if !wp.exceptions.is_empty() || unverified > 0 {
         pdf.write_line(
@@ -264,27 +294,28 @@ pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
             "F2",
             9.5,
             (0.57, 0.25, 0.05),
-        );
+        )?;
     }
     pdf.y -= 6.0;
     if !wp.summary.is_empty() {
-        pdf.write_line("Summary", "F2", 12.0, (0.11, 0.21, 0.36));
-        pdf.write_wrapped(&wp.summary, "F1", 10.0, 88);
+        pdf.write_line("Summary", "F2", 12.0, (0.11, 0.21, 0.36))?;
+        pdf.write_wrapped(&wp.summary, "F1", 10.0, 88)?;
         pdf.y -= 6.0;
     }
     for section in &wp.sections {
-        pdf.write_line(&section.heading, "F2", 12.0, (0.11, 0.21, 0.36));
+        pdf.write_line(&section.heading, "F2", 12.0, (0.11, 0.21, 0.36))?;
         for p in &section.paragraphs {
-            pdf.write_wrapped(p, "F1", 10.0, 88);
+            pdf.write_wrapped(p, "F1", 10.0, 88)?;
         }
         for b in &section.bullets {
-            pdf.write_wrapped(&format!("- {b}"), "F1", 10.0, 86);
+            pdf.write_wrapped(&format!("- {b}"), "F1", 10.0, 86)?;
         }
         if let Some(tbl) = &section.table {
-            pdf.write_table(&tbl.headers, &tbl.rows);
+            pdf.write_table(&tbl.headers, &tbl.rows)?;
         }
         pdf.y -= 4.0;
     }
-    write_registers(&mut pdf, wp);
+    write_exceptions(&mut pdf, wp)?;
+    write_sources(&mut pdf, wp)?;
     pdf.finish(&wp.title)
 }

@@ -4,7 +4,9 @@
 //! Spreadsheet cell coordinates, tokenizer and recursive-descent parser for
 //! deterministic `.xlsx` formula verification.
 
-use crate::formula_funcs::{ArgValue, DISALLOWED_FUNCTIONS, Value, compare_values, eval_function};
+use crate::formula_funcs::{
+    ArgValue, DISALLOWED_FUNCTIONS, EvalError, Value, compare_values, eval_function,
+};
 use std::collections::{BTreeMap, BTreeSet};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -23,47 +25,7 @@ pub enum GridCell {
     Error(String),
 }
 
-pub fn col_to_letters(mut col: usize) -> String {
-    let mut out = Vec::new();
-    loop {
-        out.push(b'A' + (col % 26) as u8);
-        if col < 26 {
-            break;
-        }
-        col = col / 26 - 1;
-    }
-    out.reverse();
-    String::from_utf8(out).unwrap_or_default()
-}
-
-pub fn cell_ref(row: usize, col: usize) -> String {
-    format!("{}{}", col_to_letters(col), row + 1)
-}
-
-pub fn parse_cell_ref(token: &str) -> Option<(usize, usize)> {
-    let clean: String = token.chars().filter(|c| *c != '$').collect();
-    let split = clean.find(|c: char| c.is_ascii_digit())?;
-    if split == 0 {
-        return None;
-    }
-    let letters = &clean[..split];
-    let digits = &clean[split..];
-    if !letters.bytes().all(|b| b.is_ascii_alphabetic())
-        || !digits.bytes().all(|b| b.is_ascii_digit())
-    {
-        return None;
-    }
-    let mut col: usize = 0;
-    for b in letters.bytes() {
-        let idx = usize::from(b.to_ascii_uppercase() - b'A') + 1;
-        col = col.checked_mul(26)?.checked_add(idx)?;
-    }
-    let row = digits.parse::<usize>().ok()?;
-    if row == 0 || col == 0 {
-        return None;
-    }
-    Some((row - 1, col - 1))
-}
+pub use crate::formula_funcs::{cell_ref, parse_cell_ref};
 
 #[derive(Debug, Clone, PartialEq)]
 enum Token {
@@ -93,7 +55,7 @@ fn read_quoted(
     start: usize,
     quote: char,
     err: &str,
-) -> Result<(String, usize), String> {
+) -> Result<(String, usize), EvalError> {
     let mut i = start + 1;
     let mut s = String::new();
     while i < chars.len() {
@@ -109,7 +71,7 @@ fn read_quoted(
             i += 1;
         }
     }
-    Err(err.to_owned())
+    Err(EvalError::Formula(err.to_owned()))
 }
 
 fn read_punctuation(chars: &[char], i: usize) -> Option<(Token, usize)> {
@@ -134,7 +96,7 @@ fn read_punctuation(chars: &[char], i: usize) -> Option<(Token, usize)> {
     Some((tok.0, i + tok.1))
 }
 
-fn read_atom(chars: &[char], start: usize) -> Result<(Token, usize), String> {
+fn read_atom(chars: &[char], start: usize) -> Result<(Token, usize), EvalError> {
     let mut i = start;
     if chars[i] == '"' {
         let (s, next) = read_quoted(chars, i, '"', "#VALUE!: unterminated string literal")?;
@@ -151,7 +113,7 @@ fn read_atom(chars: &[char], start: usize) -> Result<(Token, usize), String> {
         let text: String = chars[start..i].iter().collect();
         let val = text
             .parse::<f64>()
-            .map_err(|_| format!("#VALUE!: invalid number '{text}'"))?;
+            .map_err(|_| EvalError::Formula(format!("#VALUE!: invalid number '{text}'")))?;
         return Ok((Token::Number(val), i));
     }
     if chars[i].is_ascii_alphabetic() || matches!(chars[i], '_' | '$') {
@@ -162,16 +124,35 @@ fn read_atom(chars: &[char], start: usize) -> Result<(Token, usize), String> {
         }
         return Ok((Token::Ident(chars[start..i].iter().collect()), i));
     }
-    Err(format!("#VALUE!: unexpected character '{}'", chars[i]))
+    Err(EvalError::Formula(format!(
+        "#VALUE!: unexpected character '{}'",
+        chars[i]
+    )))
 }
 
-fn tokenize(formula: &str) -> Result<Vec<Token>, String> {
+fn validate_policy_tokens(tokens: &[Token]) -> Result<(), EvalError> {
+    for pair in tokens.windows(2) {
+        if let [Token::Ident(name), Token::LParen] = pair {
+            let upper = name.to_ascii_uppercase();
+            if DISALLOWED_FUNCTIONS.contains(&upper.as_str()) {
+                return Err(EvalError::Policy(format!(
+                    "#NAME?: disallowed external or volatile function '{upper}'"
+                )));
+            }
+        }
+    }
+    Ok(())
+}
+
+fn tokenize(formula: &str) -> Result<Vec<Token>, EvalError> {
     let expr = formula.trim().strip_prefix('=').unwrap_or(formula.trim());
     if expr.is_empty() {
-        return Err("#VALUE!: empty formula".to_owned());
+        return Err(EvalError::Formula("#VALUE!: empty formula".to_owned()));
     }
     if expr.contains('[') || expr.contains(']') {
-        return Err("#REF!: external workbook references are disallowed".to_owned());
+        return Err(EvalError::Policy(
+            "#REF!: external workbook references are disallowed".to_owned(),
+        ));
     }
     let chars: Vec<char> = expr.chars().collect();
     let mut tokens = Vec::new();
@@ -188,12 +169,13 @@ fn tokenize(formula: &str) -> Result<Vec<Token>, String> {
             i = next;
         }
     }
+    validate_policy_tokens(&tokens)?;
     Ok(tokens)
 }
 
 pub struct WorkbookEvaluator<'a> {
     pub grid: &'a BTreeMap<CellCoord, GridCell>,
-    cache: BTreeMap<CellCoord, Result<Value, String>>,
+    cache: BTreeMap<CellCoord, Result<Value, EvalError>>,
     visiting: BTreeSet<CellCoord>,
 }
 
@@ -207,30 +189,23 @@ impl<'a> WorkbookEvaluator<'a> {
     }
 
     pub fn eval_numeric(&mut self, coord: &CellCoord) -> Result<f64, String> {
-        let num = self.eval_cell(coord)?.as_number()?;
+        let num = self
+            .eval_cell(coord)
+            .and_then(|v| v.as_number())
+            .map_err(EvalError::into_message)?;
         if !num.is_finite() {
             return Err("#NUM!: non-finite result".to_owned());
         }
         Ok(num)
     }
 
-    fn eval_cell(&mut self, coord: &CellCoord) -> Result<Value, String> {
-        if let Some(cached) = self.cache.get(coord) {
-            return cached.clone();
-        }
-        if !self.visiting.insert(coord.clone()) {
-            return Err(format!(
-                "#REF!: circular reference at {}!{}",
-                coord.sheet,
-                cell_ref(coord.row, coord.col)
-            ));
-        }
-        let result = match self.grid.get(coord) {
+    fn eval_cell_inner(&mut self, coord: &CellCoord) -> Result<Value, EvalError> {
+        match self.grid.get(coord) {
             None => Ok(Value::Empty),
             Some(GridCell::Number(n)) => Ok(Value::Number(*n)),
             Some(GridCell::Bool(b)) => Ok(Value::Bool(*b)),
             Some(GridCell::Text(t)) => Ok(Value::Text(t.clone())),
-            Some(GridCell::Error(err)) => Err(err.clone()),
+            Some(GridCell::Error(err)) => Err(EvalError::Formula(err.clone())),
             Some(GridCell::Formula(formula)) => {
                 let tokens = tokenize(formula)?;
                 let mut parser = Parser {
@@ -241,12 +216,28 @@ impl<'a> WorkbookEvaluator<'a> {
                 };
                 let value = parser.parse_comparison()?;
                 if parser.pos != parser.tokens.len() {
-                    Err("#VALUE!: unexpected trailing tokens in formula".to_owned())
+                    Err(EvalError::Formula(
+                        "#VALUE!: unexpected trailing tokens in formula".to_owned(),
+                    ))
                 } else {
                     Ok(value)
                 }
             }
-        };
+        }
+    }
+
+    fn eval_cell(&mut self, coord: &CellCoord) -> Result<Value, EvalError> {
+        if let Some(cached) = self.cache.get(coord) {
+            return cached.clone();
+        }
+        if !self.visiting.insert(coord.clone()) {
+            return Err(EvalError::Formula(format!(
+                "#REF!: circular reference at {}!{}",
+                coord.sheet,
+                cell_ref(coord.row, coord.col)
+            )));
+        }
+        let result = self.eval_cell_inner(coord);
         self.visiting.remove(coord);
         self.cache.insert(coord.clone(), result.clone());
         result
@@ -271,7 +262,7 @@ impl<'a, 'b> Parser<'a, 'b> {
         Some(tok)
     }
 
-    fn parse_comparison(&mut self) -> Result<Value, String> {
+    fn parse_comparison(&mut self) -> Result<Value, EvalError> {
         let mut left = self.parse_additive()?;
         while let Some(
             op @ (Token::Eq | Token::Ne | Token::Lt | Token::Le | Token::Gt | Token::Ge),
@@ -293,7 +284,7 @@ impl<'a, 'b> Parser<'a, 'b> {
         Ok(left)
     }
 
-    fn parse_additive(&mut self) -> Result<Value, String> {
+    fn parse_additive(&mut self) -> Result<Value, EvalError> {
         let mut left = self.parse_multiplicative()?;
         while let Some(op @ (Token::Plus | Token::Minus)) = self.peek().cloned() {
             self.pos += 1;
@@ -304,7 +295,7 @@ impl<'a, 'b> Parser<'a, 'b> {
         Ok(left)
     }
 
-    fn parse_multiplicative(&mut self) -> Result<Value, String> {
+    fn parse_multiplicative(&mut self) -> Result<Value, EvalError> {
         let mut left = self.parse_unary()?;
         while let Some(op @ (Token::Star | Token::Slash)) = self.peek().cloned() {
             self.pos += 1;
@@ -312,7 +303,7 @@ impl<'a, 'b> Parser<'a, 'b> {
             let (l, r) = (left.as_number()?, right.as_number()?);
             if op == Token::Slash {
                 if r == 0.0 {
-                    return Err("#DIV/0!: division by zero".to_owned());
+                    return Err(EvalError::Formula("#DIV/0!: division by zero".to_owned()));
                 }
                 left = Value::Number(l / r);
             } else {
@@ -322,7 +313,7 @@ impl<'a, 'b> Parser<'a, 'b> {
         Ok(left)
     }
 
-    fn parse_unary(&mut self) -> Result<Value, String> {
+    fn parse_unary(&mut self) -> Result<Value, EvalError> {
         match self.peek() {
             Some(Token::Plus) => {
                 self.pos += 1;
@@ -336,19 +327,24 @@ impl<'a, 'b> Parser<'a, 'b> {
         }
     }
 
-    fn parse_sheet_cell(&mut self, sheet: String) -> Result<Value, String> {
+    fn parse_sheet_cell(&mut self, sheet: String) -> Result<Value, EvalError> {
         if self.next() != Some(Token::Bang) {
-            return Err("#REF!: expected '!' after sheet name".to_owned());
+            return Err(EvalError::Formula(
+                "#REF!: expected '!' after sheet name".to_owned(),
+            ));
         }
         let Some(Token::Ident(cell_tok)) = self.next() else {
-            return Err("#REF!: expected cell reference after '!'".to_owned());
+            return Err(EvalError::Formula(
+                "#REF!: expected cell reference after '!'".to_owned(),
+            ));
         };
-        let (row, col) = parse_cell_ref(&cell_tok)
-            .ok_or_else(|| format!("#REF!: invalid cell reference '{cell_tok}'"))?;
+        let (row, col) = parse_cell_ref(&cell_tok).ok_or_else(|| {
+            EvalError::Formula(format!("#REF!: invalid cell reference '{cell_tok}'"))
+        })?;
         self.eval.eval_cell(&CellCoord { sheet, row, col })
     }
 
-    fn parse_ident(&mut self, ident: String) -> Result<Value, String> {
+    fn parse_ident(&mut self, ident: String) -> Result<Value, EvalError> {
         if self.peek() == Some(&Token::LParen) {
             return self.parse_function(&ident);
         }
@@ -359,8 +355,9 @@ impl<'a, 'b> Parser<'a, 'b> {
             "TRUE" => Ok(Value::Bool(true)),
             "FALSE" => Ok(Value::Bool(false)),
             _ => {
-                let (row, col) = parse_cell_ref(&ident)
-                    .ok_or_else(|| format!("#NAME?: unknown identifier '{ident}'"))?;
+                let (row, col) = parse_cell_ref(&ident).ok_or_else(|| {
+                    EvalError::Formula(format!("#NAME?: unknown identifier '{ident}'"))
+                })?;
                 self.eval.eval_cell(&CellCoord {
                     sheet: self.current_sheet.to_owned(),
                     row,
@@ -370,24 +367,28 @@ impl<'a, 'b> Parser<'a, 'b> {
         }
     }
 
-    fn parse_primary(&mut self) -> Result<Value, String> {
+    fn parse_primary(&mut self) -> Result<Value, EvalError> {
         match self.next() {
             Some(Token::Number(n)) => Ok(Value::Number(n)),
             Some(Token::String(s)) => Ok(Value::Text(s)),
             Some(Token::LParen) => {
                 let value = self.parse_comparison()?;
                 if self.next() != Some(Token::RParen) {
-                    return Err("#VALUE!: missing closing parenthesis".to_owned());
+                    return Err(EvalError::Formula(
+                        "#VALUE!: missing closing parenthesis".to_owned(),
+                    ));
                 }
                 Ok(value)
             }
             Some(Token::QuotedSheet(sheet)) => self.parse_sheet_cell(sheet),
             Some(Token::Ident(ident)) => self.parse_ident(ident),
-            _ => Err("#VALUE!: unexpected token in formula".to_owned()),
+            _ => Err(EvalError::Formula(
+                "#VALUE!: unexpected token in formula".to_owned(),
+            )),
         }
     }
 
-    fn try_parse_range(&mut self) -> Result<Option<Vec<Value>>, String> {
+    fn try_parse_range(&mut self) -> Result<Option<Vec<Value>>, EvalError> {
         let saved = self.pos;
         let sheet = match self.peek() {
             Some(Token::QuotedSheet(s) | Token::Ident(s))
@@ -425,24 +426,36 @@ impl<'a, 'b> Parser<'a, 'b> {
         Ok(Some(values))
     }
 
-    fn parse_function(&mut self, name: &str) -> Result<Value, String> {
+    fn parse_iferror(&mut self) -> Result<Value, EvalError> {
+        let first = self.parse_comparison();
+        if self.next() != Some(Token::Comma) {
+            return Err(EvalError::Formula(
+                "#VALUE!: IFERROR requires 2 arguments".to_owned(),
+            ));
+        }
+        let fallback = self.parse_comparison()?;
+        if self.next() != Some(Token::RParen) {
+            return Err(EvalError::Formula(
+                "#VALUE!: missing closing parenthesis for IFERROR".to_owned(),
+            ));
+        }
+        match first {
+            Ok(v) => Ok(v),
+            Err(policy @ EvalError::Policy(_)) => Err(policy),
+            Err(EvalError::Formula(_)) => Ok(fallback),
+        }
+    }
+
+    fn parse_function(&mut self, name: &str) -> Result<Value, EvalError> {
         let upper = name.to_ascii_uppercase();
         if DISALLOWED_FUNCTIONS.contains(&upper.as_str()) {
-            return Err(format!(
+            return Err(EvalError::Policy(format!(
                 "#NAME?: disallowed external or volatile function '{upper}'"
-            ));
+            )));
         }
         self.pos += 1;
         if upper == "IFERROR" {
-            let first = self.parse_comparison();
-            if self.next() != Some(Token::Comma) {
-                return Err("#VALUE!: IFERROR requires 2 arguments".to_owned());
-            }
-            let fallback = self.parse_comparison()?;
-            if self.next() != Some(Token::RParen) {
-                return Err("#VALUE!: missing closing parenthesis for IFERROR".to_owned());
-            }
-            return Ok(first.unwrap_or(fallback));
+            return self.parse_iferror();
         }
         let mut args = Vec::new();
         if self.peek() != Some(&Token::RParen) {
@@ -455,14 +468,18 @@ impl<'a, 'b> Parser<'a, 'b> {
                 match self.peek() {
                     Some(Token::Comma) => self.pos += 1,
                     Some(Token::RParen) => break,
-                    _ => return Err(format!("#VALUE!: malformed arguments in {upper}()")),
+                    _ => {
+                        return Err(EvalError::Formula(format!(
+                            "#VALUE!: malformed arguments in {upper}()"
+                        )));
+                    }
                 }
             }
         }
         if self.next() != Some(Token::RParen) {
-            return Err(format!(
+            return Err(EvalError::Formula(format!(
                 "#VALUE!: missing closing parenthesis for {upper}()"
-            ));
+            )));
         }
         eval_function(&upper, &args)
     }

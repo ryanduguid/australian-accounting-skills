@@ -6,7 +6,8 @@
 
 - **Prep only:** every generated `.xlsx`, `.docx` and `.pdf` carries the non-removable `DRAFT FOR HUMAN REVIEW - PREP ONLY - NOT FOR LODGEMENT - NOT ADVICE` banner.
 - **No silent suppression:** open reviewer exceptions and `UNVERIFIED` markers are counted on the cover summary and reported in the JSON verification output.
-- **Formula safety:** text cells are stored as OOXML inline strings (neutralising spreadsheet formula injection). Formula cells reject external workbook references (`[...]`) and disallowed external or volatile functions (`WEBSERVICE`, `HYPERLINK`, `CALL`, `REGISTER.ID`, `IMPORTXML`, `IMPORTDATA`, `IMPORTHTML`, `EXEC`, `CMD`), detect circular references and `#DIV/0!`, and write verified cached values (`<v>`) alongside `<f>`.
+- **Formula safety:** text cells are stored as OOXML inline strings (neutralising spreadsheet formula injection). Formula cells reject external workbook references (`[...]`) and disallowed external or volatile functions (`WEBSERVICE`, `HYPERLINK`, `CALL`, `REGISTER.ID`, `IMPORTXML`, `IMPORTDATA`, `IMPORTHTML`, `EXEC`, `CMD`) as non-catchable policy violations (so `IFERROR` cannot conceal them), detect circular references and `#DIV/0!`, reject non-finite cached values (`NaN`/`inf`) and write verified finite cached values (`<v>`) alongside `<f>`.
+- **Character encoding:** `.xlsx` and `.docx` preserve full UTF-8 Unicode; `.pdf` uses `WinAnsiEncoding` (ASCII, Latin-1 and common currency/punctuation) and explicitly fails rather than silently substituting `?` when text contains a character outside `WinAnsiEncoding`.
 - **Client data:** write rendered client deliverables only to a firm-approved secure folder outside this repository.
 
 ## Usage
@@ -28,7 +29,7 @@ workpaper-renderer render \
   --report /secure/path/bas-report.json
 ```
 
-Verify an existing `.xlsx` workpaper (ZIP CRC-32 integrity, mandatory draft banner, formula safety, error cells and cached-value agreement):
+Verify an existing `.xlsx` workpaper (ZIP CRC-32 integrity, mandatory draft banner, formula safety, error cells and finite cached-value agreement):
 
 ```bash
 workpaper-renderer verify-xlsx --input /secure/path/bas-draft.xlsx

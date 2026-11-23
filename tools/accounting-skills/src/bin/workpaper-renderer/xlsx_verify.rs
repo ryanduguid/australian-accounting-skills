@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //! Standalone `.xlsx` archive verifier: checks ZIP CRC-32 integrity, mandatory
-//! draft banner presence, formula safety, Excel error cells and cached-value
-//! agreement with deterministic recalculation.
+//! draft banner presence, formula safety, Excel error cells and finite
+//! cached-value agreement with deterministic recalculation.
 
 use crate::{
     formula::{CellCoord, GridCell, WorkbookEvaluator, cell_ref, parse_cell_ref},
@@ -78,9 +78,27 @@ fn parse_sheet_paths(entries: &BTreeMap<String, Vec<u8>>) -> Result<Vec<(String,
     Ok(sheets)
 }
 
+#[derive(Debug, Clone)]
+enum CachedValue {
+    Missing,
+    Finite(f64),
+    NonFinite(String),
+}
+
+fn parse_cached_value(body: &str) -> CachedValue {
+    let Some(raw) = extract_tag_text(body, "v") else {
+        return CachedValue::Missing;
+    };
+    let trimmed = raw.trim();
+    match trimmed.parse::<f64>() {
+        Ok(num) if num.is_finite() => CachedValue::Finite(num),
+        _ => CachedValue::NonFinite(trimmed.to_owned()),
+    }
+}
+
 struct ParsedWorkbook {
     grid: BTreeMap<CellCoord, GridCell>,
-    formulas: Vec<(CellCoord, String, Option<f64>)>,
+    formulas: Vec<(CellCoord, String, CachedValue)>,
     errors: Vec<String>,
     banner_found: bool,
     unverified_mentions: usize,
@@ -94,7 +112,7 @@ fn record_cell_body(
     state: &mut ParsedWorkbook,
 ) {
     if let Some(formula_text) = extract_tag_text(body, "f") {
-        let cached = extract_tag_text(body, "v").and_then(|v| v.trim().parse::<f64>().ok());
+        let cached = parse_cached_value(body);
         if cell_type == "e" {
             let code = extract_tag_text(body, "v").unwrap_or_else(|| "#ERROR!".to_owned());
             state.errors.push(format!(
@@ -121,15 +139,26 @@ fn record_cell_body(
             coord.sheet
         ));
         state.grid.insert(coord, GridCell::Error(code));
-    } else if let Some(val_text) = extract_tag_text(body, "v")
-        && let Ok(num) = val_text.trim().parse::<f64>()
-    {
-        state.grid.insert(coord, GridCell::Number(num));
+    } else if let Some(val_text) = extract_tag_text(body, "v") {
+        match val_text.trim().parse::<f64>() {
+            Ok(num) if num.is_finite() => {
+                state.grid.insert(coord, GridCell::Number(num));
+            }
+            _ => {
+                state.errors.push(format!(
+                    "{}!{r_attr} carries non-finite numeric value '{}'",
+                    coord.sheet,
+                    val_text.trim()
+                ));
+            }
+        }
     }
 }
 
 fn parse_cell_segment(sheet_name: &str, segment: &str, state: &mut ParsedWorkbook) {
-    let Some(gt) = segment.find('>') else { return };
+    let Some(gt) = segment.find('>') else {
+        return;
+    };
     let attrs = &segment[..gt];
     let Some(end_c) = segment[gt + 1..].find("</c>") else {
         return;
@@ -159,19 +188,29 @@ fn check_single_formula(
     evaluator: &mut WorkbookEvaluator<'_>,
     coord: &CellCoord,
     formula_text: &str,
-    cached: Option<f64>,
+    cached: &CachedValue,
     errors: &mut Vec<String>,
 ) -> FormulaCheck {
     let addr = cell_ref(coord.row, coord.col);
+    let cached_num = match cached {
+        CachedValue::Finite(c) => Some(*c),
+        CachedValue::Missing | CachedValue::NonFinite(_) => None,
+    };
     match evaluator.eval_numeric(coord) {
         Ok(val) => {
             let err_msg = match cached {
-                Some(c) if (val - c).abs() > 1e-6 => Some(format!(
+                CachedValue::Finite(c) if (val - c).abs() > 1e-6 => Some(format!(
                     "{}!{addr}: cached value {c} disagrees with recalculated value {val}",
                     coord.sheet
                 )),
-                None => Some(format!("{}!{addr}: missing cached value <v>", coord.sheet)),
-                Some(_) => None,
+                CachedValue::NonFinite(raw) => Some(format!(
+                    "{}!{addr}: non-finite cached value '{raw}'",
+                    coord.sheet
+                )),
+                CachedValue::Missing => {
+                    Some(format!("{}!{addr}: missing cached value <v>", coord.sheet))
+                }
+                CachedValue::Finite(_) => None,
             };
             if let Some(msg) = &err_msg {
                 errors.push(msg.clone());
@@ -181,7 +220,7 @@ fn check_single_formula(
                 cell: addr,
                 formula: format!("={formula_text}"),
                 value: Some(val),
-                cached,
+                cached: cached_num,
                 ok: err_msg.is_none(),
                 error: err_msg,
             }
@@ -193,7 +232,7 @@ fn check_single_formula(
                 cell: addr,
                 formula: format!("={formula_text}"),
                 value: None,
-                cached,
+                cached: cached_num,
                 ok: false,
                 error: Some(err),
             }
@@ -237,7 +276,7 @@ pub fn verify_xlsx_bytes(bytes: &[u8]) -> Result<VerificationReport, String> {
             &mut evaluator,
             coord,
             formula_text,
-            *cached,
+            cached,
             &mut state.errors,
         ));
     }

@@ -8,6 +8,63 @@ fn bin() -> &'static str {
     env!("CARGO_BIN_EXE_workpaper-renderer")
 }
 
+fn crc32(bytes: &[u8]) -> u32 {
+    let mut crc = u32::MAX;
+    for byte in bytes {
+        crc ^= u32::from(*byte);
+        for _ in 0..8 {
+            crc = if crc & 1 == 1 {
+                (crc >> 1) ^ 0xEDB8_8320
+            } else {
+                crc >> 1
+            };
+        }
+    }
+    !crc
+}
+
+/// Replace an equal-length byte slice inside a stored ZIP archive and fix the
+/// entry's CRC-32 in both its local header and central directory record.
+fn patch_stored_zip_equal_len(archive: &[u8], needle: &[u8], replacement: &[u8]) -> Vec<u8> {
+    assert_eq!(needle.len(), replacement.len());
+    let mut out = archive.to_vec();
+    let pos = out
+        .windows(needle.len())
+        .position(|w| w == needle)
+        .expect("needle not found in archive");
+    out[pos..pos + needle.len()].copy_from_slice(replacement);
+
+    // Find the enclosing local header (0x04034b50) before `pos`
+    let local_sig = 0x0403_4b50u32.to_le_bytes();
+    let local_off = (0..=pos)
+        .rev()
+        .find(|&i| out[i..i + 4] == local_sig)
+        .expect("local header not found");
+    let size = u32::from_le_bytes(out[local_off + 18..local_off + 22].try_into().unwrap()) as usize;
+    let name_len =
+        u16::from_le_bytes(out[local_off + 26..local_off + 28].try_into().unwrap()) as usize;
+    let extra_len =
+        u16::from_le_bytes(out[local_off + 28..local_off + 30].try_into().unwrap()) as usize;
+    let data_start = local_off + 30 + name_len + extra_len;
+    let new_crc = crc32(&out[data_start..data_start + size]).to_le_bytes();
+    let old_crc = out[local_off + 14..local_off + 18].to_vec();
+    out[local_off + 14..local_off + 18].copy_from_slice(&new_crc);
+
+    // Update the matching central directory header (0x02014b50) with matching offset
+    let cd_sig = 0x0201_4b50u32.to_le_bytes();
+    let off_bytes = (local_off as u32).to_le_bytes();
+    let mut i = data_start + size;
+    while i + 46 <= out.len() {
+        if out[i..i + 4] == cd_sig && out[i + 42..i + 46] == off_bytes {
+            assert_eq!(&out[i + 16..i + 20], old_crc.as_slice());
+            out[i + 16..i + 20].copy_from_slice(&new_crc);
+            return out;
+        }
+        i += 1;
+    }
+    panic!("matching central directory record not found");
+}
+
 #[test]
 fn cli_help_schema_and_bad_args() {
     let help = Command::new(bin()).arg("--help").output().unwrap();
@@ -148,7 +205,6 @@ fn renders_json_workpaper_to_xlsx_docx_pdf_and_verifies_formulas() {
     assert_eq!(report["open_exception_count"], 1);
     assert!(report["unverified_mentions"].as_u64().unwrap() >= 3);
 
-    // Check key evaluated values
     let formulas = report["formulas"].as_array().unwrap();
     let find_val = |sheet: &str, cell: &str| {
         formulas
@@ -169,7 +225,6 @@ fn renders_json_workpaper_to_xlsx_docx_pdf_and_verifies_formulas() {
     assert!((find_val("Cross Check", "B2") - 8000.0).abs() < 1e-6);
     assert!((find_val("Cross Check", "B3") - 0.0).abs() < 1e-6);
 
-    // Standalone verify-xlsx passes on the generated workbook.
     let verify = Command::new(bin())
         .args(["verify-xlsx", "--input", xlsx_path.to_str().unwrap()])
         .output()
@@ -185,13 +240,11 @@ fn renders_json_workpaper_to_xlsx_docx_pdf_and_verifies_formulas() {
     assert_eq!(verify_report["ok"], true);
     assert_eq!(verify_report["formula_count"], 10);
 
-    // Check formula-injection string stayed an inline string, not a formula.
     let xlsx_bytes = fs::read(&xlsx_path).unwrap();
     let xlsx_str = String::from_utf8_lossy(&xlsx_bytes);
     assert!(xlsx_str.contains("DRAFT FOR HUMAN REVIEW"));
     assert!(xlsx_str.contains(r#"t="inlineStr"><is><t>=SUM(C2:C4)</t></is>"#));
 
-    // Check DOCX contains header, banner, headings and exceptions.
     let docx_bytes = fs::read(&docx_path).unwrap();
     let docx_str = String::from_utf8_lossy(&docx_bytes);
     assert!(docx_bytes.starts_with(b"PK\x03\x04"));
@@ -200,7 +253,6 @@ fn renders_json_workpaper_to_xlsx_docx_pdf_and_verifies_formulas() {
     assert!(docx_str.contains("OPEN REVIEW ITEMS PRESENT"));
     assert!(docx_str.contains("Reviewer exception register"));
 
-    // Check PDF structure, header banner and xref trailer.
     let pdf_bytes = fs::read(&pdf_path).unwrap();
     let pdf_str = String::from_utf8_lossy(&pdf_bytes);
     assert!(pdf_bytes.starts_with(b"%PDF-1.4\n"));
@@ -210,7 +262,7 @@ fn renders_json_workpaper_to_xlsx_docx_pdf_and_verifies_formulas() {
 }
 
 #[test]
-fn detects_div_zero_cycles_and_disallowed_formulas() {
+fn detects_div_zero_cycles_disallowed_functions_and_iferror_bypass() {
     let dir = tempfile::tempdir().unwrap();
     let input = dir.path().join("bad.json");
     let xlsx_path = dir.path().join("bad.xlsx");
@@ -224,9 +276,13 @@ fn detects_div_zero_cycles_and_disallowed_formulas() {
                 "headers": ["Case", "Formula"],
                 "rows": [
                     ["DivZero", {"formula": "=10/0"}],
-                    ["CycleA", {"formula": "=B4+1"}],
-                    ["CycleB", {"formula": "=B3+1"}],
+                    ["RefFailed", {"formula": "=B2+1"}],
+                    ["CycleA", {"formula": "=B5+1"}],
+                    ["CycleB", {"formula": "=B4+1"}],
                     ["Webservice", {"formula": "=WEBSERVICE(\"https://example.invalid\")"}],
+                    ["IfErrorDirect", {"formula": "=IFERROR(WEBSERVICE(\"https://example.invalid\"), 0)"}],
+                    ["IfErrorNested", {"formula": "=IFERROR(IFERROR(WEBSERVICE(\"https://example.invalid\"), 1), 0)"}],
+                    ["IfErrorIndirect", {"formula": "=IFERROR(B6, 0)"}],
                     ["ExternalRef", {"formula": "=[other.xlsx]Sheet1!A1"}]
                 ]
             }
@@ -249,14 +305,145 @@ fn detects_div_zero_cycles_and_disallowed_formulas() {
     assert_eq!(output.status.code(), Some(1));
     let report: Value = serde_json::from_slice(&fs::read(&report_path).unwrap()).unwrap();
     assert_eq!(report["ok"], false);
-    assert_eq!(report["error_count"], 5);
+    assert_eq!(report["error_count"], 9);
 
-    // verify-xlsx must also reject the workbook carrying error cells.
+    // I1: referencing failed cell B2 must report #DIV/0!, never a stale circular reference.
+    let ref_failed = report["formulas"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["cell"] == "B3")
+        .unwrap();
+    assert!(ref_failed["error"].as_str().unwrap().contains("#DIV/0!"));
+
+    // S1: verify-xlsx must also reject the workbook, including IFERROR-wrapped disallowed calls.
     let verify = Command::new(bin())
         .args(["verify-xlsx", "--input", xlsx_path.to_str().unwrap()])
         .output()
         .unwrap();
     assert_eq!(verify.status.code(), Some(1));
+}
+
+#[test]
+fn verify_xlsx_rejects_nan_cached_value_with_valid_crc() {
+    let dir = tempfile::tempdir().unwrap();
+    let input = dir.path().join("nan.json");
+    let xlsx_path = dir.path().join("nan.xlsx");
+    let tampered_path = dir.path().join("nan-tampered.xlsx");
+
+    let workpaper = json!({
+        "title": "NaN Cache Fixture",
+        "sheets": [
+            {
+                "name": "Calc",
+                "headers": ["Item", "Amount"],
+                "rows": [
+                    ["Base", 123.0],
+                    ["Total", {"formula": "=B2+0"}]
+                ]
+            }
+        ]
+    });
+    fs::write(&input, serde_json::to_vec_pretty(&workpaper).unwrap()).unwrap();
+
+    let render = Command::new(bin())
+        .args([
+            "render",
+            "--input",
+            input.to_str().unwrap(),
+            "--xlsx",
+            xlsx_path.to_str().unwrap(),
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(render.status.code(), Some(0));
+
+    let original = fs::read(&xlsx_path).unwrap();
+    let tampered = patch_stored_zip_equal_len(&original, b"<v>123</v>", b"<v>NaN</v>");
+    fs::write(&tampered_path, tampered).unwrap();
+
+    let verify = Command::new(bin())
+        .args(["verify-xlsx", "--input", tampered_path.to_str().unwrap()])
+        .output()
+        .unwrap();
+    assert_eq!(verify.status.code(), Some(1));
+    let report: Value = serde_json::from_slice(&verify.stdout).unwrap();
+    assert_eq!(report["ok"], false);
+    assert!(
+        report["errors"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e.as_str().unwrap().contains("non-finite")),
+        "expected non-finite error, got: {report}"
+    );
+}
+
+#[test]
+fn pdf_preserves_winansi_and_rejects_unrepresentable_unicode() {
+    let dir = tempfile::tempdir().unwrap();
+
+    // WinAnsi characters (€, é, ü) must be preserved with WinAnsiEncoding.
+    let ok_json = dir.path().join("winansi.json");
+    let ok_pdf = dir.path().join("winansi.pdf");
+    fs::write(
+        &ok_json,
+        serde_json::to_vec(&json!({
+            "title": "Café & Über Advisory — €1,250",
+            "summary": "Accented text Café and euro symbol € preserved."
+        }))
+        .unwrap(),
+    )
+    .unwrap();
+    let ok_out = Command::new(bin())
+        .args([
+            "render",
+            "--input",
+            ok_json.to_str().unwrap(),
+            "--pdf",
+            ok_pdf.to_str().unwrap(),
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(
+        ok_out.status.code(),
+        Some(0),
+        "stderr: {}",
+        String::from_utf8_lossy(&ok_out.stderr)
+    );
+    let pdf_str = String::from_utf8_lossy(&fs::read(&ok_pdf).unwrap()).into_owned();
+    assert!(pdf_str.contains("/Encoding /WinAnsiEncoding"));
+    assert!(pdf_str.contains("\\200"), "expected WinAnsi euro \\200");
+    assert!(pdf_str.contains("\\351"), "expected WinAnsi e-acute \\351");
+
+    // Characters outside WinAnsi (e.g. Māori macron ā = U+0101) must fail explicitly.
+    let bad_json = dir.path().join("maori.json");
+    let bad_pdf = dir.path().join("maori.pdf");
+    fs::write(
+        &bad_json,
+        serde_json::to_vec(&json!({
+            "title": "Māori Entity Workpaper"
+        }))
+        .unwrap(),
+    )
+    .unwrap();
+    let bad_out = Command::new(bin())
+        .args([
+            "render",
+            "--input",
+            bad_json.to_str().unwrap(),
+            "--pdf",
+            bad_pdf.to_str().unwrap(),
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(bad_out.status.code(), Some(1));
+    assert!(
+        String::from_utf8_lossy(&bad_out.stderr).contains("U+0101"),
+        "stderr: {}",
+        String::from_utf8_lossy(&bad_out.stderr)
+    );
+    assert!(!bad_pdf.exists(), "must not emit corrupted PDF on error");
 }
 
 #[test]
