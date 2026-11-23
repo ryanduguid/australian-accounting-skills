@@ -24,9 +24,12 @@ where `section-index/` lists its Act's sections.
 `review-state write CASE_DIR --draft PATH --register REGISTER.json` records a review's check register in
 `CASE_DIR/review-state.json`, with the SHA-256 of the draft and of every regular file under `CASE_DIR/sources/`.
 Each check is `passed`, `failed`, `not performed` or `not applicable`, the last 2 with a note saying why; the
-result is `passed` only when none failed and none was left not performed. `review-state verify CASE_DIR` exits 0
-only while that review passed and the draft and sources are unchanged, and otherwise exits 2 and prints the first
-`STALE` reason: no review, a review that did not pass, or a draft or source changed, added or removed. The review
+result is `passed` only when none failed and none was left not performed. `write` prints the state file's SHA-256 for the reviewer to
+record: the file is not signed, so `review-state verify CASE_DIR --state-sha256 HEX` is what refuses a state rewritten
+after the review. `verify` exits 0 only while that review passed and the draft and sources are unchanged, and otherwise
+exits 2 and prints the first `STALE` reason: no review, a state other than the recorded one, a review that did not
+pass, or a draft or source changed, added or removed. A symlink or other special file under `sources/` is an error
+(exit 1). It sets no age limit; `written_on` records the date for the reader. The review
 skills write it and `au-client-letter` verifies it before drafting from reviewed work.
 
 `statement-check` is also new: the `statement-to-csv` skill runs it on statement lines transcribed

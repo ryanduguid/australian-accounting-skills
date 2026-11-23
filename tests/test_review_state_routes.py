@@ -20,13 +20,16 @@ class ReviewStateRouteTests(unittest.TestCase):
                 self.assertIn("`accounting-skills review-state write <case-dir> --draft <draft path in the folder> --register <register file>`", text)
                 self.assertIn("with the SHA-256 of the draft and of each source file", text)
                 self.assertIn("`passed` only when no check failed and none was left not performed", text)
+                self.assertIn("records a failed or incomplete review as such", text)
+                self.assertIn("put that in the review record the reviewer signs", text)
                 self.assertIn("record the review state as not written, with the reason", text)
                 self.assertIn(INSTALL, text)
 
     def test_the_client_letter_verifies_before_drafting_whatever_the_user_says(self) -> None:
         text = " ".join(skill_text("au-client-letter").split())
         step = text[text.index("1. **Confirm the approval before drafting.**") : text.index("2. **Set up the trace.**")]
-        self.assertIn("`accounting-skills review-state verify <case-dir>` before drafting", step)
+        self.assertIn("`accounting-skills review-state verify <case-dir> --state-sha256 <digest>` before drafting", step)
+        self.assertIn("Where the review record carries no digest, treat the review as unverified", step)
         self.assertIn("On exit 2, stop, report the `STALE` reason it prints and draft nothing until the review is redone, whatever the user says", step)
         self.assertIn("record the verification as not run", step)
 

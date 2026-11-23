@@ -23,7 +23,7 @@ pub const STATE_FILE: &str = "review-state.json";
 const SOURCES: &str = "sources";
 const SCHEMA_VERSION: u32 = 1;
 const STATUSES: [&str; 4] = ["passed", "failed", "not performed", "not applicable"];
-const USAGE: &str = "usage: accounting-skills review-state write CASE_DIR --draft RELATIVE_PATH --register REGISTER.json\n       accounting-skills review-state verify CASE_DIR";
+const USAGE: &str = "usage: accounting-skills review-state write CASE_DIR --draft RELATIVE_PATH --register REGISTER.json\n       accounting-skills review-state verify CASE_DIR [--state-sha256 HEX]";
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct Check {
@@ -151,8 +151,9 @@ fn draft_digest(case: &Path, relative: &str) -> Result<Digest> {
     })
 }
 
-/// Writes the state for `checks` and returns it.
-pub fn write(case: &Path, draft: &str, checks: Vec<Check>, today: &str) -> Result<State> {
+/// Writes the state for `checks`; returns it with the SHA-256 of the file written,
+/// which the reviewer records so `verify` can refuse a state rewritten later.
+pub fn write(case: &Path, draft: &str, checks: Vec<Check>, today: &str) -> Result<(State, String)> {
     validate(&checks)?;
     let case = canonical_root(case)?;
     let state = State {
@@ -163,11 +164,9 @@ pub fn write(case: &Path, draft: &str, checks: Vec<Check>, today: &str) -> Resul
         sources: source_digests(&case)?,
         checks,
     };
-    replace_file(
-        &case.join(STATE_FILE),
-        &(serde_json::to_string_pretty(&state)? + "\n"),
-    )?;
-    Ok(state)
+    let text = serde_json::to_string_pretty(&state)? + "\n";
+    replace_file(&case.join(STATE_FILE), &text)?;
+    Ok((state, sha256(text.as_bytes())))
 }
 
 /// The first change between the reviewed sources and the current ones.
@@ -192,8 +191,10 @@ fn source_change(reviewed: &[Digest], current: &[Digest]) -> Option<String> {
     added.map(|now| format!("source {} was added since the review", now.path))
 }
 
-/// `Ok(None)` while the review passed and is current; otherwise the first reason it cannot be relied on.
-pub fn verify(case: &Path) -> Result<Option<String>> {
+/// `Ok(None)` while the review passed and is current; otherwise the first reason it
+/// cannot be relied on. The state file is not signed: only `recorded`, the digest
+/// `write` printed and the reviewer kept, shows it was not rewritten since.
+pub fn verify(case: &Path, recorded: Option<&str>) -> Result<Option<String>> {
     let case = canonical_root(case)?;
     let text = match fs::read_to_string(case.join(STATE_FILE)) {
         Ok(text) => text,
@@ -204,6 +205,11 @@ pub fn verify(case: &Path) -> Result<Option<String>> {
         }
         Err(error) => return Err(error.into()),
     };
+    if recorded.is_some_and(|digest| !digest.eq_ignore_ascii_case(&sha256(text.as_bytes()))) {
+        return Ok(Some(format!(
+            "{STATE_FILE} is not the file whose SHA-256 was recorded at the review"
+        )));
+    }
     let state: State = serde_json::from_str(&text)
         .map_err(|error| format!("{STATE_FILE} is unreadable: {error}"))?;
     if state.schema_version != SCHEMA_VERSION {
@@ -262,9 +268,9 @@ fn write_cli(case: &Path, mut args: impl Iterator<Item = OsString>) -> Result<u8
         .date()
         .strftime("%Y-%m-%d")
         .to_string();
-    let state = write(case, &draft, register.checks, &today)?;
+    let (state, digest) = write(case, &draft, register.checks, &today)?;
     let line = format!(
-        "wrote {STATE_FILE}: review {}, {} checks, {} sources\n",
+        "wrote {STATE_FILE}: review {}, {} checks, {} sources; record its SHA-256 {digest}\n",
         state.result,
         state.checks.len(),
         state.sources.len()
@@ -278,8 +284,15 @@ pub fn cli(mut args: impl Iterator<Item = OsString>) -> Result<u8> {
     let case = PathBuf::from(args.next().ok_or(USAGE)?);
     match command.as_deref().and_then(std::ffi::OsStr::to_str) {
         Some("write") => write_cli(&case, args),
-        Some("verify") if args.next().is_none() => {
-            let (code, line) = match verify(&case)? {
+        Some("verify") => {
+            let recorded = match (args.next(), args.next(), args.next()) {
+                (None, None, None) => None,
+                (Some(flag), Some(value), None) if flag == "--state-sha256" => {
+                    Some(value.into_string().map_err(|_| USAGE)?)
+                }
+                _ => return Err(USAGE.into()),
+            };
+            let (code, line) = match verify(&case, recorded.as_deref())? {
                 None => (
                     0,
                     "review current: passed, and the draft and sources are unchanged\n".to_owned(),

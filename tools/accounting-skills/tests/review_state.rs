@@ -38,13 +38,13 @@ fn case() -> tempfile::TempDir {
 }
 
 fn reason(case: &Path) -> String {
-    verify(case).unwrap().unwrap_or_default()
+    verify(case, None).unwrap().unwrap_or_default()
 }
 
 #[test]
 fn a_passed_review_stays_current_until_its_draft_or_a_source_changes() {
     let case = case();
-    let state = write(case.path(), "draft.md", passed(), "2026-11-24").unwrap();
+    let (state, _) = write(case.path(), "draft.md", passed(), "2026-11-24").unwrap();
     assert_eq!(state.result, "passed");
     let paths: Vec<_> = state
         .sources
@@ -52,7 +52,7 @@ fn a_passed_review_stays_current_until_its_draft_or_a_source_changes() {
         .map(|digest| digest.path.as_str())
         .collect();
     assert_eq!(paths, ["sources/bank/statement.csv", "sources/receipt.txt"]);
-    assert_eq!(verify(case.path()).unwrap(), None);
+    assert_eq!(verify(case.path(), None).unwrap(), None);
 
     fs::write(case.path().join("draft.md"), "Draft return v2\n").unwrap();
     assert_eq!(
@@ -60,7 +60,7 @@ fn a_passed_review_stays_current_until_its_draft_or_a_source_changes() {
         "draft draft.md changed since the review"
     );
     fs::write(case.path().join("draft.md"), "Draft return v1\n").unwrap();
-    assert_eq!(verify(case.path()).unwrap(), None);
+    assert_eq!(verify(case.path(), None).unwrap(), None);
 
     fs::write(
         case.path().join("sources/receipt.txt"),
@@ -210,6 +210,24 @@ fn the_command_writes_then_verifies_with_its_exit_codes() {
     );
     // register.json sits outside sources/, so only the 2 source files count.
     assert!(String::from_utf8_lossy(&wrote.stdout).contains("review passed, 1 checks, 2 sources"));
+    let digest = String::from_utf8_lossy(&wrote.stdout)
+        .trim()
+        .rsplit(' ')
+        .next()
+        .unwrap()
+        .to_owned();
+    assert_eq!(
+        run(&["review-state", "verify", dir, "--state-sha256", &digest])
+            .status
+            .code(),
+        Some(0)
+    );
+    assert_eq!(
+        run(&["review-state", "verify", dir, "--state-sha256"])
+            .status
+            .code(),
+        Some(1)
+    );
     assert_eq!(run(&["review-state", "verify", dir]).status.code(), Some(0));
     fs::write(case.path().join("draft.md"), "changed").unwrap();
     let stale = run(&["review-state", "verify", dir]);
@@ -221,5 +239,31 @@ fn the_command_writes_then_verifies_with_its_exit_codes() {
             .status
             .code(),
         Some(1)
+    );
+}
+
+#[test]
+fn a_rewritten_state_fails_against_the_digest_recorded_at_the_review() {
+    let case = case();
+    let failed = vec![check(
+        "D9 gifts or donations",
+        "failed",
+        "recipient not a DGR",
+    )];
+    let (_, digest) = write(case.path(), "draft.md", failed, "2026-11-24").unwrap();
+    assert_eq!(
+        verify(case.path(), Some(&digest.to_uppercase())).unwrap(),
+        Some("the review did not pass: D9 gifts or donations failed".into())
+    );
+    // Rewriting both the check and the result, or rerunning write after the draft changed, gives a
+    // state that passes on its own; the digest the reviewer recorded is what refuses it.
+    fs::write(case.path().join("draft.md"), "Draft return v2\n").unwrap();
+    write(case.path(), "draft.md", passed(), "2026-11-24").unwrap();
+    assert_eq!(verify(case.path(), None).unwrap(), None);
+    assert_eq!(
+        verify(case.path(), Some(&digest)).unwrap(),
+        Some(format!(
+            "{STATE_FILE} is not the file whose SHA-256 was recorded at the review"
+        ))
     );
 }
