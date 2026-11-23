@@ -7,7 +7,7 @@
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 18,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 89,
+    "skills_with_behavioural_gate": 93,
     "skills_with_only_the_seeded_case": 20,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -251,7 +251,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -657,7 +659,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1278,7 +1282,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1542,7 +1547,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1739,7 +1746,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1797,7 +1806,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -2234,6 +2244,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -2430,7 +2441,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -3447,6 +3459,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_workers_compensation_premium.py"
         ],
         "inventory": []
