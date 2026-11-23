@@ -530,7 +530,7 @@ command's output differ, so a change to a skill's citations updates it.
 Income Tax Assessment Act 1997 (Cth): 452 sections, 450 found, 2 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 179 sections, 177 found, 2 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 159 sections, 159 found, 0 listed exceptions, 0 absent.
-Income Tax Assessment Act 1936 (Cth): 154 sections, 154 found, 0 listed exceptions, 0 absent.
+Income Tax Assessment Act 1936 (Cth): 156 sections, 156 found, 0 listed exceptions, 0 absent.
 Corporations Act 2001 (Cth): 125 sections, 125 found, 0 listed exceptions, 0 absent.
 Taxation Administration Act 1953 (Cth): 88 sections, 88 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 80 sections, 80 found, 0 listed exceptions, 0 absent.
@@ -568,8 +568,8 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-2017 of 2017 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1743 of 1743 legislative sections.
-1743 of 1743 resolved sections checked against an index of their Act: 1738 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
+2019 of 2019 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1745 of 1745 legislative sections.
+1745 of 1745 resolved sections checked against an index of their Act: 1740 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing
