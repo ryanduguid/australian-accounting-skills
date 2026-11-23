@@ -30,52 +30,61 @@ pub fn crc32(bytes: &[u8]) -> u32 {
     !crc
 }
 
+fn narrow_u32(value: usize) -> Result<u32, String> {
+    u32::try_from(value).map_err(|_| "ZIP archive exceeds 4 GiB limit".to_owned())
+}
+
+fn append_entry(
+    archive: &mut Vec<u8>,
+    directory: &mut Vec<u8>,
+    name: &str,
+    bytes: &[u8],
+) -> Result<(), String> {
+    if name.contains('\\') || name.split('/').any(|p| matches!(p, "" | "." | "..")) {
+        return Err(format!("invalid ZIP entry path: {name}"));
+    }
+    let offset = narrow_u32(archive.len())?;
+    let size = narrow_u32(bytes.len())?;
+    let name_len = u16::try_from(name.len()).map_err(|_| "ZIP entry name exceeds 65,535 bytes")?;
+    let crc = crc32(bytes);
+
+    let mut common = Vec::with_capacity(24);
+    for field in [VERSION, UTF8, 0u16, DOS_TIME, DOS_DATE] {
+        common.extend(field.to_le_bytes());
+    }
+    for field in [crc, size, size] {
+        common.extend(field.to_le_bytes());
+    }
+    common.extend(name_len.to_le_bytes());
+    common.extend(0u16.to_le_bytes());
+
+    archive.extend(LOCAL_SIG.to_le_bytes());
+    archive.extend(&common);
+    archive.extend(name.as_bytes());
+    archive.extend(bytes);
+
+    directory.extend(CENTRAL_SIG.to_le_bytes());
+    directory.extend(VERSION.to_le_bytes());
+    directory.extend(&common);
+    for field in [0u16, 0, 0] {
+        directory.extend(field.to_le_bytes());
+    }
+    directory.extend(0u32.to_le_bytes());
+    directory.extend(offset.to_le_bytes());
+    directory.extend(name.as_bytes());
+    Ok(())
+}
+
 pub fn write_zip(entries: &BTreeMap<String, Vec<u8>>) -> Result<Vec<u8>, String> {
-    let narrow = |value: usize| {
-        u32::try_from(value).map_err(|_| "ZIP archive exceeds 4 GiB limit".to_owned())
-    };
     let mut archive = Vec::new();
     let mut directory = Vec::new();
     for (name, bytes) in entries {
-        if name.contains('\\') || name.split('/').any(|p| matches!(p, "" | "." | "..")) {
-            return Err(format!("invalid ZIP entry path: {name}"));
-        }
-        let offset = narrow(archive.len())?;
-        let size = narrow(bytes.len())?;
-        let name_len =
-            u16::try_from(name.len()).map_err(|_| "ZIP entry name exceeds 65,535 bytes")?;
-        let crc = crc32(bytes);
-
-        let mut common = Vec::with_capacity(24);
-        for field in [VERSION, UTF8, 0u16, DOS_TIME, DOS_DATE] {
-            common.extend(field.to_le_bytes());
-        }
-        for field in [crc, size, size] {
-            common.extend(field.to_le_bytes());
-        }
-        common.extend(name_len.to_le_bytes());
-        common.extend(0u16.to_le_bytes());
-
-        archive.extend(LOCAL_SIG.to_le_bytes());
-        archive.extend(&common);
-        archive.extend(name.as_bytes());
-        archive.extend(bytes);
-
-        directory.extend(CENTRAL_SIG.to_le_bytes());
-        directory.extend(VERSION.to_le_bytes());
-        directory.extend(&common);
-        for field in [0u16, 0, 0] {
-            directory.extend(field.to_le_bytes());
-        }
-        directory.extend(0u32.to_le_bytes());
-        directory.extend(offset.to_le_bytes());
-        directory.extend(name.as_bytes());
+        append_entry(&mut archive, &mut directory, name, bytes)?;
     }
-
     let count =
         u16::try_from(entries.len()).map_err(|_| "ZIP exceeds 65,535 entries".to_owned())?;
-    let cd_offset = narrow(archive.len())?;
-    let cd_size = narrow(directory.len())?;
+    let cd_offset = narrow_u32(archive.len())?;
+    let cd_size = narrow_u32(directory.len())?;
     archive.extend(directory);
     archive.extend(EOCD_SIG.to_le_bytes());
     for field in [0u16, 0, count, count] {
@@ -99,6 +108,75 @@ fn read_u32(bytes: &[u8], offset: usize) -> Result<u32, String> {
         .get(offset..offset + 4)
         .ok_or_else(|| "unexpected end of ZIP archive".to_owned())?;
     Ok(u32::from_le_bytes([slice[0], slice[1], slice[2], slice[3]]))
+}
+
+fn read_local_payload(
+    bytes: &[u8],
+    name: &str,
+    local_offset: usize,
+    comp_size: usize,
+    expected_crc: u32,
+) -> Result<Vec<u8>, String> {
+    if read_u32(bytes, local_offset)? != LOCAL_SIG {
+        return Err(format!("invalid local header for ZIP entry {name}"));
+    }
+    let local_name_len = usize::from(read_u16(bytes, local_offset + 26)?);
+    let local_extra_len = usize::from(read_u16(bytes, local_offset + 28)?);
+    let data_start = local_offset
+        .checked_add(30)
+        .and_then(|v| v.checked_add(local_name_len))
+        .and_then(|v| v.checked_add(local_extra_len))
+        .ok_or_else(|| "ZIP local header offset overflow".to_owned())?;
+    let data_end = data_start
+        .checked_add(comp_size)
+        .ok_or_else(|| "ZIP entry size overflow".to_owned())?;
+    let payload = bytes
+        .get(data_start..data_end)
+        .ok_or_else(|| format!("truncated payload for ZIP entry {name}"))?
+        .to_vec();
+    if crc32(&payload) != expected_crc {
+        return Err(format!("CRC-32 mismatch for ZIP entry {name}"));
+    }
+    Ok(payload)
+}
+
+fn parse_central_entry(bytes: &[u8], cursor: usize) -> Result<(String, Vec<u8>, usize), String> {
+    if read_u32(bytes, cursor)? != CENTRAL_SIG {
+        return Err("invalid ZIP central directory signature".to_owned());
+    }
+    let method = read_u16(bytes, cursor + 10)?;
+    if method != 0 {
+        return Err(format!(
+            "unsupported ZIP compression method {method} (only stored entries are supported)"
+        ));
+    }
+    let expected_crc = read_u32(bytes, cursor + 16)?;
+    let comp_size = usize::try_from(read_u32(bytes, cursor + 20)?).unwrap_or(usize::MAX);
+    let uncomp_size = usize::try_from(read_u32(bytes, cursor + 24)?).unwrap_or(usize::MAX);
+    if comp_size != uncomp_size {
+        return Err("stored ZIP entry has mismatched sizes".to_owned());
+    }
+    let name_len = usize::from(read_u16(bytes, cursor + 28)?);
+    let extra_len = usize::from(read_u16(bytes, cursor + 30)?);
+    let comment_len = usize::from(read_u16(bytes, cursor + 32)?);
+    let local_offset = usize::try_from(read_u32(bytes, cursor + 42)?).unwrap_or(usize::MAX);
+
+    let name_start = cursor + 46;
+    let name_bytes = bytes
+        .get(name_start..name_start + name_len)
+        .ok_or_else(|| "truncated ZIP entry name".to_owned())?;
+    let name = std::str::from_utf8(name_bytes)
+        .map_err(|_| "ZIP entry name is not valid UTF-8".to_owned())?
+        .to_owned();
+    if name.contains('\\') || name.split('/').any(|p| matches!(p, "." | "..")) {
+        return Err(format!("unsafe ZIP entry path: {name}"));
+    }
+    let payload = read_local_payload(bytes, &name, local_offset, comp_size, expected_crc)?;
+    Ok((
+        name,
+        payload,
+        name_start + name_len + extra_len + comment_len,
+    ))
 }
 
 /// Read stored entries from a ZIP archive and validate every CRC-32 checksum.
@@ -125,61 +203,11 @@ pub fn read_zip(bytes: &[u8]) -> Result<BTreeMap<String, Vec<u8>>, String> {
     let mut entries = BTreeMap::new();
     let mut cursor = cd_offset;
     for _ in 0..entry_count {
-        if read_u32(bytes, cursor)? != CENTRAL_SIG {
-            return Err("invalid ZIP central directory signature".to_owned());
-        }
-        let method = read_u16(bytes, cursor + 10)?;
-        if method != 0 {
-            return Err(format!(
-                "unsupported ZIP compression method {method} (only stored entries are supported)"
-            ));
-        }
-        let expected_crc = read_u32(bytes, cursor + 16)?;
-        let comp_size = usize::try_from(read_u32(bytes, cursor + 20)?).unwrap_or(usize::MAX);
-        let uncomp_size = usize::try_from(read_u32(bytes, cursor + 24)?).unwrap_or(usize::MAX);
-        if comp_size != uncomp_size {
-            return Err("stored ZIP entry has mismatched sizes".to_owned());
-        }
-        let name_len = usize::from(read_u16(bytes, cursor + 28)?);
-        let extra_len = usize::from(read_u16(bytes, cursor + 30)?);
-        let comment_len = usize::from(read_u16(bytes, cursor + 32)?);
-        let local_offset = usize::try_from(read_u32(bytes, cursor + 42)?).unwrap_or(usize::MAX);
-
-        let name_start = cursor + 46;
-        let name_bytes = bytes
-            .get(name_start..name_start + name_len)
-            .ok_or_else(|| "truncated ZIP entry name".to_owned())?;
-        let name = std::str::from_utf8(name_bytes)
-            .map_err(|_| "ZIP entry name is not valid UTF-8".to_owned())?
-            .to_owned();
-        if name.contains('\\') || name.split('/').any(|p| matches!(p, "." | "..")) {
-            return Err(format!("unsafe ZIP entry path: {name}"));
-        }
-
-        if read_u32(bytes, local_offset)? != LOCAL_SIG {
-            return Err(format!("invalid local header for ZIP entry {name}"));
-        }
-        let local_name_len = usize::from(read_u16(bytes, local_offset + 26)?);
-        let local_extra_len = usize::from(read_u16(bytes, local_offset + 28)?);
-        let data_start = local_offset
-            .checked_add(30)
-            .and_then(|v| v.checked_add(local_name_len))
-            .and_then(|v| v.checked_add(local_extra_len))
-            .ok_or_else(|| "ZIP local header offset overflow".to_owned())?;
-        let data_end = data_start
-            .checked_add(comp_size)
-            .ok_or_else(|| "ZIP entry size overflow".to_owned())?;
-        let payload = bytes
-            .get(data_start..data_end)
-            .ok_or_else(|| format!("truncated payload for ZIP entry {name}"))?
-            .to_vec();
-        if crc32(&payload) != expected_crc {
-            return Err(format!("CRC-32 mismatch for ZIP entry {name}"));
-        }
+        let (name, payload, next_cursor) = parse_central_entry(bytes, cursor)?;
         if entries.insert(name.clone(), payload).is_some() {
             return Err(format!("duplicate ZIP entry: {name}"));
         }
-        cursor = name_start + name_len + extra_len + comment_len;
+        cursor = next_cursor;
     }
     Ok(entries)
 }

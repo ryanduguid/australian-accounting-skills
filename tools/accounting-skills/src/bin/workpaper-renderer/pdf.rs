@@ -7,8 +7,8 @@
 
 use crate::model::{DRAFT_BANNER, Workpaper};
 
-const PAGE_WIDTH: f32 = 595.0; // A4 portrait width in points
-const PAGE_HEIGHT: f32 = 842.0; // A4 portrait height in points
+const PAGE_WIDTH: f32 = 595.0;
+const PAGE_HEIGHT: f32 = 842.0;
 const MARGIN_X: f32 = 50.0;
 const TOP_Y: f32 = 775.0;
 const BOTTOM_Y: f32 = 60.0;
@@ -49,13 +49,35 @@ fn wrap_text(text: &str, max_chars: usize) -> Vec<String> {
             current = word.to_owned();
         }
     }
-    if !current.is_empty() {
+    if !current.is_empty() || lines.is_empty() {
         lines.push(current);
     }
-    if lines.is_empty() {
-        lines.push(String::new());
-    }
     lines
+}
+
+fn assemble_pdf(objects: &[String]) -> Vec<u8> {
+    let mut pdf = Vec::new();
+    pdf.extend_from_slice(b"%PDF-1.4\n");
+    let mut offsets = Vec::with_capacity(objects.len() + 1);
+    offsets.push(0usize);
+    for (i, body) in objects.iter().enumerate() {
+        offsets.push(pdf.len());
+        pdf.extend_from_slice(format!("{} 0 obj\n{body}\nendobj\n", i + 1).as_bytes());
+    }
+    let xref_pos = pdf.len();
+    pdf.extend_from_slice(format!("xref\n0 {}\n", objects.len() + 1).as_bytes());
+    pdf.extend_from_slice(b"0000000000 65535 f \n");
+    for offset in offsets.iter().skip(1) {
+        pdf.extend_from_slice(format!("{offset:010} 00000 n \n").as_bytes());
+    }
+    pdf.extend_from_slice(
+        format!(
+            "trailer\n<< /Size {} /Root 1 0 R >>\nstartxref\n{xref_pos}\n%%EOF\n",
+            objects.len() + 1
+        )
+        .as_bytes(),
+    );
+    pdf
 }
 
 struct PdfBuilder {
@@ -103,44 +125,26 @@ impl PdfBuilder {
 
     fn write_table(&mut self, headers: &[String], rows: &[Vec<String>]) {
         if !headers.is_empty() {
-            let line = headers.join(" | ");
-            self.write_line(&line, "F2", 9.5, (0.11, 0.21, 0.36));
+            self.write_line(&headers.join(" | "), "F2", 9.5, (0.11, 0.21, 0.36));
         }
         for row in rows {
-            let joined = row.join(" | ");
-            for wrapped in wrap_text(&joined, 92) {
+            for wrapped in wrap_text(&row.join(" | "), 92) {
                 self.write_line(&wrapped, "F1", 9.0, (0.12, 0.16, 0.22));
             }
         }
         self.y -= 6.0;
     }
 
-    fn finish(mut self, title: &str) -> Vec<u8> {
-        if !self.current.is_empty() || self.pages.is_empty() {
-            self.pages.push(self.current);
-        }
-        let total_pages = self.pages.len();
-
-        // Build PDF objects:
-        // 1: Catalog, 2: Pages, 3: Helvetica (F1), 4: Helvetica-Bold (F2),
-        // then pairs of (Page, ContentStream) starting at object 5.
-        let mut objects: Vec<String> = Vec::with_capacity(4 + total_pages * 2);
+    fn build_objects(&self, title: &str) -> Vec<String> {
+        let total = self.pages.len();
+        let mut objects = Vec::with_capacity(4 + total * 2);
         objects.push("<< /Type /Catalog /Pages 2 0 R >>".to_owned());
-
-        let mut kids = String::new();
-        for idx in 0..total_pages {
-            let page_obj = 5 + idx * 2;
-            kids.push_str(&format!("{page_obj} 0 R "));
-        }
-        objects.push(format!(
-            "<< /Type /Pages /Kids [ {kids}] /Count {total_pages} >>"
-        ));
+        let kids: String = (0..total).map(|i| format!("{} 0 R ", 5 + i * 2)).collect();
+        objects.push(format!("<< /Type /Pages /Kids [ {kids}] /Count {total} >>"));
         objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>".to_owned());
         objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>".to_owned());
-
         for (idx, body) in self.pages.iter().enumerate() {
-            let page_obj = 5 + idx * 2;
-            let content_obj = page_obj + 1;
+            let content_obj = 6 + idx * 2;
             let header = format!(
                 "0.99 0.95 0.78 rg {MARGIN_X:.1} 800.0 {:.1} 20.0 re f\n\
                  BT /F2 8.5 Tf 0.57 0.25 0.05 rg {:.1} 807.0 Td ({}) Tj ET\n",
@@ -149,10 +153,9 @@ impl PdfBuilder {
                 pdf_escape(DRAFT_BANNER)
             );
             let footer = format!(
-                "BT /F1 8.0 Tf 0.40 0.45 0.55 rg {MARGIN_X:.1} 30.0 Td ({} - Page {} of {}) Tj ET\n",
+                "BT /F1 8.0 Tf 0.40 0.45 0.55 rg {MARGIN_X:.1} 30.0 Td ({} - Page {} of {total}) Tj ET\n",
                 pdf_escape(title),
-                idx + 1,
-                total_pages
+                idx + 1
             );
             let stream = format!("{header}{body}{footer}");
             objects.push(format!(
@@ -164,30 +167,78 @@ impl PdfBuilder {
                 stream.len()
             ));
         }
-
-        let mut pdf = Vec::new();
-        pdf.extend_from_slice(b"%PDF-1.4\n");
-        let mut offsets = Vec::with_capacity(objects.len() + 1);
-        offsets.push(0usize);
-        for (i, body) in objects.iter().enumerate() {
-            offsets.push(pdf.len());
-            pdf.extend_from_slice(format!("{} 0 obj\n{body}\nendobj\n", i + 1).as_bytes());
-        }
-        let xref_pos = pdf.len();
-        pdf.extend_from_slice(format!("xref\n0 {}\n", objects.len() + 1).as_bytes());
-        pdf.extend_from_slice(b"0000000000 65535 f \n");
-        for offset in offsets.iter().skip(1) {
-            pdf.extend_from_slice(format!("{offset:010} 00000 n \n").as_bytes());
-        }
-        pdf.extend_from_slice(
-            format!(
-                "trailer\n<< /Size {} /Root 1 0 R >>\nstartxref\n{xref_pos}\n%%EOF\n",
-                objects.len() + 1
-            )
-            .as_bytes(),
-        );
-        pdf
+        objects
     }
+
+    fn finish(mut self, title: &str) -> Vec<u8> {
+        if !self.current.is_empty() || self.pages.is_empty() {
+            self.pages.push(std::mem::take(&mut self.current));
+        }
+        assemble_pdf(&self.build_objects(title))
+    }
+}
+
+fn write_exceptions(pdf: &mut PdfBuilder, wp: &Workpaper) {
+    if wp.exceptions.is_empty() {
+        return;
+    }
+    pdf.write_line(
+        "Reviewer exception register",
+        "F2",
+        12.0,
+        (0.11, 0.21, 0.36),
+    );
+    let rows: Vec<Vec<String>> = wp
+        .exceptions
+        .iter()
+        .enumerate()
+        .map(|(i, e)| {
+            let id = if e.id.is_empty() {
+                format!("EXC-{}", i + 1)
+            } else {
+                e.id.clone()
+            };
+            vec![
+                id,
+                e.item.clone(),
+                e.status.clone(),
+                e.evidence_needed.clone(),
+                e.owner.clone(),
+            ]
+        })
+        .collect();
+    let headers = ["ID", "Item", "Status", "Evidence needed", "Owner"]
+        .map(str::to_owned)
+        .to_vec();
+    pdf.write_table(&headers, &rows);
+}
+
+fn write_sources(pdf: &mut PdfBuilder, wp: &Workpaper) {
+    if wp.sources.is_empty() {
+        return;
+    }
+    pdf.write_line("Primary sources checked", "F2", 12.0, (0.11, 0.21, 0.36));
+    let rows: Vec<Vec<String>> = wp
+        .sources
+        .iter()
+        .map(|s| {
+            vec![
+                s.title.clone(),
+                s.reference.clone(),
+                s.checked_at.clone(),
+                s.status.clone(),
+            ]
+        })
+        .collect();
+    let headers = ["Source", "Reference", "Checked on", "Status"]
+        .map(str::to_owned)
+        .to_vec();
+    pdf.write_table(&headers, &rows);
+}
+
+fn write_registers(pdf: &mut PdfBuilder, wp: &Workpaper) {
+    write_exceptions(pdf, wp);
+    write_sources(pdf, wp);
 }
 
 pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
@@ -203,12 +254,12 @@ pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
         9.5,
         (0.25, 0.30, 0.38),
     );
-    if !wp.exceptions.is_empty() || wp.unverified_mentions() > 0 {
+    let unverified = wp.unverified_mentions();
+    if !wp.exceptions.is_empty() || unverified > 0 {
         pdf.write_line(
             &format!(
-                "OPEN REVIEW ITEMS: {} exception(s), {} UNVERIFIED mention(s).",
-                wp.exceptions.len(),
-                wp.unverified_mentions()
+                "OPEN REVIEW ITEMS: {} exception(s), {unverified} UNVERIFIED mention(s).",
+                wp.exceptions.len()
             ),
             "F2",
             9.5,
@@ -216,13 +267,11 @@ pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
         );
     }
     pdf.y -= 6.0;
-
     if !wp.summary.is_empty() {
         pdf.write_line("Summary", "F2", 12.0, (0.11, 0.21, 0.36));
         pdf.write_wrapped(&wp.summary, "F1", 10.0, 88);
         pdf.y -= 6.0;
     }
-
     for section in &wp.sections {
         pdf.write_line(&section.heading, "F2", 12.0, (0.11, 0.21, 0.36));
         for p in &section.paragraphs {
@@ -236,68 +285,6 @@ pub fn render_pdf(wp: &Workpaper) -> Vec<u8> {
         }
         pdf.y -= 4.0;
     }
-
-    if !wp.exceptions.is_empty() {
-        pdf.write_line(
-            "Reviewer exception register",
-            "F2",
-            12.0,
-            (0.11, 0.21, 0.36),
-        );
-        let rows: Vec<Vec<String>> = wp
-            .exceptions
-            .iter()
-            .enumerate()
-            .map(|(i, e)| {
-                vec![
-                    if e.id.is_empty() {
-                        format!("EXC-{}", i + 1)
-                    } else {
-                        e.id.clone()
-                    },
-                    e.item.clone(),
-                    e.status.clone(),
-                    e.evidence_needed.clone(),
-                    e.owner.clone(),
-                ]
-            })
-            .collect();
-        pdf.write_table(
-            &[
-                "ID".to_owned(),
-                "Item".to_owned(),
-                "Status".to_owned(),
-                "Evidence needed".to_owned(),
-                "Owner".to_owned(),
-            ],
-            &rows,
-        );
-    }
-
-    if !wp.sources.is_empty() {
-        pdf.write_line("Primary sources checked", "F2", 12.0, (0.11, 0.21, 0.36));
-        let rows: Vec<Vec<String>> = wp
-            .sources
-            .iter()
-            .map(|s| {
-                vec![
-                    s.title.clone(),
-                    s.reference.clone(),
-                    s.checked_at.clone(),
-                    s.status.clone(),
-                ]
-            })
-            .collect();
-        pdf.write_table(
-            &[
-                "Source".to_owned(),
-                "Reference".to_owned(),
-                "Checked on".to_owned(),
-                "Status".to_owned(),
-            ],
-            &rows,
-        );
-    }
-
+    write_registers(&mut pdf, wp);
     pdf.finish(&wp.title)
 }

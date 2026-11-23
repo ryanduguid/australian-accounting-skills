@@ -20,15 +20,13 @@ fn strip_quotes(value: &str) -> String {
 
 fn is_separator_row(line: &str) -> bool {
     let trimmed = line.trim().trim_matches('|');
-    if trimmed.is_empty() {
-        return false;
-    }
-    trimmed.split('|').all(|cell| {
-        let cell = cell.trim();
-        !cell.is_empty()
-            && cell.bytes().all(|b| matches!(b, b'-' | b':' | b' '))
-            && cell.contains('-')
-    })
+    !trimmed.is_empty()
+        && trimmed.split('|').all(|cell| {
+            let cell = cell.trim();
+            !cell.is_empty()
+                && cell.bytes().all(|b| matches!(b, b'-' | b':' | b' '))
+                && cell.contains('-')
+        })
 }
 
 fn split_pipe_row(line: &str) -> Vec<String> {
@@ -57,167 +55,179 @@ fn parse_cell_from_markdown(text: &str) -> CellSpec {
     CellSpec::Text(trimmed.to_owned())
 }
 
-pub fn parse_markdown(input: &str) -> Workpaper {
-    let mut wp = Workpaper {
-        status: "DRAFT_FOR_REVIEW".to_owned(),
-        ..Default::default()
+fn parse_front_matter(lines: &[&str], wp: &mut Workpaper) -> usize {
+    if lines.first().copied() != Some("---") {
+        return 0;
+    }
+    let Some(end_offset) = lines[1..].iter().position(|line| *line == "---") else {
+        return 0;
     };
-    let lines: Vec<&str> = input.lines().collect();
-    let mut index = 0;
-
-    if lines.first().copied() == Some("---")
-        && let Some(end_offset) = lines[1..].iter().position(|line| *line == "---")
-    {
-        for line in &lines[1..1 + end_offset] {
-            if let Some((key, value)) = line.split_once(':') {
-                let value = strip_quotes(value);
-                match key.trim() {
-                    "title" => wp.title = value,
-                    "entity_code" | "entity" => wp.entity_code = value,
-                    "period" => wp.period = value,
-                    "prepared_on" => wp.prepared_on = value,
-                    "reviewer" => wp.reviewer = value,
-                    "status" if !value.is_empty() => wp.status = value,
-                    "summary" => wp.summary = value,
-                    _ => {}
-                }
+    for line in &lines[1..1 + end_offset] {
+        if let Some((key, value)) = line.split_once(':') {
+            let value = strip_quotes(value);
+            match key.trim() {
+                "title" => wp.title = value,
+                "entity_code" | "entity" => wp.entity_code = value,
+                "period" => wp.period = value,
+                "prepared_on" => wp.prepared_on = value,
+                "reviewer" => wp.reviewer = value,
+                "status" if !value.is_empty() => wp.status = value,
+                "summary" => wp.summary = value,
+                _ => {}
             }
         }
-        index = end_offset + 2;
+    }
+    end_offset + 2
+}
+
+struct ParserState {
+    wp: Workpaper,
+    current: Section,
+    has_section: bool,
+    paragraph_buf: Vec<String>,
+}
+
+impl ParserState {
+    fn flush_paragraph(&mut self) {
+        if self.paragraph_buf.is_empty() {
+            return;
+        }
+        let joined = self.paragraph_buf.join(" ");
+        self.paragraph_buf.clear();
+        if self.has_section {
+            self.current.paragraphs.push(joined);
+        } else if self.wp.summary.is_empty() {
+            self.wp.summary = joined;
+        } else {
+            self.wp.summary.push(' ');
+            self.wp.summary.push_str(&joined);
+        }
     }
 
-    let mut current = Section::default();
-    let mut has_section = false;
-    let mut paragraph_buf: Vec<String> = Vec::new();
+    fn ensure_section(&mut self, default_heading: &str) {
+        if !self.has_section {
+            self.current.heading = default_heading.to_owned();
+            self.has_section = true;
+        }
+    }
 
-    let flush_paragraph =
-        |buf: &mut Vec<String>, wp: &mut Workpaper, current: &mut Section, has_section: bool| {
-            if buf.is_empty() {
-                return;
+    fn consume_table(&mut self, lines: &[&str], start: usize) -> usize {
+        self.flush_paragraph();
+        self.ensure_section("Schedule");
+        let headers = split_pipe_row(lines[start].trim());
+        let mut index = start + 2;
+        let mut rows = Vec::new();
+        while index < lines.len() {
+            let row_line = lines[index].trim();
+            if row_line.is_empty() || !row_line.contains('|') {
+                break;
             }
-            let joined = buf.join(" ");
-            buf.clear();
-            if has_section {
-                current.paragraphs.push(joined);
-            } else if wp.summary.is_empty() {
-                wp.summary = joined;
-            } else {
-                wp.summary.push(' ');
-                wp.summary.push_str(&joined);
-            }
+            rows.push(split_pipe_row(row_line));
+            index += 1;
+        }
+        let sheet_rows = rows
+            .iter()
+            .map(|row| row.iter().map(|c| parse_cell_from_markdown(c)).collect())
+            .collect();
+        let sheet_name = if self.current.heading.is_empty() {
+            format!("Schedule {}", self.wp.sheets.len() + 1)
+        } else {
+            self.current.heading.clone()
         };
+        self.wp.sheets.push(Sheet {
+            name: sheet_name,
+            headers: headers.clone(),
+            rows: sheet_rows,
+        });
+        self.current.table = Some(TextTable { headers, rows });
+        index
+    }
 
-    while index < lines.len() {
-        let line = lines[index];
-        let trimmed = line.trim();
-
-        if trimmed.is_empty() {
-            flush_paragraph(&mut paragraph_buf, &mut wp, &mut current, has_section);
-            index += 1;
-            continue;
-        }
-
-        if let Some(title) = trimmed.strip_prefix("# ")
-            && wp.title.is_empty()
+    fn consume_bullet(&mut self, item: &str) {
+        self.flush_paragraph();
+        self.ensure_section("Notes");
+        let text = item.trim().to_owned();
+        if self
+            .current
+            .heading
+            .to_ascii_lowercase()
+            .contains("exception")
+            || text.contains("UNVERIFIED")
         {
-            flush_paragraph(&mut paragraph_buf, &mut wp, &mut current, has_section);
-            wp.title = title.trim().to_owned();
-            index += 1;
-            continue;
+            self.wp.exceptions.push(ExceptionItem {
+                id: format!("EXC-{}", self.wp.exceptions.len() + 1),
+                item: text.clone(),
+                status: if text.contains("UNVERIFIED") {
+                    "UNVERIFIED".to_owned()
+                } else {
+                    "OPEN".to_owned()
+                },
+                evidence_needed: String::new(),
+                owner: "Reviewer".to_owned(),
+            });
         }
+        self.current.bullets.push(text);
+    }
+}
 
-        if let Some(heading) = trimmed
+impl ParserState {
+    fn step_line(&mut self, lines: &[&str], index: usize) -> usize {
+        let trimmed = lines[index].trim();
+        if trimmed.is_empty() {
+            self.flush_paragraph();
+        } else if let Some(title) = trimmed.strip_prefix("# ")
+            && self.wp.title.is_empty()
+        {
+            self.flush_paragraph();
+            self.wp.title = title.trim().to_owned();
+        } else if let Some(heading) = trimmed
             .strip_prefix("## ")
             .or_else(|| trimmed.strip_prefix("### "))
         {
-            flush_paragraph(&mut paragraph_buf, &mut wp, &mut current, has_section);
-            if has_section {
-                wp.sections.push(current);
+            self.flush_paragraph();
+            if self.has_section {
+                self.wp.sections.push(std::mem::take(&mut self.current));
             }
-            current = Section {
-                heading: heading.trim().to_owned(),
-                ..Default::default()
-            };
-            has_section = true;
-            index += 1;
-            continue;
-        }
-
-        if trimmed.contains('|') && index + 1 < lines.len() && is_separator_row(lines[index + 1]) {
-            flush_paragraph(&mut paragraph_buf, &mut wp, &mut current, has_section);
-            if !has_section {
-                current.heading = "Schedule".to_owned();
-                has_section = true;
-            }
-            let headers = split_pipe_row(trimmed);
-            index += 2;
-            let mut rows = Vec::new();
-            while index < lines.len() {
-                let row_line = lines[index].trim();
-                if row_line.is_empty() || !row_line.contains('|') {
-                    break;
-                }
-                rows.push(split_pipe_row(row_line));
-                index += 1;
-            }
-            let sheet_rows = rows
-                .iter()
-                .map(|row| row.iter().map(|c| parse_cell_from_markdown(c)).collect())
-                .collect();
-            let sheet_name = if current.heading.is_empty() {
-                format!("Schedule {}", wp.sheets.len() + 1)
-            } else {
-                current.heading.clone()
-            };
-            wp.sheets.push(Sheet {
-                name: sheet_name,
-                headers: headers.clone(),
-                rows: sheet_rows,
-            });
-            current.table = Some(TextTable { headers, rows });
-            continue;
-        }
-
-        if let Some(item) = trimmed
+            self.current.heading = heading.trim().to_owned();
+            self.has_section = true;
+        } else if trimmed.contains('|')
+            && index + 1 < lines.len()
+            && is_separator_row(lines[index + 1])
+        {
+            return self.consume_table(lines, index);
+        } else if let Some(item) = trimmed
             .strip_prefix("- ")
             .or_else(|| trimmed.strip_prefix("* "))
         {
-            flush_paragraph(&mut paragraph_buf, &mut wp, &mut current, has_section);
-            if !has_section {
-                current.heading = "Notes".to_owned();
-                has_section = true;
-            }
-            let text = item.trim().to_owned();
-            if current.heading.to_ascii_lowercase().contains("exception")
-                || text.contains("UNVERIFIED")
-            {
-                wp.exceptions.push(ExceptionItem {
-                    id: format!("EXC-{}", wp.exceptions.len() + 1),
-                    item: text.clone(),
-                    status: if text.contains("UNVERIFIED") {
-                        "UNVERIFIED".to_owned()
-                    } else {
-                        "OPEN".to_owned()
-                    },
-                    evidence_needed: String::new(),
-                    owner: "Reviewer".to_owned(),
-                });
-            }
-            current.bullets.push(text);
-            index += 1;
-            continue;
+            self.consume_bullet(item);
+        } else {
+            self.paragraph_buf.push(trimmed.to_owned());
         }
+        index + 1
+    }
+}
 
-        paragraph_buf.push(trimmed.to_owned());
-        index += 1;
+pub fn parse_markdown(input: &str) -> Workpaper {
+    let mut state = ParserState {
+        wp: Workpaper {
+            status: "DRAFT_FOR_REVIEW".to_owned(),
+            ..Default::default()
+        },
+        current: Section::default(),
+        has_section: false,
+        paragraph_buf: Vec::new(),
+    };
+    let lines: Vec<&str> = input.lines().collect();
+    let mut index = parse_front_matter(&lines, &mut state.wp);
+    while index < lines.len() {
+        index = state.step_line(&lines, index);
     }
-
-    flush_paragraph(&mut paragraph_buf, &mut wp, &mut current, has_section);
-    if has_section {
-        wp.sections.push(current);
+    state.flush_paragraph();
+    if state.has_section {
+        state.wp.sections.push(state.current);
     }
-    if wp.title.is_empty() {
-        wp.title = "Workpaper draft".to_owned();
+    if state.wp.title.is_empty() {
+        state.wp.title = "Workpaper draft".to_owned();
     }
-    wp
+    state.wp
 }
