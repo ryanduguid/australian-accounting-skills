@@ -495,10 +495,6 @@ class LegalSourceGateTests(unittest.TestCase):
         "au-lump-sum-arrears": ("lump-sum-arrears-tax-offset",),
         "au-division-293": ("division-293",),
         "au-division-296": ("division-296",),
-        "au-payroll-review": (
-            "payg-gross-up", "schedule-5-method-a", "schedule-5-method-b-i", "schedule-5-method-b-ii",
-            "seniors-pensioners-withholding",
-        ),
         "au-not-for-profit": ("dgr-check",),
         "au-super-contribution-caps": ("fhss",),
         "plant-and-equipment-costing": ("hire-purchase-schedule", "chattel-mortgage-schedule", "loan-transactions"),
@@ -585,6 +581,27 @@ class LegalSourceGateTests(unittest.TestCase):
         trader = " ".join(skill_text("au-sole-trader").split())
         self.assertIn("https://duguid.com.au/tools/individual-tax/sole-trader/", trader)
         self.assertIn("never as a fallback when a local tool refuses", trader)
+
+    def test_withholding_skills_route_the_1_2_0_schedule_commands(self) -> None:
+        payroll = self.assert_released_calculators(
+            "au-payroll-review", "payg-gross-up", "schedule-5-method-a", "schedule-5-method-b-i",
+            "schedule-5-method-b-ii", "seniors-pensioners-withholding", "daily-casual-withholding",
+            "horticulture-shearing-withholding", "entertainer-withholding", "return-to-work-withholding",
+            "annuity-withholding", "upward-variation-withholding", "payg-withholding", "study-loan-withholding",
+            version="1.2.0",
+        )
+        bas = self.assert_released_calculators(
+            "bas-preparation", "no-abn-withholding", "voluntary-agreement-withholding", version="1.2.0"
+        )
+        for text in (payroll, bas):
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each schedule's years and refusals; whether a payee falls under it stays with the workflow.
+        self.assertIn("for payments from 1 July 2024 to 30 June 2027", payroll)
+        self.assertIn("Whether a payee or payment falls under a schedule stays with step 5", payroll)
+        self.assertIn("so another schedule's amount is worked with its own command first", payroll)
+        self.assertIn("record them as step 5a says", payroll)
+        self.assertIn("the operator establishes that the rule applies and that none of its exceptions does", bas)
+        self.assertIn("stay with the payroll and payables records, never with the command", bas)
 
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
