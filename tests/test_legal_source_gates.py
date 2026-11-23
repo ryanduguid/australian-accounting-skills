@@ -489,10 +489,6 @@ class LegalSourceGateTests(unittest.TestCase):
         "au-main-residence": ("main-residence",),
         "au-working-holiday-makers": ("working-holiday-maker-withholding", "dasp-tax"),
         "au-gst-property": ("gst-margin-scheme",),
-        "au-individual-return": (
-            "resident-tax", "foreign-resident-tax", "low-income-tax-offset", "study-loan-repayment",
-            "personal-tax-estimate",
-        ),
         "au-etp-redundancy": ("termination-payment", "etp-tax-free-component", "unused-leave-payment"),
         "au-medicare-review": ("medicare-levy", "medicare-levy-surcharge", "income-tests"),
         "au-sapto": ("seniors-pensioners-tax-offset",),
@@ -557,6 +553,38 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("and the financial acquisitions threshold tests, each for 2020-21 to 2026-27", text)
         self.assertIn("goods divided for resupply, goods leased before sale and valuable metal", text)
         self.assertIn("the BAS labels come from the supported workpapers, never from the command", text)
+
+    def test_individual_and_business_skills_route_their_1_2_0_commands(self) -> None:
+        individual = self.assert_released_calculators(
+            "au-individual-return", "resident-tax", "foreign-resident-tax", "low-income-tax-offset",
+            "study-loan-repayment", "personal-tax-estimate", "work-expenses", "private-health-insurance-rebate",
+            "beneficiary-tax-offset", "invalid-carer-tax-offset", "zone-tax-offset",
+            "net-medical-expenses-tax-offset", "government-super-amounts", version="1.2.0",
+        )
+        psi = self.assert_released_calculators("au-psi-review", "psi-test", version="1.2.0")
+        sbito = self.assert_released_calculators(
+            "au-small-business-income-offset", "small-business-income-offset", version="1.2.0"
+        )
+        ncl = self.assert_released_calculators("au-non-commercial-losses", "non-commercial-losses", version="1.2.0")
+        dt = self.assert_released_calculators("au-financial-statements", "deferred-tax", version="1.2.0")
+        for text in (individual, psi, sbito, ncl, dt):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals; the facts and judgements stay with the skill's workflow.
+        self.assertIn("so steps 3 and 4 stay as written", individual)
+        self.assertIn("refuses premiums paid from 1 April 2027", individual)
+        self.assertIn("from 2020-21 to 2025-26, run once for each dependant", individual)
+        self.assertIn("so route that to `au-sapto`", individual)
+        self.assertIn("covers only 2016-17, 2017-18 and 2018-19", individual)
+        self.assertIn("https://duguid.com.au/tools/individual-tax/government-super/", individual)
+        self.assertIn("for a full-year resident the `private-health-insurance-rebate` command", individual)
+        self.assertIn("the evidence for each answer stays with steps 1 to 3", psi)
+        self.assertIn("are the operator's established figures from steps 2 to 4", sbito)
+        self.assertIn("does not decide the Commissioner's discretion, which step 4 records", ncl)
+        self.assertIn("the judgement whether future taxable profit is probable", dt)
+        trader = " ".join(skill_text("au-sole-trader").split())
+        self.assertIn("https://duguid.com.au/tools/individual-tax/sole-trader/", trader)
+        self.assertIn("never as a fallback when a local tool refuses", trader)
 
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(

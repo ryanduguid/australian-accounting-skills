@@ -106,6 +106,38 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators 1.2.0 release",
+      "url": "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "An agent checked the Windows archive against the release's SHA256SUMS and both attestations on 23 November 2026; its executable printed `australian-tax-calculators 1.2.0` and its periods command listed 2020-21 to 2026-27 for deferred_tax. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0",
+      "http_status": 200,
+      "fetched_at": "2026-11-23",
+      "review_required_since": "2026-11-23",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators 1.2.0 source at its tagged commit",
+      "url": "https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "An agent read the tagged commit's README and CHANGELOG and the executable's worksheet catalogue on 23 November 2026 for deferred-tax: their arguments, scope statements, periods and refusals. They work out the facts they are given and decide no position. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators",
+      "http_status": 200,
+      "fetched_at": "2026-11-23",
+      "review_required_since": "2026-11-23",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
