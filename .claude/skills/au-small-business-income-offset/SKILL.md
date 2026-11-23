@@ -21,6 +21,27 @@ Income year, individual's sole-trader, partnership and trust interests, aggregat
 
 5. Prepare the proposed non-refundable offset separately from LITO, SAPTO, franking and foreign-tax offsets. Reconcile any later ATO assessment against the supplied inputs; a tool that computes reportable business income does not necessarily compute the offset itself.
 
+## Tax calculators
+
+The `small-business-income-offset` command comes from the released [`australian-tax-calculators` 1.2.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators)). `aus-accounting-mcp` 0.11.0 runs the earlier 1.1.0 release for its tax worksheets, so use this executable for this command. It is installed separately, and `pip` does not install it. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS`, and verify both before extracting anything:
+
+```text
+gh release download australian-tax-calculators/v1.2.0 --repo ryanduguid/australian-accounting --pattern SHA256SUMS --pattern <archive>
+gh attestation verify SHA256SUMS --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.2.0 --source-digest 31ecb4022aa0127ae9f672798d1d9fbfe6388e85 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+sha256sum --check --ignore-missing SHA256SUMS
+gh attestation verify <archive> --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.2.0 --source-digest 31ecb4022aa0127ae9f672798d1d9fbfe6388e85 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+```
+
+Stop if any of the 4 fails. On another platform, build the tagged commit from its lock file with Rust 1.99 or later, into a tool directory of its own; `cargo install --list --root <tool-dir>` must show `australian-tax-calculators v1.2.0` with that commit in its source:
+
+```text
+cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev 31ecb4022aa0127ae9f672798d1d9fbfe6388e85 australian-tax-calculators
+```
+
+Run it by its full path, the extracted `australian-tax-calculators` or `<tool-dir>/bin/australian-tax-calculators` (`.exe` on Windows), never one found on `PATH`, as other builds also report 1.2.0; check that `--version` prints exactly `australian-tax-calculators 1.2.0`, and pass `--refusal-json` after the command so a refusal (exit 2) prints its code. Use this local executable; a remote calculator is used only where the user has explicitly permitted that call for this question, on fabricated or firm-approved inputs, and never as a fallback when a local tool refuses. Send `{}` to its `worksheet-catalogue` command for each worksheet's scope statement and its required and optional inputs. Before running a command, send its worksheet name, the command's name with underscores, to its `periods` command, such as `{"kind": "small_business_income_offset"}`, and confirm it supports the reporting month or income year in question rather than merely accepting the year; if it does not, say so and follow the written method. Each command reads one JSON object on stdin, without the `kind` field that only `periods` takes, with amounts as decimal strings and a `scope_confirmed` flag: set it only once each condition in the scope statement the command returns is evidenced, and where one is not, follow the written method for that item. Send only amounts, dates and the established facts the command takes, never a client's name, address, TFN, ABN or other identifier. Record what it consumed: the release, the engine version, the exact input, the output with the scope statement, sources and source-check date it returns, and the run date. Record a refusal and its code as an open item, and do not change the facts to get past it. Keep the calculator's own labels as its own, reported beside the facts it was given, never as the reviewer's decision on a position. A calculator's figure checks the written method, which is always completed: where they differ, record the difference for the reviewer and adopt neither. Without the executable, follow the written method.
+
+`small-business-income-offset` works out the offset under Subdivision 328-F of the ITAA 1997 for one individual, not as a trustee and not a prescribed person under section 102AC of the ITAA 1936, for an income year from 2020-21 to 2026-27. Net small business income, each partnership or trust share and its deductions, the basic income tax liability and the offsets applied before this one are the operator's established figures from steps 2 to 4, and each partnership or trust must be a small business entity that is not a corporate tax entity.
+
 ## Hand-off and checks
 
 An entity/source eligibility matrix, income inclusion/exclusion bridge and supported offset workpaper or unresolved-input list. Identify every dependency on PSI/PSB, Division 35 and whole-return figures for the registered agent.
