@@ -9,8 +9,11 @@ Dates use Australia/Sydney (UTC+10). No client data was used.
 ## AAS-6: STP finalisation deadline
 
 The indexed URL (`.../single-touch-payroll/in-detail/finalisation`) and a
-second guessed URL both return HTTP 404. The live page is
-[End-of-year finalisation through STP](https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/start-reporting/end-of-year-finalisation-through-stp),
+second guessed URL both return HTTP 404. On 23 September 2026 the live page was
+End-of-year finalisation through STP
+(`.../single-touch-payroll/start-reporting/end-of-year-finalisation-through-stp`,
+which later redirected to the STP hub; current live page:
+[Finalising your STP data](https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/single-touch-payroll/finalising-your-stp-data)),
 QC 58561, last updated 16 October 2025. It states:
 
 - 14 July each year for arm's length employees
