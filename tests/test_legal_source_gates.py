@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from fractions import Fraction
 from pathlib import Path
@@ -351,7 +352,26 @@ class LegalSourceGateTests(unittest.TestCase):
         "1.2.0": ("31ecb4022aa0127ae9f672798d1d9fbfe6388e85", "0.12.0"),
     }
 
-    def assert_released_calculators(self, name: str, *commands: str, version: str = "1.0.0") -> str:
+    #: The aus-accounting-mcp release each commit the plugin may start is.
+    PLUGIN_SERVERS = {"bf2619c95e211685ca4c996cc7c04f9e400a616e": "0.12.0"}
+
+    def test_every_pinned_calculators_release_runs_on_the_plugin_server(self) -> None:
+        """Each server accepts only the calculators release it runs, so a skill pinning
+        another one has every calculator call refused."""
+        plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        commit = re.search(r"@([0-9a-f]{40})#", plugin["mcpServers"]["aus-accounting"]["args"][1])
+        if commit is None:
+            self.fail("the plugin must start aus-accounting-mcp from a pinned commit")
+        server = self.PLUGIN_SERVERS.get(commit.group(1))
+        self.assertIsNotNone(server, "add the plugin's aus-accounting-mcp commit to PLUGIN_SERVERS")
+        accepted = {version for version, (_, runs) in self.RELEASES.items() if runs == server}
+        for path in sorted(SKILLS.glob("*/SKILL.md")):
+            pins = set(re.findall(r"australian-tax-calculators/v(\d+\.\d+\.\d+)", path.read_text(encoding="utf-8")))
+            for version in pins:
+                with self.subTest(skill=path.parent.name, version=version):
+                    self.assertIn(version, accepted)
+
+    def assert_released_calculators(self, name: str, *commands: str, version: str = "1.2.0") -> str:
         """The skill pins an australian-tax-calculators release, names the aus-accounting-mcp
         release that runs it, verifies it before use and keeps the written method as the result."""
         text = " ".join(skill_text(name).split())
@@ -430,7 +450,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("give `asset` as `car`, one row per income year held with its `method` and `days_held`", cars)
 
         fbt = self.assert_released_calculators(
-            "fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost", version="1.1.0"
+            "fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost", version="1.2.0"
         )
         self.assertIn("used only where a valid logbook supports the operating cost method", fbt)
         self.assertIn("the statutory result's `taxable_value_before_exemption` as `statutory_formula_taxable_value`", fbt)
@@ -626,7 +646,7 @@ class LegalSourceGateTests(unittest.TestCase):
     def test_skills_route_the_1_1_0_commands_to_the_pinned_release(self) -> None:
         for name, commands in self.ROUTES_1_1_0.items():
             with self.subTest(skill=name):
-                text = self.assert_released_calculators(name, *commands, version="1.1.0")
+                text = self.assert_released_calculators(name, *commands, version="1.2.0")
                 # The route reads each worksheet's own scope and keeps the client out of the input.
                 self.assertIn("`worksheet-catalogue` command", text)
                 identifiers = (
@@ -637,10 +657,18 @@ class LegalSourceGateTests(unittest.TestCase):
         # A refusal is stated in the command's own terms, not the figure behind it.
         fuel = " ".join(skill_text("fuel-tax-credits").split())
         self.assertIn("a simplified method without the small claimant statement", fuel)
+        # From 1.2.0 Method 2 keeps each line's acquisition day across a period of flat rates.
+        self.assertIn("where every applicable rate stays flat it keeps each line's acquisition day", fuel)
         sb = " ".join(skill_text("au-small-business-cgt").split())
         self.assertIn("refuses an active-day total that falls on the boundary of the active asset test's period", sb)
         gst = " ".join(skill_text("au-gst-property").split())
-        self.assertIn("Release 1.1.0 takes the valuation date as given", gst)
+        # From 1.2.0 an approved valuation's day is checked against the facts s 75-10(3) fixes it by.
+        self.assertIn("refuses a day s 75-10(3) does not fix for them", gst)
+        for field in ("improved_on_1_july_2000", "registration_effective_day", "applied_for_registration",
+                      "registration_application_day", "supply_day"):
+            self.assertIn(f"`{field}`", gst)
+        self.assertIn("It refers a possible overlap of items 2 and 3 for separate review.", gst)
+        self.assertNotIn("takes the valuation date as given", gst)
         dgr = " ".join(skill_text("au-not-for-profit").split())
         self.assertIn("it never says a payment is deductible", dgr)
         self.assertIn("send the recipient's details only, never the donor's", dgr)
@@ -705,7 +733,7 @@ class LegalSourceGateTests(unittest.TestCase):
             self.assertIn("Record what it consumed: the page, the date run, the inputs", text)
 
     def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
-        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.1.0")
+        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.2.0")
         self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
         # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
         self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
