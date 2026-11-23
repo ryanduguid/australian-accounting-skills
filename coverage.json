@@ -3,11 +3,11 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
     "skills": 111,
-    "sources_indexed": 877,
+    "sources_indexed": 885,
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 18,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 93,
+    "skills_with_behavioural_gate": 95,
     "skills_with_only_the_seeded_case": 20,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -994,7 +994,7 @@
     {
       "skill": "au-financial-statements",
       "sources": {
-        "indexed": 7,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-10-29",
         "reviewed_count": 1,
@@ -1021,6 +1021,7 @@
       "gates": {
         "behavioural": [
           "test_financial_statements.py",
+          "test_legal_source_gates.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1408,7 +1409,7 @@
     {
       "skill": "au-non-commercial-losses",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 1,
@@ -1427,7 +1428,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1783,7 +1786,7 @@
     {
       "skill": "au-psi-review",
       "sources": {
-        "indexed": 4,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -2067,7 +2070,7 @@
     {
       "skill": "au-small-business-income-offset",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 1,
@@ -2086,7 +2089,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -2177,6 +2182,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
           "test_marketplace_settlements.py"
         ],
         "inventory": []
