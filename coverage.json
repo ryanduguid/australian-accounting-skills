@@ -67,7 +67,8 @@
       "gates": {
         "behavioural": [
           "test_aml_ctf_cdd_reliance.py",
-          "test_practice_review_steps.py"
+          "test_practice_review_steps.py",
+          "test_rule_anchors.py"
         ],
         "inventory": []
       }
@@ -103,7 +104,8 @@
           "test_aml_ctf_cdd_reliance.py",
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
-          "test_practice_review_steps.py"
+          "test_practice_review_steps.py",
+          "test_rule_anchors.py"
         ],
         "inventory": []
       }
@@ -1661,7 +1663,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_pre_lodgement_review.py"
+          "test_pre_lodgement_review.py",
+          "test_rule_anchors.py"
         ],
         "inventory": []
       }

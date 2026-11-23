@@ -88,6 +88,12 @@ it.
   authoritative source or require live verification for mutable rules.
 - Use fabricated-from-scratch fixtures. Never add a de-identified or redacted
   client export as a regression example.
+- Rule anchors: a skill's no-lodgement, evidence-boundary and untrusted-instruction
+  rules, and its risk-rating refusal where it has one, end the first line of their
+  paragraph or list item with an anchor such as `<!-- rule: no-lodgement -->`.
+  Move the anchor with its rule. Where a skill needs a rule worded differently,
+  update `tests/test_rule_anchors.py`, which lists the required anchors and the
+  wording each anchored item needs, so a change that drops or rewords one away fails.
 
 ## Checks before opening a pull request
 
