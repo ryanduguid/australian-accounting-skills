@@ -22,6 +22,8 @@ DRAFT_STEPS = (
     ("au-bookkeeping", "3a"),
     ("year-end-workpapers", 0),
     ("au-individual-return", 1),
+    ("au-company-tax", "5a"),
+    ("au-trust-distributions", "6a"),
 )
 NO_TREATMENT = r"\bstates? no (?:GST or other )?tax treatment, position, conclusion or advice, and no rate, threshold or due date\b"
 
@@ -121,6 +123,29 @@ class ClientRequestDraftTests(unittest.TestCase):
         self.assert_sentence(step, r"\bpre-fill does not show is missing, not zero\b", r"\bkeep it unknown\b")
         example = section("au-individual-return", "Fabricated acceptance example")
         self.assertIn("absent from pre-fill stays unknown, not zero", example)
+
+    # au-company-tax and au-trust-distributions: the return QA review's open questions
+
+    def test_return_qa_open_items_become_plain_client_questions_for_the_practitioner(self) -> None:
+        for skill, number, review in (("au-company-tax", "5a", "step 5"), ("au-trust-distributions", "6a", "step 6")):
+            with self.subTest(skill=skill):
+                step = workflow_step(skill, number)
+                self.assert_sentence(step, rf"\bopen item from {review}\b", r"\bfact or record the client holds\b",
+                                     r"\bone plain, neutral question\b", r"\bdraft email\b", r"\bone question per item\b")
+                self.assert_sentence(step, r"\beveryday words\b", r"\brather than a return label, item number or code\b")
+                # The client never learns what the review found or suspects.
+                self.assert_sentence(step, DO_NOT + r"disclose the matrix\b", r"\ban amount or difference the review found\b",
+                                     r"\bsuspected error or issue\b", r"\bwhy an item was escalated\b",
+                                     r"\bimply an error or a tax outcome\b")
+                self.assert_sentence(step, r"\bEvery tax position and specialist matter stays off the draft\b",
+                                     r"\bDivision 7A\b", r"\bsection 100A of the ITAA 1936\b", r"\bbase rate entity status\b")
+                self.assert_sentence(step, r"\bleave the recipient blank\b", r"\bnever supply an email address\b")
+                self.assert_sentence(step, r"'Draft for practitioner review: not sent'")
+                self.assert_sentence(step, r"\bpractitioner reviews, edits and decides whether to send it\b")
+                self.assert_sentence(step, r"\bno draft was prepared\b")
+                self.assertIn("client question draft, drafted and not sent", section(skill, "Hand-off and checks"))
+        self.assert_sentence(workflow_step("au-trust-distributions", "6a"), r"\bgoes to a beneficiary\b",
+                             r"\bnothing about another beneficiary\b")
 
     def test_individual_return_checklist_is_a_two_year_matrix_with_fixed_statuses(self) -> None:
         step = workflow_step("au-individual-return", 1)
