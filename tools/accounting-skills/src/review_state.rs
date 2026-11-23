@@ -10,7 +10,7 @@
 use crate::{
     Result, canonical_root, platform_text, replace_file, source_content::sha256, within_root,
 };
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use std::{
     ffi::OsString,
     fs,
@@ -98,6 +98,28 @@ pub fn result(checks: &[Check]) -> &'static str {
     }
 }
 
+/// `path` resolved through any links, refused unless it stays inside the
+/// canonical `case` folder.
+fn inside(case: &Path, path: &Path) -> io::Result<PathBuf> {
+    let resolved = path.canonicalize()?;
+    if resolved.starts_with(case) {
+        Ok(resolved)
+    } else {
+        Err(io::Error::new(
+            io::ErrorKind::PermissionDenied,
+            format!("{} resolves outside the case folder", path.display()),
+        ))
+    }
+}
+
+/// Parses `text` as exactly one JSON value of the closed type `T`.
+fn parse<T: DeserializeOwned>(text: &str) -> serde_json::Result<T> {
+    let mut reader = serde_json::Deserializer::from_str(text);
+    let value = T::deserialize(&mut reader)?;
+    reader.end()?;
+    Ok(value)
+}
+
 fn walk(folder: &Path, relative: &str, found: &mut Vec<Digest>) -> Result<()> {
     let mut entries = fs::read_dir(folder)?.collect::<io::Result<Vec<_>>>()?;
     entries.sort_by_key(fs::DirEntry::file_name);
@@ -124,10 +146,9 @@ fn walk(folder: &Path, relative: &str, found: &mut Vec<Digest>) -> Result<()> {
 
 /// Every regular file under the case's `sources/` folder, by `/` path, sorted.
 pub fn source_digests(case: &Path) -> Result<Vec<Digest>> {
-    let folder = case.join(SOURCES);
     let mut found = Vec::new();
-    match fs::symlink_metadata(&folder) {
-        Ok(metadata) if metadata.is_dir() => walk(&folder, SOURCES, &mut found)?,
+    match inside(case, &case.join(SOURCES)) {
+        Ok(folder) if fs::metadata(&folder)?.is_dir() => walk(&folder, SOURCES, &mut found)?,
         Ok(_) => return Err(format!("{SOURCES} is not a folder").into()),
         Err(error) if error.kind() == io::ErrorKind::NotFound => {}
         Err(error) => return Err(error.into()),
@@ -137,12 +158,12 @@ pub fn source_digests(case: &Path) -> Result<Vec<Digest>> {
 }
 
 fn draft_digest(case: &Path, relative: &str) -> Result<Digest> {
-    let path = within_root(case, Path::new(relative))?;
+    let path = inside(case, &within_root(case, Path::new(relative))?)?;
     let top = relative.split(['/', '\\']).next().unwrap_or_default();
     if top == SOURCES || relative == STATE_FILE {
         return Err(format!("the draft cannot be {STATE_FILE} or inside {SOURCES}/").into());
     }
-    if !fs::symlink_metadata(&path)?.is_file() {
+    if !fs::metadata(&path)?.is_file() {
         return Err(format!("draft {relative} is not a regular file").into());
     }
     Ok(Digest {
@@ -196,7 +217,7 @@ fn source_change(reviewed: &[Digest], current: &[Digest]) -> Option<String> {
 /// `write` printed and the reviewer kept, shows it was not rewritten since.
 pub fn verify(case: &Path, recorded: Option<&str>) -> Result<Option<String>> {
     let case = canonical_root(case)?;
-    let text = match fs::read_to_string(case.join(STATE_FILE)) {
+    let text = match inside(&case, &case.join(STATE_FILE)).and_then(fs::read_to_string) {
         Ok(text) => text,
         Err(error) if error.kind() == io::ErrorKind::NotFound => {
             return Ok(Some(format!(
@@ -210,8 +231,8 @@ pub fn verify(case: &Path, recorded: Option<&str>) -> Result<Option<String>> {
             "{STATE_FILE} is not the file whose SHA-256 was recorded at the review"
         )));
     }
-    let state: State = serde_json::from_str(&text)
-        .map_err(|error| format!("{STATE_FILE} is unreadable: {error}"))?;
+    let state: State =
+        parse(&text).map_err(|error| format!("{STATE_FILE} is unreadable: {error}"))?;
     if state.schema_version != SCHEMA_VERSION {
         return Err(format!(
             "{STATE_FILE} has schema version {}, not {SCHEMA_VERSION}",
@@ -262,7 +283,7 @@ fn write_cli(case: &Path, mut args: impl Iterator<Item = OsString>) -> Result<u8
     let (Some(draft), Some(register)) = (draft, register) else {
         return Err(USAGE.into());
     };
-    let register: Register = serde_json::from_str(&fs::read_to_string(register)?)
+    let register: Register = parse(&fs::read_to_string(register)?)
         .map_err(|error| format!("the register is unreadable: {error}"))?;
     let today = jiff::ZonedDateTime::now()
         .date()

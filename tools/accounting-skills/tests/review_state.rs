@@ -267,3 +267,18 @@ fn a_rewritten_state_fails_against_the_digest_recorded_at_the_review() {
         ))
     );
 }
+
+#[cfg(unix)]
+#[test]
+fn a_sources_link_leading_outside_the_case_is_refused() {
+    let case = case();
+    let outside = tempfile::tempdir().unwrap();
+    fs::rename(case.path().join("sources"), outside.path().join("sources")).unwrap();
+    std::os::unix::fs::symlink(outside.path().join("sources"), case.path().join("sources"))
+        .unwrap();
+    let error = write(case.path(), "draft.md", passed(), "2026-11-24").unwrap_err();
+    assert!(
+        error.to_string().contains("outside the case folder"),
+        "{error}"
+    );
+}
