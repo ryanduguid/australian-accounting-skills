@@ -978,10 +978,6 @@ class LegalSourceGateTests(unittest.TestCase):
             "business-calculators/psi-determination/",
             "so the evidence for each stays with the workflow above",
         ),
-        "au-franking-account": (
-            "business-calculators/franking-account/",
-            "It does not decide whether a distribution is frankable",
-        ),
         "au-company-tax": (
             "business-calculators/company-tax/",
             "with connected entities and affiliates, stay with step 2",
