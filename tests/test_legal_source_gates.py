@@ -344,11 +344,11 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
     #: Each pinned australian-tax-calculators release, its tagged commit and the
-    #: aus-accounting-mcp release that runs it, or None where no server release runs it yet.
+    #: aus-accounting-mcp release that runs it.
     RELEASES = {
         "1.0.0": ("6ac566682829731d52a1b4456708a0b9d29b5695", "0.10.0"),
         "1.1.0": ("c4a716a25f065ccc957c5db83dec711251cb4121", "0.11.0"),
-        "1.2.0": ("31ecb4022aa0127ae9f672798d1d9fbfe6388e85", None),
+        "1.2.0": ("31ecb4022aa0127ae9f672798d1d9fbfe6388e85", "0.12.0"),
     }
 
     def assert_released_calculators(self, name: str, *commands: str, version: str = "1.0.0") -> str:
@@ -380,11 +380,8 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn(f"must show `australian-tax-calculators v{version}` with that commit in its source", text)
         self.assertIn("never one found on `PATH`", text)
         self.assertIn(f"check that `--version` prints exactly `australian-tax-calculators {version}`", text)
-        if server:
-            self.assertIn(f"the executable `aus-accounting-mcp` {server} also runs for its tax worksheets", text)
-        else:
-            # The newest server runs an earlier release, so the skill must not send its commands there.
-            self.assertIn("`aus-accounting-mcp` 0.11.0 runs the earlier 1.1.0 release for its tax worksheets, so use this executable", text)
+        self.assertIn(f"the executable `aus-accounting-mcp` {server} also runs for its tax worksheets", text)
+        self.assertNotIn("runs the earlier", text)
         # A skill pins one release: a second tag would leave a reader two executables to verify.
         for other in self.RELEASES:
             if other != version:
@@ -402,8 +399,19 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_skills_route_business_costs_and_cars_to_the_released_calculators(self) -> None:
         depreciation = self.assert_released_calculators(
-            "au-depreciation-schedule", "business-capital-expenditure", "balancing-adjustment", "trade-in"
+            "au-depreciation-schedule", "business-capital-expenditure", "balancing-adjustment", "trade-in",
+            "depreciation-low-value-pool", "depreciation-small-business-pool", version="1.2.0",
         )
+        # The pool commands take step 4's established amounts; pool entry and taxable use stay with the step.
+        pools = depreciation[depreciation.index("4. Apply the pools.") : depreciation.index("5. Apply caps.")]
+        self.assertIn("with `depreciation-low-value-pool`", pools)
+        self.assertIn("with `depreciation-small-business-pool`", pools)
+        self.assertIn("Both cover the income years 2020-21 to 2026-27", pools)
+        self.assertIn("each taxable use percentage or which assets the instant asset write-off or temporary full expensing took instead: those stay with this step", pools)
+        # 0.12.0 runs the executable only by the released digest or one the operator names.
+        self.assertIn("From `aus-accounting-mcp` 0.12.0 that worksheet runs", depreciation)
+        self.assertIn("the value in `AUS_TAX_CALCULATORS_SHA256`", depreciation)
+        self.assertIn("An earlier server, such as the 0.10.0 the development plugin starts, accepts only an earlier release", depreciation)
         # s 40-880: the 5 year rule and the start-up exception from the Act; the judgements stay the reviewer's.
         step = depreciation[depreciation.index("6a. **Business capital expenditure.**") : depreciation.index("7. Keep capital works")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-880", step)
