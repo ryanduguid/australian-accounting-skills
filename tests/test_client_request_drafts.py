@@ -122,6 +122,12 @@ class ClientRequestDraftTests(unittest.TestCase):
         example = section("au-individual-return", "Fabricated acceptance example")
         self.assertIn("absent from pre-fill stays unknown, not zero", example)
 
+    def test_individual_return_checklist_is_a_two_year_matrix_with_fixed_statuses(self) -> None:
+        step = workflow_step("au-individual-return", 1)
+        self.assert_sentence(step, r"\bone row per expected source\b", r"\bprior year\b", r"\bthis year\b",
+                             r"`received`, `requested`, `expected in pre-fill`, `not expected` or `outstanding`")
+        self.assert_sentence(step, r"\binternal note\b", r"\bwording the client sees\b", r"\brather than a return label or code\b")
+
 
 if __name__ == "__main__":
     unittest.main()
