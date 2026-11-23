@@ -663,7 +663,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("refuses an active-day total that falls on the boundary of the active asset test's period", sb)
         gst = " ".join(skill_text("au-gst-property").split())
         # From 1.2.0 an approved valuation's day is checked against the facts s 75-10(3) fixes it by.
-        self.assertIn("refuses a day s 75-10(3) does not fix for them", gst)
+        self.assertIn("refuses a day s 75-10(3) of the GST Act does not fix for them", gst)
         for field in ("improved_on_1_july_2000", "registration_effective_day", "applied_for_registration",
                       "registration_application_day", "supply_day"):
             self.assertIn(f"`{field}`", gst)
