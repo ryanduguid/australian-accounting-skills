@@ -100,7 +100,11 @@ fn python_str(value: Option<&Value>) -> Result<String> {
     })
 }
 
-/// Every `output.jsonl` under the root, not following directory links.
+/// Trace file names: earlier Claude Code kept `output.jsonl`; 2.1.328 keeps
+/// `out/trace.jsonl` beside a `sealed` grader folder the run cannot read.
+const TRACE_NAMES: [&str; 2] = ["output.jsonl", "trace.jsonl"];
+
+/// Every trace under the root, not following directory links or entering `sealed`.
 fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
     let listing = if dir.as_os_str().is_empty() {
         Path::new(".")
@@ -110,17 +114,19 @@ fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
     for entry in fs::read_dir(listing).map_err(|error| format!("{}: {error}", listing.display()))? {
         let entry = entry?;
         let path = dir.join(entry.file_name());
-        if entry.file_type()?.is_dir() {
+        if entry.file_type()?.is_dir() && entry.file_name() != "sealed" {
             traces(&path, found)?;
         }
     }
     // Match Python's literal rglob lookup, including the directory's case rule.
-    let trace = dir.join("output.jsonl");
-    match fs::symlink_metadata(&trace) {
-        Ok(metadata) if !metadata.is_dir() => found.push(trace),
-        Ok(_) => {}
-        Err(error) if error.kind() == io::ErrorKind::NotFound => {}
-        Err(error) => return Err(format!("{}: {error}", trace.display()).into()),
+    for name in TRACE_NAMES {
+        let trace = dir.join(name);
+        match fs::symlink_metadata(&trace) {
+            Ok(metadata) if !metadata.is_dir() => found.push(trace),
+            Ok(_) => {}
+            Err(error) if error.kind() == io::ErrorKind::NotFound => {}
+            Err(error) => return Err(format!("{}: {error}", trace.display()).into()),
+        }
     }
     Ok(())
 }
@@ -213,7 +219,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     }
     report += &format!("traces={total} flagged={flagged}\n");
     if total == 0 {
-        problems += "no output.jsonl trace found, so nothing was audited\n";
+        problems += "no output.jsonl or trace.jsonl trace found, so nothing was audited\n";
     }
     io::stdout().write_all(platform_text(&report).as_bytes())?;
     io::stderr().write_all(platform_text(&problems).as_bytes())?;
