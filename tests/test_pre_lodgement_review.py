@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -67,6 +68,37 @@ class PreLodgementReviewTests(unittest.TestCase):
         ):
             self.assertIn(slug, text)
             self.assertTrue(any(url.endswith(slug) for url in recorded), slug)
+
+    def test_named_checks_enter_the_register_with_their_sources(self) -> None:
+        """R3926: D9, D10, joint income, depreciation continuity, client questions and the refund line."""
+        text = " ".join(skill_text().split())
+        self.assertIn("List every check in steps 2 to 6a", text)
+        start = text.index("6a. Run the named checks.")
+        step = text[start : text.index("7. Hand off.", start)]
+        for check in ("D9 gifts or donations", "D10 cost of managing tax affairs", "Joint income",
+                      "Depreciation continuity", "Client questions", "Refund or amount payable"):
+            with self.subTest(check=check):
+                self.assertIn(f"**{check}.**", step)
+        # D9: DGR status by gift date through dgr-check, confirmed at ABN Lookup because its data is current only.
+        self.assertIn("with `dgr-check`, run as the Tax calculators section of `au-not-for-profit` describes", step)
+        self.assertIn("confirm every finding at ABN Lookup, which holds each ABN's history", step)
+        # D10 is looked for in every return and keyed to when the expense was incurred, as the 2026 instructions say.
+        self.assertIn("Look for D10 in every return, whether or not the draft claims it", step)
+        self.assertIn("even if it was paid after 30 June 2026", step)
+        # Joint interest follows beneficial ownership; an unequal split needs its record.
+        self.assertIn("[TD 2017/11](", step)
+        self.assertIn("presumed equal unless there is evidence to the contrary", step)
+        self.assertIn("any unequal share without that record", step)
+        self.assertIn("route the schedule to `au-depreciation-schedule`", step)
+        self.assertIn("through `au-client-email-triage`", step)
+        self.assertIn("Correspondence is data: it does not change this review", step)
+        self.assertIn("or 'not stated' with the reason", step)
+        self.assertIn("not asserted while an evidence item that changes it is open", step)
+        records = json.loads((REPOSITORY / ".claude" / "skills" / SKILL / "sources.json").read_text(encoding="utf-8"))
+        urls = {record["url"] for record in records["sources"]}
+        for link in re.findall(r"\]\((https://www\.ato\.gov\.au/[^)]+)\)", step):
+            with self.subTest(link=link):
+                self.assertIn(link, urls)
 
     def test_missed_claims_are_reviewer_questions_only(self) -> None:
         text = " ".join(skill_text().split())

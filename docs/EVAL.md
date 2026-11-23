@@ -568,7 +568,7 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-2003 of 2003 citations resolve to a sources.json record: 273 of 273 rulings and guidance, 1730 of 1730 legislative sections.
+2004 of 2004 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1730 of 1730 legislative sections.
 1730 of 1730 resolved sections checked against an index of their Act: 1725 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
