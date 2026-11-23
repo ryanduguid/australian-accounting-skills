@@ -25,11 +25,11 @@ on material that moved.
 
 | Outcome | Skill | Source | Reviewed | Upstream | Detail |
 | --- | --- | --- | --- | --- | --- |
-| baseline-required | `example-skill` | [baseline-required 0](https://example.test/baseline-required/0) | 2026-09-08 | not published | detail |
-| blocked | `example-skill` | [blocked 0](https://example.test/blocked/0) | 2026-09-08 | not published | detail |
 | changed | `example-skill` | [changed 0](https://example.test/changed/0) | 2026-09-08 | not published | detail |
-| client-rendered | `example-skill` | [client-rendered 0](https://example.test/client-rendered/0) | 2026-09-08 | not published | detail |
 | missing | `example-skill` | [missing 0](https://example.test/missing/0) | 2026-09-08 | not published | detail |
-| review-due | `example-skill` | [review-due 0](https://example.test/review-due/0) | 2026-09-08 | not published | detail |
-| unreachable | `example-skill` | [unreachable 0](https://example.test/unreachable/0) | 2026-09-08 | not published | detail |
 | unreadable | `example-skill` | [unreadable 0](https://example.test/unreadable/0) | 2026-09-08 | not published | detail |
+| review-due | `example-skill` | [review-due 0](https://example.test/review-due/0) | 2026-09-08 | not published | detail |
+| baseline-required | `example-skill` | [baseline-required 0](https://example.test/baseline-required/0) | 2026-09-08 | not published | detail |
+| client-rendered | `example-skill` | [client-rendered 0](https://example.test/client-rendered/0) | 2026-09-08 | not published | detail |
+| unreachable | `example-skill` | [unreachable 0](https://example.test/unreachable/0) | 2026-09-08 | not published | detail |
+| blocked | `example-skill` | [blocked 0](https://example.test/blocked/0) | 2026-09-08 | not published | detail |
