@@ -52,6 +52,20 @@ fn a_trace_that_names_the_graders_fails_and_a_clean_one_passes() {
     assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
 }
 
+/// Claude Code 2.1.328 keeps `out/trace.jsonl` beside a `sealed` grader folder
+/// the run cannot read, so the audit reads the trace and never enters `sealed`.
+#[test]
+fn a_kept_folder_trace_is_audited_and_its_sealed_folder_skipped() {
+    let folder = tempfile::tempdir().unwrap();
+    let out = folder.path().join("kept/out");
+    fs::create_dir_all(&out).unwrap();
+    fs::write(out.join("trace.jsonl"), format!("{READ}\n")).unwrap();
+    write(&folder.path().join("kept"), "sealed", &[READ]);
+    let shown: std::path::PathBuf = ["kept", "out", "trace.jsonl"].iter().collect();
+    let expected = format!("FLAG {}\n{READ_HIT}\ntraces=1 flagged=1\n", shown.display());
+    assert_eq!(audit(folder.path(), &["."]), (1, expected, String::new()));
+}
+
 /// A suspect folder that ends the path is followed by the JSON quotation mark
 /// or by a space, not by a separator.
 #[test]
@@ -199,7 +213,7 @@ fn an_unread_line_or_an_empty_audit_fails() {
         (
             1,
             "traces=0 flagged=0\n".into(),
-            "no output.jsonl trace found, so nothing was audited\n".into()
+            "no output.jsonl or trace.jsonl trace found, so nothing was audited\n".into()
         )
     );
     let (code, _, stderr) = audit(folder.path(), &["missing"]);

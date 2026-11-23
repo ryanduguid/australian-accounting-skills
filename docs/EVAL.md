@@ -264,7 +264,8 @@ This compares against the revision itself, rather than its merge base with HEAD.
 Changes only to cards, shared rules or plugin metadata do not select cases;
 omit the flag to evaluate those changes with the full case set.
 
-`audit-grader-reads` searches each folder for `output.jsonl` traces and lists
+`audit-grader-reads` searches each folder, skipping any `sealed` folder, for
+`output.jsonl` and `trace.jsonl` traces and lists
 up to 5 tool calls per trace whose input has `evals`, `graders`, `validation` or `held` as
 a path part after a slash or backslash, or names a rubric, `required-checks`, `restraint.md`, `skill-fired`
 or `case.yaml`. It fails when it flags a call, finds no trace or cannot read a

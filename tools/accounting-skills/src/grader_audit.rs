@@ -100,7 +100,9 @@ fn python_str(value: Option<&Value>) -> Result<String> {
     })
 }
 
-/// Every `output.jsonl` under the root, not following directory links.
+/// Every `output.jsonl` under the root, and every `trace.jsonl`, which Claude
+/// Code 2.1.328 keeps at `out/trace.jsonl` beside a `sealed` grader folder the
+/// run cannot read; not following directory links or entering `sealed`.
 fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
     let listing = if dir.as_os_str().is_empty() {
         Path::new(".")
@@ -110,8 +112,11 @@ fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
     for entry in fs::read_dir(listing).map_err(|error| format!("{}: {error}", listing.display()))? {
         let entry = entry?;
         let path = dir.join(entry.file_name());
-        if entry.file_type()?.is_dir() {
+        let is_dir = entry.file_type()?.is_dir();
+        if is_dir && entry.file_name() != "sealed" {
             traces(&path, found)?;
+        } else if !is_dir && entry.file_name() == "trace.jsonl" {
+            found.push(path);
         }
     }
     // Match Python's literal rglob lookup, including the directory's case rule.
@@ -213,7 +218,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     }
     report += &format!("traces={total} flagged={flagged}\n");
     if total == 0 {
-        problems += "no output.jsonl trace found, so nothing was audited\n";
+        problems += "no output.jsonl or trace.jsonl trace found, so nothing was audited\n";
     }
     io::stdout().write_all(platform_text(&report).as_bytes())?;
     io::stderr().write_all(platform_text(&problems).as_bytes())?;
