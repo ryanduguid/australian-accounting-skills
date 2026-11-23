@@ -1641,7 +1641,7 @@
     {
       "skill": "au-pre-lodgement-review",
       "sources": {
-        "indexed": 12,
+        "indexed": 16,
         "exempt": false,
         "reviewed": "2026-10-15",
         "reviewed_count": 6,
