@@ -947,6 +947,80 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("It refuses a car the person did not own or lease", car)
         self.assertIn("so step 4 stays as written", car)
 
+    #: Live site pages routed on 23 November 2026: each skill, the page and a
+    #: boundary the page leaves to the skill's own workflow.
+    SITE_PAGE_ROUTES = {
+        "au-rental-property": (
+            "business-calculators/rental-property/",
+            "Ownership shares, the periods of use and the classification of each expense stay with steps 2 to 4",
+        ),
+        "au-ato-penalties-interest": (
+            "business-calculators/ato-penalties-interest/",
+            "GIC after 31 December 2026 unless a rate is assumed, which makes the result an estimate",
+        ),
+        "au-payg-instalment-variation": (
+            "business-calculators/payg-instalments/",
+            "or whether either option may be chosen, so steps 2 and 3 stay as written",
+        ),
+        "au-transfer-duty": (
+            "business-calculators/first-home-owner-grant/",
+            "takes the 4 eligibility facts as stated rather than testing them",
+        ),
+        "au-land-tax": (
+            "business-calculators/foreign-surcharge/",
+            "It does not decide which land is taxable, which rates apply, whether an owner is a foreign person",
+        ),
+        "au-ato-objection": (
+            "business-calculators/objection-deadline/",
+            "It does not know public holidays, so check the last day and the day after it",
+        ),
+        "au-psi-review": (
+            "business-calculators/psi-determination/",
+            "so the evidence for each stays with the workflow above",
+        ),
+        "au-franking-account": (
+            "business-calculators/franking-account/",
+            "It does not decide whether a distribution is frankable",
+        ),
+        "au-company-tax": (
+            "business-calculators/company-tax/",
+            "with connected entities and affiliates, stay with step 2",
+        ),
+        "au-super-guarantee-charge": (
+            "business-calculators/sgc-payday/",
+            "amounts not yet received by the fund",
+        ),
+        "au-super-contribution-caps": (
+            "individual-tax/concessional-catch-up/",
+            "It works the cap only",
+        ),
+        "workers-compensation-premium": (
+            "business-calculators/workers-compensation/",
+            "The classification, the rate and which wages count stay with the workflow above",
+        ),
+        "au-professional-firm-profits": (
+            "business-calculators/pcg-2021-4-allocation/",
+            "a green zone is not a ruling: Part IVA can still apply",
+        ),
+        "au-etp-redundancy": (
+            "business-calculators/long-service-leave/",
+            "whether a break keeps service continuous",
+        ),
+        "coal-lsl-levy": ("coal-lsl-levy/", "never names, dates of birth or Coal LSL numbers"),
+        "au-depreciation-schedule": ("depreciation-rates/", "Check each life against the registered determination"),
+        "bas-preparation": ("bas-due-dates/", "the date on the activity statement governs"),
+    }
+
+    def test_site_page_routes_leave_the_skills_decisions_with_the_workflow(self) -> None:
+        for name, (page, boundary) in self.SITE_PAGE_ROUTES.items():
+            with self.subTest(skill=name):
+                text = " ".join(skill_text(name).split())
+                self.assertIn(f"https://duguid.com.au/tools/{page}", text)
+                self.assertIn(boundary, text)
+                # A page is a cross-check: never the fallback for a refusal, and its labels stay its own.
+                self.assertIn("never as a fallback when a local tool refuses", text)
+                self.assertIn("Keep the page's own labels as its own", text)
+
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
 
