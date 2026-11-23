@@ -299,6 +299,14 @@
   skill: au-company-tax
   not: [au-franking-account, year-end-workpapers]
   prompt: Here is the final trial balance for a client company for 2025-26. Bridge the accounting profit to taxable income and gather the evidence on whether it is a base rate entity.
+- id: company-return-qa-review
+  skill: au-company-tax
+  not: [au-pre-lodgement-review, div7a-compliance]
+  prompt: The 2025-26 company return is prepared and ready for partner sign-off. Check that its loans to shareholders, franking account balances and base rate entity box agree to the accounts, ledgers and workpapers before we sign.
+- id: trust-return-qa-review
+  skill: au-trust-distributions
+  not: [au-pre-lodgement-review, au-trust-deed-review]
+  prompt: Our staff member has finished the family trust's 2025-26 return. Before I sign off, check that the statement of distribution agrees to the resolution, the trust income and the beneficiary loan accounts.
 - id: director-loan-account
   skill: div7a-compliance
   not: [au-company-tax, au-franking-account]
