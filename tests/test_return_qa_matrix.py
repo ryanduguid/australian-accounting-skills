@@ -16,7 +16,7 @@ import unittest
 from skill_prose import DO_NOT, PENDING, affirms, records, sentences, table_row, workflow_step
 
 QA_STEPS = (("au-company-tax", 5), ("au-trust-distributions", 6))
-STATES = r"`agrees`.*`one source only`.*`not found`.*`differs`"
+STATES = r"`agrees`.*`differs`.*`one source only`.*`not found`"
 
 
 class ReturnQaMatrixTests(unittest.TestCase):
@@ -41,6 +41,10 @@ class ReturnQaMatrixTests(unittest.TestCase):
                 self.assert_sentence(step, r"\btolerance is under AUD 1\b", r"\bwhole figures or no cents\b",
                                      r"\bonly to the cents dropped\b")
                 self.assert_sentence(step, r"\bevery other difference, however small, is `differs`")
+                self.assert_sentence(step, r"`differs` \(any 2 sources disagree beyond the tolerance, even where others agree\)")
+                self.assert_sentence(step, r"\bcompare the unrounded amounts first\b", r"\brounding bridge\b",
+                                     r"\bnever widening the tolerance\b")
+                self.assert_sentence(step, r"\bsame basis\b", r"\btrust-law income are different figures\b")
                 self.assert_sentence(step, DO_NOT + r"change a figure to clear a row\b", r"\bopen item\b")
                 self.assert_sentence(step, r"\bnot performed\b", r"\brather than mapping it from this table\b")
                 self.assert_sentence(step, r"\bnot a finding that the return is correct\b", r"\bno assurance\b")
@@ -50,14 +54,16 @@ class ReturnQaMatrixTests(unittest.TestCase):
         row = self.row("au-company-tax", "Base rate entity")
         self.assert_sentence(row, r"\bs 23AA of the \*Income Tax Rates Act 1986\*", r"\bno more than 80%",
                              r"\bless than AUD 50 million\b", affirmed=(r"\bis a base rate entity\b",))
-        self.assert_sentence(row, r"\bs 23AB\(1\)", r"\bs 23AB\(2\)", r"\breviewer question\b")
+        self.assert_sentence(row, r"\bdenominator is assessable income, not accounting revenue\b")
+        self.assert_sentence(row, r"\bs 23AB\(2\)", r"\bleave the exclusion to the reviewer\b", r"\bnever applying it yourself\b")
         self.assert_sentence(row, r"\bpercentage\b")
         self.assert_sentence(row, r"\binput is missing\b", r"`not found`", r"\bF2 stays `UNVERIFIED`")
 
     def test_company_matrix_ties_label_n_and_leaves_deemed_dividends_to_div7a(self) -> None:
         row = self.row("au-company-tax", "Division 7A loans")
         self.assert_sentence(row, r"\bwhole figures\b", r"\bdebit balance at the end of the year\b",
-                             r"\bnatural person, partnership or trust\b", r"\bcode A, B or M\b")
+                             r"\bnatural person, partnership or trust\b",
+                             r"\bcode A \(all loans made on or after 4 December 1997\)", r"\bprivate company or closely held\b")
         self.assert_sentence(row, r"\bs 109D\(1\) of the ITAA 1936\b", r"`div7a-compliance`",
                              DO_NOT + r"conclude\b")
 
@@ -76,13 +82,20 @@ class ReturnQaMatrixTests(unittest.TestCase):
                              r"\bs 100A\(1\) of the ITAA 1936\b", r"\bs 100A\(13\) of the ITAA 1936\b",
                              r"\bordinary family or commercial dealing\b")
         self.assert_sentence(row, r"\bspecialist decision\b")
+        self.assert_sentence(row, r"\bas a fact to investigate, never as evidence that a reimbursement agreement exists\b")
 
     def test_trust_matrix_ties_shares_to_trust_income_and_keeps_tfns_out(self) -> None:
         self.assertIn("item 57 label A", self.row("au-trust-distributions", "Beneficiary shares"))
         self.assert_sentence(self.row("au-trust-distributions", "Trust income"), r"\bloss is shown as 0\b")
         self.assert_sentence(self.row("au-trust-distributions", "Beneficiary details"), r"\bnever the TFN itself\b")
         self.assert_sentence(self.row("au-trust-distributions", "No beneficiary presently entitled"),
-                             r"\bs 99A of the ITAA 1936\b", r"\bnever assume the Commissioner's discretion\b")
+                             r"\bnever assume the Commissioner's discretion\b")
+        self.assert_sentence(self.row("au-trust-distributions", "No beneficiary presently entitled"),
+                             r"\bs 99A\(2\) of the ITAA 1936\b", r"\bwill, codicil, intestacy\b", r"\bbankrupt\b",
+                             r"\bs 99A\(3\) of the ITAA 1936\b")
+        self.assert_sentence(self.row("au-trust-distributions", "Beneficiary shares"), r"\bnever use it to reconcile net income\b")
+        self.assert_sentence(self.row("au-trust-distributions", "Net income"), r"\bseparately from label W\b", r"\bnot forced to agree\b")
+        self.assert_sentence(self.row("au-trust-distributions", "Assessment calculation code"), r"\bnever infer one from a name\b")
         self.assert_sentence(self.row("au-trust-distributions", "Losses"),
                              r"\bexceed the total the instructions state\b", r"\bmust equal item 27 label U\b")
         for check in ("Net income", "Unpaid entitlements", "Elections", "Balance sheet"):
