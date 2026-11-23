@@ -147,6 +147,10 @@ NEEDS_ATTENTION = (
 # coverage.json counts the blocked and unreachable ones per skill; a
 # client-rendered page answers 200, so it appears in the report only.
 ACTIONABLE = (CHANGED, MISSING, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED)
+# Report rows run in this order. The workflow cuts an issue body over GitHub's
+# limit at a line boundary, so what needs an edit here comes before the
+# hundreds of blocked and unreachable rows that do not.
+ROW_ORDER = ACTIONABLE + (CLIENT_RENDERED, UNREACHABLE, BLOCKED)
 REPORTED_OUTCOMES = (
     CHANGED, MISSING, BLOCKED, UNREACHABLE, CLIENT_RENDERED, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED,
     SCHEDULED, RECORDED, UNCHANGED,
@@ -905,7 +909,7 @@ def render(report: Report, *, write: bool) -> str:
             "| Outcome | Skill | Source | Reviewed | Upstream | Detail |",
             "| --- | --- | --- | --- | --- | --- |",
         ]
-        for outcome in sorted(report.needs_attention, key=lambda o: (o.outcome, o.skill)):
+        for outcome in sorted(report.needs_attention, key=lambda o: (ROW_ORDER.index(o.outcome), o.skill)):
             title, checked_at, upstream, detail = map(markdown_text, (
                 outcome.title, outcome.checked_at,
                 outcome.fetched.last_modified or "not published", outcome.detail,
