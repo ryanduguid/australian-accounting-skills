@@ -21,6 +21,14 @@ Run the refresh from main to use the actual squash commit dates.
 has a record in its skill's `sources.json`, and that a cited section exists
 where `section-index/` lists its Act's sections.
 
+`review-state write CASE_DIR --draft PATH --register REGISTER.json` records a review's check register in
+`CASE_DIR/review-state.json`, with the SHA-256 of the draft and of every regular file under `CASE_DIR/sources/`.
+Each check is `passed`, `failed`, `not performed` or `not applicable`, the last 2 with a note saying why; the
+result is `passed` only when none failed and none was left not performed. `review-state verify CASE_DIR` exits 0
+only while that review passed and the draft and sources are unchanged, and otherwise exits 2 and prints the first
+`STALE` reason: no review, a review that did not pass, or a draft or source changed, added or removed. The review
+skills write it and `au-client-letter` verifies it before drafting from reviewed work.
+
 `statement-check` is also new: the `statement-to-csv` skill runs it on statement lines transcribed
 to JSON. In exact cents it checks each printed running balance, brought-forward and
 carried-forward balance and closing balance, extracted gross credits and debits against printed
