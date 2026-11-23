@@ -184,6 +184,19 @@ fn parse_cell_segment(sheet_name: &str, segment: &str, state: &mut ParsedWorkboo
     );
 }
 
+fn compare_cached_value(sheet: &str, addr: &str, val: f64, cached: &CachedValue) -> Option<String> {
+    match cached {
+        CachedValue::Finite(c) if (val - c).abs() > 1e-6 => Some(format!(
+            "{sheet}!{addr}: cached value {c} disagrees with recalculated value {val}"
+        )),
+        CachedValue::NonFinite(raw) => {
+            Some(format!("{sheet}!{addr}: non-finite cached value '{raw}'"))
+        }
+        CachedValue::Missing => Some(format!("{sheet}!{addr}: missing cached value <v>")),
+        CachedValue::Finite(_) => None,
+    }
+}
+
 fn check_single_formula(
     evaluator: &mut WorkbookEvaluator<'_>,
     coord: &CellCoord,
@@ -196,38 +209,14 @@ fn check_single_formula(
         CachedValue::Finite(c) => Some(*c),
         CachedValue::Missing | CachedValue::NonFinite(_) => None,
     };
-    match evaluator.eval_numeric(coord) {
-        Ok(val) => {
-            let err_msg = match cached {
-                CachedValue::Finite(c) if (val - c).abs() > 1e-6 => Some(format!(
-                    "{}!{addr}: cached value {c} disagrees with recalculated value {val}",
-                    coord.sheet
-                )),
-                CachedValue::NonFinite(raw) => Some(format!(
-                    "{}!{addr}: non-finite cached value '{raw}'",
-                    coord.sheet
-                )),
-                CachedValue::Missing => {
-                    Some(format!("{}!{addr}: missing cached value <v>", coord.sheet))
-                }
-                CachedValue::Finite(_) => None,
-            };
-            if let Some(msg) = &err_msg {
-                errors.push(msg.clone());
-            }
-            FormulaCheck {
-                sheet: coord.sheet.clone(),
-                cell: addr,
-                formula: format!("={formula_text}"),
-                value: Some(val),
-                cached: cached_num,
-                ok: err_msg.is_none(),
-                error: err_msg,
-            }
-        }
+    let (value, err_msg) = match evaluator.eval_numeric(coord) {
+        Ok(val) => (
+            Some(val),
+            compare_cached_value(&coord.sheet, &addr, val, cached),
+        ),
         Err(err) => {
             errors.push(format!("{}!{addr} (={formula_text}): {err}", coord.sheet));
-            FormulaCheck {
+            return FormulaCheck {
                 sheet: coord.sheet.clone(),
                 cell: addr,
                 formula: format!("={formula_text}"),
@@ -235,8 +224,20 @@ fn check_single_formula(
                 cached: cached_num,
                 ok: false,
                 error: Some(err),
-            }
+            };
         }
+    };
+    if let Some(msg) = &err_msg {
+        errors.push(msg.clone());
+    }
+    FormulaCheck {
+        sheet: coord.sheet.clone(),
+        cell: addr,
+        formula: format!("={formula_text}"),
+        value,
+        cached: cached_num,
+        ok: err_msg.is_none(),
+        error: err_msg,
     }
 }
 
