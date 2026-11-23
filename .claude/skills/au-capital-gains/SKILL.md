@@ -29,7 +29,7 @@ Asset ownership and residency history, acquisition and disposal contracts, broke
 
 ## Tax calculators
 
-The `cgt-parcels`, `capital-gains` and `cgt-cost-base-adjustments` commands come from the released [`australian-tax-calculators` 1.2.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators)). `aus-accounting-mcp` 0.11.0 runs the earlier 1.1.0 release for its tax worksheets, so use this executable for these commands. It is installed separately, and `pip` does not install it. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS`, and verify both before extracting anything:
+The `cgt-parcels`, `capital-gains` and `cgt-cost-base-adjustments` commands come from the released [`australian-tax-calculators` 1.2.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators)), the executable `aus-accounting-mcp` 0.12.0 also runs for its tax worksheets. It is installed separately, and `pip` does not install it. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS`, and verify both before extracting anything:
 
 ```text
 gh release download australian-tax-calculators/v1.2.0 --repo ryanduguid/australian-accounting --pattern SHA256SUMS --pattern <archive>

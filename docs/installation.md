@@ -166,9 +166,9 @@ Payday Super tools, when available, to cross-check their own calculations;
 the current primary-source checks in each skill still run. From 0.10.0 its `calculate_tax_worksheet` tool runs the
 [`australian-tax-calculators` 1.0.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.0.0)
 executable, which the plugin does not install: without it on the path, or named by its absolute path in
-`AUS_TAX_CALCULATORS_BIN`, that tool refuses and names the release, and the other tools work. `au-depreciation-schedule`
-and `au-car-expenses` say how to download and verify it, and run its commands directly; `fbt-annual-workflow` and the
-other skills with a Tax calculators section do the same for the 1.1.0 release, and `au-rental-property`, `au-capital-gains`, `au-rd-incentive`, `au-tax-residency`, `au-smsf-death-benefits`, `au-ato-penalties-interest`, `bas-preparation`, `au-payroll-review`, `au-individual-return`, `au-psi-review`, `au-small-business-income-offset`, `au-non-commercial-losses` and `au-financial-statements` for the 1.2.0 release.
+`AUS_TAX_CALCULATORS_BIN`, that tool refuses and names the release, and the other tools work. `au-car-expenses`
+says how to download and verify it, and runs its command directly; `fbt-annual-workflow` and the
+other skills with a Tax calculators section do the same for the 1.1.0 release, and `au-rental-property`, `au-capital-gains`, `au-rd-incentive`, `au-tax-residency`, `au-smsf-death-benefits`, `au-ato-penalties-interest`, `bas-preparation`, `au-payroll-review`, `au-individual-return`, `au-psi-review`, `au-small-business-income-offset`, `au-non-commercial-losses`, `au-financial-statements` and `au-depreciation-schedule` for the 1.2.0 release, which `aus-accounting-mcp` 0.12.0 runs.
 To run the skills without the server, disable it with
 `/mcp` in Claude Code. The `npx skills` and Codex routes do not start it.
 
