@@ -19,10 +19,11 @@ use std::{
 };
 
 /// Each committed path or folder the build ships, and where it ships it.
-pub const SOURCES: [(&str, &str); 9] = [
+pub const SOURCES: [(&str, &str); 10] = [
     (MANIFEST, MANIFEST),
     (".claude-plugin/icon.png", ".claude-plugin/icon.png"),
     (".claude/skills", "skills"),
+    ("commands", "commands"),
     ("DISCLAIMER.md", "DISCLAIMER.md"),
     ("LICENSE", "LICENSE"),
     ("NOTICE", "NOTICE"),
@@ -34,7 +35,7 @@ pub const SOURCES: [(&str, &str); 9] = [
 const MANIFEST: &str = ".claude-plugin/plugin.json";
 /// The manifest keys the build ships unchanged. Any other key fails the build,
 /// so a component added on `main` is never shipped or dropped unnoticed.
-const MANIFEST_KEYS: [&str; 13] = [
+const MANIFEST_KEYS: [&str; 14] = [
     "$schema",
     "name",
     "version",
@@ -48,6 +49,7 @@ const MANIFEST_KEYS: [&str; 13] = [
     "supportUrl",
     "keywords",
     "skills",
+    "commands",
 ];
 /// The directory refuses a version with this many files and folders or more.
 pub const MAX_ENTRIES: usize = 512;

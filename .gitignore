@@ -91,6 +91,8 @@ exports/
 !/.claude/skills/reconciliation-break-trace/SKILL.md
 !/.claude/rules/
 !/.claude/rules/**/*.md
+!/commands/
+!/commands/*.md
 
 # Fixed, fabricated regression cards. Keep this exception narrow: arbitrary
 # Markdown elsewhere remains blocked as a possible generated workpaper.
