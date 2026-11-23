@@ -21,7 +21,7 @@ Income year, employment type and assessable labour income, the record of hours w
 
    Separate phone/data service costs from device acquisition costs. For each, retain the billed period, purchaser, evidence, work/private use and employer-paid, provided or reimbursed facts. Compare the same expense references with business and GST workpapers as well as the fixed rate schedule; keep any overlap as a review exception until the allocation and treatment are supported.
 
-5. Treat occupancy expenses (such as rent or mortgage interest) and home office cleaning as reviewer items. The ATO allows them only in limited circumstances where there is a dedicated home office, so prepare the floor-area and private-use evidence and stop at a flag.
+5. For occupancy expenses such as rent or mortgage interest, check the ATO's [occupancy expenses guidance](https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/occupancy-expenses) for the period. Ask what workplace the employer made available, whether working at home was required or chosen, why the duties needed a place of business and what supports those facts. Record how the room was used, its private use and whether it was readily suitable for ordinary domestic use. Then collect floor area, period of use and expense evidence for the reviewer. Flag eligibility separately from apportionment and leave an occupancy amount blank while eligibility is open. Keep home office cleaning as a separate running-expense review item with its own use and cost records.
 
 6. Total the claim with cents disregarded, as the ATO manual steps direct, and tie it to the return label.
 

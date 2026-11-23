@@ -17,6 +17,10 @@ For an AI-extracted amount, date or code, show the document and page or row, the
 
 Give every supplied file one row in the evidence register. Keep a stable source reference, its original file reference, the workpaper items it supports (if any) and its disposition. Account for copies, unreadable files and records with no proposed return entry. Give the reason for each open or excluded file. Reconcile the register to the files received, including on a reordered or repeated intake.
 
+For supplied messages, use `au-client-email-triage` where available. Link each attachment to its message and file reference. Record the received timestamp and timezone, document date, payment date if evidenced, and the facts and timing rule supporting the proposed income year. Leave the year open if that basis is missing. A manually supplied copy follows the same document checks and can have no message reference.
+
+When filtering supplied correspondence, record the chosen Australian timezone. Use local midnight on 1 July inclusive to the following 1 July exclusive, converting both boundaries to the timestamp convention used by the source. Keep relevant evidence delivered outside that window, including a June invoice received in July. Record any wider discovery window separately. The time filter selects messages only.
+
 If a classifier manifest and review are supplied, keep the page reference and check the review against the exact manifest digest. A page text hash alone cannot identify a file or establish a transaction. If the digest changes, reopen the classification and any match that depended on it. Keep matches independently checked against the original documents.
 
 ## Workflow
@@ -81,6 +85,10 @@ In the firm-approved output location, arrange the pack so the reviewer can check
 Give each index item a stable reference used by the missing-facts, missing-records and reviewer-decision lists. Keep its supplied facts, next action, reason, supporting authority and check date beside the item. Verify a proposed return destination independently for the income year and channel; a topic page or statement heading does not prove a myTax or paper label. Use `destination unverified` while that mapping is open, and distinguish context retained for review from an amount proposed for entry. A verified destination never clears an evidence or treatment exception.
 
 Include the evidence register alongside the item index so the reviewer can trace each file to its disposition and each matched amount back to its sources. For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
+
+If the installed accounting MCP offers `itr_label`, look up the year, channel and item, then compare the proposed destination with the cited ATO instructions. Correct a conflicting label in the proposal and retain the discrepancy for review. If the tool is unavailable or its map has no entry, check the relevant instructions directly or leave the destination open.
+
+For amounts or holdings that continue into the next year, link each closing balance to its opening row in the specialist schedule. Identify the owner and parcel, property or loss category, both income years, the closing quantity or amount, its source version and the opening quantity or amount it supports. Refer unsold parcels and unapplied capital losses to `au-capital-gains` and continuing borrowing expenses to `au-rental-property`. Keep an unsupported opening value blank with its missing evidence and reviewer action. A corrected statement supersedes the earlier reference: retain both versions, reopen affected opening rows and dependent amounts, and reconcile them to the revised closing schedule before reuse. Leave independently supported rows in place.
 
 ## Source and review boundary
 
