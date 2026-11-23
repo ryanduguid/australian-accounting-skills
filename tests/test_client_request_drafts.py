@@ -131,14 +131,21 @@ class ClientRequestDraftTests(unittest.TestCase):
             with self.subTest(skill=skill):
                 step = workflow_step(skill, number)
                 self.assert_sentence(step, rf"\bopen item from {review}\b", r"\bfact or record the client holds\b",
-                                     r"\bone plain question\b", r"\bdraft email\b")
-                self.assert_sentence(step, r"\beveryday words\b", r"\brather than a return label, item number or code\b",
-                                     DO_NOT + r"mention the matrix\b")
+                                     r"\bone plain, neutral question\b", r"\bdraft email\b", r"\bone question per item\b")
+                self.assert_sentence(step, r"\beveryday words\b", r"\brather than a return label, item number or code\b")
+                # The client never learns what the review found or suspects.
+                self.assert_sentence(step, DO_NOT + r"disclose the matrix\b", r"\ban amount or difference the review found\b",
+                                     r"\bsuspected error or issue\b", r"\bwhy an item was escalated\b",
+                                     r"\bimply an error or a tax outcome\b")
+                self.assert_sentence(step, r"\bEvery tax position and specialist matter stays off the draft\b",
+                                     r"\bDivision 7A\b", r"\bsection 100A of the ITAA 1936\b", r"\bbase rate entity status\b")
+                self.assert_sentence(step, r"\bleave the recipient blank\b", r"\bnever supply an email address\b")
                 self.assert_sentence(step, r"'Draft for practitioner review: not sent'")
                 self.assert_sentence(step, r"\bpractitioner reviews, edits and decides whether to send it\b")
-                self.assert_sentence(step, r"\breviewer or a specialist\b", r"\bstay off the draft\b")
                 self.assert_sentence(step, r"\bno draft was prepared\b")
                 self.assertIn("client question draft, drafted and not sent", section(skill, "Hand-off and checks"))
+        self.assert_sentence(workflow_step("au-trust-distributions", "6a"), r"\bgoes to a beneficiary\b",
+                             r"\bnothing about another beneficiary\b")
 
     def test_individual_return_checklist_is_a_two_year_matrix_with_fixed_statuses(self) -> None:
         step = workflow_step("au-individual-return", 1)
