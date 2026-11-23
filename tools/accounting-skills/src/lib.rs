@@ -8,6 +8,7 @@ pub mod last_changed;
 mod passage_diff;
 pub mod plugin_dist;
 pub mod plugin_evals;
+pub mod review_state;
 pub mod serve_mcp;
 pub mod skill_zips;
 mod source_codec_rules;
