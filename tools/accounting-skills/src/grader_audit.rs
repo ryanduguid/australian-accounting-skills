@@ -100,11 +100,9 @@ fn python_str(value: Option<&Value>) -> Result<String> {
     })
 }
 
-/// Trace file names: earlier Claude Code kept `output.jsonl`; 2.1.328 keeps
-/// `out/trace.jsonl` beside a `sealed` grader folder the run cannot read.
-const TRACE_NAMES: [&str; 2] = ["output.jsonl", "trace.jsonl"];
-
-/// Every trace under the root, not following directory links or entering `sealed`.
+/// Every `output.jsonl` under the root, and every `trace.jsonl`, which Claude
+/// Code 2.1.328 keeps at `out/trace.jsonl` beside a `sealed` grader folder the
+/// run cannot read; not following directory links or entering `sealed`.
 fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
     let listing = if dir.as_os_str().is_empty() {
         Path::new(".")
@@ -114,19 +112,20 @@ fn traces(dir: &Path, found: &mut Vec<PathBuf>) -> Result<()> {
     for entry in fs::read_dir(listing).map_err(|error| format!("{}: {error}", listing.display()))? {
         let entry = entry?;
         let path = dir.join(entry.file_name());
-        if entry.file_type()?.is_dir() && entry.file_name() != "sealed" {
+        let is_dir = entry.file_type()?.is_dir();
+        if is_dir && entry.file_name() != "sealed" {
             traces(&path, found)?;
+        } else if !is_dir && entry.file_name() == "trace.jsonl" {
+            found.push(path);
         }
     }
     // Match Python's literal rglob lookup, including the directory's case rule.
-    for name in TRACE_NAMES {
-        let trace = dir.join(name);
-        match fs::symlink_metadata(&trace) {
-            Ok(metadata) if !metadata.is_dir() => found.push(trace),
-            Ok(_) => {}
-            Err(error) if error.kind() == io::ErrorKind::NotFound => {}
-            Err(error) => return Err(format!("{}: {error}", trace.display()).into()),
-        }
+    let trace = dir.join("output.jsonl");
+    match fs::symlink_metadata(&trace) {
+        Ok(metadata) if !metadata.is_dir() => found.push(trace),
+        Ok(_) => {}
+        Err(error) if error.kind() == io::ErrorKind::NotFound => {}
+        Err(error) => return Err(format!("{}: {error}", trace.display()).into()),
     }
     Ok(())
 }
