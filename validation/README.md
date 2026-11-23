@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 243 cards in `cases/` test workflow quality, provenance and restraint.
+The 245 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -167,6 +167,8 @@ law claim, unverified source or guess.
 | [Working holiday maker withholding and return review: missing evidence](cases/au-working-holiday-makers-missing-evidence.md) | au-working-holiday-makers |
 | [Quotations from incomplete source text](cases/source-quote-partial-coverage.md) | au-tax-rates-verification |
 | [Receipt links and conflicting schedule entries](cases/receipt-schedule-conflicts.md) | au-individual-return |
+| [Income year evidence and opening balances](cases/return-year-evidence-and-opening-balances.md) | au-individual-return |
+| [Home office occupancy and the alternative workplace](cases/wfh-occupancy-alternative-workplace.md) | au-wfh-deductions |
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 | [SAPTO with an incomplete rebate-income bridge](cases/au-sapto-rebate-income-and-spouse.md) | au-sapto |

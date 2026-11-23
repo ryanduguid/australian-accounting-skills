@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 111 skills, 876 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 17 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 111 skills, 877 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -54,7 +54,7 @@ Totals: 111 skills, 876 indexed primary sources of which 341 have a recorded hum
 | [`au-franking-account`](../.claude/skills/au-franking-account/SKILL.md) | [18](../.claude/skills/au-franking-account/sources.json) | 2026-11-02 (15 of 18) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-gst-property`](../.claude/skills/au-gst-property/SKILL.md) | [38](../.claude/skills/au-gst-property/sources.json) | 2026-09-30 (2 of 38) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-gst-registration-review`](../.claude/skills/au-gst-registration-review/SKILL.md) | [2](../.claude/skills/au-gst-registration-review/sources.json) | 2026-10-14 (1 of 2) | 0 | 1 | 2 | 1 | 0 | 0 |
-| [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | [9](../.claude/skills/au-individual-return/sources.json) | 2026-10-14 (2 of 9) | 2 | 0 | 6 | 3 | 0 | 0 |
+| [`au-individual-return`](../.claude/skills/au-individual-return/SKILL.md) | [9](../.claude/skills/au-individual-return/sources.json) | 2026-10-14 (2 of 9) | 2 | 0 | 7 | 3 | 0 | 0 |
 | [`au-land-tax`](../.claude/skills/au-land-tax/SKILL.md) | [12](../.claude/skills/au-land-tax/sources.json) | 2026-09-30 (3 of 12) | 0 | 0 | 9 | 2 | 0 | 0 |
 | [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) | [3](../.claude/skills/au-lump-sum-arrears/sources.json) | 2026-11-02 (1 of 3) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) | [17](../.claude/skills/au-main-residence/sources.json) | none (0 of 17) | 0 | 0 | 2 | 0 | 0 | 0 |
@@ -98,7 +98,7 @@ Totals: 111 skills, 876 indexed primary sources of which 341 have a recorded hum
 | [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md) | [11](../.claude/skills/au-trust-deed-review/sources.json) | 2026-11-02 (8 of 11) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | [15](../.claude/skills/au-trust-distributions/sources.json) | 2026-09-30 (9 of 15) | 2 | 2 | 3 | 1 | 0 | 0 |
 | [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | [5](../.claude/skills/au-trust-losses/sources.json) | none (0 of 5) | 0 | 0 | 1 | 0 | 0 | 0 |
-| [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | [5](../.claude/skills/au-wfh-deductions/sources.json) | 2026-10-14 (3 of 5) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | [6](../.claude/skills/au-wfh-deductions/sources.json) | 2026-10-14 (3 of 6) | 1 | 1 | 2 | 1 | 0 | 0 |
 | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | [14](../.claude/skills/au-working-holiday-makers/sources.json) | 2026-09-29 (12 of 14) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | [21](../.claude/skills/bas-preparation/sources.json) | 2026-10-14 (5 of 21) | 0 | 0 | 16 | 3 | 0 | 0 |
 | [`cashflow-forecast-13week`](../.claude/skills/cashflow-forecast-13week/SKILL.md) | [6](../.claude/skills/cashflow-forecast-13week/sources.json) | 2026-09-30 (5 of 6) | 0 | 0 | 2 | 2 | 0 | 0 |

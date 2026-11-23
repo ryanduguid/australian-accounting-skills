@@ -2,6 +2,21 @@
   "skill": "au-wfh-deductions",
   "sources": [
     {
+      "title": "ATO: Occupancy expenses",
+      "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/occupancy-expenses",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Check the guidance for the employee's circumstances and income year before assessing occupancy expenses.",
+      "review_required_since": "2026-11-23",
+      "final_url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/occupancy-expenses",
+      "http_status": 403,
+      "fetched_at": "2026-11-23",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
       "title": "ATO: Fixed rate method",
       "url": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/working-from-home-expenses/fixed-rate-method",
       "checked_at": "2026-10-14",
