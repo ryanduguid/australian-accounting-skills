@@ -36,6 +36,16 @@ DOLLAR_PLACEHOLDER = re.compile(r"\$\d")
 # number of occurrences and the reason each stays. Every other figure was
 # replaced by a pointer to its primary source on 15 October 2026.
 KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
+    ("au-company-tax/SKILL.md", "80%"): (
+        1, "the passive income limit in s 23AA(a) of the Income Tax Rates Act 1986 as read in compilation 66 "
+        "on 24 November 2026; test_return_qa_matrix.py pins the wording"),
+    ("au-company-tax/SKILL.md", "AUD 50"): (
+        1, "the aggregated turnover limit in s 23AA(b) of the Income Tax Rates Act 1986 as read in compilation 66 "
+        "on 24 November 2026; test_return_qa_matrix.py pins the wording"),
+    ("au-company-tax/SKILL.md", "AUD 1,"): (
+        1, "the QA matrix's own tolerance, the cents a whole-figure return label drops; not a rate or threshold"),
+    ("au-trust-distributions/SKILL.md", "AUD 1,"): (
+        1, "the QA matrix's own tolerance, the cents a whole-figure return label drops; not a rate or threshold"),
     ("bas-preparation/references/transaction-gst-review.md", "$100"): (
         2, "fabricated input to a worked arithmetic example, not a rate or threshold"),
     ("bas-preparation/references/transaction-gst-review.md", "$60"): (

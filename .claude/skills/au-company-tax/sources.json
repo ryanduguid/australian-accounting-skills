@@ -52,6 +52,54 @@
       "content_hash_covers": "html",
       "source_last_modified": "",
       "content_url": "https://www.legislation.gov.au/C2026A00071/asmade/text"
+    },
+    {
+      "title": "ATO: Company tax return 2026 instructions",
+      "url": "https://www.ato.gov.au/forms-and-instructions/company-tax-return-2026-instructions",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026 through the print-whole-section PDF (published 30 May 2026): item 3 label F2, item 6 label T, item 7 label T, item 8 labels C to H, J, K, M, N and P, item 13 label U, calculation statement labels A and K, and the losses schedule trigger. Human source approval remains pending. Open the instructions for the return's income year.",
+      "final_url": "https://www.ato.gov.au/forms-and-instructions/company-tax-return-2026-instructions",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Income Tax Rates Act 1986",
+      "url": "https://www.legislation.gov.au/C2004A03348/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: compilation 66, compilation date 1 July 2026, ss 23AA and 23AB (base rate entity and base rate entity passive income). Human source approval remains pending. Read the compilation in force for the year of income.",
+      "final_url": "https://www.legislation.gov.au/C2004A03348/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Income Tax Assessment Act 1936",
+      "url": "https://www.legislation.gov.au/C1936A00027/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: compilation 193, compilation date 1 October 2026, volume 2, s 109D (loans treated as dividends). Human source approval remains pending. Read the compilation in force for the year of income.",
+      "final_url": "https://www.legislation.gov.au/C1936A00027/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

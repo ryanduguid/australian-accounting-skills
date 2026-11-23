@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 111 skills, 885 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 111 skills, 889 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -35,7 +35,7 @@ Totals: 111 skills, 885 indexed primary sources of which 341 have a recorded hum
 | [`au-client-email-triage`](../.claude/skills/au-client-email-triage/SKILL.md) | [1](../.claude/skills/au-client-email-triage/sources.json) | none (0 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-client-letter`](../.claude/skills/au-client-letter/SKILL.md) | [1](../.claude/skills/au-client-letter/sources.json) | none (0 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-client-meeting-note`](../.claude/skills/au-client-meeting-note/SKILL.md) | [6](../.claude/skills/au-client-meeting-note/sources.json) | none (0 of 6) | 3 | 0 | 2 | 0 | 0 | 0 |
-| [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | [3](../.claude/skills/au-company-tax/sources.json) | 2026-09-30 (3 of 3) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-company-tax`](../.claude/skills/au-company-tax/SKILL.md) | [6](../.claude/skills/au-company-tax/sources.json) | 2026-09-30 (3 of 6) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-cpi-rent-review`](../.claude/skills/au-cpi-rent-review/SKILL.md) | [7](../.claude/skills/au-cpi-rent-review/sources.json) | none (0 of 7) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-crypto-tax`](../.claude/skills/au-crypto-tax/SKILL.md) | [5](../.claude/skills/au-crypto-tax/sources.json) | 2026-10-14 (1 of 5) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-deceased-estates`](../.claude/skills/au-deceased-estates/SKILL.md) | [4](../.claude/skills/au-deceased-estates/sources.json) | 2026-10-14 (1 of 4) | 1 | 0 | 1 | 1 | 0 | 0 |
@@ -96,7 +96,7 @@ Totals: 111 skills, 885 indexed primary sources of which 341 have a recorded hum
 | [`au-transfer-pricing`](../.claude/skills/au-transfer-pricing/SKILL.md) | [1](../.claude/skills/au-transfer-pricing/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-travel-expenses`](../.claude/skills/au-travel-expenses/SKILL.md) | [12](../.claude/skills/au-travel-expenses/sources.json) | 2026-11-02 (9 of 12) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-trust-deed-review`](../.claude/skills/au-trust-deed-review/SKILL.md) | [11](../.claude/skills/au-trust-deed-review/sources.json) | 2026-11-02 (8 of 11) | 0 | 1 | 1 | 1 | 0 | 0 |
-| [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | [15](../.claude/skills/au-trust-distributions/sources.json) | 2026-09-30 (9 of 15) | 2 | 2 | 3 | 1 | 0 | 0 |
+| [`au-trust-distributions`](../.claude/skills/au-trust-distributions/SKILL.md) | [16](../.claude/skills/au-trust-distributions/sources.json) | 2026-09-30 (9 of 16) | 2 | 2 | 3 | 1 | 0 | 0 |
 | [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | [5](../.claude/skills/au-trust-losses/sources.json) | none (0 of 5) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | [6](../.claude/skills/au-wfh-deductions/sources.json) | 2026-10-14 (3 of 6) | 1 | 1 | 2 | 1 | 0 | 0 |
 | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | [14](../.claude/skills/au-working-holiday-makers/sources.json) | 2026-09-29 (12 of 14) | 0 | 1 | 1 | 1 | 0 | 0 |

@@ -271,6 +271,22 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "ATO: Trust tax return 2026 instructions",
+      "url": "https://www.ato.gov.au/forms-and-instructions/trust-tax-return-2026-instructions",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: items 26, 27 and 33 to 36 and the family trust and interposed entity election status items (last updated 30 May 2026, the election page 26 October 2026), item 57 (30 May 2026) and item 58, the statement of distribution (26 October 2026). Human source approval remains pending. Open the instructions for the return's income year.",
+      "final_url": "https://www.ato.gov.au/forms-and-instructions/trust-tax-return-2026-instructions",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
