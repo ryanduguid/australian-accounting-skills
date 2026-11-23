@@ -411,7 +411,7 @@ class LegalSourceGateTests(unittest.TestCase):
         # 0.12.0 runs the executable only by the released digest or one the operator names.
         self.assertIn("From `aus-accounting-mcp` 0.12.0 that worksheet runs", depreciation)
         self.assertIn("the value in `AUS_TAX_CALCULATORS_SHA256`", depreciation)
-        self.assertIn("An earlier server, such as the 0.10.0 the development plugin starts, accepts only an earlier release", depreciation)
+        self.assertIn("An earlier server, such as 0.10.0 or 0.11.0, accepts only an earlier release and refuses this one; the development plugin starts 0.12.0.", depreciation)
         # s 40-880: the 5 year rule and the start-up exception from the Act; the judgements stay the reviewer's.
         step = depreciation[depreciation.index("6a. **Business capital expenditure.**") : depreciation.index("7. Keep capital works")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-880", step)
@@ -681,7 +681,7 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
         text = " ".join(skill_text("div7a-compliance").split())
-        self.assertIn("The plugin pins `aus-accounting-mcp` 0.10.0, whose `review_div7a_loan` refuses, with no figure", text)
+        self.assertIn("The plugin pins `aus-accounting-mcp` 0.12.0, whose `review_div7a_loan` refuses, with no figure", text)
         self.assertIn("Record the refusal and its code as an exception", text)
 
     def test_site_vehicle_and_div7a_routes_keep_the_decision_with_the_reviewer(self) -> None:
