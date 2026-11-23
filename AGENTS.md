@@ -74,7 +74,7 @@ Read [the reuse instructions](#reusing-this-code) before carrying skills, valida
 | `claude-plugin` branch | The skills-only plugin the Claude plugin directory reads, generated from the verified release commit. Change the source through `main` and follow [the release process](RELEASING.md#plugin-directory-branch). |
 | `docs/plugin-directory-readme.md` | The README that branch ships |
 | `validation/` | Validation pack the tests exercise |
-| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial, plugin-eval and plugin-branch builders, the `statement-check` tie-out `statement-to-csv` runs, the `serve-mcp` read-only MCP server, and a candidate port of the other `scripts/` |
+| `tools/accounting-skills/` | Native Rust tooling: the only coverage, sweep-outcome, trial, plugin-eval and plugin-branch builders, the `statement-check` tie-out `statement-to-csv` runs, the `review-state` check register the review skills write and `au-client-letter` verifies, the `serve-mcp` read-only MCP server, and a candidate port of the other `scripts/` |
 
 `.gitignore` denies `*.json` and `*.md` and re-includes by exception. A new
 tracked file of either kind needs its own negation, or git will silently skip
