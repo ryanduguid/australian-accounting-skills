@@ -115,6 +115,13 @@ class ClientRequestDraftTests(unittest.TestCase):
         self.assert_sentence(step, r"\bcovering email\b")
         self.assert_sentence(step, r"\bThe firm sends the request\b")
 
+    def test_individual_return_reconciles_each_payer_and_keeps_absent_pre_fill_unknown(self) -> None:
+        step = workflow_step("au-individual-return", 2)
+        self.assert_sentence(step, r"\bmore than one payer\b", r"\bsum of the per-payer amounts\b", r"\bexception\b")
+        self.assert_sentence(step, r"\bpre-fill does not show is missing, not zero\b", r"\bkeep it unknown\b")
+        example = section("au-individual-return", "Fabricated acceptance example")
+        self.assertIn("absent from pre-fill stays unknown, not zero", example)
+
 
 if __name__ == "__main__":
     unittest.main()
