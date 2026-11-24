@@ -180,6 +180,38 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "AUSTRAC: Persons designated for targeted financial sanctions (TFS)",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/persons-designated-targeted-financial-sanctions-tfs",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: the page (last updated 27 October 2026) on targeted financial sanctions obligations under ss 28(2)(e) and 30 of the AML/CTF Act and s 5-3 of the AML/CTF Rules, checks during the business relationship and what to do where a person is designated. AUSTRAC's guidance is the regulator's view, not law. Human source approval remains pending.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/customer-due-diligence/persons-designated-targeted-financial-sanctions-tfs",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "AUSTRAC: Suspicious matter reports",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/reporting-us/suspicious-matter-reports",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: the page (last updated 20 November 2026) on suspicious matter reports, enhanced due diligence under s 32(b) of the AML/CTF Act and ending a customer relationship. AUSTRAC's guidance is the regulator's view, not law. Human source approval remains pending.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/reporting-us/suspicious-matter-reports",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
