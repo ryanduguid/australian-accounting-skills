@@ -66,6 +66,14 @@ Run it by its full path, the extracted `australian-tax-calculators` or `<tool-di
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 For the year: the eligibility fact sheet for steps 1 to 3 with each condition's evidence and date or its open item; the trust and determined trust component tie-out by character with each document's creation date; the attribution method and the members' components set beside each determined trust component; the AMMA statement register with versions and dates; the unders, overs and rounding register; the trustee liability schedule with the provision for each amount; the payments register with each payment's character split, recipient facts, listed country and date of effect, withholding or deemed payment amount, notice and payment summary; and the return label map. Before hand-off, check that for each character the members' determined member components and any trustee liability account for the whole determined trust component, that every AMMA statement was given within 3 months of the year end or is listed as late, that no withholding rate appears without the payment's character split and the recipient's address or residence facts and listed country, and that no rate, threshold or due date appears without its source and the date read.
 
 This skill does not decide whether the trust is a managed investment trust, a withholding MIT or an AMIT, whether rights are clearly defined, whether an attribution is fair and reasonable, whether a circumstance is temporary, whether a building is a clean building, how much income is non-concessional MIT income, or a member's residence. Those are for the trustee on the reviewer's advice. It makes no AMIT or class choice and gives no statement, notice or payment summary; an authorised person does each.
