@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 111 skills, 893 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 112 skills, 911 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -60,6 +60,7 @@ Totals: 111 skills, 893 indexed primary sources of which 341 have a recorded hum
 | [`au-main-residence`](../.claude/skills/au-main-residence/SKILL.md) | [17](../.claude/skills/au-main-residence/sources.json) | none (0 of 17) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) | [1](../.claude/skills/au-managed-fund-amit/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-medicare-review`](../.claude/skills/au-medicare-review/SKILL.md) | [3](../.claude/skills/au-medicare-review/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-mit-amit-trustee`](../.claude/skills/au-mit-amit-trustee/SKILL.md) | [18](../.claude/skills/au-mit-amit-trustee/sources.json) | none (0 of 18) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) | [3](../.claude/skills/au-non-commercial-losses/sources.json) | 2026-11-02 (1 of 3) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | [3](../.claude/skills/au-nonresident-cgt/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | [3](../.claude/skills/au-not-for-profit/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |

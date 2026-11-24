@@ -46,6 +46,19 @@ KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
         1, "the QA matrix's own tolerance, the cents a whole-figure return label drops; not a rate or threshold"),
     ("au-trust-distributions/SKILL.md", "AUD 1,"): (
         1, "the QA matrix's own tolerance, the cents a whole-figure return label drops; not a rate or threshold"),
+    ("au-mit-amit-trustee/SKILL.md", "10%"): (
+        2, "the closely held limit for a foreign resident individual in s 275-30(1)(c) of the ITAA 1997 and the "
+        "clean building rate in s 12-385(3)(a)(ii) in Schedule 1 to the TAA 1953, read 24 November 2026; "
+        "test_mit_amit_trustee.py pins both"),
+    ("au-mit-amit-trustee/SKILL.md", "15%"): (
+        2, "the information exchange country rate in s 12-385(3)(a)(i) in Schedule 1 to the TAA 1953, read "
+        "24 November 2026, and the acceptance example's refusal to apply it by default"),
+    ("au-mit-amit-trustee/SKILL.md", "30%"): (
+        3, "the non-concessional MIT income and other-address rates in s 12-385(3) in Schedule 1 to the TAA 1953, "
+        "read 24 November 2026, and the acceptance example's refusal to apply it by default"),
+    ("au-mit-amit-trustee/SKILL.md", "45%"): (
+        1, "the trustee shortfall rate in s 12(11) to (13) of the Income Tax Rates Act 1986 as read in compilation 66 "
+        "on 24 November 2026, set beside the ATO's own description; test_mit_amit_trustee.py pins the wording"),
     ("bas-preparation/references/transaction-gst-review.md", "$100"): (
         2, "fabricated input to a worked arithmetic example, not a rate or threshold"),
     ("bas-preparation/references/transaction-gst-review.md", "$60"): (
