@@ -25,6 +25,7 @@
     "agent skills"
   ],
   "skills": "./.claude/skills",
+  "commands": "./commands",
   "mcpServers": {
     "aus-accounting": {
       "command": "uvx",
