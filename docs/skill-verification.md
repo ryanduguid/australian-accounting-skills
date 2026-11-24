@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 111 skills, 893 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 111 skills, 897 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 18 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -86,7 +86,7 @@ Totals: 111 skills, 893 indexed primary sources of which 341 have a recorded hum
 | [`au-smsf-year-end`](../.claude/skills/au-smsf-year-end/SKILL.md) | [10](../.claude/skills/au-smsf-year-end/sources.json) | 2026-09-30 (6 of 10) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-sole-trader`](../.claude/skills/au-sole-trader/SKILL.md) | [4](../.claude/skills/au-sole-trader/sources.json) | 2026-10-14 (1 of 4) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-super-contribution-caps`](../.claude/skills/au-super-contribution-caps/SKILL.md) | [14](../.claude/skills/au-super-contribution-caps/sources.json) | 2026-10-14 (4 of 14) | 1 | 1 | 2 | 2 | 0 | 0 |
-| [`au-super-guarantee-charge`](../.claude/skills/au-super-guarantee-charge/SKILL.md) | [12](../.claude/skills/au-super-guarantee-charge/sources.json) | 2026-11-02 (8 of 12) | 0 | 0 | 2 | 2 | 0 | 0 |
+| [`au-super-guarantee-charge`](../.claude/skills/au-super-guarantee-charge/SKILL.md) | [14](../.claude/skills/au-super-guarantee-charge/sources.json) | 2026-11-02 (8 of 14) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`au-tax-agent-obligations`](../.claude/skills/au-tax-agent-obligations/SKILL.md) | [24](../.claude/skills/au-tax-agent-obligations/sources.json) | 2026-11-02 (2 of 24) | 10 | 0 | 4 | 1 | 0 | 0 |
 | [`au-tax-planning-review`](../.claude/skills/au-tax-planning-review/SKILL.md) | [1](../.claude/skills/au-tax-planning-review/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-tax-rates-verification`](../.claude/skills/au-tax-rates-verification/SKILL.md) | [1](../.claude/skills/au-tax-rates-verification/sources.json) | 2026-10-14 (1 of 1) | 0 | 0 | 2 | 1 | 0 | 0 |
@@ -119,7 +119,7 @@ Totals: 111 skills, 893 indexed primary sources of which 341 have a recorded hum
 | [`reconciliation-break-trace`](../.claude/skills/reconciliation-break-trace/SKILL.md) | exempt | none | 0 | 0 | 4 | 0 | 0 | 0 |
 | [`retention-schedule`](../.claude/skills/retention-schedule/SKILL.md) | [7](../.claude/skills/retention-schedule/sources.json) | 2026-09-30 (4 of 7) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`statement-to-csv`](../.claude/skills/statement-to-csv/SKILL.md) | [4](../.claude/skills/statement-to-csv/sources.json) | 2026-11-02 (2 of 4) | 0 | 1 | 3 | 1 | 0 | 0 |
-| [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md) | [8](../.claude/skills/stp-finalisation/sources.json) | 2026-09-30 (5 of 8) | 0 | 1 | 4 | 3 | 0 | 0 |
+| [`stp-finalisation`](../.claude/skills/stp-finalisation/SKILL.md) | [10](../.claude/skills/stp-finalisation/sources.json) | 2026-09-30 (5 of 10) | 0 | 1 | 4 | 3 | 0 | 0 |
 | [`tax-invoice-review`](../.claude/skills/tax-invoice-review/SKILL.md) | [12](../.claude/skills/tax-invoice-review/sources.json) | 2026-10-14 (3 of 12) | 1 | 0 | 7 | 2 | 0 | 0 |
 | [`wip-over-under-billing`](../.claude/skills/wip-over-under-billing/SKILL.md) | [12](../.claude/skills/wip-over-under-billing/sources.json) | 2026-09-30 (12 of 12) | 0 | 0 | 2 | 1 | 0 | 1 |
 | [`workers-compensation-premium`](../.claude/skills/workers-compensation-premium/SKILL.md) | [21](../.claude/skills/workers-compensation-premium/sources.json) | none (0 of 21) | 0 | 0 | 1 | 0 | 0 | 0 |
