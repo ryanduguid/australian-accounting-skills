@@ -11,21 +11,21 @@ Income year, the individual's total superannuation balance (TSB) reported for ea
 
 ## Workflow
 
-1. Confirm the law applies to the year. Division 296 of the Income Tax Assessment Act 1997 was inserted by the Treasury Laws Amendment (Building a Stronger and Fairer Super System) Act 2026 and applies from the 2026-27 income year. Read the large and very large superannuation balance thresholds for the year from sections 296-30 and 296-35 of the ITAA 1997 or the ATO page; they are indexed after 2026-27. <!-- year-change: 2026-27 -->
+1. Confirm the law applies to the year. Division 296 of the Income Tax Assessment Act 1997 was inserted by the Treasury Laws Amendment (Building a Stronger and Fairer Super System) Act 2026 and applies from the 2026-27 income year. Read the large and very large superannuation balance thresholds for the year from sections 296-30 and 296-35 of the ITAA 1997 or the ATO page; they are indexed after 2026-27. Section 960-285 of the ITAA 1997 indexes each to the CPI, rounds it down to a multiple of the rounding amount its table sets for that threshold and leaves it unchanged when the indexation factor is 1 or less; until the ATO publishes a later year's thresholds, compute nothing for that year. <!-- year-change: 2026-27 -->
 
 2. Work out the TSB reference amount. For 2026-27, use the TSB at the end of the year only. From 2027-28, use the greater of the TSB just before the start of the year and at the end of the year. Remove limited recourse borrowing arrangement amounts. Tie each interest's value to the fund's report. <!-- year-change: 2027-28 -->
 
 3. If the reference amount does not exceed the large threshold, or total superannuation earnings are nil or less, record that no taxable superannuation earnings arise and stop. Keep the supporting balances.
 
-4. Total superannuation earnings: add the relevant earnings each fund reports, including interests held as a reversionary retirement phase recipient or notionally through a family law split. Treat excluded interests and foreign fund interests as nil. A missing fund report leaves the total `UNVERIFIED`.
+4. Total superannuation earnings: add the relevant earnings each fund reports, including each interest supporting an income stream the individual receives in the retirement phase because of another person's death, reversionary or not (section 296-55 of the ITAA 1997), and interests held notionally through a family law split. Treat excluded interests and foreign fund interests as nil. A missing fund report leaves the total `UNVERIFIED`.
 
 5. Compute the proportion above each threshold: (reference amount less threshold) divided by reference amount, times 100, rounded to 2 decimal places as section 296-40 of the ITAA 1997 directs. Apply the proportion to total superannuation earnings for the large threshold component and, where relevant, the very large threshold component.
 
 6. Apply the rates in the Superannuation (Building a Stronger and Fairer Super System) Imposition Act 2026 for each component, cross-checked against the ATO page. Show each component, its rate and the source separately.
 
-7. Defined benefit and prescribed interests: identify the tax attributable to them, which is deferred to a Division 296 debt account, and record it apart from the amount due. Note that a liability not deferred is due 84 days after the notice of assessment.
+7. Defined benefit interests: estimate the part of the tax attributable to each interest that is or includes a defined benefit interest, and record it apart from the amount due. The Commissioner determines that part, and it is deferred to a Division 296 debt account under Division 134 in Schedule 1 to the Taxation Administration Act 1953, unless the interest's Division 296 end benefit has already become payable. Tax on a prescribed interest that neither is nor includes a defined benefit interest is not deferred. A liability not deferred is due 84 days after the notice of assessment (section 296-130 of the ITAA 1997). If, on the 84th day after the notice issues, the payments already made and the amounts already released for that assessment fall short of the tax not deferred, the Commissioner may issue release authorities to the individual's super providers under Division 131 in Schedule 1 to the Taxation Administration Act 1953.
 
-8. Death: if the individual died in 2026-27, record that no Division 296 tax is payable for that year. For a later year of death, follow the ATO rules on TSB being nil after death and on later earnings being assessed in the year of death.
+8. Death: if the individual died in 2026-27, record that no Division 296 tax is payable for that year. For a later year of death, the TSB at any time after death is taken to be nil (section 296-50 of the ITAA 1997), so the TSB just before the start of that year sets the reference amount; follow the ATO guidance on later earnings being assessed in the year of death.
 
 9. SMSF: check whether the fund made, or can still make, the irrevocable cost base election for assets held at the end of 30 June 2026 before its 2026-27 return is due. Prepare the facts for the trustee; the election is theirs.
 
@@ -62,7 +62,7 @@ A person can compare a result with the site's [Division 296 tax calculator](http
 4. Open items: each with its owner and next action.
 5. Files: at most 5 links to the workpapers and sources relied on.
 
-A TSB schedule by interest and date, an earnings schedule by fund, the proportion and component calculations with rounding shown, a deferred amount for defined benefit or prescribed interests, and a reconciliation to any notice. Every earnings figure agrees to a fund report or is marked missing. Elections, objections and payment choices are reviewer and trustee decisions.
+A TSB schedule by interest and date, an earnings schedule by fund, the proportion and component calculations with rounding shown, any amount deferred under step 7, and a reconciliation to any notice. Every earnings figure agrees to a fund report or is marked missing. Elections, objections and payment choices are reviewer and trustee decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
