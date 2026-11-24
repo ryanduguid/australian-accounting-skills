@@ -3,7 +3,7 @@
 
 The tests check the wording a reader could get wrong: the firm's risk assessment and
 policies come before a client's first service; a minor beneficiary is not left out; a
-review or screening interval is the firm's input, never a rule; a sanctions match stops
+fixed review or screening interval is the firm's input; a sanctions match stops
 the file; a suspicious matter report or a foreign politically exposed person sets
 conditions, not an automatic exit; a new service alone does not end pre-commencement
 status; and personnel engaged offshore are not left out. Every new source record waits
@@ -41,25 +41,31 @@ class AmlCtfEdgeCases(unittest.TestCase):
 
     def test_unit_holders_and_minor_beneficiaries_follow_the_provisions(self) -> None:
         step = flat(workflow_step(COVERAGE, 3))
-        self.assertIn("ultimately owns, directly or indirectly, 25% or more of the person", step)
+        self.assertIn("ultimately owns, directly or indirectly, 25% or more of the person, or who controls it", step)
         self.assertIn("only where the nature of the trust means it is not possible to identify each beneficiary", step)
         self.assertIn("s 6-6(3) treats whether those persons are politically exposed", step)
         self.assertIn("Neither the Act nor the Rules as read sets an exception by a beneficiary's age", step)
-        self.assertIn("route any instruction to leave one out to that officer", step)
+        self.assertIn("with a screening date or a basis the officer has recorded that treats the matter as established", step)
+        self.assertIn("route any instruction to leave one out because of age", step)
 
     def test_intervals_are_the_firms_input(self) -> None:
         step = flat(workflow_step(COVERAGE, 4))
         self.assertIn("are the firm's policy choices", step)
         self.assertIn("sets no interval, so take each interval from the firm's policies", step)
         self.assertIn("it sets no frequency", step)
-        self.assertNotIn("daily", step)
+        self.assertIn("at a frequency appropriate to the client's ML/TF risk", step)
 
     def test_new_pep_and_address_change_are_triggers(self) -> None:
         step = flat(workflow_step(COVERAGE, 4))
         self.assertIn("s 6-24(1) of the AML/CTF Rules", step)
         self.assertIn("s 5-5(1A) of the AML/CTF Rules", step)
         self.assertIn("a new designated service does not by itself end that status", step)
-        self.assertIn("s 36(4) of the AML/CTF Act applies s 28(1) again only if", step)
+        self.assertIn("s 36(4) of the AML/CTF Act makes s 28(1) apply only if", step)
+        self.assertIn("results in the client's ML/TF risk being medium or high", step)
+        self.assertIn("(s 36(2) of the AML/CTF Act)", step)
+        self.assertIn("a domestic or international organisation politically exposed person while the client's ML/TF risk is high", step)
+        self.assertIn("Sections 5-5(2) and 6-24(2) of the AML/CTF Rules", step)
+        self.assertIn("decide none of them", step)
 
     def test_a_sanctions_match_stops_the_file(self) -> None:
         step = flat(workflow_step(RELIANCE, 7))
@@ -73,11 +79,18 @@ class AmlCtfEdgeCases(unittest.TestCase):
         self.assertIn("Section 32(b) of the AML/CTF Act also requires enhanced due diligence", step)
         self.assertIn("does not have to end a customer relationship", step)
         self.assertIn("set conditions for providing the service rather than a prohibition", step)
+        self.assertIn("s 32(c) also covers any person acting on behalf of the client", step)
+        self.assertIn("Record the suspicious matter reporting circumstance only where that officer has put it on this file", step)
+        self.assertIn("as a question for that officer, without deciding whether s 32(e) applies", step)
 
     def test_offshore_personnel_are_not_left_out(self) -> None:
         step = flat(workflow_step(SERVICES, 7))
-        self.assertIn("s 26F(4)(d) and (e) of the AML/CTF Act", step)
+        self.assertIn("s 26F(4)(d) of the AML/CTF Act requires", step)
+        self.assertIn("Section 26F(4)(e) of the AML/CTF Act requires", step)
         self.assertIn("so list personnel engaged offshore with the rest", step)
+        self.assertIn("at or through a permanent establishment in Australia (s 26F(2) of the AML/CTF Act)", step)
+        self.assertIn("who perform, or will perform, functions relevant to its obligations", step)
+        self.assertIn("initial training on employment or engagement and ongoing training", step)
         self.assertIn("not a required check", step)
         self.assertIn("15 or fewer personnel", step)
 
