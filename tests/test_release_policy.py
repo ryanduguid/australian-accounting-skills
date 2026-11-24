@@ -65,6 +65,11 @@ class ReleasePolicyTests(unittest.TestCase):
             "skills-verification-mode: subcontractor-accounting-v1",
             workflow,
         )
+        parsed = yaml.safe_load(workflow)
+        self.assertEqual(
+            parsed["jobs"]["release"]["with"]["skill-archives"],
+            ".claude/skills/*",
+        )
 
 
 class CorrectionNoticeTests(unittest.TestCase):
