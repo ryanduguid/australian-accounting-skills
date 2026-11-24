@@ -631,6 +631,46 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the operator establishes that the rule applies and that none of its exceptions does", bas)
         self.assertIn("stay with the payroll and payables records, never with the command", bas)
 
+    def test_medicare_super_and_stp_skills_route_their_1_2_0_commands(self) -> None:
+        medicare = self.assert_released_calculators(
+            "au-medicare-review", "medicare-levy", "medicare-levy-surcharge", "income-tests",
+            "private-health-insurance-rebate", version="1.2.0",
+        )
+        caps = self.assert_released_calculators(
+            "au-super-contribution-caps", "fhss", "contribution-caps", "government-super-amounts", version="1.2.0"
+        )
+        stp = self.assert_released_calculators(
+            "stp-finalisation", "payg-withholding", "study-loan-withholding", "quarterly-sg", version="1.2.0"
+        )
+        sgc = self.assert_released_calculators("au-super-guarantee-charge", "quarterly-sg", version="1.2.0")
+        for text in (medicare, caps, stp, sgc):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals in its own codes; eligibility and the facts stay with the steps.
+        self.assertIn("for an income year from 2020-21 to 2026-27, from step 1's statement lines", medicare)
+        self.assertIn("(`private_health_insurance_rebate.rate_unpublished`)", medicare)
+        self.assertIn("the supplied tax claim code stay with step 1", medicare)
+        self.assertIn("a total offset of 144.94 and no excess", medicare)
+        # Scope limits the catalogue states, kept beside the positive routes.
+        self.assertIn("every person insured is an eligible person under the *Health Insurance Act 1973*", medicare)
+        self.assertIn("leaves out defined benefit interests and notional taxed contributions", caps)
+        self.assertIn("a deceased person's annualised income, interest on late payments", caps)
+        self.assertIn("no bring-forward period started in either of the 2 previous years", caps)
+        self.assertIn("(`contribution_caps.defined_benefit_interest`)", caps)
+        self.assertIn("it never applies step 3's proposed July 2026 relief", caps)
+        self.assertIn("(`government_super_amounts.fact_not_supplied`)", caps)
+        self.assertIn("15,000 unused from 2020-21, 10,000 of it applied, 45,000 available, 5,000 headroom", caps)
+        self.assertIn("never to rebuild the year's total", stp)
+        self.assertIn("(`payg.pay_date_before_schedule`)", stp)
+        self.assertIn("the command decides none of them", stp)
+        self.assertIn("a lead for `au-super-guarantee-charge`, not a charge", stp)
+        # The quarterly minimum is the required contribution, never the shortfall on salary or wages.
+        for text in (stp, sgc):
+            self.assertIn("one complete quarter of 2025-26", text)
+            self.assertIn("It refuses 2026-27 (`period.unsupported`)", text)
+        self.assertIn("so its additional contribution is never the shortfall or a charge", sgc)
+        self.assertIn("returned a 1,560.00 minimum and a 65.00 additional contribution", sgc)
+
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
             "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.2.0"
