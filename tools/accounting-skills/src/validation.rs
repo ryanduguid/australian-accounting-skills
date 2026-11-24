@@ -390,11 +390,18 @@ pub fn split_figure_cards(input: &Names) -> (Names, Names) {
         .cloned()
         .partition(|name| !matches(&FIGURE_NAME, name))
 }
+fn key_set(value: &Value) -> Option<Names> {
+    value.as_object().map(|map| map.keys().cloned().collect())
+}
 pub fn check_figures_schema(input: &str) -> Result<()> {
     let schema = strict_json(input, "validation/figures.schema.json")?;
+    let items = &schema["properties"]["fields"]["items"];
     if schema["required"] != json!(FIGURE_KEYS)
         || schema["additionalProperties"] != json!(false)
-        || schema["properties"]["fields"]["items"]["required"] != json!(FIGURE_FIELD_KEYS)
+        || key_set(&schema["properties"]) != Some(names(FIGURE_KEYS))
+        || items["required"] != json!(FIGURE_FIELD_KEYS)
+        || items["additionalProperties"] != json!(false)
+        || key_set(&items["properties"]) != Some(names(FIGURE_FIELD_KEYS))
         || schema["$defs"]["verdict"]["enum"] != json!(FIGURE_VERDICTS)
     {
         return Err(
@@ -423,6 +430,13 @@ pub fn check_figure_card(rel: &str, input: &str, skills: &Names) -> Result<usize
         .filter(|stem| !stem.as_str().contains("--") && !stem.as_str().ends_with('-'))
         .ok_or("figures card name must be validation/figures/<slug>.json")?
         .as_str();
+    if input.contains("\\u") {
+        // An escape could hide an identifier from the scan of the raw text, and
+        // Python and serde_json treat a lone surrogate escape differently.
+        return Err(
+            "figures card must not use JSON unicode escapes; write each character itself".into(),
+        );
+    }
     let data = strict_json(input, rel)?;
     if !data.is_object() || keys(&data) != names(FIGURE_KEYS) {
         return Err(format!(
@@ -489,20 +503,19 @@ pub fn score_figures(fields: &Names, verdicts: &Value) -> Result<(usize, usize, 
     else {
         return Err("verdicts must give exactly one verdict for each lodged field".into());
     };
-    let mut counts: BTreeMap<&str, usize> = BTreeMap::new();
+    let (mut matched, mut wrong_amount) = (0, 0);
     for value in verdicts.values() {
         let verdict = value
             .as_str()
             .filter(|verdict| FIGURE_VERDICTS.contains(verdict))
             .ok_or_else(|| format!("each verdict must be one of {}", FIGURE_VERDICTS.join(", ")))?;
-        *counts.entry(verdict).or_insert(0) += 1;
+        match verdict {
+            "match" => matched += 1,
+            "wrong-amount" => wrong_amount += 1,
+            _ => {}
+        }
     }
-    let count = |verdict: &str| counts.get(verdict).copied().unwrap_or(0);
-    Ok((
-        verdicts.len(),
-        count("match"),
-        count("match") + count("wrong-amount"),
-    ))
+    Ok((verdicts.len(), matched, matched + wrong_amount))
 }
 pub fn git_entries(paths: &[String], root: &Path) -> Result<BTreeMap<String, String>> {
     let output = Command::new("git")

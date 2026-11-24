@@ -407,6 +407,10 @@ def split_figure_cards(names: set[str]) -> tuple[set[str], set[str]]:
     return names - figures, figures
 
 
+def _key_set(value: object) -> set[str] | None:
+    return set(value) if isinstance(value, dict) else None
+
+
 def check_figures_schema(text: str) -> None:
     """Hold the published figures card schema to the checker's keys and verdicts."""
     # Any: a wrong shape raises KeyError or TypeError below and is refused.
@@ -415,7 +419,10 @@ def check_figures_schema(text: str) -> None:
         declared = (
             schema["required"] == list(FIGURE_KEYS)
             and schema["additionalProperties"] is False
+            and _key_set(schema["properties"]) == set(FIGURE_KEYS)
             and schema["properties"]["fields"]["items"]["required"] == list(FIGURE_FIELD_KEYS)
+            and schema["properties"]["fields"]["items"]["additionalProperties"] is False
+            and _key_set(schema["properties"]["fields"]["items"]["properties"]) == set(FIGURE_FIELD_KEYS)
             and schema["$defs"]["verdict"]["enum"] == list(FIGURE_VERDICTS)
         )
     except (KeyError, TypeError):
@@ -436,6 +443,10 @@ def check_figure_card(rel: str, text: str, skills: set[str]) -> int:
     match = FIGURE_FILE_RE.match(rel)
     if match is None or "--" in match.group(1) or match.group(1).endswith("-"):
         raise ValidationError("figures card name must be validation/figures/<slug>.json")
+    if "\\u" in text:
+        # An escape could hide an identifier from the scan of the raw text, and
+        # Python and serde_json treat a lone surrogate escape differently.
+        raise ValidationError("figures card must not use JSON unicode escapes; write each character itself")
     data = _strict_json(text, rel)
     if not isinstance(data, dict) or set(data) != set(FIGURE_KEYS):
         raise ValidationError(f"figures card keys must be exactly {', '.join(FIGURE_KEYS)}")

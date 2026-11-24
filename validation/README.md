@@ -394,7 +394,8 @@ answer key for a field-level preparation benchmark. It names one target skill,
 the return form, a one-line scenario saying what the fabricated evidence shows,
 and each lodged field's code, label and amount in dollars and cents.
 [`figures.schema.json`](figures.schema.json) is its shape; the checker holds the
-schema's keys and verdict list to its own.
+schema's keys and verdict list to its own. A card is plain UTF-8 text with no
+JSON `\u` escapes, so the scan for identifiers reads every character as written.
 
 A run gives each lodged field exactly one verdict:
 
