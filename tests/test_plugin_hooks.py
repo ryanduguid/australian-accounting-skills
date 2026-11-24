@@ -60,6 +60,33 @@ class PromptHookTests(unittest.TestCase):
             with self.subTest(prompt=prompt):
                 self.assertEqual(hook("prompt", {"prompt": prompt}), "")
 
+    def test_short_keywords_match_only_as_whole_words(self) -> None:
+        for keyword, skill in (
+            ("bas", "bas-preparation"),
+            ("fbt", "fbt-annual-workflow"),
+            ("psi", "au-psi-review"),
+            ("amit", "au-managed-fund-amit"),
+            ("wfh", "au-wfh-deductions"),
+            ("smsf", "au-smsf-year-end"),
+        ):
+            with self.subTest(keyword=keyword):
+                text = attached(hook("prompt", {"prompt": f"Check the {keyword.upper()}."}), "UserPromptSubmit")
+                self.assertIn(f"skill {skill} ", text)
+                for near in (f"{keyword}x", f"x{keyword}", f"{keyword}-like", f"{keyword}2"):
+                    self.assertEqual(hook("prompt", {"prompt": f"a {near} b"}), "", near)
+
+    def test_input_that_is_not_utf8_json_adds_nothing(self) -> None:
+        for raw in (bytes([0xFF, 0xFE, 0x7B]), b"not json", b""):
+            with self.subTest(raw=raw):
+                result = subprocess.run(
+                    [sys.executable, "-I", str(SCRIPT), "prompt"],
+                    input=raw,
+                    capture_output=True,
+                    timeout=60,
+                    check=False,
+                )
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (0, b"", b""))
+
     def test_bad_input_adds_nothing(self) -> None:
         for mode, payload in (("prompt", ["fbt"]), ("prompt", {"prompt": 7}), ("other", {})):
             with self.subTest(mode=mode, payload=payload):
@@ -97,6 +124,10 @@ class CompactHookTests(unittest.TestCase):
         self.assertEqual(hook("compact", {"source": "startup", "transcript_path": used}), "")
         missing = str(Path(tempfile.gettempdir()) / "no-such-transcript.jsonl")
         self.assertEqual(hook("compact", {"source": "compact", "transcript_path": missing}), "")
+
+    def test_only_the_transcripts_last_mebibyte_counts(self) -> None:
+        path = self.transcript("bas-preparation " + "x" * (1024 * 1024 + 10))
+        self.assertEqual(hook("compact", {"source": "compact", "transcript_path": path}), "")
 
     def test_a_transcript_naming_every_skill_stays_within_the_bound(self) -> None:
         path = self.transcript("\n".join(SKILLS) * 50)

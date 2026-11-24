@@ -8,7 +8,7 @@
             "type": "command",
             "command": "python3",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/critical_rules.py", "prompt"],
-            "timeout": 10,
+            "timeout": 3,
             "onFailure": "continue"
           }
         ]
@@ -22,7 +22,7 @@
             "type": "command",
             "command": "python3",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/critical_rules.py", "compact"],
-            "timeout": 10,
+            "timeout": 3,
             "onFailure": "continue"
           }
         ]
