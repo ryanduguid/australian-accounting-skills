@@ -67,9 +67,9 @@ const FIGURE_KEYS: &[&str] = &[
 const FIGURE_FIELD_KEYS: &[&str] = &["field", "label", "amount"];
 pub const FIGURE_VERDICTS: &[&str] =
     &["match", "wrong-amount", "wrong-field", "omitted", "queried"];
-static FIGURE_NAME: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^validation/figures/([a-z0-9](?:[a-z0-9]|-(?=[a-z0-9]))*)\.json$").unwrap()
-});
+// Kept free of nested quantifiers; check_figure_card refuses a doubled or trailing hyphen.
+static FIGURE_NAME: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^validation/figures/([a-z0-9][a-z0-9-]*)\.json$").unwrap());
 static FIGURE_AMOUNT: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^-?(?:0|[1-9][0-9]{0,6})\.[0-9]{2}$").unwrap());
 static SLUG: LazyLock<Regex> =
@@ -420,6 +420,7 @@ pub fn check_figure_card(rel: &str, input: &str, skills: &Names) -> Result<usize
     let stem = FIGURE_NAME
         .captures(rel)?
         .and_then(|cap| cap.get(1))
+        .filter(|stem| !stem.as_str().contains("--") && !stem.as_str().ends_with('-'))
         .ok_or("figures card name must be validation/figures/<slug>.json")?
         .as_str();
     let data = strict_json(input, rel)?;

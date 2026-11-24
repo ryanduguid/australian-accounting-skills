@@ -51,8 +51,8 @@ RESULT_FIELD_MAX_LENGTH = 120
 # A figures card: a fabricated return whose lodged figures are the answer key
 # for a field-level preparation benchmark. A run gives each lodged field one
 # verdict from FIGURE_VERDICTS; match rate and label accuracy are kept apart.
-# A slug with no nested quantifier: a hyphen only between 2 letters or digits.
-FIGURE_FILE_RE = re.compile(r"^validation/figures/([a-z0-9](?:[a-z0-9]|-(?=[a-z0-9]))*)\.json\Z")
+# Kept free of nested quantifiers; check_figure_card refuses a doubled or trailing hyphen.
+FIGURE_FILE_RE = re.compile(r"^validation/figures/([a-z0-9][a-z0-9-]*)\.json\Z")
 FIGURE_KEYS = ("id", "synthetic", "target_skill", "return_form", "scenario", "fields")
 FIGURE_FIELD_KEYS = ("field", "label", "amount")
 FIGURE_VERDICTS = ("match", "wrong-amount", "wrong-field", "omitted", "queried")
@@ -434,7 +434,7 @@ def _figure_line(value: object, limit: int, label: str) -> str:
 def check_figure_card(rel: str, text: str, skills: set[str]) -> int:
     """Validate a figures card and return how many lodged fields it holds."""
     match = FIGURE_FILE_RE.match(rel)
-    if match is None:
+    if match is None or "--" in match.group(1) or match.group(1).endswith("-"):
         raise ValidationError("figures card name must be validation/figures/<slug>.json")
     data = _strict_json(text, rel)
     if not isinstance(data, dict) or set(data) != set(FIGURE_KEYS):

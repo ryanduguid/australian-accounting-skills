@@ -46,7 +46,7 @@
     {"name": "a trailing newline in the amount", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1100.00\n"}]}, "error": "field 1: amount must be one non-empty line"},
     {"name": "non-ASCII digits", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "١١.00"}]}, "error": "field 1: amount must be dollars and cents"},
     {"name": "a repeated field", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1100.00"}, {"field": "G1", "label": "Total sales again", "amount": "1.00"}]}, "error": "field 2: duplicate field 'G1'"},
-    {"name": "an identifier in a label", "set": {"fields": [{"field": "G1", "label": "Sales for TFN 123 456 782", "amount": "1100.00"}]}, "error": "possible labelled Australian identifier"},
+    {"name": "an identifier in a label", "set": {"fields": [{"field": "G1", "label": "Sales for TFN: 1", "amount": "1100.00"}]}, "error": "possible labelled Australian identifier"},
     {"name": "an email in the scenario", "set": {"scenario": "Synthetic sales sent by owner@example.com."}, "error": "possible email address"}
   ],
   "scores": [
