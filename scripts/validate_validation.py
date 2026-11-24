@@ -15,6 +15,7 @@ import sys
 import unicodedata
 from datetime import date
 from pathlib import Path, PurePosixPath
+from typing import Any
 
 import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
@@ -407,7 +408,8 @@ def split_figure_cards(names: set[str]) -> tuple[set[str], set[str]]:
 
 def check_figures_schema(text: str) -> None:
     """Hold the published figures card schema to the checker's keys and verdicts."""
-    schema = _strict_json(text, "validation/figures.schema.json")
+    # Any: a wrong shape raises KeyError or TypeError below and is refused.
+    schema: Any = _strict_json(text, "validation/figures.schema.json")
     try:
         declared = (
             schema["required"] == list(FIGURE_KEYS)
