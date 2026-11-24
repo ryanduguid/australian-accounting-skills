@@ -1,0 +1,423 @@
+{
+  "au-aasb-standards-reference": [
+    "aasb standards reference"
+  ],
+  "au-aml-ctf-cdd-reliance": [
+    "aml ctf cdd reliance",
+    "aml/ctf",
+    "customer due diligence"
+  ],
+  "au-aml-ctf-client-coverage": [
+    "aml ctf client coverage",
+    "aml/ctf",
+    "anti-money laundering"
+  ],
+  "au-aml-ctf-designated-services": [
+    "aml ctf designated services",
+    "aml/ctf",
+    "designated service"
+  ],
+  "au-asic-company-changes": [
+    "asic company changes",
+    "asic"
+  ],
+  "au-ato-account-reconciliation": [
+    "ato account reconciliation"
+  ],
+  "au-ato-correspondence-triage": [
+    "ato correspondence triage"
+  ],
+  "au-ato-objection": [
+    "ato objection",
+    "objection"
+  ],
+  "au-ato-penalties-interest": [
+    "ato penalties interest",
+    "general interest charge",
+    "ato penalty"
+  ],
+  "au-award-underpayment-review": [
+    "award underpayment review"
+  ],
+  "au-bookkeeping": [
+    "bookkeeping"
+  ],
+  "au-business-acquisition-review": [
+    "business acquisition review"
+  ],
+  "au-business-formation": [
+    "business formation"
+  ],
+  "au-capital-gains": [
+    "capital gains",
+    "capital gain",
+    "cgt"
+  ],
+  "au-car-expenses": [
+    "car expenses",
+    "car expense",
+    "logbook",
+    "cents per kilometre"
+  ],
+  "au-client-acceptance": [
+    "client acceptance"
+  ],
+  "au-client-departure": [
+    "client departure"
+  ],
+  "au-client-email-triage": [
+    "client email triage"
+  ],
+  "au-client-letter": [
+    "client letter"
+  ],
+  "au-client-meeting-note": [
+    "client meeting note"
+  ],
+  "au-company-tax": [
+    "company tax"
+  ],
+  "au-cpi-rent-review": [
+    "cpi rent review"
+  ],
+  "au-crypto-tax": [
+    "crypto tax",
+    "crypto",
+    "cryptocurrency"
+  ],
+  "au-deceased-estates": [
+    "deceased estates",
+    "deceased estate"
+  ],
+  "au-depreciation-schedule": [
+    "depreciation schedule",
+    "depreciation",
+    "decline in value"
+  ],
+  "au-director-penalty-review": [
+    "director penalty review",
+    "director penalty notice",
+    "director penalty"
+  ],
+  "au-division-293": [
+    "division 293",
+    "div 293"
+  ],
+  "au-division-296": [
+    "division 296",
+    "div 296"
+  ],
+  "au-dssp": [
+    "dssp"
+  ],
+  "au-employee-share-schemes": [
+    "employee share schemes",
+    "employee share scheme"
+  ],
+  "au-etp-redundancy": [
+    "etp redundancy",
+    "employment termination payment",
+    "redundancy"
+  ],
+  "au-family-trust-election": [
+    "family trust election"
+  ],
+  "au-financial-statements": [
+    "financial statements"
+  ],
+  "au-foreign-income": [
+    "foreign income"
+  ],
+  "au-foreign-pensions": [
+    "foreign pensions"
+  ],
+  "au-forex-review": [
+    "forex review"
+  ],
+  "au-franking-account": [
+    "franking account",
+    "franking credit"
+  ],
+  "au-gst-property": [
+    "gst property",
+    "gst on property",
+    "margin scheme"
+  ],
+  "au-gst-registration-review": [
+    "gst registration review",
+    "gst registration"
+  ],
+  "au-individual-return": [
+    "individual return",
+    "individual tax return"
+  ],
+  "au-land-tax": [
+    "land tax"
+  ],
+  "au-lump-sum-arrears": [
+    "lump sum arrears"
+  ],
+  "au-main-residence": [
+    "main residence",
+    "main residence exemption"
+  ],
+  "au-managed-fund-amit": [
+    "managed fund amit",
+    "amit",
+    "managed fund"
+  ],
+  "au-medicare-review": [
+    "medicare review",
+    "medicare levy surcharge",
+    "medicare levy"
+  ],
+  "au-mit-amit-trustee": [
+    "mit amit trustee",
+    "managed investment trust",
+    "amit trustee",
+    "mit trustee"
+  ],
+  "au-non-commercial-losses": [
+    "non commercial losses",
+    "non-commercial loss"
+  ],
+  "au-nonresident-cgt": [
+    "nonresident cgt",
+    "foreign resident cgt",
+    "foreign resident capital gains withholding"
+  ],
+  "au-not-for-profit": [
+    "not for profit"
+  ],
+  "au-partnership-tax": [
+    "partnership tax"
+  ],
+  "au-payg-instalment-variation": [
+    "payg instalment variation",
+    "payg instalment"
+  ],
+  "au-payroll-review": [
+    "payroll review"
+  ],
+  "au-payroll-tax-states": [
+    "payroll tax states",
+    "payroll tax"
+  ],
+  "au-pre-lodgement-review": [
+    "pre lodgement review"
+  ],
+  "au-primary-production": [
+    "primary production"
+  ],
+  "au-private-ruling-application": [
+    "private ruling application"
+  ],
+  "au-professional-firm-profits": [
+    "professional firm profits"
+  ],
+  "au-property-development-income": [
+    "property development income"
+  ],
+  "au-psi-review": [
+    "psi review",
+    "personal services income",
+    "psi"
+  ],
+  "au-rd-incentive": [
+    "rd incentive",
+    "r&d tax incentive",
+    "research and development tax incentive"
+  ],
+  "au-rental-property": [
+    "rental property",
+    "rental income",
+    "negative gearing"
+  ],
+  "au-restructure-rollovers": [
+    "restructure rollovers"
+  ],
+  "au-return-amendment": [
+    "return amendment"
+  ],
+  "au-sapto": [
+    "sapto",
+    "seniors and pensioners tax offset"
+  ],
+  "au-share-buy-back": [
+    "share buy back",
+    "share buy-back",
+    "buy-back"
+  ],
+  "au-short-stay-accommodation": [
+    "short stay accommodation",
+    "short-stay",
+    "short stay"
+  ],
+  "au-small-business-cgt": [
+    "small business cgt",
+    "small business cgt concession"
+  ],
+  "au-small-business-income-offset": [
+    "small business income offset"
+  ],
+  "au-smsf-death-benefits": [
+    "smsf death benefits",
+    "smsf death benefit"
+  ],
+  "au-smsf-year-end": [
+    "smsf year end",
+    "smsf"
+  ],
+  "au-sole-trader": [
+    "sole trader"
+  ],
+  "au-super-contribution-caps": [
+    "super contribution caps",
+    "contribution cap",
+    "concessional contribution"
+  ],
+  "au-super-guarantee-charge": [
+    "super guarantee charge",
+    "sg charge"
+  ],
+  "au-tax-agent-obligations": [
+    "tax agent obligations"
+  ],
+  "au-tax-planning-review": [
+    "tax planning review"
+  ],
+  "au-tax-rates-verification": [
+    "tax rates verification"
+  ],
+  "au-tax-research": [
+    "tax research"
+  ],
+  "au-tax-residency": [
+    "tax residency"
+  ],
+  "au-transfer-duty": [
+    "transfer duty",
+    "stamp duty"
+  ],
+  "au-transfer-pricing": [
+    "transfer pricing"
+  ],
+  "au-travel-expenses": [
+    "travel expenses",
+    "travel expense",
+    "travel allowance"
+  ],
+  "au-trust-deed-review": [
+    "trust deed review"
+  ],
+  "au-trust-distributions": [
+    "trust distributions",
+    "trust distribution",
+    "section 100a"
+  ],
+  "au-trust-losses": [
+    "trust losses"
+  ],
+  "au-wfh-deductions": [
+    "wfh deductions",
+    "working from home",
+    "wfh"
+  ],
+  "au-working-holiday-makers": [
+    "working holiday makers",
+    "working holiday maker"
+  ],
+  "bas-preparation": [
+    "bas preparation",
+    "bas",
+    "business activity statement"
+  ],
+  "cashflow-forecast-13week": [
+    "cashflow forecast 13week"
+  ],
+  "coal-lsl-levy": [
+    "coal lsl levy",
+    "coal lsl",
+    "coal long service leave"
+  ],
+  "contract-cost-tracking": [
+    "contract cost tracking"
+  ],
+  "contracting-exports": [
+    "contracting exports"
+  ],
+  "contractor-super-tpar": [
+    "contractor super tpar",
+    "tpar",
+    "taxable payments annual report"
+  ],
+  "div7a-compliance": [
+    "div7a compliance",
+    "division 7a",
+    "div 7a",
+    "div7a"
+  ],
+  "fbt-annual-workflow": [
+    "fbt annual workflow",
+    "fbt",
+    "fringe benefits tax"
+  ],
+  "financial-modelling": [
+    "financial modelling"
+  ],
+  "fuel-tax-credits": [
+    "fuel tax credits",
+    "fuel tax credit"
+  ],
+  "marketplace-settlements": [
+    "marketplace settlements"
+  ],
+  "month-end-close": [
+    "month end close"
+  ],
+  "myob-exports": [
+    "myob exports",
+    "myob"
+  ],
+  "payroll-tax-contractors": [
+    "payroll tax contractors"
+  ],
+  "plant-and-equipment-costing": [
+    "plant and equipment costing"
+  ],
+  "progress-claim-preparation": [
+    "progress claim preparation"
+  ],
+  "reconciliation-break-trace": [
+    "reconciliation break trace"
+  ],
+  "retention-schedule": [
+    "retention schedule"
+  ],
+  "statement-to-csv": [
+    "statement to csv"
+  ],
+  "stp-finalisation": [
+    "stp finalisation",
+    "single touch payroll"
+  ],
+  "tax-invoice-review": [
+    "tax invoice review"
+  ],
+  "wip-over-under-billing": [
+    "wip over under billing"
+  ],
+  "workers-compensation-premium": [
+    "workers compensation premium"
+  ],
+  "workpaper-tie-out": [
+    "workpaper tie out"
+  ],
+  "xero-exports": [
+    "xero exports",
+    "xero"
+  ],
+  "year-end-workpapers": [
+    "year end workpapers"
+  ]
+}
