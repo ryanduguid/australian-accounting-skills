@@ -311,8 +311,7 @@ the run it last passed with its card and skill unchanged since: 13 from the
 [second](../validation/results/2026-11-02-nagaris-rerun-confirmed.json), 2 from the
 [third](../validation/results/2026-11-02-nagaris-rerun2-confirmed.json), 2 from
 [5d2f737](../validation/results/2026-11-02-nagaris-rerun3-confirmed.json) and 1 from
-[8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts
-now cover 95 of the 242 cards. The 4 and 5 November 2026 changes to
+[8393bd7](../validation/results/2026-11-02-nagaris-rerun5-confirmed.json). Confirmed verdicts now cover 95 of the 246 cards. The 4 and 5 November 2026 changes to
 au-trust-distributions, au-super-contribution-caps, au-rental-property,
 au-financial-statements, au-pre-lodgement-review, au-aml-ctf-client-coverage,
 bas-preparation, workpaper-tie-out, au-smsf-year-end, au-tax-agent-obligations,
@@ -369,7 +368,7 @@ but it does show the shape of a passing result.
 
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
-the 126 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
+the 130 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
 112 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
@@ -382,7 +381,7 @@ claude plugin eval . --case 'route-*' --runs 1 --ablation none --no-publish --ma
 ```
 
 The estimate for the earlier 107-case pack was about US$18, not a measurement.
-The 126-case pack has no measured cost; a run that reaches the US$30 cap stops
+The 130-case pack has no measured cost; a run that reaches the US$30 cap stops
 with partial results. The 79 prompts added on 4 and 11 November 2026, the 6 prompts added on 12 November 2026 and the prompts added on 16 and 19 November 2026
 have no recorded run.
 

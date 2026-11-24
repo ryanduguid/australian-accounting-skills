@@ -104,7 +104,7 @@ Each skill folder also includes the repository's `LICENSE` and `NOTICE` from
 the same commit.
 
 These ZIPs are not attached to a release. They hold the skills of whatever the
-checkout has checked out: a checkout of the `v0.7.0` tag gives that release's
+checkout has checked out: a checkout of the `v0.8.0` tag gives that release's
 skills, and one of the default branch can include later changes. The command
 is not in v0.6.0 or earlier. Anthropic's article says skill sharing works in both chat and
 Cowork; uploading a skill for Cowork has not been tested.
@@ -285,7 +285,7 @@ agents' copies were not opened in those agents.
 
 ### Development checkout
 
-v0.7.0 contains 107 skills, and the default `main` branch can be ahead of it.
+v0.8.0 contains 112 skills, and the default `main` branch can be ahead of it.
 To try `main`, the default branch, in a separate project, clone it and install the
 local checkout:
 
