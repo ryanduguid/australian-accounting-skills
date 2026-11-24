@@ -159,6 +159,36 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "ASIC: Company and organisation registers",
+      "url": "https://www.asic.gov.au/online-services/search-asic-registers/company-and-organisation-registers",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 22 November 2026. Human source approval remains pending. Verify the search steps and the free and paid information at use time. ASIC Connect's search screens were unavailable during a scheduled outage that day, so the steps were not tried on them.",
+      "final_url": "https://www.asic.gov.au/online-services/search-asic-registers/company-and-organisation-registers",
+      "http_status": 200,
+      "fetched_at": "2026-11-22",
+      "review_required_since": "2026-11-22",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ASIC: Business names register",
+      "url": "https://www.asic.gov.au/online-services/search-asic-registers/business-names-register",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 22 November 2026. Human source approval remains pending. Verify the search steps and the free and paid information at use time. ASIC Connect's search screens were unavailable during a scheduled outage that day, so the steps were not tried on them.",
+      "final_url": "https://www.asic.gov.au/online-services/search-asic-registers/business-names-register",
+      "http_status": 200,
+      "fetched_at": "2026-11-22",
+      "review_required_since": "2026-11-22",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

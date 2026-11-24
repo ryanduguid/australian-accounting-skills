@@ -105,6 +105,54 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "AUSTRAC: Step 2: Identify and assess your risks",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/develop-your-amlctf-programs/step-2-identify-and-assess-your-risks",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: the page (last updated 18 November 2026) on the ML/TF risk assessment under s 26C of the AML/CTF Act, including that AML/CTF policies are put in place once the risk assessment is complete. AUSTRAC's guidance is the regulator's view, not law. Human source approval remains pending.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/develop-your-amlctf-programs/step-2-identify-and-assess-your-risks",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "AUSTRAC: Accounting program starter kit: Getting started",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/program-starter-kits/accountant-program-starter-kit/accounting-program-starter-kit-getting-started",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: the page (last updated 2 October 2026) on the accounting program starter kit and the practice characteristics it was designed for. AUSTRAC's guidance is the regulator's view, not law. Human source approval remains pending.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/program-starter-kits/accountant-program-starter-kit/accounting-program-starter-kit-getting-started",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "AUSTRAC: Personnel due diligence (PDD)",
+      "url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/personnel-due-diligence-and-training/personnel-due-diligence-pdd",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Read by an agent on 24 November 2026: the page (last updated 20 November 2026) on personnel due diligence under s 26F(4)(d) of the AML/CTF Act and s 5-8 of the AML/CTF Rules. AUSTRAC's guidance is the regulator's view, not law. Human source approval remains pending.",
+      "final_url": "https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-amlctf-program/personnel-due-diligence-and-training/personnel-due-diligence-pdd",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
