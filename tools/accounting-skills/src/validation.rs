@@ -54,6 +54,23 @@ const SECTIONS: &[&str] = &[
 static RESULT_NAME: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"^validation/results/(\d{4}-\d{2}-\d{2})-[a-z0-9]+(?:-[a-z0-9]+)*\.json$").unwrap()
 });
+// A figures card: a fabricated return whose lodged figures are the answer key
+// for a field-level preparation benchmark (`scripts/validate_validation.py`).
+const FIGURE_KEYS: &[&str] = &[
+    "id",
+    "synthetic",
+    "target_skill",
+    "return_form",
+    "scenario",
+    "fields",
+];
+const FIGURE_FIELD_KEYS: &[&str] = &["field", "label", "amount"];
+pub const FIGURE_VERDICTS: &[&str] =
+    &["match", "wrong-amount", "wrong-field", "omitted", "queried"];
+static FIGURE_NAME: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^validation/figures/([a-z0-9]+(?:-[a-z0-9]+)*)\.json$").unwrap());
+static FIGURE_AMOUNT: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^-?(?:0|[1-9][0-9]{0,6})\.[0-9]{2}$").unwrap());
 static SLUG: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[a-z0-9]+(?:-[a-z0-9]+)*\z").unwrap());
 
@@ -346,6 +363,7 @@ pub fn discover_case_names(root: &Path) -> Result<Names> {
 pub fn expected_validation(cases: &Names) -> Names {
     names(&[
         "validation/README.md",
+        "validation/figures.schema.json",
         "validation/results.schema.json",
         "validation/routing-cases.yaml",
     ])
@@ -364,6 +382,121 @@ pub fn split_result_files(input: &Names) -> (Names, Names) {
         .iter()
         .cloned()
         .partition(|name| !matches(&RESULT_NAME, name))
+}
+pub fn split_figure_cards(input: &Names) -> (Names, Names) {
+    input
+        .iter()
+        .cloned()
+        .partition(|name| !matches(&FIGURE_NAME, name))
+}
+pub fn check_figures_schema(input: &str) -> Result<()> {
+    let schema = strict_json(input, "validation/figures.schema.json")?;
+    if schema["required"] != json!(FIGURE_KEYS)
+        || schema["additionalProperties"] != json!(false)
+        || schema["properties"]["fields"]["items"]["required"] != json!(FIGURE_FIELD_KEYS)
+        || schema["$defs"]["verdict"]["enum"] != json!(FIGURE_VERDICTS)
+    {
+        return Err(
+            "schema must declare exactly the figures card keys, field keys and verdicts".into(),
+        );
+    }
+    Ok(())
+}
+fn figure_line<'a>(value: &'a Value, limit: usize, label: &str) -> Result<&'a str> {
+    value
+        .as_str()
+        .filter(|s| {
+            !s.trim_matches(' ').is_empty()
+                && s.chars().count() <= limit
+                && !s.contains(['\r', '\n'])
+        })
+        .ok_or_else(|| {
+            format!("{label} must be one non-empty line of at most {limit} characters").into()
+        })
+}
+/// Validates a figures card and returns how many lodged fields it holds.
+pub fn check_figure_card(rel: &str, input: &str, skills: &Names) -> Result<usize> {
+    let stem = FIGURE_NAME
+        .captures(rel)?
+        .and_then(|cap| cap.get(1))
+        .ok_or("figures card name must be validation/figures/<slug>.json")?
+        .as_str();
+    let data = strict_json(input, rel)?;
+    if !data.is_object() || keys(&data) != names(FIGURE_KEYS) {
+        return Err(format!(
+            "figures card keys must be exactly {}",
+            FIGURE_KEYS.join(", ")
+        )
+        .into());
+    }
+    if data["id"].as_str() != Some(stem) {
+        return Err("id must match the file name".into());
+    }
+    if data["synthetic"] != json!(true) {
+        return Err("synthetic must be true: figures cards are fabricated".into());
+    }
+    if !data["target_skill"]
+        .as_str()
+        .is_some_and(|skill| skills.contains(skill))
+    {
+        return Err("target_skill must name a skill in .claude/skills".into());
+    }
+    figure_line(&data["return_form"], 120, "return_form")?;
+    figure_line(&data["scenario"], 600, "scenario")?;
+    let fields = data["fields"]
+        .as_array()
+        .filter(|fields| !fields.is_empty())
+        .ok_or("fields must list at least one lodged field")?;
+    let mut seen = Names::new();
+    for (index, entry) in fields.iter().enumerate() {
+        let index = index + 1;
+        if !entry.is_object() || keys(entry) != names(FIGURE_FIELD_KEYS) {
+            return Err(format!(
+                "field {index}: keys must be exactly {}",
+                FIGURE_FIELD_KEYS.join(", ")
+            )
+            .into());
+        }
+        for key in FIGURE_FIELD_KEYS {
+            figure_line(&entry[*key], 120, &format!("field {index}: {key}"))?;
+        }
+        if !matches(&FIGURE_AMOUNT, string(&entry["amount"])) {
+            return Err(format!(
+                "field {index}: amount must be dollars and cents under 10 million, such as 1234.50"
+            )
+            .into());
+        }
+        let field = string(&entry["field"]);
+        if !seen.insert(field.to_owned()) {
+            return Err(format!("field {index}: duplicate field {}", repr(field)).into());
+        }
+    }
+    text::sensitive(input, &[])?;
+    Ok(fields.len())
+}
+/// Counts one run's field verdicts as (fields, match, label right): a figure at
+/// the right field counts towards label accuracy whatever its amount.
+pub fn score_figures(fields: &Names, verdicts: &Value) -> Result<(usize, usize, usize)> {
+    let Some(verdicts) = verdicts
+        .as_object()
+        .filter(|map| map.keys().cloned().collect::<Names>() == *fields)
+    else {
+        return Err("verdicts must give exactly one verdict for each lodged field".into());
+    };
+    let mut counts: BTreeMap<&str, usize> = BTreeMap::new();
+    for value in verdicts.values() {
+        let verdict = value
+            .as_str()
+            .filter(|verdict| FIGURE_VERDICTS.contains(verdict))
+            .ok_or_else(|| format!("each verdict must be one of {}", FIGURE_VERDICTS.join(", ")))?;
+        *counts.entry(verdict).or_insert(0) += 1;
+    }
+    let count = |verdict: &str| counts.get(verdict).copied().unwrap_or(0);
+    Ok((
+        verdicts.len(),
+        count("match"),
+        count("match") + count("wrong-amount"),
+    ))
 }
 pub fn git_entries(paths: &[String], root: &Path) -> Result<BTreeMap<String, String>> {
     let output = Command::new("git")
@@ -766,11 +899,14 @@ pub fn main(root: &Path) -> Result<(u8, String)> {
     let mut cases = Names::new();
     let mut expected = Names::new();
     let mut result_files = Names::new();
+    let mut figure_files = Names::new();
     let mut inventory = || -> Result<()> {
         cases = discover_case_names(root)?;
         expected = expected_validation(&cases);
         let (actual, results) = split_result_files(&inventory_validation_tree(root)?);
         result_files = results;
+        let (actual, figures) = split_figure_cards(&actual);
+        figure_files = figures;
         if actual != expected {
             errors.push(format!(
                 "validation inventory mismatch: missing={}, unexpected={}",
@@ -787,6 +923,7 @@ pub fn main(root: &Path) -> Result<(u8, String)> {
         .union(&names(SUPPORT))
         .cloned()
         .chain(result_files.iter().cloned())
+        .chain(figure_files.iter().cloned())
         .collect();
     match git_entries(&expected_all.iter().cloned().collect::<Vec<_>>(), root) {
         Err(e) => errors.push(e.to_string()),
@@ -928,6 +1065,20 @@ pub fn main(root: &Path) -> Result<(u8, String)> {
             }
         }
     }
+    if let Some(schema) = sources.get("validation/figures.schema.json")
+        && let Err(e) = check_figures_schema(schema)
+    {
+        errors.push(format!("validation/figures.schema.json: {e}"));
+    }
+    let mut figure_fields = 0;
+    for rel in &figure_files {
+        if let Some(text) = sources.get(rel) {
+            match check_figure_card(rel, text, &skills) {
+                Ok(fields) => figure_fields += fields,
+                Err(e) => errors.push(format!("{rel}: {e}")),
+            }
+        }
+    }
     if let Err(e) = text::sensitive(
         sources
             .get("validation/README.md")
@@ -951,7 +1102,7 @@ pub fn main(root: &Path) -> Result<(u8, String)> {
     Ok((
         0,
         format!(
-            "Validation pack checks passed: {} fabricated cards, {} skills, {} result records ({}), exact tracked inventory.\n",
+            "Validation pack checks passed: {} fabricated cards, {} skills, {} result records ({}), {} figures cards ({figure_fields} lodged fields), exact tracked inventory.\n",
             cases.len(),
             skills.len(),
             result_files.len(),
@@ -959,7 +1110,8 @@ pub fn main(root: &Path) -> Result<(u8, String)> {
                 .iter()
                 .map(|s| format!("{s}={}", counts[s]))
                 .collect::<Vec<_>>()
-                .join(", ")
+                .join(", "),
+            figure_files.len()
         ),
     ))
 }
