@@ -224,8 +224,8 @@ class CgtGapWorkflowTests(unittest.TestCase):
             "https://www.ato.gov.au/law/view/document?DocID=TXD/TD199966/NAT/ATO/00001",
             "https://www.ato.gov.au/law/view/document?DocID=TXR/TR9330/NAT/ATO/00001",
             # The released calculator its Tax calculators section pins.
-            "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.1.0",
-            "https://github.com/ryanduguid/australian-accounting/tree/c4a716a25f065ccc957c5db83dec711251cb4121/packages/australian-tax-calculators",
+            "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0",
+            "https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators",
             "https://www.legislation.gov.au/C2026A00049/asmade/text",
         )
 
