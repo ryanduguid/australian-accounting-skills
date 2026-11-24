@@ -15,6 +15,7 @@ import sys
 import unicodedata
 from datetime import date
 from pathlib import Path, PurePosixPath
+from typing import Any
 
 import yaml
 from yaml.tokens import AliasToken, AnchorToken, TagToken
@@ -47,6 +48,16 @@ GIT_COMMIT_WAIVED = frozenset({"unlabelled long numeric identifier"})
 # One line each and short: room for a model name or a version, not for a
 # pasted output or a note on why a case failed.
 RESULT_FIELD_MAX_LENGTH = 120
+# A figures card: a fabricated return whose lodged figures are the answer key
+# for a field-level preparation benchmark. A run gives each lodged field one
+# verdict from FIGURE_VERDICTS; match rate and label accuracy are kept apart.
+# Kept free of nested quantifiers; check_figure_card refuses a doubled or trailing hyphen.
+FIGURE_FILE_RE = re.compile(r"^validation/figures/([a-z0-9][a-z0-9-]*)\.json\Z")
+FIGURE_KEYS = ("id", "synthetic", "target_skill", "return_form", "scenario", "fields")
+FIGURE_FIELD_KEYS = ("field", "label", "amount")
+FIGURE_VERDICTS = ("match", "wrong-amount", "wrong-field", "omitted", "queried")
+FIGURE_SCENARIO_MAX_LENGTH = 600
+FIGURE_AMOUNT = re.compile(r"-?(?:0|[1-9][0-9]{0,6})\.[0-9]{2}\Z")
 REQUIRED_SECTIONS = (
     "## Scenario",
     "## Task",
@@ -126,6 +137,7 @@ def discover_case_names(root: Path = ROOT) -> set[str]:
 def expected_validation(case_names: set[str]) -> set[str]:
     return {
         "validation/README.md",
+        "validation/figures.schema.json",
         "validation/results.schema.json",
         "validation/routing-cases.yaml",
         *(f"validation/cases/{name}" for name in case_names),
@@ -389,6 +401,90 @@ def split_result_files(names: set[str]) -> tuple[set[str], set[str]]:
     return names - results, results
 
 
+def split_figure_cards(names: set[str]) -> tuple[set[str], set[str]]:
+    """Separate figures cards, which any number may exist of, from the fixed inventory."""
+    figures = {name for name in names if FIGURE_FILE_RE.match(name)}
+    return names - figures, figures
+
+
+def check_figures_schema(text: str) -> None:
+    """Hold the published figures card schema to the checker's keys and verdicts."""
+    # Any: a wrong shape raises KeyError or TypeError below and is refused.
+    schema: Any = _strict_json(text, "validation/figures.schema.json")
+    try:
+        declared = (
+            schema["required"] == list(FIGURE_KEYS)
+            and schema["additionalProperties"] is False
+            and schema["properties"]["fields"]["items"]["required"] == list(FIGURE_FIELD_KEYS)
+            and schema["$defs"]["verdict"]["enum"] == list(FIGURE_VERDICTS)
+        )
+    except (KeyError, TypeError):
+        declared = False
+    if not declared:
+        raise ValidationError("schema must declare exactly the figures card keys, field keys and verdicts")
+
+
+def _figure_line(value: object, limit: int, label: str) -> str:
+    if (not isinstance(value, str) or value.strip(" ") == "" or len(value) > limit
+            or "\r" in value or "\n" in value):
+        raise ValidationError(f"{label} must be one non-empty line of at most {limit} characters")
+    return value
+
+
+def check_figure_card(rel: str, text: str, skills: set[str]) -> int:
+    """Validate a figures card and return how many lodged fields it holds."""
+    match = FIGURE_FILE_RE.match(rel)
+    if match is None or "--" in match.group(1) or match.group(1).endswith("-"):
+        raise ValidationError("figures card name must be validation/figures/<slug>.json")
+    data = _strict_json(text, rel)
+    if not isinstance(data, dict) or set(data) != set(FIGURE_KEYS):
+        raise ValidationError(f"figures card keys must be exactly {', '.join(FIGURE_KEYS)}")
+    if data["id"] != match.group(1):
+        raise ValidationError("id must match the file name")
+    if data["synthetic"] is not True:
+        raise ValidationError("synthetic must be true: figures cards are fabricated")
+    target = data["target_skill"]
+    if not isinstance(target, str) or target not in skills:
+        raise ValidationError("target_skill must name a skill in .claude/skills")
+    _figure_line(data["return_form"], RESULT_FIELD_MAX_LENGTH, "return_form")
+    _figure_line(data["scenario"], FIGURE_SCENARIO_MAX_LENGTH, "scenario")
+    count = _check_figure_fields(data["fields"])
+    check_sensitive_content(text)
+    return count
+
+
+def _check_figure_fields(fields: object) -> int:
+    if not isinstance(fields, list) or not fields:
+        raise ValidationError("fields must list at least one lodged field")
+    seen: set[str] = set()
+    for index, entry in enumerate(fields, start=1):
+        if not isinstance(entry, dict) or set(entry) != set(FIGURE_FIELD_KEYS):
+            raise ValidationError(f"field {index}: keys must be exactly {', '.join(FIGURE_FIELD_KEYS)}")
+        for key in FIGURE_FIELD_KEYS:
+            _figure_line(entry[key], RESULT_FIELD_MAX_LENGTH, f"field {index}: {key}")
+        if FIGURE_AMOUNT.match(entry["amount"]) is None:
+            raise ValidationError(f"field {index}: amount must be dollars and cents under 10 million, such as 1234.50")
+        if entry["field"] in seen:
+            raise ValidationError(f"field {index}: duplicate field {entry['field']!r}")
+        seen.add(entry["field"])
+    return len(fields)
+
+
+def score_figures(fields: set[str], verdicts: object) -> dict[str, int]:
+    """Count one run's field verdicts; match rate and label accuracy stay separate.
+
+    A figure at the right field counts towards label accuracy whether or not its
+    amount is right, so a wrong amount cannot hide a correct label or the reverse.
+    """
+    if not isinstance(verdicts, dict) or set(verdicts) != fields:
+        raise ValidationError("verdicts must give exactly one verdict for each lodged field")
+    values = list(verdicts.values())
+    if any(not isinstance(value, str) or value not in FIGURE_VERDICTS for value in values):
+        raise ValidationError(f"each verdict must be one of {', '.join(FIGURE_VERDICTS)}")
+    matched = values.count("match")
+    return {"fields": len(values), "match": matched, "label_right": matched + values.count("wrong-amount")}
+
+
 def check_results_schema(text: str, known: frozenset[str] = CASE_IDS) -> None:
     """The published schema must name exactly the cards and verdicts the checker knows."""
     schema = _strict_json(text, "validation/results.schema.json")
@@ -619,10 +715,12 @@ def main(root: Path = ROOT) -> int:
     expected: set[str] = set()
 
     result_files: set[str] = set()
+    figure_files: set[str] = set()
     try:
         case_names = discover_case_names(root)
         expected = expected_validation(case_names)
         actual, result_files = split_result_files(inventory_validation_tree(root))
+        actual, figure_files = split_figure_cards(actual)
         if actual != expected:
             errors.append(
                 "validation inventory mismatch: "
@@ -632,7 +730,7 @@ def main(root: Path = ROOT) -> int:
     except ValidationError as error:
         errors.append(str(error))
 
-    expected_all = expected | EXPECTED_SUPPORT | result_files
+    expected_all = expected | EXPECTED_SUPPORT | result_files | figure_files
     try:
         tracked = git_entries(sorted(expected_all), root)
         if set(tracked) != expected_all:
@@ -739,6 +837,22 @@ def main(root: Path = ROOT) -> int:
         except ValidationError as error:
             errors.append(f"{rel}: {error}")
 
+    figures_schema = read_sources.get("validation/figures.schema.json")
+    if figures_schema is not None:
+        try:
+            check_figures_schema(figures_schema)
+        except ValidationError as error:
+            errors.append(f"validation/figures.schema.json: {error}")
+    figure_fields = 0
+    for rel in sorted(figure_files):
+        text = read_sources.get(rel)
+        if text is None:
+            continue
+        try:
+            figure_fields += check_figure_card(rel, text, discovered_skills)
+        except ValidationError as error:
+            errors.append(f"{rel}: {error}")
+
     validation_readme = read_sources.get("validation/README.md", "")
     try:
         check_sensitive_content(validation_readme)
@@ -755,6 +869,7 @@ def main(root: Path = ROOT) -> int:
         f"{len(case_names)} fabricated cards, "
         f"{len(discovered_skills)} skills, {len(result_files)} result records "
         f"({', '.join(f'{key}={value}' for key, value in result_counts.items())}), "
+        f"{len(figure_files)} figures cards ({figure_fields} lodged fields), "
         "exact tracked inventory."
     )
     return 0

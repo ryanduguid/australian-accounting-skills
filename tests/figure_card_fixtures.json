@@ -1,0 +1,72 @@
+{
+  "description": "Fabricated figures card cases shared by the Python validator tests and the native port's tests; both must give each case the same outcome.",
+  "skills": ["bas-preparation"],
+  "base": {
+    "id": "fixture-card",
+    "synthetic": true,
+    "target_skill": "bas-preparation",
+    "return_form": "Fabricated business activity statement",
+    "scenario": "Synthetic sales of 1100.00 including GST and a credit note reversing 55.00.",
+    "fields": [
+      {"field": "G1", "label": "Total sales", "amount": "1100.00"},
+      {"field": "1A", "label": "GST on sales", "amount": "-5.00"}
+    ]
+  },
+  "cards": [
+    {"name": "the base card", "fields": 2},
+    {"name": "a zero amount", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "0.00"}]}, "fields": 1},
+    {"name": "a wrong file name", "rel": "validation/figures/Fixture-Card.json", "error": "figures card name must be validation/figures/<slug>.json"},
+    {"name": "a doubled hyphen", "rel": "validation/figures/fixture--card.json", "error": "figures card name must be validation/figures/<slug>.json"},
+    {"name": "a trailing hyphen", "rel": "validation/figures/fixture-card-.json", "error": "figures card name must be validation/figures/<slug>.json"},
+    {"name": "a result file name", "rel": "validation/results/fixture-card.json", "error": "figures card name must be validation/figures/<slug>.json"},
+    {"name": "invalid JSON", "text": "{\"id\": ", "error": "not valid JSON"},
+    {"name": "a repeated key", "text": "{\"id\": \"fixture-card\", \"id\": \"fixture-card\"}", "error": "duplicate JSON key"},
+    {"name": "a list", "text": "[]", "error": "figures card keys must be exactly id, synthetic, target_skill, return_form, scenario, fields"},
+    {"name": "an extra key", "set": {"notes": "free text"}, "error": "figures card keys must be exactly"},
+    {"name": "a missing key", "drop": "scenario", "error": "figures card keys must be exactly"},
+    {"name": "an id unlike the file", "set": {"id": "other-card"}, "error": "id must match the file name"},
+    {"name": "synthetic false", "set": {"synthetic": false}, "error": "synthetic must be true: figures cards are fabricated"},
+    {"name": "synthetic 1", "set": {"synthetic": 1}, "error": "synthetic must be true"},
+    {"name": "an unknown skill", "set": {"target_skill": "no-such-skill"}, "error": "target_skill must name a skill in .claude/skills"},
+    {"name": "a skill list", "set": {"target_skill": ["bas-preparation"]}, "error": "target_skill must name a skill"},
+    {"name": "a blank return form", "set": {"return_form": "   "}, "error": "return_form must be one non-empty line of at most 120 characters"},
+    {"name": "a long return form", "set": {"return_form": "Fabricated business activity statement with a description that runs well past the one hundred and twenty character limit set for every one-line field"}, "error": "return_form must be one non-empty line"},
+    {"name": "a two-line scenario", "set": {"scenario": "Synthetic sales.\nA pasted output."}, "error": "scenario must be one non-empty line of at most 600 characters"},
+    {"name": "a numeric scenario", "set": {"scenario": 5}, "error": "scenario must be one non-empty line"},
+    {"name": "no fields", "set": {"fields": []}, "error": "fields must list at least one lodged field"},
+    {"name": "fields as an object", "set": {"fields": {"G1": "1100.00"}}, "error": "fields must list at least one lodged field"},
+    {"name": "a field with an extra key", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1100.00", "note": "x"}]}, "error": "field 1: keys must be exactly field, label, amount"},
+    {"name": "a field that is a string", "set": {"fields": ["G1"]}, "error": "field 1: keys must be exactly"},
+    {"name": "a numeric amount", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": 1100.0}]}, "error": "field 1: amount must be one non-empty line of at most 120 characters"},
+    {"name": "a blank label", "set": {"fields": [{"field": "G1", "label": "", "amount": "1100.00"}]}, "error": "field 1: label must be one non-empty line"},
+    {"name": "a grouped amount", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1,100.00"}]}, "error": "field 1: amount must be dollars and cents under 10 million, such as 1234.50"},
+    {"name": "whole dollars", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1100"}]}, "error": "field 1: amount must be dollars and cents"},
+    {"name": "a leading zero", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "01100.00"}]}, "error": "field 1: amount must be dollars and cents"},
+    {"name": "ten million", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "10000000.00"}]}, "error": "field 1: amount must be dollars and cents"},
+    {"name": "a trailing newline in the amount", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1100.00\n"}]}, "error": "field 1: amount must be one non-empty line"},
+    {"name": "non-ASCII digits", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "١١.00"}]}, "error": "field 1: amount must be dollars and cents"},
+    {"name": "a repeated field", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "1100.00"}, {"field": "G1", "label": "Total sales again", "amount": "1.00"}]}, "error": "field 2: duplicate field 'G1'"},
+    {"name": "an identifier in a label", "set": {"fields": [{"field": "G1", "label": "Sales for TFN: 1", "amount": "1100.00"}]}, "error": "possible labelled Australian identifier"},
+    {"name": "an email in the scenario", "set": {"scenario": "Synthetic sales sent by owner@example.com."}, "error": "possible email address"}
+  ],
+  "scores": [
+    {"name": "every verdict once", "fields": ["G1", "1A", "G11", "1B", "W1"], "verdicts": {"G1": "match", "1A": "wrong-amount", "G11": "wrong-field", "1B": "omitted", "W1": "queried"}, "counts": {"fields": 5, "match": 1, "label_right": 2}},
+    {"name": "all matched", "fields": ["G1", "1A"], "verdicts": {"G1": "match", "1A": "match"}, "counts": {"fields": 2, "match": 2, "label_right": 2}},
+    {"name": "right fields, wrong amounts", "fields": ["G1", "1A"], "verdicts": {"G1": "wrong-amount", "1A": "wrong-amount"}, "counts": {"fields": 2, "match": 0, "label_right": 2}},
+    {"name": "a field with no verdict", "fields": ["G1", "1A"], "verdicts": {"G1": "match"}, "error": "verdicts must give exactly one verdict for each lodged field"},
+    {"name": "a verdict for no field", "fields": ["G1"], "verdicts": {"G1": "match", "G2": "match"}, "error": "verdicts must give exactly one verdict for each lodged field"},
+    {"name": "verdicts as a list", "fields": ["G1"], "verdicts": ["match"], "error": "verdicts must give exactly one verdict for each lodged field"},
+    {"name": "a pass or fail verdict", "fields": ["G1"], "verdicts": {"G1": "pass"}, "error": "each verdict must be one of match, wrong-amount, wrong-field, omitted, queried"},
+    {"name": "a numeric verdict", "fields": ["G1"], "verdicts": {"G1": 1}, "error": "each verdict must be one of"},
+    {"name": "a list verdict", "fields": ["G1"], "verdicts": {"G1": ["match"]}, "error": "each verdict must be one of"}
+  ],
+  "schemas": [
+    {"name": "the minimum declaration", "schema": {"required": ["id", "synthetic", "target_skill", "return_form", "scenario", "fields"], "additionalProperties": false, "properties": {"fields": {"items": {"required": ["field", "label", "amount"]}}}, "$defs": {"verdict": {"enum": ["match", "wrong-amount", "wrong-field", "omitted", "queried"]}}}, "ok": true},
+    {"name": "a verdict missing", "schema": {"required": ["id", "synthetic", "target_skill", "return_form", "scenario", "fields"], "additionalProperties": false, "properties": {"fields": {"items": {"required": ["field", "label", "amount"]}}}, "$defs": {"verdict": {"enum": ["match", "wrong-amount", "wrong-field", "omitted"]}}}, "ok": false},
+    {"name": "extra properties allowed", "schema": {"required": ["id", "synthetic", "target_skill", "return_form", "scenario", "fields"], "additionalProperties": 0, "properties": {"fields": {"items": {"required": ["field", "label", "amount"]}}}, "$defs": {"verdict": {"enum": ["match", "wrong-amount", "wrong-field", "omitted", "queried"]}}}, "ok": false},
+    {"name": "keys reordered", "schema": {"required": ["synthetic", "id", "target_skill", "return_form", "scenario", "fields"], "additionalProperties": false, "properties": {"fields": {"items": {"required": ["field", "label", "amount"]}}}, "$defs": {"verdict": {"enum": ["match", "wrong-amount", "wrong-field", "omitted", "queried"]}}}, "ok": false},
+    {"name": "field items as a list", "schema": {"required": ["id", "synthetic", "target_skill", "return_form", "scenario", "fields"], "additionalProperties": false, "properties": {"fields": {"items": []}}, "$defs": {"verdict": {"enum": ["match", "wrong-amount", "wrong-field", "omitted", "queried"]}}}, "ok": false},
+    {"name": "no verdict definition", "schema": {"required": ["id", "synthetic", "target_skill", "return_form", "scenario", "fields"], "additionalProperties": false, "properties": {"fields": {"items": {"required": ["field", "label", "amount"]}}}}, "ok": false},
+    {"name": "a list", "schema": [], "ok": false}
+  ]
+}

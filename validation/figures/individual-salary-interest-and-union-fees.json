@@ -1,0 +1,12 @@
+{
+  "id": "individual-salary-interest-and-union-fees",
+  "synthetic": true,
+  "target_skill": "au-individual-return",
+  "return_form": "Fabricated individual tax return",
+  "scenario": "Synthetic income statement from one employer showing gross salary of 61250.00, a bank summary showing interest of 412.37 in the taxpayer's sole name, and union fee receipts totalling 389.00; no other income or deductions.",
+  "fields": [
+    {"field": "1", "label": "Salary or wages", "amount": "61250.00"},
+    {"field": "10", "label": "Gross interest", "amount": "412.37"},
+    {"field": "D5", "label": "Other work-related expenses", "amount": "389.00"}
+  ]
+}

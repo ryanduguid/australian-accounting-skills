@@ -219,3 +219,97 @@ fn check_ignore_reports_only_the_ignored_paths() {
             .starts_with("git check-ignore failed: ")
     );
 }
+
+/// The cases `tests/test_validation_pack.py` also runs, from the same file.
+fn figure_fixtures() -> serde_json::Value {
+    let path = concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../tests/figure_card_fixtures.json"
+    );
+    serde_json::from_str(&fs::read_to_string(path).unwrap()).unwrap()
+}
+
+#[test]
+fn figures_cards_agree_with_the_shared_python_cases() {
+    let fixtures = figure_fixtures();
+    let skills: BTreeSet<String> = fixtures["skills"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|skill| skill.as_str().unwrap().to_owned())
+        .collect();
+    for case in fixtures["cards"].as_array().unwrap() {
+        let mut card = fixtures["base"].clone();
+        if let Some(set) = case["set"].as_object() {
+            for (key, value) in set {
+                card[key] = value.clone();
+            }
+        }
+        if let Some(drop) = case["drop"].as_str() {
+            card.as_object_mut().unwrap().remove(drop);
+        }
+        let text = case["text"].as_str().map_or_else(
+            || serde_json::to_string_pretty(&card).unwrap() + "\n",
+            str::to_owned,
+        );
+        let rel = case["rel"]
+            .as_str()
+            .unwrap_or("validation/figures/fixture-card.json");
+        let name = &case["name"];
+        match v::check_figure_card(rel, &text, &skills) {
+            Ok(fields) => assert_eq!(json!(fields), case["fields"], "{name}"),
+            Err(error) => {
+                let expected = case["error"]
+                    .as_str()
+                    .unwrap_or_else(|| panic!("{name}: {error}"));
+                assert!(error.to_string().contains(expected), "{name}: {error}");
+            }
+        }
+    }
+}
+
+#[test]
+fn figure_scores_and_schemas_agree_with_the_shared_python_cases() {
+    let fixtures = figure_fixtures();
+    for case in fixtures["scores"].as_array().unwrap() {
+        let fields: BTreeSet<String> = case["fields"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|field| field.as_str().unwrap().to_owned())
+            .collect();
+        let name = &case["name"];
+        match v::score_figures(&fields, &case["verdicts"]) {
+            Ok((fields, matched, label_right)) => assert_eq!(
+                json!({"fields": fields, "match": matched, "label_right": label_right}),
+                case["counts"],
+                "{name}"
+            ),
+            Err(error) => {
+                let expected = case["error"]
+                    .as_str()
+                    .unwrap_or_else(|| panic!("{name}: {error}"));
+                assert!(error.to_string().contains(expected), "{name}: {error}");
+            }
+        }
+    }
+    for case in fixtures["schemas"].as_array().unwrap() {
+        let result = v::check_figures_schema(&case["schema"].to_string());
+        assert_eq!(result.is_ok(), case["ok"] == true, "{}", case["name"]);
+    }
+    let published = concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../validation/figures.schema.json"
+    );
+    v::check_figures_schema(&fs::read_to_string(published).unwrap()).unwrap();
+    let (fixed, figures) = v::split_figure_cards(&BTreeSet::from([
+        "validation/figures.schema.json".to_owned(),
+        "validation/figures/fixture-card.json".to_owned(),
+        "validation/figures/Notes.json".to_owned(),
+    ]));
+    assert_eq!(
+        figures,
+        BTreeSet::from(["validation/figures/fixture-card.json".to_owned()])
+    );
+    assert_eq!(fixed.len(), 2);
+}
