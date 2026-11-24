@@ -389,8 +389,15 @@ def _strict_json(text: str, label: str) -> object:
             mapping[key] = value
         return mapping
 
+    def reject_constant(token: str) -> object:
+        raise ValueError(f"non-standard JSON constant {token!r}")
+
     try:
-        return json.loads(text, object_pairs_hook=reject_duplicates)
+        return json.loads(
+            text,
+            object_pairs_hook=reject_duplicates,
+            parse_constant=reject_constant,
+        )
     except ValueError as error:
         raise ValidationError(f"{label}: not valid JSON ({error})") from error
 
@@ -461,6 +468,12 @@ def check_figure_card(rel: str, text: str, skills: set[str]) -> int:
     _figure_line(data["scenario"], FIGURE_SCENARIO_MAX_LENGTH, "scenario")
     count = _check_figure_fields(data["fields"])
     check_sensitive_content(text)
+    for value in (
+        data["return_form"],
+        data["scenario"],
+        *(entry[key] for entry in data["fields"] for key in ("field", "label")),
+    ):
+        check_sensitive_content(value)
     return count
 
 

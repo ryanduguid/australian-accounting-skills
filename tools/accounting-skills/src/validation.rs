@@ -76,18 +76,32 @@ static SLUG: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[a-z0-9]+(?:-[a-z0-9]+)*\z").unwrap());
 
 pub fn repr(text: &str) -> String {
+    use std::fmt::Write;
     let quote = if text.contains('\'') && !text.contains('"') {
         '"'
     } else {
         '\''
     };
-    let value = text
-        .replace('\\', "\\\\")
-        .replace(quote, &format!("\\{quote}"))
-        .replace('\n', "\\n")
-        .replace('\r', "\\r")
-        .replace('\t', "\\t");
-    format!("{quote}{value}{quote}")
+    let mut value = String::with_capacity(text.len() + 2);
+    value.push(quote);
+    for ch in text.chars() {
+        match ch {
+            '\\' => value.push_str("\\\\"),
+            c if c == quote => {
+                value.push('\\');
+                value.push(c);
+            }
+            '\n' => value.push_str("\\n"),
+            '\r' => value.push_str("\\r"),
+            '\t' => value.push_str("\\t"),
+            c if c.is_ascii_control() => {
+                let _ = write!(value, "\\x{:02x}", c as u32);
+            }
+            c => value.push(c),
+        }
+    }
+    value.push(quote);
+    value
 }
 fn list<'a>(items: impl IntoIterator<Item = &'a String>) -> String {
     format!(
@@ -461,6 +475,14 @@ pub fn check_figure_card(rel: &str, input: &str, skills: &Names) -> Result<usize
     figure_line(&data["scenario"], 600, "scenario")?;
     let count = check_figure_fields(&data["fields"])?;
     text::sensitive(input, &[])?;
+    for value in [string(&data["return_form"]), string(&data["scenario"])] {
+        text::sensitive(value, &[])?;
+    }
+    for entry in data["fields"].as_array().unwrap() {
+        for key in ["field", "label"] {
+            text::sensitive(string(&entry[key]), &[])?;
+        }
+    }
     Ok(count)
 }
 fn check_figure_fields(fields: &Value) -> Result<usize> {

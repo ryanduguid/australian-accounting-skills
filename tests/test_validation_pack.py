@@ -1004,13 +1004,16 @@ class FigureCardTests(unittest.TestCase):
 
     def test_shared_schema_cases(self) -> None:
         for case in FIGURE_FIXTURES["schemas"]:
-            text = json.dumps(case["schema"])
+            raw = case.get("text")
+            text = raw if isinstance(raw, str) else json.dumps(case["schema"])
+            expected = str(case.get("error", "must declare exactly"))
             with self.subTest(case=case["name"]):
                 if case["ok"]:
                     validator.check_figures_schema(text)
                 else:
-                    with self.assertRaisesRegex(validator.ValidationError, "must declare exactly"):
+                    with self.assertRaises(validator.ValidationError) as caught:
                         validator.check_figures_schema(text)
+                    self.assertIn(expected, str(caught.exception))
 
     def test_published_schema_and_cards_pass(self) -> None:
         validator.check_figures_schema(

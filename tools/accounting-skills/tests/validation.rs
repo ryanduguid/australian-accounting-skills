@@ -294,8 +294,18 @@ fn figure_scores_and_schemas_agree_with_the_shared_python_cases() {
         }
     }
     for case in fixtures["schemas"].as_array().unwrap() {
-        let result = v::check_figures_schema(&case["schema"].to_string());
+        let text = case["text"]
+            .as_str()
+            .map_or_else(|| case["schema"].to_string(), str::to_owned);
+        let result = v::check_figures_schema(&text);
         assert_eq!(result.is_ok(), case["ok"] == true, "{}", case["name"]);
+        if let Some(expected) = case["error"].as_str() {
+            assert!(
+                result.unwrap_err().to_string().contains(expected),
+                "{}",
+                case["name"]
+            );
+        }
     }
     let published = concat!(
         env!("CARGO_MANIFEST_DIR"),
