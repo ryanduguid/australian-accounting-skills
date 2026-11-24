@@ -27,6 +27,14 @@ Income year, the original trust deed and every deed of variation, appointment, r
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A document register, clause-referenced deed abstract, variation-power table, election record summary, a numbered list of legal questions for the trustee's lawyer and the resolution-readiness checklist for `au-trust-distributions`. Every abstract line cites a clause in an instrument on the register. The lawyer decides validity and construction; the trustee and adviser draft, decide and execute resolutions. Do not draft, date or sign a resolution or variation.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

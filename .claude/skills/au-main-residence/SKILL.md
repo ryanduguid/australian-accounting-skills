@@ -70,6 +70,14 @@ A person can compare a result with the site's [CGT calculator](https://duguid.co
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 An eligibility and residency record, the ownership period on both date bases, a dwelling and land schedule, a period-by-period use schedule with each extension rule and available choice, an income use schedule with floor areas, the first income use valuation record and the apportionment inputs with any supported preliminary result. The periods must add up to the ownership period with no gap or overlap; no two dwellings count as an owner's main residence on the same day except under s 118-140 of the ITAA 1997, a nomination under s 118-170 of the ITAA 1997 or, before the key event, an old dwelling and its substitute under s 118-147 of the ITAA 1997 (s 118-147(7) of the ITAA 1997); the gain or loss must agree with the `au-capital-gains` event row. The owner makes each choice; the reviewer decides whether, and to what extent, the exemption applies.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

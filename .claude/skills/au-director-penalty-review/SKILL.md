@@ -27,6 +27,14 @@ Route the super guarantee charge computation to `au-super-guarantee-charge`, gen
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A reconciled liability schedule, a reporting-timing classification with its source and date, a director tenure timeline, a DPN register with payments reconciled across the parallel liabilities, a conditional options list and a defence evidence list. Whether a director is personally liable, and what to do, is for the director's lawyer or insolvency adviser.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

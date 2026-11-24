@@ -65,6 +65,14 @@ A person can compare a result with the site's [Fuel tax credit calculator](https
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Litres apportioned across all uses equal litres acquired per the invoices and fuel card statements, per unit and per period; nothing apportions more fuel than was acquired (PCG 2016/8 para 9)
 - Each rate band's litres tie to the acquisition-date split, and the sum of the banded amounts ties to 7D
 - Net fuel amount rebuilt from credits and from increasing and decreasing adjustments under s 60-5 of the Fuel Tax Act agrees to 7C less 7D as the ATO expresses it; if it does not, an adjustment or error correction is on the wrong label

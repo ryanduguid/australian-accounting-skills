@@ -56,6 +56,14 @@ A person can compare a result with the site's [CGT calculator](https://duguid.co
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 Use the reconciled acquisition history from `au-dssp`, `au-employee-share-schemes` or `au-managed-fund-amit` where those events affect a disposal. Verify each acquisition date, cost-base element and prior inclusion before using it; an unavailable companion or unsupported history leaves the affected basis open. Apply the law for the actual disposal period, including any reform or transitional rules, rather than extending an earlier parcel treatment automatically.
 
 An event schedule and loss roll-forward with links to evidence. Every disposal appears once; unresolved basis or eligibility prevents a final taxable-gain conclusion.

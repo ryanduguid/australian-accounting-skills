@@ -60,6 +60,14 @@ For step 3's carry-forward test, the site's [concessional catch-up calculator](h
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A contribution schedule by fund and type tied to fund reports, a concessional cap test with carry-forward workings, a non-concessional cap test with the bring-forward position, and an excess and release summary; for an FHSS release, the determination or contribution schedule with the command's output or the written method's figures. Contribution totals agree to the fund reports. Elections, withdrawals and further contributions are decisions for the client and reviewer.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

@@ -31,6 +31,14 @@ The trust deed and every variation, with the history of trustees, appointors or 
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A reasons schedule, a family and family group map for each candidate test individual, a family control test schedule, a specified income year test, an FTDT screen covering the period back to the earliest candidate year and up to the election date, an IEE schedule for each proposed interposed entity, a schedule of variation and revocation limits, and a form data sheet. Every recipient is inside, outside or `UNRESOLVED` with evidence. The trustee, and each interposed entity, decides whether to elect and whom to specify; a registered tax agent advises and lodges.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

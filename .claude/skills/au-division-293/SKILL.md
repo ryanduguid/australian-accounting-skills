@@ -50,6 +50,14 @@ A person can compare a result with the site's [Division 293 tax calculator](http
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A Division 293 income schedule tied to the return, a contributions schedule by fund, the lesser-of calculation, a deferred amount for defined benefit interests, and a reconciliation to any notice. Differences from a notice are traced to a return error, a fund reporting error or an open question. Objection, correction and release elections are reviewer decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

@@ -78,6 +78,14 @@ Primary sources (checked 20 August 2026):
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - No control account difference left unexplained (an immaterial, *explained* difference is acceptable; an unexplained one is not)
 - Every supplier created or bank detail changed in the month has independent confirmation evidence, or is an open exception with that supplier's next payment waiting for an authorised human
 - Every prior review point is closed by evidence or carried with an owner, and the correction log is updated

@@ -44,6 +44,14 @@ An optional local check, [`the-exchequer-tally`](https://github.com/ryanduguid/a
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A rebuilt franking account roll-forward reconciled to the ATO account and ledger, imputation rate evidence, a distribution and benchmark schedule, a distribution statement check and, where relevant, a deficit tax and offset schedule. For a proposed dividend, add the s 254T of the Corporations Act 2001 evidence, the resolution schedule, the draft distribution statements and the projected franking account entries and journals. The rebuilt closing balance must equal opening balance plus credits less debits, with every ledger difference itemised. The directors decide dividends and franking; a registered tax agent decides the tax treatment and any lodgement.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

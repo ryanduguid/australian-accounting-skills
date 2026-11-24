@@ -134,20 +134,10 @@ From 10 December 2026, Australian Privacy Principle (APP) 1.7 requires an APP en
 Australian Accounting Skills is preparation-only and written for Australian practice. As read on
 13 November 2026, these kinds of product and pack cover nearby ground:
 
-- [Ask Nagaris](https://nagaris.com/ask-nagaris-skills), part of Nagaris's hosted practice platform.
-  Its skills page lists 79 skills and says there are more than 80. The v0.7.0 release of this pack
-  has 107, counting each folder that holds a `SKILL.md` under `.claude/skills/`. The counts are not
-  like for like: one Nagaris skill can cover ground this pack splits across several. Ask Nagaris
-  runs its skills over the firm's own clients, jobs, emails and documents with no installation, and
-  acts with the firm's sign-off. This pack has no access to a firm's systems: it works only from the
-  files and read-only connections the operator gives the agent. The
-  [Ask Nagaris comparison](docs/nagaris-comparison.md) records topic-by-topic decisions as at
-  2 November 2026, rechecked on 11 and 12 November.
 - A general AI agent platform offers an Australian tax and accounting agent that answers questions on
   Australian tax and AASB accounting, installed with one click on a paid monthly plan.
 - [openaccountants/openaccountants](https://github.com/openaccountants/openaccountants): a broad
-  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes. Its
-  [site](https://www.openaccountants.com/) counts 2,204 skills in all.
+  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes.
 - Official finance and small-business plugins from an AI host's maker. The `small-business` plugin declares
   Xero and MYOB connectors. At its commit `84d8efd`, its `tax-prep` skill does US federal
   calculations only; for a business outside the US it stops at a closed-books packet for the

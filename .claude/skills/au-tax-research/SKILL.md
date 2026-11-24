@@ -82,6 +82,14 @@ recheck_sources_by:
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A file note with every section completed or marked not established, a sources table in which every row carries an identifier, pinpoint, version, date read and currency label, and a list of open facts with any draft request for them. For a Budget measure screen, one row per measure with its source page, client facts, status, start date and route. The reviewer decides the position, whether advice is given and what the client is told.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

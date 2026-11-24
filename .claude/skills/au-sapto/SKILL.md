@@ -44,6 +44,14 @@ Run it by its full path, the extracted `australian-tax-calculators` or `<tool-di
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A person-by-person eligibility matrix, rebate-income bridge, period/category record and separate own-offset and spouse-transfer schedules. Leave the offset and dependent Medicare conclusion unverified when eligibility, spouse facts or authority is missing. A registered agent approves the position.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

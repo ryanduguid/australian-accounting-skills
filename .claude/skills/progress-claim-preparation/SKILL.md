@@ -38,6 +38,14 @@ Ask for these if not provided:
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Cumulative value claimed less amounts certified in prior claims equals the gross claimed now, and the movement agrees to this period's measurement records
 - Every variation line cites a written instruction or sits in the unapproved subtotal
 - Retention withheld this claim and cumulative retention agree to the retention ledger

@@ -29,6 +29,14 @@ Owner names and title shares, property type (whole dwelling, granny flat, room i
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A gross income reconciliation for each platform tied to bank receipts and declared income, a night calendar that adds up to the days owned, an expense schedule by category with its apportionment evidence, the holiday home evidence file, the GST screen record and the state levy notes. Every proposed deduction traces to evidence and verified treatment.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

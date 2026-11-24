@@ -3156,6 +3156,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_close_out_and_year_changes.py",
           "test_myob_exports.py"
         ],
         "inventory": []
@@ -3585,6 +3586,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_close_out_and_year_changes.py",
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
           "test_myob_exports.py",

@@ -29,6 +29,14 @@ Employer, review period and what prompted the review, each employee's employment
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 An instrument and classification decision log, a sourced rate table by period, per-pay-period recalculations, a back pay schedule with set-off shown separately, the routed super, withholding and payroll tax items and the open legal questions. The schedule ties to the payroll register for every period reviewed, and a missing rate, time record or decision leaves the affected periods conditional.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
