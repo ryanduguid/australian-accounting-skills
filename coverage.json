@@ -7,7 +7,7 @@
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 20,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 96,
+    "skills_with_behavioural_gate": 97,
     "skills_with_only_the_seeded_case": 20,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -605,6 +605,7 @@
       "gates": {
         "behavioural": [
           "test_client_letter.py",
+          "test_research_runs.py",
           "test_review_state_routes.py"
         ],
         "inventory": []
@@ -2356,7 +2357,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_research_runs.py"
+        ],
         "inventory": []
       }
     },
@@ -2421,7 +2424,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_research_and_ato_drafts.py"
+          "test_research_and_ato_drafts.py",
+          "test_research_runs.py"
         ],
         "inventory": []
       }
