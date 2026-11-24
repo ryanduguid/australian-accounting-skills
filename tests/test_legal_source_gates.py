@@ -651,6 +651,10 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("(`private_health_insurance_rebate.rate_unpublished`)", medicare)
         self.assertIn("the supplied tax claim code stay with step 1", medicare)
         self.assertIn("a total offset of 144.94 and no excess", medicare)
+        # Scope limits the catalogue states, kept beside the positive routes.
+        self.assertIn("every person insured is an eligible person under the *Health Insurance Act 1973*", medicare)
+        self.assertIn("leaves out defined benefit interests and notional taxed contributions", caps)
+        self.assertIn("a deceased person's annualised income, interest on late payments", caps)
         self.assertIn("no bring-forward period started in either of the 2 previous years", caps)
         self.assertIn("(`contribution_caps.defined_benefit_interest`)", caps)
         self.assertIn("it never applies step 3's proposed July 2026 relief", caps)
