@@ -331,7 +331,11 @@ mod tests {
         // The squash commit replaces both branch commits, as a squash merge does.
         commit_all(root, "Squash", "2026-03-05T18:00:00+11:00");
         git(root, &["branch", "-qD", "topic"]).unwrap();
-        assert!(read_text(&root.join(OUTPUT)).unwrap().contains("/newer-skill) | 2026-03-05 |\n"));
+        assert!(
+            read_text(&root.join(OUTPUT))
+                .unwrap()
+                .contains("/newer-skill) | 2026-03-05 |\n")
+        );
         assert_eq!(run(root, &["--check"]), Ok(0));
     }
 
