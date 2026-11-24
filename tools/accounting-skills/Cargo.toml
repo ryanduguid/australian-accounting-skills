@@ -3,6 +3,8 @@ name = "accounting-skills"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.99"
+# `cargo run` without `--bin` runs this binary, not workpaper-renderer.
+default-run = "accounting-skills"
 license = "Apache-2.0"
 authors = ["Ryan Duguid"]
 description = "Native tooling for the accounting skill repository"
