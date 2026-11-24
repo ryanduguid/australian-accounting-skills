@@ -528,12 +528,12 @@ command's output differ, so a change to a skill's citations updates it.
 <!-- check-citations summary -->
 ```text
 Income Tax Assessment Act 1997 (Cth): 515 sections, 513 found, 2 listed exceptions, 0 absent.
-Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 179 sections, 177 found, 2 listed exceptions, 0 absent.
+Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 202 sections, 200 found, 2 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 160 sections, 160 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment Act 1936 (Cth): 158 sections, 158 found, 0 listed exceptions, 0 absent.
 Corporations Act 2001 (Cth): 125 sections, 125 found, 0 listed exceptions, 0 absent.
 Taxation Administration Act 1953 (Cth): 122 sections, 122 found, 0 listed exceptions, 0 absent.
-Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 80 sections, 80 found, 0 listed exceptions, 0 absent.
+Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 93 sections, 93 found, 0 listed exceptions, 0 absent.
 Superannuation Guarantee (Administration) Act 1992 (Cth): 79 sections, 78 found, 1 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (NSW): 53 sections, 53 found, 0 listed exceptions, 0 absent.
 Building Industry Fairness (Security of Payment) Act 2017 (Qld): 48 sections, 48 found, 0 listed exceptions, 0 absent.
@@ -568,8 +568,8 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-2123 of 2123 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1849 of 1849 legislative sections.
-1849 of 1849 resolved sections checked against an index of their Act: 1844 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
+2159 of 2159 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1885 of 1885 legislative sections.
+1885 of 1885 resolved sections checked against an index of their Act: 1880 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing

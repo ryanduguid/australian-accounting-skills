@@ -46,6 +46,9 @@ KEPT_FIGURES: dict[tuple[str, str], tuple[int, str]] = {
         1, "the QA matrix's own tolerance, the cents a whole-figure return label drops; not a rate or threshold"),
     ("au-trust-distributions/SKILL.md", "AUD 1,"): (
         1, "the QA matrix's own tolerance, the cents a whole-figure return label drops; not a rate or threshold"),
+    ("au-aml-ctf-client-coverage/SKILL.md", "25%"): (
+        1, "the ownership limb of 'beneficial owner' in s 5 of the AML/CTF Act as read in compilation 63 "
+        "on 24 November 2026; test_aml_ctf_edge_cases.py pins the wording"),
     ("au-mit-amit-trustee/SKILL.md", "10%"): (
         2, "the closely held limit for a foreign resident individual in s 275-30(1)(c) of the ITAA 1997 and the "
         "clean building rate in s 12-385(3)(a)(ii) in Schedule 1 to the TAA 1953, read 24 November 2026; "
