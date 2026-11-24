@@ -1138,6 +1138,36 @@ class LegalSourceGateTests(unittest.TestCase):
                 self.assertIn("never as a fallback when a local tool refuses", text)
                 self.assertIn("Keep the page's own labels as its own", text)
 
+    #: Site pages live from 24 November 2026: each skill, the page and what the
+    #: page refuses or leaves to the skill's own workflow.
+    SITE_PAGE_ROUTES_24_NOV = (
+        ("au-rd-incentive", "business-calculators/rd-tax-offset/", "registration and eligibility stay with steps 1 to 4"),
+        ("au-rd-incentive", "business-calculators/rd-tax-offset/", "It refuses 2020-21 and earlier years"),
+        ("bas-preparation", "business-calculators/gst-adjustments/", "Take the BAS labels from the supported workpapers"),
+        ("bas-preparation", "business-calculators/gst-adjustments/", "the margin scheme and other special rules"),
+        ("au-financial-statements", "business-calculators/deferred-tax/", "the judgement whether future taxable profit"),
+        ("au-financial-statements", "business-calculators/deferred-tax/", "It refuses business combinations"),
+        ("au-individual-return", "individual-tax/income-tax/", "It refuses taxable income that includes a special income component"),
+        ("au-individual-return", "individual-tax/income-tax/", "does not decide whether the person was entitled to the offset"),
+        ("au-foreign-income", "individual-tax/income-tax/", "Which tax counts and what a treaty allows stay with step 3"),
+        ("au-foreign-income", "individual-tax/income-tax/", "it refuses a rate for a day other than the one the rule names"),
+        ("au-non-commercial-losses", "individual-tax/sole-trader/", "the Commissioner's discretion is never decided there"),
+        ("au-super-contribution-caps", "individual-tax/transfer-balance/", "It refuses reversionary income streams"),
+        ("au-super-contribution-caps", "individual-tax/transfer-balance/", "The ATO's determination or assessment governs"),
+        ("au-smsf-year-end", "individual-tax/pension-minimum/", "the test of payments made by 30 June stay with step 3"),
+        ("au-smsf-year-end", "individual-tax/pension-minimum/", "does not apply the halved factors of 2019-20 to 2022-23"),
+    )
+
+    def test_24_november_site_page_routes_keep_the_skills_decisions(self) -> None:
+        for name, page, boundary in self.SITE_PAGE_ROUTES_24_NOV:
+            with self.subTest(skill=name, boundary=boundary):
+                text = " ".join(skill_text(name).split())
+                self.assertIn(f"https://duguid.com.au/tools/{page}", text)
+                self.assertIn(boundary, text)
+                self.assertIn("never as a fallback when a local tool refuses", text)
+                self.assertIn("Keep the page's own labels as its own", text)
+                self.assertIn("read 24 November 2026", text)
+
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
 

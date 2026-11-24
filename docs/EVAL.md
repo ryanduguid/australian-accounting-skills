@@ -527,7 +527,7 @@ command's output differ, so a change to a skill's citations updates it.
 
 <!-- check-citations summary -->
 ```text
-Income Tax Assessment Act 1997 (Cth): 515 sections, 513 found, 2 listed exceptions, 0 absent.
+Income Tax Assessment Act 1997 (Cth): 524 sections, 522 found, 2 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 202 sections, 200 found, 2 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 160 sections, 160 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment Act 1936 (Cth): 158 sections, 158 found, 0 listed exceptions, 0 absent.
@@ -547,6 +547,7 @@ Superannuation Industry (Supervision) Act 1993 (Cth): 19 sections, 19 found, 0 l
 Building and Construction Industry Security of Payment Act 1999 (NSW): 16 sections, 16 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 1971 (Qld): 13 sections, 13 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
+Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Income Tax Rates Act 1986 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2011 (ACT): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Taxation Administration Regulations 2017 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
@@ -561,15 +562,14 @@ Payroll Tax Act 2009 (NT): 5 sections, 5 found, 0 listed exceptions, 0 absent.
 Stamp Duty Act 1978 (NT): 5 sections, 5 found, 0 listed exceptions, 0 absent.
 Coal Mining Industry (Long Service Leave) Payroll Levy Act 1992 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Duties Act 2000 (Vic): 2 sections, 2 found, 0 listed exceptions, 0 absent.
-Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Superannuation Guarantee (Administration) Regulations 2018 (Cth): 2 sections, 2 found, 0 listed exceptions, 0 absent.
 Duties Act 2001 (Qld): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-2159 of 2159 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1885 of 1885 legislative sections.
-1885 of 1885 resolved sections checked against an index of their Act: 1880 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
+2176 of 2176 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1902 of 1902 legislative sections.
+1902 of 1902 resolved sections checked against an index of their Act: 1897 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing

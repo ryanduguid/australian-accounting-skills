@@ -19,6 +19,15 @@ Income year, residency and temporary-residency facts, income by country and type
 
 4. Prepare the foreign income tax offset limit workpaper under instructions applicable to the income year. Reconcile its inputs to the Australian return workpaper; foreign receipts alone are insufficient. If whole-return inputs are missing, complete the foreign-income reconciliation and leave the limit unresolved. Do not assume every foreign levy is creditable or every amount paid is fully offsettable.
 
+## Site calculator
+
+For steps 2 and 4, the site's [income tax calculator](https://duguid.com.au/tools/individual-tax/income-tax/) (published 17 November 2026, last checked 18 November 2026, its foreign income forms added 24 November 2026, read 24 November 2026) has 2 parts for one individual and an income year from 2020-21 to 2026-27. It runs in the browser and sends no inputs to a server. Before relying on it, confirm it supports the reporting month or income year in question; use it as a cross-check of the workpapers only, never as a fallback when a local tool refuses.
+
+- 'Foreign income conversion' translates one foreign currency amount into Australian dollars at the rate for the day the rule names for that kind of amount or at an average over a period of up to 12 months that includes it. The rate and its source are entered, and it refuses a rate for a day other than the one the rule names. Whether an average reasonably approximates the day's rate stays with step 2.
+- The foreign income tax offset option on the main form takes the foreign income tax that counts, in Australian dollars, and limits it to the default limit, or to the greater of that and the income tax payable less that payable without the foreign-source income and its related deductions, plus the tax on non-assessable non-exempt income. Each income tax payable figure is before tax offsets and includes the Medicare levy and surcharge. Foreign tax above the limit is neither refunded nor carried forward. The page works the limit out from its own estimate at the year's resident rates with the full tax-free threshold only for the years it states; for other years, and for a part-year resident, enter the stated income tax payable figures. It does not cover tax on the profits of an overseas permanent establishment or attributed controlled foreign company income, the Joint Petroleum Development Area rule or the life insurance rules. Which tax counts and what a treaty allows stay with step 3, and the return inputs with step 4.
+
+Enter only amounts, currency codes, rates and dates, never the person's name or TFN. Record what it consumed: the page, the date run, the inputs and the result. Keep the page's own labels as its own, beside those inputs. Where the page and the workpaper differ, record the difference for the reviewer and adopt neither.
+
 ## Hand-off and checks
 
 **Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
