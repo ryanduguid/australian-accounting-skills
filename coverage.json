@@ -2,12 +2,12 @@
   "schema_version": 1,
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
-    "skills": 111,
-    "sources_indexed": 896,
+    "skills": 112,
+    "sources_indexed": 918,
     "skills_source_exempt": 5,
     "skills_with_unreachable_sources": 20,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 95,
+    "skills_with_behavioural_gate": 96,
     "skills_with_only_the_seeded_case": 20,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
@@ -1413,6 +1413,34 @@
       }
     },
     {
+      "skill": "au-mit-amit-trustee",
+      "sources": {
+        "indexed": 18,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-24",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "mit-amit-trustee-shortfall-and-withholding"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_mit_amit_trustee.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
       "skill": "au-non-commercial-losses",
       "sources": {
         "indexed": 3,
@@ -2234,7 +2262,7 @@
     {
       "skill": "au-super-guarantee-charge",
       "sources": {
-        "indexed": 12,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 8,
@@ -3341,7 +3369,7 @@
     {
       "skill": "stp-finalisation",
       "sources": {
-        "indexed": 8,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 5,
@@ -3371,6 +3399,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
           "test_payday_super_guidance.py",
           "test_skill_metadata.py",
           "test_validation_pack.py",
