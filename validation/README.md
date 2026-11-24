@@ -387,6 +387,31 @@ recorded separately. Earlier observations are retained. These records contain
 no human-confirmed verdicts. See the
 [trial evidence and limitations](../docs/EVAL.md#current-evidence-and-rerun).
 
+## Figures cards
+
+A figures card in `figures/` is a fabricated return whose lodged figures are the
+answer key for a field-level preparation benchmark. It names one target skill,
+the return form, a one-line scenario saying what the fabricated evidence shows,
+and each lodged field's code, label and amount in dollars and cents.
+[`figures.schema.json`](figures.schema.json) is its shape; the checker holds the
+schema's keys and verdict list to its own. A card is plain UTF-8 text with no
+JSON `\u` escapes, so the scan for identifiers reads every character as written.
+
+A run gives each lodged field exactly one verdict:
+
+| Verdict | Meaning |
+| --- | --- |
+| `match` | The right field and the right amount. |
+| `wrong-amount` | The right field, another amount. |
+| `wrong-field` | The amount reported at another field. |
+| `omitted` | The field left blank. |
+| `queried` | Left for a reviewer with a stated evidence gap. |
+
+Match rate is `match` over the card's fields. Label accuracy is `match` plus
+`wrong-amount` over the same fields: whether each figure landed on the right
+field, whatever its amount. The 2 are reported apart, so a right label cannot
+hide a wrong amount or the reverse. No figures run or score is recorded here.
+
 ## Static checks
 
 Stage intended additions so the checker can verify the exact tracked inventory,

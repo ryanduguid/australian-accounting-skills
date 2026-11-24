@@ -1,0 +1,13 @@
+{
+  "id": "bas-quarter-taxable-sales-and-purchases",
+  "synthetic": true,
+  "target_skill": "bas-preparation",
+  "return_form": "Fabricated business activity statement, quarterly, GST on the cash basis",
+  "scenario": "Synthetic sales ledger of taxable sales totalling 22000.00 including GST and a purchases ledger of taxable non-capital purchases totalling 5500.00 including GST, each with a tax invoice; every listed sale was received and every listed purchase paid in full during the quarter; no capital purchases, exports or input-taxed sales.",
+  "fields": [
+    {"field": "G1", "label": "Total sales", "amount": "22000.00"},
+    {"field": "1A", "label": "GST on sales", "amount": "2000.00"},
+    {"field": "G11", "label": "Non-capital purchases", "amount": "5500.00"},
+    {"field": "1B", "label": "GST on purchases", "amount": "500.00"}
+  ]
+}

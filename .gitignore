@@ -122,6 +122,13 @@ exports/
 !/validation/results.schema.json
 !/validation/results/
 !/validation/results/*.json
+# Figures cards hold fabricated lodged figures only; the validator holds them
+# to validation/figures.schema.json.
+!/validation/figures.schema.json
+!/validation/figures/
+!/validation/figures/*.json
+# Shared figures card cases the Python and native tests both run.
+!/tests/figure_card_fixtures.json
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
 # matching the sibling repos. Uncomment here, ABOVE the client-name rules:
