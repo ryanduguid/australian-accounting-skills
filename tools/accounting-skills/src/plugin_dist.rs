@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Build the plugin as the Claude plugin directory reads it. The directory
 //! refuses, from an organisation it has not verified, a local MCP server, a
@@ -19,10 +19,11 @@ use std::{
 };
 
 /// Each committed path or folder the build ships, and where it ships it.
-pub const SOURCES: [(&str, &str); 9] = [
+pub const SOURCES: [(&str, &str); 10] = [
     (MANIFEST, MANIFEST),
     (".claude-plugin/icon.png", ".claude-plugin/icon.png"),
     (".claude/skills", "skills"),
+    ("commands", "commands"),
     ("DISCLAIMER.md", "DISCLAIMER.md"),
     ("LICENSE", "LICENSE"),
     ("NOTICE", "NOTICE"),
@@ -34,7 +35,7 @@ pub const SOURCES: [(&str, &str); 9] = [
 const MANIFEST: &str = ".claude-plugin/plugin.json";
 /// The manifest keys the build ships unchanged. Any other key fails the build,
 /// so a component added on `main` is never shipped or dropped unnoticed.
-const MANIFEST_KEYS: [&str; 13] = [
+const MANIFEST_KEYS: [&str; 14] = [
     "$schema",
     "name",
     "version",
@@ -48,6 +49,7 @@ const MANIFEST_KEYS: [&str; 13] = [
     "supportUrl",
     "keywords",
     "skills",
+    "commands",
 ];
 /// The directory refuses a version with this many files and folders or more.
 pub const MAX_ENTRIES: usize = 512;
@@ -340,6 +342,21 @@ fn blobs(root: &Path, oids: &[String]) -> Result<Vec<Vec<u8>>> {
 /// return its counts of files and of files and folders.
 pub fn build(root: &Path, destination: &Path) -> Result<(usize, usize)> {
     let mut files = committed(root, &SOURCES)?;
+    let root_notices = BARE_TEXT.map(|name| (name, files.get(name).cloned()));
+    // The whole plugin distributes the root notices once. Standalone skills
+    // carry their own copies.
+    files.retain(|path, bytes| {
+        let Some((folder, name)) = path.rsplit_once('/') else {
+            return true;
+        };
+        let skill_root = folder
+            .strip_prefix("skills/")
+            .is_some_and(|skill| !skill.is_empty() && !skill.contains('/'));
+        !skill_root
+            || !root_notices
+                .iter()
+                .any(|(notice, root_bytes)| *notice == name && root_bytes.as_ref() == Some(bytes))
+    });
     let generated = manifest(&files[MANIFEST])?;
     files.insert(MANIFEST.to_owned(), generated);
     let entries = check(&files)?;

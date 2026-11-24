@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! Primary-source retrieval, pending candidates and independent human readiness.
 pub use crate::source_content::{body_digest, client_rendered, readable_text};
@@ -52,6 +52,19 @@ pub const OUTCOMES: &[&str] = &[
     UNCHANGED,
 ];
 pub const ACTIONABLE: &[&str] = &[CHANGED, MISSING, UNREADABLE, REVIEW_DUE, BASELINE_REQUIRED];
+/// Report rows run in this order. The workflow cuts an issue body over GitHub's
+/// limit at a line boundary, so what needs an edit here comes before the
+/// hundreds of blocked and unreachable rows that do not.
+const ROW_ORDER: &[&str] = &[
+    CHANGED,
+    MISSING,
+    UNREADABLE,
+    REVIEW_DUE,
+    BASELINE_REQUIRED,
+    CLIENT_RENDERED,
+    UNREACHABLE,
+    BLOCKED,
+];
 const BOUNDARY: &str = "\nReadiness concerns recorded source evidence. Verify the exact fact and its effective period at use time; this is not legal, tax or professional approval.\n";
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -948,7 +961,8 @@ pub fn render_at(report: &Report, write: bool, swept: &str) -> String {
             ]
             .map(str::to_owned),
         );
-        attention.sort_by(|a, b| (&a.outcome, &a.skill).cmp(&(&b.outcome, &b.skill)));
+        let rank = |o: &&Outcome| ROW_ORDER.iter().position(|name| *name == o.outcome);
+        attention.sort_by(|a, b| (rank(a), &a.skill).cmp(&(rank(b), &b.skill)));
         for o in attention {
             lines.push(format!(
                 "| {} | `{}` | [{}]({}) | {} | {} | {} |",

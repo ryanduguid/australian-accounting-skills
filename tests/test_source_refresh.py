@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """What the source sweep must never do quietly.
 
 The sweep exists to say which primary sources moved. Every failure mode worth
@@ -596,13 +596,13 @@ class RenderTests(unittest.TestCase):
             ("Moved", "https://example.test/old", fetched(final_url=destination)),
         ])
         self.assertEqual(rows, [
+            r"| changed | `example-skill` | [Moved](https://example.test/page) | 2026-09-08 | not published "
+            r"| Source destination changed from https://example.test/old to "
+            r"https://example.test/p/&lt;svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
             r"| blocked | `example-skill` | [Refused \| Example](https://example.test/page) "
             r"| 2026-09-08 | not published | HTTP 403 &lt;svg onload=alert(1)\> \| \[Pay\](https://phish.example) "
             "\\`x\\`\ufffd\\[31m\ufffd#\u2060#\u2060 Injected \\\\\\| \ufffd\xa0\ufffd\\\\. "
             "This host refuses automated retrieval: review by hand. |",
-            r"| changed | `example-skill` | [Moved](https://example.test/page) | 2026-09-08 | not published "
-            r"| Source destination changed from https://example.test/old to "
-            r"https://example.test/p/&lt;svg/onload=alert(1)\>\|\[x\](https://phish.example)\`. |",
         ])
 
     def test_an_ordinary_destination_still_renders_as_a_usable_link(self) -> None:
@@ -674,14 +674,14 @@ class RenderTests(unittest.TestCase):
             ("Odd type", "https://example.test/page", fetched(digest="", content_type="x/@someuser")),
         ], url=source)
         self.assertEqual(rows, [
-            f"| blocked | `example-skill` | [Ruling #\u20603]({source}) | 2026-09-08 | not published "
-            f"| HTTP 403 {joined}. This host refuses automated retrieval: review by hand. |",
             f"| changed | `example-skill` | [Moved]({source}) | 2026-09-08 | not published "
             "| Source destination changed from https://example.test/old to "
             "https://example.test/x&lt;@someuser&lt;https://github.com/rust-lang/rust/issues/1. |",
             f"| unreadable | `example-skill` | [Odd type]({source}) | 2026-09-08 | not published "
             "| Retrieved x/@\u2060someuser but extracted no content to digest. This is a fault in "
             "scripts/source\\_refresh.py, not a finding about the source. |",
+            f"| blocked | `example-skill` | [Ruling #\u20603]({source}) | 2026-09-08 | not published "
+            f"| HTTP 403 {joined}. This host refuses automated retrieval: review by hand. |",
         ])
 
 

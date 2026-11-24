@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! The `statement-check` command as the statement-to-csv skill runs it: its exit codes and output.
 //! Every figure is fabricated.

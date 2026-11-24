@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/validation/figures.schema.json",
+  "title": "Figures card",
+  "description": "A fabricated return whose lodged figures are the answer key for a field-level preparation benchmark. A run gives each lodged field one verdict from $defs.verdict; match rate and label accuracy are reported apart.",
+  "type": "object",
+  "required": [
+    "id",
+    "synthetic",
+    "target_skill",
+    "return_form",
+    "scenario",
+    "fields"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The file name without .json.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "synthetic": {
+      "const": true
+    },
+    "target_skill": {
+      "description": "A skill folder under .claude/skills.",
+      "type": "string"
+    },
+    "return_form": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "scenario": {
+      "description": "One line saying what the fabricated evidence shows.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "field",
+          "label",
+          "amount"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "description": "The return's field code, unique within the card.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "amount": {
+            "description": "The lodged figure in dollars and cents.",
+            "type": "string",
+            "pattern": "^-?(?:0|[1-9][0-9]{0,6})\\.[0-9]{2}$"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "verdict": {
+      "description": "One per lodged field. match: right field, right amount. wrong-amount: right field, another amount. wrong-field: the amount reported at another field. omitted: left blank. queried: left for a reviewer with a stated evidence gap.",
+      "enum": [
+        "match",
+        "wrong-amount",
+        "wrong-field",
+        "omitted",
+        "queried"
+      ]
+    }
+  }
+}

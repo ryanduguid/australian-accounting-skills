@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 use accounting_skills::{Result, validation as v};
 use serde_json::{Value, json};
@@ -64,6 +64,20 @@ fn invoke(request: &Value) -> Result<Value> {
             Value::Null
         }
         "result" => json!(v::check_result_file(s("path"), s("text"), &names("known"))?),
+        "split_figures" => {
+            let (a, b) = v::split_figure_cards(&names("names"));
+            json!([a, b])
+        }
+        "figures_schema" => {
+            v::check_figures_schema(s("text"))?;
+            Value::Null
+        }
+        "figure" => json!(v::check_figure_card(s("path"), s("text"), &names("names"))?),
+        "score" => {
+            let (fields, matched, label_right) =
+                v::score_figures(&names("names"), &request["verdicts"])?;
+            json!({"fields":fields,"match":matched,"label_right":label_right})
+        }
         "published" => {
             v::check_published_inventories(&names("names"), root)?;
             Value::Null

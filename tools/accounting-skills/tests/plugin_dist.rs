@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 use accounting_skills::plugin_dist::{Files, MAX_ENTRIES, MAX_TEXT_BYTES, build, check, manifest};
 use serde_json::{Value, json};
@@ -72,10 +72,14 @@ fn both_build_commands_print_their_usage_for_help_and_for_bad_arguments() {
 
 /// A committed repository holding a fabricated plugin and files it must not ship.
 fn fixture(root: &Path, skip: &str) {
-    let files: [(&str, &[u8]); 14] = [
+    let files: [(&str, &[u8]); 17] = [
         (
             ".claude-plugin/plugin.json",
-            br#"{"name": "fixture", "version": "1.0.0", "skills": "./.claude/skills", "mcpServers": {"local": {"command": "uvx"}}}"#,
+            br#"{"name": "fixture", "version": "1.0.0", "skills": "./.claude/skills", "commands": "./commands", "mcpServers": {"local": {"command": "uvx"}}}"#,
+        ),
+        (
+            "commands/bas-prep.md",
+            b"---\ndescription: \"Prepare a BAS workpaper.\"\n---\n\nUse `bas-preparation`.\n",
         ),
         // A PNG signature and bytes that are not UTF-8.
         (".claude-plugin/icon.png", b"\x89PNG\r\n\x1a\n\xff\xfe"),
@@ -89,6 +93,14 @@ fn fixture(root: &Path, skip: &str) {
             b"Back to [the skill](../SKILL.md).\n",
         ),
         (".claude/rules/rule.md", b"Fabricated rule\n"),
+        (
+            ".claude/skills/bas-preparation/LICENSE",
+            b"Fabricated licence\n",
+        ),
+        (
+            ".claude/skills/bas-preparation/NOTICE",
+            b"Fabricated notice\n",
+        ),
         ("DISCLAIMER.md", b"Fabricated disclaimer\n"),
         ("LICENSE", b"Fabricated licence\n"),
         ("NOTICE", b"Fabricated notice\n"),
@@ -156,7 +168,7 @@ fn the_build_ships_the_skills_in_skills_without_the_mcp_server() {
     // An uncommitted edit is not shipped: the build reads the commit.
     fs::write(root.join("LICENSE"), "Uncommitted licence\n").unwrap();
     let destination = directory.path().join("plugin");
-    assert_eq!(build(&root, &destination).unwrap(), (10, 14));
+    assert_eq!(build(&root, &destination).unwrap(), (11, 16));
     assert_eq!(
         listing(&destination),
         BTreeSet::from(
@@ -169,6 +181,7 @@ fn the_build_ships_the_skills_in_skills_without_the_mcp_server() {
                 "PRIVACY.md",
                 "README.md",
                 "SECURITY.md",
+                "commands/bas-prep.md",
                 "skills/bas-preparation/SKILL.md",
                 "skills/bas-preparation/references/guide.md",
             ]
@@ -188,10 +201,21 @@ fn the_build_ships_the_skills_in_skills_without_the_mcp_server() {
             .unwrap();
     assert_eq!(
         shipped,
-        json!({"name": "fixture", "version": "1.0.0", "skills": "./skills"})
+        json!({"name": "fixture", "version": "1.0.0", "skills": "./skills", "commands": "./commands"})
     );
     // The destination must be new.
     assert!(build(&root, &destination).is_err());
+
+    // A distinct skill notice must not be omitted as a copy of the root notice.
+    let notice = ".claude/skills/bas-preparation/NOTICE";
+    fs::write(root.join(notice), "Distinct skill notice\n").unwrap();
+    git(&root, &["add", "--", notice]);
+    commit(&root);
+    let error = build(&root, &directory.path().join("distinct")).unwrap_err();
+    assert_eq!(
+        error.to_string(),
+        "skills/bas-preparation/NOTICE is not a file type the directory accepts"
+    );
 }
 
 #[test]
@@ -229,7 +253,7 @@ fn manifest_drops_only_the_mcp_servers_and_refuses_an_unknown_component() {
         shipped,
         "{\n  \"$schema\": \"s\",\n  \"name\": \"n\",\n  \"version\": \"2.0.0\",\n  \"skills\": \"./skills\",\n  \"keywords\": [\n    \"a\"\n  ]\n}\n"
     );
-    for key in ["hooks", "lspServers", "monitors", "commands", "agents"] {
+    for key in ["hooks", "lspServers", "monitors", "agents"] {
         let source = format!(r#"{{"name": "n", "{key}": "./x"}}"#);
         assert_eq!(
             manifest(source.as_bytes()).unwrap_err().to_string(),
@@ -392,7 +416,8 @@ fn the_repository_plugin_fits_the_directory() {
                 "PRIVACY.md",
                 "README.md",
                 "SECURITY.md",
-                "skills"
+                "commands",
+                "skills",
             ]
             .map(str::to_owned)
         )
@@ -422,15 +447,35 @@ fn the_repository_plugin_fits_the_directory() {
         ],
     ))
     .unwrap();
-    // Every committed skill file ships byte for byte under skills/.
+    // Standalone notices are identical to the copies shipped at the root.
+    // Every other committed skill file ships byte for byte under skills/.
+    let mut skill_files = 0;
     for path in committed.lines() {
         let shipped = destination.join(path.strip_prefix(".claude/").unwrap());
-        assert_eq!(
-            fs::read(&shipped).unwrap(),
-            git(&root, &["show", &format!("HEAD:{path}")]),
-            "{path}"
-        );
+        let bytes = git(&root, &["show", &format!("HEAD:{path}")]);
+        if let [".claude", "skills", _, name @ ("LICENSE" | "NOTICE")] =
+            path.split('/').collect::<Vec<_>>().as_slice()
+        {
+            assert!(!shipped.exists(), "{path}");
+            assert_eq!(bytes, fs::read(destination.join(name)).unwrap(), "{path}");
+            continue;
+        }
+        skill_files += 1;
+        assert_eq!(fs::read(&shipped).unwrap(), bytes, "{path}");
     }
-    // The manifest, icon, README and 5 notices beside the skills.
-    assert_eq!(count, committed.lines().count() + 8);
+    let committed_commands = String::from_utf8(git(
+        &root,
+        &["ls-tree", "-r", "--name-only", "HEAD", "--", "commands"],
+    ))
+    .unwrap();
+    let mut command_files = 0;
+    for path in committed_commands.lines() {
+        let shipped = destination.join(path);
+        let bytes = git(&root, &["show", &format!("HEAD:{path}")]);
+        command_files += 1;
+        assert_eq!(fs::read(&shipped).unwrap(), bytes, "{path}");
+    }
+    assert!(command_files > 0, "expected committed slash commands");
+    // The manifest, icon, README and 5 notices beside the skills and commands.
+    assert_eq!(count, skill_files + command_files + 8);
 }

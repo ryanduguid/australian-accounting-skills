@@ -1,3 +1,38 @@
+# v0.8.0
+
+Together the changes below provide 112 skills (up from 107 in `v0.7.0`),
+246 validation cards, 130 routing cases and 2 figures cards (7 lodged fields).
+
+## Highlights
+
+- **Apache-2.0 licence:** Ryan Duguid's original work is now licensed under
+  Apache-2.0. Earlier releases retain their original licence terms.
+- **Five new skills:** `au-aasb-standards-reference`, `au-aml-ctf-cdd-reliance`,
+  `au-aml-ctf-designated-services`, `au-mit-amit-trustee` and
+  `workers-compensation-premium`.
+- **Slash commands, hooks and MCP tool server:** added 10 compliance slash
+  commands (`commands/`) backed by `accounting-skills` workpaper rendering
+  (#505), added `accounting-skills serve-mcp` with skill-tree hashing, attached
+  matching skills' critical-rule anchors through plugin hooks (#500, #516), and
+  pinned the Claude Code plugin to `aus-accounting-mcp` `0.12.0` (`bf2619c`)
+  (#499).
+- **Skill coverage and calculator alignment:** updated skills to cite and route
+  `australian-tax-calculators` `1.2.0` and the 24 November site calculators
+  (#472–#494, #509, #512, #522), added pre-sign-off QA matrices and plain client
+  question drafting (#501–#504), updated Division 296 and AML/CTF rules
+  (#518, #520, #524), and added figures cards for field-level preparation
+  benchmarks (`validate_validation.py`, native `validate-validation`) (#523).
+- **Release packaging and discovery:** added per-skill ZIP archive uploads via
+  `release-skills.yml` (`skill-archives: ".claude/skills/*"`) and `context7.json`
+  configuration (#525).
+
+At this release, `accounting-skills check-citations` resolved 2,176 of 2,176
+citations (274 of 274 rulings and guidance, 1,902 of 1,902 legislative
+sections; 1,897 found in their Act index, 5 listed exceptions, 0 absent).
+`validate_validation.py` checked 246 validation cards across 112 skills (23
+result records: 8 confirmed, 13 observed, 2 legacy; 82 skills with confirmed
+passes, 0 fails, 2 non-current digests) and 2 figures cards.
+
 # v0.7.0
 
 Together the changes below provide 107 skills, 237 validation cards and 122 routing

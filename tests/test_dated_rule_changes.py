@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Skills that meet a 2026 rule change keep its start date, its scope and its source.
 
 Each test reads one numbered workflow step, or one table row cell by cell, and
@@ -1895,29 +1895,31 @@ class DatedRuleChangeTests(unittest.TestCase):
         privacy = readme.split("## Privacy")[1].split("## Alternatives")[0]
         self.assert_sentence(privacy, r"\*\*Your agent host\*\* decides where\b")
         self.assert_sentence(privacy, r"\bcloud model\b", r"\bnormally reach\b", r"\bcheck your host's configuration\b")
-        audited = "fd110b9bfa7da874a508534d2bd497d522e9ef91"  # aus-accounting-mcp v0.10.0
+        audited = "bf2619c95e211685ca4c996cc7c04f9e400a616e"  # aus-accounting-mcp v0.12.0
         plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         self.assertIn(f"@{audited}#", plugin["mcpServers"]["aus-accounting"]["args"][1])
-        self.assert_sentence(privacy, r"\bdefault branch starts `aus-accounting-mcp` 0\.10\.0", rf"/commit/{audited}\)")
-        self.assert_sentence(privacy, r"\bAt 0\.10\.0\b", r"\bimport no network library apart from `asyncio`")
-        # 0.10.0 dropped the Python australian-tax-calculators engine: 4 engines from PyPI and lodgment-calendar.
+        self.assert_sentence(privacy, r"\bdefault branch starts `aus-accounting-mcp` 0\.12\.0", rf"/commit/{audited}\)")
+        self.assert_sentence(privacy, r"\bAt 0\.12\.0\b", r"\bimport no network library apart from `asyncio`")
+        # From 0.10.0 the Python australian-tax-calculators engine is gone: 4 engines from PyPI and lodgment-calendar.
         self.assert_sentence(privacy, r"\bthe 5 engines the plugin's command installs\b")
         self.assert_sentence(privacy, r"\btakes 4 engines from PyPI\b", r"\bbuilds the fifth, `lodgment-calendar`")
-        # 0.10.0 runs the calculators executable, so the README must say what it runs and how.
-        self.assert_sentence(privacy, r"\bimports `subprocess`", r"`calculate_tax_worksheet` runs\b", r"\bseparately installed\b")
+        # 0.12.0 runs only the 1.2.0 calculators executable, so the README must say what it runs and how.
+        self.assert_sentence(privacy, r"\bimports `subprocess`", r"`calculate_tax_worksheet` runs\b", r"\bseparately installed `australian-tax-calculators` 1\.2\.0")
         self.assert_sentence(
             privacy, r"\btrace of 0\.6\.0\b", r"\b0 socket and 0 connect calls\b", r"\b12 calculation tools\b"
         )
-        self.assert_sentence(privacy, r"\btrace was not repeated for 0\.8\.0, 0\.9\.0 or 0\.10\.0\b")
+        self.assert_sentence(privacy, r"\btrace was not repeated for 0\.8\.0, 0\.9\.0, 0\.10\.0 or 0\.12\.0\b")
         self.assert_sentence(privacy, r"\b8 corpus tools\b", r"\bnot traced\b")
         self.assert_sentence(privacy, r"\btrace's method and output\b", r"\bnot published\b")
         self.assert_sentence(privacy, r"\bMCP SDK\b", r"\bnot pinned\b", r"\bdid not cover it\b")
 
     def test_skill_folders_hold_no_runtime_scripts(self) -> None:
         readme = " ".join((SKILLS.parents[1] / "README.md").read_text(encoding="utf-8").split())
-        self.assertIn("The skill folders hold Markdown and JSON files and no scripts", readme)
-        suffixes = {path.suffix for path in SKILLS.rglob("*") if path.is_file()}
-        self.assertLessEqual(suffixes, {".md", ".json"})
+        self.assertIn("Each skill folder contains Markdown, JSON and its licence and notice", readme)
+        for path in SKILLS.rglob("*"):
+            if path.is_file() and path.suffix not in {".md", ".json"}:
+                self.assertEqual(path.parent.parent, SKILLS, path)
+                self.assertIn(path.name, {"LICENSE", "NOTICE"}, path)
 
     def test_readme_names_every_local_program_a_skill_names(self) -> None:
         """A firm reads the Privacy section to decide what can leave the machine, so a

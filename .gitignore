@@ -58,6 +58,10 @@ exports/
 # The derived evidence matrix. accounting-skills build-coverage writes it, and
 # its --check mode fails when the file drifts from the tree.
 !/coverage.json
+# The plugin's hook configuration and the keywords its rule hook matches.
+!/hooks/hooks.json
+!/hooks/skill-keywords.json
+!/context7.json
 .claude/settings.local.json
 # *.md must not swallow the repo's own docs — a checklist or register written
 # as Markdown is the stray being caught here. Any future tracked Markdown
@@ -91,6 +95,8 @@ exports/
 !/.claude/skills/reconciliation-break-trace/SKILL.md
 !/.claude/rules/
 !/.claude/rules/**/*.md
+!/commands/
+!/commands/*.md
 
 # Fixed, fabricated regression cards. Keep this exception narrow: arbitrary
 # Markdown elsewhere remains blocked as a possible generated workpaper.
@@ -116,6 +122,13 @@ exports/
 !/validation/results.schema.json
 !/validation/results/
 !/validation/results/*.json
+# Figures cards hold fabricated lodged figures only; the validator holds them
+# to validation/figures.schema.json.
+!/validation/figures.schema.json
+!/validation/figures/
+!/validation/figures/*.json
+# Shared figures card cases the Python and native tests both run.
+!/tests/figure_card_fixtures.json
 
 # Allow sanitised sample fixtures when needed — sample-* convention only,
 # matching the sibling repos. Uncomment here, ABOVE the client-name rules:

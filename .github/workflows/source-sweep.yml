@@ -111,7 +111,16 @@ jobs:
 
       - name: File the result
         if: needs.sweep.outputs.outcome == 'findings'
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          # GitHub refuses an issue body over 65,536 characters: keep whole
+          # lines up to 60,000 and link the full report artifact.
+          if [ "$(wc -c < sweep.md)" -gt 60000 ]; then
+            awk -v max=60000 '{ n += length($0) + 1; if (n > max) exit; print }' sweep.md > body.md
+            printf '\n---\n\nReport truncated. The full report is the source-sweep artifact of [this run](%s).\n' "$RUN_URL" >> body.md
+            mv body.md sweep.md
+          fi
           existing=$(gh issue list --state open --search "$TITLE in:title" \
             --json number,title \
             --jq "[.[] | select(.title == env.TITLE) | .number] | first // empty")

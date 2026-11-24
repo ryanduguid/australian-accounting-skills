@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Adverse tests for the fabricated validation-pack trust boundary."""
 
 from __future__ import annotations
@@ -136,6 +136,15 @@ def build_fixture(root: Path, cards: int = 6) -> None:
             indent=2,
         )
         + "\n",
+    )
+    write(
+        root / "validation" / "figures.schema.json",
+        validator.read_utf8(REPOSITORY / "validation" / "figures.schema.json"),
+    )
+    figures = dict(FIGURE_FIXTURES["base"], target_skill=sorted(skills)[0])
+    write(
+        root / "validation" / "figures" / "fixture-card.json",
+        json.dumps(figures, indent=2) + "\n",
     )
     for relative_path in sorted(validator.EXPECTED_SUPPORT):
         write(root / relative_path, "fixture support file\n")
@@ -451,6 +460,15 @@ class SafetyControlTests(unittest.TestCase):
         self.assertIn("Source manifest: report/version", close)
         self.assertIn("re-export affected trial balances", close)
         self.assertIn("period-lock action is recorded as pending or complete", close)
+
+    def test_rental_repayment_uses_prior_maximum_before_apportioning(self) -> None:
+        rental = (
+            REPOSITORY / ".claude" / "skills" / "au-rental-property" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn(
+            "reduce the original expenditure by the earlier years' maximum deductions before apportionment",
+            rental,
+        )
 
     def test_close_control_step_reports_exit_2_and_quotes_exceptions(self) -> None:
         close = (
@@ -941,6 +959,89 @@ class RecordedRunTests(unittest.TestCase):
                     validator.check_results_schema(json.dumps(schema), frozenset({"a", "b"}))
 
 
+FIGURE_FIXTURES = json.loads(
+    (REPOSITORY / "tests" / "figure_card_fixtures.json").read_text(encoding="utf-8")
+)
+
+
+def figure_card_case(case: dict[str, object]) -> tuple[str, str]:
+    """The (path, text) a shared figures card case describes; the native tests build the same."""
+    card = dict(FIGURE_FIXTURES["base"])
+    card.update(case.get("set", {}))  # type: ignore[arg-type]
+    card.pop(str(case.get("drop", "")), None)
+    text = case.get("text")
+    if not isinstance(text, str):
+        text = json.dumps(card, ensure_ascii=False, indent=2) + "\n"
+    return str(case.get("rel", "validation/figures/fixture-card.json")), text
+
+
+class FigureCardTests(unittest.TestCase):
+    """Each shared case is also run by tools/accounting-skills/tests/validation.rs."""
+
+    def test_shared_card_cases(self) -> None:
+        skills = set(FIGURE_FIXTURES["skills"])
+        for case in FIGURE_FIXTURES["cards"]:
+            rel, text = figure_card_case(case)
+            with self.subTest(case=case["name"]):
+                if "error" in case:
+                    with self.assertRaises(validator.ValidationError) as caught:
+                        validator.check_figure_card(rel, text, skills)
+                    self.assertIn(case["error"], str(caught.exception))
+                else:
+                    self.assertEqual(validator.check_figure_card(rel, text, skills), case["fields"])
+
+    def test_shared_score_cases_keep_match_rate_apart_from_label_accuracy(self) -> None:
+        for case in FIGURE_FIXTURES["scores"]:
+            with self.subTest(case=case["name"]):
+                if "error" in case:
+                    with self.assertRaises(validator.ValidationError) as caught:
+                        validator.score_figures(set(case["fields"]), case["verdicts"])
+                    self.assertIn(case["error"], str(caught.exception))
+                else:
+                    self.assertEqual(
+                        validator.score_figures(set(case["fields"]), case["verdicts"]), case["counts"]
+                    )
+
+    def test_shared_schema_cases(self) -> None:
+        for case in FIGURE_FIXTURES["schemas"]:
+            raw = case.get("text")
+            text = raw if isinstance(raw, str) else json.dumps(case["schema"])
+            expected = str(case.get("error", "must declare exactly"))
+            with self.subTest(case=case["name"]):
+                if case["ok"]:
+                    validator.check_figures_schema(text)
+                else:
+                    with self.assertRaises(validator.ValidationError) as caught:
+                        validator.check_figures_schema(text)
+                    self.assertIn(expected, str(caught.exception))
+
+    def test_published_schema_and_cards_pass(self) -> None:
+        validator.check_figures_schema(
+            validator.read_utf8(REPOSITORY / "validation" / "figures.schema.json")
+        )
+        skills = {path.parent.name for path in (REPOSITORY / ".claude" / "skills").glob("*/SKILL.md")}
+        cards = sorted((REPOSITORY / "validation" / "figures").glob("*.json"))
+        self.assertTrue(cards)
+        for path in cards:
+            with self.subTest(card=path.name):
+                rel = f"validation/figures/{path.name}"
+                self.assertGreater(validator.check_figure_card(rel, validator.read_utf8(path), skills), 0)
+
+    def test_inventory_splits_figures_cards_from_the_fixed_set(self) -> None:
+        fixed, figures = validator.split_figure_cards({
+            "validation/figures.schema.json",
+            "validation/figures/fixture-card.json",
+            "validation/figures/Notes.json",
+            "validation/figures/nested/fixture-card.json",
+        })
+        self.assertEqual(figures, {"validation/figures/fixture-card.json"})
+        self.assertEqual(fixed, {
+            "validation/figures.schema.json",
+            "validation/figures/Notes.json",
+            "validation/figures/nested/fixture-card.json",
+        })
+
+
 class OptimisedValidationTests(unittest.TestCase):
     def test_inventory_validation_survives_optimisation(self) -> None:
         result = subprocess.run(
@@ -1040,6 +1141,29 @@ class FullRunTests(unittest.TestCase):
         data["results"] = {case: "pass"}
         write(path, json.dumps(data) + "\n")
         self.assert_refused(root, "only human-confirmed trials may contain verdicts")
+
+    def test_figures_cards_are_counted_and_their_failures_refused(self) -> None:
+        root = self.copy()
+        status, output = self.run_main(root)
+        self.assertEqual(status, 0, output)
+        self.assertIn("1 figures cards (2 lodged fields)", output)
+        card = root / "validation/figures/fixture-card.json"
+        write(card, card.read_text(encoding="utf-8").replace('"synthetic": true', '"synthetic": false'))
+        schema = root / "validation/figures.schema.json"
+        write(schema, schema.read_text(encoding="utf-8").replace('"queried"', '"pending"'))
+        untracked = root / "validation/figures/untracked-card.json"
+        write(untracked, card.read_text(encoding="utf-8"))
+        self.assert_refused(
+            root,
+            "validation/figures/fixture-card.json: synthetic must be true",
+            "validation/figures.schema.json: schema must declare exactly",
+            "tracked inventory mismatch: missing=['validation/figures/untracked-card.json']",
+        )
+        root = self.copy()
+        unreadable = root / "validation/figures/unreadable-card.json"
+        unreadable.write_bytes(b"\xff\n")
+        git(root, "add", str(unreadable))
+        self.assert_refused(root, "validation/figures/unreadable-card.json: ")
 
     def test_extra_skill_directory_entries_are_not_skills(self) -> None:
         """A loose file or a folder without SKILL.md is skipped, not installed."""

@@ -131,7 +131,8 @@ jobs:
           persist-credentials: false
           # A pull request's merge commit and its first parent, the base
           # branch, show which files the pull request changes.
-          fetch-depth: 2
+          # Skill change dates on main need the complete path history.
+          fetch-depth: ${{ matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/main' && '0' || '2' }}
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
@@ -193,6 +194,30 @@ jobs:
           target/release/accounting-skills validate-validation --root "$GITHUB_WORKSPACE"
           target/release/accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check > /dev/null
           target/release/accounting-skills check-citations --root "$GITHUB_WORKSPACE"
+
+      - name: Check the published skill change dates
+        if: matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/main'
+        run: |
+          status=0
+          report=$(target/release/accounting-skills last-changed --root "$GITHUB_WORKSPACE" --check) || status=$?
+          if [ "$status" -ne 2 ]; then
+            exit "$status"
+          fi
+          # A skill change merged without a refresh makes the table stale, so a
+          # stale table warns for 7 days from the first change it missed and then fails.
+          stale_since=${report#stale since }
+          # `date -d ''` reads as today, which would warn for ever, so refuse a missing day.
+          if ! [[ "$stale_since" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "::error file=docs/skill-last-changed.md::The stale table gave no day: '$report'."
+            exit 1
+          fi
+          age_days=$(( ($(date -u +%s) - $(date -u -d "$stale_since" +%s)) / 86400 ))
+          echo 'Refresh the skill dates from main with accounting-skills last-changed --write.' >> "$GITHUB_STEP_SUMMARY"
+          if [ "$age_days" -ge 7 ]; then
+            echo "::error file=docs/skill-last-changed.md::Skill change dates have been stale since $stale_since ($age_days days)."
+            exit 1
+          fi
+          echo "::warning file=docs/skill-last-changed.md::Skill change dates need a refresh from main (stale since $stale_since; fails after 7 days)."
 
       # On a pull request, the source_refresh, source_codecs, multibyte and
       # gb18030 comparisons run only when it changes a file they read. Pushes

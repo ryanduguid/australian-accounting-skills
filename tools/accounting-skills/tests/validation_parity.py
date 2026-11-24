@@ -1,5 +1,5 @@
 # Copyright 2026 Ryan Duguid
-# SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# SPDX-License-Identifier: Apache-2.0
 
 """Replay original validator tests against native operations and compare fabricated inputs."""
 from __future__ import annotations
@@ -36,7 +36,8 @@ def main():
                  'inventory_validation_tree', 'discover_case_names', 'expected_validation',
                  'case_ids', 'split_result_files', 'git_entries', 'ignored_paths',
                  'check_results_schema', 'check_result_file', 'check_published_inventories',
-                 'check_text', 'main')
+                 'check_text', 'split_figure_cards', 'check_figures_schema',
+                 'check_figure_card', 'score_figures', 'main')
     originals = {name: getattr(v, name) for name in functions}
     original_patterns = dict(v.SENSITIVE_PATTERNS)
     child = subprocess.Popen([str(args.probe.resolve())], stdin=subprocess.PIPE,
@@ -92,6 +93,10 @@ def main():
         'check_result_file': result_file,
         'check_published_inventories': lambda skills, directory=root: call('published', names=sorted(skills), root=str(directory)),
         'check_text': lambda path, text: call('text', path=path, text=text),
+        'split_figure_cards': lambda names: tuple(set(part) for part in call('split_figures', names=sorted(names))),
+        'check_figures_schema': lambda text: call('figures_schema', text=text),
+        'check_figure_card': lambda path, text, skills: call('figure', path=path, text=text, names=sorted(skills)),
+        'score_figures': lambda fields, verdicts: call('score', names=sorted(fields), verdicts=verdicts),
         'main': native_main,
     }
 

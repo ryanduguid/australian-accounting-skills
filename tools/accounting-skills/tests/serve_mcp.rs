@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! `serve-mcp` driven as an MCP client drives it: JSON-RPC lines over the
 //! child process's stdin and stdout.
@@ -190,7 +190,13 @@ fn a_client_lists_every_skill_and_gets_each_one_byte_for_byte() {
         assert_eq!(served.len(), references.len(), "{name}");
         assert_eq!(
             result["content"].as_array().unwrap().len(),
-            2 + references.len(),
+            3 + references.len(),
+            "{name}: the files, then the tree hash"
+        );
+        let hash = result["structuredContent"]["tree_sha256"].as_str().unwrap();
+        assert_eq!(
+            result["content"][2 + references.len()]["text"],
+            format!("skill-tree-sha256-v1 {hash}").as_str(),
             "{name}"
         );
         for (index, path) in references.iter().enumerate() {
@@ -762,4 +768,89 @@ fn assert_no_skills_at_start(root: &Path) {
         output.stdout.is_empty(),
         "nothing but MCP messages may reach stdout"
     );
+}
+
+fn hex_sha256(bytes: &[u8]) -> String {
+    use sha2::{Digest, Sha256};
+    Sha256::digest(bytes)
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
+}
+
+/// `get_skill` reports the tree hash of what it returns, computed as its
+/// scheme says, and refuses the whole skill when an expected hash differs.
+#[test]
+fn get_skill_reports_its_tree_hash_and_refuses_a_skill_that_changed() {
+    let root = fixture();
+    let skill = root.path().join(".claude/skills/a");
+    let sources = "{\"sources\": []}\n";
+    fs::write(skill.join("sources.json"), sources).unwrap();
+    fs::create_dir(skill.join("references")).unwrap();
+    fs::write(skill.join("references/z.md"), "Z\n").unwrap();
+    fs::write(skill.join("references/b.md"), "B\n").unwrap();
+    let body = fs::read_to_string(skill.join("SKILL.md")).unwrap();
+    let tree = format!(
+        "SKILL.md\0{}\nsources.json\0{}\nreferences/b.md\0{}\nreferences/z.md\0{}\n",
+        hex_sha256(body.as_bytes()),
+        hex_sha256(sources.as_bytes()),
+        hex_sha256(b"B\n"),
+        hex_sha256(b"Z\n"),
+    );
+    let hash = hex_sha256(tree.as_bytes());
+    let other = "0".repeat(64);
+    let replies = session(
+        root.path(),
+        &[
+            initialize("2025-11-25"),
+            call(2, "get_skill", json!({"name": "a"})),
+            call(3, "get_skill", json!({"name": "a", "sha256": hash})),
+            call(4, "get_skill", json!({"name": "a", "sha256": other})),
+            call(
+                5,
+                "get_skill",
+                json!({"name": "a", "sha256": hash.to_uppercase()}),
+            ),
+            call(6, "get_skill", json!({"name": "a", "sha256": 7})),
+        ],
+    );
+    for id in [2, 3] {
+        let result = &reply(&replies, id)["result"];
+        assert_eq!(result["isError"], false, "{id}: {result}");
+        assert_eq!(result["structuredContent"]["tree_sha256"], hash.as_str());
+        assert_eq!(
+            result["structuredContent"]["tree_scheme"],
+            "skill-tree-sha256-v1"
+        );
+        let content = result["content"].as_array().unwrap();
+        assert_eq!(content.len(), 5, "{id}: {result}");
+        assert_eq!(
+            content[4]["text"],
+            format!("skill-tree-sha256-v1 {hash}").as_str()
+        );
+    }
+    let changed = &reply(&replies, 4)["result"];
+    assert_eq!(changed["isError"], true);
+    let message = changed["content"][0]["text"].as_str().unwrap();
+    assert!(message.contains(&hash), "{message}");
+    assert!(!message.contains("# A"), "{message}");
+    for id in [5, 6] {
+        let result = &reply(&replies, id)["result"];
+        assert_eq!(result["isError"], true, "{id}: {result}");
+        assert_eq!(
+            result["content"][0]["text"],
+            "sha256 must be 64 lower-case hex digits"
+        );
+    }
+
+    // Any change to a returned file changes the hash.
+    fs::write(skill.join("references/b.md"), "B.\n").unwrap();
+    let replies = session(
+        root.path(),
+        &[
+            initialize("2025-11-25"),
+            call(2, "get_skill", json!({"name": "a", "sha256": hash})),
+        ],
+    );
+    assert_eq!(reply(&replies, 2)["result"]["isError"], true);
 }

@@ -2,13 +2,13 @@
   "schema_version": 1,
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
-    "skills": 111,
-    "sources_indexed": 823,
+    "skills": 112,
+    "sources_indexed": 926,
     "skills_source_exempt": 5,
-    "skills_with_unreachable_sources": 17,
+    "skills_with_unreachable_sources": 20,
     "skills_with_sources_moved_since_review": 13,
-    "skills_with_behavioural_gate": 77,
-    "skills_with_only_the_seeded_case": 21,
+    "skills_with_behavioural_gate": 98,
+    "skills_with_only_the_seeded_case": 20,
     "skills_with_confirmed_pass": 82,
     "skills_with_confirmed_fail": 0,
     "skills_with_confirmed_noncurrent_digest": 2,
@@ -46,7 +46,7 @@
     {
       "skill": "au-aml-ctf-cdd-reliance",
       "sources": {
-        "indexed": 12,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "",
         "reviewed_count": 0,
@@ -66,7 +66,10 @@
       },
       "gates": {
         "behavioural": [
-          "test_aml_ctf_cdd_reliance.py"
+          "test_aml_ctf_cdd_reliance.py",
+          "test_aml_ctf_edge_cases.py",
+          "test_practice_review_steps.py",
+          "test_rule_anchors.py"
         ],
         "inventory": []
       }
@@ -74,7 +77,7 @@
     {
       "skill": "au-aml-ctf-client-coverage",
       "sources": {
-        "indexed": 13,
+        "indexed": 15,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 6,
@@ -100,9 +103,11 @@
       "gates": {
         "behavioural": [
           "test_aml_ctf_cdd_reliance.py",
+          "test_aml_ctf_edge_cases.py",
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
-          "test_practice_review_steps.py"
+          "test_practice_review_steps.py",
+          "test_rule_anchors.py"
         ],
         "inventory": []
       }
@@ -110,7 +115,7 @@
     {
       "skill": "au-aml-ctf-designated-services",
       "sources": {
-        "indexed": 7,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "",
         "reviewed_count": 0,
@@ -131,7 +136,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_aml_ctf_designated_services.py"
+          "test_aml_ctf_designated_services.py",
+          "test_aml_ctf_edge_cases.py"
         ],
         "inventory": []
       }
@@ -161,6 +167,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -249,14 +256,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-ato-penalties-interest",
       "sources": {
-        "indexed": 9,
+        "indexed": 11,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 6,
@@ -281,6 +290,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_research_and_ato_drafts.py"
         ],
         "inventory": []
@@ -379,7 +389,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_practice_review_steps.py"
+        ],
         "inventory": []
       }
     },
@@ -416,7 +428,7 @@
     {
       "skill": "au-capital-gains",
       "sources": {
-        "indexed": 8,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 7,
@@ -442,7 +454,8 @@
       "gates": {
         "behavioural": [
           "test_cgt_gap_workflows.py",
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -450,12 +463,12 @@
     {
       "skill": "au-car-expenses",
       "sources": {
-        "indexed": 5,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
         "fetched": "2026-09-24",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
@@ -591,7 +604,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_client_letter.py"
+          "test_client_letter.py",
+          "test_research_runs.py",
+          "test_review_state_routes.py"
         ],
         "inventory": []
       }
@@ -628,7 +643,7 @@
     {
       "skill": "au-company-tax",
       "sources": {
-        "indexed": 3,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
@@ -651,7 +666,11 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_client_request_drafts.py",
+          "test_legal_source_gates.py",
+          "test_return_qa_matrix.py"
+        ],
         "inventory": []
       }
     },
@@ -811,7 +830,7 @@
     {
       "skill": "au-division-293",
       "sources": {
-        "indexed": 2,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -832,14 +851,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-division-296",
       "sources": {
-        "indexed": 4,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
@@ -862,7 +883,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -922,7 +945,7 @@
     {
       "skill": "au-etp-redundancy",
       "sources": {
-        "indexed": 3,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 3,
@@ -943,7 +966,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -978,7 +1003,7 @@
     {
       "skill": "au-financial-statements",
       "sources": {
-        "indexed": 7,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-10-29",
         "reviewed_count": 1,
@@ -1005,6 +1030,7 @@
       "gates": {
         "behavioural": [
           "test_financial_statements.py",
+          "test_legal_source_gates.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1034,7 +1060,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1131,7 +1159,7 @@
     {
       "skill": "au-gst-property",
       "sources": {
-        "indexed": 36,
+        "indexed": 38,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 2,
@@ -1155,7 +1183,8 @@
       "gates": {
         "behavioural": [
           "test_farm_land_and_succession.py",
-          "test_gst_margin_scheme.py"
+          "test_gst_margin_scheme.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1194,7 +1223,7 @@
     {
       "skill": "au-individual-return",
       "sources": {
-        "indexed": 7,
+        "indexed": 9,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1203,13 +1232,14 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 6,
+        "cases": 7,
         "case_ids": [
           "au-individual-return-hidden-pdf-text",
           "au-individual-return-missing-evidence",
           "au-individual-return-occupation-guide",
           "au-individual-return-records-request",
           "receipt-schedule-conflicts",
+          "return-year-evidence-and-opening-balances",
           "year-end-workpapers-records-request"
         ],
         "only_seeded_case": false,
@@ -1224,7 +1254,9 @@
       "gates": {
         "behavioural": [
           "test_client_request_drafts.py",
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
+          "test_review_state_routes.py"
         ],
         "inventory": []
       }
@@ -1263,7 +1295,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1271,7 +1304,7 @@
     {
       "skill": "au-lump-sum-arrears",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 1,
@@ -1290,14 +1323,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-main-residence",
       "sources": {
-        "indexed": 15,
+        "indexed": 17,
         "exempt": false,
         "reviewed": "",
         "reviewed_count": 0,
@@ -1318,7 +1353,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_cgt_gap_workflows.py"
+          "test_cgt_gap_workflows.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -1347,6 +1383,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_plugin_hooks.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1355,7 +1392,7 @@
     {
       "skill": "au-medicare-review",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
@@ -1376,14 +1413,44 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
+        "inventory": []
+      }
+    },
+    {
+      "skill": "au-mit-amit-trustee",
+      "sources": {
+        "indexed": 18,
+        "exempt": false,
+        "reviewed": "",
+        "reviewed_count": 0,
+        "fetched": "2026-11-24",
+        "unreachable": 0,
+        "moved_since_review": []
+      },
+      "validation": {
+        "cases": 1,
+        "case_ids": [
+          "mit-amit-trustee-shortfall-and-withholding"
+        ],
+        "only_seeded_case": false,
+        "confirmed_pass": [],
+        "confirmed_fail": [],
+        "confirmed_noncurrent_digest": []
+      },
+      "gates": {
+        "behavioural": [
+          "test_mit_amit_trustee.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-non-commercial-losses",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 1,
@@ -1402,7 +1469,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1440,7 +1509,7 @@
     {
       "skill": "au-not-for-profit",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
@@ -1461,7 +1530,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1520,14 +1591,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-payroll-review",
       "sources": {
-        "indexed": 5,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1555,6 +1628,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_practice_review_steps.py",
           "test_worked_examples.py"
         ],
@@ -1564,7 +1638,7 @@
     {
       "skill": "au-payroll-tax-states",
       "sources": {
-        "indexed": 18,
+        "indexed": 20,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 9,
@@ -1595,6 +1669,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_payroll_jurisdictions.py",
           "test_practice_review_steps.py"
         ],
@@ -1604,7 +1679,7 @@
     {
       "skill": "au-pre-lodgement-review",
       "sources": {
-        "indexed": 12,
+        "indexed": 16,
         "exempt": false,
         "reviewed": "2026-10-15",
         "reviewed_count": 6,
@@ -1627,7 +1702,9 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_pre_lodgement_review.py"
+          "test_pre_lodgement_review.py",
+          "test_review_state_routes.py",
+          "test_rule_anchors.py"
         ],
         "inventory": []
       }
@@ -1715,7 +1792,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1750,7 +1829,7 @@
     {
       "skill": "au-psi-review",
       "sources": {
-        "indexed": 4,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1773,7 +1852,9 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py"
         ],
         "inventory": []
       }
@@ -1781,7 +1862,7 @@
     {
       "skill": "au-rd-incentive",
       "sources": {
-        "indexed": 2,
+        "indexed": 4,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
@@ -1802,7 +1883,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -1818,9 +1901,10 @@
         "moved_since_review": []
       },
       "validation": {
-        "cases": 3,
+        "cases": 4,
         "case_ids": [
           "au-rental-property-agent-balance-bridge",
+          "au-rental-property-borrowing-early-repayment",
           "au-rental-property-missing-evidence",
           "au-rental-property-planted-lease-clause"
         ],
@@ -1837,6 +1921,7 @@
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
           "test_tax_reform_no_3_status.py",
+          "test_validation_pack.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1906,7 +1991,7 @@
     {
       "skill": "au-sapto",
       "sources": {
-        "indexed": 3,
+        "indexed": 5,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 2,
@@ -1927,6 +2012,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1996,7 +2082,7 @@
     {
       "skill": "au-small-business-cgt",
       "sources": {
-        "indexed": 13,
+        "indexed": 15,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 3,
@@ -2019,7 +2105,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_farm_land_and_succession.py"
+          "test_farm_land_and_succession.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -2027,7 +2114,7 @@
     {
       "skill": "au-small-business-income-offset",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 1,
@@ -2046,14 +2133,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-smsf-death-benefits",
       "sources": {
-        "indexed": 11,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "",
         "reviewed_count": 0,
@@ -2073,7 +2162,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_entity_super_workflows.py"
+          "test_entity_super_workflows.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -2104,6 +2194,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -2136,6 +2228,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
           "test_marketplace_settlements.py"
         ],
         "inventory": []
@@ -2144,7 +2237,7 @@
     {
       "skill": "au-super-contribution-caps",
       "sources": {
-        "indexed": 7,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 4,
@@ -2170,6 +2263,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_tax_reform_no_3_status.py"
         ],
         "inventory": []
@@ -2178,7 +2272,7 @@
     {
       "skill": "au-super-guarantee-charge",
       "sources": {
-        "indexed": 12,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 8,
@@ -2202,6 +2296,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -2265,7 +2360,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_research_runs.py"
+        ],
         "inventory": []
       }
     },
@@ -2330,7 +2427,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_research_and_ato_drafts.py"
+          "test_research_and_ato_drafts.py",
+          "test_research_runs.py"
         ],
         "inventory": []
       }
@@ -2338,7 +2436,7 @@
     {
       "skill": "au-tax-residency",
       "sources": {
-        "indexed": 1,
+        "indexed": 3,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 1,
@@ -2359,7 +2457,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -2396,7 +2496,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_dated_rule_changes.py"
+          "test_dated_rule_changes.py",
+          "test_legal_source_gates.py"
         ],
         "inventory": []
       }
@@ -2432,12 +2533,12 @@
     {
       "skill": "au-travel-expenses",
       "sources": {
-        "indexed": 12,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 9,
         "fetched": "2026-11-02",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": [
           "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances"
         ]
@@ -2492,7 +2593,7 @@
     {
       "skill": "au-trust-distributions",
       "sources": {
-        "indexed": 15,
+        "indexed": 16,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 9,
@@ -2519,7 +2620,9 @@
       },
       "gates": {
         "behavioural": [
+          "test_client_request_drafts.py",
           "test_dated_rule_changes.py",
+          "test_return_qa_matrix.py",
           "test_tax_reform_no_3_status.py",
           "test_worked_examples.py"
         ],
@@ -2557,22 +2660,23 @@
     {
       "skill": "au-wfh-deductions",
       "sources": {
-        "indexed": 5,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 3,
         "fetched": "2026-09-24",
-        "unreachable": 0,
+        "unreachable": 2,
         "moved_since_review": [
           "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses"
         ]
       },
       "validation": {
-        "cases": 1,
+        "cases": 2,
         "case_ids": [
-          "au-wfh-deductions-missing-evidence"
+          "au-wfh-deductions-missing-evidence",
+          "wfh-occupancy-alternative-workplace"
         ],
-        "only_seeded_case": true,
+        "only_seeded_case": false,
         "confirmed_pass": [
           "au-wfh-deductions-missing-evidence"
         ],
@@ -2580,14 +2684,17 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "au-working-holiday-makers",
       "sources": {
-        "indexed": 12,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-09-29",
         "reviewed_count": 12,
@@ -2610,14 +2717,16 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
     {
       "skill": "bas-preparation",
       "sources": {
-        "indexed": 19,
+        "indexed": 21,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 5,
@@ -2661,6 +2770,7 @@
           "test_legal_source_gates.py",
           "test_marketplace_settlements.py",
           "test_myob_exports.py",
+          "test_plugin_hooks.py",
           "test_practice_review_steps.py",
           "test_skill_metadata.py",
           "test_source_refresh.py",
@@ -2889,6 +2999,7 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_plugin_hooks.py",
           "test_review_registers.py",
           "test_validation_pack.py"
         ],
@@ -2930,7 +3041,7 @@
     {
       "skill": "fuel-tax-credits",
       "sources": {
-        "indexed": 14,
+        "indexed": 16,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 2,
@@ -3061,6 +3172,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_close_out_and_year_changes.py",
           "test_myob_exports.py"
         ],
         "inventory": []
@@ -3106,7 +3218,7 @@
     {
       "skill": "plant-and-equipment-costing",
       "sources": {
-        "indexed": 6,
+        "indexed": 8,
         "exempt": false,
         "reviewed": "2026-10-29",
         "reviewed_count": 2,
@@ -3129,7 +3241,9 @@
         "confirmed_noncurrent_digest": []
       },
       "gates": {
-        "behavioural": [],
+        "behavioural": [
+          "test_legal_source_gates.py"
+        ],
         "inventory": []
       }
     },
@@ -3271,7 +3385,7 @@
     {
       "skill": "stp-finalisation",
       "sources": {
-        "indexed": 8,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 5,
@@ -3301,6 +3415,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
           "test_payday_super_guidance.py",
           "test_skill_metadata.py",
           "test_validation_pack.py",
@@ -3312,7 +3427,7 @@
     {
       "skill": "tax-invoice-review",
       "sources": {
-        "indexed": 10,
+        "indexed": 12,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 3,
@@ -3406,6 +3521,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_legal_source_gates.py",
           "test_workers_compensation_premium.py"
         ],
         "inventory": []
@@ -3446,6 +3562,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_review_state_routes.py",
           "test_worked_examples.py",
           "test_workpaper_tie_out.py"
         ],
@@ -3486,6 +3603,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_close_out_and_year_changes.py",
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
           "test_myob_exports.py",
@@ -3527,6 +3645,7 @@
           "test_client_request_drafts.py",
           "test_dated_rule_changes.py",
           "test_myob_exports.py",
+          "test_review_state_routes.py",
           "test_worked_examples.py"
         ],
         "inventory": []

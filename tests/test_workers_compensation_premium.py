@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The workers compensation premium skill: scheme by scheme, the insurer decides, no rate held."""
 
 from __future__ import annotations
@@ -94,6 +94,12 @@ class WorkersCompensationPremiumTests(unittest.TestCase):
             "the schemes' wages, less the amounts added from outside gross pay, plus the excluded items and the "
             "gross pay of the workers excluded (each with its reason), equal the gross pay",
             step(4),
+        )
+        hand_off = text().split("## Hand-off and checks", 1)[1]
+        self.assertIn(
+            "the schemes' wages, less the amounts added from outside gross pay and plus the excluded items "
+            "and workers, tie to payroll",
+            hand_off,
         )
         # icare's per capita classifications are priced per unit, not on wages.
         self.assertIn(

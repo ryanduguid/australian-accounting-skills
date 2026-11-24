@@ -33,7 +33,7 @@ Before tagging:
    releases, such as v0.2.1, stay in the README's collapsed section.
 6. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns the repository tests, the fabricated-pack validator and the exact 107-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
+The workflow reruns the repository tests, the fabricated-pack validator and the exact 112-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees, plus per-skill ZIP archives from `.claude/skills/*`. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for the release archives.
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final 4-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
@@ -41,7 +41,7 @@ Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires e
 
 The Claude plugin directory reads the generated `claude-plugin` branch. That branch carries only Markdown, text, JSON, YAML and images, with no local MCP server. After the Release workflow succeeds, `.github/workflows/plugin-dist.yml` verifies the published immutable release and its signed tag, then builds from the exact tagged commit. The manifest version must match the tag. The branch advances only when the plugin changed and its version exceeds the branch's version. A manual run on `main` validates the candidate without publishing it. Never edit the branch by hand.
 
-`accounting-skills build-plugin-dist` copies `.claude-plugin/plugin.json`, removes `mcpServers` and sets `skills` to `./skills`. It also copies the icon, `.claude/skills/` into `skills/`, `DISCLAIMER.md`, `LICENSE`, `NOTICE`, `PRIVACY.md`, `SECURITY.md` and `docs/plugin-directory-readme.md` as the README.
+`accounting-skills build-plugin-dist` copies `.claude-plugin/plugin.json`, removes `mcpServers` and sets `skills` to `./skills`. It also copies the icon, `.claude/skills/` into `skills/`, `DISCLAIMER.md`, `LICENSE`, `NOTICE`, `PRIVACY.md`, `SECURITY.md` and `docs/plugin-directory-readme.md` as the README. The bundled plugin ships one root copy of each licence file. The builder omits a skill's standalone `LICENSE` or `NOTICE` only when it matches the corresponding root file byte for byte.
 
 The build fails when the plugin would reach 512 files and folders; when a file is not Markdown, text, JSON, YAML, an image, or `LICENSE` or `NOTICE` at the root; when a text file is over 256 KiB, is not UTF-8, or holds a NUL byte; when any file starts with `#!`; when it holds a `.claude` folder, a nested `.claude-plugin` folder, a stray component file such as `hooks.json` or `.mcp.json`, or a package manager config; when `plugin.json` gains a key the build does not ship or its `version` is not plain `X.Y.Z` without leading zeros; and when an inline Markdown link or HTML `src` in it names a file it does not ship. The workflow then runs Claude Code's `claude plugin validate --profile directory --strict` on the output before publishing; that validator does not flag a local MCP server or a disallowed file type, so the build's own checks stay the gate for those. Add to `SOURCES` or `MANIFEST_KEYS` in `tools/accounting-skills/src/plugin_dist.rs` only what the directory accepts. The Claude Code marketplace, Codex, Cursor and agent plugin routes read `main`; of these, only the Claude Code marketplace keeps the MCP server, and the other 3 manifests declare none.
 
@@ -54,7 +54,12 @@ published tag and its development section says what `main` adds.
 
 Before tagging, regenerate `docs/skill-last-changed.md` with
 `cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- last-changed --write`
-from a full clone.
+from a full clone. Between releases, Verify on `main` warns when the table is stale and
+fails once it has been stale for 7 days, counted from the first skill change the table
+missed; a refresh pull request clears it. The table records dates only, never a commit,
+so a squash merge leaves a table written on its branch valid when it lands on the day of the
+branch's last skill change; a later squash makes it stale from that day. A pull request that changes
+a skill need not regenerate it.
 
 ## Protected failed tag
 
@@ -78,9 +83,8 @@ Those commands preserve the signer identity of the existing `v0.1.5` release.
 Releases cut after the specialised policy migration are signed by the policy's
 internal publication workflow. For the next release, update `tag` if the
 intended version changes and bind verification to the exact source and policy
-commit. Releases after `v0.5.0` are signed at the current policy pin,
-`ca5492bd09693be9e1fd47d980e2740ef8daf023`. The commands verify `v0.7.0`, signed at
-that pin like `v0.6.0`; `v0.5.0` was signed at `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, `v0.4.0` at
+commit. Releases from `v0.5.0` to `v0.7.0` are signed at `ca5492bd09693be9e1fd47d980e2740ef8daf023`; `v0.8.0` and later releases with per-skill ZIPs are signed at `d7039efe6d8c441f1f213c674902909e80535599`. The commands verify `v0.8.0`, signed at
+that pin; `v0.7.0` and `v0.6.0` were signed at `ca5492bd09693be9e1fd47d980e2740ef8daf023`, `v0.5.0` at `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, `v0.4.0` at
 `a601f1d8b143f92b0517f709216993660d21f480` and `v0.3.0` to `v0.3.2` at
 `87767ec809dc7f77bcd45808219adaf67841ae7b`, so verify each with its digest.
 Releases from `a601f1d` also carry the signed provenance
@@ -88,7 +92,7 @@ bundle `australian-accounting-skills-<version>.intoto.jsonl`, which the loop
 skips because it holds the attestation itself:
 
 ```bash
-tag=v0.7.0
+tag=v0.8.0
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
@@ -98,14 +102,14 @@ for file in *; do
     --source-digest "$release_commit" \
     --source-ref "refs/tags/$tag" \
     --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-    --signer-digest ca5492bd09693be9e1fd47d980e2740ef8daf023
+    --signer-digest d7039efe6d8c441f1f213c674902909e80535599
 done
 gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
   --predicate-type https://spdx.dev/Document/v2.3 \
   --source-digest "$release_commit" \
   --source-ref "refs/tags/$tag" \
   --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-  --signer-digest ca5492bd09693be9e1fd47d980e2740ef8daf023
+  --signer-digest d7039efe6d8c441f1f213c674902909e80535599
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a

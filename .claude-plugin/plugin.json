@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "australian-accounting-skills",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Australian accounting and tax preparation workflows with source checks and human review. Not tax advice.",
   "author": {
     "name": "Ryan Duguid"
   },
   "homepage": "https://duguid.com.au/tools/australian-tax-ai-agents/",
   "repository": "https://github.com/ryanduguid/australian-accounting-skills",
-  "license": "LicenseRef-Duguid-Public-Attribution-1.0",
+  "license": "Apache-2.0",
   "privacyPolicyUrl": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/PRIVACY.md",
   "documentationUrl": "https://github.com/ryanduguid/australian-accounting-skills/blob/main/docs/installation.md",
   "supportUrl": "https://github.com/ryanduguid/australian-accounting-skills/issues",
@@ -25,12 +25,13 @@
     "agent skills"
   ],
   "skills": "./.claude/skills",
+  "commands": "./commands",
   "mcpServers": {
     "aus-accounting": {
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/ryanduguid/australian-accounting@fd110b9bfa7da874a508534d2bd497d522e9ef91#subdirectory=apps/aus-accounting-mcp",
+        "git+https://github.com/ryanduguid/australian-accounting@bf2619c95e211685ca4c996cc7c04f9e400a616e#subdirectory=apps/aus-accounting-mcp",
         "aus-accounting-mcp"
       ]
     }

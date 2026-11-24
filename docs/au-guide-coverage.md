@@ -82,6 +82,6 @@ The [fork's 13 Australian calculator directories](https://github.com/ryanduguid/
 
 ## Provenance and verification
 
-The Australian Accounting Skills workflows were written from primary-source discovery and the pack's preparation and review conventions. This map links to OpenAccountants as a reference. Its [Skills License v2.0](https://github.com/openaccountants/openaccountants/blob/d5f956217b4bf67b29910cdae6052ef80fe2a32a/LICENSES/LicenseRef-OA-Guide-License-2.0.txt) governs source content and restricts bulk extraction and redistribution of the collection. The Australian Accounting Skills workflows use the [Ryan Duguid Public Attribution Licence 1.0](../LICENSE).
+The Australian Accounting Skills workflows were written from primary-source discovery and the pack's preparation and review conventions. This map links to OpenAccountants as a reference. Its [Skills License v2.0](https://github.com/openaccountants/openaccountants/blob/d5f956217b4bf67b29910cdae6052ef80fe2a32a/LICENSES/LicenseRef-OA-Guide-License-2.0.txt) governs source content and restricts bulk extraction and redistribution of the collection. The [Apache License, Version 2.0](../LICENSE) covers Ryan Duguid's original Australian Accounting Skills workflows. See [NOTICE](../NOTICE) for attribution and retained terms.
 
 Open the applicable primary source before using a rule. Discovery, static checks, a model assessment and a qualified practitioner's review are separate evidence. See the [skill verification register](skill-verification.md) for the current evidence for each workflow.

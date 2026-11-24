@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The CPI rent review added on 12 November 2026 keeps its figures sourced and its flags open.
 
 Each test reads one step, a template or a card and checks the rule a reader

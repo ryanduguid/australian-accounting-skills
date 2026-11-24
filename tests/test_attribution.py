@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Every distributed file keeps the copyright notice LICENSE requires redistributors to keep."""
 
 from __future__ import annotations
@@ -10,14 +10,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROSE_NOTICE = (
     "Copyright 2026 Ryan Duguid. From github.com/ryanduguid/australian-accounting-skills, "
-    "Ryan Duguid Public Attribution Licence 1.0. "
-    "Copies and adaptations of this file must keep this notice. "
+    "Apache-2.0. "
+    "Keep this notice when redistributing this file or an adaptation. "
     "It does not belong in client work.\n"
 )
 CODE_NOTICE = (
-    "# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0\n"
+    "# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0\n"
 )
-CREDIT_LINE = "Based on australian-accounting-skills by Ryan Duguid"
+CREDIT_LINE = "This product includes work by Ryan Duguid"
 
 
 class AttributionTests(unittest.TestCase):
@@ -31,6 +31,12 @@ class AttributionTests(unittest.TestCase):
         for path in paths:
             with self.subTest(path=path.relative_to(ROOT).as_posix()):
                 self.assertTrue(path.read_text(encoding="utf-8").endswith("\n\n" + PROSE_NOTICE))
+
+    def test_every_individually_installed_skill_carries_the_root_notices(self) -> None:
+        for manifest in ROOT.glob(".claude/skills/*/SKILL.md"):
+            for name in ("LICENSE", "NOTICE"):
+                with self.subTest(skill=manifest.parent.name, file=name):
+                    self.assertEqual((manifest.parent / name).read_bytes(), (ROOT / name).read_bytes())
 
     def test_every_script_and_test_opens_with_the_notice(self) -> None:
         paths = [*ROOT.glob("scripts/*.py"), *ROOT.glob("tests/*.py")]

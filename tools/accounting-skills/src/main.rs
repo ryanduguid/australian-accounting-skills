@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 use accounting_skills::{
     Result, VERIFICATION_PAGE, platform_text, read_text, rendered_with_page, replace_file,
@@ -51,6 +51,9 @@ fn run() -> Result<u8> {
     }
     if command.as_deref() == Some(std::ffi::OsStr::new("sweep-outcome")) {
         return accounting_skills::sweep::cli(args);
+    }
+    if command.as_deref() == Some(std::ffi::OsStr::new("review-state")) {
+        return accounting_skills::review_state::cli(args);
     }
     if command.as_deref() == Some(std::ffi::OsStr::new("audit-grader-reads")) {
         return accounting_skills::grader_audit::cli(args);

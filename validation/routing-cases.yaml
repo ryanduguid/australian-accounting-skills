@@ -263,6 +263,10 @@
   skill: au-managed-fund-amit
   not: [au-capital-gains, au-dssp]
   prompt: A client holds 5 ETFs and 2 unlisted managed funds and has received their annual tax statements, one of them reissued. Prepare the workpaper for the attributed income and the cost base adjustments to each holding.
+- id: amit-trustee-year-end-review
+  skill: au-mit-amit-trustee
+  not: [au-managed-fund-amit, au-trust-distributions, au-foreign-income]
+  prompt: We act for the trustee of a registered unit trust that chose the attribution regime. Before the member statements go out, check that the trust still qualifies, that what we attribute to members adds up to the trust's figures, whether the trustee owes tax on any gap, and what to withhold from distributions to members with overseas addresses.
 - id: deceased-estate-split
   skill: au-deceased-estates
   not: [au-individual-return, au-trust-distributions]
@@ -283,6 +287,10 @@
   skill: au-super-contribution-caps
   not: [au-division-293, au-payroll-review]
   prompt: An employee wants to salary sacrifice more of her pay into super before 30 June 2026, and her employer's contributions reach the fund about a month after each payday. How much more can she sacrifice in 2025-26 without going over?
+- id: fhss-release
+  skill: au-super-contribution-caps
+  not: [au-individual-return, au-smsf-year-end]
+  prompt: A client salary sacrificed extra into super over 3 years to save a home deposit and has just received her ATO first home super saver determination. Work out what the release will pay her, the tax withheld and what is added to her assessable income.
 - id: smsf-annual-accounts
   skill: au-smsf-year-end
   not: [au-financial-statements, au-super-contribution-caps]
@@ -295,6 +303,14 @@
   skill: au-company-tax
   not: [au-franking-account, year-end-workpapers]
   prompt: Here is the final trial balance for a client company for 2025-26. Bridge the accounting profit to taxable income and gather the evidence on whether it is a base rate entity.
+- id: company-return-qa-review
+  skill: au-company-tax
+  not: [au-pre-lodgement-review, div7a-compliance]
+  prompt: The 2025-26 company return is prepared and ready for partner sign-off. Check that its loans to shareholders, franking account balances and base rate entity box agree to the accounts, ledgers and workpapers before we sign.
+- id: trust-return-qa-review
+  skill: au-trust-distributions
+  not: [au-pre-lodgement-review, au-trust-deed-review]
+  prompt: Our staff member has finished the family trust's 2025-26 return. Before I sign off, check that the statement of distribution agrees to the resolution, the trust income and the beneficiary loan accounts.
 - id: director-loan-account
   skill: div7a-compliance
   not: [au-company-tax, au-franking-account]

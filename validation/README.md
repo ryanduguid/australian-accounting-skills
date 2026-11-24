@@ -1,6 +1,6 @@
 # Fabricated regression validation
 
-The 242 cards in `cases/` test workflow quality, provenance and restraint.
+The 246 cards in `cases/` test workflow quality, provenance and restraint.
 They are fabricated Markdown scenarios, not de-identified client examples. No
 real or realistic client name, individual, contact detail, ABN, TFN, bank
 detail, credential, ledger export or derived client data belongs here.
@@ -147,6 +147,7 @@ law claim, unverified source or guess.
 | [R&D Tax Incentive evidence pack: missing evidence](cases/au-rd-incentive-missing-evidence.md) | au-rd-incentive |
 | [Rental property workpapers: missing evidence](cases/au-rental-property-missing-evidence.md) | au-rental-property |
 | [Rental agent funds and duplicate expense evidence](cases/au-rental-property-agent-balance-bridge.md) | au-rental-property |
+| [Mixed-use rental loan repaid early](cases/au-rental-property-borrowing-early-repayment.md) | au-rental-property |
 | [Individual return amendment review: missing evidence](cases/au-return-amendment-missing-evidence.md) | au-return-amendment |
 | [Short-stay accommodation workpapers: missing evidence](cases/au-short-stay-accommodation-missing-evidence.md) | au-short-stay-accommodation |
 | [Platform income and a GST registration question](cases/au-short-stay-accommodation-platform-gst-registration.md) | au-short-stay-accommodation, au-gst-registration-review |
@@ -166,6 +167,8 @@ law claim, unverified source or guess.
 | [Working holiday maker withholding and return review: missing evidence](cases/au-working-holiday-makers-missing-evidence.md) | au-working-holiday-makers |
 | [Quotations from incomplete source text](cases/source-quote-partial-coverage.md) | au-tax-rates-verification |
 | [Receipt links and conflicting schedule entries](cases/receipt-schedule-conflicts.md) | au-individual-return |
+| [Income year evidence and opening balances](cases/return-year-evidence-and-opening-balances.md) | au-individual-return |
+| [Home office occupancy and the alternative workplace](cases/wfh-occupancy-alternative-workplace.md) | au-wfh-deductions |
 | [Statement corrections and stale review records](cases/statement-correction-revision.md) | au-bookkeeping |
 | [Completed stages without supporting artefacts](cases/engagement-completion-evidence.md) | year-end-workpapers, workpaper-tie-out |
 | [SAPTO with an incomplete rebate-income bridge](cases/au-sapto-rebate-income-and-spouse.md) | au-sapto |
@@ -180,6 +183,7 @@ law claim, unverified source or guess.
 | [Complete asymmetric rebate-income bridges](cases/au-sapto-complete-asymmetric-bridge.md) | au-sapto |
 | [Complete mixed-date parcel and DRP reconciliation](cases/au-dssp-supported-parcel-bridge.md) | au-dssp |
 | [Complete AMMA and reinvestment parcel bridge](cases/au-managed-fund-amit-complete-reinvestment.md) | au-managed-fund-amit |
+| [AMIT trustee with late statements, an attribution shortfall and an overseas payment](cases/mit-amit-trustee-shortfall-and-withholding.md) | au-mit-amit-trustee |
 | [Sole director resigns before a replacement is validly appointed](cases/au-asic-company-changes-sole-director-exit.md) | au-asic-company-changes |
 | [Objection to an old amended assessment with an unsupported receipt date](cases/au-ato-objection-uncertain-timing.md) | au-ato-objection |
 | [Casual back pay with a misclassification and a missing rate table](cases/au-award-underpayment-review-missing-rate-table.md) | au-award-underpayment-review |
@@ -293,7 +297,7 @@ law claim, unverified source or guess.
 | [Year-end records request and covering email built from last year](cases/year-end-workpapers-records-request.md) | year-end-workpapers, au-individual-return |
 | [Three-year analytical review with a related-party loan](cases/year-end-workpapers-three-year-review.md) | year-end-workpapers |
 
-Together the cards cover all 111 distributable skills. The 43 topic-expansion cards are
+Together the cards cover all 112 distributable skills. The 43 topic-expansion cards are
 missing-evidence cases, one per new Australian workflow. Static validation
 checks their structure and inventory, and the 28 September whole-card run,
 confirmed on 29 September, covers them along with every other card then
@@ -382,6 +386,31 @@ classification inputs; the repaired positive fixture and both SAPTO trials are
 recorded separately. Earlier observations are retained. These records contain
 no human-confirmed verdicts. See the
 [trial evidence and limitations](../docs/EVAL.md#current-evidence-and-rerun).
+
+## Figures cards
+
+A figures card in `figures/` is a fabricated return whose lodged figures are the
+answer key for a field-level preparation benchmark. It names one target skill,
+the return form, a one-line scenario saying what the fabricated evidence shows,
+and each lodged field's code, label and amount in dollars and cents.
+[`figures.schema.json`](figures.schema.json) is its shape; the checker holds the
+schema's keys and verdict list to its own. A card is plain UTF-8 text with no
+JSON `\u` escapes, so the scan for identifiers reads every character as written.
+
+A run gives each lodged field exactly one verdict:
+
+| Verdict | Meaning |
+| --- | --- |
+| `match` | The right field and the right amount. |
+| `wrong-amount` | The right field, another amount. |
+| `wrong-field` | The amount reported at another field. |
+| `omitted` | The field left blank. |
+| `queried` | Left for a reviewer with a stated evidence gap. |
+
+Match rate is `match` over the card's fields. Label accuracy is `match` plus
+`wrong-amount` over the same fields: whether each figure landed on the right
+field, whatever its amount. The 2 are reported apart, so a right label cannot
+hide a wrong amount or the reverse. No figures run or score is recorded here.
 
 ## Static checks
 

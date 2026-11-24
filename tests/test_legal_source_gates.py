@@ -1,9 +1,10 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """Regression gates for the reviewed legal and tax source boundaries."""
 
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from fractions import Fraction
 from pathlib import Path
@@ -343,12 +344,39 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Do not invent WIP arithmetic", text)
         self.assertIn("Do not invent the cost-to-cost ratio", text)
 
-    def assert_released_calculators(self, name: str, *commands: str) -> str:
-        """The skill pins australian-tax-calculators 1.0.0, the release aus-accounting-mcp 0.10.0
-        runs, verifies it before use and keeps the written method as the result."""
+    #: Each pinned australian-tax-calculators release, its tagged commit and the
+    #: aus-accounting-mcp release that runs it.
+    RELEASES = {
+        "1.0.0": ("6ac566682829731d52a1b4456708a0b9d29b5695", "0.10.0"),
+        "1.1.0": ("c4a716a25f065ccc957c5db83dec711251cb4121", "0.11.0"),
+        "1.2.0": ("31ecb4022aa0127ae9f672798d1d9fbfe6388e85", "0.12.0"),
+    }
+
+    #: The aus-accounting-mcp release each commit the plugin may start is.
+    PLUGIN_SERVERS = {"bf2619c95e211685ca4c996cc7c04f9e400a616e": "0.12.0"}
+
+    def test_every_pinned_calculators_release_runs_on_the_plugin_server(self) -> None:
+        """Each server accepts only the calculators release it runs, so a skill pinning
+        another one has every calculator call refused."""
+        plugin = json.loads((REPOSITORY / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        commit = re.search(r"@([0-9a-f]{40})#", plugin["mcpServers"]["aus-accounting"]["args"][1])
+        if commit is None:
+            self.fail("the plugin must start aus-accounting-mcp from a pinned commit")
+        server = self.PLUGIN_SERVERS.get(commit.group(1))
+        self.assertIsNotNone(server, "add the plugin's aus-accounting-mcp commit to PLUGIN_SERVERS")
+        accepted = {version for version, (_, runs) in self.RELEASES.items() if runs == server}
+        for path in sorted(SKILLS.glob("*/SKILL.md")):
+            pins = set(re.findall(r"australian-tax-calculators/v(\d+\.\d+\.\d+)", path.read_text(encoding="utf-8")))
+            for version in pins:
+                with self.subTest(skill=path.parent.name, version=version):
+                    self.assertIn(version, accepted)
+
+    def assert_released_calculators(self, name: str, *commands: str, version: str = "1.2.0") -> str:
+        """The skill pins an australian-tax-calculators release, names the aus-accounting-mcp
+        release that runs it, verifies it before use and keeps the written method as the result."""
         text = " ".join(skill_text(name).split())
-        revision = "6ac566682829731d52a1b4456708a0b9d29b5695"  # tag australian-tax-calculators/v1.0.0
-        release = "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.0.0"
+        revision, server = self.RELEASES[version]
+        release = f"https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v{version}"
         tree = f"https://github.com/ryanduguid/australian-accounting/tree/{revision}/packages/australian-tax-calculators"
         records = json.loads((SKILLS / name / "sources.json").read_text(encoding="utf-8"))["sources"]
         for url in (release, tree):
@@ -358,7 +386,7 @@ class LegalSourceGateTests(unittest.TestCase):
                 self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
         # A downloaded archive is trusted only after its provenance and checksum, both pinned to the tag.
         pins = (
-            "--repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.0.0 "
+            f"--repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v{version} "
             f"--source-digest {revision} --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml"
         )
         self.assertIn(f"gh attestation verify SHA256SUMS {pins}", text)
@@ -369,9 +397,15 @@ class LegalSourceGateTests(unittest.TestCase):
             f"cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev {revision} australian-tax-calculators",
             text,
         )
-        self.assertIn("must show `australian-tax-calculators v1.0.0` with that commit in its source", text)
+        self.assertIn(f"must show `australian-tax-calculators v{version}` with that commit in its source", text)
         self.assertIn("never one found on `PATH`", text)
-        self.assertIn("check that `--version` prints exactly `australian-tax-calculators 1.0.0`", text)
+        self.assertIn(f"check that `--version` prints exactly `australian-tax-calculators {version}`", text)
+        self.assertIn(f"the executable `aus-accounting-mcp` {server} also runs for its tax worksheets", text)
+        self.assertNotIn("runs the earlier", text)
+        # A skill pins one release: a second tag would leave a reader two executables to verify.
+        for other in self.RELEASES:
+            if other != version:
+                self.assertNotIn(f"australian-tax-calculators/v{other}", text)
         self.assertIn("A calculator's figure checks the written method, which is always completed", text)
         self.assertIn("record the difference for the reviewer and adopt neither", text)
         self.assertIn("Without the executable, follow the written method.", text)
@@ -385,8 +419,19 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_skills_route_business_costs_and_cars_to_the_released_calculators(self) -> None:
         depreciation = self.assert_released_calculators(
-            "au-depreciation-schedule", "business-capital-expenditure", "balancing-adjustment", "trade-in"
+            "au-depreciation-schedule", "business-capital-expenditure", "balancing-adjustment", "trade-in",
+            "depreciation-low-value-pool", "depreciation-small-business-pool", version="1.2.0",
         )
+        # The pool commands take step 4's established amounts; pool entry and taxable use stay with the step.
+        pools = depreciation[depreciation.index("4. Apply the pools.") : depreciation.index("5. Apply caps.")]
+        self.assertIn("with `depreciation-low-value-pool`", pools)
+        self.assertIn("with `depreciation-small-business-pool`", pools)
+        self.assertIn("Both cover the income years 2020-21 to 2026-27", pools)
+        self.assertIn("each taxable use percentage or which assets the instant asset write-off or temporary full expensing took instead: those stay with this step", pools)
+        # 0.12.0 runs the executable only by the released digest or one the operator names.
+        self.assertIn("From `aus-accounting-mcp` 0.12.0 that worksheet runs", depreciation)
+        self.assertIn("the value in `AUS_TAX_CALCULATORS_SHA256`", depreciation)
+        self.assertIn("An earlier server, such as 0.10.0 or 0.11.0, accepts only an earlier release and refuses this one; the development plugin starts 0.12.0.", depreciation)
         # s 40-880: the 5 year rule and the start-up exception from the Act; the judgements stay the reviewer's.
         step = depreciation[depreciation.index("6a. **Business capital expenditure.**") : depreciation.index("7. Keep capital works")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-880", step)
@@ -404,13 +449,22 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("a car claimed only by the cents per kilometre method has nothing assessable or deductible (s 40-370(1) Note 2)", cars)
         self.assertIn("give `asset` as `car`, one row per income year held with its `method` and `days_held`", cars)
 
-        fbt = self.assert_released_calculators("fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost")
+        fbt = self.assert_released_calculators(
+            "fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost", version="1.2.0"
+        )
         self.assertIn("used only where a valid logbook supports the operating cost method", fbt)
         self.assertIn("the statutory result's `taxable_value_before_exemption` as `statutory_formula_taxable_value`", fbt)
         self.assertIn("Their results are taxable values before gross-up, and neither applies the reportable fringe benefits threshold", fbt)
 
     def test_rental_skill_spreads_borrowing_expenses_under_s_25_25_and_routes_to_the_released_calculator(self) -> None:
-        text = self.assert_released_calculators("au-rental-property", "borrowing-expenses")
+        text = self.assert_released_calculators(
+            "au-rental-property",
+            "borrowing-expenses",
+            "borrowing-expenses-schedule",
+            "rental-property",
+            "capital-works",
+            version="1.2.0",
+        )
         step = text[text.index("2a. Borrowing expenses:") : text.index("3. Trace borrowed funds")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/25-25", step)
         # s 25-25(5) as read on 19 November 2026: the shortest of the 3 periods.
@@ -422,10 +476,20 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the method statement in s 25-25(4) of the ITAA 1997", step)
         self.assertIn("the amount s 25-25(6) of the ITAA 1997 sets", step)
         self.assertIn("record the use of refinanced or redrawn money as a reviewer question", step)
-        # 1.0.0's borrowing-expenses: one loan, one year, 2024-25 to 2026-27, and its scope conditions.
-        self.assertIn("one loan's deduction for one income year from 2024-25 to 2026-27", text)
+        # borrowing-expenses, unchanged in 1.2.0: one loan, one year, 2017-18 to 2027-28, and its scope conditions.
+        self.assertIn("one loan's deduction for one income year from 2017-18 to 2027-28", text)
         self.assertIn("all the expenditure to be incurred in the income year the loan began and one income-producing share throughout the loan", text)
-        self.assertIn("a loan first drawn on 29 February and every income year from 2027-28", text)
+        self.assertIn("and every income year after 2027-28; for 2027-28 it flags the result for the s 26-155 check", text)
+        self.assertNotIn("29 February", text)
+        # The schedule spreads several loans, refinancing included, and leaves the money's use to the reviewer.
+        self.assertIn("for a loan that refinances an earlier one, which loan it repaid", text)
+        self.assertIn("Which costs are borrowing expenses, the money's use and the tracing of redraws stay with steps 2a and 3", text)
+        # 1.2.0's rental-property and capital-works: their years, scope and refusals; the facts stay with the steps.
+        self.assertIn("one owner and income year from 2020-21 to 2026-27", text)
+        self.assertIn("it does not support 2027-28, from which s 26-155 of the ITAA 1997 can quarantine rental deductions", text)
+        self.assertIn("the use of borrowed money and each asset's decline in value stay with steps 1 to 4", text)
+        self.assertIn("It refuses works begun before 16 September 1987, the higher rate for works begun before 27 February 1992", text)
+        self.assertIn("which it does not carry forward, stay with step 2", text)
 
     def test_fuel_skill_sets_out_the_small_claimant_methods_without_their_figures(self) -> None:
         text = " ".join(skill_text("fuel-tax-credits").split())
@@ -440,17 +504,276 @@ class LegalSourceGateTests(unittest.TestCase):
         # PCG 2021/2 paras 9 to 12, with the ceiling and the derived percentage left to the guideline.
         self.assertIn("by the percentage para 9 sets", step)
         self.assertIn("never with the PCG 2016/11 percentages (para 12)", step)
-        self.assertIn("No released version of `australian-tax-calculators`, including 1.0.0", step)
+        self.assertIn("Where the released `fuel-tax-credits` command in [Tax calculators](#tax-calculators) is installed", step)
         records = json.loads((SKILLS / "fuel-tax-credits" / "sources.json").read_text(encoding="utf-8"))["sources"]
         self.assertFalse([record["url"] for record in records if "aip.com.au" in record["url"]])
 
+    #: Skills routed on 22 November 2026 to commands first released in, or
+    #: otherwise unrouted before, australian-tax-calculators 1.1.0.
+    ROUTES_1_1_0 = {
+        "fuel-tax-credits": ("fuel-tax-credits",),
+        "au-payroll-tax-states": ("payroll-tax",),
+        "au-small-business-cgt": ("sb-cgt-concessions",),
+        "au-main-residence": ("main-residence",),
+        "au-working-holiday-makers": ("working-holiday-maker-withholding", "dasp-tax"),
+        "au-gst-property": ("gst-margin-scheme",),
+        "au-etp-redundancy": ("termination-payment", "etp-tax-free-component", "unused-leave-payment"),
+        "au-medicare-review": ("medicare-levy", "medicare-levy-surcharge", "income-tests"),
+        "au-sapto": ("seniors-pensioners-tax-offset",),
+        "au-lump-sum-arrears": ("lump-sum-arrears-tax-offset",),
+        "au-division-293": ("division-293",),
+        "au-division-296": ("division-296",),
+        "au-not-for-profit": ("dgr-check",),
+        "au-super-contribution-caps": ("fhss",),
+        "plant-and-equipment-costing": ("hire-purchase-schedule", "chattel-mortgage-schedule", "loan-transactions"),
+        "fbt-annual-workflow": (
+            "fbt", "fbt-return", "fbt-loan", "fbt-meal-entertainment", "fbt-car-parking", "fbt-debt-waiver",
+            "fbt-expense-payment", "fbt-property", "fbt-residual", "fbt-housing", "fbt-lafha", "fbt-board",
+            "fbt-tax-exempt-body-entertainment", "fbt-ev-exemption-check", "fbt-meal-entertainment-register",
+            "fbt-minor-benefit-check",
+        ),
+    }
+
+    def test_rd_and_residency_skills_route_their_1_2_0_commands(self) -> None:
+        rd = self.assert_released_calculators("au-rd-incentive", "rd-tax-offset", version="1.2.0")
+        residency = self.assert_released_calculators(
+            "au-tax-residency", "residency-tests", "lodgment-required", version="1.2.0"
+        )
+        for text in (rd, residency):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals; registration, residency facts and treaty questions stay with the skill.
+        self.assertIn("for an income year from 2021-22 to 2026-27. It refuses earlier years", rd)
+        self.assertIn("registration and eligibility stay with the workflow above", rd)
+        self.assertIn("never inferred from the dates or anything else", residency)
+        self.assertIn("a tax treaty's tie-breaker may then apply; that question stays with the workflow above", residency)
+        self.assertIn("It refuses 2026-27, as no instrument for that year was on the register on 22 November 2026", residency)
+
+    def test_super_and_penalty_skills_route_their_1_2_0_commands(self) -> None:
+        sup = self.assert_released_calculators(
+            "au-smsf-death-benefits", "super-benefit-tax", "super-withholding", version="1.2.0"
+        )
+        pen = self.assert_released_calculators("au-ato-penalties-interest", "ato-interest-penalties", version="1.2.0")
+        for text in (sup, pen):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals; dependency, the schedule read and culpability stay with the skill.
+        self.assertIn("each part can bear in 2020-21 to 2026-27", sup)
+        self.assertIn("never replaces step 6's record of the provision that governs each recipient", sup)
+        self.assertIn("paid from 13 October 2020 to 30 June 2027", sup)
+        self.assertIn("Step 7 still reads the current withholding schedule at use time", sup)
+        self.assertIn("for an income year from 2020-21 to 2027-28", pen)
+        self.assertIn("the culpability and any remission request stay with the workflow above", pen)
+
+    def test_bas_skill_routes_the_gst_adjustment_commands_to_the_1_2_0_release(self) -> None:
+        text = self.assert_released_calculators(
+            "bas-preparation", "gst", "wine-equalisation-tax", "luxury-car-tax", "gst-creditable-purpose-change",
+            "gst-annual-apportionment", "gst-financial-acquisitions-threshold", "gst-going-concern",
+            "gst-second-hand-goods", "gst-bad-debt", version="1.2.0",
+        )
+        self.assertIn("`worksheet-catalogue` command", text)
+        self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # The adjustment commands' years and refusals; the adjustment, its period and the labels stay with the skill.
+        self.assertIn("and the financial acquisitions threshold tests, each for 2020-21 to 2026-27", text)
+        self.assertIn("goods divided for resupply, goods leased before sale and valuable metal", text)
+        self.assertIn("the BAS labels come from the supported workpapers, never from the command", text)
+
+    def test_individual_and_business_skills_route_their_1_2_0_commands(self) -> None:
+        individual = self.assert_released_calculators(
+            "au-individual-return", "resident-tax", "foreign-resident-tax", "low-income-tax-offset",
+            "study-loan-repayment", "personal-tax-estimate", "work-expenses", "private-health-insurance-rebate",
+            "beneficiary-tax-offset", "invalid-carer-tax-offset", "zone-tax-offset",
+            "net-medical-expenses-tax-offset", "government-super-amounts", version="1.2.0",
+        )
+        psi = self.assert_released_calculators("au-psi-review", "psi-test", version="1.2.0")
+        sbito = self.assert_released_calculators(
+            "au-small-business-income-offset", "small-business-income-offset", version="1.2.0"
+        )
+        ncl = self.assert_released_calculators("au-non-commercial-losses", "non-commercial-losses", version="1.2.0")
+        dt = self.assert_released_calculators("au-financial-statements", "deferred-tax", version="1.2.0")
+        for text in (individual, psi, sbito, ncl, dt):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals; the facts and judgements stay with the skill's workflow.
+        self.assertIn("so steps 3 and 4 stay as written", individual)
+        self.assertIn("refuses premiums paid from 1 April 2027", individual)
+        self.assertIn("from 2020-21 to 2025-26, run once for each dependant", individual)
+        self.assertIn("so route that to `au-sapto`", individual)
+        self.assertIn("covers only 2016-17, 2017-18 and 2018-19", individual)
+        self.assertIn("https://duguid.com.au/tools/individual-tax/government-super/", individual)
+        self.assertIn("for a full-year resident the `private-health-insurance-rebate` command", individual)
+        self.assertIn("the evidence for each answer stays with steps 1 to 3", psi)
+        self.assertIn("are the operator's established figures from steps 2 to 4", sbito)
+        self.assertIn("does not decide the Commissioner's discretion, which step 4 records", ncl)
+        self.assertIn("the judgement whether future taxable profit is probable", dt)
+        trader = " ".join(skill_text("au-sole-trader").split())
+        self.assertIn("https://duguid.com.au/tools/individual-tax/sole-trader/", trader)
+        self.assertIn("never as a fallback when a local tool refuses", trader)
+
+    def test_withholding_skills_route_the_1_2_0_schedule_commands(self) -> None:
+        payroll = self.assert_released_calculators(
+            "au-payroll-review", "payg-gross-up", "schedule-5-method-a", "schedule-5-method-b-i",
+            "schedule-5-method-b-ii", "seniors-pensioners-withholding", "daily-casual-withholding",
+            "horticulture-shearing-withholding", "entertainer-withholding", "return-to-work-withholding",
+            "annuity-withholding", "upward-variation-withholding", "payg-withholding", "study-loan-withholding",
+            version="1.2.0",
+        )
+        bas = self.assert_released_calculators(
+            "bas-preparation", "no-abn-withholding", "voluntary-agreement-withholding", version="1.2.0"
+        )
+        for text in (payroll, bas):
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each schedule's years and refusals; whether a payee falls under it stays with the workflow.
+        self.assertIn("for payments from 1 July 2024 to 30 June 2027", payroll)
+        self.assertIn("Whether a payee or payment falls under a schedule stays with step 5", payroll)
+        self.assertIn("so another schedule's amount is worked with its own command first", payroll)
+        self.assertIn("record them as step 5a says", payroll)
+        self.assertIn("the operator establishes that the rule applies and that none of its exceptions does", bas)
+        self.assertIn("stay with the payroll and payables records, never with the command", bas)
+
+    def test_medicare_super_and_stp_skills_route_their_1_2_0_commands(self) -> None:
+        medicare = self.assert_released_calculators(
+            "au-medicare-review", "medicare-levy", "medicare-levy-surcharge", "income-tests",
+            "private-health-insurance-rebate", version="1.2.0",
+        )
+        caps = self.assert_released_calculators(
+            "au-super-contribution-caps", "fhss", "contribution-caps", "government-super-amounts", version="1.2.0"
+        )
+        stp = self.assert_released_calculators(
+            "stp-finalisation", "payg-withholding", "study-loan-withholding", "quarterly-sg", version="1.2.0"
+        )
+        sgc = self.assert_released_calculators("au-super-guarantee-charge", "quarterly-sg", version="1.2.0")
+        for text in (medicare, caps, stp, sgc):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each command's years and refusals in its own codes; eligibility and the facts stay with the steps.
+        self.assertIn("for an income year from 2020-21 to 2026-27, from step 1's statement lines", medicare)
+        self.assertIn("(`private_health_insurance_rebate.rate_unpublished`)", medicare)
+        self.assertIn("the supplied tax claim code stay with step 1", medicare)
+        self.assertIn("a total offset of 144.94 and no excess", medicare)
+        # Scope limits the catalogue states, kept beside the positive routes.
+        self.assertIn("every person insured is an eligible person under the *Health Insurance Act 1973*", medicare)
+        self.assertIn("leaves out defined benefit interests and notional taxed contributions", caps)
+        self.assertIn("a deceased person's annualised income, interest on late payments", caps)
+        self.assertIn("no bring-forward period started in either of the 2 previous years", caps)
+        self.assertIn("(`contribution_caps.defined_benefit_interest`)", caps)
+        self.assertIn("it never applies step 3's proposed July 2026 relief", caps)
+        self.assertIn("(`government_super_amounts.fact_not_supplied`)", caps)
+        self.assertIn("15,000 unused from 2020-21, 10,000 of it applied, 45,000 available, 5,000 headroom", caps)
+        self.assertIn("never to rebuild the year's total", stp)
+        self.assertIn("(`payg.pay_date_before_schedule`)", stp)
+        self.assertIn("the command decides none of them", stp)
+        self.assertIn("a lead for `au-super-guarantee-charge`, not a charge", stp)
+        # The quarterly minimum is the required contribution, never the shortfall on salary or wages.
+        for text in (stp, sgc):
+            self.assertIn("one complete quarter of 2025-26", text)
+            self.assertIn("It refuses 2026-27 (`period.unsupported`)", text)
+        self.assertIn("so its additional contribution is never the shortfall or a charge", sgc)
+        self.assertIn("returned a 1,560.00 minimum and a 65.00 additional contribution", sgc)
+
+    def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
+        text = self.assert_released_calculators(
+            "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.2.0"
+        )
+        self.assertIn("`worksheet-catalogue` command", text)
+        self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # 1.2.0's cost base adjustments: its years, events and refusals; the amounts stay with the records.
+        self.assertIn("from 1 July 2018 to the end of an income year from 2018-19 to 2026-27", text)
+        self.assertIn("It refuses events before 1 July 2018 or after the year, a demerger it does not carry", text)
+        self.assertIn("come from the statements and records in step 2", text)
+        self.assertIn("the command does not work them out", text)
+
+    def test_skills_route_the_1_1_0_commands_to_the_pinned_release(self) -> None:
+        for name, commands in self.ROUTES_1_1_0.items():
+            with self.subTest(skill=name):
+                text = self.assert_released_calculators(name, *commands, version="1.2.0")
+                # The route reads each worksheet's own scope and keeps the client out of the input.
+                self.assertIn("`worksheet-catalogue` command", text)
+                identifiers = (
+                    "never employee names" if name == "fbt-annual-workflow"
+                    else "never a client's name, address, TFN, ABN or other identifier"
+                )
+                self.assertIn(identifiers, text)
+        # A refusal is stated in the command's own terms, not the figure behind it.
+        fuel = " ".join(skill_text("fuel-tax-credits").split())
+        self.assertIn("a simplified method without the small claimant statement", fuel)
+        # From 1.2.0 Method 2 keeps each line's acquisition day across a period of flat rates.
+        self.assertIn("where every applicable rate stays flat it keeps each line's acquisition day", fuel)
+        sb = " ".join(skill_text("au-small-business-cgt").split())
+        self.assertIn("refuses an active-day total that falls on the boundary of the active asset test's period", sb)
+        gst = " ".join(skill_text("au-gst-property").split())
+        # From 1.2.0 an approved valuation's day is checked against the facts s 75-10(3) fixes it by.
+        self.assertIn("refuses a day s 75-10(3) of the GST Act does not fix for them", gst)
+        for field in ("improved_on_1_july_2000", "registration_effective_day", "applied_for_registration",
+                      "registration_application_day", "supply_day"):
+            self.assertIn(f"`{field}`", gst)
+        self.assertIn("It refers a possible overlap of items 2 and 3 for separate review.", gst)
+        self.assertNotIn("takes the valuation date as given", gst)
+        dgr = " ".join(skill_text("au-not-for-profit").split())
+        self.assertIn("it never says a payment is deductible", dgr)
+        self.assertIn("send the recipient's details only, never the donor's", dgr)
+        # dgr-check refuses scope_confirmed, and its data holds no ended endorsement.
+        self.assertIn("`dgr-check` takes no `scope_confirmed` flag", dgr)
+        self.assertNotIn("a `scope_confirmed` flag: set it", dgr)
+        self.assertIn("confirm every finding you rely on at ABN Lookup", dgr)
+        fbt = " ".join(skill_text("fbt-annual-workflow").split())
+        self.assertIn("use labels such as `Employer` and `E1`, never names", fbt)
+        # The FHSS route leaves the figure to the determination and states the cutoff the release refuses past.
+        fhss = " ".join(skill_text("au-super-contribution-caps").split())
+        self.assertIn("The Commissioner's determination governs", fhss)
+        self.assertIn("its associated earnings are labelled `estimate`", fhss)
+        self.assertIn("after 31 December 2026, the last quarter whose shortfall interest charge rate", fhss)
+        self.assertIn("(`fhss.contribution_kind_invalid`)", fhss)
+        self.assertIn("do not request, release or notify anything", fhss)
+        self.assertIn("do not rely on its `fhss_tax_if_not_used` or `recontribution_required`", fhss)
+        # Item 30(4) exempts only what relates to or results from a qualifying item 30(1) action.
+        self.assertIn("relating to, or resulting from, directly or indirectly, a transitional action", fhss)
+        self.assertIn("A later release unrelated to such an action keeps those rules.", fhss)
+        # Each of item 30(1)'s 4 conditions must hold.
+        self.assertIn("a determination was made from 1 July 2018 to 14 September 2024", fhss)
+        self.assertIn(
+            "after it, the individual began holding an interest in real property or land of a kind "
+            "TAA 1953 Sch 1 s 138-10(2)(a) mentions",
+            fhss,
+        )
+        self.assertIn(
+            "from 15 September 2024 to 14 September 2027 the individual applied to amend that determination, "
+            "amended the valid release request or applied to vary a release authority for it",
+            fhss,
+        )
+        self.assertIn("when that action was taken the Commissioner had not begun treating any FHSS credit", fhss)
+        self.assertIn("the maximum release amount when none is given, as the amount released", fhss)
+        individual = " ".join(skill_text("au-individual-return").split())
+        self.assertIn("`au-super-contribution-caps` for a first home super saver (FHSS) release", individual)
+        self.assertIn("A rebatable or exempt employer is outside both", fbt)
+
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
         text = " ".join(skill_text("div7a-compliance").split())
-        self.assertIn("The plugin pins `aus-accounting-mcp` 0.10.0, whose `review_div7a_loan` refuses, with no figure", text)
+        self.assertIn("The plugin pins `aus-accounting-mcp` 0.12.0, whose `review_div7a_loan` refuses, with no figure", text)
         self.assertIn("Record the refusal and its code as an exception", text)
 
+    def test_site_vehicle_and_div7a_routes_keep_the_decision_with_the_reviewer(self) -> None:
+        site = "https://duguid.com.au/tools/business-calculators/"
+        div7a = " ".join(skill_text("div7a-compliance").split())
+        self.assertIn(f"{site}div7a/", div7a)
+        self.assertIn(f"{site}div7a-schedule/", div7a)
+        # The pages read the site's rate table, so the ato.gov.au rate from step 3 comes first.
+        self.assertIn("only where the page's rate for the year matches the ato.gov.au rate", div7a)
+        self.assertIn("a page's figure is a cross-check, never the assessed repayment", div7a)
+        car = " ".join(skill_text("au-car-expenses").split())
+        self.assertIn(f"{site}vehicle-class/", car)
+        self.assertIn("It leaves the car limit undecided for a dual cab, a single cab ute and a panel van", car)
+        self.assertIn("stop the car methods for that vehicle and carry the question to the reviewer", car)
+        fbt = " ".join(skill_text("fbt-annual-workflow").split())
+        self.assertIn(f"{site}vehicle-class/", fbt)
+        self.assertIn(f"{site}fbt-car/", fbt)
+        self.assertIn("It does not decide whether private use was minor, infrequent and irregular", fbt)
+        self.assertIn("evidence for the exemption decision in step 2, which stays the reviewer's", fbt)
+        for text in (div7a, car, fbt):
+            self.assertIn("Record what it consumed: the page, the date run, the inputs", text)
+
     def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
-        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier")
+        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.2.0")
         self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
         # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
         self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
@@ -723,6 +1046,128 @@ class LegalSourceGateTests(unittest.TestCase):
         ):
             self.assertIn(finding, card_text)
 
+    def test_depreciation_pools_route_leaves_pool_entry_and_taxable_use_to_the_schedule(self) -> None:
+        text = " ".join(skill_text("au-depreciation-schedule").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/depreciation-pools/", text)
+        # The page takes amounts after the preparer's choices, so those choices stay in the schedule.
+        self.assertIn("an income year from 2020-21 to 2026-27", text)
+        self.assertIn("it does not decide which assets may go into a pool", text)
+        self.assertIn("refuses works begun before 16 September 1987", text)
+        self.assertIn("never the client's name, an asset serial number or a property address", text)
+
+    def test_work_expenses_route_leaves_evidence_and_occupancy_to_the_workpaper(self) -> None:
+        url = "https://duguid.com.au/tools/individual-tax/work-expenses/"
+        wfh = " ".join(skill_text("au-wfh-deductions").split())
+        car = " ".join(skill_text("au-car-expenses").split())
+        self.assertIn(url, wfh)
+        self.assertIn(url, car)
+        # The page compares methods; the rate read, the hours evidence and occupancy stay with the skill.
+        self.assertIn("read the year's rate from the ATO page in step 1 regardless", wfh)
+        self.assertIn("step 5 and the hours and evidence of step 2 stay as written", wfh)
+        self.assertIn("never the person's name or TFN", wfh)
+        self.assertIn("It refuses a car the person did not own or lease", car)
+        self.assertIn("so step 4 stays as written", car)
+
+    #: Live site pages routed on 23 November 2026: each skill, the page and a
+    #: boundary the page leaves to the skill's own workflow.
+    SITE_PAGE_ROUTES = {
+        "au-rental-property": (
+            "business-calculators/rental-property/",
+            "Ownership shares, the periods of use and the classification of each expense stay with steps 2 to 4",
+        ),
+        "au-ato-penalties-interest": (
+            "business-calculators/ato-penalties-interest/",
+            "GIC after 31 December 2026 unless a rate is assumed, which makes the result an estimate",
+        ),
+        "au-payg-instalment-variation": (
+            "business-calculators/payg-instalments/",
+            "or whether either option may be chosen, so steps 2 and 3 stay as written",
+        ),
+        "au-transfer-duty": (
+            "business-calculators/first-home-owner-grant/",
+            "takes the 4 eligibility facts as stated rather than testing them",
+        ),
+        "au-land-tax": (
+            "business-calculators/foreign-surcharge/",
+            "It does not decide which land is taxable, which rates apply, whether an owner is a foreign person",
+        ),
+        "au-ato-objection": (
+            "business-calculators/objection-deadline/",
+            "It does not know public holidays, so check the last day and the day after it",
+        ),
+        "au-psi-review": (
+            "business-calculators/psi-determination/",
+            "so the evidence for each stays with the workflow above",
+        ),
+        "au-company-tax": (
+            "business-calculators/company-tax/",
+            "with connected entities and affiliates, stay with step 2",
+        ),
+        "au-super-guarantee-charge": (
+            "business-calculators/sgc-payday/",
+            "amounts not yet received by the fund",
+        ),
+        "au-super-contribution-caps": (
+            "individual-tax/concessional-catch-up/",
+            "It works the cap only",
+        ),
+        "workers-compensation-premium": (
+            "business-calculators/workers-compensation/",
+            "The classification, the rate and which wages count stay with the workflow above",
+        ),
+        "au-professional-firm-profits": (
+            "business-calculators/pcg-2021-4-allocation/",
+            "a green zone is not a ruling: Part IVA can still apply",
+        ),
+        "au-etp-redundancy": (
+            "business-calculators/long-service-leave/",
+            "whether a break keeps service continuous",
+        ),
+        "coal-lsl-levy": ("coal-lsl-levy/", "never names, dates of birth or Coal LSL numbers"),
+        "au-depreciation-schedule": ("depreciation-rates/", "Check each life against the registered determination"),
+        "bas-preparation": ("bas-due-dates/", "the date on the activity statement governs"),
+    }
+
+    def test_site_page_routes_leave_the_skills_decisions_with_the_workflow(self) -> None:
+        for name, (page, boundary) in self.SITE_PAGE_ROUTES.items():
+            with self.subTest(skill=name):
+                text = " ".join(skill_text(name).split())
+                self.assertIn(f"https://duguid.com.au/tools/{page}", text)
+                self.assertIn(boundary, text)
+                # A page is a cross-check: never the fallback for a refusal, and its labels stay its own.
+                self.assertIn("never as a fallback when a local tool refuses", text)
+                self.assertIn("Keep the page's own labels as its own", text)
+
+    #: Site pages live from 24 November 2026: each skill, the page and what the
+    #: page refuses or leaves to the skill's own workflow.
+    SITE_PAGE_ROUTES_24_NOV = (
+        ("au-rd-incentive", "business-calculators/rd-tax-offset/", "registration and eligibility stay with steps 1 to 4"),
+        ("au-rd-incentive", "business-calculators/rd-tax-offset/", "It refuses 2020-21 and earlier years"),
+        ("bas-preparation", "business-calculators/gst-adjustments/", "Take the BAS labels from the supported workpapers"),
+        ("bas-preparation", "business-calculators/gst-adjustments/", "the margin scheme and other special rules"),
+        ("au-financial-statements", "business-calculators/deferred-tax/", "the judgement whether future taxable profit"),
+        ("au-financial-statements", "business-calculators/deferred-tax/", "It refuses business combinations"),
+        ("au-individual-return", "individual-tax/income-tax/", "It refuses taxable income that includes a special income component"),
+        ("au-individual-return", "individual-tax/income-tax/", "does not decide whether the person was entitled to the offset"),
+        ("au-foreign-income", "individual-tax/income-tax/", "Which tax counts and what a treaty allows stay with step 3"),
+        ("au-foreign-income", "individual-tax/income-tax/", "it refuses a rate for a day other than the one the rule names"),
+        ("au-non-commercial-losses", "individual-tax/sole-trader/", "the Commissioner's discretion is never decided there"),
+        ("au-super-contribution-caps", "individual-tax/transfer-balance/", "It refuses reversionary income streams"),
+        ("au-super-contribution-caps", "individual-tax/transfer-balance/", "The ATO's determination or assessment governs"),
+        ("au-smsf-year-end", "individual-tax/pension-minimum/", "the test of payments made by 30 June stay with step 3"),
+        ("au-smsf-year-end", "individual-tax/pension-minimum/", "does not apply the halved factors of 2019-20 to 2022-23"),
+    )
+
+    def test_24_november_site_page_routes_keep_the_skills_decisions(self) -> None:
+        for name, page, boundary in self.SITE_PAGE_ROUTES_24_NOV:
+            with self.subTest(skill=name, boundary=boundary):
+                text = " ".join(skill_text(name).split())
+                self.assertIn(f"https://duguid.com.au/tools/{page}", text)
+                self.assertIn(boundary, text)
+                self.assertIn("never as a fallback when a local tool refuses", text)
+                self.assertIn("Keep the page's own labels as its own", text)
+                self.assertIn("read 24 November 2026", text)
+
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
 
@@ -743,6 +1188,44 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("([40]-[42])", text)
         self.assertIn("do not decide whether to request an amendment or object", text)
         self.assertIn("trustee resolutions, accounting records and later dealings with the entitlement", text)
+
+    def test_super_lump_sum_route_leaves_components_and_dependency_to_the_workflow(self) -> None:
+        text = " ".join(skill_text("au-smsf-death-benefits").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/super-benefit-tax/", text)
+        # The page takes the components and dependency as given and gives ceilings, not the tax payable.
+        self.assertIn("paid from 1 July 2020 to 30 June 2027", text)
+        self.assertIn("you state those, so step 6 stays as written", text)
+        self.assertIn("death benefits paid to a deceased estate", text)
+        self.assertIn("The fund's payment summary and the recipient's assessment, not the page, settle the tax", text)
+
+    def test_gic_payment_plan_route_leaves_the_debt_and_the_plan_to_step_2_and_the_ato(self) -> None:
+        text = " ".join(skill_text("au-ato-penalties-interest").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/gic-payment-plan/", text)
+        # The page projects a plan; the accrued GIC and the real instalments are not its to give.
+        self.assertIn("It does not work out the debt, its due date or GIC that accrued before the plan starts", text)
+        self.assertIn("mark a result that relies on an assumed rate as an estimate", text)
+        self.assertIn("the page's figure is an estimate for the reviewer, never the amount payable", text)
+        self.assertIn("never the taxpayer's name or reference", text)
+
+    def test_asic_fees_route_leaves_due_dates_and_payment_to_asic_and_the_officeholder(self) -> None:
+        text = " ".join(skill_text("au-asic-company-changes").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/asic-fees/", text)
+        # The page holds one fee year and works out no due date, so those stay with ASIC's records.
+        self.assertIn("it takes due and received dates from 1 July 2026 to 30 June 2027 only", text)
+        self.assertIn("It does not work out a due date, move one for a weekend or public holiday", text)
+        self.assertIn("Check every amount against ASIC's invoice or fee table", text)
+        self.assertIn("never the company's name, ACN or officeholders", text)
+
+    def test_wet_and_lct_routes_leave_the_labels_to_the_workpapers(self) -> None:
+        text = " ".join(skill_text("bas-preparation").split())
+        self.assertIn("https://duguid.com.au/tools/business-calculators/wine-equalisation-tax/", text)
+        self.assertIn("https://duguid.com.au/tools/business-calculators/luxury-car-tax/", text)
+        # Each page holds its own years and leaves the tax period and classification to the preparer.
+        self.assertIn("a financial year from 2023-24 to 2027-28", text)
+        self.assertIn("a tax period in a financial year from 2019-20 to 2026-27", text)
+        self.assertIn("flags rebates claimed above the cap without working out the excess", text)
+        self.assertIn("Neither page decides which tax period a dealing or line belongs to", text)
+        self.assertIn("Take labels 1C, 1D, 1E and 1F from the supported workpapers, never from the page", text)
 
 
 if __name__ == "__main__":

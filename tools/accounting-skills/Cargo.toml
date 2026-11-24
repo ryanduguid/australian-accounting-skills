@@ -3,7 +3,9 @@ name = "accounting-skills"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.99"
-license = "LicenseRef-Duguid-Public-Attribution-1.0"
+# `cargo run` without `--bin` runs this binary, not workpaper-renderer.
+default-run = "accounting-skills"
+license = "Apache-2.0"
 authors = ["Ryan Duguid"]
 description = "Native tooling for the accounting skill repository"
 publish = false
@@ -21,3 +23,8 @@ yaml-rust2 = { version = "=0.13.0", default-features = false }
 
 [dev-dependencies]
 tempfile = "=3.27.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = "symbols"

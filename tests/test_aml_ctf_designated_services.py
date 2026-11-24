@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The designated services skill added on 16 November 2026 classifies services and decides no grey area.
 
 Each test reads one step, the sources or the card and checks the rule a reader

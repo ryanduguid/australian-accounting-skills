@@ -72,6 +72,53 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators 1.2.0 release",
+      "url": "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "An agent checked the Windows archive against the release's SHA256SUMS and both attestations on 24 November 2026; its executable printed `australian-tax-calculators 1.2.0` and its periods command listed 2026-27 for division_296. aus-accounting-mcp 0.12.0 runs this release (its release notes, read that day). Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.2.0",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators 1.2.0 source at its tagged commit",
+      "url": "https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "An agent read the tagged commit's CHANGELOG and the executable's worksheet catalogue on 24 November 2026 for division-296, and ran each worksheet's catalogue example on 1.1.0 and 1.2.0: their arguments, scope statements, periods and refusals. They work out the facts they are given and decide no position. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/tree/31ecb4022aa0127ae9f672798d1d9fbfe6388e85/packages/australian-tax-calculators",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Income Tax Assessment (1997 Act) Regulations 2021 (ss 296-55.02, 296-65.01, 296-70.02, 296-70.03, 296-70.04)",
+      "url": "https://www.legislation.gov.au/F2021L00206/latest/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 24 November 2026: the sections were inserted by F2026L00726 (as made, registered 18 June 2026) and appear unchanged in compilation 16 (F2026C00602, in force from 27 June 2026). Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/F2021L00206/latest/text",
+      "http_status": 200,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }

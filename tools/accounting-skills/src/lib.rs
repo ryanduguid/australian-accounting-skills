@@ -1,5 +1,5 @@
 // Copyright 2026 Ryan Duguid
-// SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 //! The coverage matrix in coverage.json, derived from the skills, validation cards and tests.
 pub mod citations;
@@ -8,6 +8,7 @@ pub mod last_changed;
 mod passage_diff;
 pub mod plugin_dist;
 pub mod plugin_evals;
+pub mod review_state;
 pub mod serve_mcp;
 pub mod skill_zips;
 mod source_codec_rules;

@@ -1,4 +1,4 @@
-# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: LicenseRef-Duguid-Public-Attribution-1.0
+# Copyright 2026 Ryan Duguid. SPDX-License-Identifier: Apache-2.0
 """The marketplace settlements workflow added on 12 November 2026 keeps its tie-out and GST limits.
 
 Each test reads one workflow step or section and checks the rule a reader could get

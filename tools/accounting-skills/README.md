@@ -13,10 +13,24 @@ are retired:
 | `prepare-trial` | `prepare_trial.py` |
 | `build-plugin-evals` | `build_plugin_evals.py` |
 
-`last-changed` is new, with no retired script: it writes `docs/skill-last-changed.md` from git history and refuses a shallow clone.
+`last-changed --write` refreshes `docs/skill-last-changed.md` from Git history.
+`last-changed --check` exits 2 when its dates need a refresh. Both need a full
+clone. Verify checks the report on main and warns when it needs a refresh.
+Run the refresh from main to use the actual squash commit dates.
 `check-citations` is also new: it checks that every cited section and ruling
 has a record in its skill's `sources.json`, and that a cited section exists
 where `section-index/` lists its Act's sections.
+
+`review-state write CASE_DIR --draft PATH --register REGISTER.json` records a review's check register in
+`CASE_DIR/review-state.json`, with the SHA-256 of the draft and of every regular file under `CASE_DIR/sources/`.
+Each check is `passed`, `failed`, `not performed` or `not applicable`, the last 2 with a note saying why; the
+result is `passed` only when none failed and none was left not performed. `write` prints the state file's SHA-256 for the reviewer to
+record: the file is not signed, so `review-state verify CASE_DIR --state-sha256 HEX` is what refuses a state rewritten
+after the review. `verify` exits 0 only while that review passed and the draft and sources are unchanged, and otherwise
+exits 2 and prints the first `STALE` reason: no review, a state other than the recorded one, a review that did not
+pass, or a draft or source changed, added or removed. A symlink or other special file under `sources/` is an error
+(exit 1). It sets no age limit; `written_on` records the date for the reader. The review
+skills write it and `au-client-letter` verifies it before drafting from reviewed work.
 
 `statement-check` is also new: the `statement-to-csv` skill runs it on statement lines transcribed
 to JSON. In exact cents it checks each printed running balance, brought-forward and
