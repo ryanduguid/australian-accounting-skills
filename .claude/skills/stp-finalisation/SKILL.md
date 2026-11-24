@@ -49,6 +49,14 @@ Primary sources (checked 20 August 2026):
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Payroll register ↔ STP agrees by employee for reported fields; payroll register ↔ GL expense accounts and PAYG/SG liability roll-forwards are separately documented. Per-employee ties must not be replaced with a total-only check
 - RFBA stated per affected employee, or the absence confirmed with the user and recorded
 - SG rate and due-date regime cited per period (quarterly for FY2025-26 and earlier; per payday under payday super from FY2026-27); payment dates evidenced; for FY2026-27 onward, the payday-super STP field/code requirements verified at ato.gov.au

@@ -86,6 +86,14 @@ A person can compare a result with the site's [Income tax and refund calculator]
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 **Review state.** Where the repository's [native tooling](https://github.com/ryanduguid/australian-accounting-skills/tree/main/tools/accounting-skills) is installed (`accounting-skills review-state` run alone prints its usage), save the check register as JSON, `{"checks": [{"check": "<name>", "status": "passed", "note": "<why, required for not performed or not applicable>"}]}` with each status `passed`, `failed`, `not performed` or `not applicable`, in the firm-approved case folder that holds the draft and, under `sources/`, every source file the review read. Then run `accounting-skills review-state write <case-dir> --draft <draft path in the folder> --register <register file>`. It writes `review-state.json` with the SHA-256 of the draft and of each source file and records a failed or incomplete review as such; its result is `passed` only when no check failed and none was left not performed. It prints the state file's own SHA-256: put that in the review record the reviewer signs, because the file is not signed and only the recorded digest shows it was not rewritten later. Where the tool is not installed, record the review state as not written, with the reason. Do not install the tool yourself: no release is published, and it is built from source with `cargo install --locked --path tools/accounting-skills` in a checkout of this repository, which needs Rust 1.99 or newer.
 
 An income-and-deduction index, return-label mapping and exceptions list, with the standard deduction comparison from 2026-27. Every proposed figure has a source; no final tax or refund is asserted while dependent evidence is missing.

@@ -58,6 +58,14 @@ Carry this record into the WIP evidence schedule and hand-off, alongside the act
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Total revenue to date per the WIP schedule, less prior period revenue to date, agrees to contract revenue in the general ledger for the period
 - Sum of contract assets on the schedule agrees to the contract asset or WIP control account; sum of contract liabilities agrees to the contract liability account; neither is a net portfolio figure
 - Billings to date per contract agree to the progress claim register and to the revenue and receivables ledgers, with retention reconciled to the retention schedule

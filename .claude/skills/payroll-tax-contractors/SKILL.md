@@ -48,6 +48,14 @@ Test each subcontractor engagement against the contractor provisions of the stat
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Total contractor payments per the listing equals exempt payments plus deemed wages plus non-labour deductions plus GST, with no unclassified residual
 - Contractor payments per the listing reconcile to the subcontractor expense accounts for the year, and to the contractor listing behind `contractor-super-tpar` where one is prepared
 - Day counts tie to timesheets or site records, not to invoice counts

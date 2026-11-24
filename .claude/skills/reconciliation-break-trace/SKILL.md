@@ -36,6 +36,14 @@ Root-cause each difference that a reconciliation leaves open, so the reviewer se
 
 ## Output
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A break register with one row per item: account, period, item amount, side, cause sentence, cause type, evidence references, owner, expected clear date or blank, action and status. Show the arithmetic that ties the items and any unexplained remainder back to the difference. Proposed adjustments appear as unposted drafts with their supporting evidence, for an authorised human to approve and post. After a human posts any adjustment, require fresh exports and rerun the reconciliation; the earlier trace does not prove the new balance.
 
 Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.

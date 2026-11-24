@@ -29,6 +29,14 @@ The arrangement as the applicant describes it, with each step, date, amount and 
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A draft application with the fact-to-document matrix, related-entity map, question list with the neutrality test, contentions, periods, requirements checklist and exceptions list. Every document fact appears in the scheme description or in the exceptions list. Whether to apply, the final facts and questions, the declarations, signing and lodgement are for the registered agent and the applicant.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

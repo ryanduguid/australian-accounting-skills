@@ -36,6 +36,14 @@ For the company: whether it is a listed public company, its constitution, board 
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A classification record, a Corporations Act step register, a share capital transfer and tainting record, a price split with the average capital per share comparison, a market value record, a franking debit and distribution schedule for `au-franking-account`, an integrity and ruling facts record, a Division 7A screen and a seller schedule by parcel. The amounts debited to share capital and to other accounts must equal the total purchase price. For an off-market buy-back by a company that is not a listed public company, the dividend part must equal the price less the share capital debit only once the reviewer has settled that the account was not tainted; while tainting is unsettled, the split stays `UNVERIFIED`, and if the account was tainted, its debit does not reduce the dividend; the price per share times the shares bought back must agree with the payment records; the shares cancelled must equal the shares bought back and the register after must equal the register before less those shares; each seller's dividend and franking credit must agree with their statement. The directors decide the buy-back and its terms; the company's lawyer advises on the procedure; a registered tax agent decides each tax position.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

@@ -29,6 +29,14 @@ Route the new accountant's acceptance work to `au-client-acceptance` and the pra
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A departure register with each open piece of work, a records list giving each record's location, proposed owner and basis or `UNVERIFIED`, the cloud account owner and users of each ledger file, a draft reply limited to the permitted disclosure, each lien question with the limits read, the records the practice keeps and the ATO client list steps. The authorised practitioner decides ownership, any lien, what is released, the reply and every ATO change.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

@@ -21,6 +21,14 @@ Income year, residency and temporary-residency facts, income by country and type
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 For foreign pensions or annuities, use `au-foreign-pensions` for payment character, UPP and arrears evidence before carrying the supported assessable amount here. Keep that amount distinct from the foreign-tax-offset eligibility and whole-return limit. If the companion or records are unavailable, retain those pension questions as unresolved.
 
 A country-by-income schedule, AUD conversion trail and supported offset calculation or evidence gaps. Reconcile back to receipts and assessments without reporting net cash as gross income.
