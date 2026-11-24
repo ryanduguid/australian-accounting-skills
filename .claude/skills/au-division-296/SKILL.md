@@ -23,7 +23,7 @@ Income year, the individual's total superannuation balance (TSB) reported for ea
 
 6. Apply the rates in the Superannuation (Building a Stronger and Fairer Super System) Imposition Act 2026 for each component, cross-checked against the ATO page. Show each component, its rate and the source separately.
 
-7. Defined benefit interests: estimate the part of the tax attributable to each interest that is or includes a defined benefit interest, and record it apart from the amount due. The Commissioner determines that part, and it is deferred to a Division 296 debt account under Division 134 in Schedule 1 to the Taxation Administration Act 1953, unless the interest's Division 296 end benefit has already become payable. Tax on a prescribed interest that is not a defined benefit interest is not deferred. A liability not deferred is due 84 days after the notice of assessment (section 296-130 of the ITAA 1997). If it is still unpaid on the 84th day, the Commissioner may issue release authorities to the individual's super providers.
+7. Defined benefit interests: estimate the part of the tax attributable to each interest that is or includes a defined benefit interest, and record it apart from the amount due. The Commissioner determines that part, and it is deferred to a Division 296 debt account under Division 134 in Schedule 1 to the Taxation Administration Act 1953, unless the interest's Division 296 end benefit has already become payable. Tax on a prescribed interest that neither is nor includes a defined benefit interest is not deferred. A liability not deferred is due 84 days after the notice of assessment (section 296-130 of the ITAA 1997). If, on the 84th day after the notice issues, the payments already made and the amounts already released for that assessment fall short of the tax not deferred, the Commissioner may issue release authorities to the individual's super providers under Division 131 in Schedule 1 to the Taxation Administration Act 1953.
 
 8. Death: if the individual died in 2026-27, record that no Division 296 tax is payable for that year. For a later year of death, the TSB at any time after death is taken to be nil (section 296-50 of the ITAA 1997), so the TSB just before the start of that year sets the reference amount; follow the ATO guidance on later earnings being assessed in the year of death.
 
@@ -62,7 +62,7 @@ A person can compare a result with the site's [Division 296 tax calculator](http
 4. Open items: each with its owner and next action.
 5. Files: at most 5 links to the workpapers and sources relied on.
 
-A TSB schedule by interest and date, an earnings schedule by fund, the proportion and component calculations with rounding shown, a deferred amount for defined benefit or prescribed interests, and a reconciliation to any notice. Every earnings figure agrees to a fund report or is marked missing. Elections, objections and payment choices are reviewer and trustee decisions.
+A TSB schedule by interest and date, an earnings schedule by fund, the proportion and component calculations with rounding shown, any amount deferred under step 7, and a reconciliation to any notice. Every earnings figure agrees to a fund report or is marked missing. Elections, objections and payment choices are reviewer and trustee decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
 
