@@ -3,9 +3,9 @@
   "note": "Derived from the tree by the build-coverage command in tools/accounting-skills. Do not edit by hand. The native CI job and the coverage-matrix pre-commit hook rebuild this file and fail on any difference. The reviewed field is the earliest recorded human review date across the sources for a skill. The fetched field is the earliest of their last recorded retrieval-attempt dates. A retrieval is not a human review. The reviewed_count field is how many of the indexed sources carry a human review date. The confirmed_pass and confirmed_fail fields list the skill's cards with a human-confirmed verdict in validation/results whose rubric digest matches the card as it is now; confirmed_noncurrent_digest lists cards with a confirmed verdict whose rubric digest does not match the current card, whether or not the current card also has a verdict; the card's history is not checked. One card version confirmed both pass and fail is refused, as is a status other than prepared, observed or confirmed. Legacy records without a status are not counted.",
   "totals": {
     "skills": 112,
-    "sources_indexed": 911,
+    "sources_indexed": 918,
     "skills_source_exempt": 5,
-    "skills_with_unreachable_sources": 18,
+    "skills_with_unreachable_sources": 20,
     "skills_with_sources_moved_since_review": 13,
     "skills_with_behavioural_gate": 96,
     "skills_with_only_the_seeded_case": 20,
@@ -460,12 +460,12 @@
     {
       "skill": "au-car-expenses",
       "sources": {
-        "indexed": 5,
+        "indexed": 6,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 2,
         "fetched": "2026-09-24",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": []
       },
       "validation": {
@@ -1377,6 +1377,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_plugin_hooks.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1846,7 +1847,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py"
         ],
         "inventory": []
       }
@@ -2186,6 +2188,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_plugin_hooks.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -2262,7 +2265,7 @@
     {
       "skill": "au-super-guarantee-charge",
       "sources": {
-        "indexed": 12,
+        "indexed": 14,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 8,
@@ -2520,12 +2523,12 @@
     {
       "skill": "au-travel-expenses",
       "sources": {
-        "indexed": 12,
+        "indexed": 13,
         "exempt": false,
         "reviewed": "2026-11-02",
         "reviewed_count": 9,
         "fetched": "2026-11-02",
-        "unreachable": 0,
+        "unreachable": 1,
         "moved_since_review": [
           "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/payments-to-employees/allowances-and-reimbursements/travel-allowances"
         ]
@@ -2647,12 +2650,12 @@
     {
       "skill": "au-wfh-deductions",
       "sources": {
-        "indexed": 6,
+        "indexed": 7,
         "exempt": false,
         "reviewed": "2026-10-14",
         "reviewed_count": 3,
         "fetched": "2026-09-24",
-        "unreachable": 1,
+        "unreachable": 2,
         "moved_since_review": [
           "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses"
         ]
@@ -2672,7 +2675,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py"
         ],
         "inventory": []
       }
@@ -2756,6 +2760,7 @@
           "test_legal_source_gates.py",
           "test_marketplace_settlements.py",
           "test_myob_exports.py",
+          "test_plugin_hooks.py",
           "test_practice_review_steps.py",
           "test_skill_metadata.py",
           "test_source_refresh.py",
@@ -2984,6 +2989,7 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_plugin_hooks.py",
           "test_review_registers.py",
           "test_validation_pack.py"
         ],
@@ -3369,7 +3375,7 @@
     {
       "skill": "stp-finalisation",
       "sources": {
-        "indexed": 8,
+        "indexed": 10,
         "exempt": false,
         "reviewed": "2026-09-30",
         "reviewed_count": 5,
@@ -3399,6 +3405,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_legal_source_gates.py",
           "test_payday_super_guidance.py",
           "test_skill_metadata.py",
           "test_validation_pack.py",

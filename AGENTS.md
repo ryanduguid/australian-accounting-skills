@@ -68,6 +68,7 @@ Read [the reuse instructions](#reusing-this-code) before carrying skills, valida
 | `.claude/rules/` | Shared rules the skills reference |
 | `.claude-plugin/plugin.json` | Claude Code plugin manifest |
 | `.claude-plugin/marketplace.json` | Claude Code marketplace listing |
+| `hooks/` | Claude Code plugin hooks that attach matching skills' anchored rules to a prompt and after compaction, with the keywords they match |
 | `.codex-plugin/plugin.json` | Codex plugin manifest |
 | `.cursor-plugin/plugin.json` | Cursor plugin manifest, not yet loaded in Cursor |
 | `.agents/plugins/marketplace.json` | Agent plugin marketplace listing |

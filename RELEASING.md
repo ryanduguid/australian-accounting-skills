@@ -54,7 +54,11 @@ published tag and its development section says what `main` adds.
 
 Before tagging, regenerate `docs/skill-last-changed.md` with
 `cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- last-changed --write`
-from a full clone.
+from a full clone. Between releases, Verify on `main` warns when the table is stale and
+fails once it has been stale for 7 days, counted from the first skill change the table
+missed; a refresh pull request clears it. The table records dates only, never a commit,
+so a squash merge leaves a table written on its branch valid. A pull request that changes
+a skill need not regenerate it.
 
 ## Protected failed tag
 

@@ -1,0 +1,32 @@
+{
+  "description": "Attach the matching Australian accounting skills' critical rules to a prompt that names them, and again after compaction",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/critical_rules.py", "prompt"],
+            "timeout": 3,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/critical_rules.py", "compact"],
+            "timeout": 3,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ]
+  }
+}
