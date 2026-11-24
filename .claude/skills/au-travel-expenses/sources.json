@@ -262,6 +262,22 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Treasury Laws Amendment (Tax Reform No. 1) Act 2026 (Schedule 4)",
+      "url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 24 November 2026 through the Register's API (as-made Word text). Human source approval remains pending. Verify the complete authority, applicable period and facts at use time.",
+      "final_url": "https://www.legislation.gov.au/C2026A00049/asmade/text",
+      "http_status": 0,
+      "fetched_at": "2026-11-24",
+      "review_required_since": "2026-11-24",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

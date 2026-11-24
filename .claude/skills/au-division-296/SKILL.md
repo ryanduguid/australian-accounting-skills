@@ -11,9 +11,9 @@ Income year, the individual's total superannuation balance (TSB) reported for ea
 
 ## Workflow
 
-1. Confirm the law applies to the year. Division 296 of the Income Tax Assessment Act 1997 was inserted by the Treasury Laws Amendment (Building a Stronger and Fairer Super System) Act 2026 and applies from the 2026-27 income year. Read the large and very large superannuation balance thresholds for the year from sections 296-30 and 296-35 of the ITAA 1997 or the ATO page; they are indexed after 2026-27.
+1. Confirm the law applies to the year. Division 296 of the Income Tax Assessment Act 1997 was inserted by the Treasury Laws Amendment (Building a Stronger and Fairer Super System) Act 2026 and applies from the 2026-27 income year. Read the large and very large superannuation balance thresholds for the year from sections 296-30 and 296-35 of the ITAA 1997 or the ATO page; they are indexed after 2026-27. <!-- year-change: 2026-27 -->
 
-2. Work out the TSB reference amount. For 2026-27, use the TSB at the end of the year only. From 2027-28, use the greater of the TSB just before the start of the year and at the end of the year. Remove limited recourse borrowing arrangement amounts. Tie each interest's value to the fund's report.
+2. Work out the TSB reference amount. For 2026-27, use the TSB at the end of the year only. From 2027-28, use the greater of the TSB just before the start of the year and at the end of the year. Remove limited recourse borrowing arrangement amounts. Tie each interest's value to the fund's report. <!-- year-change: 2027-28 -->
 
 3. If the reference amount does not exceed the large threshold, or total superannuation earnings are nil or less, record that no taxable superannuation earnings arise and stop. Keep the supporting balances.
 

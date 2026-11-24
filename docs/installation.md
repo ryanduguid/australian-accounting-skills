@@ -197,6 +197,18 @@ Other plugins and skills sharing the listing can also push it over. To check, ru
 `"skillListingBudgetFraction": 0.02` for 2%. On 1 November 2026 a value of 0.005
 cut the then 76-skill listing to 5k tokens.
 
+A session can still work without loading a skill whose rules apply, so the development
+plugin also carries 2 hooks in `hooks/hooks.json`. When a prompt names a skill or one of
+its keywords in `hooks/skill-keywords.json`, the `UserPromptSubmit` hook adds that skill's
+anchored rules (no lodgement, the evidence boundary, untrusted instructions and, where it
+has one, the risk-rating refusal) to the context; after compaction, the `SessionStart` hook
+does the same for the skills the transcript's last 1 MiB names. Each adds at most 3 skills
+and 6,000 characters, adds nothing when no skill matches, reads only the plugin's own
+files and the transcript, and makes no network request. They run `python3` with the
+standard library only, so they need no build step; where `python3` is not on the path, as
+on some Windows installations, they fail without blocking the prompt and add nothing. The
+plugin directory's build does not ship them: that directory refuses hook files.
+
 The `australian-accounting-skills` plug-in ID, namespace and install target are stable compatibility identifiers.
 
 If the Hardhat Ledger plugin is installed, uninstall or disable
