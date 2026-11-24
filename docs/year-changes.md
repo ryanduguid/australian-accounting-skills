@@ -1,6 +1,6 @@
 # Year changes
 
-Each rule a skill applies differently from a stated income year has one row here and a `<!-- year-change: YYYY-YY -->` marker ending the first line of its paragraph or list item in the skill, giving the first income year the change applies to. `tests/test_year_changes.py` fails when a marker has no row, a row has no marker, a row's section is not in its skill, or its source is not in the skill's `sources.json`.
+Each rule a skill applies differently from a stated income year has one row here and a `<!-- year-change: YYYY-YY -->` marker ending the first line of its paragraph or list item in the skill, giving the first income year the change applies to. `tests/test_close_out_and_year_changes.py` fails when a marker has no row, a row has no marker, a row's section is not in its skill, or its source is not in the skill's `sources.json`.
 
 A row records the change as the skill states it, the primary source and its exact words, and the day an agent or person read them. A person still reviews the source before relying on the row.
 
