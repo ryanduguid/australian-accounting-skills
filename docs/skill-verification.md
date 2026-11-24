@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 112 skills, 925 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 20 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 112 skills, 926 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 20 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -42,7 +42,7 @@ Totals: 112 skills, 925 indexed primary sources of which 341 have a recorded hum
 | [`au-depreciation-schedule`](../.claude/skills/au-depreciation-schedule/SKILL.md) | [16](../.claude/skills/au-depreciation-schedule/sources.json) | 2026-11-02 (11 of 16) | 0 | 0 | 2 | 1 | 0 | 0 |
 | [`au-director-penalty-review`](../.claude/skills/au-director-penalty-review/SKILL.md) | [5](../.claude/skills/au-director-penalty-review/sources.json) | 2026-11-02 (3 of 5) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`au-division-293`](../.claude/skills/au-division-293/SKILL.md) | [4](../.claude/skills/au-division-293/sources.json) | 2026-10-14 (2 of 4) | 0 | 0 | 1 | 1 | 0 | 0 |
-| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | [6](../.claude/skills/au-division-296/sources.json) | 2026-09-30 (3 of 6) | 0 | 1 | 1 | 1 | 0 | 0 |
+| [`au-division-296`](../.claude/skills/au-division-296/SKILL.md) | [7](../.claude/skills/au-division-296/sources.json) | 2026-09-30 (3 of 7) | 0 | 1 | 1 | 1 | 0 | 0 |
 | [`au-dssp`](../.claude/skills/au-dssp/SKILL.md) | [2](../.claude/skills/au-dssp/sources.json) | 2026-11-02 (2 of 2) | 0 | 0 | 2 | 0 | 0 | 0 |
 | [`au-employee-share-schemes`](../.claude/skills/au-employee-share-schemes/SKILL.md) | [1](../.claude/skills/au-employee-share-schemes/sources.json) | 2026-11-02 (1 of 1) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-etp-redundancy`](../.claude/skills/au-etp-redundancy/SKILL.md) | [5](../.claude/skills/au-etp-redundancy/sources.json) | 2026-10-14 (3 of 5) | 0 | 0 | 1 | 1 | 0 | 0 |
