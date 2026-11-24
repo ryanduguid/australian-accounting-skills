@@ -7,18 +7,17 @@ authors:
     given-names: Ryan
     website: "https://duguid.com.au/"
 abstract: >-
-  One hundred and seven preparation-only agent skills for Australian public-practice
+  One hundred and twelve preparation-only agent skills for Australian public-practice
   and contracting workflows, with source verification, reconciliation
   checks and human review boundaries. This record identifies the published
-  v0.7.0 release under the Ryan Duguid Public Attribution Licence 1.0. The
-  development branch is ahead of it with one hundred and twelve skills; cite its
-  exact commit when using later changes. Earlier releases
+  v0.8.0 release under the Apache License, Version 2.0. Earlier releases
   retain their original citation records and licences in their tagged revisions.
-version: 0.7.0
-date-released: 2026-11-14
+version: 0.8.0
+date-released: 2026-11-25
 repository-code: "https://github.com/ryanduguid/australian-accounting-skills"
 url: "https://duguid.com.au/tools/australian-tax-ai-agents/"
-license-url: "https://github.com/ryanduguid/australian-accounting-skills/blob/v0.7.0/LICENSE"
+license: Apache-2.0
+license-url: "https://github.com/ryanduguid/australian-accounting-skills/blob/v0.8.0/LICENSE"
 keywords:
   - Australian accounting
   - public practice

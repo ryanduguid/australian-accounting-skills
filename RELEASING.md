@@ -33,7 +33,7 @@ Before tagging:
    releases, such as v0.2.1, stay in the README's collapsed section.
 6. Create an annotated tag on current remote `main`, for example `git tag -a v0.1.5 -m "v0.1.5"` (or `-s` when signing is configured), then push only that tag.
 
-The workflow reruns the repository tests, the fabricated-pack validator and the exact 107-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for both archives.
+The workflow reruns the repository tests, the fabricated-pack validator and the exact 112-skill `skills@1.5.22` discovery check. It builds deterministic ZIP and tar.gz archives that include the hidden `.claude` and `.claude-plugin` trees, plus per-skill ZIP archives from `.claude/skills/*`. The archive helper fixes the timezone to UTC and Git text conversion to LF so the same tagged tree produces the same archive bytes on Linux and Windows. It generates an SPDX 2.3 SBOM, `SHA256SUMS`, GitHub provenance and SBOM attestations for the release archives.
 
 Publication is fail-closed. Before writing `SHA256SUMS`, the workflow requires exactly the ZIP, tar.gz and SPDX files; it creates the manifest without overwrite, requires the exact final 4-file inventory and verifies every recorded digest. It inventories all releases, including drafts, before building; rechecks the remote annotated tag, exact `main` commit and release absence immediately before creating a draft; verifies the draft by release ID; and checks its notes, complete asset set and GitHub-recorded digests before publishing it by ID. It then requires the published release to be immutable and verifies the release and every downloaded asset against GitHub's release attestation. An existing release is never edited or overwritten, and a published tag must never be moved.
 
@@ -83,9 +83,8 @@ Those commands preserve the signer identity of the existing `v0.1.5` release.
 Releases cut after the specialised policy migration are signed by the policy's
 internal publication workflow. For the next release, update `tag` if the
 intended version changes and bind verification to the exact source and policy
-commit. Releases after `v0.5.0` are signed at the current policy pin,
-`ca5492bd09693be9e1fd47d980e2740ef8daf023`. The commands verify `v0.7.0`, signed at
-that pin like `v0.6.0`; `v0.5.0` was signed at `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, `v0.4.0` at
+commit. Releases from `v0.5.0` to `v0.7.0` are signed at `ca5492bd09693be9e1fd47d980e2740ef8daf023`; `v0.8.0` and later releases with per-skill ZIPs are signed at `d7039efe6d8c441f1f213c674902909e80535599`. The commands verify `v0.8.0`, signed at
+that pin; `v0.7.0` and `v0.6.0` were signed at `ca5492bd09693be9e1fd47d980e2740ef8daf023`, `v0.5.0` at `0f7ca4ce0ba2e7ea52fc611149a42cd5d0a26f6c`, `v0.4.0` at
 `a601f1d8b143f92b0517f709216993660d21f480` and `v0.3.0` to `v0.3.2` at
 `87767ec809dc7f77bcd45808219adaf67841ae7b`, so verify each with its digest.
 Releases from `a601f1d` also carry the signed provenance
@@ -93,7 +92,7 @@ bundle `australian-accounting-skills-<version>.intoto.jsonl`, which the loop
 skips because it holds the attestation itself:
 
 ```bash
-tag=v0.7.0
+tag=v0.8.0
 repo=ryanduguid/australian-accounting-skills
 release_commit="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag^{}" | cut -f1)"
 test -n "$release_commit"
@@ -103,14 +102,14 @@ for file in *; do
     --source-digest "$release_commit" \
     --source-ref "refs/tags/$tag" \
     --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-    --signer-digest ca5492bd09693be9e1fd47d980e2740ef8daf023
+    --signer-digest d7039efe6d8c441f1f213c674902909e80535599
 done
 gh attestation verify "australian-accounting-skills-${tag#v}.zip" -R "$repo" \
   --predicate-type https://spdx.dev/Document/v2.3 \
   --source-digest "$release_commit" \
   --source-ref "refs/tags/$tag" \
   --signer-workflow ryanduguid/release-policy/.github/workflows/publish-archives.yml \
-  --signer-digest ca5492bd09693be9e1fd47d980e2740ef8daf023
+  --signer-digest d7039efe6d8c441f1f213c674902909e80535599
 ```
 
 If any gate fails, inspect it before touching the tag or draft. Never move a
