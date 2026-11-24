@@ -25,7 +25,7 @@ Income year, employment type and assessable labour income, the record of hours w
 
 6. Total the claim with cents disregarded, as the ATO manual steps direct, and tie it to the return label.
 
-7. From 2026-27, check eligibility for the standard deduction for work-related expenses. Every claimed work-related expense of the kinds the ATO lists, including working from home expenses, reduces it dollar for dollar, and any remaining standard deduction still applies. Collect all such expenses, not only working from home. Prepare both positions: the itemised claims (with written evidence) plus any remaining standard deduction, and the maximum standard deduction with those expenses not claimed. The client and reviewer choose.
+7. From 2026-27, check eligibility for the standard deduction for work-related expenses. Every claimed work-related expense of the kinds the ATO lists, including working from home expenses, reduces it dollar for dollar, and any remaining standard deduction still applies. Collect all such expenses, not only working from home. Prepare both positions: the itemised claims (with written evidence) plus any remaining standard deduction, and the maximum standard deduction with those expenses not claimed. The client and reviewer choose. Item 17 of Schedule 4 to the [*Treasury Laws Amendment (Tax Reform No. 1) Act 2026*](https://www.legislation.gov.au/C2026A00049/asmade/text) applies the standard deduction to assessments for the 2026-27 income year and later income years. <!-- year-change: 2026-27 -->
 
 ## Site calculator
 
