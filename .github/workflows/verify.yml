@@ -156,10 +156,27 @@ jobs:
 
       - name: Install the pinned cargo-llvm-cov
         if: matrix.os == 'ubuntu-latest'
-        uses: taiki-e/install-action@cfdb7ed4ccc7c7dce37759eae89dc5674b469b39 # v2.90.3
+        uses: taiki-e/install-action@ab49d3c64680143e184118bed66a46419fc15519 # v2.90.5
         with:
           tool: cargo-llvm-cov@0.9.1
           fallback: none
+
+      - name: Install verified cargo-deny 0.22.0
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+          distribution=cargo-deny-0.22.0-x86_64-unknown-linux-musl
+          archive="$distribution.tar.gz"
+          curl --proto '=https' --proto-redir '=https' -fsSL --max-time 75 -o "$archive" \
+            "https://github.com/EmbarkStudios/cargo-deny/releases/download/0.22.0/$archive"
+          printf '%s  %s\n' 98c56e6a408bfa5c3c60744b6015aaa6aa08f743fdeb88386d06fca035bb1786 "$archive" | sha256sum --check
+          tar -xzf "$archive" "$distribution/cargo-deny"
+          echo "$PWD/$distribution" >> "$GITHUB_PATH"
+
+      - name: Check licences and dependency sources with cargo-deny
+        if: matrix.os == 'ubuntu-latest'
+        run: cargo deny --locked --config "$GITHUB_WORKSPACE/deny.toml" check licenses sources
 
       - name: Restore the dependency build cache
         uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
@@ -284,7 +301,7 @@ jobs:
     name: shared conformance
     permissions:
       contents: read
-    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@ca5492bd09693be9e1fd47d980e2740ef8daf023
+    uses: ryanduguid/release-policy/.github/workflows/verify-skills.yml@d7039efe6d8c441f1f213c674902909e80535599
     with:
       skills-verification-mode: subcontractor-accounting-v1
 
