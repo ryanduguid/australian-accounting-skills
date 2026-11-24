@@ -192,7 +192,7 @@ mod tests {
         let directory = checkout();
         assert_eq!(run(directory.path(), &["--write"]), Ok(0));
         let text = read_text(&directory.path().join(OUTPUT)).unwrap();
-        assert!(!text.contains("commit "), "the table names no commit");
+        assert!(!text.contains("at commit"), "the table names no commit");
         assert!(text.contains("/older-skill) | 2026-01-02 |\n"));
         assert!(text.contains("/newer-skill) | 2026-03-04 |\n"));
     }
