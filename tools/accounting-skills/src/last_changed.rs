@@ -49,13 +49,21 @@ fn recorded_dates(text: &str) -> BTreeMap<&str, &str> {
 }
 
 /// The day the table first fell behind: for each skill whose row is wrong, the
-/// first change to it dated after its recorded date (any change, if unlisted).
+/// first change to it dated after its recorded date (any change, if unlisted);
+/// a listed skill that is gone counts from its deletion. A table whose rows are
+/// all right but whose text differs counts from the day it was last written.
 fn stale_since(root: &Path, recorded: &str, rows: &[(String, String)]) -> Result<String> {
     let listed = recorded_dates(recorded);
+    let current: BTreeMap<&str, &str> = rows
+        .iter()
+        .map(|(skill, date)| (skill.as_str(), date.as_str()))
+        .collect();
     let mut first: Option<String> = None;
-    for (skill, date) in rows {
-        let previous = listed.get(skill.as_str()).copied();
-        if previous == Some(date.as_str()) {
+    let deleted = listed.keys().filter(|skill| !current.contains_key(*skill));
+    for skill in current.keys().chain(deleted) {
+        let previous = listed.get(skill).copied();
+        let date = current.get(skill).copied();
+        if previous.is_some() && previous == date {
             continue;
         }
         let path = format!(".claude/skills/{skill}");
@@ -63,13 +71,18 @@ fn stale_since(root: &Path, recorded: &str, rows: &[(String, String)]) -> Result
         let day = history
             .lines()
             .find(|day| previous.is_none_or(|previous| *day > previous))
-            .unwrap_or(date)
+            .or(date)
+            .or(history.lines().last())
+            .unwrap_or_default()
             .to_string();
-        if first.as_ref().is_none_or(|first| day < *first) {
+        if !day.is_empty() && first.as_ref().is_none_or(|first| day < *first) {
             first = Some(day);
         }
     }
-    Ok(first.unwrap_or_default())
+    match first {
+        Some(day) => Ok(day),
+        None => git(root, &["log", "-1", "--format=%cs", "--", OUTPUT]),
+    }
 }
 
 /// Runs the `last-changed` command. `--check` exits 2 when the table is stale
@@ -308,16 +321,41 @@ mod tests {
         let root = directory.path();
         let main = git(root, &["rev-parse", "--abbrev-ref", "HEAD"]).unwrap();
         git(root, &["switch", "-qc", "topic"]).unwrap();
-        commit_skill(root, "newer-skill", "2026-03-04T15:00:00+11:00");
+        // A new day, so the branch moves the row the squash must keep valid.
+        commit_skill(root, "newer-skill", "2026-03-05T09:00:00+11:00");
         assert_eq!(run(root, &["--write"]), Ok(0));
         git(root, &["add", "--", OUTPUT]).unwrap();
-        commit_all(root, "Refresh on the branch", "2026-03-04T15:30:00+11:00");
+        commit_all(root, "Refresh on the branch", "2026-03-05T09:30:00+11:00");
         git(root, &["switch", "-q", &main]).unwrap();
         git(root, &["merge", "--squash", "-q", "topic"]).unwrap();
         // The squash commit replaces both branch commits, as a squash merge does.
-        commit_all(root, "Squash", "2026-03-04T18:00:00+11:00");
+        commit_all(root, "Squash", "2026-03-05T18:00:00+11:00");
         git(root, &["branch", "-qD", "topic"]).unwrap();
+        assert!(read_text(&root.join(OUTPUT)).unwrap().contains("/newer-skill) | 2026-03-05 |\n"));
         assert_eq!(run(root, &["--check"]), Ok(0));
+    }
+
+    #[test]
+    fn a_branch_table_squashed_on_a_later_day_is_stale_from_the_squash() {
+        let directory = checkout();
+        let root = directory.path();
+        let main = git(root, &["rev-parse", "--abbrev-ref", "HEAD"]).unwrap();
+        git(root, &["switch", "-qc", "topic"]).unwrap();
+        commit_skill(root, "newer-skill", "2026-03-05T09:00:00+11:00");
+        assert_eq!(run(root, &["--write"]), Ok(0));
+        let recorded = read_text(&root.join(OUTPUT)).unwrap();
+        git(root, &["add", "--", OUTPUT]).unwrap();
+        commit_all(root, "Refresh on the branch", "2026-03-05T09:30:00+11:00");
+        git(root, &["switch", "-q", &main]).unwrap();
+        git(root, &["merge", "--squash", "-q", "topic"]).unwrap();
+        commit_all(root, "Squash", "2026-03-06T10:00:00+11:00");
+        git(root, &["branch", "-qD", "topic"]).unwrap();
+        assert_eq!(run(root, &["--check"]), Ok(2));
+        let rows = [
+            ("newer-skill".to_string(), "2026-03-06".to_string()),
+            ("older-skill".to_string(), "2026-01-02".to_string()),
+        ];
+        assert_eq!(stale_since(root, &recorded, &rows).unwrap(), "2026-03-06");
     }
 
     #[test]
@@ -339,6 +377,37 @@ mod tests {
         );
         let current = render(&rows).unwrap();
         assert_eq!(stale_since(root, &current, &rows).unwrap(), "");
+    }
+
+    #[test]
+    fn dates_a_table_that_still_lists_a_deleted_skill() {
+        let directory = checkout();
+        let root = directory.path();
+        let recorded = render(&[
+            ("newer-skill".into(), "2026-03-04".into()),
+            ("older-skill".into(), "2026-01-02".into()),
+        ])
+        .unwrap();
+        fs::remove_dir_all(root.join(".claude/skills/older-skill")).unwrap();
+        git(root, &["add", "-A"]).unwrap();
+        commit_all(root, "Delete a skill", "2026-04-05T12:00:00+10:00");
+        let rows = [("newer-skill".to_string(), "2026-03-04".to_string())];
+        assert_eq!(stale_since(root, &recorded, &rows).unwrap(), "2026-04-05");
+    }
+
+    #[test]
+    fn dates_a_table_whose_only_difference_is_its_text_from_its_last_write() {
+        let directory = checkout();
+        let root = directory.path();
+        let rows = [
+            ("newer-skill".to_string(), "2026-03-04".to_string()),
+            ("older-skill".to_string(), "2026-01-02".to_string()),
+        ];
+        let recorded = render(&rows).unwrap().replace("Generated", "Written");
+        fs::write(root.join(OUTPUT), &recorded).unwrap();
+        git(root, &["add", "--", OUTPUT]).unwrap();
+        commit_all(root, "Record the snapshot", "2026-05-06T12:00:00+10:00");
+        assert_eq!(stale_since(root, &recorded, &rows).unwrap(), "2026-05-06");
     }
 
     #[test]
