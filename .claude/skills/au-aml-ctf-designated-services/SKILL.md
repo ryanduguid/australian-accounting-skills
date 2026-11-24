@@ -57,6 +57,14 @@ The practice's list of services, with each service's engagement letter, scope do
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A service register with one row per service: the facts recorded, the result (`item N`, `none` or `UNDETERMINED`), the provision, any AUSTRAC guidance relied on labelled as the regulator's view with its last updated date, and for an `UNDETERMINED` service the missing fact or professional view and who should supply it. Then the obligation list with each provision and date, firm or conditional. Every service has exactly one result. Whether a service is a designated service, whether to enrol, and every obligation and report are for the AML/CTF compliance officer or another authorised person.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

@@ -31,6 +31,14 @@ For a year's tax set-aside, the site's [sole trader tax set-aside calculator](ht
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 Route a proposed Division 35 loss use or deferral to `au-non-commercial-losses` and a small business income tax offset to `au-small-business-income-offset`. Carry their supported results back separately; an ABN, accounting loss or unreviewed PSI amount cannot establish either outcome. Missing companion workflows or evidence leave the dependent tax result unverified. Build the tax depreciation schedule with `au-depreciation-schedule` and travel claims with `au-travel-expenses`.
 
 A business profit-to-tax bridge, private-use schedule and return mapping with unresolved eligibility items. Drawings are not substituted for profit. Also hand off the step 0 indicator record for each activity.

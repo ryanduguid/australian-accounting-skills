@@ -91,6 +91,14 @@ Use the same 4 columns as part (a) for parts (b) to (e), (g) and (h).
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A draft file note with a status line, a reviewer exceptions list at the top and parts (a) to (h). Before hand-off: every line carries a reference that opens to the passage it reports; every attendee has a recorded status for consent to the recording and to the AI tool; every scope change is routed to `au-client-acceptance` and every tax or accounting question to `au-tax-research`, unanswered; and each line in part (c) matches its reference without added advice. The practitioner reviews each line, decides what the note records, whether and how anything is communicated to the client and whether the scope changes.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

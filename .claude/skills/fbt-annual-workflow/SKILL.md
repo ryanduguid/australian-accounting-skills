@@ -72,6 +72,14 @@ For a ute, van or other vehicle whose status is in doubt, the site's [vehicle cl
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Line register: every line in each swept account carries one status and its reason, each account's register total ties to its GL movement for the FBT year, and any difference is an open item
 - Every gross-up factor and the FBT rate carry an ATO citation with check date
 - Car benefits: method choice documented per vehicle, days-available count shown

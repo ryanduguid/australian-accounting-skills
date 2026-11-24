@@ -69,6 +69,14 @@ status: DRAFT_FOR_REVIEW
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 An issue register with a status line, a reviewer exceptions list at the top, the issues, the attachments and the spans not registered. Before hand-off: every line quotes a span that opens to its reference; every span of the email is either registered or listed as not registered; no line answers a question or states a treatment, rate, threshold or due date from memory; every deadline is in the email's words or marked for the practitioner to confirm; every attachment mentioned is matched to a file or marked `NOT SUPPLIED`; and each routed skill exists in this pack. The practitioner decides each issue and any reply.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

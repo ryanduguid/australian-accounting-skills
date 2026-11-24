@@ -58,6 +58,14 @@ For an asset's effective life, the site's [depreciation rates page](https://dugu
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A rolled-forward register, an individual asset schedule, pool roll-forwards, a balancing adjustment schedule, a separate capital works schedule, an accounting depreciation schedule for each class the documented policy covers and a tax-to-accounting reconciliation. Each asset appears in one regime; closing tax values agree to the schedules and accounting values to the trial balance. Accounting lives, methods and residual values come from the recorded policy, never from the tax schedule. Effective life choices, regime choices and disputed taxable-use percentages are reviewer decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

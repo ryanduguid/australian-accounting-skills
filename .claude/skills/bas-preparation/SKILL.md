@@ -108,6 +108,14 @@ For a 2026-27 lodgment date, the site's [BAS due dates page](https://duguid.com.
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - 1A − 1B ties to GST account movement (documented), either directly or via the cash-basis bridge per step 4
 - The entity's STP status, withholding category and actual statement labels are recorded; W1 is not invented or required where current ATO guidance says the employer need not report it (at time of writing that relief applies to large withholders reporting through STP, not to every STP reporter; verify at ato.gov.au)
 - Where W1 is present and required, it agrees to payroll gross less pre-tax salary sacrifice for the period, plus any voluntary-agreement payments

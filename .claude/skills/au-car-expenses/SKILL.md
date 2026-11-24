@@ -48,6 +48,14 @@ To compare steps 2 and 3 for a car the person owned or leased, the site's [work 
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A trip classification note, a kilometres or logbook summary with the work-use percentage, an expense schedule tied to receipts, the decline in value calculation, a method comparison and, from 2026-27, the standard deduction comparison. Method choice and any disputed trip category are reviewer decisions. Route travel costs other than this car (airfares, accommodation, meals and allowances) to `au-travel-expenses`.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

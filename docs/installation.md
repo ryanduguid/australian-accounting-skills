@@ -308,7 +308,12 @@ It has 3 read-only tools:
 - `search_skills`: the skills whose name, description or `SKILL.md` contains every word of
   a query, ignoring case, with name and description matches first.
 - `get_skill`: a skill's `SKILL.md`, then its `sources.json` (or `sources.exempt.json`) and
-  each file in its `references` folder, exactly as they are in the checkout.
+  each file in its `references` folder, exactly as they are in the checkout, then their tree
+  hash (`tree_sha256`). Pass that hash back as `sha256` to pin the skill: the server then
+  refuses the skill, returning none of it, once any of those files has changed. The hash
+  (`skill-tree-sha256-v1`) is the SHA-256 of one `PATH NUL SHA256 LF` line for each file, in
+  the order returned, where PATH is relative to the skill folder and SHA256 is the file's own
+  SHA-256 in lower-case hex.
 
 Build it once with Rust 1.99 or later, then give your client the checkout's absolute path:
 

@@ -57,6 +57,14 @@ Primary sources (checked 20 August 2026):
 
 ## Output
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 The 13-week grid, a dated assumptions log, and a narrative stating the base and stress trough weeks and amounts, available options, decision owner and status. Use the firm-approved secure client-data location. If none is configured, ask before creating a path beside a checkout. Confirm the selected path is outside every version-control checkout, not merely ignored by one; do not change `.gitignore`, output locations or repository configuration without explicit approval.
 
 ## Checks before handing over

@@ -53,6 +53,14 @@ The practice's Tax Practitioners Board registrations (each individual, partnersh
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 An obligation register for each registered entity and individual, an evidence index, a gap list, a change-notification log and a breach-question log of facts with no conclusions. Every Code item and Determination section has a row. Professional-body rows appear only for a membership held, sit apart from the Tax Agent Services Act rows and record evidence and gaps without a conclusion about compliance. AML/CTF rows appear only where the practice's records treat it as a reporting entity, sit apart from the Tax Agent Services Act and professional-body rows and record evidence and gaps without a conclusion about compliance or about whether a service is designated. Where the ATO client list is supplied, the reconciliation lists clients on the practice list and not the ATO list, clients on the ATO list and not the practice list and identifier conflicts, each as a question for the responsible practitioner. Whether an obligation is met, any notification or report and any remediation are decisions for the responsible practitioner.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

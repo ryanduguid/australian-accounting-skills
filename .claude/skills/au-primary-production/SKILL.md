@@ -40,6 +40,14 @@ Income year, the entity and every owner's interest (individual, partner, trust b
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A business indicator matrix, an income split for each owner, a farm management deposit register and exception evidence list, averaging inputs, a livestock reconciliation in numbers and values, the forced disposal election evidence and the classification of primary production assets. For a farm succession, also the asset and entity register, a CGT event schedule, a concession and rollover evidence matrix, the effect on each individual's deposits and averaging, the routing list and the open decisions with their owners. Head counts agree to movement records and values to the trading stock schedule; deposits and repayments agree to provider statements.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

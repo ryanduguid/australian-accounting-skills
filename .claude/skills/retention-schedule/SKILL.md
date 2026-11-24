@@ -34,6 +34,14 @@ Build a per-contract retention schedule that carries every amount from withholdi
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Closing retention receivable per the schedule agrees to the retention asset in the GL, and closing retention payable agrees to the retention liability, with any difference explained by contract
 - Retention withheld in the period agrees to the retention lines on the certified progress claims for the period
 - Where a trust applies, the trust bank reconciliation agrees to the total of the beneficiary ledger balances, with no beneficiary in deficit and no trust cash treated as available working capital
