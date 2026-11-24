@@ -447,7 +447,12 @@ def check_figure_card(rel: str, text: str, skills: set[str]) -> int:
         raise ValidationError("target_skill must name a skill in .claude/skills")
     _figure_line(data["return_form"], RESULT_FIELD_MAX_LENGTH, "return_form")
     _figure_line(data["scenario"], FIGURE_SCENARIO_MAX_LENGTH, "scenario")
-    fields = data["fields"]
+    count = _check_figure_fields(data["fields"])
+    check_sensitive_content(text)
+    return count
+
+
+def _check_figure_fields(fields: object) -> int:
     if not isinstance(fields, list) or not fields:
         raise ValidationError("fields must list at least one lodged field")
     seen: set[str] = set()
@@ -461,7 +466,6 @@ def check_figure_card(rel: str, text: str, skills: set[str]) -> int:
         if entry["field"] in seen:
             raise ValidationError(f"field {index}: duplicate field {entry['field']!r}")
         seen.add(entry["field"])
-    check_sensitive_content(text)
     return len(fields)
 
 

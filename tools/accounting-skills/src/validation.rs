@@ -443,7 +443,12 @@ pub fn check_figure_card(rel: &str, input: &str, skills: &Names) -> Result<usize
     }
     figure_line(&data["return_form"], 120, "return_form")?;
     figure_line(&data["scenario"], 600, "scenario")?;
-    let fields = data["fields"]
+    let count = check_figure_fields(&data["fields"])?;
+    text::sensitive(input, &[])?;
+    Ok(count)
+}
+fn check_figure_fields(fields: &Value) -> Result<usize> {
+    let fields = fields
         .as_array()
         .filter(|fields| !fields.is_empty())
         .ok_or("fields must list at least one lodged field")?;
@@ -471,7 +476,6 @@ pub fn check_figure_card(rel: &str, input: &str, skills: &Names) -> Result<usize
             return Err(format!("field {index}: duplicate field {}", repr(field)).into());
         }
     }
-    text::sensitive(input, &[])?;
     Ok(fields.len())
 }
 /// Counts one run's field verdicts as (fields, match, label right): a figure at
