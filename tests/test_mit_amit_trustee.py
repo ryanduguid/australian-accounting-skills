@@ -71,6 +71,8 @@ class MitAmitTrusteeTests(unittest.TestCase):
         )
         self.assertIn("(compilation 66, read 24 November 2026) each set a rate of 45%", liabilities)
         self.assertIn("record both and leave the rate applied to the reviewer", liabilities)
+        # s 276-340(2): a non-FITO tax offset trust component deficit is the trustee's own liability.
+        self.assertIn("which the trustee is taxed on under s 276-340 of the ITAA 1997", liabilities)
         self.assertIn("No under or over arises once the amendment period under s 170 of the ITAA 1936", step(6))
 
     def test_no_withholding_rate_without_character_address_and_listed_country(self) -> None:
@@ -84,6 +86,11 @@ class MitAmitTrusteeTests(unittest.TestCase):
         self.assertIn("listed in the table in s 34 of the *Taxation Administration Regulations 2017*, each with its own date of effect", withholding)
         self.assertIn("where any is missing, leave the rate blank and the item open", withholding)
         self.assertIn("turns on the recipient's residence (s 12-390(7)), not the address", withholding)
+        # ss 12A-110(9) and (10) and 12-405(4) and (5) cap the Commissioner's extension; s 12A-110(8)
+        # stops a post-AMMA actual payment being counted again.
+        self.assertIn("up to 3 years more under s 12A-110(9) and (10)", withholding)
+        self.assertIn("up to 3 months more under s 12-405(4) and (5)", withholding)
+        self.assertIn("is not another fund payment (s 12A-110(8)", withholding)
         hand_off = text().split("## Hand-off and checks", 1)[1]
         self.assertIn("no withholding rate appears without the payment's character split", hand_off)
 
@@ -94,6 +101,10 @@ class MitAmitTrusteeTests(unittest.TestCase):
             "not later than 14 days after the end of 6 months after the end of the trust's income year", notices
         )
         self.assertIn("s 16-157 in Schedule 1 to the TAA 1953", notices)
+        # s 12A-15(1)(c): the AMIT notice covers deemed and pre-AMMA actual payments only.
+        self.assertIn(
+            "only for a deemed payment under s 12A-205 or a pre-AMMA actual payment in respect of one", notices
+        )
 
     def test_return_map_shows_taxable_amounts_and_capital_gains_reform(self) -> None:
         labels = step(10)
