@@ -57,7 +57,8 @@ Before tagging, regenerate `docs/skill-last-changed.md` with
 from a full clone. Between releases, Verify on `main` warns when the table is stale and
 fails once it has been stale for 7 days, counted from the first skill change the table
 missed; a refresh pull request clears it. The table records dates only, never a commit,
-so a squash merge leaves a table written on its branch valid. A pull request that changes
+so a squash merge leaves a table written on its branch valid when it lands on the day of the
+branch's last skill change; a later squash makes it stale from that day. A pull request that changes
 a skill need not regenerate it.
 
 ## Protected failed tag
