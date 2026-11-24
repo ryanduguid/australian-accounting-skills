@@ -43,6 +43,14 @@ The client code and customer type (individual, sole trader, body corporate, part
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A customer due diligence file checklist for one client: a row for each matter in s 28(2) of the AML/CTF Act with its evidence reference, provision and status; the risk rating and the level of due diligence the records raise; any delayed due diligence conditions and dates; for reliance, the route and a row for each condition with its status; and the records list. The file's status is `ready for the AML/CTF compliance officer` when no row is `missing` and every other row has evidence or a named question, and `incomplete` otherwise; it is never `complete`.
 
 This skill does not decide whether a matter is established on reasonable grounds, the client's ML/TF risk rating, whether simplified or enhanced due diligence applies, whether a person is a politically exposed person or designated for targeted financial sanctions, whether delayed due diligence is permitted, whether reliance is appropriate or available, or whether to start or continue the service or enter an arrangement. Those are for the AML/CTF compliance officer or another authorised person, and a senior manager where s 5-5 of the AML/CTF Rules requires approval. <!-- rule: no-risk-rating -->

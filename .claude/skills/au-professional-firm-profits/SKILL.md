@@ -29,6 +29,14 @@ The site's [PCG 2021/4 risk scorer](https://duguid.com.au/tools/business-calcula
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 An IPP and associated-entity map reconciled to the firm's allocations, an application-criteria and gateway evidence table, a factor input schedule tracing every amount to a source, the indicated scores and zone marked pending review, and the open questions. Factor 1's denominator must equal the whole of firm group total in the map. The registered tax agent or reviewer decides the gateways, scores, zone and any engagement with the ATO; the firm and practitioner decide any change to their arrangements.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

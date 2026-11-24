@@ -88,6 +88,7 @@ The [coverage map](au-guide-coverage.md) links Australian OpenAccountants guides
 | [`au-foreign-pensions`](../.claude/skills/au-foreign-pensions/SKILL.md) | Foreign pension and annuity workpapers |
 | [`au-lump-sum-arrears`](../.claude/skills/au-lump-sum-arrears/SKILL.md) | Lump sum payments in arrears workpapers |
 | [`au-managed-fund-amit`](../.claude/skills/au-managed-fund-amit/SKILL.md) | Managed fund and AMIT member workpapers |
+| [`au-mit-amit-trustee`](../.claude/skills/au-mit-amit-trustee/SKILL.md) | MIT and AMIT trustee review: status facts, attribution, AMMA statements, unders and overs, trustee tax and fund payment withholding |
 | [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) | Non-commercial business-loss workpapers |
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | Seniors and pensioners tax offset workpapers |
 | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | Small business income tax offset workpapers |

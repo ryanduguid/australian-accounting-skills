@@ -29,6 +29,14 @@ Income year, taxpayer type (employee, sole trader or partner, or other business 
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A trip classification register, an itinerary and apportionment note for each mixed trip, an expense schedule by trip and category tied to evidence, an allowance reconciliation (paid, declared, expenses claimed and the reasonable amount relied on), a travel record status list, employer-side referrals and, where it applies, the standard deduction comparison. Every claimed amount agrees to a receipt or a verified exception; the trip characterisation, main purpose and apportionment are reviewer decisions.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

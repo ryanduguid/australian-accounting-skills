@@ -66,6 +66,14 @@ Run it by its full path, the extracted `australian-tax-calculators` or `<tool-di
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 Employer mode: a visa and registration timeline, a withholding recomputation by pay reconciled to payroll and STP, an income type and country code check, a super reconciliation, and registration, variation and characterisation items for the reviewer.
 
 Individual mode: a working holiday maker income schedule reconciled to income statements, the residency facts and tests from `au-tax-residency`, the treaty analysis with both conditional calculations where it may apply, the Medicare levy workings, a lodgement decision note and a departure checklist.

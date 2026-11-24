@@ -23,6 +23,14 @@ Income year, holder entity and residency, fund and holding identifiers, annual t
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A statement-component schedule, cash/attribution/reinvestment bridge, version log and parcel basis roll-forward. Tie holdings to registry records and each return mapping to the applicable year's instructions. Missing statements, basis or adjustment direction remain open.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

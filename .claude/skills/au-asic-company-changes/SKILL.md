@@ -47,6 +47,14 @@ For a fee on the step 1 register or the step 6 annual review, the site's [ASIC f
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A change register with provisions, forms, periods and fees as verified at ASIC with the check date, a resolution-readiness checklist, a share capital reduction record with its classification, the directors' recorded considerations, the approval and the lodgement dates, the minimum officeholder check, draft minutes and resolutions, and an exceptions list. Every change ties to a governing rule and a signed document or carries a flag. Appointments, removals, share decisions, whether a reduction is fair and reasonable or materially prejudices the company's ability to pay its creditors, the solvency opinion, signing, lodgement and fee payment are for the directors, the members or the authorised officeholder.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

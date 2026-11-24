@@ -33,6 +33,14 @@ Builds a per-contract cost position from the ledger and the commitment register:
 
 ## Output
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 Per contract at the step 1 unit of account, in the form `wip-over-under-billing` consumes:
 
 - Cost to date (inception to date), split between cost that measures progress and cost tagged under para B19(a) or (b)

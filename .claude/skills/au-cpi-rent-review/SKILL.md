@@ -112,6 +112,14 @@ Open items:
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A workpaper with a status line, a reviewer exceptions list at the top and every calculation step shown, and a draft notice marked as unsent. Before hand-off: every index figure carries its release, table, series ID and period, or is marked `UNVERIFIED`; no figure came from memory; the base and current figures share an index reference period; each equation recomputes to the cent; each cap, collar or ratchet shows its own result; and each flag in step 7 that applies is listed with its owner. The landlord or agent decides whether and when to send the notice; the landlord's lawyer confirms the clause's meaning and any retail leases legislation; the practitioner decides the GST treatment.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.

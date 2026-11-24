@@ -6,7 +6,7 @@ through [CLAUDE.md](./CLAUDE.md).
 
 ## What this repository is
 
-One hundred and eleven agent skills for Australian public-practice and contracting-business
+One hundred and twelve agent skills for Australian public-practice and contracting-business
 accounting. The Australian topic expansion adds tax returns, investment and
 cross-border workpapers, state-tax evidence, financial statements and formation
 checklists.
@@ -88,6 +88,13 @@ it.
   authoritative source or require live verification for mutable rules.
 - Use fabricated-from-scratch fixtures. Never add a de-identified or redacted
   client export as a regression example.
+- Close-out: every case skill opens its first hand-off section (`Hand-off and checks`,
+  `Checks before handing over` or `Output`) with the same 5-part close-out block, which
+  `tests/test_close_out_and_year_changes.py` holds word for word.
+- Year changes: a rule a skill applies differently from a stated income year ends the first
+  line of its paragraph or list item with `<!-- year-change: YYYY-YY -->`, and
+  [docs/year-changes.md](docs/year-changes.md) has its row: skill, section, change, primary
+  source, the source's exact words and the day they were read.
 - Rule anchors: a skill's no-lodgement, evidence-boundary and untrusted-instruction
   rules, and its risk-rating refusal where it has one, end the first line of their
   paragraph or list item with an anchor such as `<!-- rule: no-lodgement -->`.

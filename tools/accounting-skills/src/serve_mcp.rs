@@ -12,7 +12,10 @@
 //!
 //! A request line may hold at most `MAX_LINE` bytes. One request reads at
 //! most `MAX_REPLY` bytes of files, and no reply line is longer than that.
-use crate::{Result, canonical_root, discover_skills, strict_yaml::card_mapping, within_root};
+use crate::{
+    Result, canonical_root, discover_skills, source_content::sha256, strict_yaml::card_mapping,
+    within_root,
+};
 use serde_json::{Map, Value, json};
 use std::{
     ffi::OsString,
@@ -32,6 +35,10 @@ const MAX_REPLY: usize = 16 << 20;
 const VERSION_KEY: &str = "io.modelcontextprotocol/protocolVersion";
 const CAPABILITIES_KEY: &str = "io.modelcontextprotocol/clientCapabilities";
 const SERVER_INFO_KEY: &str = "io.modelcontextprotocol/serverInfo";
+/// The scheme `get_skill`'s `tree_sha256` follows: the SHA-256 of one
+/// `PATH NUL SHA256 LF` line for each file it returns, in the order returned,
+/// with PATH relative to the skill folder and SHA256 the file's own, in hex.
+const TREE_SCHEME: &str = "skill-tree-sha256-v1";
 const INSTRUCTIONS: &str = "Australian accounting and tax preparation workflows. Call list_skills or search_skills to find a workflow, then get_skill and follow the SKILL.md it returns. Preparation only: nothing here lodges, files or pays, and an authorised person reviews every output.";
 
 /// A JSON-RPC error: code, message and optional data.
@@ -218,7 +225,8 @@ impl Server {
             "search_skills" => {
                 text_argument(arguments, "query").and_then(|query| self.list(Some(query)))
             }
-            "get_skill" => text_argument(arguments, "name").and_then(|skill| self.get(skill)),
+            "get_skill" => text_argument(arguments, "name")
+                .and_then(|skill| self.get(skill, expected_hash(arguments)?)),
             _ => return Err(invalid_params(format!("Unknown tool: {name}"))),
         };
         Ok(complete(match outcome {
@@ -273,8 +281,9 @@ impl Server {
 
     /// A skill's `SKILL.md`, its sources file and the files in its
     /// `references` folder, which its `SKILL.md` tells the agent to read, each
-    /// exactly as on disk.
-    fn get(&self, skill: &str) -> Result<(Value, Value)> {
+    /// exactly as on disk, then their tree hash. Refuses the skill, returning
+    /// none of it, when `expected` is given and the tree hash differs.
+    fn get(&self, skill: &str, expected: Option<&str>) -> Result<(Value, Value)> {
         // Only a name list_skills returns is read, so a path, `..` or a
         // different spelling never reaches the file system.
         if !discover_skills(&self.root)?
@@ -287,11 +296,13 @@ impl Server {
         let body = self
             .read(skill, "SKILL.md", &mut room)?
             .ok_or_else(|| format!("{skill}/SKILL.md is missing"))?;
+        let mut tree = format!("SKILL.md\0{}\n", sha256(body.as_bytes()));
         let mut content = vec![text(&body)];
         let mut structured =
             json!({"name": skill, "skill_md": body, "sources_file": null, "sources": null});
         for file in ["sources.json", "sources.exempt.json"] {
             if let Some(sources) = self.read(skill, file, &mut room)? {
+                tree.push_str(&format!("{file}\0{}\n", sha256(sources.as_bytes())));
                 content.push(text(&sources));
                 structured["sources_file"] = json!(file);
                 structured["sources"] = json!(sources);
@@ -300,10 +311,23 @@ impl Server {
         }
         let mut references = Vec::new();
         for (path, body) in self.references(skill, &mut room)? {
+            tree.push_str(&format!("{path}\0{}\n", sha256(body.as_bytes())));
             content.push(text(&body));
             references.push(json!({"path": path, "text": body}));
         }
+        let hash = sha256(tree.as_bytes());
+        if let Some(expected) = expected
+            && expected != hash
+        {
+            return Err(format!(
+                "{skill} has tree hash {hash}, not the expected {expected}: the skill changed since it was pinned"
+            )
+            .into());
+        }
+        content.push(text(&format!("{TREE_SCHEME} {hash}")));
         structured["references"] = json!(references);
+        structured["tree_sha256"] = json!(hash);
+        structured["tree_scheme"] = json!(TREE_SCHEME);
         Ok((Value::Array(content), structured))
     }
 
@@ -409,6 +433,22 @@ fn text_argument<'a>(arguments: &'a Map<String, Value>, name: &str) -> Result<&'
         .ok_or_else(|| format!("{name} must be a string"))?)
 }
 
+/// The optional `sha256` argument of `get_skill`: 64 lower-case hex digits.
+fn expected_hash(arguments: &Map<String, Value>) -> Result<Option<&str>> {
+    match arguments.get("sha256") {
+        None => Ok(None),
+        Some(Value::String(hash))
+            if hash.len() == 64
+                && hash
+                    .bytes()
+                    .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte)) =>
+        {
+            Ok(Some(hash))
+        }
+        Some(_) => Err("sha256 must be 64 lower-case hex digits".into()),
+    }
+}
+
 fn tools() -> Value {
     let read_only = json!({"readOnlyHint": true, "openWorldHint": false});
     let string = |description: &str| json!({"type": "string", "description": description});
@@ -432,10 +472,13 @@ fn tools() -> Value {
         },
         {
             "name": "get_skill",
-            "description": "Return a skill's SKILL.md, then its sources.json (or sources.exempt.json), then each file in its references folder, exactly as in the pack. Follow the SKILL.md.",
+            "description": "Return a skill's SKILL.md, then its sources.json (or sources.exempt.json), then each file in its references folder, exactly as in the pack, then their tree hash. Follow the SKILL.md.",
             "inputSchema": {
                 "type": "object",
-                "properties": {"name": string("A name list_skills returns, such as 'bas-preparation'.")},
+                "properties": {
+                    "name": string("A name list_skills returns, such as 'bas-preparation'."),
+                    "sha256": string("Optional: the tree hash a previous get_skill returned. The skill is refused if it has changed since."),
+                },
                 "required": ["name"],
                 "additionalProperties": false,
             },

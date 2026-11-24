@@ -95,6 +95,14 @@ recommends nothing; the Boundaries below apply to it unchanged.
 
 ## Output
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 The workbook, a dated assumptions log naming the source and owner of every
 driver, and a review note stating the scenario, the checks run and the
 unresolved items with owner and next action. Use the firm-approved secure

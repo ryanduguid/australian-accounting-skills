@@ -45,6 +45,14 @@ Build a payer-side review schedule for subcontractor spend. For superannuation, 
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Gross reported per contractor ties to the subcontractor ledger and to subcontractor cost in the accounts for the same year (see `contract-cost-tracking`)
 - Amounts withheld tie to the PAYG withholding payable account and to the no-ABN label on the activity statements for the year (see `contracting-exports`)
 - No payment reported under a TAA s 396-55 item is also a payment from which Div 12 required withholding, and no payee sits in the schedule twice under different name spellings

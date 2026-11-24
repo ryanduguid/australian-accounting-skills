@@ -31,6 +31,14 @@ The other skills in this pack assume clean, period-locked inputs. This skill is 
 
 ## Checks before handing over
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 - Every export in the set carries the same period end and the same basis, both stated on the file record
 - Each export ties to the trial balance line it supports, or the difference is a named ledger reconciling item that is quantified and explained
 - Payroll by employee equals payroll by job for the period

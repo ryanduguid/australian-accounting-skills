@@ -42,6 +42,14 @@ The site's workers compensation premium calculator (`https://duguid.com.au/tools
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 For each scheme: the policy, the period and the insurer; the worker list with each person's status as a fact or an open question; the wages mapping table with each passage and date read; the wages tie-out to payroll; the premium notice check; and the estimate against actual reconciliation. Before hand-off, check that each worker appears in exactly one scheme or in the excluded list, that the schemes' wages, less the amounts added from outside gross pay and plus the excluded items and workers, tie to payroll, and that no rate, threshold or due date appears without its source and the date read.
 
 This skill does not decide worker status, a cross-border worker's scheme, an industry classification, grouping, an exemption or the experience-rated part of a premium. Those are for the employer, its insurer or the regulator, on the reviewer's advice. A person declares wages and pays the premium.

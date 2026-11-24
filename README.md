@@ -92,7 +92,7 @@ Use au-tax-research to draft a file note on the question below, with each primar
 | `au-tax-research` | File note with source status and alternative views |
 | `cashflow-forecast-13week` | Rolling 13-week cashflow from bank balance and agings |
 
-See [all 111 skills](docs/skill-catalogue.md), which include the 35 added since v0.5.0.
+See [all 112 skills](docs/skill-catalogue.md), which include the 36 added since v0.5.0.
 
 ## First run
 
@@ -134,20 +134,10 @@ From 10 December 2026, Australian Privacy Principle (APP) 1.7 requires an APP en
 Australian Accounting Skills is preparation-only and written for Australian practice. As read on
 13 November 2026, these kinds of product and pack cover nearby ground:
 
-- [Ask Nagaris](https://nagaris.com/ask-nagaris-skills), part of Nagaris's hosted practice platform.
-  Its skills page lists 79 skills and says there are more than 80. The v0.7.0 release of this pack
-  has 107, counting each folder that holds a `SKILL.md` under `.claude/skills/`. The counts are not
-  like for like: one Nagaris skill can cover ground this pack splits across several. Ask Nagaris
-  runs its skills over the firm's own clients, jobs, emails and documents with no installation, and
-  acts with the firm's sign-off. This pack has no access to a firm's systems: it works only from the
-  files and read-only connections the operator gives the agent. The
-  [Ask Nagaris comparison](docs/nagaris-comparison.md) records topic-by-topic decisions as at
-  2 November 2026, rechecked on 11 and 12 November.
 - A general AI agent platform offers an Australian tax and accounting agent that answers questions on
   Australian tax and AASB accounting, installed with one click on a paid monthly plan.
 - [openaccountants/openaccountants](https://github.com/openaccountants/openaccountants): a broad
-  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes. Its
-  [site](https://www.openaccountants.com/) counts 2,204 skills in all.
+  multi-jurisdiction pack under AGPL-3.0, to which Ryan Duguid contributes.
 - Official finance and small-business plugins from an AI host's maker. The `small-business` plugin declares
   Xero and MYOB connectors. At its commit `84d8efd`, its `tax-prep` skill does US federal
   calculations only; for a business outside the US it stops at a closed-books packet for the
@@ -160,11 +150,11 @@ Australian Accounting Skills is preparation-only and written for Australian prac
 
 ## Validation record
 
-Human-confirmed model verdicts cover 95 of the 245 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. Claude Opus 5.5 also passed the 23 cards added on 2 November 2026 in task-only runs that day, which withheld each card's required checks, prohibitions and source boundary; Opus judges proposed the verdicts and Ryan Duguid confirmed a pass for each the same day. Two of the 28 September passes, for `au-financial-statements-missing-evidence` and `wip-cost-to-complete-gap`, were given on earlier versions of those cards, which changed on 19 October 2026, so [How each skill was verified](docs/skill-verification.md) counts 93 cards with a confirmed pass on the current card and lists those 2 under a non-current digest.
+Human-confirmed model verdicts cover 95 of the 246 [validation cards](validation/README.md). Claude Opus 5.5 passed all 70 cards then current in a whole-card run on 28 September 2026, confirmed on 29 September, and passed the `au-client-acceptance` and `au-working-holiday-makers` cards in single-card runs on 1 and 4 October, confirmed on 4 October. Earlier, Claude Opus 5 passed the 17 cards then current on 6 September and gpt-6-astra through Codex passed 16 of 17 on 8 September. Neither of those records states its input mode. Claude Opus 5.5 also passed the 23 cards added on 2 November 2026 in task-only runs that day, which withheld each card's required checks, prohibitions and source boundary; Opus judges proposed the verdicts and Ryan Duguid confirmed a pass for each the same day. Two of the 28 September passes, for `au-financial-statements-missing-evidence` and `wip-cost-to-complete-gap`, were given on earlier versions of those cards, which changed on 19 October 2026, so [How each skill was verified](docs/skill-verification.md) counts 93 cards with a confirmed pass on the current card and lists those 2 under a non-current digest.
 
 The [evaluation guide](docs/EVAL.md) supplies the whole card, including its required checks, so read these results as adherence to visible instructions, not independent error detection. The 28 September run could read only each card and its skills, so it does not show source retrieval or restraint with action tools. Most confirmed verdicts also predate the current skill wording: on 11 November 2026, for 73 of the 95 cards, the `SKILL.md` or references of a skill the card names in its `target_skills` had changed beyond copyright and licence lines between the commit its confirmed run recorded and `main`, so those verdicts describe the earlier wording.
 
-The other 150 cards have no confirmed model verdict: the [validation pack](validation/README.md) lists every card and [validation/results](validation/results/) the confirmed runs. Static checks cover all 111 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
+The other 151 cards have no confirmed model verdict: the [validation pack](validation/README.md) lists every card and [validation/results](validation/results/) the confirmed runs. Static checks cover all 112 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
 
 ## Corrections to earlier releases
 
@@ -185,7 +175,7 @@ The marketplace added without a tag resolves the default branch, which can be ah
 /plugin install australian-accounting-skills@ryanduguid
 ```
 
-The default branch prepares v0.7.1 with 111 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
+The default branch prepares v0.7.1 with 112 workflows. See the [Australian topic coverage map](docs/au-guide-coverage.md) for the additions and verification limits, and [Installation](docs/installation.md) for the Hardhat Ledger collision warning.
 
 [CITATION.cff](CITATION.cff) identifies the published v0.7.0 release and its 107 workflows. Cite the tag or exact commit you used; earlier citation records remain in their original revisions. The [Hardhat consolidation record](docs/HARDHAT-CONSOLIDATION.md) explains the expanded inventory.
 
@@ -205,7 +195,7 @@ Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, t
 
 **Reference**
 
-- [All 111 skills and their supporting files](docs/skill-catalogue.md), [how each was verified](docs/skill-verification.md) and [when each last changed](docs/skill-last-changed.md)
+- [All 112 skills and their supporting files](docs/skill-catalogue.md), [how each was verified](docs/skill-verification.md) and [when each last changed](docs/skill-last-changed.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
 - [Contributor checks](AGENTS.md), [release process](RELEASING.md) and [professional boundary](DISCLAIMER.md)

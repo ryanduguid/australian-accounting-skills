@@ -131,6 +131,14 @@ For any other Standard, return the citation record and the open questions to the
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A citation record for each Standard used: number, title, compilation number, preparation date, application paragraph, uncompiled amendments checked, paragraph relied on, portal URL, date read and the fact in your own words. Add the entity's tier and the AASB 1057 and AASB 1053 paragraphs that set it, the IFRS relationship from the selected version, and each open question with the evidence needed, owner and next action. Check that every version's application paragraph covers the whole period, that no amending Standard affecting the period is left unread, and that no Standard text is copied beyond what [the terms above](#quotation-and-copyright) allow. A qualified reviewer approves the choice of Standard, version and tier; an authorised human makes the accounting decisions.
 
 ## Source and review boundary

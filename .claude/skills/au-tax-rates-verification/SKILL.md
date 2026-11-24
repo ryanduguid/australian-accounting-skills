@@ -29,6 +29,14 @@ Requested period and event dates, taxpayer/entity category, jurisdiction, calcul
 
 ## Hand-off and checks
 
+**Close-out.** Begin the hand-off with these 5 parts, in this order: <!-- close-out -->
+
+1. Bottom line: the prepared result for the reviewer, or what stops one, in 1 or 2 sentences.
+2. Done: what was prepared and checked.
+3. Figures: where each key figure came from, agreeing with the workpaper.
+4. Open items: each with its owner and next action.
+5. Files: at most 5 links to the workpapers and sources relied on.
+
 A source register and discrepancy list. For calculator comparisons, retain the exact inputs, component workings, expected and observed results, tolerance and its reason, and any excluded cases. Record unavailable execution separately from static source inspection. No row is approved solely because its filename or heading says the requested year, its tests pass or another calculator agrees.
 
 For each unresolved item record evidence needed, owner, status and next action. Keep dependent results conditional until the item is resolved.
