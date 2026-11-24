@@ -62,9 +62,14 @@ class AmlCtfEdgeCases(unittest.TestCase):
         self.assertIn("a new designated service does not by itself end that status", step)
         self.assertIn("s 36(4) of the AML/CTF Act makes s 28(1) of the AML/CTF Act apply only if", step)
         self.assertIn("results in the client's ML/TF risk being medium or high", step)
-        self.assertIn("under s 36(2) of the AML/CTF Act", step)
+        self.assertIn("The client ceases to be a pre-commencement customer when the firm complies with s 28(1) of the "
+                      "AML/CTF Act, under s 36(2) of the AML/CTF Act", step)
         self.assertIn("a domestic or international organisation politically exposed person while the client's ML/TF risk is high", step)
-        self.assertIn("Sections 5-5(2) and 6-24(2) of the AML/CTF Rules", step)
+        self.assertIn("Sections 5-5(2) and 6-24(2) of the AML/CTF Rules treat a foreign politically exposed person as "
+                      "domestic where the service is provided at or through a permanent establishment in a foreign country "
+                      "and the status comes from a connection to that same country", step)
+        self.assertIn("once the firm has established that status on reasonable grounds, a senior manager determines, "
+                      "as soon as practicable after those steps are completed", step)
         self.assertIn("decide none of them", step)
 
     def test_a_sanctions_match_stops_the_file(self) -> None:
@@ -82,6 +87,8 @@ class AmlCtfEdgeCases(unittest.TestCase):
         self.assertIn("s 32(c) of the AML/CTF Act also covers any person acting on behalf of the client", step)
         self.assertIn("Record the suspicious matter reporting circumstance only where that officer has put it on this file", step)
         self.assertIn("as a question for that officer, without deciding whether s 32(e) applies", step)
+        self.assertIn("s 32(e) where the service is provided, or proposed to be provided, as part of a nested services", step)
+        self.assertIn("a provided or proposed service may be part of a nested services relationship", step)
 
     def test_offshore_personnel_are_not_left_out(self) -> None:
         step = flat(workflow_step(SERVICES, 7))
@@ -90,6 +97,7 @@ class AmlCtfEdgeCases(unittest.TestCase):
         self.assertIn("so list personnel engaged offshore with the rest", step)
         self.assertIn("at or through a permanent establishment in Australia (s 26F(2) of the AML/CTF Act)", step)
         self.assertIn("who perform, or will perform, functions relevant to its obligations", step)
+        self.assertIn("training for persons employed or otherwise engaged who perform, or will perform, those functions", step)
         self.assertIn("initial training on employment or engagement and ongoing training", step)
         self.assertIn("not a required check", step)
         self.assertIn("15 or fewer personnel", step)
