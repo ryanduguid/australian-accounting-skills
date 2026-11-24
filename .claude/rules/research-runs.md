@@ -61,6 +61,17 @@ sent_to_client: no
 ## Reviewer decision
 ```
 
+## A skill with its own file note template
+
+Where the adopting skill has its own template, that template stays the output
+contract: keep its header fields, `note_type` and status, its fact request and its
+sources table with its currency labels. Add `runs:` to its header with the number
+of runs, then put the runs below its header in the order above. In each run,
+`Legislation and guidance` holds the skill's sources table for that run, and the
+run lists the facts relied on and the facts not established at that run. A
+position-free request to the client for facts, where the skill drafts one, stays
+separate from the clarifying questions table, which names conclusions.
+
 ## Rules for each part
 
 - **Original request.** Quote the question as asked, with who asked and when.
