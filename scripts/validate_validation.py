@@ -51,7 +51,8 @@ RESULT_FIELD_MAX_LENGTH = 120
 # A figures card: a fabricated return whose lodged figures are the answer key
 # for a field-level preparation benchmark. A run gives each lodged field one
 # verdict from FIGURE_VERDICTS; match rate and label accuracy are kept apart.
-FIGURE_FILE_RE = re.compile(r"^validation/figures/([a-z0-9]+(?:-[a-z0-9]+)*)\.json\Z")
+# A slug with no nested quantifier: a hyphen only between 2 letters or digits.
+FIGURE_FILE_RE = re.compile(r"^validation/figures/([a-z0-9](?:[a-z0-9]|-(?=[a-z0-9]))*)\.json\Z")
 FIGURE_KEYS = ("id", "synthetic", "target_skill", "return_form", "scenario", "fields")
 FIGURE_FIELD_KEYS = ("field", "label", "amount")
 FIGURE_VERDICTS = ("match", "wrong-amount", "wrong-field", "omitted", "queried")

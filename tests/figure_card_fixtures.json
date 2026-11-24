@@ -16,6 +16,8 @@
     {"name": "the base card", "fields": 2},
     {"name": "a zero amount", "set": {"fields": [{"field": "G1", "label": "Total sales", "amount": "0.00"}]}, "fields": 1},
     {"name": "a wrong file name", "rel": "validation/figures/Fixture-Card.json", "error": "figures card name must be validation/figures/<slug>.json"},
+    {"name": "a doubled hyphen", "rel": "validation/figures/fixture--card.json", "error": "figures card name must be validation/figures/<slug>.json"},
+    {"name": "a trailing hyphen", "rel": "validation/figures/fixture-card-.json", "error": "figures card name must be validation/figures/<slug>.json"},
     {"name": "a result file name", "rel": "validation/results/fixture-card.json", "error": "figures card name must be validation/figures/<slug>.json"},
     {"name": "invalid JSON", "text": "{\"id\": ", "error": "not valid JSON"},
     {"name": "a repeated key", "text": "{\"id\": \"fixture-card\", \"id\": \"fixture-card\"}", "error": "duplicate JSON key"},

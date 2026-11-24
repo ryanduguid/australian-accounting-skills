@@ -67,8 +67,9 @@ const FIGURE_KEYS: &[&str] = &[
 const FIGURE_FIELD_KEYS: &[&str] = &["field", "label", "amount"];
 pub const FIGURE_VERDICTS: &[&str] =
     &["match", "wrong-amount", "wrong-field", "omitted", "queried"];
-static FIGURE_NAME: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^validation/figures/([a-z0-9]+(?:-[a-z0-9]+)*)\.json$").unwrap());
+static FIGURE_NAME: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"^validation/figures/([a-z0-9](?:[a-z0-9]|-(?=[a-z0-9]))*)\.json$").unwrap()
+});
 static FIGURE_AMOUNT: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^-?(?:0|[1-9][0-9]{0,6})\.[0-9]{2}$").unwrap());
 static SLUG: LazyLock<Regex> =
