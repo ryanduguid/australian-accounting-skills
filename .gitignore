@@ -61,6 +61,7 @@ exports/
 # The plugin's hook configuration and the keywords its rule hook matches.
 !/hooks/hooks.json
 !/hooks/skill-keywords.json
+!/context7.json
 .claude/settings.local.json
 # *.md must not swallow the repo's own docs — a checklist or register written
 # as Markdown is the stray being caught here. Any future tracked Markdown

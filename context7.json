@@ -1,0 +1,13 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Australian Accounting Skills",
+  "description": "Agent skills for Australian accounting and tax preparation workflows (BAS, month-end close, payroll, FBT, Division 7A, trusts and returns), with primary-source checks, validation cards and human review gates.",
+  "folders": [".claude/skills", "commands", "docs"],
+  "rules": [
+    "All skills are preparation-only workpaper workflows for review by a registered tax agent, BAS agent or qualified accountant; never lodge, post, pay or give tax advice.",
+    "Check primary sources (legislation.gov.au, ato.gov.au, state revenue offices, AASB) for mutable rates, thresholds, labels and due dates before relying on a figure.",
+    "Use the pinned aus-accounting MCP server configured in .claude-plugin/plugin.json (or the installed calculator binary) for deterministic Australian tax calculations rather than inventing tax arithmetic.",
+    "Keep real client TFNs, ABNs and live financial exports out of public repositories, URLs and unapproved model tools; use fabricated fixtures for examples.",
+    "Install from a tagged GitHub release when production stability is required; main holds unreleased changes and development routes."
+  ]
+}
