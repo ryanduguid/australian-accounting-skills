@@ -263,6 +263,10 @@
   skill: au-managed-fund-amit
   not: [au-capital-gains, au-dssp]
   prompt: A client holds 5 ETFs and 2 unlisted managed funds and has received their annual tax statements, one of them reissued. Prepare the workpaper for the attributed income and the cost base adjustments to each holding.
+- id: amit-trustee-year-end-review
+  skill: au-mit-amit-trustee
+  not: [au-managed-fund-amit, au-trust-distributions, au-foreign-income]
+  prompt: We act for the trustee of a registered unit trust that chose the attribution regime. Before the member statements go out, check that the trust still qualifies, that what we attribute to members adds up to the trust's figures, whether the trustee owes tax on any gap, and what to withhold from distributions to members with overseas addresses.
 - id: deceased-estate-split
   skill: au-deceased-estates
   not: [au-individual-return, au-trust-distributions]

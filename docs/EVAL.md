@@ -370,7 +370,7 @@ but it does show the shape of a passing result.
 Most cards name their target skill, so they cannot show whether a task alone
 selects it. The builder therefore also writes a `route-<id>` case for each of
 the 126 synthetic prompts in `validation/routing-cases.yaml`. Every one of the
-111 skills has at least one, and `tests/test_routing_cases.py` fails when a
+112 skills has at least one, and `tests/test_routing_cases.py` fails when a
 skill has none. Some skills that sit close together, such as the super contribution
 cap and Division 293 skills, or the WIP and contract cost skills, have a second
 prompt that turns on what separates them. No prompt names a skill. Each case
@@ -527,12 +527,12 @@ command's output differ, so a change to a skill's citations updates it.
 
 <!-- check-citations summary -->
 ```text
-Income Tax Assessment Act 1997 (Cth): 452 sections, 450 found, 2 listed exceptions, 0 absent.
+Income Tax Assessment Act 1997 (Cth): 513 sections, 511 found, 2 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 179 sections, 177 found, 2 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 159 sections, 159 found, 0 listed exceptions, 0 absent.
-Income Tax Assessment Act 1936 (Cth): 156 sections, 156 found, 0 listed exceptions, 0 absent.
+Income Tax Assessment Act 1936 (Cth): 158 sections, 158 found, 0 listed exceptions, 0 absent.
 Corporations Act 2001 (Cth): 125 sections, 125 found, 0 listed exceptions, 0 absent.
-Taxation Administration Act 1953 (Cth): 88 sections, 88 found, 0 listed exceptions, 0 absent.
+Taxation Administration Act 1953 (Cth): 117 sections, 117 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 80 sections, 80 found, 0 listed exceptions, 0 absent.
 Superannuation Guarantee (Administration) Act 1992 (Cth): 79 sections, 78 found, 1 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (NSW): 53 sections, 53 found, 0 listed exceptions, 0 absent.
@@ -547,11 +547,11 @@ Superannuation Industry (Supervision) Act 1993 (Cth): 19 sections, 19 found, 0 l
 Building and Construction Industry Security of Payment Act 1999 (NSW): 16 sections, 16 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 1971 (Qld): 13 sections, 13 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
+Income Tax Rates Act 1986 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2011 (ACT): 10 sections, 10 found, 0 listed exceptions, 0 absent.
+Taxation Administration Regulations 2017 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (Vic): 9 sections, 9 found, 0 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Regulations 2019 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
-Income Tax Rates Act 1986 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
-Taxation Administration Regulations 2017 (Cth): 8 sections, 8 found, 0 listed exceptions, 0 absent.
 Fringe Benefits Tax Assessment Act 1986 (Cth): 6 sections, 6 found, 0 listed exceptions, 0 absent.
 Coal Mining Industry (Long Service Leave) Administration Act 1992 (Cth): 5 sections, 5 found, 0 listed exceptions, 0 absent.
 Fair Work Act 2009 (Cth): 5 sections, 5 found, 0 listed exceptions, 0 absent.
@@ -568,8 +568,8 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-2019 of 2019 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1745 of 1745 legislative sections.
-1745 of 1745 resolved sections checked against an index of their Act: 1740 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
+2115 of 2115 citations resolve to a sources.json record: 274 of 274 rulings and guidance, 1841 of 1841 legislative sections.
+1841 of 1841 resolved sections checked against an index of their Act: 1836 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing
