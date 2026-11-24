@@ -1377,6 +1377,7 @@
       },
       "gates": {
         "behavioural": [
+          "test_plugin_hooks.py",
           "test_worked_examples.py"
         ],
         "inventory": []
@@ -1846,7 +1847,8 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py"
         ],
         "inventory": []
       }
@@ -2186,6 +2188,7 @@
       "gates": {
         "behavioural": [
           "test_dated_rule_changes.py",
+          "test_plugin_hooks.py",
           "test_practice_review_steps.py"
         ],
         "inventory": []
@@ -2672,7 +2675,8 @@
       },
       "gates": {
         "behavioural": [
-          "test_legal_source_gates.py"
+          "test_legal_source_gates.py",
+          "test_plugin_hooks.py"
         ],
         "inventory": []
       }
@@ -2756,6 +2760,7 @@
           "test_legal_source_gates.py",
           "test_marketplace_settlements.py",
           "test_myob_exports.py",
+          "test_plugin_hooks.py",
           "test_practice_review_steps.py",
           "test_skill_metadata.py",
           "test_source_refresh.py",
@@ -2984,6 +2989,7 @@
         "behavioural": [
           "test_dated_rule_changes.py",
           "test_legal_source_gates.py",
+          "test_plugin_hooks.py",
           "test_review_registers.py",
           "test_validation_pack.py"
         ],
