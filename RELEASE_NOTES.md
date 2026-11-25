@@ -101,8 +101,8 @@ Xero Central article is, as `client-rendered` instead of as a fault in the sweep
 becomes `review-due` once the record's `reverify_by` passes. The sweep still cannot read
 the 8 Xero Central records, so they need reading in a browser and review by hand.
 
-The README's Alternatives are reread as at 13 November 2026 and add Ask Nagaris and
-Sapience (#401). CI no longer lets a later merge cancel an earlier merge's run on `main`
+The README's Alternatives are reread as at 13 November 2026 and update
+comparable-tool entries (#401). CI no longer lets a later merge cancel an earlier merge's run on `main`
 (#409). The tooling's lockfile moves to `rustix` 1.1.6 for RUSTSEC-2026-0486 (#404), and
 #393 to #397 update CI actions, the tooling's `ureq` and development dependencies.
 
@@ -184,8 +184,7 @@ facts the evidence pack holds, unsigned, for the registered agent to review and 
 obligations, with no conclusion on compliance or designated services, and reconciles
 the practice's client list with the ATO's on a shared identifier without changing
 anything at the ATO. `au-trust-distributions` adds a resolution content schedule that
-never drafts wording. 14 synthetic cards cover these steps, and
-`docs/nagaris-comparison.md` records the 14 rows they change.
+never drafts wording. 14 synthetic cards cover these steps.
 
 The citation gate now resolves 1,693 of 1,693 citations to source records. Of 1,437 legislative sections, 1,197 are found in their Act's committed index, 3 are listed exceptions and 237 belong to an Act without an index. Missing sections fail the check, as do source records whose title contradicts the index header. The README gives the rebuild procedure. These structural checks do not establish the legal meaning or current application of a citation.
 
@@ -333,7 +332,7 @@ s 152-205(2) changes the basic conditions for the small business reduction
 from the income year that includes 1 July 2027. The 45 new source records
 await human review.
 
-Two skills fill gaps against the Ask Nagaris skill list. `au-main-residence`
+Two skills fill gaps against a comparable tool's skill list. `au-main-residence`
 prepares the main residence exemption evidence from Subdivision 118-B: who can
 use it, the ownership period on contract and settlement dates, a period
 schedule with the moving, changing residence, absence, building, destruction,
@@ -412,8 +411,7 @@ source records, and `year-end-workpapers` drafts a one-page client request list.
 
 Adds 17 skills, bringing the pack from 76 to 93, and grows the validation
 pack from 112 to 145 cards. Sixteen cover in-scope topics from a comparison
-with the public Ask Nagaris skill list, recorded in
-docs/nagaris-comparison.md; only the topic names were used.
+with a comparable tool's public skill list; only the topic names were used.
 
 - Tax workpapers: au-franking-account, au-trust-deed-review,
   au-restructure-rollovers, au-professional-firm-profits,
