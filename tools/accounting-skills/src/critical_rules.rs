@@ -41,7 +41,7 @@ enum ParsedArgs {
 }
 
 fn py_strip(text: &str) -> &str {
-    text.trim_matches(|ch: char| ch.is_whitespace() || matches!(ch, '\u{1c}'..='\u{1f}'))
+    text.trim_matches(crate::source_content::space)
 }
 
 fn strip_rule_anchor(line: &str) -> Option<&str> {
@@ -114,11 +114,7 @@ fn next_match(
             .is_some_and(is_word_or_hyphen);
         let step = haystack[start..].chars().next().map_or(1, char::len_utf8);
         if prev_ok && next_ok {
-            *pos = if end == start && start == haystack.len() {
-                haystack.len() + 1
-            } else {
-                end.max(start + usize::from(end == start))
-            };
+            *pos = if end == start { start + step } else { end };
             return Ok(Some(start));
         }
         *pos = start + step;
@@ -412,8 +408,8 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
 #[cfg(test)]
 mod tests {
     use super::{
-        MAX_CHARS, TRANSCRIPT_TAIL, context, format_hook_output, prompt_matches, rules, run_mode,
-        transcript_matches,
+        MAX_CHARS, TRANSCRIPT_TAIL, compile_phrase, context, format_hook_output, next_match,
+        prompt_matches, rules, run_mode, transcript_matches,
     };
     use serde_json::{Map, Value, json};
     use std::fs;
@@ -555,5 +551,26 @@ Plain line <!-- rule: bad name -->\r\n";
         )
         .unwrap();
         assert_eq!(run_mode(root.path(), "compact", &non_compact).unwrap(), "");
+    }
+
+    #[test]
+    fn next_match_advances_along_utf8_boundaries_on_multibyte_text() {
+        let collect = |phrase: &str, haystack: &str| {
+            let re = compile_phrase(phrase).unwrap();
+            let mut pos = 0;
+            let mut hits = Vec::new();
+            while let Some(start) = next_match(&re, haystack, &mut pos, phrase.is_empty()).unwrap()
+            {
+                hits.push(start);
+            }
+            hits
+        };
+        assert_eq!(collect("", ""), vec![0]);
+        assert_eq!(collect("", "é"), Vec::<usize>::new());
+        assert_eq!(collect("", "é—"), vec![5]);
+        assert_eq!(collect("", "—é"), vec![0]);
+        assert_eq!(collect("", "—é—"), vec![0, 8]);
+        assert_eq!(collect("", "——"), vec![0, 3, 6]);
+        assert_eq!(collect("é", "éé—é"), vec![7]);
     }
 }
