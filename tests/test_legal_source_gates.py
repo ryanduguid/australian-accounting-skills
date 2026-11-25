@@ -672,6 +672,38 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("so its additional contribution is never the shortfall or a charge", sgc)
         self.assertIn("returned a 1,560.00 minimum and a 65.00 additional contribution", sgc)
 
+    def test_individual_and_super_skills_route_the_1_3_0_commands(self) -> None:
+        ess = self.assert_released_calculators("au-employee-share-schemes", "ess-discount")
+        foreign = self.assert_released_calculators(
+            "au-foreign-income", "foreign-income-conversion", "foreign-income-tax-offset"
+        )
+        pension = self.assert_released_calculators("au-foreign-pensions", "foreign-pension-upp")
+        individual = self.assert_released_calculators("au-individual-return", "minors-income", "help-indexation")
+        smsf = self.assert_released_calculators("au-smsf-year-end", "smsf-tax")
+        death = self.assert_released_calculators("au-smsf-death-benefits", "transfer-balance")
+        for text in (ess, foreign, pension, individual, smsf, death):
+            self.assertIn("`worksheet-catalogue` command", text)
+            self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        # Each refusal in its own code, the facts left with the workflow step, and the executable's figures.
+        self.assertIn("(`ess_discount.foreign_employment`), so step 5 stays as written", ess)
+        self.assertIn("returned a 1,500.00 discount taxed upfront, a 1,000.00 reduction and a 500.00 assessable discount", ess)
+        self.assertIn("refuses a specific rate for any other day (`foreign_income_conversion.rate_date`)", foreign)
+        self.assertIn("(`foreign_income_tax_offset.worked_year`)", foreign)
+        self.assertIn("returned a deduction of 1,363.64 AUD", foreign)
+        self.assertIn("returned a limit and offset of 2,198.80, with 1,201.20 above the limit", foreign)
+        self.assertIn("(`foreign_pension_upp.part_year`) and one partly commuted (`foreign_pension_upp.commuted`)", pension)
+        self.assertIn("returned a deductible amount of 2,500.00 and an assessable amount of 9,500.00", pension)
+        self.assertIn("as the Commissioner's opinion settles them; the command decides none of them", individual)
+        self.assertIn("(`minors_income.special_income_component`)", individual)
+        self.assertIn("(`help_indexation.location_preferred`)", individual)
+        self.assertIn("an accumulated debt of 83,104.00 on 1 June 2025", individual)
+        self.assertIn("returned basic income tax of 2,468.00, 900.00 of it on the eligible income", individual)
+        self.assertIn("(`smsf_tax.non_complying`)", smsf)
+        self.assertIn("(`smsf_tax.disregarded_small_fund_assets`)", smsf)
+        self.assertIn("gross tax of 17,565.00, 44,435.00 of offsets refunded, a 259.00 supervisory levy and 44,176.00 refundable", smsf)
+        self.assertIn("so a reversionary credit and a child recipient's modified cap stay with step 5's written method", death)
+        self.assertIn("returned a transfer balance of 800,000.00, a personal cap of 2,050,000.00 and no excess", death)
+
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
             "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.4.0"
