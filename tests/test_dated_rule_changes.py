@@ -833,7 +833,7 @@ class DatedRuleChangeTests(unittest.TestCase):
             affirmed=(r"\bstill test\b",),
         )
         self.assert_sentence(
-            step, r"\bbefore and after\b", r"\bparagraph 37\b", r"\bin November 2026\b",
+            step, r"\bbefore and after\b", r"\bparagraph 37\b", r"\bin December 2026\b",
             affirmed=(r"\bcheck whether it has issued\b",),
         )
         self.assert_sentence(
