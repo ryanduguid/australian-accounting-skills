@@ -350,10 +350,11 @@ class LegalSourceGateTests(unittest.TestCase):
         "1.0.0": ("6ac566682829731d52a1b4456708a0b9d29b5695", "0.10.0"),
         "1.1.0": ("c4a716a25f065ccc957c5db83dec711251cb4121", "0.11.0"),
         "1.2.0": ("31ecb4022aa0127ae9f672798d1d9fbfe6388e85", "0.12.0"),
+        "1.4.0": ("007d4271766269f50c22d0224b94b49e70ccfd17", "0.13.0"),
     }
 
     #: The aus-accounting-mcp release each commit the plugin may start is.
-    PLUGIN_SERVERS = {"bf2619c95e211685ca4c996cc7c04f9e400a616e": "0.12.0"}
+    PLUGIN_SERVERS = {"704cbd9eb79a4608d607028c4cde67ae98b956e7": "0.13.0"}
 
     def test_every_pinned_calculators_release_runs_on_the_plugin_server(self) -> None:
         """Each server accepts only the calculators release it runs, so a skill pinning
@@ -371,7 +372,7 @@ class LegalSourceGateTests(unittest.TestCase):
                 with self.subTest(skill=path.parent.name, version=version):
                     self.assertIn(version, accepted)
 
-    def assert_released_calculators(self, name: str, *commands: str, version: str = "1.2.0") -> str:
+    def assert_released_calculators(self, name: str, *commands: str, version: str = "1.4.0") -> str:
         """The skill pins an australian-tax-calculators release, names the aus-accounting-mcp
         release that runs it, verifies it before use and keeps the written method as the result."""
         text = " ".join(skill_text(name).split())
@@ -420,7 +421,7 @@ class LegalSourceGateTests(unittest.TestCase):
     def test_skills_route_business_costs_and_cars_to_the_released_calculators(self) -> None:
         depreciation = self.assert_released_calculators(
             "au-depreciation-schedule", "business-capital-expenditure", "balancing-adjustment", "trade-in",
-            "depreciation-low-value-pool", "depreciation-small-business-pool", version="1.2.0",
+            "depreciation-low-value-pool", "depreciation-small-business-pool", version="1.4.0",
         )
         # The pool commands take step 4's established amounts; pool entry and taxable use stay with the step.
         pools = depreciation[depreciation.index("4. Apply the pools.") : depreciation.index("5. Apply caps.")]
@@ -431,7 +432,7 @@ class LegalSourceGateTests(unittest.TestCase):
         # 0.12.0 runs the executable only by the released digest or one the operator names.
         self.assertIn("From `aus-accounting-mcp` 0.12.0 that worksheet runs", depreciation)
         self.assertIn("the value in `AUS_TAX_CALCULATORS_SHA256`", depreciation)
-        self.assertIn("An earlier server, such as 0.10.0 or 0.11.0, accepts only an earlier release and refuses this one; the development plugin starts 0.12.0.", depreciation)
+        self.assertIn("An earlier server, such as 0.11.0 or 0.12.0, accepts only an earlier release and refuses this one; the development plugin starts 0.13.0.", depreciation)
         # s 40-880: the 5 year rule and the start-up exception from the Act; the judgements stay the reviewer's.
         step = depreciation[depreciation.index("6a. **Business capital expenditure.**") : depreciation.index("7. Keep capital works")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/40-880", step)
@@ -450,7 +451,7 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("give `asset` as `car`, one row per income year held with its `method` and `days_held`", cars)
 
         fbt = self.assert_released_calculators(
-            "fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost", version="1.2.0"
+            "fbt-annual-workflow", "fbt-car-statutory", "fbt-car-operating-cost", version="1.4.0"
         )
         self.assertIn("used only where a valid logbook supports the operating cost method", fbt)
         self.assertIn("the statutory result's `taxable_value_before_exemption` as `statutory_formula_taxable_value`", fbt)
@@ -463,7 +464,7 @@ class LegalSourceGateTests(unittest.TestCase):
             "borrowing-expenses-schedule",
             "rental-property",
             "capital-works",
-            version="1.2.0",
+            version="1.4.0",
         )
         step = text[text.index("2a. Borrowing expenses:") : text.index("3. Trace borrowed funds")]
         self.assertIn("https://www.ato.gov.au/law/view/document?docid=PAC/19970038/25-25", step)
@@ -535,9 +536,9 @@ class LegalSourceGateTests(unittest.TestCase):
     }
 
     def test_rd_and_residency_skills_route_their_1_2_0_commands(self) -> None:
-        rd = self.assert_released_calculators("au-rd-incentive", "rd-tax-offset", version="1.2.0")
+        rd = self.assert_released_calculators("au-rd-incentive", "rd-tax-offset", version="1.4.0")
         residency = self.assert_released_calculators(
-            "au-tax-residency", "residency-tests", "lodgment-required", version="1.2.0"
+            "au-tax-residency", "residency-tests", "lodgment-required", version="1.4.0"
         )
         for text in (rd, residency):
             self.assertIn("`worksheet-catalogue` command", text)
@@ -551,9 +552,9 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_super_and_penalty_skills_route_their_1_2_0_commands(self) -> None:
         sup = self.assert_released_calculators(
-            "au-smsf-death-benefits", "super-benefit-tax", "super-withholding", version="1.2.0"
+            "au-smsf-death-benefits", "super-benefit-tax", "super-withholding", version="1.4.0"
         )
-        pen = self.assert_released_calculators("au-ato-penalties-interest", "ato-interest-penalties", version="1.2.0")
+        pen = self.assert_released_calculators("au-ato-penalties-interest", "ato-interest-penalties", version="1.4.0")
         for text in (sup, pen):
             self.assertIn("`worksheet-catalogue` command", text)
             self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
@@ -569,7 +570,7 @@ class LegalSourceGateTests(unittest.TestCase):
         text = self.assert_released_calculators(
             "bas-preparation", "gst", "wine-equalisation-tax", "luxury-car-tax", "gst-creditable-purpose-change",
             "gst-annual-apportionment", "gst-financial-acquisitions-threshold", "gst-going-concern",
-            "gst-second-hand-goods", "gst-bad-debt", version="1.2.0",
+            "gst-second-hand-goods", "gst-bad-debt", version="1.4.0",
         )
         self.assertIn("`worksheet-catalogue` command", text)
         self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
@@ -583,14 +584,14 @@ class LegalSourceGateTests(unittest.TestCase):
             "au-individual-return", "resident-tax", "foreign-resident-tax", "low-income-tax-offset",
             "study-loan-repayment", "personal-tax-estimate", "work-expenses", "private-health-insurance-rebate",
             "beneficiary-tax-offset", "invalid-carer-tax-offset", "zone-tax-offset",
-            "net-medical-expenses-tax-offset", "government-super-amounts", version="1.2.0",
+            "net-medical-expenses-tax-offset", "government-super-amounts", version="1.4.0",
         )
-        psi = self.assert_released_calculators("au-psi-review", "psi-test", version="1.2.0")
+        psi = self.assert_released_calculators("au-psi-review", "psi-test", version="1.4.0")
         sbito = self.assert_released_calculators(
-            "au-small-business-income-offset", "small-business-income-offset", version="1.2.0"
+            "au-small-business-income-offset", "small-business-income-offset", version="1.4.0"
         )
-        ncl = self.assert_released_calculators("au-non-commercial-losses", "non-commercial-losses", version="1.2.0")
-        dt = self.assert_released_calculators("au-financial-statements", "deferred-tax", version="1.2.0")
+        ncl = self.assert_released_calculators("au-non-commercial-losses", "non-commercial-losses", version="1.4.0")
+        dt = self.assert_released_calculators("au-financial-statements", "deferred-tax", version="1.4.0")
         for text in (individual, psi, sbito, ncl, dt):
             self.assertIn("`worksheet-catalogue` command", text)
             self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
@@ -616,10 +617,10 @@ class LegalSourceGateTests(unittest.TestCase):
             "schedule-5-method-b-ii", "seniors-pensioners-withholding", "daily-casual-withholding",
             "horticulture-shearing-withholding", "entertainer-withholding", "return-to-work-withholding",
             "annuity-withholding", "upward-variation-withholding", "payg-withholding", "study-loan-withholding",
-            version="1.2.0",
+            version="1.4.0",
         )
         bas = self.assert_released_calculators(
-            "bas-preparation", "no-abn-withholding", "voluntary-agreement-withholding", version="1.2.0"
+            "bas-preparation", "no-abn-withholding", "voluntary-agreement-withholding", version="1.4.0"
         )
         for text in (payroll, bas):
             self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
@@ -634,15 +635,15 @@ class LegalSourceGateTests(unittest.TestCase):
     def test_medicare_super_and_stp_skills_route_their_1_2_0_commands(self) -> None:
         medicare = self.assert_released_calculators(
             "au-medicare-review", "medicare-levy", "medicare-levy-surcharge", "income-tests",
-            "private-health-insurance-rebate", version="1.2.0",
+            "private-health-insurance-rebate", version="1.4.0",
         )
         caps = self.assert_released_calculators(
-            "au-super-contribution-caps", "fhss", "contribution-caps", "government-super-amounts", version="1.2.0"
+            "au-super-contribution-caps", "fhss", "contribution-caps", "government-super-amounts", version="1.4.0"
         )
         stp = self.assert_released_calculators(
-            "stp-finalisation", "payg-withholding", "study-loan-withholding", "quarterly-sg", version="1.2.0"
+            "stp-finalisation", "payg-withholding", "study-loan-withholding", "quarterly-sg", version="1.4.0"
         )
-        sgc = self.assert_released_calculators("au-super-guarantee-charge", "quarterly-sg", version="1.2.0")
+        sgc = self.assert_released_calculators("au-super-guarantee-charge", "quarterly-sg", version="1.4.0")
         for text in (medicare, caps, stp, sgc):
             self.assertIn("`worksheet-catalogue` command", text)
             self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
@@ -673,7 +674,7 @@ class LegalSourceGateTests(unittest.TestCase):
 
     def test_capital_gains_routes_cost_base_adjustments_to_the_1_2_0_release(self) -> None:
         text = self.assert_released_calculators(
-            "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.2.0"
+            "au-capital-gains", "cgt-parcels", "capital-gains", "cgt-cost-base-adjustments", version="1.4.0"
         )
         self.assertIn("`worksheet-catalogue` command", text)
         self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
@@ -686,7 +687,7 @@ class LegalSourceGateTests(unittest.TestCase):
     def test_skills_route_the_1_1_0_commands_to_the_pinned_release(self) -> None:
         for name, commands in self.ROUTES_1_1_0.items():
             with self.subTest(skill=name):
-                text = self.assert_released_calculators(name, *commands, version="1.2.0")
+                text = self.assert_released_calculators(name, *commands, version="1.4.0")
                 # The route reads each worksheet's own scope and keeps the client out of the input.
                 self.assertIn("`worksheet-catalogue` command", text)
                 identifiers = (
@@ -745,11 +746,12 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("the maximum release amount when none is given, as the amount released", fhss)
         individual = " ".join(skill_text("au-individual-return").split())
         self.assertIn("`au-super-contribution-caps` for a first home super saver (FHSS) release", individual)
-        self.assertIn("A rebatable or exempt employer is outside both", fbt)
+        # 1.4.0's fbt-return takes employer_kind; fbt itself stays with ordinary taxable employers.
+        self.assertIn("A rebatable or exempt employer is outside `fbt`; given `employer_kind`, `fbt-return` also composes", fbt)
 
     def test_div7a_skill_records_the_pinned_servers_term_refusals(self) -> None:
         text = " ".join(skill_text("div7a-compliance").split())
-        self.assertIn("The plugin pins `aus-accounting-mcp` 0.12.0, whose `review_div7a_loan` refuses, with no figure", text)
+        self.assertIn("The plugin pins `aus-accounting-mcp` 0.13.0, whose `review_div7a_loan` refuses, with no figure", text)
         self.assertIn("Record the refusal and its code as an exception", text)
 
     def test_site_vehicle_and_div7a_routes_keep_the_decision_with_the_reviewer(self) -> None:
@@ -773,7 +775,7 @@ class LegalSourceGateTests(unittest.TestCase):
             self.assertIn("Record what it consumed: the page, the date run, the inputs", text)
 
     def test_fbt_skill_routes_entertainment_lines_to_the_pinned_classifier(self) -> None:
-        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.2.0")
+        text = self.assert_released_calculators("fbt-annual-workflow", "fbt-entertainment-classifier", version="1.4.0")
         self.assertIn('Send `{"kind": "fbt_entertainment_classifier"}` to its `periods` command first', text)
         # Each line and class it cannot settle goes to the reviewer; nothing it says is the reviewer's decision.
         self.assertIn("leaves a line or class `undetermined` where a fact is missing and names the fact", text)
