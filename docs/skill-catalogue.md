@@ -93,11 +93,12 @@ The [coverage map](au-guide-coverage.md) links Australian OpenAccountants guides
 | [`au-sapto`](../.claude/skills/au-sapto/SKILL.md) | Seniors and pensioners tax offset workpapers |
 | [`au-small-business-income-offset`](../.claude/skills/au-small-business-income-offset/SKILL.md) | Small business income tax offset workpapers |
 
-## Additions from the 2 November 2026 comparison
+## Additions from 2 November 2026
 
-The [Ask Nagaris comparison](nagaris-comparison.md) records which public skill
-topics these cover; `au-director-penalty-review` comes from this repository's
-own gap list.
+These 16 practice workflows are independently written from Australian primary
+sources for topics identified on 2 November 2026, with `NOTICE` recording
+where the topics came from; `au-director-penalty-review` comes from this
+repository's own gap list.
 
 | Skill | Use it for |
 | --- | --- |

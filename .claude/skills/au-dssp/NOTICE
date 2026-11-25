@@ -77,11 +77,10 @@ workflow and its cards are independently written for Australian practice
 ledgers; no upstream skill text, prompts, schemas or code were copied.
 
 The topics of 16 skills added on 2 November 2026, and of 5 extensions, were
-identified by comparing the public skill list at
-https://nagaris.com/ask-nagaris-skills, read that day. The page publishes only
-skill names and one-line descriptions; no Nagaris text was copied. The new
-workflows and cards are independently written from Australian primary
-sources. The comparison is recorded in docs/nagaris-comparison.md.
+identified by reviewing a comparable tool's public skill list, read that day.
+That list publishes only skill names and one-line descriptions; no text from
+it was copied. The new workflows and cards are independently written from
+Australian primary sources.
 
 The topics of 4 skills added on 4 November 2026 were identified from public
 material; no text from it was copied. au-client-departure and au-trust-losses
@@ -89,29 +88,27 @@ come from the public titles of CA ANZ member resources, including its N1
 guidance note on client records and a members-only trust losses checklist
 that was not read. au-ato-correspondence-triage and
 au-ato-account-reconciliation come from the public product descriptions of
-Business Automation Works' ATOmate and Omble, read on 3 November 2026, and the
+comparable practice-automation tools, read on 3 November 2026, and the
 year-end list of ATO amendments processed after balance date from the idea of
-LodgeiT's True Balance Validator help article, read on 4 November 2026. The
+a comparable tool's help article, read on 4 November 2026. The
 workflows and cards are independently written from APESB, TPB, ATO and Federal
 Register of Legislation sources; CA ANZ's N1 and CR 3 are cited as member
 guidance and regulation.
 
 The topics of au-smsf-death-benefits, au-family-trust-election and the
 dividend preparation step in au-franking-account, added on 11 November 2026,
-were identified by comparing the public skill list at
-https://nagaris.com/ask-nagaris-skills, read that day. No Nagaris text was
-copied. The workflows and cards are independently written from the Federal
-Register of Legislation and ATO sources.
+were identified by comparing the same comparable tool's public skill list, read
+that day. No text from it was copied. The workflows and cards are independently
+written from the Federal Register of Legislation and ATO sources.
 
 The topics of au-main-residence and au-share-buy-back, added on 11 November
-2026, come from the same public Ask Nagaris skill list, read again on
-11 November 2026. No Nagaris text was copied. The workflows and cards are
-independently written from Federal Register of Legislation, ATO and ASIC
-sources.
+2026, come from the same public skill list, read again on 11 November 2026. No
+text from it was copied. The workflows and cards are independently written from
+Federal Register of Legislation, ATO and ASIC sources.
 
 The topic of au-client-meeting-note, added on 12 November 2026, comes from the
-same public Ask Nagaris skill list, read again on 12 November 2026. No Nagaris
-text was copied. The workflow and cards are independently written from Federal
-Register of Legislation, TPB and OAIC sources.
+same public skill list, read again on 12 November 2026. No text from it was
+copied. The workflow and cards are independently written from Federal Register
+of Legislation, TPB and OAIC sources.
 
 Versions released before this change keep the licence they were released with.
