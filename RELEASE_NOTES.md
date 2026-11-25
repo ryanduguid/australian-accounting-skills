@@ -1,3 +1,34 @@
+# v0.8.1
+
+Patch release on top of `v0.8.0`: the inventory remains 112 skills,
+246 validation cards, 130 routing cases and 2 figures cards (7 lodged fields).
+
+## Highlights
+
+- **Documentation, notices and ASIC Connect fix:** withdrew the comparable-tool
+  comparison note, anonymised comparable-tool prose across
+  `docs/skill-catalogue.md`, `RELEASE_NOTES.md`, `NOTICE` and the 112 per-skill
+  `NOTICE` copies whilst leaving evaluation records and open-source provenance intact,
+  and replaced en-dashes with ASCII hyphens in `.claude/skills/tax-invoice-review/SKILL.md`
+  to match the ASIC Connect business-name holder labels (#528).
+- **CI, plugin metadata and documentation alignment:** removed non-endorsement text from
+  `.codex-plugin/plugin.json`, aligned shared-workflow pins to `ryanduguid/release-policy`
+  `v0.5.0` (`d7039efe`), wired `cargo-deny` (`0.22.0`) licence and source checking into
+  `verify.yml`, and refreshed release/count references in `docs/installation.md`,
+  `docs/EVAL.md` and `docs/plugin-directory-readme.md` (#527).
+- **Guide coverage and skill timestamps:** added `au-tax-system-orientation` and the
+  franking account worksheet mapping in `docs/au-guide-coverage.md` (#460), and
+  regenerated `docs/skill-last-changed.md` after the `#528` notice updates.
+- **MCP server pin unchanged:** the Claude Code plugin remains pinned to
+  `aus-accounting-mcp` `0.12.0` (`bf2619c`).
+
+At this release, `accounting-skills check-citations` resolved 2,176 of 2,176
+citations (274 of 274 rulings and guidance, 1,902 of 1,902 legislative
+sections; 1,897 found in their Act index, 5 listed exceptions, 0 absent).
+`validate_validation.py` checked 246 validation cards across 112 skills (23
+result records: 8 confirmed, 13 observed, 2 legacy; 82 skills with confirmed
+passes, 0 fails, 2 non-current digests) and 2 figures cards.
+
 # v0.8.0
 
 Together the changes below provide 112 skills (up from 107 in `v0.7.0`),
