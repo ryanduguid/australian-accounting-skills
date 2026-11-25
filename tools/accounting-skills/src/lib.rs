@@ -3,6 +3,7 @@
 
 //! The coverage matrix in coverage.json, derived from the skills, validation cards and tests.
 pub mod citations;
+pub mod critical_rules;
 pub mod grader_audit;
 pub mod last_changed;
 mod passage_diff;
@@ -279,7 +280,7 @@ fn matches_suffix(path: &Path, suffix: &str) -> Result<bool> {
     })
 }
 
-fn splitlines(text: &str) -> Vec<&str> {
+pub(crate) fn splitlines(text: &str) -> Vec<&str> {
     let mut lines = Vec::new();
     let mut start = 0;
     let mut chars = text.char_indices().peekable();

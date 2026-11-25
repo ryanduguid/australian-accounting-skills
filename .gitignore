@@ -86,6 +86,7 @@ exports/
 !/RELEASING.md
 !/CLAUDE.md
 !/AGENTS.md
+!/PORTING.md
 !/.claude/skills/**/*.md
 !/.claude/skills/au-tax-research/SKILL.md
 !/.claude/skills/au-client-acceptance/SKILL.md
@@ -147,6 +148,7 @@ exports/
 # Python
 /tools/accounting-skills/target/
 !/tools/accounting-skills/README.md
+!/tools/accounting-skills/PORTING.md
 # Section lists check-citations reads, one per Act, and their exceptions.
 !/tools/accounting-skills/section-index/*.txt
 __pycache__/

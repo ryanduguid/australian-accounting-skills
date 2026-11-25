@@ -198,7 +198,7 @@ Historical citation: Ryan Duguid (2026), Australian Accounting Skills, v0.1.5, t
 - [All 112 skills and their supporting files](docs/skill-catalogue.md), [how each was verified](docs/skill-verification.md) and [when each last changed](docs/skill-last-changed.md)
 - [Related command-line tools](docs/integrations.md)
 - [Fabricated validation pack](validation/README.md) and [evaluation method](docs/EVAL.md)
-- [Contributor checks](AGENTS.md), [release process](RELEASING.md) and [professional boundary](DISCLAIMER.md)
+- [Contributor checks](AGENTS.md), [release process](RELEASING.md), [native tooling cutover status](PORTING.md) and [professional boundary](DISCLAIMER.md)
 - [Discovery and GitHub About copy](docs/DISCOVERY.md)
 
 </details>
