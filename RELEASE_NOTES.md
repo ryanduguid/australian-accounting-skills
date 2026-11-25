@@ -92,8 +92,8 @@ benefits. `NOTICE` credits the dataset scenarios they adapt.
 `xero-exports`'s read-only gate now says that a connector holding each change in an
 approval queue still writes: its write tools fail the tool-list check, and approving a
 queued change is itself a write (#392). `NOTICE` and `docs/taxmate-adoptions.md` point
-their TaxMate links at `varnikacreative-spec/taxmate-australia`, which holds the same
-tree, since the old address returned 404 (#392).
+their upstream attribution links at the relocated repository, which holds the same tree,
+since the old address returned 404 (#392).
 
 The source sweep now reports a page that a script builds in the browser, which every
 Xero Central article is, as `client-rendered` instead of as a fault in the sweep script
