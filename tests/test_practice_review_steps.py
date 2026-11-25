@@ -294,6 +294,7 @@ class PracticeReviewStepTests(unittest.TestCase):
         self.assert_sentence(route, r"'Search within: Organisation & Business names'")
         self.assert_sentence(route, r"\bdoes not show officeholders\b", r"\bpaid company extract\b")
         self.assert_sentence(route, r"'Search within: Business names index'")
+        self.assert_sentence(route, r"'Business names holder - person'", r"'Business names holder - organisation'")
         self.assert_sentence(route, r"\bwhether the registration is current\b")
         self.assert_sentence(route, r"\brecord it `not run`", r"\bdo not substitute a lookup from another provider\b")
         self.assert_sentence(route, r"\bABN Lookup web services\b", r"\bGUID\b", r"\bcommercial or bulk access\b",
