@@ -29,8 +29,6 @@ Australian Accounting Skills is a set of agent skills for Australian accountants
 
 Each skill takes an agent through the workflow, sends it to current primary sources for anything that changes and ends in a review-ready workpaper. [Scope, limits and examples](https://duguid.com.au/tools/australian-tax-ai-agents/) are on the author's site.
 
-v0.7.0 corrects the citation counts that the v0.6.0 release notes gave: see [Corrections since v0.6.0](RELEASE_NOTES.md#corrections-since-v060).
-
 ## Install
 
 Install the 112 workflows in the published release, [v0.8.1](https://github.com/ryanduguid/australian-accounting-skills/releases/tag/v0.8.1). Each command below pins v0.8.1; the same CLI routes were run against v0.7.0 on Linux on 15 November 2026, with Claude Code 2.1.316 and Codex CLI 0.169.0.
@@ -157,6 +155,8 @@ The [evaluation guide](docs/EVAL.md) supplies the whole card, including its requ
 The other 151 cards have no confirmed model verdict: the [validation pack](validation/README.md) lists every card and [validation/results](validation/results/) the confirmed runs. Static checks cover all 112 skills, and [coverage.json](coverage.json) gives the state of each skill; [How each skill was verified](docs/skill-verification.md) shows it as one table of sources, review dates, cards and confirmed verdicts.
 
 ## Corrections to earlier releases
+
+v0.7.0 corrects the citation counts that the v0.6.0 release notes gave: see [Corrections since v0.6.0](RELEASE_NOTES.md#corrections-since-v060).
 
 v0.6.0 corrects 4 passages in v0.5.0, including a withdrawn GST ruling that `tax-invoice-review` cited: see [Corrections since v0.5.0](RELEASE_NOTES.md#corrections-since-v050).
 

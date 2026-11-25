@@ -5,8 +5,8 @@ Patch release on top of `v0.8.0`: the inventory remains 112 skills,
 
 ## Highlights
 
-- **Documentation, notices and ASIC Connect fix:** withdrew the comparison note
-  (`docs/nagaris-comparison.md`), anonymised comparable-tool prose across
+- **Documentation, notices and ASIC Connect fix:** withdrew the comparable-tool
+  comparison note, anonymised comparable-tool prose across
   `docs/skill-catalogue.md`, `RELEASE_NOTES.md`, `NOTICE` and the 112 per-skill
   `NOTICE` copies whilst leaving evaluation records and open-source provenance intact,
   and replaced en-dashes with ASCII hyphens in `.claude/skills/tax-invoice-review/SKILL.md`
