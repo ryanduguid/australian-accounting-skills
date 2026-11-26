@@ -315,6 +315,51 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "ATO: Identify your accounting basis",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/identify-your-accounting-basis",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 26 November 2026, last updated 14 September 2026: on a cash basis, sales, purchases, GST and GST credits go in the period of payment or part payment; on a non-cash basis, the earlier of payment and invoice. Human source approval remains pending. Verify the complete page, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/identify-your-accounting-basis",
+      "http_status": 200,
+      "fetched_at": "2026-11-26",
+      "review_required_since": "2026-11-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Step 3: Purchases (G10 and G11)",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-3-purchases",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 26 November 2026, last updated 9 September 2026: G11 takes all business purchases for the period other than those reported at G10. Human source approval remains pending. Verify the complete page, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-3-purchases",
+      "http_status": 200,
+      "fetched_at": "2026-11-26",
+      "review_required_since": "2026-11-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Step 4: Calculating purchases using the calculation worksheet",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-4-calculating-purchases-using-the-calculation-worksheet",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 26 November 2026, last updated 9 September 2026: amounts at G13 and G14, which include GST-free and input-taxed purchases, should also have been reported at G10 or G11. Human source approval remains pending. Verify the complete page, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-4-calculating-purchases-using-the-calculation-worksheet",
+      "http_status": 200,
+      "fetched_at": "2026-11-26",
+      "review_required_since": "2026-11-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
