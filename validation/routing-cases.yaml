@@ -637,3 +637,23 @@
   skill: year-end-workpapers
   not: [au-financial-statements, plant-and-equipment-costing]
   prompt: For the 30 June 2026 file, support the chattel mortgage balance on the truck and split it between current and non-current.
+- id: company-statement-with-prior-loss
+  skill: au-company-tax
+  not: [au-franking-account, au-non-commercial-losses]
+  prompt: A company with a 2024-25 tax loss that passed the continuity of ownership test has 2026-27 assessable income of $500,000, deductions of $380,000 and $4,000 of PAYG instalments. Work out its taxable income, tax and the amount due on the return.
+- id: franking-benchmark-two-dividends
+  skill: au-franking-account
+  not: [au-company-tax, div7a-compliance]
+  prompt: A private company paid a fully franked dividend in September and a 75% franked one in March of the same year. Check the benchmark rule and the franking debit, and the account's closing balance.
+- id: partnership-shares-by-interest
+  skill: au-partnership-tax
+  not: [au-professional-firm-profits, au-trust-distributions]
+  prompt: A 2026-27 partnership of 2 resident partners at 60% and 40% has assessable income of $120,000 and deductions of $30,000. Work out its net income and each partner's share for the partnership return.
+- id: trust-loss-tests-applied
+  skill: au-trust-losses
+  not: [au-trust-distributions, au-trust-deed-review]
+  prompt: A non-fixed trust made a loss in 2024-25 and wants to deduct it in 2026-27. List which of the loss tests apply to it and whether each passes on the facts we have.
+- id: trustee-assessed-on-unallocated-income
+  skill: au-trust-distributions
+  not: [au-trust-losses, au-trust-deed-review]
+  prompt: A resident trust's 2026-27 net income is $100,000 but its resolution entitles only 1 adult beneficiary to $60,000 of its $80,000 trust income. Who is assessed on the rest and what tax does the trustee pay?

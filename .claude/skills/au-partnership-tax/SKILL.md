@@ -17,11 +17,32 @@ Partnership agreement and changes, each with its execution evidence (signatures,
 
 2. Bridge accounting profit to the partnership tax schedule using supported adjustments. Separate partners' drawings and capital movements from business expenses.
 
-3. Prepare allocations under the documented agreement and verified tax rules. Keep accounting profit, tax net income and cash distributions separately reconcilable.
+3. Prepare allocations under the documented agreement and verified tax rules. Keep accounting profit, tax net income and cash distributions separately reconcilable. Check the net income or loss and each partner's share by interest with `partnership-net-income` in [Solomon's Sword](#solomons-sword).
 
 4. Roll forward each partner's capital/current account and link partner statements to the partnership totals. Flag agreement changes, special allocations, losses and personal deductions for review.
 
    Identify the partnership, partner reference, income year and agreement version on each statement. Preserve the supplied income, deduction, loss, credit and withholding components separately from drawings. Match each partner's individual-return row to that statement once, while keeping the partnership workpaper separate. Collect GST/BAS periods, overlap with partner business records and PSI signals as review questions; an allocation schedule does not settle those matters.
+
+## Solomon's Sword
+
+The `partnership-net-income` command come from the released [`solomons-sword` 1.0.0](https://github.com/ryanduguid/australian-accounting/releases/tag/solomons-sword/v1.0.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/527f3ad4b0d87316ea66da5665d7b0e94cf9f97b/packages/solomons-sword)), an optional local check It is installed separately, and `pip` does not install it: PyPI holds the earlier Python release. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS` and verify both before extracting anything:
+
+```text
+gh release download solomons-sword/v1.0.0 --repo ryanduguid/australian-accounting --pattern SHA256SUMS --pattern <archive>
+gh attestation verify SHA256SUMS --repo ryanduguid/australian-accounting --source-ref refs/tags/solomons-sword/v1.0.0 --source-digest 527f3ad4b0d87316ea66da5665d7b0e94cf9f97b --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+sha256sum --check --ignore-missing SHA256SUMS
+gh attestation verify <archive> --repo ryanduguid/australian-accounting --source-ref refs/tags/solomons-sword/v1.0.0 --source-digest 527f3ad4b0d87316ea66da5665d7b0e94cf9f97b --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+```
+
+Stop if any of the 4 fails. On another platform, build the tagged commit from its lock file with Rust 1.99 or later, into a tool directory of its own; `cargo install --list --root <tool-dir>` must show `solomons-sword v1.0.0` with that commit in its source:
+
+```text
+cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev 527f3ad4b0d87316ea66da5665d7b0e94cf9f97b solomons-sword
+```
+
+Run it by its full path, the extracted `solomons-sword` or `<tool-dir>/bin/solomons-sword` (`.exe` on Windows), never one found on `PATH`, as other builds also report 1.0.0; check that `--version` prints exactly `solomons-sword 1.0.0`. Each JSON command reads one JSON object on stdin and prints one JSON result, with amounts as decimal strings; an invalid or refused request exits 2 and writes `error: <reason>` to stderr. Send only amounts, dates, role labels and the established facts the command takes, never a client's name, address, TFN, ABN or other identifier: where a name field is required, pass a placeholder such as `Beneficiary A`. Record what it consumed: the release, the exact input, the output with every refusal and unknown result, and the run date. Record a refusal as an open item, and do not change the facts to get past it. Keep the tool's labels as its own, reported beside the facts it was given, never as the reviewer's decision on a position. A tool's figure checks the written method, which is always completed: where they differ, record the difference for the reviewer and adopt neither. Without the executable, follow the written method.
+
+`partnership-net-income` works a partnership's net income or partnership loss under ss 90 to 92 of the *Income Tax Assessment Act 1936*, for an income year from 2024-25 to 2026-27 (`financial_year` 2025 to 2027), and each partner's share of it and of exempt and non-assessable non-exempt income by their stated interest. The stated percentages must total `100`, and a non-resident partner is decided only where all the income is from Australian sources. The operator establishes the assessable income, the deductions (leaving out those under s 290-150 and Division 36 of the *Income Tax Assessment Act 1997*, which the command excludes) and each partner's residency and interest from the agreement and step 3's schedule. It refuses part-year residents, corporate limited partnerships, venture capital partnerships, foreign hybrids, uncontrolled partnership income, segregated or pension asset interests and salary or interest allocated to partners; follow the written method for that partnership. On fabricated facts, for 2026-27 assessable income of 120,000.00, deductions of 30,000.00 and 2 resident partners with interests of `60` and `40`, it gave net income of 90,000.00, shares of 54,000.00 and 36,000.00 and no partnership loss (run on 27 November 2026 with the verified 1.0.0 Windows executable). It allocates by the stated interest only: a drawings-based or special allocation stays with step 3 and the agreement.
 
 ## Hand-off and checks
 

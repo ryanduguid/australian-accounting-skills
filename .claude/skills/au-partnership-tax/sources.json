@@ -46,6 +46,38 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "solomons-sword 1.0.0 release",
+      "url": "https://github.com/ryanduguid/australian-accounting/releases/tag/solomons-sword/v1.0.0",
+      "limitations": "An agent checked the Windows archive against the release's SHA256SUMS and both attestations on 27 November 2026; its executable printed `solomons-sword 1.0.0`. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/releases/tag/solomons-sword/v1.0.0",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "http_status": 200,
+      "fetched_at": "2026-11-27",
+      "review_required_since": "2026-11-27",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "solomons-sword 1.0.0 source at its tagged commit",
+      "url": "https://github.com/ryanduguid/australian-accounting/tree/527f3ad4b0d87316ea66da5665d7b0e94cf9f97b/packages/solomons-sword",
+      "limitations": "On 27 November 2026 an agent ran `partnership-net-income` in the verified 1.0.0 Windows executable on the fabricated facts this skill quotes. They work out the facts they are given and decide no position. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/tree/527f3ad4b0d87316ea66da5665d7b0e94cf9f97b/packages/solomons-sword",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "http_status": 200,
+      "fetched_at": "2026-11-27",
+      "review_required_since": "2026-11-27",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }
