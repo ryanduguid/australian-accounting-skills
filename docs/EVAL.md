@@ -526,10 +526,10 @@ command's output differ, so a change to a skill's citations updates it.
 
 <!-- check-citations summary -->
 ```text
-Income Tax Assessment Act 1997 (Cth): 524 sections, 522 found, 2 listed exceptions, 0 absent.
+Income Tax Assessment Act 1997 (Cth): 526 sections, 524 found, 2 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth): 203 sections, 201 found, 2 listed exceptions, 0 absent.
+Income Tax Assessment Act 1936 (Cth): 170 sections, 170 found, 0 listed exceptions, 0 absent.
 A New Tax System (Goods and Services Tax) Act 1999 (Cth): 160 sections, 160 found, 0 listed exceptions, 0 absent.
-Income Tax Assessment Act 1936 (Cth): 158 sections, 158 found, 0 listed exceptions, 0 absent.
 Corporations Act 2001 (Cth): 125 sections, 125 found, 0 listed exceptions, 0 absent.
 Taxation Administration Act 1953 (Cth): 122 sections, 122 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Rules 2025 (Cth): 93 sections, 93 found, 0 listed exceptions, 0 absent.
@@ -545,9 +545,9 @@ Queensland Building and Construction Commission Act 1991 (Qld): 21 sections, 21 
 Superannuation Industry (Supervision) Act 1993 (Cth): 19 sections, 19 found, 0 listed exceptions, 0 absent.
 Building and Construction Industry Security of Payment Act 1999 (NSW): 16 sections, 16 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 1971 (Qld): 13 sections, 13 found, 0 listed exceptions, 0 absent.
+Income Tax Rates Act 1986 (Cth): 11 sections, 11 found, 0 listed exceptions, 0 absent.
 Anti-Money Laundering and Counter-Terrorism Financing Transitional Rules 2026 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Income Tax Assessment (1997 Act) Regulations 2021 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
-Income Tax Rates Act 1986 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2011 (ACT): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Taxation Administration Regulations 2017 (Cth): 10 sections, 10 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2007 (Vic): 9 sections, 9 found, 0 listed exceptions, 0 absent.
@@ -567,8 +567,6 @@ Medicare Levy Act 1986 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Payroll Tax Act 2009 (SA): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Personal Property Securities Act 2009 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
 Taxable Payments Reporting System - Reporting Exemptions for Certain Entities Determination 2019 (Cth): 1 section, 1 found, 0 listed exceptions, 0 absent.
-2178 of 2178 citations resolve to a sources.json record: 275 of 275 rulings and guidance, 1903 of 1903 legislative sections.
-1903 of 1903 resolved sections checked against an index of their Act: 1898 found, 5 listed exceptions, 0 absent; 0 in an Act with no index.
 ```
 
 A section found on a list exists in the current compilation; that says nothing
