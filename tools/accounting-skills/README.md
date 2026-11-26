@@ -72,9 +72,12 @@ NaN, lone surrogate escapes or invalid UTF-8 are reported as SKIP.
 `docs/EVAL.md` describes its use and limits.
 
 `critical-rules-hook` mirrors `hooks/critical_rules.py` for `prompt` and
-`compact` hook inputs (`CLAUDE_PLUGIN_ROOT` or `--root PATH`), reading the
-anchored critical rules from `.claude/skills/*/SKILL.md` and
-`hooks/skill-keywords.json` and failing open with exit 0 and empty output.
+`compact` hook inputs, reading the anchored critical rules from
+`.claude/skills/*/SKILL.md` and `hooks/skill-keywords.json` under
+`--root PATH` or `CLAUDE_PLUGIN_ROOT`, never the working directory. It follows
+no link out of that root, refuses a keywords file over 1 MiB and fails open
+with exit 0 and empty output. `tests/critical_rules.rs` runs both hooks on the
+same inputs and compares their exit codes and output.
 `hooks/critical_rules.py` and `hooks/hooks.json` remain the active Claude Code
 plugin hooks whilst installations run without a build step or prebuilt binary
 release; see [PORTING.md](PORTING.md).

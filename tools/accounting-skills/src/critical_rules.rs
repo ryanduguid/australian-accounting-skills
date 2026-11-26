@@ -7,9 +7,15 @@
 //! name and `hooks/skill-keywords.json` phrases. `compact` mode
 //! (`SessionStart` after compaction) matches skill names in the last 1 MiB of
 //! the session transcript. Both fail open with empty stdout and exit 0.
+//!
+//! The plugin root comes only from `--root` or `CLAUDE_PLUGIN_ROOT`, never
+//! the working directory, so a project the user opens cannot supply rules
+//! under the plugin's name. Every file is read through its canonical path,
+//! inside the root and with no link on the way.
 
-use crate::{Result, platform_text, splitlines, validation::is_reparse_point};
+use crate::{Result, platform_text, splitlines};
 use fancy_regex::Regex;
+use serde::Deserialize;
 use serde_json::{Map, Value};
 use std::{
     borrow::Cow,
@@ -27,6 +33,9 @@ const MAX_SKILLS: usize = 3;
 const MAX_CHARS: usize = 6000;
 // Antifragile tail bound: read only the last 1 MiB rather than absorbing a multi-GB transcript.
 const TRANSCRIPT_TAIL: u64 = 1024 * 1024;
+/// The largest `skill-keywords.json` parsed; the file is about 8 KiB.
+const MAX_KEYWORDS_BYTES: u64 = 1024 * 1024;
+const PLURAL_S: [&str; 3] = ["s", "S", "\u{17f}"];
 
 static ITEM_START: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"^(?:[\s\x1c-\x1f]*(?:[-*+]|\d+[a-z]?[.)])[\s\x1c-\x1f]|#)").unwrap()
@@ -34,11 +43,6 @@ static ITEM_START: LazyLock<Regex> = LazyLock::new(|| {
 static MARKER: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^[\s\x1c-\x1f]*(?:[-*+]|\d+[a-z]?[.)])[\s\x1c-\x1f]+").unwrap());
 static WORD_OR_HYPHEN: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[\p{L}\p{N}_-]$").unwrap());
-
-enum ParsedArgs {
-    Run { root: PathBuf, mode: String },
-    NoOp,
-}
 
 fn py_strip(text: &str) -> &str {
     text.trim_matches(crate::source_content::space)
@@ -73,12 +77,19 @@ fn fold_turkish_i(text: &str) -> Cow<'_, str> {
     }
 }
 
+/// The length of a leading `s` (`S` or long `ſ`, as Python's `re.I` matches).
+fn s_len(text: &str) -> usize {
+    PLURAL_S
+        .iter()
+        .find(|s| text.starts_with(**s))
+        .map_or(0, |s| s.len())
+}
+
+/// The length of the optional `(?:e?s)` plural ending at the start of `rest`.
 fn plural_suffix_len(rest: &str) -> usize {
-    let mut chars = rest.chars();
-    match (chars.next(), chars.next()) {
-        (Some('e' | 'E'), Some(s @ ('s' | 'S' | '\u{017f}'))) => 1 + s.len_utf8(),
-        (Some(s @ ('s' | 'S' | '\u{017f}')), _) => s.len_utf8(),
-        _ => 0,
+    match rest.strip_prefix(['e', 'E']).map(s_len) {
+        Some(len) if len > 0 => 1 + len,
+        _ => s_len(rest),
     }
 }
 
@@ -121,26 +132,39 @@ fn next_match(
     }
 }
 
-fn skill_names(skills_dir: &Path) -> Result<Vec<String>> {
-    match fs::symlink_metadata(skills_dir) {
-        Ok(meta) if meta.is_dir() && !is_reparse_point(skills_dir)? => {}
-        Ok(_) => return Ok(Vec::new()),
-        Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(Vec::new()),
-        Err(error) => return Err(error.into()),
+/// The canonical path of `dir/name`, or `None` when it is missing, a link or
+/// a junction, or resolves outside `dir`. `dir` must be canonical.
+fn entry_in(dir: &Path, name: impl AsRef<Path>) -> Option<PathBuf> {
+    let spelled = dir.join(name);
+    let target = fs::canonicalize(&spelled).ok()?;
+    if !target.starts_with(dir) {
+        return None;
     }
+    (target == spelled).then_some(target)
+}
+
+/// The regular file `dir/folder/file`, with no link on the way.
+fn file_in(dir: &Path, folder: impl AsRef<Path>, file: &str) -> Option<PathBuf> {
+    entry_in(dir, folder)
+        .and_then(|folder| entry_in(&folder, file))
+        .filter(|path| path.is_file())
+}
+
+/// The plugin's `.claude/skills` folder under the canonical `root`.
+fn skills_dir(root: &Path) -> Option<PathBuf> {
+    entry_in(root, ".claude")
+        .and_then(|claude| entry_in(&claude, "skills"))
+        .filter(|skills| skills.is_dir())
+}
+
+fn skill_names(skills_dir: &Path) -> Result<Vec<String>> {
     let mut names = Vec::new();
     for entry in fs::read_dir(skills_dir)? {
-        let path = entry?.path();
-        if is_reparse_point(&path)? || !path.is_dir() {
-            continue;
-        }
-        let skill_md = path.join("SKILL.md");
-        if fs::symlink_metadata(&skill_md).is_ok_and(|meta| meta.is_file()) {
-            let name = path
-                .file_name()
-                .and_then(|name| name.to_str())
-                .ok_or("skill folder name is not UTF-8")?
-                .to_owned();
+        let name = entry?.file_name();
+        if file_in(skills_dir, &name, "SKILL.md").is_some() {
+            let name = name
+                .into_string()
+                .map_err(|_| "skill folder name is not UTF-8")?;
             names.push(name);
         }
     }
@@ -149,10 +173,8 @@ fn skill_names(skills_dir: &Path) -> Result<Vec<String>> {
 }
 
 fn rules(skills_dir: &Path, skill: &str) -> Result<Vec<String>> {
-    let path = skills_dir.join(skill).join("SKILL.md");
-    if !fs::symlink_metadata(&path).is_ok_and(|meta| meta.is_file()) {
-        return Err("SKILL.md must be a regular file".into());
-    }
+    let path = file_in(skills_dir, skill, "SKILL.md")
+        .ok_or("SKILL.md must be a regular file in the skill's folder")?;
     let text = fs::read_to_string(&path)?;
     let lines = splitlines(&text);
     let mut items = Vec::new();
@@ -177,33 +199,26 @@ fn rules(skills_dir: &Path, skill: &str) -> Result<Vec<String>> {
     Ok(items)
 }
 
-fn load_keywords(path: &Path) -> Result<BTreeMap<String, Vec<String>>> {
-    if !fs::symlink_metadata(path).is_ok_and(|meta| meta.is_file()) {
-        return Err("skill-keywords.json must be a regular file".into());
+/// `hooks/skill-keywords.json` under the canonical `root`: an object of
+/// string arrays, at most `MAX_KEYWORDS_BYTES` long.
+fn load_keywords(root: &Path) -> Result<BTreeMap<String, Vec<String>>> {
+    let path = file_in(root, "hooks", "skill-keywords.json")
+        .ok_or("hooks/skill-keywords.json must be a regular file in the plugin root")?;
+    let mut bytes = Vec::new();
+    File::open(&path)?
+        .take(MAX_KEYWORDS_BYTES + 1)
+        .read_to_end(&mut bytes)?;
+    if bytes.len() as u64 > MAX_KEYWORDS_BYTES {
+        return Err("skill-keywords.json is larger than 1 MiB".into());
     }
-    let text = fs::read_to_string(path)?;
-    let Value::Object(object) = serde_json::from_str::<Value>(&text)? else {
-        return Err("skill-keywords.json must be a JSON object".into());
-    };
-    let mut map = BTreeMap::new();
-    for (skill, value) in object {
-        let Value::Array(items) = value else {
-            return Err("skill keywords must be an array".into());
-        };
-        let mut phrases = Vec::with_capacity(items.len());
-        for item in items {
-            let Value::String(phrase) = item else {
-                return Err("keyword must be a string".into());
-            };
-            phrases.push(phrase);
-        }
-        map.insert(skill, phrases);
-    }
-    Ok(map)
+    let mut parser = serde_json::Deserializer::from_slice(&bytes);
+    let keywords = BTreeMap::<String, Vec<String>>::deserialize(&mut parser)?;
+    parser.end()?;
+    Ok(keywords)
 }
 
 fn prompt_matches(root: &Path, skills_dir: &Path, prompt: &str) -> Result<Vec<String>> {
-    let keywords = load_keywords(&root.join("hooks").join("skill-keywords.json"))?;
+    let keywords = load_keywords(root)?;
     let folded_prompt = fold_turkish_i(prompt);
     let mut found: Vec<(usize, String)> = Vec::new();
     for skill in skill_names(skills_dir)? {
@@ -308,13 +323,16 @@ fn format_hook_output(event: &str, text: &str) -> Result<String> {
 }
 
 fn run_mode(root: &Path, mode: &str, payload: &Map<String, Value>) -> Result<String> {
-    let skills_dir = root.join(".claude").join("skills");
+    let root = fs::canonicalize(root)?;
+    let Some(skills_dir) = skills_dir(&root) else {
+        return Ok(String::new());
+    };
     let (event, reason, matched) = match mode {
         "prompt" => {
             let Some(prompt) = payload.get("prompt").and_then(Value::as_str) else {
                 return Ok(String::new());
             };
-            let skills = prompt_matches(root, &skills_dir, prompt)?;
+            let skills = prompt_matches(&root, &skills_dir, prompt)?;
             ("UserPromptSubmit", "the prompt mentions it", skills)
         }
         "compact" => {
@@ -337,48 +355,74 @@ fn run_mode(root: &Path, mode: &str, payload: &Map<String, Value>) -> Result<Str
     format_hook_output(event, &text)
 }
 
-fn default_root() -> Result<PathBuf> {
-    if let Some(root) = std::env::var_os("CLAUDE_PLUGIN_ROOT")
-        && !root.is_empty()
-    {
-        return Ok(PathBuf::from(root));
+/// `input` with each lone surrogate escape (`\ud800` to `\udfff` outside a
+/// pair) replaced by `�`. Python's `json.loads` accepts one, and a
+/// JavaScript client writes one for a prompt holding half an emoji; serde
+/// refuses it. Neither prints the prompt, so the hook's output is unchanged.
+fn replace_lone_surrogates(input: &str) -> Cow<'_, str> {
+    fn escape_at(bytes: &[u8], at: usize) -> Option<u16> {
+        let hex = bytes.get(at..at + 6)?.strip_prefix(b"\\u")?;
+        u16::from_str_radix(std::str::from_utf8(hex).ok()?, 16).ok()
     }
-    Ok(std::env::current_dir()?)
+    if !input.contains("\\u") {
+        return Cow::Borrowed(input);
+    }
+    let bytes = input.as_bytes();
+    let mut out = String::with_capacity(input.len());
+    let (mut copied, mut at) = (0, 0);
+    while at < bytes.len() {
+        if bytes[at] != b'\\' {
+            at += 1;
+            continue;
+        }
+        let Some(unit) = escape_at(bytes, at) else {
+            at += 2;
+            continue;
+        };
+        let paired = (0xd800..0xdc00).contains(&unit)
+            && escape_at(bytes, at + 6).is_some_and(|low| (0xdc00..0xe000).contains(&low));
+        if paired {
+            at += 12;
+        } else if (0xd800..0xe000).contains(&unit) {
+            out.push_str(&input[copied..at]);
+            out.push_str("\\ufffd");
+            at += 6;
+            copied = at;
+        } else {
+            at += 6;
+        }
+    }
+    out.push_str(&input[copied..]);
+    Cow::Owned(out)
 }
 
-fn parse_args(mut args: impl Iterator<Item = OsString>) -> Result<ParsedArgs> {
+/// The root from `--root PATH`, `--root=PATH` or else `CLAUDE_PLUGIN_ROOT`,
+/// and the one mode argument; `None` for anything else.
+fn parse_args(mut args: impl Iterator<Item = OsString>) -> Option<(PathBuf, String)> {
     let mut root: Option<PathBuf> = None;
     let mut positionals = Vec::new();
     while let Some(arg) = args.next() {
         if arg == "--root" {
-            let Some(value) = args.next() else {
-                return Ok(ParsedArgs::NoOp);
-            };
-            root = Some(PathBuf::from(value));
+            root = Some(PathBuf::from(args.next()?));
         } else if let Some(value) = arg.to_str().and_then(|text| text.strip_prefix("--root=")) {
             root = Some(PathBuf::from(value));
         } else {
             positionals.push(arg);
         }
     }
-    if positionals.len() != 1 {
-        return Ok(ParsedArgs::NoOp);
-    }
-    let Some(mode) = positionals[0].to_str() else {
-        return Ok(ParsedArgs::NoOp);
+    let [mode] = positionals.as_slice() else {
+        return None;
     };
-    let root = match root {
-        Some(path) => path,
-        None => default_root()?,
-    };
-    Ok(ParsedArgs::Run {
-        root,
-        mode: mode.to_owned(),
-    })
+    let root = root.or_else(|| {
+        std::env::var_os("CLAUDE_PLUGIN_ROOT")
+            .filter(|root| !root.is_empty())
+            .map(PathBuf::from)
+    })?;
+    Some((root, mode.to_str()?.to_owned()))
 }
 
 pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
-    let Ok(ParsedArgs::Run { root, mode }) = parse_args(args) else {
+    let Some((root, mode)) = parse_args(args) else {
         return Ok(0);
     };
     if !matches!(mode.as_str(), "prompt" | "compact") {
@@ -391,6 +435,7 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
     let Ok(input) = String::from_utf8(raw) else {
         return Ok(0);
     };
+    let input = replace_lone_surrogates(&input);
     let Ok(Value::Object(payload)) = serde_json::from_str::<Value>(&input) else {
         return Ok(0);
     };
@@ -406,171 +451,4 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::{
-        MAX_CHARS, TRANSCRIPT_TAIL, compile_phrase, context, format_hook_output, next_match,
-        prompt_matches, rules, run_mode, transcript_matches,
-    };
-    use serde_json::{Map, Value, json};
-    use std::fs;
-    use tempfile::TempDir;
-
-    fn fixture_root(skills: &[(&str, &str)], keywords: Value) -> TempDir {
-        let root = tempfile::tempdir().unwrap();
-        let hooks = root.path().join("hooks");
-        fs::create_dir_all(&hooks).unwrap();
-        fs::write(hooks.join("skill-keywords.json"), keywords.to_string()).unwrap();
-        for (name, body) in skills {
-            let dir = root.path().join(".claude/skills").join(name);
-            fs::create_dir_all(&dir).unwrap();
-            fs::write(dir.join("SKILL.md"), body).unwrap();
-        }
-        root
-    }
-
-    #[test]
-    fn extracts_anchored_rules_with_continuations_and_multi_anchors() {
-        let body = "\
-# Demo\r\n\
-- Do not lodge. <!-- rule: no-lodgement -->\r\n\
-  Prepare only.\r\n\
-  - Nested stop.\r\n\
-1a) Never guess rates. <!-- rule: evidence-boundary --> <!-- rule: untrusted-instructions -->\r\n\
-  Verify primary text.\r\n\
-# Heading stops continuation\r\n\
-Plain line <!-- rule: bad name -->\r\n";
-        let root = fixture_root(&[("demo-skill", body)], json!({}));
-        let extracted = rules(&root.path().join(".claude/skills"), "demo-skill").unwrap();
-        assert_eq!(
-            extracted,
-            [
-                "Do not lodge. Prepare only.",
-                "Never guess rates. Verify primary text.",
-            ]
-        );
-    }
-
-    #[test]
-    fn matches_whole_words_plurals_and_unicode_case_folding() {
-        let root = fixture_root(
-            &[
-                ("au-psi-review", "Rule <!-- rule: no-lodgement -->\n"),
-                ("bas-preparation", "Rule <!-- rule: no-lodgement -->\n"),
-                ("fbt-annual-workflow", "Rule <!-- rule: no-lodgement -->\n"),
-            ],
-            json!({
-                "au-psi-review": ["psi"],
-                "bas-preparation": ["bas"],
-                "fbt-annual-workflow": ["tax", "fbt"],
-            }),
-        );
-        let skills_dir = root.path().join(".claude/skills");
-        assert_eq!(
-            prompt_matches(
-                root.path(),
-                &skills_dir,
-                "Check PS\u{0130} and taxes; not basil, fbt-like, fbt2."
-            )
-            .unwrap(),
-            ["au-psi-review", "fbt-annual-workflow"]
-        );
-        assert_eq!(
-            prompt_matches(root.path(), &skills_dir, "Review taxe\u{017f} then BASes.").unwrap(),
-            ["fbt-annual-workflow", "bas-preparation"]
-        );
-    }
-
-    #[test]
-    fn orders_prompt_earliest_and_compact_most_recent_within_tail() {
-        let root = fixture_root(
-            &[
-                ("alpha-skill", "A <!-- rule: no-lodgement -->\n"),
-                ("beta-skill", "B <!-- rule: no-lodgement -->\n"),
-            ],
-            json!({"alpha-skill": ["alpha"], "beta-skill": ["beta"]}),
-        );
-        let skills_dir = root.path().join(".claude/skills");
-        let transcript = root.path().join("session.jsonl");
-        let padding = "x".repeat(TRANSCRIPT_TAIL as usize + 32);
-        let text = format!("alpha-skill {padding} alpha-skill then beta-skill");
-        fs::write(&transcript, text).unwrap();
-        let compact = transcript_matches(&skills_dir, transcript.to_str().unwrap()).unwrap();
-        assert_eq!(compact, ["beta-skill", "alpha-skill"]);
-
-        let pushed_out = root.path().join("old.jsonl");
-        fs::write(&pushed_out, format!("alpha-skill {padding}")).unwrap();
-        assert!(
-            transcript_matches(&skills_dir, pushed_out.to_str().unwrap())
-                .unwrap()
-                .is_empty()
-        );
-    }
-
-    #[test]
-    fn enforces_max_skills_and_max_chars_in_unicode_scalars() {
-        let long_rule = "é".repeat(2990);
-        let body = format!("- {long_rule} <!-- rule: no-lodgement -->\n");
-        let root = fixture_root(
-            &[
-                ("skill-a", &body),
-                ("skill-b", &body),
-                ("skill-c", "Short <!-- rule: no-lodgement -->\n"),
-                ("skill-d", "Short <!-- rule: no-lodgement -->\n"),
-            ],
-            json!({}),
-        );
-        let skills_dir = root.path().join(".claude/skills");
-        let chosen = vec![
-            "skill-a".to_owned(),
-            "skill-b".to_owned(),
-            "skill-c".to_owned(),
-            "skill-d".to_owned(),
-        ];
-        let text = context(&skills_dir, &chosen, "the prompt mentions it").unwrap();
-        assert!(text.chars().count() <= MAX_CHARS);
-        assert!(text.contains("skill-a"));
-        assert!(!text.contains("skill-b"));
-        assert!(!text.contains("skill-d"));
-    }
-
-    #[test]
-    fn formats_ascii_escaped_json_and_ignores_invalid_payloads() {
-        let json_line = format_hook_output("UserPromptSubmit", "aé—\u{7f}\u{1f600}").unwrap();
-        assert_eq!(
-            json_line,
-            r#"{"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "a\u00e9\u2014\u007f\ud83d\ude00"}}"#
-        );
-        let root = fixture_root(
-            &[("bas-preparation", "R <!-- rule: no-lodgement -->\n")],
-            json!({}),
-        );
-        let non_str = serde_json::from_value::<Map<String, Value>>(json!({"prompt": 7})).unwrap();
-        assert_eq!(run_mode(root.path(), "prompt", &non_str).unwrap(), "");
-        let non_compact = serde_json::from_value::<Map<String, Value>>(
-            json!({"source": "startup", "transcript_path": "missing"}),
-        )
-        .unwrap();
-        assert_eq!(run_mode(root.path(), "compact", &non_compact).unwrap(), "");
-    }
-
-    #[test]
-    fn next_match_advances_along_utf8_boundaries_on_multibyte_text() {
-        let collect = |phrase: &str, haystack: &str| {
-            let re = compile_phrase(phrase).unwrap();
-            let mut pos = 0;
-            let mut hits = Vec::new();
-            while let Some(start) = next_match(&re, haystack, &mut pos, phrase.is_empty()).unwrap()
-            {
-                hits.push(start);
-            }
-            hits
-        };
-        assert_eq!(collect("", ""), vec![0]);
-        assert_eq!(collect("", "é"), Vec::<usize>::new());
-        assert_eq!(collect("", "é—"), vec![5]);
-        assert_eq!(collect("", "—é"), vec![0]);
-        assert_eq!(collect("", "—é—"), vec![0, 8]);
-        assert_eq!(collect("", "——"), vec![0, 3, 6]);
-        assert_eq!(collect("é", "éé—é"), vec![7]);
-    }
-}
+mod tests;
