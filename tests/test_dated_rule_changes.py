@@ -46,6 +46,8 @@ LINKED_PROGRAMS = {
     "/releases/tag/australian-tax-calculators/": "australian-tax-calculators",
     "/packages/the-exchequer-tally": "the-exchequer-tally",
     "/packages/solomons-sword": "solomons-sword",
+    "/releases/tag/the-exchequer-tally/": "the-exchequer-tally",
+    "/releases/tag/solomons-sword/": "solomons-sword",
     "/packages/payday-super-checker": "payday-super-check",
     "ryanduguid/PaulGoodman": "fadden",
 }

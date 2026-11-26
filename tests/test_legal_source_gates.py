@@ -1357,5 +1357,63 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("it returned 39,852.89 outstanding, 11,933.23 current and 27,919.66 non-current", workpapers)
         self.assertFalse((SKILLS / "year-end-workpapers" / "sources.exempt.json").exists())
 
+    NATIVE_COMMIT = "527f3ad4b0d87316ea66da5665d7b0e94cf9f97b"
+
+    def assert_native_check(self, name: str, package: str, *commands: str) -> str:
+        """The skill pins a 1.0.0 native executable (the-exchequer-tally or solomons-sword) at its tagged
+        commit, verifies it before use, passes it no identifiers and keeps the written method as the result."""
+        text = " ".join(skill_text(name).split())
+        release = f"https://github.com/ryanduguid/australian-accounting/releases/tag/{package}/v1.0.0"
+        tree = f"https://github.com/ryanduguid/australian-accounting/tree/{self.NATIVE_COMMIT}/packages/{package}"
+        records = json.loads((SKILLS / name / "sources.json").read_text(encoding="utf-8"))["sources"]
+        for url in (release, tree):
+            with self.subTest(skill=name, url=url):
+                self.assertIn(url, text)
+                record = next((record for record in records if record["url"] == url), {})
+                self.assertEqual(record.get("verification_status"), "source-discovery-only-human-review-pending")
+        pins = (
+            f"--repo ryanduguid/australian-accounting --source-ref refs/tags/{package}/v1.0.0 "
+            f"--source-digest {self.NATIVE_COMMIT} --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml"
+        )
+        self.assertIn(f"gh attestation verify SHA256SUMS {pins}", text)
+        self.assertIn("sha256sum --check --ignore-missing SHA256SUMS", text)
+        self.assertIn(f"gh attestation verify <archive> {pins}", text)
+        self.assertIn("Stop if any of the 4 fails.", text)
+        self.assertIn(f"--rev {self.NATIVE_COMMIT} {package}", text)
+        self.assertIn(f"check that `--version` prints exactly `{package} 1.0.0`", text)
+        self.assertIn("never one found on `PATH`", text)
+        self.assertIn("never a client's name, address, TFN, ABN or other identifier", text)
+        self.assertIn("A tool's figure checks the written method, which is always completed", text)
+        self.assertIn("Without the executable, follow the written method.", text)
+        self.assertNotIn(f"/tree/main/packages/{package}", text)
+        for command in commands:
+            with self.subTest(skill=name, command=command):
+                self.assertIn(f"`{command}`", text)
+        self.assertIn("run on 27 November 2026 with the verified 1.0.0 Windows executable", text)
+        return text
+
+    def test_company_trust_and_partnership_skills_route_the_native_1_0_0_commands(self) -> None:
+        """The Exchequer Tally and Solomon's Sword 1.0.0 shipped on 24 November 2026; routed on 27 November."""
+        company = self.assert_native_check("au-company-tax", "the-exchequer-tally", "corporate-tax", "company-tax-statement")
+        franking = self.assert_native_check(
+            "au-franking-account", "the-exchequer-tally", "max-franking-rate", "franking-account", "benchmark", "statement"
+        )
+        partnership = self.assert_native_check("au-partnership-tax", "solomons-sword", "partnership-net-income")
+        losses = self.assert_native_check("au-trust-losses", "solomons-sword", "trust-loss-tests")
+        distributions = self.assert_native_check(
+            "au-trust-distributions", "solomons-sword", "trust-resolution", "proportionate-share", "trustee-assessment", "s99b-liability", "s100a-check"
+        )
+        self.assertIn("it gave calculation statement label A 70,000.00, B 17,500.00 and S 13,500.00", company)
+        self.assertIn("which the command never judges", company)
+        self.assertIn("a closing balance of -2,000.00, franking deficit tax of 2,000.00 and an offset of 1,400.00", franking)
+        self.assertIn("a second distribution franked at `75.00%` and a franking debit of 833.33", franking)
+        self.assertIn("it gave net income of 90,000.00, shares of 54,000.00 and 36,000.00 and no partnership loss", partnership)
+        self.assertIn("the reviewer decides whether each loss can be deducted", losses)
+        self.assertIn("trustee tax of 11,250.00", distributions)
+        self.assertIn("treat it as client data", distributions)
+        for text in (company, franking, partnership, losses, distributions):
+            self.assertNotIn("An optional local check, [`", text)
+
+
 if __name__ == "__main__":
     unittest.main()
