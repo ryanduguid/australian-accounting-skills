@@ -227,64 +227,75 @@ fn write_skill(skills: &Path, name: &str) {
     .unwrap();
 }
 
+/// A plugin root holding `inside-skill`, and a keywords folder (a link to
+/// `hooks_link_target` when given) whose file maps it to 'zebra'.
+fn plugin_root(hooks_link_target: Option<&Path>) -> tempfile::TempDir {
+    let root = tempfile::tempdir().unwrap();
+    write_skill(&root.path().join(".claude").join("skills"), "inside-skill");
+    match hooks_link_target {
+        Some(target) => link_folder(target, &root.path().join("hooks")),
+        None => {
+            fs::create_dir_all(root.path().join("hooks")).unwrap();
+            fs::write(root.path().join("hooks").join("skill-keywords.json"), ZEBRA).unwrap();
+        }
+    }
+    root
+}
+
+const ZEBRA: &str = r#"{"inside-skill": ["zebra"]}"#;
+
+fn prompt_output(root: &Path, text: &str) -> Output {
+    run_hook(
+        Some(root),
+        None,
+        &["prompt"],
+        json!({"prompt": text}).to_string().as_bytes(),
+    )
+}
+
 #[test]
 fn linked_folders_are_not_followed_out_of_the_root() {
-    let root = tempfile::tempdir().unwrap();
     let outside = tempfile::tempdir().unwrap();
-    let skills = root.path().join(".claude/skills");
-    write_skill(&skills, "inside-skill");
     write_skill(outside.path(), "outside-skill");
+    fs::create_dir_all(outside.path().join("hooks")).unwrap();
+    fs::write(
+        outside.path().join("hooks").join("skill-keywords.json"),
+        ZEBRA,
+    )
+    .unwrap();
+
+    // Real folders: the keyword attaches the inside skill; a linked skill never attaches.
+    let root = plugin_root(None);
+    let skills = root.path().join(".claude").join("skills");
     link_folder(
         &outside.path().join("outside-skill"),
         &skills.join("linked-skill"),
     );
-    fs::create_dir_all(outside.path().join("hooks")).unwrap();
-    fs::write(
-        outside.path().join("hooks/skill-keywords.json"),
-        r#"{"inside-skill": ["zebra"]}"#,
-    )
-    .unwrap();
-    let prompt = |text: &str| json!({"prompt": text}).to_string();
-
-    // The keywords folder is a link: nothing is read through it.
-    link_folder(&outside.path().join("hooks"), &root.path().join("hooks"));
-    let out = run_hook(
-        Some(root.path()),
-        None,
-        &["prompt"],
-        prompt("zebra inside-skill").as_bytes(),
-    );
-    assert_eq!(out.stdout, b"");
-
-    // A real keywords folder: the inside skill attaches, the linked one never does.
-    fs::remove_dir(root.path().join("hooks")).unwrap();
-    fs::create_dir_all(root.path().join("hooks")).unwrap();
-    fs::write(root.path().join("hooks/skill-keywords.json"), "{}").unwrap();
     let text = attached(
-        &run_hook(
-            Some(root.path()),
-            None,
-            &["prompt"],
-            prompt("inside-skill linked-skill outside-skill").as_bytes(),
-        ),
+        &prompt_output(root.path(), "zebra linked-skill outside-skill"),
         "UserPromptSubmit",
     );
     assert!(text.contains("inside-skill rule."), "{text}");
     assert!(!text.contains("outside-skill rule."), "{text}");
 
+    // The keywords folder is a link: nothing is read through it.
+    let linked_hooks = plugin_root(Some(&outside.path().join("hooks")));
+    assert_eq!(prompt_output(linked_hooks.path(), "zebra").stdout, b"");
+
     // The skills folder itself is a link.
     let other = tempfile::tempdir().unwrap();
     fs::create_dir_all(other.path().join(".claude")).unwrap();
     fs::create_dir_all(other.path().join("hooks")).unwrap();
-    fs::write(other.path().join("hooks/skill-keywords.json"), "{}").unwrap();
-    link_folder(&skills, &other.path().join(".claude/skills"));
-    let out = run_hook(
-        Some(other.path()),
-        None,
-        &["prompt"],
-        prompt("inside-skill").as_bytes(),
+    fs::write(
+        other.path().join("hooks").join("skill-keywords.json"),
+        ZEBRA,
+    )
+    .unwrap();
+    link_folder(&skills, &other.path().join(".claude").join("skills"));
+    assert_eq!(
+        prompt_output(other.path(), "zebra inside-skill").stdout,
+        b""
     );
-    assert_eq!(out.stdout, b"");
 }
 
 fn python_hook(mode: &str, stdin_bytes: &[u8]) -> Output {
