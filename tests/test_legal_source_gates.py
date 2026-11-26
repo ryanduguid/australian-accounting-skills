@@ -1262,5 +1262,57 @@ class LegalSourceGateTests(unittest.TestCase):
         self.assertIn("Take labels 1C, 1D, 1E and 1F from the supported workpapers, never from the page", text)
 
 
+    def test_business_and_state_tax_skills_route_their_1_3_0_and_1_4_0_commands(self) -> None:
+        """Commands first released in calculators 1.3.0 or 1.4.0, routed on 26 November 2026. Each
+        step names its command; the facts, eligibility and decisions stay with the skill."""
+        routes = {
+            "bas-preparation": ("gst-error-correction", "payg-instalment"),
+            "au-payg-instalment-variation": ("payg-instalment",),
+            "fbt-annual-workflow": ("fbt-instalment",),
+            "au-payroll-tax-states": ("payroll-tax", "payroll-tax-group"),
+            "au-land-tax": ("land-tax", "foreign-purchaser-surcharge", "vic-property-taxes"),
+            "au-transfer-duty": ("transfer-duty", "foreign-purchaser-surcharge", "first-home-owner-grant"),
+            "coal-lsl-levy": ("portable-lsl-levy",),
+            "workers-compensation-premium": ("workers-compensation-premium",),
+            "au-professional-firm-profits": ("pcg-2021-4",),
+            "au-not-for-profit": ("dgr-check", "endorsement-review"),
+            "au-asic-company-changes": ("asic-fees",),
+            "au-depreciation-schedule": ("instant-asset-write-off",),
+            "au-company-tax": ("prepayments", "trading-stock"),
+            "au-financial-statements": ("deferred-tax", "impairment-test", "deferred-revenue"),
+            "au-aml-ctf-client-coverage": ("aml-cdd-review",),
+            "au-etp-redundancy": ("notice-period", "long-service-leave"),
+            "au-mit-amit-trustee": ("cgt-cost-base-adjustments", "non-resident-withholding"),
+        }
+        texts = {name: self.assert_released_calculators(name, *commands) for name, commands in routes.items()}
+        for name, text in texts.items():
+            with self.subTest(skill=name):
+                # Every figure quoted is the released executable's output on fabricated facts.
+                self.assertIn("(run on 26 November 2026 with the verified 1.4.0 Windows executable)", text)
+                self.assertRegex(text, r"Send only [^.]*, never [^.]*identifiers?\.")
+        self.assertIn("it works no amount and amends nothing", texts["bas-preparation"])
+        self.assertIn("the decision in step 7 stays with the authorised human", texts["bas-preparation"])
+        self.assertIn("use it to check step 4's arithmetic only", texts["au-payg-instalment-variation"])
+        self.assertIn("so step 6 still ties each instalment to the tax account", texts["fbt-annual-workflow"])
+        self.assertIn("any exclusion order and the designated employer stay with steps 2 and 6", texts["au-payroll-tax-states"])
+        self.assertIn("only the land tax surcharge belongs in this workpaper", texts["au-land-tax"])
+        self.assertIn("so step 5's record of them stands", texts["au-land-tax"])
+        self.assertIn("it has nothing to check until step 2 has a dutiable value", texts["au-transfer-duty"])
+        self.assertIn("takes the 4 eligibility facts as stated without testing them", texts["au-transfer-duty"])
+        self.assertIn("The released `portable-lsl-levy` command in [Tax calculators](#tax-calculators) is such a local tool.", texts["coal-lsl-levy"])
+        self.assertIn("leaves the classification, the rate and which wages count to steps 1 to 4", texts["workers-compensation-premium"])
+        self.assertIn("its zone is not a ruling", texts["au-professional-firm-profits"])
+        self.assertIn("It checks no register and decides no status", texts["au-not-for-profit"])
+        self.assertIn("The operator gives the due date: it never works one out from a review date", texts["au-asic-company-changes"])
+        self.assertIn("does not decide the lock-out rules, so step 4 stays as written", texts["au-depreciation-schedule"])
+        self.assertIn("it gave no deduction for 2025-26 and 24,000.00 for 2026-27", texts["au-company-tax"])
+        self.assertIn("the policy, the estimates and the judgements stay with this step", texts["au-financial-statements"])
+        # The practice's risk rating is recorded, never assigned by the command.
+        self.assertIn("It takes the client's risk rating as recorded and never assigns one", texts["au-aml-ctf-client-coverage"])
+        self.assertIn("an award, agreement or contract can give more", texts["au-etp-redundancy"])
+        self.assertIn("It does not decide whether the trust is a withholding MIT", texts["au-mit-amit-trustee"])
+        # charity-check needs the client's own ABN, which these skills never send to a calculator.
+        self.assertNotIn("`charity-check`", texts["au-not-for-profit"])
+
 if __name__ == "__main__":
     unittest.main()

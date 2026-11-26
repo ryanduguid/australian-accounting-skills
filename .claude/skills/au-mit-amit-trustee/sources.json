@@ -23,7 +23,7 @@
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
       "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "An agent read the worksheet catalogue the 1.4.0 executable returns for `cgt-cost-base-adjustments` on 26 November 2026: its scope statement, inputs, periods and refusals. It applies an AMIT cost base net amount it is given and does not work out the trustee's estimate. Human review pending.",
+      "limitations": "An agent read the worksheet catalogue the 1.4.0 executable returns for `cgt-cost-base-adjustments` on 26 November 2026: its scope statement, inputs, periods and refusals. It applies an AMIT cost base net amount it is given and does not work out the trustee's estimate. Human review pending. On 26 November 2026 an agent read the worksheet catalogue entries for non-resident-withholding in the verified 1.4.0 Windows executable and ran each on the fabricated facts this skill quotes. They work out the facts they are given and decide no position. Human review pending.",
       "final_url": "https://github.com/ryanduguid/australian-accounting/tree/007d4271766269f50c22d0224b94b49e70ccfd17/packages/australian-tax-calculators",
       "http_status": 200,
       "fetched_at": "2026-11-26",

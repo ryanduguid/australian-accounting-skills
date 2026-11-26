@@ -525,6 +525,82 @@
   skill: marketplace-settlements
   not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
   prompt: A client sells homewares through an online marketplace and is paid every week after the platform takes its fees, refunds and a reserve. The bookkeeper has been recording each payout as sales. Rebuild the month from the settlement reports and tie the payouts to the bank before we do the BAS.
+- id: gst-error-current-return
+  skill: bas-preparation
+  not: [au-return-amendment]
+  prompt: Our client understated its net GST by $9,500 in the June 2025 quarter and its GST turnover is about $3.2 million. Can the error go on the September 2026 quarter's activity statement, lodged on 28 October 2026, instead of revising the earlier one?
+- id: payg-instalment-third-quarter-variation
+  skill: au-payg-instalment-variation
+  not: [bas-preparation]
+  prompt: A client now expects tax of $36,000 on her instalment income for 2026-27 and has paid $21,000 in the first 2 quarters. If she varies, what is her third quarterly instalment?
+- id: fbt-instalment-variation
+  skill: fbt-annual-workflow
+  not: [bas-preparation]
+  prompt: An employer now expects fringe benefits tax of $42,000 for the year ending 31 March 2027 and has paid $24,000 of instalments. If it varies, what goes at the FBT instalment labels on its December quarter activity statement?
+- id: payroll-tax-victorian-group-deduction
+  skill: au-payroll-tax-states
+  not: [payroll-tax-contractors]
+  prompt: Two related companies in Victoria pay $1.4 million and $650,000 of wages in 2026-27. Set out the payroll tax group, which one claims the deduction and how much it is.
+- id: queensland-land-tax-check
+  skill: au-land-tax
+  not: [au-rental-property]
+  prompt: A client owns Queensland investment land with a taxable value of $950,000 for 2026-27. Check the land tax on her assessment against the rates.
+- id: victorian-windfall-gains-notice
+  skill: au-land-tax
+  not: [au-property-development-income]
+  prompt: A client's Victorian block was rezoned in 2026, lifting its capital improved value from $1.1 million to $1.6 million. Check the windfall gains tax notice.
+- id: foreign-buyer-duty-surcharge
+  skill: au-transfer-duty
+  not: [au-land-tax]
+  prompt: A foreign individual is buying a Queensland house for $780,000. Prepare the stamp duty evidence, including the surcharge for foreign buyers.
+- id: first-home-grant-new-house
+  skill: au-transfer-duty
+  not: [au-individual-return]
+  prompt: A couple buying their first home, a new Queensland house for $690,000 under a September 2026 contract, ask what duty they pay and whether they get the first home owner grant.
+- id: coal-levy-base-rate-month
+  skill: coal-lsl-levy
+  not: [au-payroll-tax-states]
+  prompt: Work out September 2026's black coal long service leave levy for a base rate employee paid $7,200 of base pay, $1,800 of overtime and penalties and $400 of allowances.
+- id: workers-comp-premium-adjustment
+  skill: workers-compensation-premium
+  not: [au-payroll-review]
+  prompt: Our Tasmanian client estimated $850,000 of wages for its 2026-27 workers compensation policy at its insurer's rate of 2.1%, but its actual wages were $910,000. What will the adjustment be?
+- id: professional-firm-risk-zone
+  skill: au-professional-firm-profits
+  not: [au-trust-distributions]
+  prompt: A law firm principal returns $240,000 of the firm's profit herself and her company receives $360,000 for 2025-26. Score this against the ATO's profit allocation guidance and say which risk zone it falls in.
+- id: charity-exemption-self-review
+  skill: au-not-for-profit
+  not: [au-trust-deed-review]
+  prompt: A registered charity's board wants to complete the ATO's annual self-review of its income tax exemption. Prepare the worksheet questions and what a 'No' answer means.
+- id: asic-late-review-fee
+  skill: au-asic-company-changes
+  not: [au-business-formation]
+  prompt: A client's proprietary company paid its annual review fee, due on 20 August 2026, on 2 October 2026. What review fee and late fee does ASIC charge?
+- id: small-business-asset-write-off
+  skill: au-depreciation-schedule
+  not: [au-sole-trader]
+  prompt: A small business that uses simplified depreciation bought a $14,300 machine in February 2026 and started using it in March, 90% for the business. Can it write the machine off in 2025-26?
+- id: company-prepayment-and-stock
+  skill: au-company-tax
+  not: [year-end-workpapers]
+  prompt: For a company's 2025-26 return, it prepaid $24,000 of services for 2026-27 in June and its closing stocktake changed. Work out the tax adjustments for the prepayment and the trading stock.
+- id: impairment-and-deferred-revenue
+  skill: au-financial-statements
+  not: [au-aasb-standards-reference]
+  prompt: For the 30 June 2026 accounts, test the cash-generating unit carrying goodwill for impairment and work out the deferred revenue on an annual service contract billed in February.
+- id: aml-periodic-review-due
+  skill: au-aml-ctf-client-coverage
+  not: [au-aml-ctf-cdd-reliance]
+  prompt: A medium-risk client we last reviewed under our anti-money laundering program in July 2026 has just changed its ownership. When is its next periodic review due, and does the change need an immediate review?
+- id: redundancy-notice-and-long-service
+  skill: au-etp-redundancy
+  not: [au-award-underpayment-review]
+  prompt: A Victorian employer is making a 56-year-old employee redundant after 10 years. How many weeks' notice is she owed, and what is her long service leave worth at $1,850 a week?
+- id: mit-fund-payment-withholding
+  skill: au-mit-amit-trustee
+  not: [au-managed-fund-amit]
+  prompt: Our withholding MIT is paying a $50,000 fund payment to a foreign investor in an information exchange country. How much do we withhold?
 - id: ess-upfront-discount-reduction
   skill: au-employee-share-schemes
   not: [au-capital-gains, au-individual-return]
