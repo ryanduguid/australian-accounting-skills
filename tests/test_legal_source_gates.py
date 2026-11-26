@@ -1314,5 +1314,26 @@ class LegalSourceGateTests(unittest.TestCase):
         # charity-check needs the client's own ABN, which these skills never send to a calculator.
         self.assertNotIn("`charity-check`", texts["au-not-for-profit"])
 
+    def test_leftover_routes_name_their_1_4_0_commands(self) -> None:
+        """esic, foreign-resident-withholding and contract-register, routed on 26 November 2026.
+        year-end-workpapers left its source exemption to hold the release records."""
+        individual = self.assert_released_calculators("au-individual-return", "esic")
+        nonresident = self.assert_released_calculators("au-nonresident-cgt", "foreign-resident-withholding")
+        workpapers = self.assert_released_calculators("year-end-workpapers", "contract-register")
+        for text in (individual, nonresident, workpapers):
+            self.assertIn("(run on 26 November 2026 with the verified 1.4.0 Windows executable)", text)
+            self.assertIn("never one found on `PATH`", text)
+        self.assertIn("(`esic.trust_or_partnership_unsupported`)", individual)
+        self.assertIn("the command decides none of them", individual)
+        self.assertIn("it returned a tax offset of 8,000.00", individual)
+        self.assertIn("(`foreign_resident_withholding.asset_unsupported`)", nonresident)
+        self.assertIn("it is not the vendor's tax", nonresident)
+        self.assertIn("it returned an amount payable of 123,000.00 (run", nonresident)
+        self.assertIn("(`contract_register.kind_unsupported`)", workpapers)
+        self.assertIn("Fill `contract`, `client` and `financier` with workpaper references.", workpapers)
+        self.assertIn("never a client's or financier's name, a contract number, address, TFN, ABN or other identifier", workpapers)
+        self.assertIn("it returned 39,852.89 outstanding, 11,933.23 current and 27,919.66 non-current", workpapers)
+        self.assertFalse((SKILLS / "year-end-workpapers" / "sources.exempt.json").exists())
+
 if __name__ == "__main__":
     unittest.main()

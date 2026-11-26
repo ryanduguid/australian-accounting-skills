@@ -19,7 +19,28 @@ Residency chronology, entity and asset ownership, asset type and location, indir
 
 3. Prepare a supported cost-base and proceeds schedule. Review discount, main-residence (through `au-main-residence`), rollover and transitional conditions separately and flag unresolved eligibility.
 
-4. Reconcile withholding, clearance or variation evidence and settlement cash independently of the final CGT computation. Withholding does not establish the final tax liability.
+4. Reconcile withholding, clearance or variation evidence and settlement cash independently of the final CGT computation. Withholding does not establish the final tax liability. Check the amount the purchaser had to pay with the `foreign-resident-withholding` command (Tax calculators below).
+
+## Tax calculators
+
+The `foreign-resident-withholding` command comes from the released [`australian-tax-calculators` 1.4.0](https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.4.0) ([source at its tagged commit](https://github.com/ryanduguid/australian-accounting/tree/007d4271766269f50c22d0224b94b49e70ccfd17/packages/australian-tax-calculators)), the executable `aus-accounting-mcp` 0.13.0 also runs for its tax worksheets. It is installed separately, and `pip` does not install it. When installation is approved, download the release's x86_64 Linux or Windows archive with its `SHA256SUMS`, and verify both before extracting anything:
+
+```text
+gh release download australian-tax-calculators/v1.4.0 --repo ryanduguid/australian-accounting --pattern SHA256SUMS --pattern <archive>
+gh attestation verify SHA256SUMS --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.4.0 --source-digest 007d4271766269f50c22d0224b94b49e70ccfd17 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+sha256sum --check --ignore-missing SHA256SUMS
+gh attestation verify <archive> --repo ryanduguid/australian-accounting --source-ref refs/tags/australian-tax-calculators/v1.4.0 --source-digest 007d4271766269f50c22d0224b94b49e70ccfd17 --signer-workflow ryanduguid/release-policy/.github/workflows/release-binary.yml
+```
+
+Stop if any of the 4 fails. On another platform, build the tagged commit from its lock file with Rust 1.99 or later, into a tool directory of its own; `cargo install --list --root <tool-dir>` must show `australian-tax-calculators v1.4.0` with that commit in its source:
+
+```text
+cargo install --locked --root <tool-dir> --git https://github.com/ryanduguid/australian-accounting --rev 007d4271766269f50c22d0224b94b49e70ccfd17 australian-tax-calculators
+```
+
+Run it by its full path, the extracted `australian-tax-calculators` or `<tool-dir>/bin/australian-tax-calculators` (`.exe` on Windows), never one found on `PATH`, as other builds also report 1.4.0; check that `--version` prints exactly `australian-tax-calculators 1.4.0`, and pass `--refusal-json` after the command so a refusal (exit 2) prints its code. Use this local executable; a remote calculator is used only where the user has explicitly permitted that call for this question, on fabricated or firm-approved inputs, and never as a fallback when a local tool refuses. Send `{}` to its `worksheet-catalogue` command for each worksheet's scope statement and its required and optional inputs. Before running a command, send its worksheet name, the command's name with underscores, to its `periods` command, such as `{"kind": "land_tax"}`, and confirm it supports the reporting month or income year in question rather than merely accepting the year; if it does not, say so and follow the written method. Each command reads one JSON object on stdin, without the `kind` field that only `periods` takes, with amounts as decimal strings and a `scope_confirmed` flag: set it only once each condition in the scope statement the command returns is evidenced, and where one is not, follow the written method for that item. Send only amounts, dates and the established facts the command takes, never a client's name, address, TFN, ABN or other identifier. Record what it consumed: the release, the engine version, the exact input, the output with the scope statement, sources and source-check date it returns, and the run date. Record a refusal and its code as an open item, and do not change the facts to get past it. Keep the calculator's own labels as its own, reported beside the facts it was given, never as the reviewer's decision on a position. A calculator's figure checks the written method, which is always completed: where they differ, record the difference for the reviewer and adopt neither. Without the executable, follow the written method.
+
+`foreign-resident-withholding` works out the foreign resident capital gains withholding a purchaser pays on acquiring taxable Australian real property or a company title interest from one or more vendors, for a contract date from 1 July 2017 to 30 June 2027, at the rate and with any market value exclusion in force on the contract date. Give each vendor's share and the clearance certificate or notice of variation that vendor gave; those documents, any exclusion and any class variation to nil are established facts, and the command checks none of them against the title. It refuses any other asset, such as another indirect Australian real property interest or an option (`foreign_resident_withholding.asset_unsupported`), so that withholding stays with step 4's written method. Its amount is what the purchaser had to pay, which the vendor claims as a credit; it is not the vendor's tax, so step 3's schedule stands apart from it. On fabricated facts, one vendor with no clearance certificate selling Australian land under a contract of 15 September 2025 for 820,000.00, it returned an amount payable of 123,000.00 (run on 26 November 2026 with the verified 1.4.0 Windows executable).
 
 ## Hand-off and checks
 
