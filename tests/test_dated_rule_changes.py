@@ -785,11 +785,19 @@ class DatedRuleChangeTests(unittest.TestCase):
             basis, r"\bcash basis\b", r"\bGST-free and input-taxed sales follow payment\b", NOT + r"the invoice\b"
         )
         self.assert_sentence(basis, r"\binvoiced in one period and paid in the next\b", r"\bG1\b", r"\bG3\b", r"\blater period\b")
+        # G2 and G3 are GST-free labels: an input-taxed sale goes at G1 only.
+        self.assert_sentence(basis, r"\ban input-taxed sale goes at G1 only\b", r"\bnever at G2 or G3\b")
         self.assert_sentence(
-            basis, r"\binvoice date\b", affirmed=(r"\btreat G1, G2 and G3 as unsupported\b", r"\brestated by payment date\b")
+            basis,
+            r"\binvoice date\b",
+            affirmed=(r"\btreat G1, and G2 or G3 for the GST-free ones, as unsupported\b", r"\brestated by payment date\b"),
         )
         labels = workflow_step("bas-preparation", 2)
         self.assert_sentence(labels, r"\bG10 and G11\b", r"\bGST-free and input-taxed\b", r"\bnot only those with GST in the price\b")
+        # The inclusion keeps the ATO's exclusions and special rules.
+        self.assert_sentence(
+            labels, r"\bsubject to the exclusions and special rules\b", r"\bstamp duty\b", r"\bcar limit\b", r"\bsettlement of a claim\b"
+        )
         self.assert_sentence(labels, r"\bG13\b", r"\bG14\b", r"\bshould also have been reported at G10 or G11\b")
         self.assert_sentence(
             labels, affirmed=(r"\bmap a non-capital GST-free or input-taxed purchase to G11\b", r"\b1B takes only the GST credits\b")
