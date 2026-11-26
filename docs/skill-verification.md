@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 112 skills, 956 indexed primary sources of which 341 have a recorded human review, 4 skills exempt from source indexing, 20 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 112 skills, 959 indexed primary sources of which 341 have a recorded human review, 4 skills exempt from source indexing, 20 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -101,7 +101,7 @@ Totals: 112 skills, 956 indexed primary sources of which 341 have a recorded hum
 | [`au-trust-losses`](../.claude/skills/au-trust-losses/SKILL.md) | [5](../.claude/skills/au-trust-losses/sources.json) | none (0 of 5) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-wfh-deductions`](../.claude/skills/au-wfh-deductions/SKILL.md) | [7](../.claude/skills/au-wfh-deductions/sources.json) | 2026-10-14 (3 of 7) | 2 | 1 | 2 | 1 | 0 | 0 |
 | [`au-working-holiday-makers`](../.claude/skills/au-working-holiday-makers/SKILL.md) | [14](../.claude/skills/au-working-holiday-makers/sources.json) | 2026-09-29 (12 of 14) | 0 | 1 | 1 | 1 | 0 | 0 |
-| [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | [21](../.claude/skills/bas-preparation/sources.json) | 2026-10-14 (5 of 21) | 0 | 0 | 16 | 3 | 0 | 0 |
+| [`bas-preparation`](../.claude/skills/bas-preparation/SKILL.md) | [24](../.claude/skills/bas-preparation/sources.json) | 2026-10-14 (5 of 24) | 0 | 0 | 16 | 3 | 0 | 0 |
 | [`cashflow-forecast-13week`](../.claude/skills/cashflow-forecast-13week/SKILL.md) | [6](../.claude/skills/cashflow-forecast-13week/sources.json) | 2026-09-30 (5 of 6) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`coal-lsl-levy`](../.claude/skills/coal-lsl-levy/SKILL.md) | [9](../.claude/skills/coal-lsl-levy/sources.json) | 2026-09-30 (5 of 9) | 0 | 0 | 2 | 2 | 0 | 0 |
 | [`contract-cost-tracking`](../.claude/skills/contract-cost-tracking/SKILL.md) | [4](../.claude/skills/contract-cost-tracking/sources.json) | 2026-10-29 (2 of 4) | 0 | 0 | 2 | 2 | 0 | 0 |
