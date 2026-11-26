@@ -777,6 +777,46 @@ class DatedRuleChangeTests(unittest.TestCase):
             f"{base}concessional-reporting",
         )
 
+    def test_bas_reports_gst_free_purchases_at_g11_and_cash_basis_sales_when_paid(self) -> None:
+        """ATO BAS label instructions read on 26 November 2026."""
+        base = "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/"
+        basis = workflow_step("bas-preparation", 1)
+        self.assert_sentence(
+            basis, r"\bcash basis\b", r"\bGST-free and input-taxed sales follow payment\b", NOT + r"the invoice\b"
+        )
+        self.assert_sentence(basis, r"\binvoiced in one period and paid in the next\b", r"\bG1\b", r"\bG3\b", r"\blater period\b")
+        # G2 and G3 are GST-free labels: an input-taxed sale goes at G1 only.
+        self.assert_sentence(basis, r"\ban input-taxed sale goes at G1 only\b", r"\bnever at G2 or G3\b")
+        # G2 and G3 follow the ATO's own lists, not a goods-or-services shortcut.
+        self.assert_sentence(
+            basis,
+            r"\bG2 or G3 as the ATO's \[G1 to G3 instructions\]",
+            r"\bG2 for the export sales they list and G3 for every other GST-free sale\b",
+        )
+        self.assert_sentence(
+            basis,
+            r"\binvoice date\b",
+            affirmed=(r"\btreat G1, and G2 or G3 for the GST-free ones, as unsupported\b", r"\brestated by payment date\b"),
+        )
+        labels = workflow_step("bas-preparation", 2)
+        self.assert_sentence(labels, r"\bG10 and G11\b", r"\bGST-free and input-taxed\b", r"\bnot only those with GST in the price\b")
+        # The inclusion keeps the ATO's exclusions and special rules.
+        self.assert_sentence(
+            labels, r"\bsubject to the exclusions and special rules\b", r"\bstamp duty\b", r"\bcar limit\b", r"\bsettlement of a claim\b"
+        )
+        self.assert_sentence(labels, r"\bG13\b", r"\bG14\b", r"\bshould also have been reported at G10 or G11\b")
+        self.assert_sentence(
+            labels, affirmed=(r"\bmap a non-capital GST-free or input-taxed purchase to G11\b", r"\b1B takes only the GST credits\b")
+        )
+        self.assert_carries(labels, "read 26 November 2026")
+        self.assert_cited_and_recorded(
+            "bas-preparation",
+            f"{base}identify-your-accounting-basis",
+            f"{base}complete-your-bas/step-1-sales",
+            f"{base}complete-your-bas/step-3-purchases",
+            f"{base}complete-your-bas/step-4-calculating-purchases-using-the-calculation-worksheet",
+        )
+
     def test_estate_dwelling_is_tested_under_s_118_195_with_the_draft_marked(self) -> None:
         step = workflow_step("au-deceased-estates", 4)
         self.assert_carries(
