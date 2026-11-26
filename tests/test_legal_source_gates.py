@@ -1202,6 +1202,28 @@ class LegalSourceGateTests(unittest.TestCase):
                 self.assertIn("Keep the page's own labels as its own", text)
                 self.assertIn("read 24 November 2026", text)
 
+    def test_k8_routes_the_lease_page_and_leaves_business_days_unrouted(self) -> None:
+        """K8, 26 November 2026: au-financial-statements step 4 measures leases, so it takes the
+        AASB 16 lease page; no bas-preparation step counts business days, so that page is not routed."""
+        text = " ".join(skill_text("au-financial-statements").split())
+        step = text[text.index("4. Apply documented accounting policies") : text.index("5. Cross-check statements")]
+        self.assertIn("For a lessee's lease under AASB 16, cross-check the lease liability", step)
+        self.assertIn("https://duguid.com.au/tools/business-calculators/lease/", text)
+        self.assertIn("read 26 November 2026", text)
+        self.assertIn("It does not decide whether a contract is or contains a lease, the lease term, the discount rate", text)
+        self.assertIn("never as a fallback when a local tool refuses", text)
+        self.assertIn("Keep the page's own labels as its own", text)
+        self.assertIn("never the lessee's or lessor's name, an ABN or an asset identifier", text)
+        self.assertNotIn("business-calculators/business-days/", skill_text("bas-preparation"))
+
+    def test_designated_services_lists_governing_body_oversight(self) -> None:
+        """AUSTRAC's Your obligations page heads governance with 3 roles; s 26H of the AML/CTF Act
+        is the governing body's duty, which step 7's obligation list lacked."""
+        text = " ".join(skill_text("au-aml-ctf-designated-services").split())
+        self.assertIn("the governing body's ongoing oversight", text)
+        self.assertIn("(s 26H of the AML/CTF Act)", text)
+        self.assertIn("https://www.austrac.gov.au/industry-and-business/obligations-and-guidance/your-obligations", text)
+
     def test_contractor_labour_split_cites_sgd_2026_d1_as_a_draft(self) -> None:
         text = skill_text("contractor-super-tpar")
 
