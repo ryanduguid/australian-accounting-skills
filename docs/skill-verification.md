@@ -2,7 +2,7 @@
 
 Generated from [coverage.json](../coverage.json) by `accounting-skills build-coverage --write`. Its `--check` mode fails when this page disagrees with the tree.
 
-Totals: 112 skills, 952 indexed primary sources of which 341 have a recorded human review, 5 skills exempt from source indexing, 20 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
+Totals: 112 skills, 956 indexed primary sources of which 341 have a recorded human review, 4 skills exempt from source indexing, 20 skills with an unreachable source, 13 skills with a source changed since review, 82 skills with a confirmed pass, 0 skills with a confirmed fail and 2 skills with a confirmed verdict whose rubric digest does not match the current card.
 
 - **Sources**: primary sources in the skill's `sources.json`, or 'exempt' for a skill with a recorded exemption.
 - **Earliest review**: the oldest date on which a person recorded reading one of those sources, then how many of them carry a review date at all. A source with no review date has not been reviewed. A fetch is not a review.
@@ -62,7 +62,7 @@ Totals: 112 skills, 952 indexed primary sources of which 341 have a recorded hum
 | [`au-medicare-review`](../.claude/skills/au-medicare-review/SKILL.md) | [3](../.claude/skills/au-medicare-review/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-mit-amit-trustee`](../.claude/skills/au-mit-amit-trustee/SKILL.md) | [18](../.claude/skills/au-mit-amit-trustee/sources.json) | none (0 of 18) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`au-non-commercial-losses`](../.claude/skills/au-non-commercial-losses/SKILL.md) | [3](../.claude/skills/au-non-commercial-losses/sources.json) | 2026-11-02 (1 of 3) | 0 | 0 | 1 | 0 | 0 | 0 |
-| [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | [3](../.claude/skills/au-nonresident-cgt/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
+| [`au-nonresident-cgt`](../.claude/skills/au-nonresident-cgt/SKILL.md) | [5](../.claude/skills/au-nonresident-cgt/sources.json) | 2026-10-14 (1 of 5) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-not-for-profit`](../.claude/skills/au-not-for-profit/SKILL.md) | [3](../.claude/skills/au-not-for-profit/sources.json) | 2026-10-14 (1 of 3) | 0 | 0 | 1 | 1 | 0 | 0 |
 | [`au-partnership-tax`](../.claude/skills/au-partnership-tax/SKILL.md) | [3](../.claude/skills/au-partnership-tax/sources.json) | 2026-10-14 (1 of 3) | 1 | 0 | 2 | 1 | 0 | 0 |
 | [`au-payg-instalment-variation`](../.claude/skills/au-payg-instalment-variation/SKILL.md) | [5](../.claude/skills/au-payg-instalment-variation/sources.json) | 2026-10-14 (1 of 5) | 0 | 0 | 1 | 1 | 0 | 0 |
@@ -126,4 +126,4 @@ Totals: 112 skills, 952 indexed primary sources of which 341 have a recorded hum
 | [`workers-compensation-premium`](../.claude/skills/workers-compensation-premium/SKILL.md) | [23](../.claude/skills/workers-compensation-premium/sources.json) | none (0 of 23) | 0 | 0 | 1 | 0 | 0 | 0 |
 | [`workpaper-tie-out`](../.claude/skills/workpaper-tie-out/SKILL.md) | exempt | none | 0 | 0 | 9 | 3 | 0 | 0 |
 | [`xero-exports`](../.claude/skills/xero-exports/SKILL.md) | [6](../.claude/skills/xero-exports/sources.json) | none (0 of 6) | 0 | 0 | 9 | 2 | 0 | 0 |
-| [`year-end-workpapers`](../.claude/skills/year-end-workpapers/SKILL.md) | exempt | none | 0 | 0 | 5 | 1 | 0 | 0 |
+| [`year-end-workpapers`](../.claude/skills/year-end-workpapers/SKILL.md) | [2](../.claude/skills/year-end-workpapers/sources.json) | none (0 of 2) | 0 | 0 | 5 | 1 | 0 | 0 |
