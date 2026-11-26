@@ -787,11 +787,11 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(basis, r"\binvoiced in one period and paid in the next\b", r"\bG1\b", r"\bG3\b", r"\blater period\b")
         # G2 and G3 are GST-free labels: an input-taxed sale goes at G1 only.
         self.assert_sentence(basis, r"\ban input-taxed sale goes at G1 only\b", r"\bnever at G2 or G3\b")
-        # G2 is for exported goods; GST-free services and export freight and insurance go at G3.
+        # G2 and G3 follow the ATO's own lists, not a goods-or-services shortcut.
         self.assert_sentence(
             basis,
-            r"\bG2 where it is an export of goods\b",
-            r"\bG3 for any other GST-free sale, exported services and export freight and insurance included\b",
+            r"\bG2 or G3 as the ATO's \[G1 to G3 instructions\]",
+            r"\bG2 for the export sales they list and G3 for every other GST-free sale\b",
         )
         self.assert_sentence(
             basis,
@@ -812,6 +812,7 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_cited_and_recorded(
             "bas-preparation",
             f"{base}identify-your-accounting-basis",
+            f"{base}complete-your-bas/step-1-sales",
             f"{base}complete-your-bas/step-3-purchases",
             f"{base}complete-your-bas/step-4-calculating-purchases-using-the-calculation-worksheet",
         )

@@ -360,6 +360,21 @@
       "content_hash": "",
       "content_hash_covers": "",
       "source_last_modified": ""
+    },
+    {
+      "title": "ATO: Step 1: Sales (G1 to G3)",
+      "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-1-sales",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "Retrieved by an agent on 26 November 2026, last updated 9 September 2026: G2 takes the export sales the page lists, including some services relating to goods from overseas, and G3 all other GST-free sales; amounts at G2 and G3 are also at G1. Human source approval remains pending. Verify the complete page, applicable period and facts at use time.",
+      "final_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-1-sales",
+      "http_status": 200,
+      "fetched_at": "2026-11-26",
+      "review_required_since": "2026-11-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": ""
     }
   ]
 }
