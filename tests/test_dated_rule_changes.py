@@ -787,6 +787,12 @@ class DatedRuleChangeTests(unittest.TestCase):
         self.assert_sentence(basis, r"\binvoiced in one period and paid in the next\b", r"\bG1\b", r"\bG3\b", r"\blater period\b")
         # G2 and G3 are GST-free labels: an input-taxed sale goes at G1 only.
         self.assert_sentence(basis, r"\ban input-taxed sale goes at G1 only\b", r"\bnever at G2 or G3\b")
+        # G2 is for exported goods; GST-free services and export freight and insurance go at G3.
+        self.assert_sentence(
+            basis,
+            r"\bG2 where it is an export of goods\b",
+            r"\bG3 for any other GST-free sale, exported services and export freight and insurance included\b",
+        )
         self.assert_sentence(
             basis,
             r"\binvoice date\b",
