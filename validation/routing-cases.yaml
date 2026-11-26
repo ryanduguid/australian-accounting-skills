@@ -525,3 +525,27 @@
   skill: marketplace-settlements
   not: [au-short-stay-accommodation, au-bookkeeping, reconciliation-break-trace]
   prompt: A client sells homewares through an online marketplace and is paid every week after the platform takes its fees, refunds and a reserve. The bookkeeper has been recording each payout as sales. Rebuild the month from the settlement reports and tie the payouts to the bank before we do the BAS.
+- id: ess-upfront-discount-reduction
+  skill: au-employee-share-schemes
+  not: [au-capital-gains, au-individual-return]
+  prompt: My employer let me buy $1,500 of its shares for half their market value in July 2025 under a scheme open to all staff. Work out how much of the discount is taxed this year and whether the $1,000 reduction applies.
+- id: foreign-rent-currency-translation
+  skill: au-foreign-income
+  not: [au-forex-review, au-rental-property]
+  prompt: A resident client paid NZD 1,500 for repairs on her Auckland flat in July 2025 and received NZD rent all year. Translate the rent and expenses into Australian dollars for her return, showing the rate used for each.
+- id: help-debt-indexation-on-1-june
+  skill: au-individual-return
+  not: [stp-finalisation, au-payroll-review]
+  prompt: A graduate's HELP balance was $90,000 on 1 June 2024 and she took on another $11,000 for a course in November 2024. What should her debt be after indexation on 1 June 2025, and would a voluntary payment before then have helped?
+- id: minor-interest-and-wages
+  skill: au-individual-return
+  not: [au-trust-distributions, au-sole-trader]
+  prompt: A 16-year-old earned $28,000 from a part-time job and $2,000 of bank interest in 2025-26. Prepare his return workpaper, including the tax on the interest.
+- id: smsf-item-13-pension-proportion
+  skill: au-smsf-year-end
+  not: [au-company-tax, au-smsf-death-benefits]
+  prompt: Our 2-member SMSF has one member in pension phase and the actuary's certificate gives a 50% exempt proportion. Check the income tax calculation statement in the 2025-26 annual return, including franking credits and the supervisory levy.
+- id: death-benefit-pension-transfer-balance
+  skill: au-smsf-death-benefits
+  not: [au-super-contribution-caps, au-smsf-year-end]
+  prompt: A widow is starting a death benefit pension of about $1 million from her late husband's SMSF, which was not reversionary. Work out what this does to her transfer balance account and whether she will exceed her cap.
