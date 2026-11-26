@@ -422,14 +422,14 @@ fn parse_args(mut args: impl Iterator<Item = OsString>) -> Option<(PathBuf, Stri
 }
 
 pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
+    // Read the payload first, as the Python hook does, so the caller's write
+    // never meets a closed pipe.
+    let mut raw = Vec::new();
+    let read = io::stdin().lock().read_to_end(&mut raw);
     let Some((root, mode)) = parse_args(args) else {
         return Ok(0);
     };
-    if !matches!(mode.as_str(), "prompt" | "compact") {
-        return Ok(0);
-    }
-    let mut raw = Vec::new();
-    if io::stdin().lock().read_to_end(&mut raw).is_err() {
+    if read.is_err() || !matches!(mode.as_str(), "prompt" | "compact") {
         return Ok(0);
     }
     let Ok(input) = String::from_utf8(raw) else {
