@@ -229,7 +229,7 @@ fn lone_surrogate_escapes_become_replacement_characters() {
         (r#""\ud83d bas""#, r#""\ufffd bas""#),
         (r#""\ude00\ud83d""#, r#""\ufffd\ufffd""#),
         (r#""\\ud800""#, r#""\\ud800""#),
-        (r#""\\\ud800""#, r#""\\�""#),
+        (r#""\\\ud800""#, r#""\\\ufffd""#),
         (
             r#""\u00e9\uDBFF\uDFFF\udc00x""#,
             r#""\u00e9\uDBFF\uDFFF\ufffdx""#,

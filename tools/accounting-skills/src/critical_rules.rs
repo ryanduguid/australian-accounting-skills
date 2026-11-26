@@ -356,7 +356,7 @@ fn run_mode(root: &Path, mode: &str, payload: &Map<String, Value>) -> Result<Str
 }
 
 /// `input` with each lone surrogate escape (`\ud800` to `\udfff` outside a
-/// pair) replaced by `�`. Python's `json.loads` accepts one, and a
+/// pair) replaced by `\ufffd`. Python's `json.loads` accepts one, and a
 /// JavaScript client writes one for a prompt holding half an emoji; serde
 /// refuses it. Neither prints the prompt, so the hook's output is unchanged.
 fn replace_lone_surrogates(input: &str) -> Cow<'_, str> {
