@@ -443,9 +443,11 @@ pub fn cli(args: impl Iterator<Item = OsString>) -> Result<u8> {
         return Ok(0);
     };
     if !output.is_empty() {
+        // A reader that has gone away is not the hook's failure: still exit 0.
         let mut stdout = io::stdout().lock();
-        stdout.write_all(platform_text(&format!("{output}\n")).as_bytes())?;
-        stdout.flush()?;
+        let _ = stdout
+            .write_all(platform_text(&format!("{output}\n")).as_bytes())
+            .and_then(|()| stdout.flush());
     }
     Ok(0)
 }

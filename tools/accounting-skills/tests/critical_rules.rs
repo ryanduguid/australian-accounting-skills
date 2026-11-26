@@ -327,12 +327,11 @@ fn assert_parity(mode: &str, stdin_bytes: &[u8]) -> bool {
         );
     }
     assert_eq!(
-        (rust.status.code(), String::from_utf8_lossy(&rust.stdout)),
-        (
-            python.status.code(),
-            String::from_utf8_lossy(&python.stdout)
-        ),
-        "{mode} {input}"
+        (rust.status.code(), &rust.stdout),
+        (python.status.code(), &python.stdout),
+        "{mode} {input}: Rust {} against Python {}",
+        String::from_utf8_lossy(&rust.stdout),
+        String::from_utf8_lossy(&python.stdout)
     );
     !rust.stdout.is_empty()
 }
@@ -439,4 +438,31 @@ fn matches_the_python_hook_on_the_same_inputs() {
     }
     let missing = json!({"source": "compact", "transcript_path": dir.path().join("absent")});
     assert_parity("compact", missing.to_string().as_bytes());
+}
+
+#[test]
+fn a_closed_output_pipe_still_exits_zero() {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_accounting-skills"))
+        .arg("critical-rules-hook")
+        .arg("--root")
+        .arg(repository())
+        .arg("prompt")
+        .env_remove("CLAUDE_PLUGIN_ROOT")
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap();
+    drop(child.stdout.take());
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(br#"{"prompt": "bas-preparation and fbt-annual-workflow"}"#)
+        .unwrap();
+    let out = child.wait_with_output().unwrap();
+    assert_eq!(
+        (out.status.code(), out.stderr.as_slice()),
+        (Some(0), b"".as_slice())
+    );
 }
