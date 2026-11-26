@@ -625,3 +625,15 @@
   skill: au-smsf-death-benefits
   not: [au-super-contribution-caps, au-smsf-year-end]
   prompt: A widow is starting a death benefit pension of about $1 million from her late husband's SMSF, which was not reversionary. Work out what this does to her transfer balance account and whether she will exceed her cap.
+- id: esic-investor-offset
+  skill: au-individual-return
+  not: [au-capital-gains, au-employee-share-schemes]
+  prompt: In 2025-26 a client paid $40,000 for new shares in a start-up that qualifies as an early stage innovation company. What offset goes on her individual tax return?
+- id: foreign-resident-withholding-check
+  skill: au-nonresident-cgt
+  not: [au-capital-gains, au-transfer-duty]
+  prompt: A client living in Singapore sold Perth land for $820,000 under a September 2025 contract without a clearance certificate. Check what the buyer withheld at settlement.
+- id: chattel-mortgage-year-end-split
+  skill: year-end-workpapers
+  not: [au-financial-statements, plant-and-equipment-costing]
+  prompt: For the 30 June 2026 file, support the chattel mortgage balance on the truck and split it between current and non-current.
