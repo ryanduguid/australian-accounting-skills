@@ -117,6 +117,38 @@
       "content_hash_covers": "",
       "source_last_modified": "",
       "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators 1.4.0 release",
+      "url": "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.4.0",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "An agent checked the Windows archive against the release's SHA256SUMS and both attestations on 26 November 2026; its executable printed `australian-tax-calculators 1.4.0`. aus-accounting-mcp 0.13.0 runs this release. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/releases/tag/australian-tax-calculators/v1.4.0",
+      "http_status": 200,
+      "fetched_at": "2026-11-26",
+      "review_required_since": "2026-11-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
+    },
+    {
+      "title": "Australian Tax Calculators 1.4.0 source at its tagged commit",
+      "url": "https://github.com/ryanduguid/australian-accounting/tree/007d4271766269f50c22d0224b94b49e70ccfd17/packages/australian-tax-calculators",
+      "checked_at": "",
+      "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
+      "verification_status": "source-discovery-only-human-review-pending",
+      "limitations": "On 26 November 2026 an agent read the worksheet catalogue entries for portable-lsl-levy in the verified 1.4.0 Windows executable and ran each on the fabricated facts this skill quotes. They work out the facts they are given and decide no position. Human review pending.",
+      "final_url": "https://github.com/ryanduguid/australian-accounting/tree/007d4271766269f50c22d0224b94b49e70ccfd17/packages/australian-tax-calculators",
+      "http_status": 200,
+      "fetched_at": "2026-11-26",
+      "review_required_since": "2026-11-26",
+      "content_hash": "",
+      "content_hash_covers": "",
+      "source_last_modified": "",
+      "content_url": ""
     }
   ]
 }

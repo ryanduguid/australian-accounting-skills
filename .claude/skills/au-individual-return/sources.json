@@ -126,7 +126,7 @@
       "checked_at": "",
       "fact": "Primary-source discovery only; no human-reviewed current-law fact is recorded.",
       "verification_status": "source-discovery-only-human-review-pending",
-      "limitations": "An agent read the tagged commit's README and CHANGELOG and the executable's worksheet catalogue on 26 November 2026 for resident-tax, foreign-resident-tax, low-income-tax-offset, study-loan-repayment, personal-tax-estimate, work-expenses, private-health-insurance-rebate, beneficiary-tax-offset, invalid-carer-tax-offset, zone-tax-offset, net-medical-expenses-tax-offset, government-super-amounts, and, on the same day, ran minors-income and help-indexation on the skill's fabricated example: their arguments, scope statements, periods and refusals. They work out the facts they are given and decide no position. Human review pending.",
+      "limitations": "An agent read the tagged commit's README and CHANGELOG and the executable's worksheet catalogue on 26 November 2026 for resident-tax, foreign-resident-tax, low-income-tax-offset, study-loan-repayment, personal-tax-estimate, work-expenses, private-health-insurance-rebate, beneficiary-tax-offset, invalid-carer-tax-offset, zone-tax-offset, net-medical-expenses-tax-offset, government-super-amounts, and, on the same day, ran minors-income, help-indexation and esic on the skill's fabricated examples: their arguments, scope statements, periods and refusals. They work out the facts they are given and decide no position. Human review pending.",
       "final_url": "https://github.com/ryanduguid/australian-accounting/tree/007d4271766269f50c22d0224b94b49e70ccfd17/packages/australian-tax-calculators",
       "http_status": 200,
       "fetched_at": "2026-11-26",
