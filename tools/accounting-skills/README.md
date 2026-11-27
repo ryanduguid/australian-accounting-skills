@@ -87,12 +87,13 @@ commands in `scripts/` (see [PORTING.md](PORTING.md) for the held cutovers):
 
 | Python script | Native command |
 | --- | --- |
-| `validate_validation.py` | `validate-validation` |
 | `source_fetch_policy.py` | library used by `source-refresh` |
 | `source_refresh.py` | `source-refresh` |
 | `source_passages.py` | `source-passages` |
 | `strict_yaml.py` | card YAML within `validate-validation`, `prepare-trial` and `build-plugin-evals` |
 
+`validate-validation` has replaced `validate_validation.py` as the gate in CI
+and pre-commit; the script stays only as a test oracle and fuzz target.
 `strict_yaml.py` has no other script caller. Its remaining callers are the
 Python skill-metadata and entry-point tests, which stay with the Python suite.
 The native card reader is stricter than the shared factory: it also refuses

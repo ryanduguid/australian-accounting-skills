@@ -97,7 +97,7 @@ all 3 dimensions pass, so a blended pass cannot hide a refusal or authority
 failure. A record without `scores` still carries only a blended verdict. A record has one
 `input_mode`, so modes cannot be pooled in it either.
 
-`scripts/validate_validation.py` reads every result file, rejects any other
+`accounting-skills validate-validation` reads every result file, rejects any other
 key or verdict, any unknown or repeated card, a date that does not match the
 file name, and the identifier patterns it screens the cards for. It also holds
 the schema's card list to the card inventory and its verdict list to `pass`
