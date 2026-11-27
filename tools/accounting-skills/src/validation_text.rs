@@ -7,28 +7,49 @@ use std::{fs, path::Path, sync::LazyLock};
 use unicode_normalization::UnicodeNormalization;
 
 /// The code points Python 3.15's `\w` (Unicode 17.0) matches that the regex
-/// crate's Unicode 16.0 `[\p{L}\p{N}_]` lacks: 4,657 in all. Without them a
-/// `\b` before a new letter vanishes, so `sk_abcdefghijk-` followed by
-/// U+10940 would pass where Python refuses it.
-const UNICODE_17_WORD: &str = concat!(
-    r"\x{088F}\x{0C5C}\x{0CDC}\x{A7CE}-\x{A7CF}\x{A7D2}\x{A7D4}\x{A7F1}",
-    r"\x{10940}-\x{10959}\x{10EC5}-\x{10EC7}\x{11DB0}-\x{11DDB}\x{11DE0}-\x{11DE9}",
-    r"\x{16EA0}-\x{16EB8}\x{16EBB}-\x{16ED3}\x{16FF2}-\x{16FF6}\x{187F8}-\x{187FF}",
-    r"\x{18D09}-\x{18D1E}\x{18D80}-\x{18DF2}\x{1E6C0}-\x{1E6DE}\x{1E6E0}-\x{1E6E2}",
-    r"\x{1E6E4}-\x{1E6E5}\x{1E6E7}-\x{1E6ED}\x{1E6F0}-\x{1E6F4}\x{1E6FE}-\x{1E6FF}",
-    r"\x{2B73A}-\x{2B73F}\x{2CEA2}-\x{2CEAD}\x{323B0}-\x{33479}",
-);
+/// crate's Unicode 16.0 `[\p{L}\p{N}_]` lacks: 4,657 in all. They include
+/// every code point the 2 versions read differently: U+A7F1, the only NFKC
+/// change, and the Tolong Siki digits U+11DE0 to U+11DE9.
+const UNICODE_17_WORD: &[(u32, u32)] = &[
+    (0x088F, 0x088F),
+    (0x0C5C, 0x0C5C),
+    (0x0CDC, 0x0CDC),
+    (0xA7CE, 0xA7CF),
+    (0xA7D2, 0xA7D2),
+    (0xA7D4, 0xA7D4),
+    (0xA7F1, 0xA7F1),
+    (0x10940, 0x10959),
+    (0x10EC5, 0x10EC7),
+    (0x11DB0, 0x11DDB),
+    (0x11DE0, 0x11DE9),
+    (0x16EA0, 0x16EB8),
+    (0x16EBB, 0x16ED3),
+    (0x16FF2, 0x16FF6),
+    (0x187F8, 0x187FF),
+    (0x18D09, 0x18D1E),
+    (0x18D80, 0x18DF2),
+    (0x1E6C0, 0x1E6DE),
+    (0x1E6E0, 0x1E6E2),
+    (0x1E6E4, 0x1E6E5),
+    (0x1E6E7, 0x1E6ED),
+    (0x1E6F0, 0x1E6F4),
+    (0x1E6FE, 0x1E6FF),
+    (0x2B73A, 0x2B73F),
+    (0x2CEA2, 0x2CEAD),
+    (0x323B0, 0x33479),
+];
 
 /// Translates a Python pattern as Python 3.14 (Unicode 16.0) reads it, or as
 /// Python 3.15 (Unicode 17.0) does when `unicode_17` is set.
 pub fn pattern(text: &str, unicode_17: bool) -> Regex {
     let (extra_word, digit) = if unicode_17 {
-        // Python 3.15's `\d` also matches the Tolong Siki digits U+11DE0 to
-        // U+11DE9. No pattern puts `\d` inside a bracket class, so the plain
-        // swap is safe.
-        (UNICODE_17_WORD, "[\\d\u{11DE0}-\u{11DE9}]")
+        // Python 3.15's `\d` also matches the Tolong Siki digits. No pattern
+        // puts `\d` inside a bracket class, so the plain swap is safe.
+        let ranges = UNICODE_17_WORD.iter();
+        let extra = ranges.map(|(a, b)| format!(r"\x{{{a:X}}}-\x{{{b:X}}}"));
+        (extra.collect(), "[\\d\u{11DE0}-\u{11DE9}]")
     } else {
-        ("", r"\d")
+        (String::new(), r"\d")
     };
     let word = format!(r"[\p{{L}}\p{{N}}_{extra_word}]");
     let boundary = format!(r"(?:(?<={word})(?!{word})|(?<!{word})(?={word}))");
@@ -192,9 +213,13 @@ pub fn sensitive(text: &str, waived: &[String]) -> Result<()> {
             .collect()
     });
     static DATED: LazyLock<Both> = LazyLock::new(|| both(data::DATED_RULE));
-    let texts = [normalise_as(text, false)?, normalise_as(text, true)?];
+    let old = normalise_as(text, false)?;
+    let new = normalise_as(text, true)?;
+    // Without a code point the 2 versions read differently, both passes agree,
+    // so the Unicode 16.0 pass runs only when one is present.
+    let differs = old.chars().any(|c| within(c, UNICODE_17_WORD));
     let matches = |regexes: &Both| -> Result<bool> {
-        Ok(regexes[0].is_match(&texts[0])? || regexes[1].is_match(&texts[1])?)
+        Ok(regexes[1].is_match(&new)? || (differs && regexes[0].is_match(&old)?))
     };
     for (label, regexes) in RULES.iter() {
         if !waived.iter().any(|item| item == label) && matches(regexes)? {
