@@ -415,7 +415,9 @@ twice, as Python 3.14 (Unicode 16.0) and as Python 3.15 (Unicode 17.0) read it,
 and a match in either refuses the text: neither version's refusals contain the
 other's. The Unicode 17.0 pass takes NFKC from the pinned unicode-normalization
 0.1.25 (U+A7F1 normalises to `S`) and adds the Unicode 17.0 digits and letters
-the regex crate's Unicode 16.0 tables lack to `\d` and the word class. The frozen
+the regex crate's Unicode 16.0 tables lack to `\d` and the word class; the
+Unicode 16.0 pass treats all 35 Unicode 17.0 NFKC and combining-class additions
+as unassigned barriers so nothing reorders or composes across them. The frozen
 HTML entity and character tables derive from Python 3.14; PYTHON-LICENSE.txt
 contains their PSF licence. yaml-rust2 supplies strict YAML events and tokens.
 Card aliases, anchors, tags and duplicate keys are refused.

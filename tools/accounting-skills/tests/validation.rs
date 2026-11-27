@@ -122,12 +122,31 @@ fn unicode_17_spellings_are_refused_where_python_3_14_or_3_15_refuses_them() {
         ),
         (format!("effective {one}%"), "dated/rate rule"),
         // U+10940 is a letter only in Unicode 17.0, so its `\b` exists only
-        // in Python 3.15; the next 3 hold only in Python 3.14.8, where
-        // U+10940 and U+A7F1 are not letters and U+A7F1 does not normalise.
+        // in Python 3.15; the remaining cases hold only in Python 3.14.8,
+        // where U+10940 and U+A7F1 are not letters, U+A7F1 does not normalise,
+        // and Unicode 17.0 combining marks (U+1E6E3, U+1ACF, U+10EFA) are
+        // unassigned combining-class-0 barriers that block reordering and
+        // composition across them.
         ("sk_abcdefghijk-\u{10940}".to_owned(), "API credential"),
         ("\u{10940}sk_abcdefghijklmnop".to_owned(), "API credential"),
         ("sk_abcdefghijklmnop\u{10940}".to_owned(), "API credential"),
         ("x\u{A7F1}sk_abcdefghijklmnop".to_owned(), "API credential"),
+        (
+            "sk_abcdefghijka\u{1E6E3}\u{0323}".to_owned(),
+            "API credential",
+        ),
+        (
+            "sk_abcdefghijka\u{1ACF}\u{0323}".to_owned(),
+            "API credential",
+        ),
+        (
+            "sk_abcdefghijkc\u{10EFA}\u{0327}".to_owned(),
+            "API credential",
+        ),
+        (
+            "sk_abcdefghijka&#x1E6E3;&#x0323;".to_owned(),
+            "API credential",
+        ),
     ] {
         let error = v::check_sensitive_content(&text, &[])
             .unwrap_err()
@@ -138,6 +157,7 @@ fn unicode_17_spellings_are_refused_where_python_3_14_or_3_15_refuses_them() {
         format!("x{one}"),
         format!("sk_abcdef{one}"),
         "sk_abcdef\u{10940}".to_owned(),
+        "sk_abcdefghijka\u{0323}\u{1E6E3}".to_owned(),
     ] {
         assert!(v::check_sensitive_content(&text, &[]).is_ok(), "{text:?}");
     }

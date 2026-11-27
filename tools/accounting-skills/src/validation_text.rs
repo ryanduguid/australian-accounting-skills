@@ -7,9 +7,8 @@ use std::{fs, path::Path, sync::LazyLock};
 use unicode_normalization::UnicodeNormalization;
 
 /// The code points Python 3.15's `\w` (Unicode 17.0) matches that the regex
-/// crate's Unicode 16.0 `[\p{L}\p{N}_]` lacks: 4,657 in all. They include
-/// every code point the 2 versions read differently: U+A7F1, the only NFKC
-/// change, and the Tolong Siki digits U+11DE0 to U+11DE9.
+/// crate's Unicode 16.0 `[\p{L}\p{N}_]` lacks: 4,657 in all, including U+A7F1
+/// and the Tolong Siki digits U+11DE0 to U+11DE9.
 const UNICODE_17_WORD: &[(u32, u32)] = &[
     (0x088F, 0x088F),
     (0x0C5C, 0x0C5C),
@@ -37,6 +36,22 @@ const UNICODE_17_WORD: &[(u32, u32)] = &[
     (0x2B73A, 0x2B73F),
     (0x2CEA2, 0x2CEAD),
     (0x323B0, 0x33479),
+];
+
+/// The 35 code points whose NFKC decomposition (U+A7F1) or canonical combining
+/// class (34 combining marks) was added in Unicode 17.0. Every one is
+/// unassigned in Unicode 16.0 (combining class 0, no decomposition or
+/// composition), so it stays put there and nothing reorders or composes
+/// across it.
+const UNICODE_17_NFKC: &[(u32, u32)] = &[
+    (0x1ACF, 0x1ADD),
+    (0x1AE0, 0x1AEB),
+    (0xA7F1, 0xA7F1),
+    (0x10EFA, 0x10EFB),
+    (0x1E6E3, 0x1E6E3),
+    (0x1E6E6, 0x1E6E6),
+    (0x1E6EE, 0x1E6EF),
+    (0x1E6F5, 0x1E6F5),
 ];
 
 /// Translates a Python pattern as Python 3.14 (Unicode 16.0) reads it, or as
@@ -158,16 +173,24 @@ pub fn normalise(text: &str) -> Result<String> {
     normalise_as(text, true)
 }
 
-/// NFKC as Python 3.15 applies it, or as Python 3.14 does: Unicode 16.0 has
-/// no U+A7F1, so it stays put and nothing composes across it.
+/// NFKC as Python 3.15 applies it, or as Python 3.14 does: every code point
+/// in `UNICODE_17_NFKC` is unassigned in Unicode 16.0, so it stays put and
+/// nothing reorders or composes across it.
 fn nfkc(text: &str, unicode_17: bool) -> String {
     if unicode_17 {
         return text.nfkc().collect();
     }
-    text.split('\u{A7F1}')
-        .map(|part| part.nfkc().collect::<String>())
-        .collect::<Vec<_>>()
-        .join("\u{A7F1}")
+    let mut out = String::with_capacity(text.len());
+    let mut start = 0;
+    for (index, c) in text.char_indices() {
+        if within(c, UNICODE_17_NFKC) {
+            out.extend(text[start..index].nfkc());
+            out.push(c);
+            start = index + c.len_utf8();
+        }
+    }
+    out.extend(text[start..].nfkc());
+    out
 }
 
 fn normalise_as(text: &str, unicode_17: bool) -> Result<String> {
@@ -215,9 +238,10 @@ pub fn sensitive(text: &str, waived: &[String]) -> Result<()> {
     static DATED: LazyLock<Both> = LazyLock::new(|| both(data::DATED_RULE));
     let old = normalise_as(text, false)?;
     let new = normalise_as(text, true)?;
-    // Without a code point the 2 versions read differently, both passes agree,
-    // so the Unicode 16.0 pass runs only when one is present.
-    let differs = old.chars().any(|c| within(c, UNICODE_17_WORD));
+    // Without a code point whose NFKC or regex class differs between the 2
+    // versions, both passes agree, so the Unicode 16.0 pass runs only when
+    // normalisation changed or a Unicode 17.0 word character is present.
+    let differs = old != new || old.chars().any(|c| within(c, UNICODE_17_WORD));
     let matches = |regexes: &Both| -> Result<bool> {
         Ok(regexes[1].is_match(&new)? || (differs && regexes[0].is_match(&old)?))
     };

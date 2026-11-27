@@ -179,12 +179,14 @@ class ContributorCheckTests(unittest.TestCase):
             "tools/accounting-skills/Cargo.toml",
             "tools/accounting-skills/rust-toolchain.toml",
             "tools/accounting-skills/src/validation.rs",
+            "tools/accounting-skills/src/validation_text.rs",
         ]
         self.assertIn("CLAUDE.md", inputs)
         for path in inputs:
             with self.subTest(path=path):
                 self.assertTrue((REPOSITORY / path).is_file(), path)
                 self.assertRegex(path, files)
+        self.assertRegex("validation/.gitignore", files)
         for path in ("README.md", "docs/EVAL.md", "tools/accounting-skills/README.md"):
             with self.subTest(path=path):
                 self.assertNotRegex(path, files)
