@@ -6,7 +6,7 @@ These skills describe how an agent should work through an Australian accounting 
 
 - Keep client data out of the repository. The `.gitignore` blocks `input/`, `output/`, `clients/`, `exports/` and the common export extensions, including `.aba`, `.myox`, `.ofx` and `.qif`.
 - Fabricate your examples. An entity name, ABN or balance set lifted from real work is client data however realistic it looks.
-- Do not use a redacted or de-identified client export as a fixture. Create every fixture from scratch and run `python scripts/validate_validation.py` before committing it.
+- Do not use a redacted or de-identified client export as a fixture. Create every fixture from scratch and run `cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation` before committing it.
 
 ## Writing a skill
 
@@ -24,7 +24,7 @@ when editing either root file.
 
 ## Local verification
 
-Python 3.14 or newer, and Rust 1.99 or newer for the coverage check. Install
+Python 3.14 or newer, and Rust 1.99 or newer for the validation-pack, coverage and citation checks. Install
 the pinned test dependency, Pyright and Ruff first, and put ShellCheck 0.11.0
 and actionlint 1.7.12 on the path:
 
@@ -35,16 +35,16 @@ python -m pyright
 shellcheck -x scripts/*.sh
 actionlint
 python -m unittest discover -s tests -v
-python scripts/validate_validation.py
 python tests/verify_skills_cli.py
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
 ```
 
 Those 9 checks are the gates `.github/workflows/verify.yml` runs in its
 `lint`, `verify` and `native` jobs. Ruff, Pyright, ShellCheck and actionlint
-run in its `lint` job, then 3 verification checks run on Python 3.14 and 3.15,
-and the coverage and citation checks run in its `native` job.
+run in its `lint` job, then 2 verification checks run on Python 3.14 and 3.15,
+and the validation-pack, coverage and citation checks run in its `native` job.
 `python tests/verify_skills_cli.py` needs `npx` and compares the
 reported skill names from the CLI with the skill directories in the current tree.
 

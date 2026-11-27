@@ -419,7 +419,7 @@ then run from the repository root:
 
 ```powershell
 git add -- validation scripts/validate_validation.py tests/test_validation_pack.py
-python scripts/validate_validation.py
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation
 python -m unittest discover -s tests -v
 git diff --check
 ```

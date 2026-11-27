@@ -24,13 +24,16 @@ GATE_HOOKS = {
     "shellcheck -x scripts/*.sh": "shellcheck",
     "actionlint": "actionlint",
     "python -m unittest discover -s tests -v": "unittest",
-    "python scripts/validate_validation.py": "validation-pack",
     "python tests/verify_skills_cli.py": "skills-cli-discovery",
 }
-# The coverage matrix and citation checks are native, so CI runs them in the
+# The validation pack, coverage matrix and citation checks are native, so CI runs them in the
 # native job, which the gate map does not read. Each hook id maps to its local
 # command and the command the native job runs.
 NATIVE_CHECKS = {
+    "validation-pack": (
+        "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation",
+        'accounting-skills validate-validation --root "$GITHUB_WORKSPACE"',
+    ),
     "coverage-matrix": (
         "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check",
         'accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check',
@@ -86,7 +89,7 @@ class ContributorCheckTests(unittest.TestCase):
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
         self.assertIn("python -m pyright", gates)
-        self.assertEqual(len(gates), 7)
+        self.assertEqual(len(gates), 6)
         for gate in gates:
             with self.subTest(gate=gate):
                 self.assertNotIn("pip install", gate)
