@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -158,6 +159,35 @@ class ContributorCheckTests(unittest.TestCase):
         hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
         section_list = next((REPOSITORY / "tools" / "accounting-skills" / "section-index").glob("*.txt"))
         self.assertRegex(section_list.relative_to(REPOSITORY).as_posix(), hooks["citations"]["files"])
+
+    def test_the_validation_pack_hook_runs_when_an_input_changes(self) -> None:
+        """validate-validation reads these and its SUPPORT list, so a commit touching one must run it."""
+        config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
+        hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
+        files = hooks["validation-pack"]["files"]
+        source = (REPOSITORY / "tools/accounting-skills/src/validation.rs").read_text(encoding="utf-8")
+        support = re.search(r"const SUPPORT: &\[&str\] = &\[(.*?)\];", source, re.S)
+        assert support is not None
+        inputs = [
+            *re.findall(r'"([^"]+)"', support.group(1)),
+            ".claude-plugin/marketplace.json",
+            ".claude/skills/bas-preparation/SKILL.md",
+            ".gitignore",
+            "docs/skill-catalogue.md",
+            "validation/README.md",
+            "tools/accounting-skills/Cargo.lock",
+            "tools/accounting-skills/Cargo.toml",
+            "tools/accounting-skills/rust-toolchain.toml",
+            "tools/accounting-skills/src/validation.rs",
+        ]
+        self.assertIn("CLAUDE.md", inputs)
+        for path in inputs:
+            with self.subTest(path=path):
+                self.assertTrue((REPOSITORY / path).is_file(), path)
+                self.assertRegex(path, files)
+        for path in ("README.md", "docs/EVAL.md", "tools/accounting-skills/README.md"):
+            with self.subTest(path=path):
+                self.assertNotRegex(path, files)
 
     def test_every_guide_gives_the_jobs_and_floors_verify_gates_needs(self) -> None:
         """verify-gates needs these jobs, so their floors are gates a contributor must meet too."""

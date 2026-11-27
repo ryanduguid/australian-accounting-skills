@@ -9,9 +9,13 @@ use unicode_normalization::UnicodeNormalization;
 pub fn pattern(text: &str) -> Regex {
     let word = r"[\p{L}\p{N}_]";
     let boundary = format!(r"(?:(?<={word})(?!{word})|(?<!{word})(?={word}))");
+    // Python 3.15's `\d` (Unicode 17.0) also matches the Tolong Siki digits
+    // U+11DE0 to U+11DE9, which the regex crate's Unicode 16.0 tables lack.
+    // No pattern puts `\d` inside a bracket class, so the plain swap is safe.
     let mut text = text
         .replace(r"\b", &boundary)
-        .replace(r"\s", r"[\s\x1c-\x1f]");
+        .replace(r"\s", r"[\s\x1c-\x1f]")
+        .replace(r"\d", "[\\d\u{11DE0}-\u{11DE9}]");
     if text.starts_with("(?i)") {
         text = text.replace("[A-Z", "[A-Zİı").replace("[a-z", "[a-zİı");
     }

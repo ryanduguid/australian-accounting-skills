@@ -42,7 +42,7 @@ updates:
     cooldown:
       default-days: 7
     ignore:
-      # Pinned so its Unicode 16.0 tables match Python 3.14's normalisation.
+      # Pinned so its Unicode 17.0 tables match Python 3.15's normalisation.
       # A newer release changes the Unicode version and must be requalified
       # against the Python version the comparisons run. Security updates
       # still arrive, for that requalification.

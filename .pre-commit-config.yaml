@@ -67,7 +67,10 @@ repos:
         entry: cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation
         language: system
         pass_filenames: false
-        files: ^(validation/|\.claude/skills/|\.claude-plugin/|docs/skill-catalogue\.md|tools/accounting-skills/src/)
+        # Everything validate-validation reads or checks is tracked (its
+        # SUPPORT list included), the .gitignore files behind its
+        # check-ignore call and the crate's build inputs.
+        files: ^(validation/|\.claude/skills/|\.claude/rules/accounting-safety\.md$|\.claude-plugin/|docs/skill-catalogue\.md$|CLAUDE\.md$|scripts/(strict_yaml|validate_validation)\.py$|tests/test_validation_pack\.py$|tools/accounting-skills/(src/|Cargo\.(toml|lock)$|rust-toolchain\.toml$)|(.*/)?\.gitignore$)
 
       - id: skills-cli-discovery
         name: Skills CLI discovery

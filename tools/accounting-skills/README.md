@@ -411,7 +411,9 @@ It requires Git, with no Python runtime or network access.
 
 Privacy checks preserve HTML decoding, Unicode NFKC, format-character removal,
 visible Markdown variants and Python-compatible regex boundaries. The pinned
-unicode-normalization 0.1.24 tables match Python 3.14's Unicode 16.0. The frozen
+unicode-normalization 0.1.25 tables match Python 3.15's Unicode 17.0, and `\d`
+adds the Unicode 17.0 digits the regex crate's Unicode 16.0 tables lack, so the
+check refuses everything Python 3.15 refuses (U+A7F1 normalises to `S`). The frozen
 HTML entity and character tables derive from Python 3.14; PYTHON-LICENSE.txt
 contains their PSF licence. yaml-rust2 supplies strict YAML events and tokens.
 Card aliases, anchors, tags and duplicate keys are refused.
