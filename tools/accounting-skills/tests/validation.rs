@@ -96,6 +96,74 @@ fn rendered_private_patterns_remain_visible_and_waivers_are_specific() {
 }
 
 #[test]
+fn unicode_17_spellings_are_refused_where_python_3_14_or_3_15_refuses_them() {
+    // Each refusal is a verdict from scripts/validate_validation.py under
+    // CPython 3.15.0 (Unicode 17.0) or 3.14.8 (Unicode 16.0), and each pass
+    // holds under both. U+A7F1 normalises to `S` in 3.15; U+11DE0 to U+11DE9
+    // are digits there.
+    let digits: String = ('\u{11DE0}'..='\u{11DE9}').collect();
+    let one = '\u{11DE1}';
+    for (text, label) in [
+        (
+            "\u{A7F1}k_abcdef**ghijkl**mnop".to_owned(),
+            "API credential",
+        ),
+        ("\u{A7F1}k_abcdefghijklmnop".to_owned(), "API credential"),
+        (format!("BSB {one}"), "BSB or bank account"),
+        (format!("TFN {one}"), "labelled Australian identifier"),
+        (format!("phone {one}"), "phone number"),
+        (
+            digits.chars().cycle().take(12).collect(),
+            "unlabelled long numeric identifier",
+        ),
+        (
+            digits.chars().take(8).collect(),
+            "unlabelled long numeric identifier",
+        ),
+        (format!("effective {one}%"), "dated/rate rule"),
+        // U+10940 is a letter only in Unicode 17.0, so its `\b` exists only
+        // in Python 3.15; the remaining cases hold only in Python 3.14.8,
+        // where U+10940 and U+A7F1 are not letters, U+A7F1 does not normalise,
+        // and Unicode 17.0 combining marks (U+1E6E3, U+1ACF, U+10EFA) are
+        // unassigned combining-class-0 barriers that block reordering and
+        // composition across them.
+        ("sk_abcdefghijk-\u{10940}".to_owned(), "API credential"),
+        ("\u{10940}sk_abcdefghijklmnop".to_owned(), "API credential"),
+        ("sk_abcdefghijklmnop\u{10940}".to_owned(), "API credential"),
+        ("x\u{A7F1}sk_abcdefghijklmnop".to_owned(), "API credential"),
+        (
+            "sk_abcdefghijka\u{1E6E3}\u{0323}".to_owned(),
+            "API credential",
+        ),
+        (
+            "sk_abcdefghijka\u{1ACF}\u{0323}".to_owned(),
+            "API credential",
+        ),
+        (
+            "sk_abcdefghijkc\u{10EFA}\u{0327}".to_owned(),
+            "API credential",
+        ),
+        (
+            "sk_abcdefghijka&#x1E6E3;&#x0323;".to_owned(),
+            "API credential",
+        ),
+    ] {
+        let error = v::check_sensitive_content(&text, &[])
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains(label), "{text:?}: {error}");
+    }
+    for text in [
+        format!("x{one}"),
+        format!("sk_abcdef{one}"),
+        "sk_abcdef\u{10940}".to_owned(),
+        "sk_abcdefghijka\u{0323}\u{1E6E3}".to_owned(),
+    ] {
+        assert!(v::check_sensitive_content(&text, &[]).is_ok(), "{text:?}");
+    }
+}
+
+#[test]
 fn trial_provenance_does_not_upgrade_preparation_to_a_verdict() {
     let known = BTreeSet::from(["test-card".to_owned()]);
     let mut record = json!({"schema_version":2,"model":"fixture","run_date":"2026-01-31","skills_version":"fixture","runner":"A Person","input_mode":"task-only","status":"prepared","results":{},"provenance":{"test-card":{"input_sha256":"a".repeat(64),"context_sha256":"b".repeat(64),"rubric_sha256":"c".repeat(64)}}});

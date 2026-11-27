@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -24,13 +25,16 @@ GATE_HOOKS = {
     "shellcheck -x scripts/*.sh": "shellcheck",
     "actionlint": "actionlint",
     "python -m unittest discover -s tests -v": "unittest",
-    "python scripts/validate_validation.py": "validation-pack",
     "python tests/verify_skills_cli.py": "skills-cli-discovery",
 }
-# The coverage matrix and citation checks are native, so CI runs them in the
+# The validation pack, coverage matrix and citation checks are native, so CI runs them in the
 # native job, which the gate map does not read. Each hook id maps to its local
 # command and the command the native job runs.
 NATIVE_CHECKS = {
+    "validation-pack": (
+        "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation",
+        'accounting-skills validate-validation --root "$GITHUB_WORKSPACE"',
+    ),
     "coverage-matrix": (
         "cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check",
         'accounting-skills build-coverage --root "$GITHUB_WORKSPACE" --check',
@@ -86,7 +90,7 @@ class ContributorCheckTests(unittest.TestCase):
         """A lint command dropped from a guide must fail here, not after hand-off."""
         gates = ci_gate_commands()
         self.assertIn("python -m pyright", gates)
-        self.assertEqual(len(gates), 7)
+        self.assertEqual(len(gates), 6)
         for gate in gates:
             with self.subTest(gate=gate):
                 self.assertNotIn("pip install", gate)
@@ -155,6 +159,37 @@ class ContributorCheckTests(unittest.TestCase):
         hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
         section_list = next((REPOSITORY / "tools" / "accounting-skills" / "section-index").glob("*.txt"))
         self.assertRegex(section_list.relative_to(REPOSITORY).as_posix(), hooks["citations"]["files"])
+
+    def test_the_validation_pack_hook_runs_when_an_input_changes(self) -> None:
+        """validate-validation reads these and its SUPPORT list, so a commit touching one must run it."""
+        config = yaml.safe_load(PRE_COMMIT_CONFIG.read_text(encoding="utf-8"))
+        hooks = {hook["id"]: hook for repo in config["repos"] for hook in repo["hooks"]}
+        files = hooks["validation-pack"]["files"]
+        source = (REPOSITORY / "tools/accounting-skills/src/validation.rs").read_text(encoding="utf-8")
+        support = re.search(r"const SUPPORT: &\[&str\] = &\[(.*?)\];", source, re.S)
+        assert support is not None
+        inputs = [
+            *re.findall(r'"([^"]+)"', support.group(1)),
+            ".claude-plugin/marketplace.json",
+            ".claude/skills/bas-preparation/SKILL.md",
+            ".gitignore",
+            "docs/skill-catalogue.md",
+            "validation/README.md",
+            "tools/accounting-skills/Cargo.lock",
+            "tools/accounting-skills/Cargo.toml",
+            "tools/accounting-skills/rust-toolchain.toml",
+            "tools/accounting-skills/src/validation.rs",
+            "tools/accounting-skills/src/validation_text.rs",
+        ]
+        self.assertIn("CLAUDE.md", inputs)
+        for path in inputs:
+            with self.subTest(path=path):
+                self.assertTrue((REPOSITORY / path).is_file(), path)
+                self.assertRegex(path, files)
+        self.assertRegex("validation/.gitignore", files)
+        for path in ("README.md", "docs/EVAL.md", "tools/accounting-skills/README.md"):
+            with self.subTest(path=path):
+                self.assertNotRegex(path, files)
 
     def test_every_guide_gives_the_jobs_and_floors_verify_gates_needs(self) -> None:
         """verify-gates needs these jobs, so their floors are gates a contributor must meet too."""

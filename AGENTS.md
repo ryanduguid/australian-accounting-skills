@@ -112,17 +112,17 @@ python -m pyright
 shellcheck -x scripts/*.sh
 actionlint
 python -m unittest discover -s tests -v
-python scripts/validate_validation.py
 python tests/verify_skills_cli.py
+cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- validate-validation
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- build-coverage --check
 cargo run --locked --manifest-path tools/accounting-skills/Cargo.toml -- check-citations
 git diff --check
 ```
 
-The 5 Python checks, ShellCheck, actionlint, the coverage check and the
-citation check are the gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
-actionlint 1.7.12 run in its `lint` job, then its `verify` job runs the 3
-Python verification checks on Python 3.14 and 3.15. The coverage and citation checks need Rust 1.99
+The 4 Python checks, ShellCheck, actionlint and the validation-pack, coverage and
+citation checks are the gates `.github/workflows/verify.yml` runs. Ruff, Pyright, ShellCheck 0.11.0 and
+actionlint 1.7.12 run in its `lint` job, then its `verify` job runs the 2
+Python verification checks on Python 3.14 and 3.15. The validation-pack, coverage and citation checks need Rust 1.99
 or newer; the `native` job runs the same commands on Linux and Windows. The
 citation check reports, by file and line, each section, ruling, determination
 or practice statement a skill cites without a record in its `sources.json`, and

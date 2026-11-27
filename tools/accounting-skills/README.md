@@ -87,12 +87,13 @@ commands in `scripts/` (see [PORTING.md](PORTING.md) for the held cutovers):
 
 | Python script | Native command |
 | --- | --- |
-| `validate_validation.py` | `validate-validation` |
 | `source_fetch_policy.py` | library used by `source-refresh` |
 | `source_refresh.py` | `source-refresh` |
 | `source_passages.py` | `source-passages` |
 | `strict_yaml.py` | card YAML within `validate-validation`, `prepare-trial` and `build-plugin-evals` |
 
+`validate-validation` has replaced `validate_validation.py` as the gate in CI
+and pre-commit; the script stays only as a test oracle and fuzz target.
 `strict_yaml.py` has no other script caller. Its remaining callers are the
 Python skill-metadata and entry-point tests, which stay with the Python suite.
 The native card reader is stricter than the shared factory: it also refuses
@@ -409,8 +410,14 @@ reparse points in the validation tree and never reads unexpected content files.
 It requires Git, with no Python runtime or network access.
 
 Privacy checks preserve HTML decoding, Unicode NFKC, format-character removal,
-visible Markdown variants and Python-compatible regex boundaries. The pinned
-unicode-normalization 0.1.24 tables match Python 3.14's Unicode 16.0. The frozen
+visible Markdown variants and Python-compatible regex boundaries. Each rule runs
+twice, as Python 3.14 (Unicode 16.0) and as Python 3.15 (Unicode 17.0) read it,
+and a match in either refuses the text: neither version's refusals contain the
+other's. The Unicode 17.0 pass takes NFKC from the pinned unicode-normalization
+0.1.25 (U+A7F1 normalises to `S`) and adds the Unicode 17.0 digits and letters
+the regex crate's Unicode 16.0 tables lack to `\d` and the word class; the
+Unicode 16.0 pass treats all 35 Unicode 17.0 NFKC and combining-class additions
+as unassigned barriers so nothing reorders or composes across them. The frozen
 HTML entity and character tables derive from Python 3.14; PYTHON-LICENSE.txt
 contains their PSF licence. yaml-rust2 supplies strict YAML events and tokens.
 Card aliases, anchors, tags and duplicate keys are refused.

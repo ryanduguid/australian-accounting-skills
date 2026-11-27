@@ -6,12 +6,72 @@ use fancy_regex::{Captures, Regex};
 use std::{fs, path::Path, sync::LazyLock};
 use unicode_normalization::UnicodeNormalization;
 
-pub fn pattern(text: &str) -> Regex {
-    let word = r"[\p{L}\p{N}_]";
+/// The code points Python 3.15's `\w` (Unicode 17.0) matches that the regex
+/// crate's Unicode 16.0 `[\p{L}\p{N}_]` lacks: 4,657 in all, including U+A7F1
+/// and the Tolong Siki digits U+11DE0 to U+11DE9.
+const UNICODE_17_WORD: &[(u32, u32)] = &[
+    (0x088F, 0x088F),
+    (0x0C5C, 0x0C5C),
+    (0x0CDC, 0x0CDC),
+    (0xA7CE, 0xA7CF),
+    (0xA7D2, 0xA7D2),
+    (0xA7D4, 0xA7D4),
+    (0xA7F1, 0xA7F1),
+    (0x10940, 0x10959),
+    (0x10EC5, 0x10EC7),
+    (0x11DB0, 0x11DDB),
+    (0x11DE0, 0x11DE9),
+    (0x16EA0, 0x16EB8),
+    (0x16EBB, 0x16ED3),
+    (0x16FF2, 0x16FF6),
+    (0x187F8, 0x187FF),
+    (0x18D09, 0x18D1E),
+    (0x18D80, 0x18DF2),
+    (0x1E6C0, 0x1E6DE),
+    (0x1E6E0, 0x1E6E2),
+    (0x1E6E4, 0x1E6E5),
+    (0x1E6E7, 0x1E6ED),
+    (0x1E6F0, 0x1E6F4),
+    (0x1E6FE, 0x1E6FF),
+    (0x2B73A, 0x2B73F),
+    (0x2CEA2, 0x2CEAD),
+    (0x323B0, 0x33479),
+];
+
+/// The 35 code points whose NFKC decomposition (U+A7F1) or canonical combining
+/// class (34 combining marks) was added in Unicode 17.0. Every one is
+/// unassigned in Unicode 16.0 (combining class 0, no decomposition or
+/// composition), so it stays put there and nothing reorders or composes
+/// across it.
+const UNICODE_17_NFKC: &[(u32, u32)] = &[
+    (0x1ACF, 0x1ADD),
+    (0x1AE0, 0x1AEB),
+    (0xA7F1, 0xA7F1),
+    (0x10EFA, 0x10EFB),
+    (0x1E6E3, 0x1E6E3),
+    (0x1E6E6, 0x1E6E6),
+    (0x1E6EE, 0x1E6EF),
+    (0x1E6F5, 0x1E6F5),
+];
+
+/// Translates a Python pattern as Python 3.14 (Unicode 16.0) reads it, or as
+/// Python 3.15 (Unicode 17.0) does when `unicode_17` is set.
+pub fn pattern(text: &str, unicode_17: bool) -> Regex {
+    let (extra_word, digit) = if unicode_17 {
+        // Python 3.15's `\d` also matches the Tolong Siki digits. No pattern
+        // puts `\d` inside a bracket class, so the plain swap is safe.
+        let ranges = UNICODE_17_WORD.iter();
+        let extra = ranges.map(|(a, b)| format!(r"\x{{{a:X}}}-\x{{{b:X}}}"));
+        (extra.collect(), "[\\d\u{11DE0}-\u{11DE9}]")
+    } else {
+        (String::new(), r"\d")
+    };
+    let word = format!(r"[\p{{L}}\p{{N}}_{extra_word}]");
     let boundary = format!(r"(?:(?<={word})(?!{word})|(?<!{word})(?={word}))");
     let mut text = text
         .replace(r"\b", &boundary)
-        .replace(r"\s", r"[\s\x1c-\x1f]");
+        .replace(r"\s", r"[\s\x1c-\x1f]")
+        .replace(r"\d", digit);
     if text.starts_with("(?i)") {
         text = text.replace("[A-Z", "[A-Zİı").replace("[a-z", "[a-zİı");
     }
@@ -110,14 +170,38 @@ pub fn unescape_checked(text: &str) -> Result<String> {
 }
 
 pub fn normalise(text: &str) -> Result<String> {
+    normalise_as(text, true)
+}
+
+/// NFKC as Python 3.15 applies it, or as Python 3.14 does: every code point
+/// in `UNICODE_17_NFKC` is unassigned in Unicode 16.0, so it stays put and
+/// nothing reorders or composes across it.
+fn nfkc(text: &str, unicode_17: bool) -> String {
+    if unicode_17 {
+        return text.nfkc().collect();
+    }
+    let mut out = String::with_capacity(text.len());
+    let mut start = 0;
+    for (index, c) in text.char_indices() {
+        if within(c, UNICODE_17_NFKC) {
+            out.extend(text[start..index].nfkc());
+            out.push(c);
+            start = index + c.len_utf8();
+        }
+    }
+    out.extend(text[start..].nfkc());
+    out
+}
+
+fn normalise_as(text: &str, unicode_17: bool) -> Result<String> {
     static MARKUP: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"(?s)<!--.*?-->|<[^>]*>").unwrap());
     static INLINE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"!?\[([^\]\r\n]*)\]\((?:<[^>\r\n]+>|[^)\r\n]+)\)").unwrap());
     static REFERENCE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"!?\[([^\]\r\n]*)\]\[[^\]\r\n]*\]").unwrap());
-    let decoded: String = unescape_checked(text)?
-        .nfkc()
+    let decoded: String = nfkc(&unescape_checked(text)?, unicode_17)
+        .chars()
         .filter(|&c| !within(c, data::FORMATS))
         .collect();
     let visible = MARKUP.replace_all(&decoded, "");
@@ -138,21 +222,35 @@ pub fn normalise(text: &str) -> Result<String> {
     .join("\n::scan-variant-boundary::\n"))
 }
 
+/// Refuses what Python 3.14 or Python 3.15 refuses: their Unicode tables
+/// differ, and neither one's verdicts contain the other's.
 pub fn sensitive(text: &str, waived: &[String]) -> Result<()> {
-    static RULES: LazyLock<Vec<(&str, Regex)>> = LazyLock::new(|| {
+    type Both = [Regex; 2];
+    fn both(text: &str) -> Both {
+        [pattern(text, false), pattern(text, true)]
+    }
+    static RULES: LazyLock<Vec<(&str, Both)>> = LazyLock::new(|| {
         data::SENSITIVE
             .iter()
-            .map(|&(label, text)| (label, pattern(text)))
+            .map(|&(label, text)| (label, both(text)))
             .collect()
     });
-    static DATED: LazyLock<Regex> = LazyLock::new(|| pattern(data::DATED_RULE));
-    let text = normalise(text)?;
-    for (label, regex) in RULES.iter() {
-        if !waived.iter().any(|item| item == label) && regex.is_match(&text)? {
+    static DATED: LazyLock<Both> = LazyLock::new(|| both(data::DATED_RULE));
+    let old = normalise_as(text, false)?;
+    let new = normalise_as(text, true)?;
+    // Without a code point whose NFKC or regex class differs between the 2
+    // versions, both passes agree, so the Unicode 16.0 pass runs only when
+    // normalisation changed or a Unicode 17.0 word character is present.
+    let differs = old != new || old.chars().any(|c| within(c, UNICODE_17_WORD));
+    let matches = |regexes: &Both| -> Result<bool> {
+        Ok(regexes[1].is_match(&new)? || (differs && regexes[0].is_match(&old)?))
+    };
+    for (label, regexes) in RULES.iter() {
+        if !waived.iter().any(|item| item == label) && matches(regexes)? {
             return Err(format!("possible {label}").into());
         }
     }
-    if DATED.is_match(&text)? {
+    if matches(&DATED)? {
         return Err("embeds a dated/rate rule instead of a live-source check".into());
     }
     Ok(())
