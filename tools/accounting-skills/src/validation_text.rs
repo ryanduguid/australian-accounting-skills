@@ -6,16 +6,36 @@ use fancy_regex::{Captures, Regex};
 use std::{fs, path::Path, sync::LazyLock};
 use unicode_normalization::UnicodeNormalization;
 
-pub fn pattern(text: &str) -> Regex {
-    let word = r"[\p{L}\p{N}_]";
+/// The code points Python 3.15's `\w` (Unicode 17.0) matches that the regex
+/// crate's Unicode 16.0 `[\p{L}\p{N}_]` lacks: 4,657 in all. Without them a
+/// `\b` before a new letter vanishes, so `sk_abcdefghijk-` followed by
+/// U+10940 would pass where Python refuses it.
+const UNICODE_17_WORD: &str = concat!(
+    r"\x{088F}\x{0C5C}\x{0CDC}\x{A7CE}-\x{A7CF}\x{A7D2}\x{A7D4}\x{A7F1}",
+    r"\x{10940}-\x{10959}\x{10EC5}-\x{10EC7}\x{11DB0}-\x{11DDB}\x{11DE0}-\x{11DE9}",
+    r"\x{16EA0}-\x{16EB8}\x{16EBB}-\x{16ED3}\x{16FF2}-\x{16FF6}\x{187F8}-\x{187FF}",
+    r"\x{18D09}-\x{18D1E}\x{18D80}-\x{18DF2}\x{1E6C0}-\x{1E6DE}\x{1E6E0}-\x{1E6E2}",
+    r"\x{1E6E4}-\x{1E6E5}\x{1E6E7}-\x{1E6ED}\x{1E6F0}-\x{1E6F4}\x{1E6FE}-\x{1E6FF}",
+    r"\x{2B73A}-\x{2B73F}\x{2CEA2}-\x{2CEAD}\x{323B0}-\x{33479}",
+);
+
+/// Translates a Python pattern as Python 3.14 (Unicode 16.0) reads it, or as
+/// Python 3.15 (Unicode 17.0) does when `unicode_17` is set.
+pub fn pattern(text: &str, unicode_17: bool) -> Regex {
+    let (extra_word, digit) = if unicode_17 {
+        // Python 3.15's `\d` also matches the Tolong Siki digits U+11DE0 to
+        // U+11DE9. No pattern puts `\d` inside a bracket class, so the plain
+        // swap is safe.
+        (UNICODE_17_WORD, "[\\d\u{11DE0}-\u{11DE9}]")
+    } else {
+        ("", r"\d")
+    };
+    let word = format!(r"[\p{{L}}\p{{N}}_{extra_word}]");
     let boundary = format!(r"(?:(?<={word})(?!{word})|(?<!{word})(?={word}))");
-    // Python 3.15's `\d` (Unicode 17.0) also matches the Tolong Siki digits
-    // U+11DE0 to U+11DE9, which the regex crate's Unicode 16.0 tables lack.
-    // No pattern puts `\d` inside a bracket class, so the plain swap is safe.
     let mut text = text
         .replace(r"\b", &boundary)
         .replace(r"\s", r"[\s\x1c-\x1f]")
-        .replace(r"\d", "[\\d\u{11DE0}-\u{11DE9}]");
+        .replace(r"\d", digit);
     if text.starts_with("(?i)") {
         text = text.replace("[A-Z", "[A-Zİı").replace("[a-z", "[a-zİı");
     }
@@ -114,14 +134,30 @@ pub fn unescape_checked(text: &str) -> Result<String> {
 }
 
 pub fn normalise(text: &str) -> Result<String> {
+    normalise_as(text, true)
+}
+
+/// NFKC as Python 3.15 applies it, or as Python 3.14 does: Unicode 16.0 has
+/// no U+A7F1, so it stays put and nothing composes across it.
+fn nfkc(text: &str, unicode_17: bool) -> String {
+    if unicode_17 {
+        return text.nfkc().collect();
+    }
+    text.split('\u{A7F1}')
+        .map(|part| part.nfkc().collect::<String>())
+        .collect::<Vec<_>>()
+        .join("\u{A7F1}")
+}
+
+fn normalise_as(text: &str, unicode_17: bool) -> Result<String> {
     static MARKUP: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"(?s)<!--.*?-->|<[^>]*>").unwrap());
     static INLINE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"!?\[([^\]\r\n]*)\]\((?:<[^>\r\n]+>|[^)\r\n]+)\)").unwrap());
     static REFERENCE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"!?\[([^\]\r\n]*)\]\[[^\]\r\n]*\]").unwrap());
-    let decoded: String = unescape_checked(text)?
-        .nfkc()
+    let decoded: String = nfkc(&unescape_checked(text)?, unicode_17)
+        .chars()
         .filter(|&c| !within(c, data::FORMATS))
         .collect();
     let visible = MARKUP.replace_all(&decoded, "");
@@ -142,21 +178,30 @@ pub fn normalise(text: &str) -> Result<String> {
     .join("\n::scan-variant-boundary::\n"))
 }
 
+/// Refuses what Python 3.14 or Python 3.15 refuses: their Unicode tables
+/// differ, and neither one's verdicts contain the other's.
 pub fn sensitive(text: &str, waived: &[String]) -> Result<()> {
-    static RULES: LazyLock<Vec<(&str, Regex)>> = LazyLock::new(|| {
+    type Both = [Regex; 2];
+    fn both(text: &str) -> Both {
+        [pattern(text, false), pattern(text, true)]
+    }
+    static RULES: LazyLock<Vec<(&str, Both)>> = LazyLock::new(|| {
         data::SENSITIVE
             .iter()
-            .map(|&(label, text)| (label, pattern(text)))
+            .map(|&(label, text)| (label, both(text)))
             .collect()
     });
-    static DATED: LazyLock<Regex> = LazyLock::new(|| pattern(data::DATED_RULE));
-    let text = normalise(text)?;
-    for (label, regex) in RULES.iter() {
-        if !waived.iter().any(|item| item == label) && regex.is_match(&text)? {
+    static DATED: LazyLock<Both> = LazyLock::new(|| both(data::DATED_RULE));
+    let texts = [normalise_as(text, false)?, normalise_as(text, true)?];
+    let matches = |regexes: &Both| -> Result<bool> {
+        Ok(regexes[0].is_match(&texts[0])? || regexes[1].is_match(&texts[1])?)
+    };
+    for (label, regexes) in RULES.iter() {
+        if !waived.iter().any(|item| item == label) && matches(regexes)? {
             return Err(format!("possible {label}").into());
         }
     }
-    if DATED.is_match(&text)? {
+    if matches(&DATED)? {
         return Err("embeds a dated/rate rule instead of a live-source check".into());
     }
     Ok(())
