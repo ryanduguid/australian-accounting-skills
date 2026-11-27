@@ -112,24 +112,58 @@ jobs:
       - name: File the result
         if: needs.sweep.outputs.outcome == 'findings'
         env:
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          MARKER: "<!-- source-sweep continuation -->"
         run: |
-          # GitHub refuses an issue body over 65,536 characters: keep whole
-          # lines up to 60,000 and link the full report artifact.
-          if [ "$(wc -c < sweep.md)" -gt 60000 ]; then
-            awk -v max=60000 '{ n += length($0) + 1; if (n > max) exit; print }' sweep.md > body.md
-            printf '\n---\n\nReport truncated. The full report is the source-sweep artifact of [this run](%s).\n' "$RUN_URL" >> body.md
-            mv body.md sweep.md
+          # GitHub refuses an issue body or comment over 65,536 characters,
+          # and the run artifact expires. So the body keeps whole lines up to
+          # 60,000 bytes and each further 60,000 goes into a marked comment
+          # that repeats the table header: every row stays on the issue.
+          header=$(grep -n -m 1 '^| Outcome |' sweep.md | cut -d: -f1 || true)
+          awk -v max=60000 -v head="${header:-0}" -v marker="$MARKER" '
+            NR == head { h1 = $0 }
+            NR == head + 1 { h2 = $0 }
+            BEGIN { out = "part-0.md" }
+            {
+              size = length($0) + 1
+              if (n + size > max) {
+                close(out)
+                part++
+                out = "part-" part ".md"
+                print marker > out
+                n = length(marker) + 1
+                if (h1 != "" && NR > head + 1) {
+                  print h1 > out
+                  print h2 > out
+                  n += length(h1) + length(h2) + 2
+                }
+              }
+              print > out
+              n += size
+            }' sweep.md
+          if [ -f part-1.md ]; then
+            printf '\nThe report continues in the comments below.\n' >> part-0.md
           fi
           existing=$(gh issue list --state open --search "$TITLE in:title" \
             --json number,title \
             --jq "[.[] | select(.title == env.TITLE) | .number] | first // empty")
           if [ -n "$existing" ]; then
-            gh issue edit "$existing" --body-file sweep.md
+            gh issue edit "$existing" --body-file part-0.md
             echo "Updated issue #$existing"
+            # The last run's continuation comments describe an older sweep.
+            gh api --paginate "repos/$GH_REPO/issues/$existing/comments" \
+              --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith(env.MARKER))) | .id' |
+              while read -r id; do
+                gh api --method DELETE "repos/$GH_REPO/issues/comments/$id"
+              done
           else
-            gh issue create --title "$TITLE" --body-file sweep.md --label monitoring
+            url=$(gh issue create --title "$TITLE" --body-file part-0.md --label monitoring)
+            existing=${url##*/}
           fi
+          part=1
+          while [ -f "part-$part.md" ]; do
+            gh issue comment "$existing" --body-file "part-$part.md"
+            part=$((part + 1))
+          done
 
       - name: Close the issue when nothing here needs an edit
         if: needs.sweep.outputs.outcome == 'clean'

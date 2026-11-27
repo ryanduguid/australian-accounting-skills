@@ -12,7 +12,10 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -20,6 +23,8 @@ from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timezone
 from pathlib import Path
 from unittest import mock
+
+import yaml
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY / "scripts"))
@@ -197,6 +202,78 @@ class WorkflowTests(unittest.TestCase):
         self.assertTrue(creates)
         for line in creates:
             self.assertIn("--label monitoring", line)
+
+
+# Stands in for gh: logs each call, keeps each body file it is given, and
+# answers the issue lookup, issue creation and comment listing.
+FAKE_GH = """#!/usr/bin/env bash
+printf '%s\\n' "$*" >> "$GH_LOG"
+for arg in "$@"; do
+  if [ "$take" = 1 ]; then cp "$arg" "$BODIES/$(ls "$BODIES" | wc -l).md"; fi
+  take=0; [ "$arg" = --body-file ] && take=1
+done
+case "$1 $2" in
+  "issue list") printf '%s\\n' "$EXISTING" ;;
+  "issue create") echo https://github.com/o/r/issues/77 ;;
+  "api --paginate") printf '7\\n8\\n' ;;
+esac
+"""
+
+
+@unittest.skipUnless(shutil.which("bash") and shutil.which("awk"), "needs bash and awk")
+class IssueFilingTests(unittest.TestCase):
+    """Every report row must reach the issue, which outlives the run artifact."""
+
+    MARKER = "<!-- source-sweep continuation -->"
+    HEADER = "| Outcome | Skill | Source | Reviewed | Upstream | Detail |\n| --- | --- | --- | --- | --- | --- |\n"
+
+    def file(self, report: str, existing: str) -> tuple[list[str], list[str]]:
+        workflow = yaml.safe_load((REPOSITORY / ".github/workflows/source-sweep.yml").read_text(encoding="utf-8"))
+        step = next(s for s in workflow["jobs"]["file"]["steps"] if s.get("name") == "File the result")
+        self.assertEqual(step["env"]["MARKER"], self.MARKER)
+        with tempfile.TemporaryDirectory() as directory:
+            work = Path(directory)
+            (work / "bin").mkdir()
+            (work / "bodies").mkdir()
+            (work / "bin/gh").write_text(FAKE_GH, encoding="utf-8", newline="\n")
+            (work / "bin/gh").chmod(0o755)
+            (work / "sweep.md").write_text(report, encoding="utf-8", newline="\n")
+            (work / "step.sh").write_text(step["run"], encoding="utf-8", newline="\n")
+            env = dict(os.environ, PATH=f"{work / 'bin'}{os.pathsep}{os.environ['PATH']}", MARKER=self.MARKER,
+                       GH_LOG=str(work / "gh.log"), BODIES=str(work / "bodies"), EXISTING=existing,
+                       TITLE="Primary source sweep", GH_REPO="o/r")
+            subprocess.run(["bash", "-e", "step.sh"], cwd=work, env=env, check=True, capture_output=True)
+            calls = (work / "gh.log").read_text(encoding="utf-8").splitlines()
+            bodies = sorted(work.joinpath("bodies").iterdir(), key=lambda path: int(path.stem))
+            return calls, [path.read_text(encoding="utf-8") for path in bodies]
+
+    def test_a_short_report_is_the_whole_body(self) -> None:
+        report = "# Primary source sweep\n\n" + self.HEADER + "| changed | `a` | [x](https://example.test) | d | d | d |\n"
+        calls, bodies = self.file(report, existing="12")
+        self.assertEqual(bodies, [report])
+        self.assertIn("issue edit 12 --body-file part-0.md", calls)
+        # The previous sweep's continuation comments go, and none replace them.
+        self.assertIn("api --method DELETE repos/o/r/issues/comments/7", calls)
+        self.assertIn("api --method DELETE repos/o/r/issues/comments/8", calls)
+        self.assertFalse([call for call in calls if call.startswith("issue comment")])
+
+    def test_a_long_report_continues_in_comments_without_losing_a_row(self) -> None:
+        rows = [f"| baseline-required | `skill-{n}` | [page {n}](https://example.test/{n}) | 2026-11-01 | not published | "
+                + "A readable content or destination baseline is missing. " * 3 + "|\n" for n in range(700)]
+        report = "# Primary source sweep\n\nSwept 700 records.\n\n" + self.HEADER + "".join(rows)
+        calls, bodies = self.file(report, existing="")
+        self.assertGreater(len(bodies), 2)
+        self.assertIn("issue create --title Primary source sweep --body-file part-0.md --label monitoring", calls)
+        comments = [call for call in calls if call.startswith("issue comment")]
+        self.assertEqual(comments, [f"issue comment 77 --body-file part-{n}.md" for n in range(1, len(bodies))])
+        self.assertTrue(bodies[0].endswith("\nThe report continues in the comments below.\n"))
+        kept = bodies[0].removesuffix("\nThe report continues in the comments below.\n")
+        for body in bodies:
+            self.assertLessEqual(len(body.encode("utf-8")), 60100)
+        for body in bodies[1:]:
+            self.assertTrue(body.startswith(self.MARKER + "\n" + self.HEADER))
+            kept += body.removeprefix(self.MARKER + "\n" + self.HEADER)
+        self.assertEqual(kept, report)
 
 
 if __name__ == "__main__":
