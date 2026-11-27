@@ -51,10 +51,10 @@ Any agent that reads `SKILL.md`, from a separate project directory:
 
 ```bash
 git clone --branch v0.8.1 --depth 1 https://github.com/ryanduguid/australian-accounting-skills.git accounting-skills-release
-npx --yes skills@1.5.22 add ./accounting-skills-release --agent codex claude-code --skill '*' --yes --copy
+npx --yes skills@1.5.22 add ./accounting-skills-release --agent claude-code codex --skill '*' --yes --copy
 ```
 
-That copies the 112 skills into the current project's Codex and Claude Code directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone when tested on v0.7.0 on Linux on 15 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). Any MCP client that starts a local server can reach the skills through [`accounting-skills serve-mcp`](docs/installation.md#any-mcp-client-through-a-local-server), included in v0.8.0 and later source checkouts (`cargo install`). [Installation](docs/installation.md) covers manual copying, removal and versioning.
+That copies the 112 skills into the current project's Claude Code and Codex directories and leaves global installations alone. For OpenCode, use `--agent opencode`. To install one skill by name, use `--skill bas-preparation` in place of `--skill '*'`, which copied that skill alone when tested on v0.7.0 on Linux on 15 November 2026. To use Claude.ai or the desktop app, [upload one skill at a time](docs/installation.md#claudeai-or-the-claude-desktop-app-without-a-terminal). Any MCP client that starts a local server can reach the skills through [`accounting-skills serve-mcp`](docs/installation.md#any-mcp-client-through-a-local-server), included in v0.8.0 and later source checkouts (`cargo install`). [Installation](docs/installation.md) covers manual copying, removal and versioning.
 
 Claude Code keeps its skill listing within 1% of the model's context window by default and drops the least-used skills' descriptions past that. With every skill installed, a 200,000 token window is too small for all of them, so those skills are chosen less often; [the Claude Code plugin notes](docs/installation.md#claude-code-plugin) say how to check with `/context` and raise the budget.
 
